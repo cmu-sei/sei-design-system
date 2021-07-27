@@ -837,7 +837,7 @@ fieldset[disabled] .sds-multiselect * {
   @apply pointer-events-none;
 }
 
-.sds-multiselect-caret {
+.multiselect-caret {
   @apply transition-transform duration-200 ease-linear text-center absolute;
   width: 32px;
   height: 34px;
@@ -846,11 +846,11 @@ fieldset[disabled] .sds-multiselect * {
   padding: 4px 8px;
 }
 
-.open .sds-multiselect-caret {
+.open .multiselect-caret {
   transform: rotate(180deg);
 }
 
-.sds-multiselect-caret:before {
+.multiselect-caret:before {
   position: relative;
   right: 0;
   top: 65%;
@@ -862,12 +862,12 @@ fieldset[disabled] .sds-multiselect * {
   content: "";
 }
 
-.dark .sds-multiselect-caret {
+.dark .multiselect-caret {
   border-color: theme("colors.gray.500") transparent transparent;
   color: theme("colors.gray.600");
 }
 
-.sds-multiselect-clear {
+.multiselect-clear {
   @apply text-gray-400 dark:text-gray-600;
   position: absolute;
   top: 0;
@@ -879,9 +879,9 @@ fieldset[disabled] .sds-multiselect * {
   cursor: pointer;
 }
 
-.sds-multiselect-clear:hover,
-.sds-multiselect-clear:active,
-.sds-multiselect-clear:focus {
+.multiselect-clear:hover,
+.multiselect-clear:active,
+.multiselect-clear:focus {
   @apply text-gray-900 dark:text-gray-100;
 }
 
