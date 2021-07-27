@@ -1,0 +1,66 @@
+{
+  "name": "@sds/components-vue3",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --ignore-path .eslintignore .",
+    "bundle:release": "./scripts/bundle-release.sh",
+    "release": "./scripts/release.sh"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    },
+    "./dist/": "./dist/",
+    "./src/": "./src/"
+  },
+  "bugs": {
+    "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
+  },
+  "homepage": "https://designsystem.sei.cmu.edu/",
+  "publishConfig": {
+    "cache": "~/.npm",
+    "registry": "https://artifactory.sei.cmu.edu/artifactory/api/npm/sei-design-system/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://code.sei.cmu.edu/bitbucket/projects/SDS/repos/components-vue3/"
+  },
+  "dependencies": {
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@rollup/plugin-eslint": "^8.0.1",
+    "@sds/tailwindcss-2": "^0.1.14",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/line-clamp": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "@vitejs/plugin-vue": "^1.3.0",
+    "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.3.1",
+    "date-fns": "^2.23.0",
+    "eslint": "^7.31.0",
+    "eslint-plugin-vue": "^7.14.0",
+    "mitt": "^3.0.0",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7",
+    "typescript": "^4.3.2",
+    "vite": "^2.4.4",
+    "vue-tsc": "^0.2.2"
+  },
+  "engines": {
+    "node": ">=12.13.0"
+  }
+}

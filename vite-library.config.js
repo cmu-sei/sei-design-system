@@ -1,0 +1,39 @@
+const { resolve } = require('path')
+const eslint = require('@rollup/plugin-eslint');
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [{
+    ...eslint({
+      include: '**/*.+(vue|js|jsx|ts|tsx)',
+      throwOnError: true,
+      throwOnWarning: true,
+    }),
+    enforce: 'pre',
+  }, vue()],
+  publicDir: false,
+  build: {
+    target: 'esnext',
+    lib: {
+      entry: resolve(__dirname, process.env.LIB_ROOT, 'index.js'),
+      name: process.env.LIB_NAME || 'SeiDesignSystem',
+      fileName: format => `index.${format}.js`
+    },
+    rollupOptions: {
+      // make sure to externalize deps that shouldn't be bundled
+      // into your library
+      external: ['vue'],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          vue: 'Vue'
+        }
+      }
+    }
+  },
+})

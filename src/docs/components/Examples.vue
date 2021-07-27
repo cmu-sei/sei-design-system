@@ -1,0 +1,661 @@
+<template>
+  <div class="guide">
+    <p>Scroll area</p>
+    <div class="nav-group">
+      <sds-scrollspy
+        href="#scrollspy-test"
+        parent="#scrollspy-parent"
+      >
+        <template #default="{ scrollIntoView, active }">
+          <button
+            class="nav nav-underline"
+            :class="{ active }"
+            @click="scrollIntoView"
+          >
+            Test
+          </button>
+        </template>
+      </sds-scrollspy>
+      <sds-scrollspy
+        href="#scrollspy-test-2"
+        parent="#scrollspy-parent"
+      >
+        <template #default="{ scrollIntoView, active }">
+          <button
+            class="nav nav-underline"
+            :class="{ active }"
+            @click="scrollIntoView"
+          >
+            Test 2
+          </button>
+        </template>
+      </sds-scrollspy>
+    </div>
+    <div
+      id="scrollspy-parent"
+      class="h-32 scroll-area-y mb-4"
+    >
+      <p
+        id="scrollspy-test"
+        class="mb-48 text-4xl text-success"
+      >
+        test 1
+      </p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p
+        id="scrollspy-test-2"
+        class="mb-48 text-4xl text-success"
+      >
+        test 2
+      </p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+    </div>
+    <h2 class="mb-6 text-4xl">
+      Examples
+    </h2>
+    <sds-section
+      type="raised"
+      nav-class="gap-2"
+    >
+      <template #title>
+        <h3 class="text-2xl">
+          Hello
+        </h3>
+      </template>
+      <template #subtitle>
+        <p>Subtitle text</p>
+      </template>
+      <template #nav>
+        <a
+          href="#"
+          class="nav nav-pill nav-blue"
+        >Option 1</a>
+        <a
+          href="#"
+          class="nav nav-pill nav-blue"
+        >Option 2</a>
+        <a
+          href="#"
+          class="nav nav-pill nav-blue active"
+        >Option 3</a>
+      </template>
+      <div>
+        <section class="mb-4">
+          <sds-external-link
+            href="#"
+            class="link link-primary"
+            show-icon
+          >
+            External link
+          </sds-external-link>
+        </section>
+        <section class="mb-4">
+          <h3 class="my-4 text-lg">
+            Top Five Chart
+          </h3>
+          <sds-top-five-chart
+            title="Top Five Chart"
+            :entries="topFiveEntries"
+          />
+        </section>
+        <div class="mb-4 align-right">
+          <h4 class="mb-4 text-lg">
+            Toaster
+          </h4>
+          <sds-toaster v-model="toasts" />
+          <button
+            class="btn btn-blue"
+            @click="generateToast"
+          >
+            Generate Toast
+          </button>
+
+          <h4 class="my-4 text-lg">
+            Dropdown (open on hover, custom styling, click btn to go home)
+          </h4>
+          <sds-dropdown
+            title="Dropdown"
+            btn-class="rounded-none btn btn-black"
+            menu-class="h-48 p-4 -ml-6 overflow-auto text-gray-100 bg-gray-900 rounded-b w-224"
+            hover
+            :hover-delay="0"
+          >
+            <div class="text-sm">
+              This is going to be a lot of text. This is going to be a lot of
+              text. This is going to be a lot of text. This is going to be a lot
+              of text.
+            </div>
+            <sds-dropdown-header>
+              <p>Signed in as</p>
+              <p class="font-semibold truncate">
+                tom@example.com
+              </p>
+            </sds-dropdown-header>
+            <sds-dropdown-divider />
+            <sds-dropdown-item href="/">
+              Guide
+            </sds-dropdown-item>
+            <sds-dropdown-item href="#">
+              Support
+            </sds-dropdown-item>
+            <sds-dropdown-item href="#">
+              License
+            </sds-dropdown-item>
+            <sds-dropdown-divider />
+            <form
+              method="POST"
+              action="#"
+            >
+              <sds-dropdown-item
+                tag="button"
+                type="submit"
+              >
+                Sign out
+              </sds-dropdown-item>
+            </form>
+          </sds-dropdown>
+
+          <sds-dropdown
+            :title="`Modal Size: ${modalSize}`"
+            btn-class="btn btn-default"
+            animated
+          >
+            <sds-dropdown-header> Select the modal's size </sds-dropdown-header>
+            <sds-dropdown-divider />
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('sm')"
+            >
+              Small
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('md')"
+            >
+              Medium
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('lg')"
+            >
+              Large
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('xl')"
+            >
+              Extra Large
+            </sds-dropdown-item>
+          </sds-dropdown>
+        </div>
+
+        <h4 class="mb-4 text-lg">
+          Sds Textarea & Sds Input
+        </h4>
+        <sds-textarea
+          v-model="maxTextarea.input"
+          placeholder="Enter text here"
+          :maxlength="200"
+          count-characters
+        />
+        <sds-input
+          v-model="maxTextarea.input"
+          placeholder="Enter text here"
+          :maxlength="20"
+          count-characters
+        />
+
+        <button
+          class="btn btn-blue"
+          @click="showModal = true"
+        >
+          Show Modal Component
+        </button>
+        <sds-modal
+          v-model="showModal"
+          :size="modalSize"
+        >
+          <template #title>
+            <h3>Modal title</h3>
+          </template>
+
+          <div class="mb-4">
+            <p>Let's make sure the modal destroys correctly:</p>
+            <a
+              href="/"
+              class="link link-primary"
+            >Go home</a>
+          </div>
+
+          <button
+            class="btn btn-default"
+            @click="showModalSizeDropdown = !showModalSizeDropdown"
+          >
+            Toggle Dropdown
+          </button>
+          <sds-dropdown
+            v-model="showModalSizeDropdown"
+            :title="`Modal Size: ${modalSize}`"
+            btn-class="btn btn-default"
+            animated
+          >
+            <sds-dropdown-header>
+              <p class="font-semibold text-gray-500">
+                Select the modal's size
+              </p>
+            </sds-dropdown-header>
+            <sds-dropdown-divider />
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('sm')"
+            >
+              Small
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('md')"
+            >
+              Medium
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('lg')"
+            >
+              Large
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              @click="changeModalSize('xl')"
+            >
+              Extra Large
+            </sds-dropdown-item>
+          </sds-dropdown>
+          <template #footer>
+            <button
+              class="btn btn-red"
+              @click="showModal = false"
+            >
+              Close
+            </button>
+          </template>
+        </sds-modal>
+
+        <h4 class="my-4 text-lg">
+          Calendar
+        </h4>
+        <sds-calendar
+          v-model:date="calendar.date"
+          v-model:end-date="calendar.endDate"
+          v-model:min="calendar.min"
+          v-model:max="calendar.max"
+          v-model:multiple="calendar.multiple"
+        />
+
+        <form>
+          <sds-datepicker
+            v-model="calendar.date"
+            v-model:min="calendar.min"
+            v-model:max="calendar.max"
+            class="mt-4"
+            required
+            variant="danger"
+          />
+          <input
+            type="submit"
+            value="Submit"
+            class="mt-4 btn btn-primary"
+          >
+        </form>
+
+        <h4 class="my-4 text-lg">
+          Paginator
+        </h4>
+        <sds-paginator
+          :current-page="paginator.currentPage"
+          :total-pages="paginator.totalPages"
+        />
+
+        <h4 class="my-4 text-lg">
+          Multiselect
+        </h4>
+        <sds-multiselect
+          v-model="multiselect.input"
+          :selected="multiselect.selected"
+          :options="filteredMultiselectOptions"
+          show-caret
+          show-clear
+          multiple
+          taggable
+          @update-selected="updateSelected"
+        />
+        <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
+
+        <h4 class="my-4 text-lg">
+          Filter By Dropdown
+        </h4>
+        <div class="space-y-4">
+          <div>
+            <sds-filter-by-dropdown
+              v-model="filterby.options"
+              :btn-text="filterByBtnText"
+              enable-filter
+              enable-sort-options
+              @update:modelValue="filtered"
+            />
+          </div>
+          <div>
+            <sds-filter-by-dropdown
+              v-model="filterby.options"
+              :btn-text="filterByBtnText"
+              btn-class="btn btn-primary"
+              right
+              @update:modelValue="filtered"
+            />
+          </div>
+          <ul v-if="filterBySelectedOptions.length > 0">
+            <li
+              v-for="o in filterBySelectedOptions"
+              :key="o.id"
+            >
+              {{ o.text }}
+            </li>
+          </ul>
+          <p>Filtering by ids: {{ filterby.idsText }}</p>
+        </div>
+
+        <h4 class="my-4 text-lg">
+          Autosuggest
+        </h4>
+        <div>
+          <sds-autosuggest
+            v-model="text"
+            :items="items"
+            :threshold="2"
+            :autosuggest="autosuggest"
+            :disable-search="text === ''"
+            placeholder="Search for a fruit"
+            variant="primary"
+            use-built-in-highlighting
+            @search="search"
+          />
+          <p class="mt-3">
+            You performed a search with: {{ searchText }}
+          </p>
+        </div>
+
+        <h4 class="my-4 text-lg">
+          Search Box
+        </h4>
+        <div class="space-y-4">
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            @search="search"
+          />
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            variant="primary"
+            @search="search"
+          />
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            variant="success"
+            @search="search"
+          />
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            variant="info"
+            @search="search"
+          />
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            variant="warning"
+            @search="search"
+          />
+          <sds-search-box
+            v-model="text"
+            placeholder="Search for a fruit"
+            :disable-search="text === ''"
+            variant="danger"
+            @search="search"
+          />
+        </div>
+
+        <h4 class="my-4 text-lg">
+          Radio Group
+        </h4>
+        <sds-radio-group
+          v-model="radioModel"
+          :options="[
+            { text: 'Yes', value: true },
+            { text: 'No', value: false },
+          ]"
+          required
+          stacked
+          @change="$emit('radioGroupChange')"
+        />
+      </div>
+    </sds-section>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "Examples",
+  emits: ['radioGroupChange', 'hello'],
+  data() {
+    return {
+      countText: "",
+      toasts: [],
+      showDropdown: false,
+      showModal: false,
+      showModalSizeDropdown: false,
+      modalSize: "md",
+      maxTextarea: {
+        input: "",
+      },
+      calendar: {
+        date: null,
+        endDate: null,
+        max: null,
+        min: null,
+        multiple: true,
+      },
+      paginator: {
+        currentPage: 2,
+        totalPages: 23,
+      },
+      multiselect: {
+        input: "",
+        options: [
+          { key: 1, value: "Apple" },
+          { key: 2, value: "Banana" },
+          { key: 3, value: "Orange" },
+          { key: 4, value: "Lemon" },
+          { key: 5, value: "Pear" },
+        ],
+        selected: [],
+      },
+      filterby: {
+        options: [
+          { id: 1, text: "Option 1", selected: false },
+          { id: 2, text: "Option 2", selected: false },
+          { id: 3, text: "Option 3", selected: false },
+          { id: 4, text: "Option 4", selected: false },
+          { id: 5, text: "Option 5", selected: false },
+          { id: 6, text: "Option 6", selected: false },
+          { id: 7, text: "Option 7", selected: false },
+          { id: 8, text: "Option 8", selected: false },
+          { id: 9, text: "Option 9", selected: false },
+          { id: 10, text: "Option 10", selected: false },
+          { id: 11, text: "Option 11", selected: false },
+          { id: 12, text: "Option 12", selected: false },
+          { id: 13, text: "Option 13", selected: false },
+          { id: 14, text: "Option 14", selected: false },
+          { id: 15, text: "Option 15", selected: false },
+          { id: 16, text: "Option 16", selected: false },
+          { id: 17, text: "Option 17", selected: false },
+          { id: 18, text: "Option 18", selected: false },
+          { id: 19, text: "Option 19", selected: false },
+          { id: 20, text: "Option 20", selected: false },
+        ],
+        idsText: null,
+      },
+      text: "",
+      items: [],
+      fakeAjaxItems: [
+        { term: "Apple", payload: "test" },
+        {
+          term: "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
+          payload: "test",
+        },
+        { term: "Banana", payload: "test" },
+        { term: "Orange", payload: "test" },
+        { term: "Pineapple", payload: "test" },
+        { term: "Kiwi", payload: "test" },
+        { term: "Pomegranate", payload: "test" },
+        { term: "Strawberry", payload: "test" },
+        { term: "Raspberry", payload: "test" },
+        { term: "Watermelon", payload: "test" },
+        { term: "Mango", payload: "test" },
+      ],
+      searchText: "",
+      radioModel: true,
+      topFiveEntries: [
+        {
+          id: 1,
+          title: "Entry 1",
+          url: "https://seinet.sei.cmu.edu",
+          count: 20,
+        },
+        {
+          id: 2,
+          title: "Entry 2",
+          url: "https://seinet.sei.cmu.edu",
+          count: 18,
+        },
+        {
+          id: 3,
+          title: "Entry 3",
+          url: "https://seinet.sei.cmu.edu",
+          count: 12,
+        },
+        {
+          id: 4,
+          title: "Entry 4",
+          url: "https://seinet.sei.cmu.edu",
+          count: 8,
+        },
+        {
+          id: 5,
+          title: "Entry 5",
+          url: "https://seinet.sei.cmu.edu",
+          count: 2,
+        },
+      ],
+    };
+  },
+  computed: {
+    filteredMultiselectOptions() {
+      return this.multiselect.options.filter((i) =>
+        i.value.toLowerCase().includes(this.multiselect.input.toLowerCase())
+      );
+    },
+    filterByBtnText() {
+      return this.filterBySelectedOptions.length > 0
+        ? "One or more options selected"
+        : "No options are selected";
+    },
+    filterBySelectedOptions() {
+      return this.filterby.options.filter((i) => i.selected);
+    },
+  },
+  methods: {
+    generateToast() {
+      const index = Math.floor(Math.random() * Math.floor(4));
+      const toasts = [
+        {
+          id: Math.random(),
+          title: "Success Toast",
+          text: "This is the content of this toast.",
+          variant: "success",
+        },
+        {
+          id: Math.random(),
+          title: "Info Toast",
+          text: "This is the content of this toast.",
+          variant: "info",
+        },
+        {
+          id: Math.random(),
+          title: "Warning Toast",
+          text: "This is the content of this toast.",
+          variant: "warning",
+        },
+        {
+          id: Math.random(),
+          title: "Danger Toast",
+          text: "This is the content of this toast.",
+          variant: "danger",
+          noAutoHide: true,
+        },
+      ];
+      this.toasts.unshift(toasts[index]);
+    },
+    changeModalSize(size) {
+      this.modalSize = size;
+    },
+
+    updateSelected(selections) {
+      this.multiselect.selected = selections;
+    },
+    filtered(options) {
+      this.filterby.idsText = options
+        .filter((i) => i.selected)
+        .map((i) => i.id)
+        .join(", ");
+    },
+    // Perform a search
+    search(q) {
+      this.$emit("hello", q);
+      this.searchText = this.text;
+    },
+
+    // Retrieve autosuggest items
+    autosuggest() {
+      setTimeout(() => {
+        this.items = this.fakeAjaxItems.filter((i) => {
+          return i.term.toLowerCase().includes(this.text.toLowerCase());
+        });
+      }, 250);
+    },
+  },
+});
+</script>

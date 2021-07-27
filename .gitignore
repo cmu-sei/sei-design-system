@@ -1,0 +1,26 @@
+.DS_Store
+node_modules
+dist
+dist-ssr
+.cache
+build
+*.local
+
+# workaround for npm publish "type" npm ERR!
+# this works alongside the publishConfig.cache value
+# in package.json
+~/.npm
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
