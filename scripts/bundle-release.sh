@@ -19,16 +19,16 @@ rm -rf dist/
 # done
 
 printf "\nbuilding all components...\n"
-LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --root src/components --config vite-library.config.js --outDir dist/lib/
+LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --root src/components --config vite-library.config.js
 
 #####################
 # Additional Clean Up
 #####################
 
-printf "\nmoving lib to base of dist..."
-cd dist
-find lib -maxdepth 1 -mindepth 1 -exec mv {} . \;
-rmdir lib
+# printf "\nmoving lib to base of dist..."
+# cd dist
+# find lib -maxdepth 1 -mindepth 1 -exec mv {} . \;
+# rmdir lib
 
 duration=$(( SECONDS - start ))
 

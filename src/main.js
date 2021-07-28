@@ -5,6 +5,9 @@ import App from './docs/App.vue';
 import "@sds/tailwindcss-2/open-sans/index.css";
 import "./index.css";
 import SdsComponents from "./components";
+
+// Use the following to test /dist version of components
+// import SdsComponents from "../dist/index.es";
 // import {
 //   SdsAutosuggest,
 //   SdsCalendar,
@@ -37,7 +40,7 @@ import SdsComponents from "./components";
 //   SdsTextarea,
 //   SdsToaster,
 //   SdsTopFiveChart,
-// } from "./components"
+// } from "../dist/index.es"
 
 createApp(App)
   .use(SdsComponents)
