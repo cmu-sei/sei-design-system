@@ -6,7 +6,7 @@
       :class="{ valid, invalid }"
       :type="type"
       :maxlength="maxlength"
-      :placeholder="placeholder !== '' ? placeholder : false"
+      :placeholder="placeholder"
       :autofocus="autofocus"
       :disabled="disabled"
       :readonly="readonly"
