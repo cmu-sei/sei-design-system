@@ -5,5 +5,71 @@ import App from './docs/App.vue';
 import "@sds/tailwindcss-2/open-sans/index.css";
 import "./index.css";
 import SdsComponents from "./components";
+// import {
+//   SdsAutosuggest,
+//   SdsCalendar,
+//   SdsCharacterCounter,
+//   SdsDatepicker,
+//   SdsDropdown,
+//   SdsDropdownDivider,
+//   SdsDropdownHeader,
+//   SdsDropdownItem,
+//   SdsExternalLink,
+//   SdsFilterByDropdown,
+//   SdsInput,
+//   SdsLayoutFixedSidebar,
+//   SdsLayoutSeiExternal,
+//   SdsLayoutSeiExternalFooter,
+//   SdsLayoutSeiExternalHeader,
+//   SdsLayoutSeiExternalHeaderContent,
+//   SdsLayoutSeiExternalMasthead,
+//   SdsLayoutSeiExternalNav,
+//   SdsLayoutSeiExternalWordmark,
+//   SdsLayoutStacked,
+//   SdsModal,
+//   SdsMultiselect,
+//   SdsPaginator,
+//   SdsRadioGroup,
+//   SdsScrollspy,
+//   SdsSearchBox,
+//   SdsSection,
+//   SdsSortableTable,
+//   SdsTextarea,
+//   SdsToaster,
+//   SdsTopFiveChart,
+// } from "./components"
 
-createApp(App).use(SdsComponents).mount('#app')
+createApp(App)
+  .use(SdsComponents)
+  // .use(SdsAutosuggest)
+  // .use(SdsCalendar)
+  // .use(SdsCharacterCounter)
+  // .use(SdsDatepicker)
+  // .use(SdsDropdown)
+  // .use(SdsDropdownDivider)
+  // .use(SdsDropdownHeader)
+  // .use(SdsDropdownItem)
+  // .use(SdsExternalLink)
+  // .use(SdsFilterByDropdown)
+  // .use(SdsInput)
+  // .use(SdsLayoutFixedSidebar)
+  // .use(SdsLayoutSeiExternal)
+  // .use(SdsLayoutSeiExternalFooter)
+  // .use(SdsLayoutSeiExternalHeader)
+  // .use(SdsLayoutSeiExternalHeaderContent)
+  // .use(SdsLayoutSeiExternalMasthead)
+  // .use(SdsLayoutSeiExternalNav)
+  // .use(SdsLayoutSeiExternalWordmark)
+  // .use(SdsLayoutStacked)
+  // .use(SdsModal)
+  // .use(SdsMultiselect)
+  // .use(SdsPaginator)
+  // .use(SdsRadioGroup)
+  // .use(SdsScrollspy)
+  // .use(SdsSearchBox)
+  // .use(SdsSection)
+  // .use(SdsSortableTable)
+  // .use(SdsTextarea)
+  // .use(SdsToaster)
+  // .use(SdsTopFiveChart)
+  .mount('#app')
