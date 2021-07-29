@@ -1,76 +1,76 @@
-import SdsAutosuggest from "./Autosuggest/Autosuggest.vue";
-import SdsCalendar from "./Calendar/Calendar.vue";
-import SdsCharacterCounter from "./CharacterCounter/CharacterCounter.vue"
-import SdsDatepicker from "./Datepicker/Datepicker.vue";
-import SdsDropdown from "./Dropdown/Dropdown.vue";
-import SdsDropdownDivider from "./DropdownDivider/DropdownDivider.vue";
-import SdsDropdownHeader from "./DropdownHeader/DropdownHeader.vue";
-import SdsDropdownItem from "./DropdownItem/DropdownItem.vue";
-import SdsExternalLink from "./ExternalLink/ExternalLink.vue";
-import SdsFilterByDropdown from "./FilterByDropdown/FilterByDropdown.vue";
-import SdsInput from "./Input/Input.vue"
-import SdsLayoutFixedSidebar from "./LayoutFixedSidebar/LayoutFixedSidebar.vue";
-import SdsLayoutSeiExternal from "./LayoutSeiExternal/LayoutSeiExternal.vue";
-import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter/LayoutSeiExternalFooter.vue";
-import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader/LayoutSeiExternalHeader.vue";
-import SdsLayoutSeiExternalHeaderContent from "./LayoutSeiExternalHeaderContent/LayoutSeiExternalHeaderContent.vue";
-import SdsLayoutSeiExternalMasthead from "./LayoutSeiExternalMasthead/LayoutSeiExternalMasthead.vue";
-import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav/LayoutSeiExternalNav.vue";
-import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark/LayoutSeiExternalWordmark.vue";
-import SdsLayoutStacked from "./LayoutStacked/LayoutStacked.vue";
-import SdsModal from "./Modal/Modal.vue";
-import SdsMultiselect from "./Multiselect/Multiselect.vue";
-import SdsPaginator from "./Paginator/Paginator.vue";
-import SdsRadioGroup from "./RadioGroup/RadioGroup.vue";
-import SdsScrollspy from "./Scrollspy/Scrollspy.vue";
-import SdsSearchBox from "./SearchBox/SearchBox.vue";
-import SdsSection from "./Section/Section.vue";
-import SdsSortableTable from "./SortableTable/SortableTable.vue";
-import SdsTextarea from "./Textarea/Textarea.vue";
-import SdsToaster from "./Toaster/Toaster.vue";
-import SdsTopFiveChart from "./TopFiveChart/TopFiveChart.vue";
+// import SdsAutosuggest from "./Autosuggest/Autosuggest.vue";
+// import SdsCalendar from "./Calendar/Calendar.vue";
+// import SdsCharacterCounter from "./CharacterCounter/CharacterCounter.vue"
+// import SdsDatepicker from "./Datepicker/Datepicker.vue";
+// import SdsDropdown from "./Dropdown/Dropdown.vue";
+// import SdsDropdownDivider from "./DropdownDivider/DropdownDivider.vue";
+// import SdsDropdownHeader from "./DropdownHeader/DropdownHeader.vue";
+// import SdsDropdownItem from "./DropdownItem/DropdownItem.vue";
+// import SdsExternalLink from "./ExternalLink/ExternalLink.vue";
+// import SdsFilterByDropdown from "./FilterByDropdown/FilterByDropdown.vue";
+// import SdsInput from "./Input/Input.vue"
+// import SdsLayoutFixedSidebar from "./LayoutFixedSidebar/LayoutFixedSidebar.vue";
+// import SdsLayoutSeiExternal from "./LayoutSeiExternal/LayoutSeiExternal.vue";
+// import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter/LayoutSeiExternalFooter.vue";
+// import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader/LayoutSeiExternalHeader.vue";
+// import SdsLayoutSeiExternalHeaderContent from "./LayoutSeiExternalHeaderContent/LayoutSeiExternalHeaderContent.vue";
+// import SdsLayoutSeiExternalMasthead from "./LayoutSeiExternalMasthead/LayoutSeiExternalMasthead.vue";
+// import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav/LayoutSeiExternalNav.vue";
+// import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark/LayoutSeiExternalWordmark.vue";
+// import SdsLayoutStacked from "./LayoutStacked/LayoutStacked.vue";
+// import SdsModal from "./Modal/Modal.vue";
+// import SdsMultiselect from "./Multiselect/Multiselect.vue";
+// import SdsPaginator from "./Paginator/Paginator.vue";
+// import SdsRadioGroup from "./RadioGroup/RadioGroup.vue";
+// import SdsScrollspy from "./Scrollspy/Scrollspy.vue";
+// import SdsSearchBox from "./SearchBox/SearchBox.vue";
+// import SdsSection from "./Section/Section.vue";
+// import SdsSortableTable from "./SortableTable/SortableTable.vue";
+// import SdsTextarea from "./Textarea/Textarea.vue";
+// import SdsToaster from "./Toaster/Toaster.vue";
+// import SdsTopFiveChart from "./TopFiveChart/TopFiveChart.vue";
 
-const Components = {
-  SdsAutosuggest,
-  SdsCalendar,
-  SdsCharacterCounter,
-  SdsDatepicker,
-  SdsDropdown,
-  SdsDropdownDivider,
-  SdsDropdownHeader,
-  SdsDropdownItem,
-  SdsExternalLink,
-  SdsFilterByDropdown,
-  SdsInput,
-  SdsLayoutFixedSidebar,
-  SdsLayoutSeiExternal,
-  SdsLayoutSeiExternalFooter,
-  SdsLayoutSeiExternalHeader,
-  SdsLayoutSeiExternalHeaderContent,
-  SdsLayoutSeiExternalMasthead,
-  SdsLayoutSeiExternalNav,
-  SdsLayoutSeiExternalWordmark,
-  SdsLayoutStacked,
-  SdsModal,
-  SdsMultiselect,
-  SdsPaginator,
-  SdsRadioGroup,
-  SdsScrollspy,
-  SdsSearchBox,
-  SdsSection,
-  SdsSortableTable,
-  SdsTextarea,
-  SdsToaster,
-  SdsTopFiveChart,
-};
+// const Components = {
+//   SdsAutosuggest,
+//   SdsCalendar,
+//   SdsCharacterCounter,
+//   SdsDatepicker,
+//   SdsDropdown,
+//   SdsDropdownDivider,
+//   SdsDropdownHeader,
+//   SdsDropdownItem,
+//   SdsExternalLink,
+//   SdsFilterByDropdown,
+//   SdsInput,
+//   SdsLayoutFixedSidebar,
+//   SdsLayoutSeiExternal,
+//   SdsLayoutSeiExternalFooter,
+//   SdsLayoutSeiExternalHeader,
+//   SdsLayoutSeiExternalHeaderContent,
+//   SdsLayoutSeiExternalMasthead,
+//   SdsLayoutSeiExternalNav,
+//   SdsLayoutSeiExternalWordmark,
+//   SdsLayoutStacked,
+//   SdsModal,
+//   SdsMultiselect,
+//   SdsPaginator,
+//   SdsRadioGroup,
+//   SdsScrollspy,
+//   SdsSearchBox,
+//   SdsSection,
+//   SdsSortableTable,
+//   SdsTextarea,
+//   SdsToaster,
+//   SdsTopFiveChart,
+// };
 
-export default {
-  install(Vue) {
-    Object.keys(Components).forEach((name) => {
-      Vue.component(name, Components[name]);
-    });
-  },
-};
+// export default {
+//   install(Vue) {
+//     Object.keys(Components).forEach((name) => {
+//       Vue.component(name, Components[name]);
+//     });
+//   },
+// };
 
 export { default as SdsAutosuggest } from "./Autosuggest/Autosuggest.vue";
 export { default as SdsCalendar } from "./Calendar/Calendar.vue";
