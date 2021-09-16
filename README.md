@@ -1,6 +1,10 @@
-# Vue 3 + Typescript + Vite
+# @SDS/Components-Vue3
 
-This template should help get you started developing with Vue 3 and Typescript in Vite.
+Vue 3 components for the SEI Design System.
+
+## Contributing
+
+To contribute, please visit [Contributing to the SEI Design System](https://wiki-int.sei.cmu.edu/confluence/x/FpkmGQ)
 
 ## Recommended IDE Setup
 
