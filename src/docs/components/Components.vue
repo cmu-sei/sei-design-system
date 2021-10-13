@@ -845,7 +845,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue-demi'
 
 export default defineComponent({
   name: "Components",
@@ -853,7 +853,7 @@ export default defineComponent({
     return {
       openModal: false,
       openDropdown: false,
-      calendarDate: "",
+      calendarDate: ""
     };
   },
 });

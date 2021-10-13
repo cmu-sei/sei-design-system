@@ -15,6 +15,14 @@ export default defineConfig({
     }),
     enforce: 'pre',
   }, vue()],
+  server: {
+    fs: {
+      strict: true
+    }
+  },
+  optimizeDeps: {
+    exclude: ['vue-demi']
+  },
   publicDir: false,
   build: {
     target: 'esnext',
@@ -26,14 +34,15 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: ['vue', 'vue-demi'],
       output: {
         // remove the default exports warning
         exports: 'named',
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'vue-demi': 'VueDemi'
         }
       }
     }

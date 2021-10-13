@@ -14,8 +14,8 @@
   </sds-layout-sei-external>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent } from 'vue-demi'
 
 import Components from './components/Components.vue'
 import Examples from './components/Examples.vue'
