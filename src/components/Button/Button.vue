@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue-demi'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'SdsButton',

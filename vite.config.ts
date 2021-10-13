@@ -8,8 +8,5 @@ export default defineConfig({
     fs: {
       strict: true
     }
-  },
-  optimizeDeps: {
-    exclude: ['vue-demi']
   }
 })

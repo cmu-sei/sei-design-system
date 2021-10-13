@@ -1,6 +1,6 @@
 {
   "name": "@sds/components-vue3",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -36,17 +36,8 @@
     "type": "git",
     "url": "https://code.sei.cmu.edu/bitbucket/projects/SDS/repos/components-vue3/"
   },
-  "dependencies": {
-    "vue-demi": "latest"
-  },
   "peerDependencies": {
-    "@vue/composition-api": "^1.2.4",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
+    "vue": ">=3.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-eslint": "^8.0.1",
