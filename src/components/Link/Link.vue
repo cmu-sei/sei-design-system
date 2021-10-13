@@ -1,0 +1,48 @@
+<template>
+  <a
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
+    class="link"
+    :class="[variantClass]"
+  ><slot /></a>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed } from 'vue-demi'
+
+export default defineComponent({
+  name: 'SdsLink',
+  props: {
+    variant: { type: String, default: '' },
+    external: { type: Boolean, default: false }
+  },
+  setup (props) {
+    const variantClass = computed(() => {
+      switch (props.variant) {
+        case 'primary':
+          return 'link-primary'
+        case 'secondary':
+          return 'link-secondary'
+        case 'tertiary':
+          return 'link-tertiary'
+        case 'success':
+          return 'link-success'
+        case 'info':
+          return 'link-info'
+        case 'warning':
+          return 'link-warning'
+        case 'danger':
+          return 'link-danger'
+        case 'light':
+          return 'link-light'
+        case 'dark':
+          return 'link-dark'
+        default:
+          return ''
+      }
+    })
+
+    return { variantClass }
+  }
+})
+</script>

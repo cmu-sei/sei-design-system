@@ -31,9 +31,9 @@
         </template>
       </sds-scrollspy>
     </div>
-    <div
+    <sds-scroll-area
       id="scrollspy-parent"
-      class="h-32 scroll-area-y mb-4"
+      class="h-32 mb-4"
     >
       <p
         id="scrollspy-test"
@@ -65,7 +65,7 @@
       <p>test</p>
       <p>test</p>
       <p>test</p>
-    </div>
+    </sds-scroll-area>
     <h2 class="mb-6 text-4xl">
       Examples
     </h2>

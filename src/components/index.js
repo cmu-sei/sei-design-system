@@ -1,6 +1,8 @@
 import SdsAutosuggest from "./Autosuggest";
+import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCharacterCounter from "./CharacterCounter"
+import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
@@ -18,22 +20,28 @@ import SdsLayoutSeiExternalMasthead from "./LayoutSeiExternalMasthead";
 import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav";
 import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark";
 import SdsLayoutStacked from "./LayoutStacked";
+import SdsLink from "./Link";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
 import SdsRadioGroup from "./RadioGroup";
+import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
 import SdsSearchBox from "./SearchBox";
 import SdsSection from "./Section";
+import SdsSelect from "./Select";
 import SdsSortableTable from "./SortableTable";
+import SdsTab from "./Tab";
 import SdsTextarea from "./Textarea";
 import SdsToaster from "./Toaster";
 import SdsTopFiveChart from "./TopFiveChart";
 
 const Components = {
   SdsAutosuggest,
+  SdsButton,
   SdsCalendar,
   SdsCharacterCounter,
+  SdsCheckboxGroup,
   SdsDatepicker,
   SdsDropdown,
   SdsDropdownDivider,
@@ -51,14 +59,18 @@ const Components = {
   SdsLayoutSeiExternalNav,
   SdsLayoutSeiExternalWordmark,
   SdsLayoutStacked,
+  SdsLink,
   SdsModal,
   SdsMultiselect,
   SdsPaginator,
   SdsRadioGroup,
+  SdsScrollArea,
   SdsScrollspy,
   SdsSearchBox,
   SdsSection,
+  SdsSelect,
   SdsSortableTable,
+  SdsTab,
   SdsTextarea,
   SdsToaster,
   SdsTopFiveChart,
@@ -73,8 +85,10 @@ export default {
 };
 
 export { default as SdsAutosuggest } from "./Autosuggest";
+export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCharacterCounter } from "./CharacterCounter"
+export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
@@ -92,14 +106,18 @@ export { default as SdsLayoutSeiExternalMasthead } from "./LayoutSeiExternalMast
 export { default as SdsLayoutSeiExternalNav } from "./LayoutSeiExternalNav";
 export { default as SdsLayoutSeiExternalWordmark } from "./LayoutSeiExternalWordmark";
 export { default as SdsLayoutStacked } from "./LayoutStacked";
+export { default as SdsLink } from "./Link";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";
 export { default as SdsRadioGroup } from "./RadioGroup";
+export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSearchBox } from "./SearchBox";
 export { default as SdsSection } from "./Section";
+export { default as SdsSelect } from "./Select";
 export { default as SdsSortableTable } from "./SortableTable";
+export { default as SdsTab } from "./Tab";
 export { default as SdsTextarea } from "./Textarea";
 export { default as SdsToaster } from "./Toaster";
 export { default as SdsTopFiveChart } from "./TopFiveChart";
