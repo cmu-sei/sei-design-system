@@ -1,4 +1,4 @@
-import { createApp } from 'vue-demi'
+import { createApp } from 'vue'
 import App from './docs/App.vue';
 
 // SEI Design System
