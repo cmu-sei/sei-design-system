@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue-demi'
 import { parse, format, isValid, isSameDay } from 'date-fns'
 import Dropdown from '../Dropdown/Dropdown.vue';
 import Calendar from '../Calendar/Calendar.vue';

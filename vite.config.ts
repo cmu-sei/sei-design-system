@@ -3,5 +3,13 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()]
+  plugins: [vue()],
+  server: {
+    fs: {
+      strict: true
+    }
+  },
+  optimizeDeps: {
+    exclude: ['vue-demi']
+  }
 })

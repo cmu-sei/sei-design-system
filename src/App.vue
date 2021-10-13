@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue-demi'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default defineComponent({
