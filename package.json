@@ -7,7 +7,9 @@
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --ignore-path .eslintignore .",
     "bundle:release": "./scripts/bundle-release.sh",
-    "release": "./scripts/release.sh"
+    "release": "./scripts/release.sh",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "files": [
     "dist",
@@ -40,8 +42,13 @@
     "vue": ">=3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.8",
     "@rollup/plugin-eslint": "^8.0.1",
     "@sds/tailwindcss-2": "^0.1.14",
+    "@storybook/addon-actions": "^6.4.0-beta.10",
+    "@storybook/addon-essentials": "^6.4.0-beta.10",
+    "@storybook/addon-links": "^6.4.0-beta.10",
+    "@storybook/vue3": "^6.4.0-beta.10",
     "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/line-clamp": "^0.2.1",
@@ -51,18 +58,22 @@
     "@vitejs/plugin-vue": "^1.3.0",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.3.1",
+    "babel-loader": "^8.2.2",
     "date-fns": "^2.23.0",
     "eslint": "^8.0.0",
     "eslint-plugin-vue": "^7.14.0",
     "mitt": "^3.0.0",
     "postcss": "^8.3.6",
+    "storybook-builder-vite": "^0.1.1",
     "tailwindcss": "^2.2.7",
     "typescript": "^4.3.2",
     "vite": "^2.4.4",
     "vue": "^3.0.0",
+    "vue-loader": "^16.8.1",
     "vue-tsc": "^0.3.0"
   },
   "engines": {
     "node": ">=12.13.0"
-  }
+  },
+  "dependencies": {}
 }

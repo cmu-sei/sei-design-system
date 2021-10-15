@@ -1,0 +1,36 @@
+import SdsCheckboxGroup from './CheckboxGroup.vue';
+
+export default {
+  title: 'Inputs/Selections/CheckboxGroup',
+  parameters: {
+    docs: {
+      description: {
+        component: 'A radio group form field.',
+      },
+    },
+  },
+  component: SdsCheckboxGroup,
+  argTypes: {}
+};
+
+const Template = (args, { argTypes }) => ({
+  components: { SdsCheckboxGroup },
+  props: Object.keys(argTypes),
+  setup() {
+    return { ...args }
+  },
+  template: `
+    <sds-checkbox-group v-bind="$props" />
+  `
+});
+
+export const Default = Template.bind({});
+Default.args = {
+  modelValue: ['option 1'],
+  options: [
+    { id: 1, value: 'option 1', text: 'Option 1' },
+    { id: 2, value: 'option 2', text: 'Option 2' },
+    { id: 3, value: 'option 3', text: 'Option 3' },
+  ]
+};
+
