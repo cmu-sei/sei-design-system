@@ -2,6 +2,7 @@
   <button
     class="btn"
     :class="[variantClass, sizeClass]"
+    @click="onClick"
   >
     <slot />
   </button>
@@ -16,6 +17,7 @@ export default defineComponent({
     variant: { type: String, default: '' },
     size: { type: String, default: '' }
   },
+  emits: ['click'],
   computed: {
     variantClass() {
       switch (this.variant) {
@@ -40,12 +42,17 @@ export default defineComponent({
       }
     },
     sizeClass() {
-      switch(this.size) {
+      switch (this.size) {
         case 'sm':
           return 'btn-sm'
         default:
           return ''
       }
+    }
+  },
+  methods: {
+    onClick() {
+      this.$emit('click')
     }
   }
 })
