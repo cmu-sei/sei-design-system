@@ -1,7 +1,7 @@
 import SdsToast from './Toast.vue';
 
 export default {
-  title: 'Misc/Toast',
+  title: 'Feedback/Toast',
   parameters: {
     docs: {
       description: {

@@ -1,7 +1,7 @@
 import SdsSortableTable from './SortableTable.vue';
 
 export default {
-  title: 'Misc/SortableTable',
+  title: 'Data Visualization/SortableTable',
   parameters: {
     docs: {
       description: {

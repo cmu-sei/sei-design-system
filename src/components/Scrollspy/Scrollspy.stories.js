@@ -1,7 +1,7 @@
 import SdsScrollspy from './Scrollspy.vue';
 
 export default {
-  title: 'Misc/Scrollspy',
+  title: 'Utility/Scrollspy',
   parameters: {
     docs: {
       description: {
