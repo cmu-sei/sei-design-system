@@ -1,7 +1,7 @@
 import SdsCharacterCounter from './CharacterCounter.vue';
 
 export default {
-  title: 'Misc/CharacterCounter',
+  title: 'Utility/CharacterCounter',
   parameters: {
     docs: {
       description: {
