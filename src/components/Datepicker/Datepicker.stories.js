@@ -34,15 +34,17 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-datepicker
-      v-model="date"
-      v-model:min="parentMin"
-      v-model:max="parentMax"
-      v-bind="$props"
-      @input="onInput"
-      @update:min="onUpdateMin"
-      @update:max="onUpdateMax"
-    />
+    <div style="height: 28rem">
+      <sds-datepicker
+        v-model="date"
+        v-model:min="parentMin"
+        v-model:max="parentMax"
+        v-bind="$props"
+        @input="onInput"
+        @update:min="onUpdateMin"
+        @update:max="onUpdateMax"
+      />
+    </div>
   `,
   data() {
     return {

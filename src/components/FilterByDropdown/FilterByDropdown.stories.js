@@ -23,11 +23,13 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-filter-by-dropdown
-      v-model="options"
-      v-bind="$props"
-      @input="onInput"
-    />
+    <div style="height: 28rem">
+      <sds-filter-by-dropdown
+        v-model="options"
+        v-bind="$props"
+        @input="onInput"
+      />
+    </div>
   `,
   data() {
     return {

@@ -25,7 +25,9 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-multiselect v-bind="$props" />
+    <div style="height: 28rem">
+      <sds-multiselect v-bind="$props" />
+    </div>
   `
 });
 
