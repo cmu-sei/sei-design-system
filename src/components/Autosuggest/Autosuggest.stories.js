@@ -27,15 +27,17 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-autosuggest
-      v-model="searchText"
-      v-bind="$props"
-      :items="itemList"
-      :autosuggest="onAutosuggest"
-      @input="onInput"
-      @search="onSearch"
-      @result="onResult"
-    />
+    <div style="height: 28rem">
+      <sds-autosuggest
+        v-model="searchText"
+        v-bind="$props"
+        :items="itemList"
+        :autosuggest="onAutosuggest"
+        @input="onInput"
+        @search="onSearch"
+        @result="onResult"
+      />
+    </div>
   `,
   data () {
     return {

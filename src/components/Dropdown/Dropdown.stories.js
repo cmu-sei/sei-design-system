@@ -23,14 +23,16 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-dropdown
-      v-bind="$props"
-      @input="onInput"
-      @btn-click="onBtnClick"
-    >
-      <template #title>Dropdown</template>
-      <sds-dropdown-item href="#">Dropdown Item</sds-dropdown-item>
-    </sds-dropdown>
+    <div style="height: 28rem">
+      <sds-dropdown
+        v-bind="$props"
+        @input="onInput"
+        @btn-click="onBtnClick"
+      >
+        <template #title>Dropdown</template>
+        <sds-dropdown-item href="#">Dropdown Item</sds-dropdown-item>
+      </sds-dropdown>
+    </div>
   `,
   methods: {
     onInput: action('input'),

@@ -25,7 +25,10 @@ const Template = (args, { argTypes }) => ({
     return { ...args }
   },
   template: `
-    <sds-modal v-bind="$props" />
+    <div>
+      <p>Use the properties below to display the modal.</p>
+      <sds-modal v-bind="$props" />
+    </div>
   `
 });
 
