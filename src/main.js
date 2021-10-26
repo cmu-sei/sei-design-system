@@ -17,7 +17,6 @@ import SdsComponents from "./components";
 //   SdsDropdownDivider,
 //   SdsDropdownHeader,
 //   SdsDropdownItem,
-//   SdsExternalLink,
 //   SdsFilterByDropdown,
 //   SdsInput,
 //   SdsLayoutFixedSidebar,
@@ -52,7 +51,6 @@ createApp(App)
   // .use(SdsDropdownDivider)
   // .use(SdsDropdownHeader)
   // .use(SdsDropdownItem)
-  // .use(SdsExternalLink)
   // .use(SdsFilterByDropdown)
   // .use(SdsInput)
   // .use(SdsLayoutFixedSidebar)
