@@ -8,7 +8,6 @@ import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
 import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
-import SdsExternalLink from "./ExternalLink";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsInput from "./Input"
 import SdsLayoutFixedSidebar from "./LayoutFixedSidebar";
@@ -47,7 +46,6 @@ const Components = {
   SdsDropdownDivider,
   SdsDropdownHeader,
   SdsDropdownItem,
-  SdsExternalLink,
   SdsFilterByDropdown,
   SdsInput,
   SdsLayoutFixedSidebar,
@@ -94,7 +92,6 @@ export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
 export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
-export { default as SdsExternalLink } from "./ExternalLink";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsInput } from "./Input"
 export { default as SdsLayoutFixedSidebar } from "./LayoutFixedSidebar";
