@@ -46,6 +46,7 @@
     "@rollup/plugin-eslint": "^8.0.1",
     "@sds/tailwindcss-2": "^0.1.14",
     "@storybook/addon-actions": "^6.4.0-beta.10",
+    "@storybook/addon-docs": "^6.4.0-beta.10",
     "@storybook/addon-essentials": "^6.4.0-beta.10",
     "@storybook/addon-links": "^6.4.0-beta.10",
     "@storybook/vue3": "^6.4.0-beta.10",
@@ -74,6 +75,5 @@
   },
   "engines": {
     "node": ">=12.13.0"
-  },
-  "dependencies": {}
+  }
 }
