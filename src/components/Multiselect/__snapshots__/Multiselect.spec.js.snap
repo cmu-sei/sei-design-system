@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Multiselect.vue matches snapshot with no props assigned 1`] = `
+"<div class=\\"sds-multiselect canSearch\\">
+  <ul class=\\"tag-list single\\">
+    <li style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
+      <!--v-if--><input placeholder=\\"\\" style=\\"width: 0px;\\" maxlength=\\"false\\" autocapitalize=\\"off\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\">
+    </li>
+  </ul>
+  <!--v-if-->
+  <!--v-if-->
+  <!--v-if-->
+</div>"
+`;
