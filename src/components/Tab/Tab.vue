@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    :class="[variantClass, typeClass, activeClass]"
+    :class="[variantClass, typeClass, activeClass, disabledClass]"
     class="tab"
   >
     <slot />
@@ -17,7 +17,8 @@ export default defineComponent({
     tag: { type: String, default: 'button' },
     variant: { type: String, default: '' },
     type: { type: String, default: '' },
-    active: { type: Boolean, default: false }
+    active: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false }
   },
   computed: {
     variantClass() {
@@ -56,6 +57,9 @@ export default defineComponent({
     },
     activeClass() {
       return this.active ? 'active' : ''
+    },
+    disabledClass() {
+      return this.disabled ? 'disabled' : ''
     }
   }
 })

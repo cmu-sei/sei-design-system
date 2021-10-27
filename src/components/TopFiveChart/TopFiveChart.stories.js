@@ -18,9 +18,8 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsTopFiveChart },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },

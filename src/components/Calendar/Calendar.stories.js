@@ -24,9 +24,8 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsCalendar },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },

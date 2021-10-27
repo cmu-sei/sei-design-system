@@ -20,9 +20,8 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsAutosuggest },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },
