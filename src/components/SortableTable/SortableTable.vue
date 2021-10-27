@@ -171,7 +171,7 @@ export default {
   methods: {
     createLocalSortOrders() {
       for (const sortKey of this.localSortKeys) {
-        this.$set(this.localSortOrders, sortKey.id, 0);
+        this.localSortOrders[sortKey.id] = 0;
       }
     },
 

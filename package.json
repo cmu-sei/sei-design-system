@@ -24,8 +24,8 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
     },
-    "./dist/": "./dist/",
-    "./src/": "./src/"
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
   },
   "bugs": {
     "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
