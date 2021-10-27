@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsRadioGroup },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-radio-group v-bind="$props" />
+    <sds-radio-group v-bind="args" />
   `
 });
 

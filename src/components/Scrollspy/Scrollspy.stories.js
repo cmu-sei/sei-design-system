@@ -17,12 +17,12 @@ const Template = (args, { argTypes }) => ({
   components: { SdsScrollspy },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div>
       <sds-scrollspy
-        v-bind="$props"
+        v-bind="args"
         v-slot="{ scrollIntoView, active }"
       >
         <button

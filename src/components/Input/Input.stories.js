@@ -22,10 +22,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsInput },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-input v-bind="$props" />
+    <sds-input v-bind="args" />
   `
 });
 

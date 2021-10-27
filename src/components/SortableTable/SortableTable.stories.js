@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsSortableTable },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-sortable-table v-bind="$props">
+    <sds-sortable-table v-bind="args">
       <template #default="{ entry, activeSortKey }">
         <td>{{ entry.id }}</td>
         <td>{{ entry.title }}</td>

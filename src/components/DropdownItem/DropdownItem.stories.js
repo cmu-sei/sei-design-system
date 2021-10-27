@@ -22,10 +22,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsDropdownItem },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-dropdown-item v-bind="$props">
+    <sds-dropdown-item v-bind="args">
       Content of default slot
     </sds-dropdown-item>
   `

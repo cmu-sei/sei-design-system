@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsToaster },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-toaster v-bind="$props" />
+    <sds-toaster v-bind="args" />
   `
 });
 

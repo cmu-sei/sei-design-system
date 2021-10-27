@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsLayoutSeiExternal },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-sei-external v-bind="$props">
+    <sds-layout-sei-external v-bind="args">
       Default slot
     </sds-layout-sei-external>
   `

@@ -22,10 +22,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsSearchBox },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-search-box v-bind="$props" />
+    <sds-search-box v-bind="args" />
   `
 });
 

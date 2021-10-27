@@ -40,13 +40,11 @@ const Template = (args, { argTypes }) => ({
   components: { SdsButton },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <sds-button
-      v-bind="$props"
-      :class="{ 'btn-outline': outline, 'btn-block': block }"
-      :disabled="disabled"
+      v-bind="args"
       @click="onClick"
     >
       Default slot

@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsLayoutSeiExternalWordmark },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-sei-external-wordmark v-bind="$props"></sds-layout-sei-external-wordmark>
+    <sds-layout-sei-external-wordmark v-bind="args"></sds-layout-sei-external-wordmark>
   `
 });
 
