@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterByDropdown.vue matches snapshot with no props assigned 1`] = `"<dropdown-stub modelvalue=\\"false\\" title=\\"\\" right=\\"false\\" dropup=\\"false\\" btnclass=\\"link link-secondary\\" menuclass=\\"p-2 my-1 bg-gray-100 border rounded-md shadow-lg w-72 dark:border-gray-500 dark:bg-gray-700\\" hidecaret=\\"false\\" hover=\\"false\\" hoverdelay=\\"100\\" animated=\\"false\\"></dropdown-stub>"`;

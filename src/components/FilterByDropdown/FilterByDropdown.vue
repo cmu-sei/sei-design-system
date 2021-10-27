@@ -143,6 +143,7 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
+      uuid: null,
       filterText: "",
       tmpOptions: [],
       open: false,
@@ -179,8 +180,8 @@ export default {
       this.filterText = "";
     }
   },
-  beforeCreate() {
-    this.uuid = `sds-modal__${uuid()}`;
+  created() {
+    this.uuid = `sds-filter-by-dropdown__${uuid()}`;
   },
   methods: {
     toggleSelect() {

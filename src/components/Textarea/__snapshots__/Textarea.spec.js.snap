@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Textarea.vue matches snapshot with disabled prop assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\" disabled=\\"\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with maxlength and count-characters prop assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"50\\" placeholder=\\"\\"></textarea>
+  <character-counter-stub currentvalue=\\"0\\" maxvalue=\\"50\\" class=\\"text-right text-gray-500\\"></character-counter-stub>
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with no props assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with placeholder prop assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"This is a placeholder\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with readonly prop assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\" readonly=\\"\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with rows prop assigned 1`] = `
+"<div><textarea class=\\"form-control\\" rows=\\"2\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Textarea.vue matches snapshot with value prop assigned 1`] = `
+"<div value=\\"This is the text content\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
+  <!--v-if-->
+</div>"
+`;
