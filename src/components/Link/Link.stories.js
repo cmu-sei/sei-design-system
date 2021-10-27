@@ -26,9 +26,8 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsLink },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },
@@ -36,8 +35,6 @@ const Template = (args, { argTypes }) => ({
     <sds-link
       href="#"
       v-bind="args"
-      :class="{ 'link-cta': cta }"
-      :disabled="disabled"
     >
       Default slot
     </sds-link>

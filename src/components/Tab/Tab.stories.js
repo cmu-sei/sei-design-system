@@ -34,16 +34,14 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsTab },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },
   template: `
     <sds-tab
       v-bind="args"
-      :disabled="disabled"
     >
       Default slot
     </sds-tab>

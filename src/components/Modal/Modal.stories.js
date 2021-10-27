@@ -18,9 +18,8 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsModal },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },
@@ -34,6 +33,5 @@ const Template = (args, { argTypes }) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  modelValue: true
 };
 

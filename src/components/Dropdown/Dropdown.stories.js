@@ -16,9 +16,8 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsDropdown, SdsDropdownItem },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },

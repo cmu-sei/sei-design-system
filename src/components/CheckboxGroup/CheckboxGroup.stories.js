@@ -13,9 +13,8 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsCheckboxGroup },
-  props: Object.keys(argTypes),
   setup() {
     return { args }
   },
