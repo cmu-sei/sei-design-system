@@ -22,12 +22,12 @@ const Template = (args, { argTypes }) => ({
   components: { SdsModal },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div>
       <p>Use the properties below to display the modal.</p>
-      <sds-modal v-bind="$props" />
+      <sds-modal v-bind="args" />
     </div>
   `
 });

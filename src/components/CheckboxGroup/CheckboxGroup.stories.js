@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsCheckboxGroup },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-checkbox-group v-bind="$props" />
+    <sds-checkbox-group v-bind="args" />
   `
 });
 

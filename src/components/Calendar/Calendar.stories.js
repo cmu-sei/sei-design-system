@@ -28,7 +28,7 @@ const Template = (args, { argTypes }) => ({
   components: { SdsCalendar },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <sds-calendar

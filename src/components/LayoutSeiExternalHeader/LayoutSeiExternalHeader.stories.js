@@ -17,10 +17,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsLayoutSeiExternalHeader },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-sei-external-header v-bind="$props"></sds-layout-sei-external-header>
+    <sds-layout-sei-external-header v-bind="args"></sds-layout-sei-external-header>
   `
 });
 

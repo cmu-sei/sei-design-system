@@ -22,10 +22,10 @@ const Template = (args, { argTypes }) => ({
   components: { SdsTopFiveChart },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-top-five-chart v-bind="$props" />
+    <sds-top-five-chart v-bind="args" />
   `
 });
 

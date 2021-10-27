@@ -18,7 +18,7 @@ const Template = (args, { argTypes }) => ({
   components: { SdsDropdownDivider },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <sds-dropdown-divider />

@@ -22,11 +22,11 @@ const Template = (args, { argTypes }) => ({
   components: { SdsMultiselect },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div style="height: 28rem">
-      <sds-multiselect v-bind="$props" />
+      <sds-multiselect v-bind="args" />
     </div>
   `
 });

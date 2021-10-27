@@ -30,12 +30,12 @@ const Template = (args, { argTypes }) => ({
   components: { SdsLink },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <sds-link
       href="#"
-      v-bind="$props"
+      v-bind="args"
       :class="{ 'link-cta': cta }"
       :disabled="disabled"
     >

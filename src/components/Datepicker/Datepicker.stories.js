@@ -31,7 +31,7 @@ const Template = (args, { argTypes }) => ({
   components: { SdsDatepicker },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div style="height: 28rem">
@@ -39,7 +39,7 @@ const Template = (args, { argTypes }) => ({
         v-model="date"
         v-model:min="parentMin"
         v-model:max="parentMax"
-        v-bind="$props"
+        v-bind="args"
         @input="onInput"
         @update:min="onUpdateMin"
         @update:max="onUpdateMax"

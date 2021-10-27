@@ -24,13 +24,13 @@ const Template = (args, { argTypes }) => ({
   components: { SdsAutosuggest },
   props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div style="height: 28rem">
       <sds-autosuggest
         v-model="searchText"
-        v-bind="$props"
+        v-bind="args"
         :items="itemList"
         :autosuggest="onAutosuggest"
         @input="onInput"
