@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsLayoutSeiExternalMasthead },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-sei-external-masthead v-bind="$props"></sds-layout-sei-masthead>
+    <sds-layout-sei-external-masthead v-bind="args"></sds-layout-sei-masthead>
   `
 });
 

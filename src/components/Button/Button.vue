@@ -1,7 +1,8 @@
 <template>
   <button
     class="btn"
-    :class="[variantClass, sizeClass]"
+    :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass]"
+    :disabled="disabled"
     @click="onClick"
   >
     <slot />
@@ -15,7 +16,10 @@ export default defineComponent({
   name: 'SdsButton',
   props: {
     variant: { type: String, default: '' },
-    size: { type: String, default: '' }
+    size: { type: String, default: '' },
+    outline: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    block: { type: Boolean, default: false }
   },
   emits: ['click'],
   computed: {
@@ -48,6 +52,15 @@ export default defineComponent({
         default:
           return ''
       }
+    },
+    outlineClass() {
+      return this.outline ? 'btn-outline' : ''
+    },
+    disabledClass() {
+      return this.disabled ? 'disabled' : ''
+    },
+    blockClass() {
+      return this.block ? 'btn-block' : ''
     }
   },
   methods: {

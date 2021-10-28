@@ -15,14 +15,13 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsSelect },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-select v-bind="$props" />
+    <sds-select v-bind="args" />
   `
 });
 

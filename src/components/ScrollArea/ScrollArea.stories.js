@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsScrollArea },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-scroll-area v-bind="$props" class="h-64 w-32">
+    <sds-scroll-area v-bind="args" class="h-64 w-32">
       <div class="h-96">Default slot</div>
     </sds-scroll-area>
   `

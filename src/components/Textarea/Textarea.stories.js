@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsTextarea },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-textarea v-bind="$props" />
+    <sds-textarea v-bind="args" />
   `
 });
 

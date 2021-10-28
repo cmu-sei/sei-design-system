@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsLayoutSeiExternalHeaderContent },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-sei-external-header-content v-bind="$props"></sds-layout-sei-external-content>
+    <sds-layout-sei-external-header-content v-bind="args"></sds-layout-sei-external-content>
   `
 });
 

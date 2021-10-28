@@ -3,7 +3,7 @@
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     class="link"
-    :class="[variantClass]"
+    :class="[variantClass, ctaClass, disabledClass]"
   ><slot /></a>
 </template>
 
@@ -14,7 +14,9 @@ export default defineComponent({
   name: 'SdsLink',
   props: {
     variant: { type: String, default: '' },
-    external: { type: Boolean, default: false }
+    external: { type: Boolean, default: false },
+    cta: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false }
   },
   setup (props) {
     const variantClass = computed(() => {
@@ -42,7 +44,15 @@ export default defineComponent({
       }
     })
 
-    return { variantClass }
+    const ctaClass = computed(() => {
+      return props.cta ? 'link-cta' : ''
+    })
+
+    const disabledClass = computed(() => {
+      return props.disabled ? 'disabled' : ''
+    })
+
+    return { variantClass, ctaClass, disabledClass }
   }
 })
 </script>

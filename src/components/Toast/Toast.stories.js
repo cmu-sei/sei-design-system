@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsToast },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-toast v-bind="$props" />
+    <sds-toast v-bind="args" />
   `
 });
 

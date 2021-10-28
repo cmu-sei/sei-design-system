@@ -97,13 +97,13 @@
       </template>
       <div>
         <section class="mb-4">
-          <sds-external-link
+          <sds-link
             href="#"
-            class="link link-primary"
-            show-icon
+            variant="primary"
+            external
           >
             External link
-          </sds-external-link>
+          </sds-link>
         </section>
         <section class="mb-4">
           <h3 class="my-4 text-lg">
@@ -148,7 +148,10 @@
               </p>
             </sds-dropdown-header>
             <sds-dropdown-divider />
-            <sds-dropdown-item href="/">
+            <sds-dropdown-item
+              href="/"
+              disabled
+            >
               Guide
             </sds-dropdown-item>
             <sds-dropdown-item href="#">

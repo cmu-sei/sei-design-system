@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsLayoutStacked },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-stacked v-bind="$props">
+    <sds-layout-stacked v-bind="args">
       <template #header>Header slot</template>
       Default slot
       <template #footer>Footer slot</template>

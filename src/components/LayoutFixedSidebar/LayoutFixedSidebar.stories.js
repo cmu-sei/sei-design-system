@@ -13,14 +13,13 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsLayoutFixedSidebar },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-layout-fixed-sidebar v-bind="$props">
+    <sds-layout-fixed-sidebar v-bind="args">
       <template #header>Header slot</template>
       <template #sidebar>Sidebar slot</template>
       Default slot

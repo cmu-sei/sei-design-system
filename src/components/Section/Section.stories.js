@@ -18,14 +18,13 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsSection },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-section v-bind="$props">
+    <sds-section v-bind="args">
       <template #title>Title slot</template>
       <template #subtitle>Subtitle slot</template>
       <template #nav>Nav slot</template>

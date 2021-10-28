@@ -16,16 +16,15 @@ export default {
   argTypes: {}
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsDropdown, SdsDropdownItem },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
     <div style="height: 28rem">
       <sds-dropdown
-        v-bind="$props"
+        v-bind="args"
         @input="onInput"
         @btn-click="onBtnClick"
       >

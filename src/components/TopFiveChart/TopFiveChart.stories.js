@@ -18,14 +18,13 @@ export default {
   }
 };
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsTopFiveChart },
-  props: Object.keys(argTypes),
   setup() {
-    return { ...args }
+    return { args }
   },
   template: `
-    <sds-top-five-chart v-bind="$props" />
+    <sds-top-five-chart v-bind="args" />
   `
 });
 
