@@ -148,7 +148,10 @@
               </p>
             </sds-dropdown-header>
             <sds-dropdown-divider />
-            <sds-dropdown-item href="/">
+            <sds-dropdown-item
+              href="/"
+              disabled
+            >
               Guide
             </sds-dropdown-item>
             <sds-dropdown-item href="#">
