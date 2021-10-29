@@ -2,8 +2,7 @@
   <a
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
-    class="link"
-    :class="[variantClass, ctaClass, disabledClass]"
+    :class="[linkClass, variantClass, ctaClass, disabledClass]"
   ><slot /></a>
 </template>
 
@@ -19,6 +18,10 @@ export default defineComponent({
     disabled: { type: Boolean, default: false }
   },
   setup (props) {
+    const linkClass = computed(() => {
+      return props.variant !== '' || props.cta ? 'link' : ''
+    })
+
     const variantClass = computed(() => {
       switch (props.variant) {
         case 'primary':
@@ -52,7 +55,7 @@ export default defineComponent({
       return props.disabled ? 'disabled' : ''
     })
 
-    return { variantClass, ctaClass, disabledClass }
+    return { linkClass, variantClass, ctaClass, disabledClass }
   }
 })
 </script>
