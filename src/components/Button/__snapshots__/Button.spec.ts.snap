@@ -2,7 +2,7 @@
 
 exports[`Button should match its default snapshot 1`] = `
 <button
-  class="btn"
+  class=""
 >
   
   Default slot
