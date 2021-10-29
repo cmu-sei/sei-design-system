@@ -1,7 +1,6 @@
 <template>
   <button
-    class="btn"
-    :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass]"
+    :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, blockClass]"
     :disabled="disabled"
     @click="onClick"
   >
@@ -23,6 +22,9 @@ export default defineComponent({
   },
   emits: ['click'],
   computed: {
+    btnClass() {
+      return this.variant !== '' || this.size !== '' || this.outline || this.block ? 'btn' : ''
+    },
     variantClass() {
       switch (this.variant) {
         case 'default':
