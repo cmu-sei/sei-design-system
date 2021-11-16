@@ -24,6 +24,9 @@
 export default {
   name: 'SdsLayoutSeiExternalHeaderContent',
   props: {
+    /**
+     * An object containing various properties that display in the content
+     */
     page: {
       type: Object,
       default: () => ({}),

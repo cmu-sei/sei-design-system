@@ -107,55 +107,86 @@ import uniq from "lodash/uniq";
 export default {
   name: "SdsAutosuggest",
   props: {
-    // The v-model passed from the parent that is used to init the local state this.q
+    /**
+     * The v-model passed from the parent that is used to init the local state this.q
+     */
     modelValue: {
       type: String,
       default: "",
     },
-    // The placeholder for the input
+    /**
+     * The placeholder for the input
+     */
     placeholder: {
       type: String,
       default: "",
     },
+    /**
+     * Determine whether to disable the component
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Sets the maxlength of the input field
+     */
     maxlength: {
       type: Number,
       default: 524288,
     },
+    /**
+     * Determine whether to disable the search capability of the component
+     */
     disableSearch: {
       type: Boolean,
       default: false,
     },
+    /**
+     * A function that is triggered when autosuggestion should take place
+     */
     autosuggest: {
       type: Function,
       default: () => {},
     },
+    /**
+     * The look and feel of the search box
+     */
     variant: {
       type: String,
       default: "default",
     },
+    /**
+     * A string used to manipulate the CSS classes assigned to the search button
+     */
     btnClass: {
       type: String,
       default: "px-3",
     },
-    // The items used by autosuggest
+    /**
+     * The items used by autosuggest
+     */
     items: {
       type: Array,
       default: () => [],
     },
-    // The character threshold before autosuggest kicks in
+    /**
+     * The character threshold before autosuggest kicks in
+     */
     threshold: {
       type: Number,
       default: 1,
     },
-    // Determine whether to autofocus the input
+    /**
+     * Determine whether to autofocus the input
+     */
     autofocus: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determine whether to use the built-in search term highlighter
+     */
     useBuiltInHighlighting: {
       type: Boolean,
       default: false,

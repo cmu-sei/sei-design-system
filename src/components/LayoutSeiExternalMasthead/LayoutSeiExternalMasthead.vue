@@ -36,6 +36,9 @@ export default {
     LayoutSeiExternalHeaderContent,
   },
   props: {
+    /**
+     * An object containing various properties that display in the masthead
+     */
     page: {
       type: Object,
       default: () => ({}),

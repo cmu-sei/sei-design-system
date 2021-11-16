@@ -39,19 +39,24 @@ export default {
     SdsToast,
   },
   props: {
-    // v-model is an array of toasts. Each toast should look like this:
-    // {
-    //   id: <Unique_ID>,
-    //   title: 'Title',
-    //   text: 'Text of toast',
-    //   variant: 'success', # or 'info', 'warning', 'danger'
-    //   autoHideDelay: 5000, # or whatever close time you want
-    //   noAutoHide: true # if you want to disable auto hiding
-    // }
+    /**
+     * v-model is an array of toasts. Each toast should look like this:
+     * {
+     *   id: <Unique_ID>,
+     *   title: 'Title',
+     *   text: 'Text of toast',
+     *   variant: 'success', # or 'info', 'warning', 'danger'
+     *   autoHideDelay: 5000, # or whatever close time you want
+     *   noAutoHide: true # if you want to disable auto hiding
+     * }
+     */
     modelValue: {
       type: Array,
       default: () => [],
     },
+    /**
+     * The delay used by children to invoke an event that will trigger toast removal
+     */
     autoHideDelay: {
       type: Number,
       default: 5000,

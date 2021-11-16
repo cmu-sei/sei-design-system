@@ -14,10 +14,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SdsTab',
   props: {
+    /**
+     * The tag used for the component
+     */
     tag: { type: String, default: 'button' },
+    /**
+     * The color styling
+     */
     variant: { type: String, default: '' },
+    /**
+     * The overall look and feel of the component
+     */
     type: { type: String, default: '' },
+    /**
+     * Determines the active state of the component
+     */
     active: { type: Boolean, default: false },
+    /**
+     * Determines the disabled state of the component
+     */
     disabled: { type: Boolean, default: false }
   },
   computed: {

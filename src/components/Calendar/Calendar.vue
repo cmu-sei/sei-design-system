@@ -374,13 +374,37 @@ import {
 export default defineComponent({
   name: "SdsCalendar",
   props: {
-    variant: { type: String, default: "primary" },
+    /**
+     * Determines the coloring
+     */
+    variant: { type: String, default: 'primary' },
+    /**
+     * The start date for a range. The only date for a non-range. Should use .sync modifier
+     */
     date: { type: Date, default: null },
+    /**
+     * The end date for a range. Should use .sync modifier
+     */
     endDate: { type: Date, default: null },
+    /**
+     * The minimum allowed selectable date for the calendar. Should use .sync modifier
+     */
     min: { type: Date, default: null },
+    /**
+     * The maximum allowed selectable date for the calendar. Should use .sync modifier
+     */
     max: { type: Date, default: null },
+    /**
+     * The minimum allowed year allowed for the calendar.
+     */
     minYear: { type: Number, default: 1900 },
+    /**
+     * The maximum allowed year allowed for the calendar.
+     */
     maxYear: { type: Number, default: 2100 },
+    /**
+     * Toggles range and non-range capabilities
+     */
     multiple: { type: Boolean, default: false },
   },
   emits: ['update:date', 'update:endDate', 'update:min', 'update:max'],

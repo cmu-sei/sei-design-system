@@ -33,10 +33,25 @@ let id = 0;
 export default {
   name: "SdsRadioGroup",
   props: {
-    modelValue: undefined,
-    name: undefined,
+    /**
+     * The v-model of the radio group
+     */
+    modelValue: { type: [Boolean, String, Number, null], default: null },
+    /**
+     * The name of the radio form field
+     */
+    name: { type: String, default: null },
+    /**
+     * An array of options for the radio group
+     */
     options: { type: Array, default: () => [] },
+    /**
+     * Determines whether the radio group is required or not
+     */
     required: { type: Boolean, default: false },
+    /**
+     * Determines whehter the options are stacked vertically or horizontally
+     */
     stacked: { type: Boolean, default: false },
   },
   emits: ['update:modelValue', 'change'],

@@ -30,16 +30,49 @@ export default {
     CharacterCounter,
   },
   props: {
+    /**
+     * The v-model of the component (the text input)
+     */
     modelValue: { type: String, default: "" },
+    /**
+     * Determines whether to display the character counter or not
+     */
     countCharacters: { type: Boolean, default: false },
+    /**
+     * Determines the maxlength of the component
+     */
     maxlength: { type: Number, default: 524288 },
+    /**
+     * Determines the placeholder of the component
+     */
     placeholder: { type: String, default: "" },
+    /**
+     * Determines the type of the input field
+     */
     type: { type: String, default: "text" },
+    /**
+     * Determines whether to autofocus the input or not
+     */
     autofocus: { type: Boolean, default: false },
+    /**
+     * Determines whether to disable to input or not
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * Determines whether the input is required or not
+     */
     required: { type: Boolean, default: false },
+    /**
+     * Determines whether the input is readonly or not
+     */
     readonly: { type: Boolean, default: false },
+    /**
+     * Sets a valid styling if true
+     */
     valid: { type: Boolean, default: false },
+    /**
+     * Sets an invalid styling if true
+     */
     invalid: { type: Boolean, default: false },
   },
   emits: ['update:modelValue'],
