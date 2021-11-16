@@ -14,10 +14,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SdsButton',
   props: {
+    /**
+     * Determines the coloring
+     */
     variant: { type: String, default: '' },
+    /**
+     * Determines the size
+     */
     size: { type: String, default: '' },
+    /**
+     * Determines whether to use the outline styling or not
+     */
     outline: { type: Boolean, default: false },
+    /**
+     * Disables the button and prevents user interaction
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * Determines whether to use the block styling or not
+     */
     block: { type: Boolean, default: false }
   },
   emits: ['click'],

@@ -110,19 +110,24 @@
 export default {
   name: 'SdsToast',
   props: {
-    // Each toast should look like this:
-    // {
-    //   id: <Unique_ID>,
-    //   title: 'Title',
-    //   text: 'Text of toast',
-    //   variant: 'success', # or 'info', 'warning', 'danger'
-    //   autoHideDelay: 5000, # or whatever close time you want
-    //   noAutoHide: true # if you want to disable auto hiding
-    // }
+    /**
+     * Each toast should look like this:
+     * {
+     *   id: <Unique_ID>,
+     *   title: 'Title',
+     *   text: 'Text of toast',
+     *   variant: 'success', # or 'info', 'warning', 'danger'
+     *   autoHideDelay: 5000, # or whatever close time you want
+     *   noAutoHide: true # if you want to disable auto hiding
+     * }
+     */
     toast: {
       type: Object,
       default: () => ({}),
     },
+    /**
+     * Determines the wait time before automatically emitting "remove" for this component
+     */
     autoHideDelay: {
       type: Number,
       default: 5000,

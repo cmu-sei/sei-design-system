@@ -42,14 +42,24 @@ export default {
     LayoutSeiExternalMasthead,
   },
   props: {
+    /**
+     * An object containing various properties that display in the header and masthead
+     */
     page: {
       type: Object,
       default: () => ({}),
     },
+    /**
+     * Removes the content padding from the default slot section.
+     * Useful when you want to custom style the main content section.
+     */
     removeContentPadding: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to show the masthead section or not
+     */
     showMasthead: {
       type: Boolean,
       default: false,

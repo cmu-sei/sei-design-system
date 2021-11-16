@@ -126,10 +126,16 @@ export default defineComponent({
     } as Directive,
   },
   props: {
+    /**
+     * The v-model that determines the show/hide state of the modal
+     */
     modelValue: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The size of the modal
+     */
     size: {
       type: String,
       default: "md",

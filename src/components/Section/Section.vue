@@ -56,22 +56,37 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: 'SdsSection',
   props: {
+    /**
+     * The overall look and feel of the section
+     */
     type: {
       type: String,
       default: "",
     },
+    /**
+     * Determines if the header is hidden or shown
+     */
     hideHeader: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if the content is hidden or shown
+     */
     hideContent: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The class list for the nav slot
+     */
     navClass: {
       type: String,
       default: "",
     },
+    /**
+     * The class list of the default slot
+     */
     contentClass: {
       type: String,
       default: "p-4",

@@ -42,6 +42,9 @@ export default {
     LayoutSeiExternalWordmark,
   },
   props: {
+    /**
+     * An object containing various properties that display in the header
+     */
     page: {
       type: Object,
       default: () => ({}),

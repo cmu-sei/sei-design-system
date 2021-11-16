@@ -12,9 +12,21 @@ import { defineComponent, computed } from 'vue'
 export default defineComponent({
   name: 'SdsLink',
   props: {
+    /**
+     * Determines the coloring
+     */
     variant: { type: String, default: '' },
+    /**
+     * Applies the appropriate attributes for external links
+     */
     external: { type: Boolean, default: false },
+    /**
+     * Gives the link a "Call to Action" styling
+     */
     cta: { type: Boolean, default: false },
+    /**
+     * Disables clicking and reduces the links opacity
+     */
     disabled: { type: Boolean, default: false }
   },
   setup (props) {

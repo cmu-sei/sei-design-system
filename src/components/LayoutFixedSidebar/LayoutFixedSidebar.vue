@@ -87,10 +87,16 @@ import debounce from "../../helpers/debounce";
 export default {
   name: 'SdsLayoutFixedSidebar',
   props: {
+    /**
+     * The v-model that determines open/closed state
+     */
     modelValue: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The width of the sidebar, both min (collapsed) and max (expanded)
+     */
     width: {
       type: Object,
       default: () => ({
@@ -98,10 +104,17 @@ export default {
         max: 250,
       }),
     },
+    /**
+     * Determines the top offset of the sidebar.
+     * Helpful when you have a header above the the sidebar.
+     */
     topOffset: {
       type: Number,
       default: 0,
     },
+    /**
+     * A class list for the sidebar
+     */
     sidebarClass: {
       type: String,
       default: "",

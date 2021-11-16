@@ -24,18 +24,30 @@ const emitter = mitt();
 export default defineComponent({
   name: "SdsScrollspy",
   props: {
+    /**
+     * The HTML selector that this scrollspy spies on
+     */
     href: {
       type: String,
       default: null,
     },
+    /**
+     * The HTML selector of the container for the element being spyed
+     */
     parent: {
       type: String,
       default: null,
     },
+    /**
+     * The offset top for more precise control
+     */
     offset: {
       type: Number,
       default: 0,
     },
+    /**
+     * The throttle used to help with scroll performance
+     */
     throttle: {
       type: Number,
       default: 250,

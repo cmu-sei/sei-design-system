@@ -103,38 +103,65 @@ export default {
     Dropdown,
   },
   props: {
+    /**
+     * The v-model for this comonent. Determines opened/closed state
+     */
     modelValue: {
       type: Array,
       default: () => [],
     },
+    /**
+     * The text for the toggle button
+     */
     btnText: {
       type: String,
       default: "Filter",
     },
+    /**
+     * Determines whether to show or hide the caret
+     */
     hideCaret: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the class list to use on the toggle button
+     */
     btnClass: {
       type: String,
       default: "link link-secondary",
     },
+    /**
+     * Determines the class list to use on the menu
+     */
     menuClass: {
       type: String,
       default: "p-2 my-1 bg-gray-100 border rounded-md shadow-lg w-72 dark:border-gray-500 dark:bg-gray-700",
     },
+    /**
+     * Determines whether to right-align the menu
+     */
     right: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to position the menu above the toggle button
+     */
     dropUp: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determine whether to enable option filtering on the dropdown
+     */
     enableFilter: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to alphabetically sort the options
+     */
     enableSortOptions: {
       type: Boolean,
       default: false,
