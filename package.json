@@ -45,6 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
+    "@popperjs/core": "^2.10.2",
     "@rollup/plugin-eslint": "^8.0.1",
     "@sds/tailwindcss-2": "^0.2.0",
     "@storybook/addon-actions": "^6.3.12",
