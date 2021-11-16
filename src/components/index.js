@@ -20,9 +20,11 @@ import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav";
 import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark";
 import SdsLayoutStacked from "./LayoutStacked";
 import SdsLink from "./Link";
+import SdsLoadingBox from "./LoadingBox";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
+import SdsPopperWrapper from "./PopperWrapper";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
@@ -34,6 +36,8 @@ import SdsTab from "./Tab";
 import SdsTextarea from "./Textarea";
 import SdsToast from "./Toast";
 import SdsToaster from "./Toaster";
+import SdsToggleSwitch from "./ToggleSwitch";
+import SdsTooltip from "./Tooltip";
 import SdsTopFiveChart from "./TopFiveChart";
 
 const Components = {
@@ -59,9 +63,11 @@ const Components = {
   SdsLayoutSeiExternalWordmark,
   SdsLayoutStacked,
   SdsLink,
+  SdsLoadingBox,
   SdsModal,
   SdsMultiselect,
   SdsPaginator,
+  SdsPopperWrapper,
   SdsRadioGroup,
   SdsScrollArea,
   SdsScrollspy,
@@ -73,6 +79,8 @@ const Components = {
   SdsTextarea,
   SdsToast,
   SdsToaster,
+  SdsToggleSwitch,
+  SdsTooltip,
   SdsTopFiveChart,
 };
 
@@ -106,9 +114,11 @@ export { default as SdsLayoutSeiExternalNav } from "./LayoutSeiExternalNav";
 export { default as SdsLayoutSeiExternalWordmark } from "./LayoutSeiExternalWordmark";
 export { default as SdsLayoutStacked } from "./LayoutStacked";
 export { default as SdsLink } from "./Link";
+export { default as SdsLoadingBox } from "./LoadingBox";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";
+export { default as SdsPopperWrapper } from "./PopperWrapper";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
@@ -120,4 +130,6 @@ export { default as SdsTab } from "./Tab";
 export { default as SdsTextarea } from "./Textarea";
 export { default as SdsToast } from "./Toast";
 export { default as SdsToaster } from "./Toaster";
+export { default as SdsToggleSwitch } from "./ToggleSwitch";
+export { default as SdsTooltip } from "./Tooltip";
 export { default as SdsTopFiveChart } from "./TopFiveChart";
