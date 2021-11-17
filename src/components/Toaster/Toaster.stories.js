@@ -19,27 +19,57 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-toaster v-bind="args" />
-  `
+    <div>
+      <button class="btn btn-default" @click="addToast">Add Toast</button>
+      <sds-toaster v-bind="$props" v-model="localValue" />
+    </div>
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
+  methods: {
+    addToast() {
+      const index = Math.floor(Math.random() * Math.floor(4));
+      const toasts = [
+        {
+          id: Math.random(),
+          title: "Success Toast",
+          text: "This is the content of this toast.",
+          variant: "success",
+        },
+        {
+          id: Math.random(),
+          title: "Info Toast",
+          text: "This is the content of this toast.",
+          variant: "info",
+        },
+        {
+          id: Math.random(),
+          title: "Warning Toast",
+          text: "This is the content of this toast.",
+          variant: "warning",
+        },
+        {
+          id: Math.random(),
+          title: "Danger Toast",
+          text: "This is the content of this toast.",
+          variant: "danger",
+          noAutoHide: true,
+        },
+      ];
+      if (!this.localValue) {
+        this.localValue = []
+      }
+      this.localValue.unshift(toasts[index]);
+    }
+  }
 });
 
 export const Default = Template.bind({});
 Default.args = {
-  modelValue: [
-    {
-      id: 1,
-      variant: 'success',
-      title: 'Success Title',
-      text: 'Text of the toast',
-      noAutoHide: true
-    },
-    {
-      id: 2,
-      variant: 'danger',
-      title: 'Danger Title',
-      text: 'Text of the toast',
-      noAutoHide: true
-    }
-  ]
 };
-
