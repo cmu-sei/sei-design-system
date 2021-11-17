@@ -19,12 +19,20 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-layout-fixed-sidebar v-bind="args">
+    <sds-layout-fixed-sidebar v-model="localValue" v-bind="args">
       <template #header>Header slot</template>
       <template #sidebar>Sidebar slot</template>
       Default slot
     </sds-layout-fixed-sidebar>
-  `
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});

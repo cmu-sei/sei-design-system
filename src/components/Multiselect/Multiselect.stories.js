@@ -25,9 +25,17 @@ const Template = (args) => ({
   },
   template: `
     <div style="height: 28rem">
-      <sds-multiselect v-bind="args" />
+      <sds-multiselect v-model="localValue" v-bind="args" />
     </div>
-  `
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});

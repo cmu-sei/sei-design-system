@@ -35,7 +35,7 @@ const Template = (args) => ({
   template: `
     <div style="height: 28rem">
       <sds-datepicker
-        v-model="date"
+        v-model="localValue"
         v-model:min="parentMin"
         v-model:max="parentMax"
         v-bind="args"
@@ -47,9 +47,14 @@ const Template = (args) => ({
   `,
   data() {
     return {
-      date: null,
+      localValue: null,
       parentMin: null,
       parentMax: null
+    }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
     }
   },
   methods: {

@@ -28,7 +28,7 @@ const Template = (args) => ({
   template: `
     <div style="height: 28rem">
       <sds-autosuggest
-        v-model="searchText"
+        v-model="localValue"
         v-bind="args"
         :items="itemList"
         :autosuggest="onAutosuggest"
@@ -40,7 +40,6 @@ const Template = (args) => ({
   `,
   data () {
     return {
-      searchText: '',
       itemList: [],
       fakeAjaxItems: [
         { term: "Apple", payload: "test" },
@@ -59,6 +58,14 @@ const Template = (args) => ({
         { term: "Watermelon", payload: "test" },
         { term: "Mango", payload: "test" },
       ]
+    }
+  },
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
     }
   },
   methods: {

@@ -19,8 +19,16 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-radio-group v-bind="args" />
-  `
+    <sds-radio-group v-model="localValue" v-bind="args" />
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});

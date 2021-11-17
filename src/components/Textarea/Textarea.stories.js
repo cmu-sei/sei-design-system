@@ -1,3 +1,4 @@
+import { ref, watch } from 'vue';
 import SdsTextarea from './Textarea.vue';
 
 export default {
@@ -15,11 +16,15 @@ export default {
 
 const Template = (args) => ({
   components: { SdsTextarea },
-  setup() {
-    return { args }
+  setup(props) {
+    const localValue = ref(props.modelValue)
+    watch(() => props.modelValue, (newValue) => {
+      localValue.value = newValue
+    })
+    return { localValue, args }
   },
   template: `
-    <sds-textarea v-bind="args" />
+    <sds-textarea v-model="localValue" v-bind="args" />
   `
 });
 
