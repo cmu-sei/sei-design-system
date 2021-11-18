@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternalHeader from './LayoutSeiExternalHeader.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternalHeader',
+  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternalHeader',
   parameters: {
     docs: {
       description: {
