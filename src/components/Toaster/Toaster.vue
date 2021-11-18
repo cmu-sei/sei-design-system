@@ -13,6 +13,7 @@
       leave-to-class="opacity-0"
       class="space-y-4"
     >
+      <!-- @slot Toaster content. @binding toasts, autoHideDelay, removeToast -->
       <slot
         :toasts="toasts"
         :auto-hide-delay="autoHideDelay"

@@ -24,12 +24,14 @@
             v-if="hasTitleSlot"
             class="slot-title"
           >
+            <!-- @slot Section title content. -->
             <slot name="title" />
           </div>
           <div
             v-if="hasSubtitleSlot"
             class="text-sm text-gray-500"
           >
+            <!-- @slot Section subtitle content. -->
             <slot name="subtitle" />
           </div>
         </div>
@@ -38,6 +40,7 @@
           class="flex items-stretch self-start justify-center ml-auto"
           :class="[navClass]"
         >
+          <!-- @slot Section nav content. -->
           <slot name="nav" />
         </div>
       </div>
@@ -46,6 +49,7 @@
       v-if="!hideContent || hasDefaultSlot"
       :class="[contentClass]"
     >
+      <!-- @slot Section content. -->
       <slot />
     </div>
   </div>

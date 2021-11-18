@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- @slot Popper wrapper content. @binding isOpen, open, close -->
     <slot
       :is-open="isOpen"
       :open="open"

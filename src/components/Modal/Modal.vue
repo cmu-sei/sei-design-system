@@ -63,6 +63,7 @@
               :id="id"
               class="text-xl leading-tight"
             >
+              <!-- @slot Modal title content. -->
               <slot name="title" />
             </div>
             <button
@@ -98,12 +99,14 @@
             </button>
           </header>
           <main class="p-6">
+            <!-- @slot Modal content. -->
             <slot />
           </main>
           <footer
             v-if="hasFooterSlot"
             class="p-6 pt-0"
           >
+            <!-- @slot Modal footer content. -->
             <slot name="footer" />
           </footer>
         </div>

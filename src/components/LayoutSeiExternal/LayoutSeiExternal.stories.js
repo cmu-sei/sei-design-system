@@ -20,7 +20,7 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-sei-external v-bind="args">
-      Default slot
+      Page content
     </sds-layout-sei-external>
   `
 });

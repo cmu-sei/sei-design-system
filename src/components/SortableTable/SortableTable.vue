@@ -43,7 +43,7 @@
         v-for="entry in filteredEntries"
         :key="entry.id"
       >
-        <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+        <!-- @slot Sortable table content. @binding entry, activeSortKey -->
         <slot
           :entry="entry"
           :active-sort-key="localSortKey"

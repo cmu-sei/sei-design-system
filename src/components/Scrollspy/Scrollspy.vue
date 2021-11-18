@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- @slot Scrollspy content. @binding href, active, scrollIntoView -->
     <slot
       :href="href"
       :active="active"

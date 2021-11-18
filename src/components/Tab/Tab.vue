@@ -4,6 +4,7 @@
     :class="[variantClass, typeClass, activeClass, disabledClass]"
     class="tab"
   >
+    <!-- @slot Tab content. -->
     <slot />
   </component>
 </template>

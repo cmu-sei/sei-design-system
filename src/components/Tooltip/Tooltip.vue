@@ -13,6 +13,7 @@
         data-trigger
         :class="[triggerClass ? triggerClass : 'cursor-pointer tooltip']"
       >
+        <!-- @slot Trigger content. -->
         <slot name="trigger" />
       </span>
       <div
@@ -21,6 +22,7 @@
         data-popper
         :class="[sizeClass, tooltipClass ? tooltipClass : 'popper']"
       >
+        <!-- @slot Tooltip content. -->
         <slot />
         <div
           id="arrow"

@@ -20,9 +20,9 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-stacked v-bind="args">
-      <template #header>Header slot</template>
-      Default slot
-      <template #footer>Footer slot</template>
+      <template #header>Header content</template>
+      Page content
+      <template #footer>Footer content</template>
     </sds-layout-stacked>
   `
 });

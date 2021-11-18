@@ -11,6 +11,7 @@
     role="menuitem"
     @click="closeOnClick ? emitter.emit('dropdown-close') : null"
   >
+    <!-- @slot Dropdown item content. -->
     <slot />
   </component>
 </template>

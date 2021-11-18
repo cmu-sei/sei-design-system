@@ -1,5 +1,6 @@
 <template>
   <div class="scroll-area">
+    <!-- @slot Scroll area content. -->
     <slot />
   </div>
 </template>

@@ -12,6 +12,7 @@
       :class="[btnClass]"
       @click="handleClick"
     >
+      <!-- @slot Title content of trigger button. -->
       <slot name="title">
         {{ title }}
       </slot>

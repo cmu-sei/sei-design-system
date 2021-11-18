@@ -20,7 +20,7 @@ const Template = (args) => ({
   },
   template: `
     <sds-scroll-area v-bind="args" class="h-64 w-32">
-      <div class="h-96">Default slot</div>
+      <div class="h-96">Sample text</div>
     </sds-scroll-area>
   `
 });

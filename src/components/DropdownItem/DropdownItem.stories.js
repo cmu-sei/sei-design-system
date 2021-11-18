@@ -25,7 +25,7 @@ const Template = (args) => ({
   },
   template: `
     <sds-dropdown-item v-bind="args">
-      Content of default slot
+      Dropdown item
     </sds-dropdown-item>
   `
 });

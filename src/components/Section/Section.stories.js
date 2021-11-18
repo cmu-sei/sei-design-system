@@ -25,10 +25,10 @@ const Template = (args) => ({
   },
   template: `
     <sds-section v-bind="args">
-      <template #title>Title slot</template>
-      <template #subtitle>Subtitle slot</template>
-      <template #nav>Nav slot</template>
-      Default slot
+      <template #title>Section title</template>
+      <template #subtitle>Section subtitle</template>
+      <template #nav>Section nav</template>
+      Lorem ipsum dolor sit amet....
     </sds-section>
   `
 });

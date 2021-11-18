@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col h-full sds-layout-fixed-sidebar">
+    <!-- @slot Header content. -->
     <slot name="header" />
     <div class="flex flex-grow flex-shrink-0">
       <aside
@@ -26,6 +27,7 @@
         >
           <div class="flex">
             <div class="flex-col flex-auto pb-16">
+              <!-- @slot Sidebar content. -->
               <slot name="sidebar" />
             </div>
           </div>
@@ -75,6 +77,7 @@
         </div>
       </aside>
       <section class="flex flex-col items-stretch flex-grow">
+        <!-- @slot Page content. -->
         <slot />
       </section>
     </div>
