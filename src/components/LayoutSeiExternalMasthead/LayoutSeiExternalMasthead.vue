@@ -37,7 +37,7 @@ export default {
   },
   props: {
     /**
-     * An object containing various properties that display in the masthead
+     * An object containing various properties that display in the masthead.
      */
     page: {
       type: Object,

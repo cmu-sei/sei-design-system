@@ -28,23 +28,23 @@ export default defineComponent({
   name: 'SdsSelect',
   props: {
     /**
-     * The v-model of the component
+     * The v-model of the component.
      */
     modelValue: { type: [Boolean, String, Number, null], default: null },
     /**
-     * The options for the component. Expects { id, value, text }
+     * The options for the component. Expects { id, value, text }.
      */
     options: { type: Array, default: () => [] },
     /**
-     * Determines if the component can have multiple selections
+     * Determines if the component can have multiple selections.
      */
     multiple: { type: Boolean, default: false },
     /**
-     * Determines if the component is disabled
+     * Disables the component to prevent user interaction.
      */
     disabled: { type: Boolean, default: false },
     /**
-     * Determines if the component is readonly
+     * Determines if the component is readonly.
      */
     readonly: { type: Boolean, default: false },
   },

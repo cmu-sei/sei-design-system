@@ -13,19 +13,19 @@ export default defineComponent({
   name: 'SdsLink',
   props: {
     /**
-     * Determines the coloring
+     * Determines the theme color of the component.
      */
     variant: { type: String, default: '' },
     /**
-     * Applies the appropriate attributes for external links
+     * Applies the appropriate attributes for external links.
      */
     external: { type: Boolean, default: false },
     /**
-     * Gives the link a "Call to Action" styling
+     * Gives the link a "Call to Action" styling.
      */
     cta: { type: Boolean, default: false },
     /**
-     * Disables clicking and reduces the links opacity
+     * Disables the component to prevent user interaction.
      */
     disabled: { type: Boolean, default: false }
   },

@@ -43,7 +43,7 @@ export default {
   },
   props: {
     /**
-     * An object containing various properties that display in the header and masthead
+     * An object containing various properties that display in the header and masthead.
      */
     page: {
       type: Object,
@@ -58,7 +58,7 @@ export default {
       default: false,
     },
     /**
-     * Determines whether to show the masthead section or not
+     * Determines whether to show the masthead section or not.
      */
     showMasthead: {
       type: Boolean,

@@ -119,7 +119,7 @@ export default {
     },
     /**
      * Options include:
-     * red, green, orange, blue, teal, purple, indigo, pink, and gray
+     * red, green, orange, blue, teal, purple, indigo, pink, and gray.
      */
     progressColor: {
       type: String,

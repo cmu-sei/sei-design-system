@@ -126,7 +126,7 @@ export default {
       default: () => ({}),
     },
     /**
-     * Determines the wait time before automatically emitting "remove" for this component
+     * Determines the wait time before automatically emitting "remove" for this component.
      */
     autoHideDelay: {
       type: Number,

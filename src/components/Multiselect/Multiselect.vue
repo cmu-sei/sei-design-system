@@ -215,112 +215,112 @@ export default {
   name: 'SdsMultiselect',
   props: {
     /**
-     * An array of the selected options
+     * An array of the selected options.
      */
     selected: {
       type: Array,
       default: () => [],
     },
     /**
-     * An array of options that can be selected
+     * An array of options that can be selected.
      */
     options: {
       type: Array,
       default: () => [],
     },
     /**
-     * The key used for an option's value
+     * The key used for an option's value.
      */
     valueKey: {
       type: String,
       default: "key",
     },
     /**
-     * The key used for an option's label
+     * The key used for an option's label.
      */
     labelKey: {
       type: String,
       default: "value",
     },
     /**
-     * The v-model that determines the text value of the input field
+     * The v-model that determines the text value of the input field.
      */
     modelValue: {
       type: String,
       default: "",
     },
     /**
-     * Determines whether to enable autofocus or not
+     * Determines whether to enable autofocus or not.
      */
     autofocus: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether more than one option can be selected
+     * Determines whether more than one option can be selected.
      */
     multiple: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the disabled state of the componet
+     * Disables the component to prevent user interaction.
      */
     disabled: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the required state of the componet
+     * Determines the required state of the component.
      */
     required: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the loading state of the componet
+     * Determines the loading state of the component.
      */
     loading: {
       type: Boolean,
       default: false,
     },
     /**
-     * The message displayed while loading is true
+     * The message displayed while loading is true.
      */
     loadingMsg: {
       type: String,
       default: "Loading...",
     },
     /**
-     * The message that displays when the menu is initially opened
+     * The message that displays when the menu is initially opened.
      */
     defaultMsg: {
       type: String,
       default: "",
     },
     /**
-     * The message that displays when there are no results returned from a lookup
+     * The message that displays when there are no results returned from a lookup.
      */
     noResultsMsg: {
       type: String,
       default: "",
     },
     /**
-     * The message that displays when you cannot select more items
+     * The message that displays when you cannot select more items.
      */
     cannotAddResultsMsg: {
       type: String,
       default: "You have added the maximum amount of items allowed.",
     },
     /**
-     * The message that displays when the user enters invalid text
+     * The message that displays when the user enters invalid text.
      */
     invalidInputMsg: {
       type: String,
       default: "HTML input is not allowed.",
     },
     /**
-     * Determines whether to show or hide your selections as tags inside the input field
+     * Determines whether to show or hide your selections as tags inside the input field.
      */
     hideTags: {
       type: Boolean,
@@ -328,28 +328,28 @@ export default {
     },
     /**
      * Determines whether you can loop through the menu's options with the arrow keys
-     * (e.g., pressing down on that last result sends you to the first result)
+     * (e.g., pressing down on that last result sends you to the first result).
      */
     canLoopOptions: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines if options can be toggled when selected from the options list
+     * Determines if options can be toggled when selected from the options list.
      */
     toggleSelectedOptions: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines if selected options should appear in the options list
+     * Determines if selected options should appear in the options list.
      */
     hideSelectedOptions: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether to close the menu on selection
+     * Determines whether to close the menu on selection.
      */
     closeOnSelection: {
       type: Boolean,

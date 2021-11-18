@@ -60,7 +60,7 @@ export default {
     /**
      * An array of objects. Each object must have a unique "id" param but everything else is optional.
      *
-     * Example object: { id: 1, title: "Title", lastModified: "01/01/2019" }
+     * Example object: { id: 1, title: "Title", lastModified: "01/01/2019" }.
      */
     entries: {
       type: Array,
@@ -78,11 +78,11 @@ export default {
      * Each object must contain an "id" that identifies the entries array's object key used for sorting, a "title" that is used in the table
      * column header, and a "type" that is used to determine how the sort functionality should treat the data (string, date, object, other).
      *
-     * If using type "date", ensure the date can be parsed by JavaScript's Date Instance: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+     * If using type "date", ensure the date can be parsed by JavaScript's Date Instance: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date.
      *
-     * Example sortKeys object: { id: "title", title: "Column Title", type: "string" }
+     * Example sortKeys object: { id: "title", title: "Column Title", type: "string" }.
      *
-     * Another example sortKeys object: { id: "lastModified", title: "Last Modified Date", type: "date" }
+     * Another example sortKeys object: { id: "lastModified", title: "Last Modified Date", type: "date" }.
      */
     sortKeys: {
       type: Array,

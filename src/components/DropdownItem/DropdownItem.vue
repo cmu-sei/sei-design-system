@@ -29,21 +29,21 @@ export default defineComponent({
       default: "a",
     },
     /**
-     * Determines whether to close the parent dropdown when this component is clicked
+     * Determines whether to close the parent dropdown when this component is clicked.
      */
     closeOnClick: {
       type: Boolean,
       default: true,
     },
     /**
-     * Determines if this component is currently active
+     * Determines if this component is currently active.
      */
     active: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether to disable this component or not
+     * Disables the component to prevent user interaction.
      */
     disabled: {
       type: Boolean,

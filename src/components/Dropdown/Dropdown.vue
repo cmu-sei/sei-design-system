@@ -69,42 +69,42 @@ export default defineComponent({
   name: "SdsDropdown",
   props: {
     /**
-     * The v-model for the component (determines if the menu is displayed or hidden)
+     * The v-model for the component (determines if the menu is displayed or hidden).
      */
     modelValue: {
       type: Boolean,
       default: false,
     },
     /**
-     * The content of the dropdown trigger
+     * The content of the dropdown trigger.
      */
     title: {
       type: String,
       default: "",
     },
     /**
-     * Determines whether to right-align the dropdown menu
+     * Determines whether to right-align the dropdown menu.
      */
     right: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether to position the dropdown menu above the trigger
+     * Determines whether to position the dropdown menu above the trigger.
      */
     dropUp: {
       type: Boolean,
       default: false,
     },
     /**
-     * Styling for the button trigger
+     * Styling for the button trigger.
      */
     btnClass: {
       type: String,
       default: "",
     },
     /**
-     * Styling for the dropdown menu
+     * Styling for the dropdown menu.
      */
     menuClass: {
       type: String,
@@ -112,28 +112,28 @@ export default defineComponent({
         "py-2 border shadow-lg my-1 w-56 rounded-md bg-white dark:border-gray-500 dark:bg-gray-700",
     },
     /**
-     * Determines whether to hide or show the caret
+     * Determines whether to hide or show the caret.
      */
     hideCaret: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether to activate the dropdown on hover instead of click
+     * Determines whether to activate the dropdown on hover instead of click.
      */
     hover: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the time to delay the hover trigger in milliseconds
+     * Determines the time to delay the hover trigger in milliseconds.
      */
     hoverDelay: {
       type: Number,
       default: 100,
     },
     /**
-     * Determines whether the dropdown menu is animated when shown/hidden
+     * Determines whether the dropdown menu is animated when shown/hidden.
      */
     animated: {
       type: Boolean,

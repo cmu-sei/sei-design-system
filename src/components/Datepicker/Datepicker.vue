@@ -63,51 +63,51 @@ export default defineComponent({
   },
   props: {
     /**
-     * The color styling for the compoent
+     * Determines the theme color of the component.
      */
     variant: { type: String, default: 'primary' },
     /**
-     * Determines the sizing of the component
+     * Determines the sizing of the component.
      */
     size: { type: String, default: 'md' },
     /**
-     * The string format that should display in the input field
+     * The string format that should display in the input field.
      */
     format: { type: String, default: 'MM/dd/yyyy' },
     /**
-     * The pattern used for the input field's validation
+     * The pattern used for the input field's validation.
      */
     pattern: { type: String, default: '^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$' },
     /**
-     * The regex that sets the v-model based on its qualifications
+     * The regex that sets the v-model based on its qualifications.
      */
     dateRegex: { type: RegExp, default: () => /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/ },
     /**
-     * The placeholder for the component
+     * The placeholder for the component.
      */
     placeholder: { type: String, default: 'mm/dd/yyyy' },
     /**
-     * The v-model for the component
+     * The v-model for the component.
      */
     modelValue: { type: Date || null, default: null },
     /**
-     * The max date allowed for the datepicker
+     * The max date allowed for the datepicker.
      */
     max: { type: Date || null, default: null },
     /**
-     * The min date allowed for the datepicker
+     * The min date allowed for the datepicker.
      */
     min: { type: Date || null, default: null },
     /**
-     * Determines if the datepicker is right-aligned or not
+     * Determines if the datepicker is right-aligned or not.
      */
     right: { type: Boolean, default: false },
     /**
-     * Determines if the datepicker positions itself above the input field
+     * Determines if the datepicker positions itself above the input field.
      */
     dropUp: { type: Boolean, default: false },
     /**
-     * Determines if the component is required
+     * Determines if the component is required.
      */
     required: { type: Boolean, default: false },
   },

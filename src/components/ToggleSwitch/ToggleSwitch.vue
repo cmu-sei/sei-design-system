@@ -36,14 +36,14 @@ export default {
       default: false
     },
     /**
-     * The color styling of this component
+     * Determines the theme color of the component.
      */
     variant: {
       type: String,
       default: 'primary'
     },
     /**
-     * Determines the disabled state of this component
+     * Disables the component to prevent user interaction.
      */
     disabled: {
       type: Boolean,
