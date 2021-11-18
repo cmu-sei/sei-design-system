@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternalWordmark from './LayoutSeiExternalWordmark.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternalWordmark',
+  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternalWordmark',
   parameters: {
     docs: {
       description: {

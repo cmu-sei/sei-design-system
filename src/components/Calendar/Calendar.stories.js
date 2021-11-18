@@ -31,31 +31,34 @@ const Template = (args) => ({
   },
   template: `
     <sds-calendar
-      v-model:date="parentDate"
-      v-model:end-date="parentEndDate"
-      v-model:min="parentMin"
-      v-model:max="parentMax"
-      v-model:multiple="parentMultiple"
-      @update:date="onUpdateDate"
-      @update:endDate="onUpdateEndDate"
-      @update:min="onUpdateMin"
-      @update:max="onUpdateMax"
+      v-bind="args"
+      v-model:date="localDate"
+      v-model:end-date="localEndDate"
+      v-model:min="localMinDate"
+      v-model:max="localMaxDate"
     />
   `,
-  data () {
+  data() {
     return {
-      parentDate: null,
-      parentEndDate: null,
-      parentMax: null,
-      parentMin: null,
-      parentMultiple: true,
+      localDate: null,
+      localEndDate: null,
+      localMinDate: null,
+      localMaxDate: null
     }
   },
-  methods: {
-    onUpdateDate: action('update:date'),
-    onUpdateEndDate: action('update:endDate'),
-    onUpdateMin: action('update:min'),
-    onUpdateMax: action('update:max'),
+  watch: {
+    date(value) {
+      this.localDate = value
+    },
+    endDate(value) {
+      this.localEndDate = value
+    },
+    minDate(value) {
+      this.localMinDate = value
+    },
+    maxDate(value) {
+      this.localMaxDate = value
+    }
   }
 });
 

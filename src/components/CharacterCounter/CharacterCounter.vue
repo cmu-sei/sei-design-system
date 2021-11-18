@@ -9,7 +9,13 @@ import { defineComponent, computed } from "vue";
 export default defineComponent({
   name: "SdsCharacterCounter",
   props: {
+    /**
+     * The current count value.
+     */
     currentValue: { type: Number, default: 0 },
+    /**
+     * The maximum value allowed.
+     */
     maxValue: { type: Number, default: 0 },
   },
   setup(props) {

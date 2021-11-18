@@ -26,9 +26,17 @@ const Template = (args) => ({
   template: `
     <div>
       <p>Use the properties below to display the modal.</p>
-      <sds-modal v-bind="args" />
+      <sds-modal v-model="localValue" v-bind="args" />
     </div>
-  `
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});

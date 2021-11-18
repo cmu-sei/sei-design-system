@@ -107,55 +107,86 @@ import uniq from "lodash/uniq";
 export default {
   name: "SdsAutosuggest",
   props: {
-    // The v-model passed from the parent that is used to init the local state this.q
+    /**
+     * The v-model passed from the parent that is used to init the local state "this.q".
+     */
     modelValue: {
       type: String,
       default: "",
     },
-    // The placeholder for the input
+    /**
+     * The placeholder for the input.
+     */
     placeholder: {
       type: String,
       default: "",
     },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines max number of characters allowed in the input box.
+     */
     maxlength: {
       type: Number,
       default: 524288,
     },
+    /**
+     * Determines whether to disable or enable the search button.
+     */
     disableSearch: {
       type: Boolean,
       default: false,
     },
+    /**
+     * A function that is triggered when autosuggest should occur.
+     */
     autosuggest: {
       type: Function,
       default: () => {},
     },
+    /**
+     * Determines the theme color of the component.
+     */
     variant: {
       type: String,
       default: "default",
     },
+    /**
+     * A CSS class list to override the search button's styling.
+     */
     btnClass: {
       type: String,
       default: "px-3",
     },
-    // The items used by autosuggest
+    /**
+     * The items used by autosuggest.
+     */
     items: {
       type: Array,
       default: () => [],
     },
-    // The character threshold before autosuggest kicks in
+    /**
+     * The character threshold before autosuggest kicks in.
+     */
     threshold: {
       type: Number,
       default: 1,
     },
-    // Determine whether to autofocus the input
+    /**
+     * Determines whether to autofocus the input.
+     */
     autofocus: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if the component should use its built-in search query highlighting feature.
+     */
     useBuiltInHighlighting: {
       type: Boolean,
       default: false,

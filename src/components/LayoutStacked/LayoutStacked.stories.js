@@ -4,6 +4,8 @@ export default {
   title: 'Layouts/LayoutStacked',
   parameters: {
     docs: {
+      inlineStories: false,
+      iframeHeight: 250,
       description: {
         component: 'A stacked layout that automatically stretches to the size of the viewport.',
       },
@@ -19,10 +21,20 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-layout-stacked v-bind="args">
-      <template #header>Header slot</template>
-      Default slot
-      <template #footer>Footer slot</template>
+    <sds-layout-stacked v-bind="$props">
+      <template #header>
+        <div class="border border-dashed">
+          Header area
+        </div>
+      </template>
+      <div class="border border-dashed">
+        Page area
+      </div>
+      <template #footer>
+        <div class="border border-dashed">
+          Footer area
+        </div>
+      </template>
     </sds-layout-stacked>
   `
 });

@@ -36,11 +36,12 @@ const Template = (args) => ({
       href="#"
       v-bind="args"
     >
-      Default slot
+      Example link
     </sds-link>
   `
 });
 
 export const Default = Template.bind({});
-Default.args = {};
-
+Default.args = {
+  variant: 'primary'
+};

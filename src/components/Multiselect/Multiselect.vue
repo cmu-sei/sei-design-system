@@ -28,6 +28,7 @@
           :key="s[valueKey]"
           class="tag-list-item"
         >
+          <!-- @slot Tag template content. @binding tag, remove, disabled -->
           <slot
             name="tagTemplate"
             :tag="s"
@@ -129,6 +130,7 @@
         v-if="showLoading"
         class="dropdown-list-item loading"
       >
+        <!-- @slot Loading template content. @binding loadingMsg -->
         <slot
           name="loadingTemplate"
           :loadingMsg="loadingMsg"
@@ -146,6 +148,7 @@
           @click="add(o)"
           @mouseover="arrowCounter = i"
         >
+          <!-- @slot Option template content. @binding option, add, disabled, isSelectedOption -->
           <slot
             name="optionTemplate"
             :option="o"
@@ -164,6 +167,7 @@
         v-if="showDefault"
         class="dropdown-list-item default"
       >
+        <!-- @slot Default template content. @binding defaultMsg -->
         <slot
           name="defaultTemplate"
           :defaultMsg="defaultMsg"
@@ -175,6 +179,7 @@
         v-if="showNoResults"
         class="dropdown-list-item no-result"
       >
+        <!-- @slot No results template content. @binding noResultsMsg -->
         <slot
           name="noResultsTemplate"
           :noResultsMsg="noResultsMsg"
@@ -186,6 +191,7 @@
         v-if="showCannotAddResults"
         class="dropdown-list-item cannot-add-result"
       >
+        <!-- @slot Cannot add results content. @binding cannotAddResultsMsg -->
         <slot
           name="cannotAddResultsTemplate"
           :cannotAddResultsMsg="cannotAddResultsMsg"
@@ -197,6 +203,7 @@
         v-if="showInvalidInput"
         class="dropdown-list-item invalid-input"
       >
+        <!-- @slot Invalid input content. @binding invalidInputMsg -->
         <slot
           name="invalidInputTemplate"
           :invalidInputMsg="invalidInputMsg"
@@ -214,134 +221,234 @@ import debounce from "../../helpers/debounce";
 export default {
   name: 'SdsMultiselect',
   props: {
+    /**
+     * An array of the selected options.
+     */
     selected: {
       type: Array,
       default: () => [],
     },
+    /**
+     * An array of options that can be selected.
+     */
     options: {
       type: Array,
       default: () => [],
     },
+    /**
+     * The key used for an option's value.
+     */
     valueKey: {
       type: String,
       default: "key",
     },
+    /**
+     * The key used for an option's label.
+     */
     labelKey: {
       type: String,
       default: "value",
     },
+    /**
+     * The v-model that determines the text value of the input field.
+     */
     modelValue: {
       type: String,
       default: "",
     },
+    /**
+     * Determines whether to enable autofocus or not.
+     */
     autofocus: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether more than one option can be selected.
+     */
     multiple: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the required state of the component.
+     */
     required: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the loading state of the component.
+     */
     loading: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The message displayed while loading is true.
+     */
     loadingMsg: {
       type: String,
       default: "Loading...",
     },
+    /**
+     * The message that displays when the menu is initially opened.
+     */
     defaultMsg: {
       type: String,
       default: "",
     },
+    /**
+     * The message that displays when there are no results returned from a lookup.
+     */
     noResultsMsg: {
       type: String,
       default: "",
     },
+    /**
+     * The message that displays when you cannot select more items.
+     */
     cannotAddResultsMsg: {
       type: String,
       default: "You have added the maximum amount of items allowed.",
     },
+    /**
+     * The message that displays when the user enters invalid text.
+     */
     invalidInputMsg: {
       type: String,
       default: "HTML input is not allowed.",
     },
+    /**
+     * Determines whether to show or hide your selections as tags inside the input field.
+     */
     hideTags: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether you can loop through the menu's options with the arrow keys
+     * (e.g., pressing down on that last result sends you to the first result).
+     */
     canLoopOptions: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if options can be toggled when selected from the options list.
+     */
     toggleSelectedOptions: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if selected options should appear in the options list.
+     */
     hideSelectedOptions: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to close the menu on selection.
+     */
     closeOnSelection: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Determines whether the component allows for searching.
+     */
     canSearch: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Determines whether to remove the last selection.
+     */
     disableRemoveLastSelection: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if the input should be cleared after making a selection.
+     */
     clearInputOnSelection: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Determines if the options list should be purged on selection.
+     */
     clearOptionsOnSelection: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Determines the placeholder of the input.
+     */
     placeholder: {
       type: String,
       default: "",
     },
+    /**
+     * Determines the position of the menu.
+     */
     openDirection: {
       type: String,
       default: "auto",
     },
+    /**
+     * Determines the max height of the open menu.
+     */
     maxHeight: {
       type: Number,
       default: 200,
     },
+    /**
+     * Determines whether to show the caret or not.
+     */
     showCaret: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to show the primary clear button or not.
+     */
     showClear: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whehther the multiselect will accept new values from the input.
+     */
     taggable: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the maxlength of the input field.
+     */
     maxlength: {
       type: Number,
       default: -1,
     },
+    /**
+     * Determines the max number of items that can be selected.
+     */
     maxItems: {
       type: Number,
       default: -1,
     },
+    /**
+     * Determines if new tags are forced to be lowercase.
+     */
     enforceLowercaseNewTag: {
       type: Boolean,
       default: false,

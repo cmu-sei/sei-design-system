@@ -5,9 +5,11 @@
       class="z-30 flex-shrink"
       :class="{ 'sticky top-0 shadow': stickyHeader }"
     >
+      <!-- @slot Header content. -->
       <slot name="header" />
     </header>
     <main class="flex-grow">
+      <!-- @slot Page content. -->
       <slot />
     </main>
     <footer
@@ -15,6 +17,7 @@
       class="z-20 flex-shrink"
       :class="{ 'sticky bottom-0 shadow': stickyFooter }"
     >
+      <!-- @slot Footer content. -->
       <slot name="footer" />
     </footer>
   </div>
@@ -25,10 +28,16 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: 'SdsLayoutStacked',
   props: {
+    /**
+     * Determines whether to make the header sticky or not.
+     */
     stickyHeader: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to make the footer sticky or not.
+     */
     stickyFooter: {
       type: Boolean,
       default: false,

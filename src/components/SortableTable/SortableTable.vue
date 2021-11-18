@@ -33,7 +33,7 @@
           />
         </th>
         <th v-if="showActionColumn">
-          <span class="sr-only"> Actions </span>
+          <span>Actions</span>
         </th>
       </tr>
     </thead>
@@ -43,7 +43,7 @@
         v-for="entry in filteredEntries"
         :key="entry.id"
       >
-        <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+        <!-- @slot Sortable table content. @binding entry, activeSortKey -->
         <slot
           :entry="entry"
           :active-sort-key="localSortKey"
@@ -60,7 +60,7 @@ export default {
     /**
      * An array of objects. Each object must have a unique "id" param but everything else is optional.
      *
-     * Example object: { id: 1, title: "Title", lastModified: "01/01/2019" }
+     * Example object: { id: 1, title: "Title", lastModified: "01/01/2019" }.
      */
     entries: {
       type: Array,
@@ -78,18 +78,18 @@ export default {
      * Each object must contain an "id" that identifies the entries array's object key used for sorting, a "title" that is used in the table
      * column header, and a "type" that is used to determine how the sort functionality should treat the data (string, date, object, other).
      *
-     * If using type "date", ensure the date can be parsed by JavaScript's Date Instance: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+     * If using type "date", ensure the date can be parsed by JavaScript's Date Instance: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date.
      *
-     * Example sortKeys object: { id: "title", title: "Column Title", type: "string" }
+     * Example sortKeys object: { id: "title", title: "Column Title", type: "string" }.
      *
-     * Another example sortKeys object: { id: "lastModified", title: "Last Modified Date", type: "date" }
+     * Another example sortKeys object: { id: "lastModified", title: "Last Modified Date", type: "date" }.
      */
     sortKeys: {
       type: Array,
       default: () => [],
     },
     /**
-     * Determines whether to append an unsortable "actions" column to the table. When set to true, add an additional column
+     * Determines whether to append an unsortable "Actions" column to the table. When set to true, an additional column is added
      * to the slot which can be used to add action buttons for each entry row (edit, remove, etc).
      *
      * Is is recommended to use the "action-col" class for the action column.

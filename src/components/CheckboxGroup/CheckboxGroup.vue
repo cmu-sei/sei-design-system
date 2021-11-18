@@ -33,10 +33,26 @@ let id = 0;
 export default {
   name: "SdsCheckboxGroup",
   props: {
+    /**
+     * The v-model for the checkbox group.
+     */
     modelValue: { type: Array, default: () => [] },
+    /**
+     * The name for the input form field.
+     */
     name: { type: String, default: null },
+    /**
+     * An array of options available for the checkbox group.
+     * Each option should have a `value` and a `text` parameter.
+     */
     options: { type: Array, default: () => [] },
+    /**
+     * Determines whether this field is required or not.
+     */
     required: { type: Boolean, default: false },
+    /**
+     * Determines if the options should be stacked vertically or horizontally.
+     */
     stacked: { type: Boolean, default: false },
   },
   emits: ['change', 'update:modelValue'],

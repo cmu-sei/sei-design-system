@@ -36,7 +36,7 @@
     </div>
     <div
       v-if="!enableFilter"
-      class="pb-2 mb-2 space-y-2 border-b dark:border-gray-500"
+      class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
     >
       <input
         :id="`filter_by_dropdown_select_all_${uuid}`"
@@ -48,9 +48,7 @@
       <label
         :for="`filter_by_dropdown_select_all_${uuid}`"
         class="text-gray-900 dark:text-gray-50"
-      >
-        Select all
-      </label>
+      >Select all</label>
     </div>
     <div class="scroll-area max-h-48">
       <ul>
@@ -58,7 +56,7 @@
           v-for="o in filteredTmpOptions"
           :key="o.id"
         >
-          <div>
+          <div class="space-x-1">
             <input
               :id="`filter_by_dropdown_selection_list_${o.id}`"
               v-model="o.selected"
@@ -69,9 +67,7 @@
             <label
               :for="`filter_by_dropdown_selection_list_${o.id}`"
               class="text-gray-900 dark:text-gray-50"
-            >
-              {{ o.text }}
-            </label>
+            >{{ o.text }}</label>
           </div>
         </li>
       </ul>
@@ -103,38 +99,65 @@ export default {
     Dropdown,
   },
   props: {
+    /**
+     * The v-model for this component. Determines opened/closed state.
+     */
     modelValue: {
       type: Array,
       default: () => [],
     },
+    /**
+     * The text for the toggle button.
+     */
     btnText: {
       type: String,
       default: "Filter",
     },
+    /**
+     * Determines whether to show or hide the caret.
+     */
     hideCaret: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the class list to use on the toggle button.
+     */
     btnClass: {
       type: String,
       default: "link link-secondary",
     },
+    /**
+     * Determines the class list to use on the menu.
+     */
     menuClass: {
       type: String,
       default: "p-2 my-1 bg-gray-100 border rounded-md shadow-lg w-72 dark:border-gray-500 dark:bg-gray-700",
     },
+    /**
+     * Determines whether to right-align the menu.
+     */
     right: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to position the menu above the toggle button.
+     */
     dropUp: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determine whether to enable option filtering on the dropdown.
+     */
     enableFilter: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines whether to alphabetically sort the options.
+     */
     enableSortOptions: {
       type: Boolean,
       default: false,
@@ -211,15 +234,15 @@ export default {
             return a.text.toLowerCase() < b.text.toLowerCase()
               ? -1
               : a.text.toLowerCase() > b.text.toLowerCase()
-              ? 1
-              : 0;
+                ? 1
+                : 0;
           })
           .sort((a, b) => {
             return a.selected > b.selected
               ? -1
               : a.selected < b.selected
-              ? 1
-              : 0;
+                ? 1
+                : 0;
           });
       } else {
         this.tmpOptions = options;

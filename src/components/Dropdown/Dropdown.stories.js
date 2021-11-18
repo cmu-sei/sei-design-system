@@ -24,6 +24,7 @@ const Template = (args) => ({
   template: `
     <div style="height: 28rem">
       <sds-dropdown
+        v-model="localValue"
         v-bind="args"
         @input="onInput"
         @btn-click="onBtnClick"
@@ -33,6 +34,14 @@ const Template = (args) => ({
       </sds-dropdown>
     </div>
   `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
   methods: {
     onInput: action('input'),
     onBtnClick: action('btn-click')

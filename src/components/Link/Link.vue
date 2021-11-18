@@ -3,7 +3,7 @@
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[linkClass, variantClass, ctaClass, disabledClass]"
-  ><slot /></a>
+  ><!-- @slot Link content. --><slot /></a>
 </template>
 
 <script lang="ts">
@@ -12,9 +12,21 @@ import { defineComponent, computed } from 'vue'
 export default defineComponent({
   name: 'SdsLink',
   props: {
+    /**
+     * Determines the theme color of the component.
+     */
     variant: { type: String, default: '' },
+    /**
+     * Applies the appropriate attributes for external links.
+     */
     external: { type: Boolean, default: false },
+    /**
+     * Gives the link a "Call to Action" styling.
+     */
     cta: { type: Boolean, default: false },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: { type: Boolean, default: false }
   },
   setup (props) {

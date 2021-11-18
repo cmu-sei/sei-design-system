@@ -13,6 +13,7 @@
       leave-to-class="opacity-0"
       class="space-y-4"
     >
+      <!-- @slot Toaster content. @binding toasts, autoHideDelay, removeToast -->
       <slot
         :toasts="toasts"
         :auto-hide-delay="autoHideDelay"
@@ -39,19 +40,16 @@ export default {
     SdsToast,
   },
   props: {
-    // v-model is an array of toasts. Each toast should look like this:
-    // {
-    //   id: <Unique_ID>,
-    //   title: 'Title',
-    //   text: 'Text of toast',
-    //   variant: 'success', # or 'info', 'warning', 'danger'
-    //   autoHideDelay: 5000, # or whatever close time you want
-    //   noAutoHide: true # if you want to disable auto hiding
-    // }
+    /**
+     * The v-model for this component that accepts an array of toasts. See the Toast component for guidance.
+     */
     modelValue: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Determines the delay time in milliseconds used by children to invoke an event that will trigger toast removal.
+     */
     autoHideDelay: {
       type: Number,
       default: 5000,

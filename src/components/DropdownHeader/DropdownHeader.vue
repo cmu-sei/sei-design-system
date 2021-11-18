@@ -2,6 +2,7 @@
   <div
     class="px-4 py-1 text-sm font-semibold leading-5 text-gray-500 dark:text-gray-300"
   >
+    <!-- @slot Dropdown header content. -->
     <slot />
   </div>
 </template>

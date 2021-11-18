@@ -12,6 +12,7 @@
       :class="[btnClass]"
       @click="handleClick"
     >
+      <!-- @slot Title content of trigger button. -->
       <slot name="title">
         {{ title }}
       </slot>
@@ -68,20 +69,77 @@ import mitt from 'mitt';
 export default defineComponent({
   name: "SdsDropdown",
   props: {
-    modelValue: { type: Boolean, default: false },
-    title: { type: String, default: "" },
-    right: { type: Boolean, default: false },
-    dropUp: { type: Boolean, default: false },
-    btnClass: { type: String, default: "" },
+    /**
+     * The v-model for the component (determines if the menu is displayed or hidden).
+     */
+    modelValue: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * The content of the dropdown trigger.
+     */
+    title: {
+      type: String,
+      default: "",
+    },
+    /**
+     * Determines whether to right-align the dropdown menu.
+     */
+    right: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Determines whether to position the dropdown menu above the trigger.
+     */
+    dropUp: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Styling for the button trigger.
+     */
+    btnClass: {
+      type: String,
+      default: "",
+    },
+    /**
+     * Styling for the dropdown menu.
+     */
     menuClass: {
       type: String,
       default:
         "py-2 border shadow-lg my-1 w-56 rounded-md bg-white dark:border-gray-500 dark:bg-gray-700",
     },
-    hideCaret: { type: Boolean, default: false },
-    hover: { type: Boolean, default: false },
-    hoverDelay: { type: Number, default: 100 },
-    animated: { type: Boolean, default: false },
+    /**
+     * Determines whether to hide or show the caret.
+     */
+    hideCaret: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Determines whether to activate the dropdown on hover instead of click.
+     */
+    hover: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Determines the time to delay the hover trigger in milliseconds.
+     */
+    hoverDelay: {
+      type: Number,
+      default: 100,
+    },
+    /**
+     * Determines whether the dropdown menu is animated when shown/hidden.
+     */
+    animated: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue', 'btn-click'],
   setup(props, { emit }) {

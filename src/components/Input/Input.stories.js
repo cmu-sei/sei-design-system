@@ -24,8 +24,16 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-input v-bind="args" />
-  `
+    <sds-input v-model="localValue" v-bind="args" />
+  `,
+  data() {
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});

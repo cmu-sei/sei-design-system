@@ -45,6 +45,9 @@
 export default {
   name: 'SdsLayoutSeiExternalNav',
   props: {
+    /**
+     * An object containing various properties that determine the navigation.
+     */
     page: {
       type: Object,
       default: () => ({}),

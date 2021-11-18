@@ -4,6 +4,7 @@
     :disabled="disabled"
     @click="onClick"
   >
+    <!-- @slot Button content. -->
     <slot />
   </button>
 </template>
@@ -14,10 +15,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SdsButton',
   props: {
+    /**
+     * Determines the theme color of the component.
+     */
     variant: { type: String, default: '' },
+    /**
+     * Determines the size.
+     */
     size: { type: String, default: '' },
+    /**
+     * Determines whether to use the outline styling or not.
+     */
     outline: { type: Boolean, default: false },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: { type: Boolean, default: false },
+    /**
+     * Determines whether to use the block styling or not.
+     */
     block: { type: Boolean, default: false }
   },
   emits: ['click'],
@@ -67,6 +83,9 @@ export default defineComponent({
   },
   methods: {
     onClick() {
+      /**
+       * Passthrough click event
+       */
       this.$emit('click')
     }
   }

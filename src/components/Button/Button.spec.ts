@@ -5,7 +5,7 @@ describe('Button', () => {
   it('should match its default snapshot', () => {
     const wrapper = shallowMount(Component, {
       slots: {
-        default: 'Default slot'
+        default: 'Button'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
@@ -14,7 +14,7 @@ describe('Button', () => {
   it('should match its variant primary snapshot', () => {
     const wrapper = shallowMount(Component, {
       slots: {
-        default: 'Default slot'
+        default: 'Button'
       },
       props: {
         variant: 'primary'

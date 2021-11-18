@@ -21,7 +21,7 @@ const Template = (args) => ({
   },
   template: `
     <sds-dropdown-header>
-      Content of default slot
+      Dropdown header
     </sds-dropdown-header>
   `
 });

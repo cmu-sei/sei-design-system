@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col h-full sds-layout-fixed-sidebar">
+    <!-- @slot Header content. -->
     <slot name="header" />
     <div class="flex flex-grow flex-shrink-0">
       <aside
@@ -26,6 +27,7 @@
         >
           <div class="flex">
             <div class="flex-col flex-auto pb-16">
+              <!-- @slot Sidebar content. -->
               <slot name="sidebar" />
             </div>
           </div>
@@ -75,6 +77,7 @@
         </div>
       </aside>
       <section class="flex flex-col items-stretch flex-grow">
+        <!-- @slot Page content. -->
         <slot />
       </section>
     </div>
@@ -87,10 +90,16 @@ import debounce from "../../helpers/debounce";
 export default {
   name: 'SdsLayoutFixedSidebar',
   props: {
+    /**
+     * The v-model that determines open/closed state.
+     */
     modelValue: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The width of the sidebar, both min (collapsed) and max (expanded).
+     */
     width: {
       type: Object,
       default: () => ({
@@ -98,10 +107,17 @@ export default {
         max: 250,
       }),
     },
+    /**
+     * Determines the top offset of the sidebar.
+     * Helpful when you have a header above the the sidebar.
+     */
     topOffset: {
       type: Number,
       default: 0,
     },
+    /**
+     * A class list for the sidebar.
+     */
     sidebarClass: {
       type: String,
       default: "",

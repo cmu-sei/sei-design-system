@@ -4,6 +4,7 @@
     :class="[variantClass, typeClass, activeClass, disabledClass]"
     class="tab"
   >
+    <!-- @slot Tab content. -->
     <slot />
   </component>
 </template>
@@ -14,10 +15,25 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SdsTab',
   props: {
-    tag: { type: String, default: 'button' },
+    /**
+     * Determines the theme color of the component.
+     */
     variant: { type: String, default: '' },
+    /**
+     * The tag used for the component.
+     */
+    tag: { type: String, default: 'button' },
+    /**
+     * The overall look and feel of the component.
+     */
     type: { type: String, default: '' },
+    /**
+     * Determines the active state of the component.
+     */
     active: { type: Boolean, default: false },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: { type: Boolean, default: false }
   },
   computed: {

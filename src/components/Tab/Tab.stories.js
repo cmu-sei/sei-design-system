@@ -43,7 +43,7 @@ const Template = (args) => ({
     <sds-tab
       v-bind="args"
     >
-      Default slot
+      Example tab
     </sds-tab>
   `
 });

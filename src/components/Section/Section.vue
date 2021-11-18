@@ -24,12 +24,14 @@
             v-if="hasTitleSlot"
             class="slot-title"
           >
+            <!-- @slot Section title content. -->
             <slot name="title" />
           </div>
           <div
             v-if="hasSubtitleSlot"
             class="text-sm text-gray-500"
           >
+            <!-- @slot Section subtitle content. -->
             <slot name="subtitle" />
           </div>
         </div>
@@ -38,6 +40,7 @@
           class="flex items-stretch self-start justify-center ml-auto"
           :class="[navClass]"
         >
+          <!-- @slot Section nav content. -->
           <slot name="nav" />
         </div>
       </div>
@@ -46,6 +49,7 @@
       v-if="!hideContent || hasDefaultSlot"
       :class="[contentClass]"
     >
+      <!-- @slot Section content. -->
       <slot />
     </div>
   </div>
@@ -56,22 +60,37 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: 'SdsSection',
   props: {
+    /**
+     * Determines the overall look and feel of the section.
+     */
     type: {
       type: String,
       default: "",
     },
+    /**
+     * Determines if the header is hidden or shown.
+     */
     hideHeader: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines if the content is hidden or shown.
+     */
     hideContent: {
       type: Boolean,
       default: false,
     },
+    /**
+     * The class list for the nav slot.
+     */
     navClass: {
       type: String,
       default: "",
     },
+    /**
+     * The class list of the default slot.
+     */
     contentClass: {
       type: String,
       default: "p-4",

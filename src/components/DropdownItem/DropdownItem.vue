@@ -11,6 +11,7 @@
     role="menuitem"
     @click="closeOnClick ? emitter.emit('dropdown-close') : null"
   >
+    <!-- @slot Dropdown item content. -->
     <slot />
   </component>
 </template>
@@ -21,18 +22,30 @@ import { defineComponent, inject } from "vue";
 export default defineComponent({
   name: 'SdsDropdownItem',
   props: {
+    /**
+     * Determines the tag use for the component.
+     */
     tag: {
       type: String,
       default: "a",
     },
+    /**
+     * Determines whether to close the parent dropdown when this component is clicked.
+     */
     closeOnClick: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Determines if this component is currently active.
+     */
     active: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Disables the component to prevent user interaction.
+     */
     disabled: {
       type: Boolean,
       default: false,
