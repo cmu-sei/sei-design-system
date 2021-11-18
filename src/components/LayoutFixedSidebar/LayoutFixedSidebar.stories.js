@@ -4,6 +4,8 @@ export default {
   title: 'Layouts/LayoutFixedSidebar',
   parameters: {
     docs: {
+      inlineStories: false,
+      iframeHeight: 250,
       description: {
         component: 'A layout that presents a fixed-positioned, collapsible sidebar.',
       },
@@ -20,11 +22,17 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-fixed-sidebar v-model="localValue" v-bind="args">
-      <template #header>Header content</template>
-      <template #sidebar>
-        <span class="text-white">Sidebar content</span>
+      <template #header>
+        <div class="border border-dashed">
+          Header area
+        </div>
       </template>
-      Page content
+      <template #sidebar>
+        <span class="text-white">Sidebar area</span>
+      </template>
+      <div class="border border-dashed">
+        Page area
+      </div>
     </sds-layout-fixed-sidebar>
   `,
   data() {
