@@ -14,12 +14,6 @@ export default {
     variant: {
       options: ['primary', 'success', 'info', 'warning', 'danger', 'disabled'],
       control: {type: 'select'}
-    },
-    value: {
-      description: "Sets the toggle on/off."
-    },
-    disabled : {
-      description: "Disables the toggle."
     }
   }
 };
