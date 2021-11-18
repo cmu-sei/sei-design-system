@@ -127,14 +127,14 @@ export default defineComponent({
   },
   props: {
     /**
-     * The v-model that determines the show/hide state of the modal
+     * The v-model that determines the show/hide state of the modal.
      */
     modelValue: {
       type: Boolean,
       default: false,
     },
     /**
-     * The size of the modal
+     * The size of the modal.
      */
     size: {
       type: String,

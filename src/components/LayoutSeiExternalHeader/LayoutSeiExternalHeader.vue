@@ -43,7 +43,7 @@ export default {
   },
   props: {
     /**
-     * An object containing various properties that display in the header
+     * An object containing various properties that display in the header.
      */
     page: {
       type: Object,

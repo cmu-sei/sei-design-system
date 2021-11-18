@@ -26,14 +26,14 @@ export default defineComponent({
   name: 'SdsLayoutStacked',
   props: {
     /**
-     * Determines whether to make the header sticky or not
+     * Determines whether to make the header sticky or not.
      */
     stickyHeader: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whehther to make the footer sticky or not
+     * Determines whehther to make the footer sticky or not.
      */
     stickyFooter: {
       type: Boolean,

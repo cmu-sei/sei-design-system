@@ -55,7 +55,7 @@ export default {
       default: () => [],
     },
     /**
-     * The delay used by children to invoke an event that will trigger toast removal
+     * The delay used by children to invoke an event that will trigger toast removal.
      */
     autoHideDelay: {
       type: Number,

@@ -15,7 +15,7 @@ export default {
   name: 'SdsPopperWrapper',
   props: {
     /**
-     * The popper.js configuration to pass into the component
+     * The popper.js configuration to pass into the component.
      */
     config: {
       type: Object,

@@ -71,63 +71,63 @@ export default {
   name: "SdsSearchBox",
   props: {
     /**
-     * The v-model passed from the parent that is used to init the local state this.q
+     * The v-model passed from the parent that is used to init the local state this.q.
      */
     modelValue: {
       type: String,
       default: "",
     },
     /**
-     * The placeholder for the input
+     * The placeholder for the input.
      */
     placeholder: {
       type: String,
       default: "",
     },
     /**
-     * The disabled state of the component
+     * Disables the component to prevent user interaction.
      */
     disabled: {
       type: Boolean,
       default: false,
     },
     /**
-     * The max amount of characters that can be entered into the input
+     * The max amount of characters that can be entered into the input.
      */
     maxlength: {
       type: Number,
       default: 524288,
     },
     /**
-     * Disables the ability for the component to run a search
+     * Disables the ability for the component to run a search.
      */
     disableSearch: {
       type: Boolean,
       default: false,
     },
     /**
-     * The coloring of the component
+     * Determines the theme color of the component.
      */
     variant: {
       type: String,
       default: "default",
     },
     /**
-     * The class list of the search button
+     * The class list of the search button.
      */
     btnClass: {
       type: String,
       default: "px-3",
     },
     /**
-     * Determines if a search should be performed on key up
+     * Determines if a search should be performed on key up.
      */
     searchOnKeyUp: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determine whether to autofocus the input
+     * Determine whether to autofocus the input.
      */
     autofocus: {
       type: Boolean,

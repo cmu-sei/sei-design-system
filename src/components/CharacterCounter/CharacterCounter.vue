@@ -10,11 +10,11 @@ export default defineComponent({
   name: "SdsCharacterCounter",
   props: {
     /**
-     * The current count value
+     * The current count value.
      */
     currentValue: { type: Number, default: 0 },
     /**
-     * The maximum value allowed
+     * The maximum value allowed.
      */
     maxValue: { type: Number, default: 0 },
   },

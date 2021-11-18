@@ -88,14 +88,14 @@ export default {
   name: 'SdsLayoutFixedSidebar',
   props: {
     /**
-     * The v-model that determines open/closed state
+     * The v-model that determines open/closed state.
      */
     modelValue: {
       type: Boolean,
       default: false,
     },
     /**
-     * The width of the sidebar, both min (collapsed) and max (expanded)
+     * The width of the sidebar, both min (collapsed) and max (expanded).
      */
     width: {
       type: Object,
@@ -113,7 +113,7 @@ export default {
       default: 0,
     },
     /**
-     * A class list for the sidebar
+     * A class list for the sidebar.
      */
     sidebarClass: {
       type: String,

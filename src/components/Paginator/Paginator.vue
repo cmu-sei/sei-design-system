@@ -140,35 +140,35 @@ export default {
   name: 'SdsPaginator',
   props: {
     /**
-     * The coloring of the component
+     * Determines the theme color of the component.
      */
     variant: {
       type: String,
       default: "btn-default",
     },
     /**
-     * The active page number
+     * The active page number.
      */
     currentPage: {
       type: Number,
       default: 1,
     },
     /**
-     * The total number of pages
+     * The total number of pages.
      */
     totalPages: {
       type: Number,
       default: 0,
     },
     /**
-     * Determines whether to show the loading state or not
+     * Determines whether to show the loading state or not.
      */
     loading: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the page threshold before the ellipsis truncation begins
+     * Determines the page threshold before the ellipsis truncation begins.
      */
     threshold: {
       type: Number,

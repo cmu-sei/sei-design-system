@@ -41,7 +41,7 @@ export default {
   },
   props: {
     /**
-     * The styling for the tooltip
+     * The styling for the tooltip.
      */
     tooltipClass: {
       type: String,
@@ -49,7 +49,7 @@ export default {
       default: ""
     },
     /**
-     * The styling for the trigger
+     * The styling for the trigger.
      */
     triggerClass: {
       type: String,
@@ -57,7 +57,7 @@ export default {
       default: ""
     },
     /**
-     * The width of the tooltip
+     * The width of the tooltip.
      */
     size: {
       type: String,
@@ -65,7 +65,7 @@ export default {
       default: 'lg'
     },
     /**
-     * The placement of the tooltip on the screen
+     * The placement of the tooltip on the screen.
      */
     placement: {
       type: String,

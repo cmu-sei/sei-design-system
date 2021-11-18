@@ -108,84 +108,84 @@ export default {
   name: "SdsAutosuggest",
   props: {
     /**
-     * The v-model passed from the parent that is used to init the local state this.q
+     * The v-model passed from the parent that is used to init the local state this.q.
      */
     modelValue: {
       type: String,
       default: "",
     },
     /**
-     * The placeholder for the input
+     * The placeholder for the input.
      */
     placeholder: {
       type: String,
       default: "",
     },
     /**
-     * Determine whether to disable the component
+     * Disables the component to prevent user interaction.
      */
     disabled: {
       type: Boolean,
       default: false,
     },
     /**
-     * Sets the maxlength of the input field
+     * Determines max number of characters allowed in the input box.
      */
     maxlength: {
       type: Number,
       default: 524288,
     },
     /**
-     * Determine whether to disable the search capability of the component
+     * Determines whether to disable or enable the search button.
      */
     disableSearch: {
       type: Boolean,
       default: false,
     },
     /**
-     * A function that is triggered when autosuggestion should take place
+     * A function that is triggered when autosuggest should occur.
      */
     autosuggest: {
       type: Function,
       default: () => {},
     },
     /**
-     * The look and feel of the search box
+     * Determines the theme color of the component.
      */
     variant: {
       type: String,
       default: "default",
     },
     /**
-     * A string used to manipulate the CSS classes assigned to the search button
+     * A CSS class list to override the search button's styling.
      */
     btnClass: {
       type: String,
       default: "px-3",
     },
     /**
-     * The items used by autosuggest
+     * The items used by autosuggest.
      */
     items: {
       type: Array,
       default: () => [],
     },
     /**
-     * The character threshold before autosuggest kicks in
+     * The character threshold before autosuggest kicks in.
      */
     threshold: {
       type: Number,
       default: 1,
     },
     /**
-     * Determine whether to autofocus the input
+     * Determine whether to autofocus the input.
      */
     autofocus: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determine whether to use the built-in search term highlighter
+     * Determines if the component should use it's built-in search query highlighting feature.
      */
     useBuiltInHighlighting: {
       type: Boolean,
