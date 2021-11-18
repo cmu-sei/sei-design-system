@@ -50,7 +50,7 @@ export default {
      */
     required: { type: Boolean, default: false },
     /**
-     * Determines whehter the options are stacked vertically or horizontally.
+     * Determines whether the options are stacked vertically or horizontally.
      */
     stacked: { type: Boolean, default: false },
   },

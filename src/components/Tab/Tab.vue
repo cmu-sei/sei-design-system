@@ -16,13 +16,13 @@ export default defineComponent({
   name: 'SdsTab',
   props: {
     /**
-     * The tag used for the component.
-     */
-    tag: { type: String, default: 'button' },
-    /**
      * Determines the theme color of the component.
      */
     variant: { type: String, default: '' },
+    /**
+     * The tag used for the component.
+     */
+    tag: { type: String, default: 'button' },
     /**
      * The overall look and feel of the component.
      */

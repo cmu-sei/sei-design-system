@@ -61,7 +61,7 @@ export default defineComponent({
   name: 'SdsSection',
   props: {
     /**
-     * The overall look and feel of the section.
+     * Determines the overall look and feel of the section.
      */
     type: {
       type: String,

@@ -63,7 +63,7 @@ export default {
      */
     required: { type: Boolean, default: false },
     /**
-     * Determines whether the input is readonly or not.
+     * Determines whether the input is read-only or not.
      */
     readonly: { type: Boolean, default: false },
     /**

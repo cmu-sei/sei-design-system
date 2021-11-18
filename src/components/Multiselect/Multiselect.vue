@@ -363,91 +363,91 @@ export default {
       default: true,
     },
     /**
-     * Determines whether the component allows for searching
+     * Determines whether the component allows for searching.
      */
     canSearch: {
       type: Boolean,
       default: true,
     },
     /**
-     * Determines whether to remove the last selection
+     * Determines whether to remove the last selection.
      */
     disableRemoveLastSelection: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines if the input should be cleared after making a selection
+     * Determines if the input should be cleared after making a selection.
      */
     clearInputOnSelection: {
       type: Boolean,
       default: true,
     },
     /**
-     * Determines if the options list should be purged on selection
+     * Determines if the options list should be purged on selection.
      */
     clearOptionsOnSelection: {
       type: Boolean,
       default: true,
     },
     /**
-     * Determines the placeholder of the input
+     * Determines the placeholder of the input.
      */
     placeholder: {
       type: String,
       default: "",
     },
     /**
-     * Determines the position of the menu
+     * Determines the position of the menu.
      */
     openDirection: {
       type: String,
       default: "auto",
     },
     /**
-     * Determines the max height of the open menu
+     * Determines the max height of the open menu.
      */
     maxHeight: {
       type: Number,
       default: 200,
     },
     /**
-     * Determines whether to show the caret or not
+     * Determines whether to show the caret or not.
      */
     showCaret: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whether to show the primary clear button or not
+     * Determines whether to show the primary clear button or not.
      */
     showClear: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines whehther the multiselect will accept new values from the input
+     * Determines whehther the multiselect will accept new values from the input.
      */
     taggable: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines the maxlength of the input field
+     * Determines the maxlength of the input field.
      */
     maxlength: {
       type: Number,
       default: -1,
     },
     /**
-     * Determines the max number of items that can be selected
+     * Determines the max number of items that can be selected.
      */
     maxItems: {
       type: Number,
       default: -1,
     },
     /**
-     * Determines if new tags are forced to be lowercase
+     * Determines if new tags are forced to be lowercase.
      */
     enforceLowercaseNewTag: {
       type: Boolean,

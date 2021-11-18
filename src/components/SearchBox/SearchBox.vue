@@ -71,7 +71,7 @@ export default {
   name: "SdsSearchBox",
   props: {
     /**
-     * The v-model passed from the parent that is used to init the local state this.q.
+     * The v-model passed from the parent that is used to init the local state "this.q".
      */
     modelValue: {
       type: String,

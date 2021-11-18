@@ -36,7 +36,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Determines whehther to make the footer sticky or not.
+     * Determines whether to make the footer sticky or not.
      */
     stickyFooter: {
       type: Boolean,

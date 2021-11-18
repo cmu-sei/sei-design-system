@@ -192,8 +192,6 @@ export default {
     },
     resultClick(result) {
       /**
-       * Result click event.
-       *
        * Sends the object of the clicked result to the parent component.
        * This only occurs when doNotLinkEntries is false and a clicked entry does not have a "url" param.
        *
