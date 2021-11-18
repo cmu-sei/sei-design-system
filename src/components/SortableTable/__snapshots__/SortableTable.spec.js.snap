@@ -19,13 +19,13 @@ exports[`SortableTable.vue matches snapshot with entries and action col props as
   </thead><!-- Table body -->
   <tbody>
     <tr>
-      <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+      <!-- @slot Sortable table content. @binding entry, activeSortKey -->
       <td class=\\"\\">B title</td>
       <td class=\\"\\">2013-02-01</td>
       <td class=\\"active\\">2013-10-10</td>
     </tr>
     <tr>
-      <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+      <!-- @slot Sortable table content. @binding entry, activeSortKey -->
       <td class=\\"\\">A title</td>
       <td class=\\"\\">2000-01-01</td>
       <td class=\\"active\\">2014-11-12</td>
@@ -53,14 +53,14 @@ exports[`SortableTable.vue matches snapshot with entries but no action col props
   </thead><!-- Table body -->
   <tbody>
     <tr>
-      <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+      <!-- @slot Sortable table content. @binding entry, activeSortKey -->
       <td class=\\"\\">B title</td>
       <td class=\\"\\">2013-02-01</td>
       <td class=\\"active\\">2013-10-10</td><!-- This is the unsortable action column -->
       <td class=\\"action-col text-right\\"><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button></td>
     </tr>
     <tr>
-      <!-- @slot Provides an entry object and the activeSortKey string to allow for building out table the columns. -->
+      <!-- @slot Sortable table content. @binding entry, activeSortKey -->
       <td class=\\"\\">A title</td>
       <td class=\\"\\">2000-01-01</td>
       <td class=\\"active\\">2014-11-12</td><!-- This is the unsortable action column -->

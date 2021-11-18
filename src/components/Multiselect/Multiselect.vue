@@ -28,6 +28,7 @@
           :key="s[valueKey]"
           class="tag-list-item"
         >
+          <!-- @slot Tag template content. @binding tag, remove, disabled -->
           <slot
             name="tagTemplate"
             :tag="s"
@@ -129,6 +130,7 @@
         v-if="showLoading"
         class="dropdown-list-item loading"
       >
+        <!-- @slot Loading template content. @binding loadingMsg -->
         <slot
           name="loadingTemplate"
           :loadingMsg="loadingMsg"
@@ -146,6 +148,7 @@
           @click="add(o)"
           @mouseover="arrowCounter = i"
         >
+          <!-- @slot Option template content. @binding option, add, disabled, isSelectedOption -->
           <slot
             name="optionTemplate"
             :option="o"
@@ -164,6 +167,7 @@
         v-if="showDefault"
         class="dropdown-list-item default"
       >
+        <!-- @slot Default template content. @binding defaultMsg -->
         <slot
           name="defaultTemplate"
           :defaultMsg="defaultMsg"
@@ -175,6 +179,7 @@
         v-if="showNoResults"
         class="dropdown-list-item no-result"
       >
+        <!-- @slot No results template content. @binding noResultsMsg -->
         <slot
           name="noResultsTemplate"
           :noResultsMsg="noResultsMsg"
@@ -186,6 +191,7 @@
         v-if="showCannotAddResults"
         class="dropdown-list-item cannot-add-result"
       >
+        <!-- @slot Cannot add results content. @binding cannotAddResultsMsg -->
         <slot
           name="cannotAddResultsTemplate"
           :cannotAddResultsMsg="cannotAddResultsMsg"
@@ -197,6 +203,7 @@
         v-if="showInvalidInput"
         class="dropdown-list-item invalid-input"
       >
+        <!-- @slot Invalid input content. @binding invalidInputMsg -->
         <slot
           name="invalidInputTemplate"
           :invalidInputMsg="invalidInputMsg"

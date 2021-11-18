@@ -20,9 +20,11 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-fixed-sidebar v-model="localValue" v-bind="args">
-      <template #header>Header slot</template>
-      <template #sidebar>Sidebar slot</template>
-      Default slot
+      <template #header>Header content</template>
+      <template #sidebar>
+        <span class="text-white">Sidebar content</span>
+      </template>
+      Page content
     </sds-layout-fixed-sidebar>
   `,
   data() {

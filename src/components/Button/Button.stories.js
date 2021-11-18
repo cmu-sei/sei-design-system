@@ -46,7 +46,7 @@ const Template = (args) => ({
       v-bind="args"
       @click="onClick"
     >
-      Default slot
+      Button
     </sds-button>
   `,
   methods: {

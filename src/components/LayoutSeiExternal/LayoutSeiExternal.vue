@@ -1,8 +1,10 @@
 <template>
   <div class="flex flex-col w-full min-h-screen text-gray-900 bg-white">
+    <!-- @slot Header content. -->
     <slot name="header">
       <layout-sei-external-header :page="page" />
     </slot>
+    <!-- @slot Masthead content. -->
     <slot
       v-if="showMasthead"
       name="masthead"
@@ -16,10 +18,12 @@
         }"
       >
         <template v-if="removeContentPadding">
+          <!-- @slot Page content. -->
           <slot />
         </template>
         <template v-else>
           <div class="container p-4 mx-auto md:p-8">
+            <!-- @slot Page content. -->
             <slot />
           </div>
         </template>

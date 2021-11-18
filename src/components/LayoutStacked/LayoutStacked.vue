@@ -5,9 +5,11 @@
       class="z-30 flex-shrink"
       :class="{ 'sticky top-0 shadow': stickyHeader }"
     >
+      <!-- @slot Header content. -->
       <slot name="header" />
     </header>
     <main class="flex-grow">
+      <!-- @slot Page content. -->
       <slot />
     </main>
     <footer
@@ -15,6 +17,7 @@
       class="z-20 flex-shrink"
       :class="{ 'sticky bottom-0 shadow': stickyFooter }"
     >
+      <!-- @slot Footer content. -->
       <slot name="footer" />
     </footer>
   </div>

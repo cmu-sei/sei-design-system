@@ -36,7 +36,7 @@
     </div>
     <div
       v-if="!enableFilter"
-      class="pb-2 mb-2 space-y-2 border-b dark:border-gray-500"
+      class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
     >
       <input
         :id="`filter_by_dropdown_select_all_${uuid}`"
@@ -48,9 +48,7 @@
       <label
         :for="`filter_by_dropdown_select_all_${uuid}`"
         class="text-gray-900 dark:text-gray-50"
-      >
-        Select all
-      </label>
+      >Select all</label>
     </div>
     <div class="scroll-area max-h-48">
       <ul>
@@ -58,7 +56,7 @@
           v-for="o in filteredTmpOptions"
           :key="o.id"
         >
-          <div>
+          <div class="space-x-1">
             <input
               :id="`filter_by_dropdown_selection_list_${o.id}`"
               v-model="o.selected"
@@ -69,9 +67,7 @@
             <label
               :for="`filter_by_dropdown_selection_list_${o.id}`"
               class="text-gray-900 dark:text-gray-50"
-            >
-              {{ o.text }}
-            </label>
+            >{{ o.text }}</label>
           </div>
         </li>
       </ul>
@@ -238,15 +234,15 @@ export default {
             return a.text.toLowerCase() < b.text.toLowerCase()
               ? -1
               : a.text.toLowerCase() > b.text.toLowerCase()
-              ? 1
-              : 0;
+                ? 1
+                : 0;
           })
           .sort((a, b) => {
             return a.selected > b.selected
               ? -1
               : a.selected < b.selected
-              ? 1
-              : 0;
+                ? 1
+                : 0;
           });
       } else {
         this.tmpOptions = options;

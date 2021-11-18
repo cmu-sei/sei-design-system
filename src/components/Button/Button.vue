@@ -4,6 +4,7 @@
     :disabled="disabled"
     @click="onClick"
   >
+    <!-- @slot Button content. -->
     <slot />
   </button>
 </template>
