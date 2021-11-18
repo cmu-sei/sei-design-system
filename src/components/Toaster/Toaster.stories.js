@@ -4,6 +4,8 @@ export default {
   title: 'Feedback/Toaster',
   parameters: {
     docs: {
+      inlineStories: false,
+      iframeHeight: 250,
       description: {
         component: 'A component that handles toast generation and removal.',
       },

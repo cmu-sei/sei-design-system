@@ -123,7 +123,7 @@ export default {
      *
      * **variant**: 'success', // or 'info', 'warning', 'danger'
      *
-     * **autoHideDelay**: 5000, // or whatever close time you want
+     * **autoHideDelay**: 5000, // or whatever close time you want in milliseconds
      *
      * **noAutoHide**: true // if you want to disable auto hiding
      */
