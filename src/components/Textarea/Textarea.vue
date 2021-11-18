@@ -63,7 +63,7 @@ export default {
      */
     required: { type: Boolean, default: false },
     /**
-     * Determines the readonly state of the component.
+     * Determines the read-only state of the component.
      */
     readonly: { type: Boolean, default: false },
     /**

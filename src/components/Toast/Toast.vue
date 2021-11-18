@@ -111,15 +111,21 @@ export default {
   name: 'SdsToast',
   props: {
     /**
-     * Each toast should look like this:
-     * {
-     *   id: <Unique_ID>,
-     *   title: 'Title',
-     *   text: 'Text of toast',
-     *   variant: 'success', # or 'info', 'warning', 'danger'
-     *   autoHideDelay: 5000, # or whatever close time you want
-     *   noAutoHide: true # if you want to disable auto hiding
-     * }
+     * Determines the toast object presented to the user.
+     *
+     * The toast object may contain:
+     *
+     * **id**: <Unique_ID>
+     *
+     * **title**: 'Title'
+     *
+     * **text**: 'Text of toast'
+     *
+     * **variant**: 'success', // or 'info', 'warning', 'danger'
+     *
+     * **autoHideDelay**: 5000, // or whatever close time you want
+     *
+     * **noAutoHide**: true // if you want to disable auto hiding
      */
     toast: {
       type: Object,

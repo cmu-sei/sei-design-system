@@ -108,7 +108,7 @@ export default {
   name: "SdsAutosuggest",
   props: {
     /**
-     * The v-model passed from the parent that is used to init the local state this.q.
+     * The v-model passed from the parent that is used to init the local state "this.q".
      */
     modelValue: {
       type: String,
@@ -178,14 +178,14 @@ export default {
       default: 1,
     },
     /**
-     * Determine whether to autofocus the input.
+     * Determines whether to autofocus the input.
      */
     autofocus: {
       type: Boolean,
       default: false,
     },
     /**
-     * Determines if the component should use it's built-in search query highlighting feature.
+     * Determines if the component should use its built-in search query highlighting feature.
      */
     useBuiltInHighlighting: {
       type: Boolean,

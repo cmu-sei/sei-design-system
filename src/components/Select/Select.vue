@@ -44,7 +44,7 @@ export default defineComponent({
      */
     disabled: { type: Boolean, default: false },
     /**
-     * Determines if the component is readonly.
+     * Determines if the component is read-only.
      */
     readonly: { type: Boolean, default: false },
   },

@@ -100,7 +100,7 @@ export default {
   },
   props: {
     /**
-     * The v-model for this comonent. Determines opened/closed state.
+     * The v-model for this component. Determines opened/closed state.
      */
     modelValue: {
       type: Array,

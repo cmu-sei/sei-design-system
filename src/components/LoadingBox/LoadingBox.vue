@@ -9,14 +9,14 @@ export default {
   name: 'SdsLoadingBox',
   props: {
     /**
-     * Set the height of the box. Accepts tailwind height classes.
+     * Sets the height of the box. Accepts tailwind height classes.
      */
     height: {
       default: 'h-48',
       type: String
     },
     /**
-     * Set the width of the box. Accepts tailwind width classes.
+     * Sets the width of the box. Accepts tailwind width classes.
      */
     width: {
       default: 'w-1/2',

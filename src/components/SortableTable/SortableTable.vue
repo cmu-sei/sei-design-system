@@ -89,7 +89,7 @@ export default {
       default: () => [],
     },
     /**
-     * Determines whether to append an unsortable "actions" column to the table. When set to true, add an additional column
+     * Determines whether to append an unsortable "Actions" column to the table. When set to true, an additional column is added
      * to the slot which can be used to add action buttons for each entry row (edit, remove, etc).
      *
      * Is is recommended to use the "action-col" class for the action column.

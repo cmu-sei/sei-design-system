@@ -137,7 +137,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The size of the modal.
+     * Determines the size of the modal.
      */
     size: {
       type: String,

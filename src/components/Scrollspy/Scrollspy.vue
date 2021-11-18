@@ -33,7 +33,7 @@ export default defineComponent({
       default: null,
     },
     /**
-     * The HTML selector of the container for the element being spyed.
+     * The HTML selector of the container for the element being spied upon.
      */
     parent: {
       type: String,
