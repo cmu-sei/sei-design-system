@@ -44,6 +44,6 @@ Default.args = {
     { id: "title", title: "Title", type: "string" },
     { id: "lastModified", title: "Last Modified", type: "date" },
   ],
-  showActionCol: true
+  showActionColumn: true
 };
 

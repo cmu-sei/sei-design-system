@@ -33,7 +33,7 @@
           />
         </th>
         <th v-if="showActionColumn">
-          <span class="sr-only"> Actions </span>
+          <span>Actions</span>
         </th>
       </tr>
     </thead>

@@ -48,7 +48,7 @@ exports[`SortableTable.vue matches snapshot with entries but no action col props
       <th class=\\"space-x-2 cursor-pointer\\"><span>Title</span><i class=\\"fas\\"></i></th>
       <th class=\\"space-x-2 cursor-pointer\\"><span>Created</span><i class=\\"fas\\"></i></th>
       <th class=\\"bg-white dark:bg-gray-700 space-x-2 cursor-pointer\\"><span>Last modified</span><i class=\\"fas\\"></i></th>
-      <th><span class=\\"sr-only\\"> Actions </span></th>
+      <th><span>Actions</span></th>
     </tr>
   </thead><!-- Table body -->
   <tbody>

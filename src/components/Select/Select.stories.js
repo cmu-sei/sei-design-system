@@ -11,7 +11,6 @@ export default {
   },
   component: SdsSelect,
   argTypes: {
-    name: { type: 'string' }
   }
 };
 
