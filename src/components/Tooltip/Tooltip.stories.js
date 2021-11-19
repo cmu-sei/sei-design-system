@@ -28,10 +28,10 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div class="flex col h-56">
-      <sds-tooltip class="my-24 mx-auto" v-model="localValue" v-bind="args">
+    <div class="p-36">
+      <sds-tooltip v-model="localValue" v-bind="args">
         <template #trigger>
-          <button @click="onClick">I have a tooltip.</button>
+          <button class="btn btn-default" @click="onClick">I have a tooltip</button>
         </template>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum maximus blandit.</p>
       </sds-tooltip>

@@ -1,16 +1,6 @@
-<template>
-  <div>
-    <!-- @slot Popper wrapper content. @binding isOpen, open, close -->
-    <slot
-      :is-open="isOpen"
-      :open="open"
-      :close="close"
-    />
-  </div>
-</template>
-
 <script>
-import {createPopper} from '@popperjs/core';
+import { createPopper } from '@popperjs/core';
+import uuid from '../../helpers/uuid';
 
 export default {
   name: 'SdsPopperWrapper',
@@ -31,6 +21,14 @@ export default {
       popper: null,
     };
   },
+  computed: {
+    triggerId() {
+      return `sds-popper-wrapper__trigger-${uuid()}`;
+    },
+    popperId() {
+      return `sds-popper-wrapper__popper-${uuid()}`;
+    },
+  },
   watch: {
     config() {
       this.destroyPopper()
@@ -38,8 +36,8 @@ export default {
     }
   },
   mounted: function mounted() {
-    this.triggerEl = document.querySelector('[data-trigger]');
-    this.popperEl = document.querySelector('[data-popper]');
+    this.triggerEl = document.querySelector(`#${this.triggerId}`);
+    this.popperEl = document.querySelector(`#${this.popperId}`);
   },
   beforeUnmount() {
     this.destroyPopper()
@@ -74,6 +72,15 @@ export default {
       this.popper.destroy();
       this.popper = null;
     }
-  }
+  },
+  render() {
+    return this.$slots && this.$slots.default && this.$slots.default({
+      isOpen: this.isOpen,
+      open: this.open,
+      close: this.close,
+      triggerId: this.triggerId,
+      popperId: this.popperId
+    });
+  },
 };
 </script>
