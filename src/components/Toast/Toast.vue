@@ -2,7 +2,7 @@
   <div
     role="alert"
     aria-live="polite"
-    class="w-full max-w-sm ml-auto bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-700"
+    class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-700"
     @mouseenter="clearTimer"
     @mouseleave="setTimer"
   >
@@ -12,16 +12,16 @@
           <div class="flex-shrink-0">
             <!-- Heroicon name: check-circle -->
             <svg
-              v-if="toast.variant"
+              v-if="variant"
               :class="{
                 ' text-green-400 dark:text-green-300':
-                  toast.variant && toast.variant === 'success',
+                  variant && variant === 'success',
                 ' text-blue-400 dark:text-blue-300':
-                  toast.variant && toast.variant === 'info',
+                  variant && variant === 'info',
                 ' text-orange-500 dark:text-orange-400':
-                  toast.variant && toast.variant === 'warning',
+                  variant && variant === 'warning',
                 ' text-red-400 dark:text-red-300':
-                  toast.variant && toast.variant === 'danger',
+                  variant && variant === 'danger',
               }"
               class="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@
             >
               <!-- Success -->
               <path
-                v-if="toast.variant === 'success'"
+                v-if="variant === 'success'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -40,7 +40,7 @@
 
               <!-- Info -->
               <path
-                v-if="toast.variant === 'info'"
+                v-if="variant === 'info'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -49,7 +49,7 @@
 
               <!-- Warning -->
               <path
-                v-if="toast.variant === 'warning'"
+                v-if="variant === 'warning'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -58,7 +58,7 @@
 
               <!-- Danger -->
               <path
-                v-if="toast.variant === 'danger'"
+                v-if="variant === 'danger'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -68,16 +68,16 @@
           </div>
           <div class="ml-3 w-0 flex-1 pt-0.5">
             <p
-              v-if="toast.title"
+              v-if="title"
               class="text-sm font-medium leading-5 text-gray-900 dark:text-gray-100"
             >
-              {{ toast.title }}
+              {{ title }}
             </p>
             <p
-              v-if="toast.text"
+              v-if="text"
               class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300"
             >
-              {{ toast.text }}
+              {{ text }}
             </p>
           </div>
           <div class="flex flex-shrink-0 ml-4">
@@ -111,33 +111,29 @@ export default {
   name: 'SdsToast',
   props: {
     /**
-     * Determines the toast object presented to the user.
-     *
-     * The toast object may contain:
-     *
-     * **id**: <Unique_ID>
-     *
-     * **title**: 'Title'
-     *
-     * **text**: 'Text of toast'
-     *
-     * **variant**: 'success', // or 'info', 'warning', 'danger'
-     *
-     * **autoHideDelay**: 5000, // or whatever close time you want in milliseconds
-     *
-     * **noAutoHide**: true // if you want to disable auto hiding
+     * Determines the id of the component.
      */
-    toast: {
-      type: Object,
-      default: () => ({}),
-    },
+    id: { type: Number, required: true },
     /**
-     * Determines the wait time before automatically emitting "remove" for this component.
+     * Determines the theme color of the component.
      */
-    autoHideDelay: {
-      type: Number,
-      default: 5000,
-    },
+    variant: { type: String, default: 'success' },
+    /**
+     * Determines the title content of the component.
+     */
+    title: { type: String, required: true },
+    /**
+     * Determines the text content of the component.
+     */
+    text: { type: String, required: true },
+    /**
+     * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
+     */
+    autoHideDelay: { type: Number, default: 5000 },
+    /**
+     * Determines whether to ignore the autoHideDelay property.
+     */
+    noAutoHide: { type: Boolean, default: false },
   },
   emits: ['remove'],
   data() {
@@ -153,17 +149,22 @@ export default {
   },
   methods: {
     removeToast() {
-      this.$emit("remove", this.toast);
+      /**
+       * Emits an event with the "id" property as its payload.
+       *
+       * The parent component (typically the Toaster component) can then remove the toast from its toast array.
+       */
+      this.$emit("remove", this.id);
     },
     clearTimer() {
       clearTimeout(this.timer);
     },
     setTimer() {
       this.clearTimer();
-      if (this.toast.noAutoHide) return;
+      if (this.noAutoHide) return;
       this.timer = setTimeout(() => {
         this.removeToast();
-      }, this.toast.autoHideDelay || this.autoHideDelay);
+      }, this.autoHideDelay);
     },
   },
 };
