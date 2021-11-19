@@ -1,31 +1,31 @@
 <template>
   <PopperWrapper
-    v-slot="{ isOpen, open, close }"
+    v-slot="{ isOpen, open, close, triggerId, popperId }"
     :config="config"
   >
-    <div
-      v-on="{
-        mouseover: open ? open : {},
-        mouseleave: close ? close : {}
-      }"
-    >
-      <span
-        data-trigger
-        :class="[triggerClass ? triggerClass : 'cursor-pointer tooltip']"
+    <div class="inline-block">
+      <div
+        :id="triggerId"
+        :class="[triggerClass ? triggerClass : 'cursor-pointer']"
+        :aria-describedby="popperId"
+        v-on="{
+          mouseover: open ? open : {},
+          mouseleave: close ? close : {}
+        }"
       >
         <!-- @slot Trigger content. -->
         <slot name="trigger" />
-      </span>
+      </div>
       <div
         v-show="isOpen"
-        id="tooltip"
-        data-popper
-        :class="[sizeClass, tooltipClass ? tooltipClass : 'popper']"
+        :id="popperId"
+        role="tooltip"
+        :class="['tooltip', sizeClass, tooltipClass ? tooltipClass : '']"
       >
         <!-- @slot Tooltip content. -->
         <slot />
         <div
-          id="arrow"
+          class="arrow"
           data-popper-arrow
         />
       </div>
@@ -64,7 +64,7 @@ export default {
     size: {
       type: String,
       required: false,
-      default: 'lg'
+      default: 'sm'
     },
     /**
      * The placement of the tooltip on the screen.
@@ -107,9 +107,8 @@ export default {
 }
 </script>
 
-<style>
-
-#tooltip {
+<style scoped>
+.tooltip {
   width: auto;
   background-color: #111;
   color: #fff;
@@ -125,37 +124,37 @@ export default {
   box-shadow: rgb(58, 58, 58) 0 0 6px 0;
 }
 
-#arrow,
-#arrow::before {
+.arrow,
+.arrow::before {
   position: absolute;
   width: 8px;
   height: 8px;
   background: #111;
 }
 
-#arrow {
+.arrow {
   visibility: hidden;
 }
 
-#arrow::before {
+.arrow::before {
   visibility: visible;
   content: '';
   transform: rotate(45deg);
 }
 
-#tooltip[data-popper-placement^='top'] > #arrow {
+.tooltip[data-popper-placement^='top'] > .arrow {
   bottom: -4px;
 }
 
-#tooltip[data-popper-placement^='bottom'] > #arrow {
+.tooltip[data-popper-placement^='bottom'] > .arrow {
   top: -4px;
 }
 
-#tooltip[data-popper-placement^='left'] > #arrow {
+.tooltip[data-popper-placement^='left'] > .arrow {
   right: -0px;
 }
 
-#tooltip[data-popper-placement^='right'] > #arrow {
+.tooltip[data-popper-placement^='right'] > .arrow {
   left: -8px;
 }
 </style>
