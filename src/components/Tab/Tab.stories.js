@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An text control that provides the user a simple way to trigger an event.',
+        component: 'A tab is a textual component that organizes information of the same hierarchy across different views or interactions.',
       },
     },
   },

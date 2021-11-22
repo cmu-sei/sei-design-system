@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An item for use as a child to a dropdown.',
+        component: 'A modal is an overlay component displayed on top of the page content to help focus users\' attention to a single task or message.',
       },
     },
   },

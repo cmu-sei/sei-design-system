@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An advanced taggable form field that accepts text and displays a list of options.',
+        component: 'A multiselect is an advanced form field that allows users to select multiple options from a predefined set and displays them as pills within the field.',
       },
     },
   },

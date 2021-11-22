@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A group of buttons that allows for navigation between page sets.',
+        component: 'A paginator is a specialized group of buttons that allows users to browse large amounts of content in smaller chunks across multiple pages.',
       },
     },
   },

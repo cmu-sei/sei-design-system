@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A container for related content.',
+        component: 'A section is a simple container that houses related content and action buttons.',
       },
     },
   },

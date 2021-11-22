@@ -7,7 +7,7 @@ export default {
       inlineStories: false,
       iframeHeight: 250,
       description: {
-        component: 'A layout that presents a fixed-positioned, collapsible sidebar.',
+        component: 'A layout that includes a header and a fixed-positioned, collapsible sidebar.',
       },
     },
   },

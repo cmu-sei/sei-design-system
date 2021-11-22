@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An textarea form field for long content input.',
+        component: 'A textarea is a large input field that allows users to enter a freeform response spanning multiple lines.',
       },
     },
   },
