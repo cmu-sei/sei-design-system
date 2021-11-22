@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An form field that accepts texts.',
+        component: 'An input is a standard text field that allows users to enter a freeform response that includes letters, numbers, or symbols.',
       },
     },
   },

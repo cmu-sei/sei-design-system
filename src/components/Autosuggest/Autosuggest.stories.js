@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An input field that presents an autosuggest popover as you type.',
+        component: 'An autosuggest is an input field that presents users with a list options based on history, context, or the first few typed letters.',
       },
     },
   },

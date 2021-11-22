@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An text control that provides the user a simple way to trigger an event.',
+        component: 'A link is a textual navigation element that directs users to a different location on the page or site.',
       },
     },
   },

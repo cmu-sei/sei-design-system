@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An toast for use with the Toaster component.',
+        component: 'A toast serves as a feedback and confirmation mechanism after the user takes an action.',
       },
     },
   },

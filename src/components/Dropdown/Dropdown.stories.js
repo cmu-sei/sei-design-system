@@ -8,7 +8,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An interactive element that toggles a hidden menu.',
+        component: 'A dropdown displays a list of actions or options in a temporary modal menu to allow users to perform an action such as filtering or sorting existing content.',
       },
     },
   },
@@ -22,17 +22,24 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div style="height: 28rem">
-      <sds-dropdown
-        v-model="localValue"
-        v-bind="args"
-        @input="onInput"
-        @btn-click="onBtnClick"
-      >
-        <template #title>Dropdown</template>
-        <sds-dropdown-item href="#">Dropdown Item</sds-dropdown-item>
-      </sds-dropdown>
-    </div>
+  <div style="height: 28rem">
+    <sds-dropdown
+      v-bind="$props"
+      v-model="localValue"
+      @input="onInput"
+      @btn-click="onBtnClick"
+    >
+      <template #title>Dropdown</template>
+      <sds-dropdown-header>Dropdown header</sds-dropdown-header>
+      <sds-dropdown-item tag="button" @click="onClick">Item 1</sds-dropdown-item>
+      <sds-dropdown-item tag="button" @click="onClick">Item 2</sds-dropdown-item>
+      <sds-dropdown-item tag="button" @click="onClick">Item 3</sds-dropdown-item>
+      <sds-dropdown-divider />
+      <sds-dropdown-header>Dropdown header 2</sds-dropdown-header>
+      <sds-dropdown-item tag="button" @click="onClick">Item 4</sds-dropdown-item>
+      <sds-dropdown-item tag="button" @click="onClick">Item 5</sds-dropdown-item>
+    </sds-dropdown>
+  </div>
   `,
   data() {
     return { localValue: this.$props.modelValue }
@@ -44,8 +51,11 @@ const Template = (args) => ({
   },
   methods: {
     onInput: action('input'),
-    onBtnClick: action('btn-click')
-   }
+    onBtnClick: action('btn-click'),
+    onClick() {
+      console.log('item clicked')
+    }
+  }
 });
 
 export const Default = Template.bind({});

@@ -7,7 +7,7 @@ export default {
       inlineStories: false,
       iframeHeight: 250,
       description: {
-        component: 'A component that handles toast generation and removal.',
+        component: 'A toaster is a wrapper that triggers the toast component.',
       },
     },
   },

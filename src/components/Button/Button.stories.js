@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An graphical control that provides the user a simple way to trigger an event.',
+        component: 'A button allows users to take action or make a choice with a single tap.',
       },
     },
   },
