@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       inlineStories: false,
-      iframeHeight: 250,
+      iframeHeight: 300,
       description: {
         component: 'A modal is an overlay component displayed on top of the page content to help focus users\' attention to a single task or message.',
       },
@@ -27,7 +27,8 @@ const Template = (args) => ({
   },
   template: `
     <div>
-      <p>Use the properties below to display the modal.</p>
+      <p class="mb-4">Use the button below to toggle the modal.</p>
+      <button class="btn btn-primary" @click="localValue = !localValue">Toggle Modal</button>
       <sds-modal v-model="localValue" v-bind="args">
         <template #title>
           Modal title
