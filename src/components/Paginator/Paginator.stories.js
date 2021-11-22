@@ -10,7 +10,12 @@ export default {
     },
   },
   component: SdsPaginator,
-  argTypes: {}
+  argTypes: {
+    variant: {
+      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      control: { type: 'select' }
+    },
+  }
 };
 
 const Template = (args) => ({

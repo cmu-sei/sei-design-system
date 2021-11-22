@@ -11,9 +11,9 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
-          class="btn flex space-x-1"
+          class="flex space-x-1"
           title="First"
-          :class="[variant]"
+          :class="[variantClass]"
           @click.prevent="goToPage(1, $event)"
         >
           <svg
@@ -34,9 +34,9 @@
         </button>
         <button
           :disabled="prevDisabled"
-          class="btn flex space-x-1"
+          class="flex space-x-1"
           title="Prev"
-          :class="[variant]"
+          :class="[variantClass]"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <svg
@@ -66,7 +66,7 @@
         >
           <button
             :class="{
-              [variant]: true,
+              [variantClass]: true,
               'shadow-none border-transparent': page === '...',
               active: currentPage === page,
             }"
@@ -86,9 +86,9 @@
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
-          class="btn flex space-x-1"
+          class="flex space-x-1"
           title="Next"
-          :class="[variant]"
+          :class="[variantClass]"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
           <span class="sr-only sm:not-sr-only">Next</span>
@@ -109,9 +109,9 @@
         </button>
         <button
           :disabled="nextDisabled"
-          class="btn flex space-x-1"
+          class="flex space-x-1"
           title="Last"
-          :class="[variant]"
+          :class="[variantClass]"
           @click.prevent="goToPage(totalPages, $event)"
         >
           <span class="sr-only sm:not-sr-only">Last</span>
@@ -144,7 +144,7 @@ export default {
      */
     variant: {
       type: String,
-      default: "btn-default",
+      default: "default",
     },
     /**
      * The active page number.
@@ -177,6 +177,28 @@ export default {
   },
   emits: ['go-to-page'],
   computed: {
+    variantClass() {
+      switch (this.variant) {
+        case 'default':
+          return 'btn btn-default'
+        case 'primary':
+          return 'btn btn-primary'
+        case 'success':
+          return 'btn btn-success'
+        case 'info':
+          return 'btn btn-info'
+        case 'warning':
+          return 'btn btn-warning'
+        case 'danger':
+          return 'btn btn-danger'
+        case 'light':
+          return 'btn btn-light'
+        case 'dark':
+          return 'btn btn-dark'
+        default:
+          return 'btn btn-default'
+      }
+    },
     prevDisabled() {
       return this.currentPage <= 1 || this.loading;
     },
@@ -221,9 +243,6 @@ export default {
     goToPage(page, event) {
       /**
        * Passes an object to be used by a parent component: { page, event }
-       *
-       * @event goToPage
-       * @type {object}
        */
       this.$emit("go-to-page", { page, event });
     },
