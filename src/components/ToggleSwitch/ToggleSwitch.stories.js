@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A toggle switch is a UI element that allows users to turn a system state on or off, which will trigger a change across the entire application.',
+        component: 'A toggle switch is a component that allows users to turn a system state on or off, which will trigger a change across the entire application.',
       },
     },
   },
