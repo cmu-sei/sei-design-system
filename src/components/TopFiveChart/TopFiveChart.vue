@@ -193,9 +193,8 @@ export default {
     resultClick(result) {
       /**
        * Sends the object of the clicked result to the parent component.
-       * This only occurs when doNotLinkEntries is false and a clicked entry does not have a "url" param.
        *
-       * @type {object}
+       * This only occurs when doNotLinkEntries is false and a clicked entry does not have a "url" param.
        */
       this.$emit("result-click", result);
     },

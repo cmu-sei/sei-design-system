@@ -451,6 +451,9 @@ export default defineComponent({
         return this.date;
       },
       set(value: null|Date) {
+        /**
+         * Emitted when date changes.
+         */
         this.$emit("update:date", value);
       },
     },
@@ -460,6 +463,9 @@ export default defineComponent({
         return this.endDate;
       },
       set(value: null|Date) {
+        /**
+         * Emitted when endDate changes.
+         */
         this.$emit("update:endDate", value);
       },
     },
@@ -469,6 +475,9 @@ export default defineComponent({
         return this.min;
       },
       set(value: null|Date) {
+        /**
+         * Emitted when min changes.
+         */
         this.$emit("update:min", value);
       },
     },
@@ -478,6 +487,9 @@ export default defineComponent({
         return this.max;
       },
       set(value: null|Date) {
+        /**
+         * Emitted when max changes.
+         */
         this.$emit("update:max", value);
       },
     },

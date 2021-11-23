@@ -673,6 +673,9 @@ export default {
       );
     },
     focusInput() {
+      /**
+       * Emmitted when input is focused.
+       */
       this.$emit("focus");
       this.$refs.input.focus();
     },
@@ -686,11 +689,17 @@ export default {
       this.updateOptions([]);
     },
     input(value) {
+      /**
+       * Emmitted when modelValue changes.
+       */
       this.$emit("update:modelValue", value);
       this.resizeInput();
       this.positionDropdown();
     },
     updateSelected(s) {
+      /**
+       * Emmitted when selections have changed with payload of selections.
+       */
       this.$emit("update-selected", s);
       this.resizeInput();
       if (this.arrowCounter > this.filteredOptions.length - 1) {
@@ -698,11 +707,17 @@ export default {
       }
     },
     updateOptions(s) {
+      /**
+       * Emmitted when options have changed with payload of options.
+       */
       this.$emit("update-options", s);
     },
     open() {
       if (this.disabled) return;
       if (!this.showDropdown) {
+        /**
+         * Emmitted when dropdown is opened.
+         */
         this.$emit("open");
         this.focusInput();
         this.isOpen = true;
@@ -713,6 +728,9 @@ export default {
     },
     close() {
       if (this.showDropdown) {
+        /**
+         * Emmitted when dropdown is closed.
+         */
         this.$emit("close");
         if (!this.multiple) this.clearInput();
         this.isOpen = false;

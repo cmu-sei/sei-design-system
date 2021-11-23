@@ -124,6 +124,9 @@ export default defineComponent({
         return this.modelValue
       },
       set(value: any) {
+        /**
+         * Emmitted when modelValue changes.
+         */
         this.$emit('update:modelValue', value)
       }
     },
@@ -132,6 +135,9 @@ export default defineComponent({
         return this.max
       },
       set(value: any) {
+        /**
+         * Emmitted when max changes.
+         */
         this.$emit('update:max', value)
       }
     },
@@ -140,6 +146,9 @@ export default defineComponent({
         return this.min
       },
       set(value: any) {
+        /**
+         * Emmitted when min changes.
+         */
         this.$emit('update:min', value)
       }
     },
