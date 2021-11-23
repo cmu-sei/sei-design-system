@@ -209,6 +209,9 @@ export default {
         return this.modelValue;
       },
       set(val) {
+        /**
+         * Emitted when modelValue changes.
+         */
         this.$emit("update:modelValue", val);
       },
     },
@@ -376,6 +379,9 @@ export default {
     handleSearchBtn() {
       if (this.disabled || this.disableSearch) return;
       this.resetDropdown();
+      /**
+       * Emitted whenever a search is triggered.
+       */
       this.$emit("search", this.q);
     },
     // Handle click on dropdown results
@@ -384,8 +390,14 @@ export default {
       this.q = this.formatTerm(result.term);
       this.resetDropdown();
       if (result !== null) {
+        /**
+         * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
+         */
         this.$emit("result", result);
       }
+      /**
+       * Emitted whenever a search is triggered.
+       */
       this.$nextTick(() => this.$emit("search", this.q));
     },
     // Handle Enter key logic

@@ -175,6 +175,9 @@ export default defineComponent({
 
     watch(isOpen, (value: boolean) => {
       if (value === props.modelValue) return;
+      /**
+       * Emmitted when modelValue changes.
+       */
       emit("update:modelValue", value);
     })
 
@@ -193,6 +196,9 @@ export default defineComponent({
     }
 
     const handleClick = () => {
+      /**
+       * Emmitted on trigger button click.
+       */
       emit("btn-click");
       if (props.hover) return;
       isOpen.value = !isOpen.value;
