@@ -8,10 +8,8 @@
         :id="triggerId"
         :class="[triggerClass ? triggerClass : 'cursor-pointer']"
         :aria-describedby="popperId"
-        v-on="{
-          mouseover: open ? open : {},
-          mouseleave: close ? close : {}
-        }"
+        @mouseover="handleOpen(open)"
+        @mouseleave="handleClose(close)"
       >
         <!-- @slot Trigger content. -->
         <slot name="trigger" />
@@ -59,7 +57,23 @@ export default {
       default: ""
     },
     /**
-     * The width of the tooltip.
+     * Delays opening the toggle in ms.
+     */
+    openDelay: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    /**
+     * Delays closing the toggle in ms.
+     */
+    closeDelay: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    /**
+     * The width of the tooltip
      */
     size: {
       type: String,
@@ -73,6 +87,13 @@ export default {
       type: String,
       required: false,
       default: 'top'
+    }
+  },
+  emits: ['open', 'close'],
+
+  data () {
+    return {
+      timer: null
     }
   },
   computed: {
@@ -102,6 +123,28 @@ export default {
         default:
           return 'w-56'
       }
+    }
+  },
+  methods: {
+    handleOpen(open) {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        /**
+         * Emitted when the tooltip will open.
+         */
+        this.$emit('open')
+        open()
+      }, this.openDelay)
+    },
+    handleClose(close) {
+      clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+        /**
+         * Emitted when the tooltip will close.
+         */
+        this.$emit('close')
+        close()
+      }, this.closeDelay)
     }
   }
 }
