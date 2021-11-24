@@ -10,15 +10,17 @@ export default {
      */
     config: {
       type: Object,
-      default: () => ({ placement: 'bottom' }),
-    }
+      default: () => ({
+        placement: 'bottom'
+      }),
+    },
   },
   data() {
     return {
       isOpen: false,
       triggerEl: null,
       popperEl: null,
-      popper: null,
+      popper: null
     };
   },
   computed: {
@@ -44,18 +46,14 @@ export default {
   },
   methods: {
     open() {
-      if (this.isOpen) {
-        return;
-      }
+      if (this.isOpen) return;
       this.isOpen = true;
       this.$nextTick(() => {
         this.setupPopper();
       });
     },
     close() {
-      if (!this.isOpen) {
-        return;
-      }
+      if (!this.isOpen) return;
       this.isOpen = false;
     },
     setupPopper() {

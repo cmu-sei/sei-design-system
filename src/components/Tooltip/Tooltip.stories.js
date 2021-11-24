@@ -1,4 +1,5 @@
 import SdsTooltip from './Tooltip.vue';
+import { action } from '@storybook/addon-actions';
 
 export default {
   title: 'Utility/Tooltip',
@@ -28,8 +29,8 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div class="p-36">
-      <sds-tooltip v-model="localValue" v-bind="args">
+    <div class="p-48">
+      <sds-tooltip v-model="localValue" v-bind="args" @open="onOpen" @close="onClose">
         <template #trigger>
           <button class="btn btn-default" @click="onClick">I have a tooltip</button>
         </template>
@@ -46,12 +47,11 @@ const Template = (args) => ({
     }
   },
   methods: {
-    onClick() {
-      console.log('onClick Fired.');
-    }
+    onOpen: action('open'),
+    onClose: action('close'),
+    onClick: action('onClick')
   }
 });
 
 export const Default = Template.bind({});
 Default.args = {};
-
