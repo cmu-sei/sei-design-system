@@ -1,24 +1,26 @@
 <template>
-  <sds-layout-app-internal>
+  <sds-layout-app-internal v-model="collapsed">
     <template #header>
       Header content
     </template>
     <template #sidebar>
-      <p class="my-96">
-        Sidebar content
-      </p>
-      <p class="my-96">
-        Sidebar content
-      </p>
-      <p class="my-96">
-        Sidebar content
-      </p>
-      <p class="my-96">
-        Sidebar content
-      </p>
-      <p class="my-96">
-        Sidebar content
-      </p>
+      <div class="p-4">
+        <p class="my-96">
+          Sidebar content
+        </p>
+        <p class="my-96">
+          Sidebar content
+        </p>
+        <p class="my-96">
+          Sidebar content
+        </p>
+        <p class="my-96">
+          Sidebar content
+        </p>
+        <p class="my-96">
+          Sidebar content
+        </p>
+      </div>
     </template>
     <template #page-top>
       Hello, world!
@@ -42,6 +44,11 @@ export default defineComponent({
   components: {
     Components,
     Examples,
+  },
+  data() {
+    return {
+      collapsed: false
+    }
   }
 });
 </script>
