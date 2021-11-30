@@ -65,7 +65,7 @@ export default {
       },
       set(value) {
         /**
-         * Emits the current array of toasts.
+         * Emitted when current array of toasts changes.
          */
         this.$emit("update:modelValue", value);
       },
