@@ -130,7 +130,7 @@ export default {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         /**
-         * Emitted when the tooltip will open.
+         * Emitted when the tooltip opens.
          */
         this.$emit('open')
         open()
@@ -140,7 +140,7 @@ export default {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         /**
-         * Emitted when the tooltip will close.
+         * Emitted when the tooltip closes.
          */
         this.$emit('close')
         close()

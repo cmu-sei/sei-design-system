@@ -179,7 +179,7 @@ export default {
     search() {
       if (this.disabled || this.disableSearch) return;
       /**
-       * Emitted when a search is trigger with a payload of the query.
+       * Emitted when a search is triggered with a payload of the query.
        */
       this.$emit("search", this.q);
     },
