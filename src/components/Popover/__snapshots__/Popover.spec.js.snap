@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popover.vue matches snapshot 1`] = `
+<popper-wrapper-stub
+  config="[object Object]"
+/>
+`;
+
+exports[`Popover.vue matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;
+
+exports[`Popover.vue matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;

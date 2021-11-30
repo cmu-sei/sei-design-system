@@ -18,12 +18,18 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal w-auto', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
+        :class="['popover rounded-lg p-4 text-xs absolute text-left z-40 font-normal w-auto bg-white border border-gray-300 text-dark', sizeClass, placement, popoverClass ? popoverClass : '']"
+        @mouseover="handleOpen(open)"
+        @mouseleave="handleClose(close)"
       >
-        <!-- @slot Tooltip content. -->
-        <slot />
+        <!-- @slot Popover content. -->
+        <slot
+          :close="close"
+          :open="open"
+          :is-open="isOpen"
+        />
         <div
-          :class="[variantArrowClass, 'arrow']"
+          :class="[popoverArrowClass, 'before:bg-white arrow  before:border-gray-300']"
           data-popper-arrow
         />
       </div>
@@ -35,25 +41,18 @@
 import PopperWrapper from "../PopperWrapper/PopperWrapper.vue";
 
 export default {
-  name: 'SdsTooltip',
+  name: 'SdsPopover',
   components: {
     PopperWrapper
   },
   props: {
     /**
-     * The styling for the tooltip.
+     * The styling for the popover.
      */
-    tooltipClass: {
+    popoverClass: {
       type: String,
       required: false,
       default: ""
-    },
-    /**
-     * Determines the theme color of the component.
-     */
-    variant: {
-      type: String,
-      default: 'dark'
     },
     /**
      * The styling for the trigger.
@@ -69,7 +68,7 @@ export default {
     openDelay: {
       type: Number,
       required: false,
-      default: 0
+      default: 500
     },
     /**
      * Delays closing the toggle in ms.
@@ -77,27 +76,26 @@ export default {
     closeDelay: {
       type: Number,
       required: false,
-      default: 0
+      default: 250
     },
     /**
-     * The width of the tooltip.
+     * The width of the popover
      */
     size: {
       type: String,
       required: false,
-      default: 'sm'
+      default: 'lg'
     },
     /**
-     * The placement of the tooltip on the screen.
+     * The placement of the popover on the screen.
      */
     placement: {
       type: String,
       required: false,
-      default: 'top'
+      default: 'right'
     }
   },
   emits: ['open', 'close'],
-
   data () {
     return {
       timer: null
@@ -111,44 +109,34 @@ export default {
           {
             name: 'offset',
             options: {
-              offset: [0,8]
+              offset: [0,12]
             },
           },
         ],
       }
     },
-    variantClass() {
-      switch (this.variant) {
-        case 'dark':
-          return 'bg-dark text-light'
-        case 'light':
-          return 'bg-light text-dark'
-        default:
-          return 'bg-dark text-light'
-      }
-    },
-    variantArrowClass() {
-      switch (this.variant) {
-        case 'dark':
-          return 'before:bg-dark'
-        case 'light':
-          return 'before:bg-light'
-        default:
-          return 'before:bg-dark'
-      }
-    },
     sizeClass() {
       switch (this.size) {
         case 'sm':
-          return 'w-32'
-        case 'md':
-          return 'w-48'
+          return 'w-80'
         case 'lg':
-          return 'w-56'
-        case 'xl':
-          return 'w-72'
+          return 'w-96'
         default:
-          return 'w-56'
+          return 'w-80'
+      }
+    },
+    popoverArrowClass() {
+      switch (this.placement) {
+        case 'top':
+          return 'before:border-r before:border-b'
+        case 'right':
+          return 'before:border-l before:border-b'
+        case 'bottom':
+          return 'before:border-l before:border-t'
+        case 'left':
+          return 'before:border-r before:border-t'
+        default:
+          return 'w-80'
       }
     }
   },
@@ -157,7 +145,7 @@ export default {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         /**
-         * Emitted when the tooltip opens.
+         * Emitted when the popover will open.
          */
         this.$emit('open')
         open()
@@ -167,7 +155,7 @@ export default {
       clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         /**
-         * Emitted when the tooltip closes.
+         * Emitted when the popover will close.
          */
         this.$emit('close')
         close()
@@ -178,23 +166,23 @@ export default {
 </script>
 
 <style scoped>
-.tooltip.top {
-  box-shadow: rgb(0 0 0 / 15%) 0 -4px 6px 0
+.popover.top {
+  box-shadow: rgb(0 0 0 / 10%) 0 -4px 6px 0
 }
-.tooltip.right {
-  box-shadow: rgb(0 0 0 / 15%) 4px 4px 6px 0
+.popover.right {
+  box-shadow: rgb(0 0 0 / 10%) 4px 4px 6px 0
 }
-.tooltip.bottom {
-  box-shadow: rgb(0 0 0 / 15%) 0 4px 6px 0
+.popover.bottom {
+  box-shadow: rgb(0 0 0 / 10%) 0 4px 6px 0
 }
-.tooltip.left {
-  box-shadow: rgb(0 0 0 / 15%) -4px 4px 6px 0
+.popover.left {
+  box-shadow: rgb(0 0 0 / 10%) -4px 4px 6px 0
 }
 .arrow,
 .arrow::before {
   position: absolute;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 0 0 0 2px;
 }
 
@@ -208,19 +196,19 @@ export default {
   transform: rotate(45deg);
 }
 
-.tooltip[data-popper-placement^='top'] > .arrow {
-  bottom: -4px;
+.popover[data-popper-placement^='top'] > .arrow {
+  bottom: -7px;
 }
 
-.tooltip[data-popper-placement^='bottom'] > .arrow {
-  top: -4px;
+.popover[data-popper-placement^='bottom'] > .arrow {
+  top: -7px;
 }
 
-.tooltip[data-popper-placement^='left'] > .arrow {
-  right: -0px;
+.popover[data-popper-placement^='left'] > .arrow {
+  right: -7px;
 }
 
-.tooltip[data-popper-placement^='right'] > .arrow {
-  left: -8px;
+.popover[data-popper-placement^='right'] > .arrow {
+  left: -7px;
 }
 </style>
