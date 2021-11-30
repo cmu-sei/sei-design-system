@@ -26,8 +26,12 @@ const Template = (args) => ({
       <template #header>
         Header content
       </template>
-      <template #sidebar>
-        Sidebar content
+      <template #sidebar="{ collapsed }">
+        <div :class="{
+          'p-4': !collapsed
+        }">
+          Sidebar content
+        </div>
       </template>
       <template #page-top>
         Page top content
@@ -47,6 +51,5 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'default'
 };
 
