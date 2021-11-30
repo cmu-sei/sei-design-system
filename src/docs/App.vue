@@ -1,17 +1,34 @@
 <template>
-  <sds-layout-sei-external :page="{ organization: 'SEI Design System' }">
-    <div class="p-8">
-      <components />
-      <examples />
-    </div>
-    <template #footer>
-      <div class="py-8 text-center border-t">
-        <p class="text-sm">
-          SEI Design System
-        </p>
-      </div>
+  <sds-layout-app-internal>
+    <template #header>
+      Header content
     </template>
-  </sds-layout-sei-external>
+    <template #sidebar>
+      <p class="my-96">
+        Sidebar content
+      </p>
+      <p class="my-96">
+        Sidebar content
+      </p>
+      <p class="my-96">
+        Sidebar content
+      </p>
+      <p class="my-96">
+        Sidebar content
+      </p>
+      <p class="my-96">
+        Sidebar content
+      </p>
+    </template>
+    <template #page-top>
+      Hello, world!
+    </template>
+    <components />
+    <examples />
+    <template #footer>
+      Footer content
+    </template>
+  </sds-layout-app-internal>
 </template>
 
 <script lang="ts">
