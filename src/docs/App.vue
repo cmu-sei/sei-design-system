@@ -5,8 +5,14 @@
     :app-name="appName"
     :page-title="pageTitle"
     :page-nav="pageNav"
-    enable-collapsible-sidebar
+    @navigate="navigate"
   >
+    <template #suite-header>
+      Suite header content
+    </template>
+    <template #page-header>
+      Page header content
+    </template>
     <components />
     <examples />
   </sds-layout-app-internal>
@@ -27,20 +33,29 @@ export default defineComponent({
   data() {
     return {
       collapsed: false,
-      appSuite: '<span class="text-red-400 font-bold">SEI</span>Net',
+      appSuite: 'Net',
       appName: 'Accomplishments',
       pageTitle: 'Dashboard',
       pageNav: [
         { id: 1, title: 'Dashboard', active: true, href: '#' },
         { id: 2, title: 'About SEI', active: false, href: '#' },
         { id: 3, title: 'News &amp; Events', active: false, href: '#' },
-        { id: 4, title: 'Divisions', active: false, href: '#', badgeCount: 4 },
+        { id: 4, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
         { id: 5, title: 'Research &amp; Projects', active: false, href: '#' },
         { id: 6, title: 'HR &amp; Benefits', active: false, href: '#' },
         { id: 7, title: 'Policies', active: false, href: '#' },
         { id: 8, title: 'Workplace Services', active: false, href: '#' },
         { id: 9, title: 'Help &amp; FAQ', active: false, href: '#' },
       ]
+    }
+  },
+  methods: {
+    navigate({ item, event }: any) {
+      event.preventDefault()
+      this.pageNav = this.pageNav.map((i) => {
+        i.active = i.id === item.id
+        return i
+      })
     }
   }
 });
