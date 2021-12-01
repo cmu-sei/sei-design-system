@@ -4,55 +4,35 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
 <div
   class="flex flex-col h-screen"
 >
-  <header
-    class="bg-gray-900 text-white py-2 px-4 flex-shrink-0"
-  >
-    <!-- @slot Header content. -->
-    
-    
-  </header>
   <div
     class="flex flex-grow flex-shrink-0"
   >
     <aside
-      class="bg-gray-900 text-white"
-      style="width: 250px; max-width: 250px; min-width: 250px;"
+      class="bg-gray-900 text-white flex-shrink-0 w-60"
     >
       <div
         class="h-screen flex flex-col sticky top-0"
       >
         <div
-          class="overflow-y-auto flex-grow overscroll-contain mb-10"
+          class="overflow-y-auto flex-grow overscroll-contain"
         >
-          <!-- @slot Sidebar content. @binding collapsed -->
-          
-          
-        </div>
-        <div
-          class="flex-shrink-0 sticky bottom-0"
-        >
-          <button
-            class="px-3 ml-auto border-transparent rounded-none tab tab-block tab-dark w-auto"
-            id="btn-collapse-toggle"
-            title="Collapse sidebar ( [ )"
+          <div
+            class="sticky top-0 bg-gray-900 z-10"
           >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6 mx-auto"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="px-4 py-2"
             >
-              <path
-                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+              <p
+                class="text-xl"
               />
-            </svg>
-          </button>
+            </div>
+            <h1
+              class="text-lg font-bold px-4 pt-2 pb-4"
+            />
+          </div>
+          <!--v-if-->
         </div>
+        <!--v-if-->
       </div>
     </aside>
     <section
@@ -62,14 +42,23 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         class="flex-grow pb-4 bg-gray-100"
       >
         <div
-          class="bg-white shadow p-4 sticky top-0 z-50"
+          class="bg-gray-900 text-white px-4 py-2 flex h-10"
         >
-          <!-- @slot Page top content. -->
-          
-          
+          <div
+            class="ml-auto"
+          >
+             Test 
+          </div>
         </div>
         <div
-          class="p-4"
+          class="bg-white shadow px-8 py-3 sticky top-0 z-50"
+        >
+          <p
+            class="text-xl font-semibold text-gray-700"
+          />
+        </div>
+        <div
+          class="px-8 py-4"
         >
           <!-- @slot Page content. -->
           
@@ -80,9 +69,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
       <footer
         class="bg-gray-900 text-white"
       >
-        <!-- @slot Footer content. -->
-        
-        
+         Footer content 
       </footer>
     </section>
   </div>
