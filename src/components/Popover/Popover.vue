@@ -79,7 +79,7 @@ export default {
       default: 250
     },
     /**
-     * The width of the popover
+     * The width of the popover.
      */
     size: {
       type: String,
