@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A popover is a brief overlay that shows on a content screen when a user clicks on a control button or within a defined area.  Popovers are generally preferred in big screens (tablet size or bigger). A popover is connected to a trigger element, such as a button or icon, that shows contextual information when the trigger element is tapped.',
+        component: 'A popover is a delayed hover component that offers additional information about a piece of content and can have an actionable component such as a button or link in it.'
       },
     },
   },
