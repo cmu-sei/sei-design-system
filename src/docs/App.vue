@@ -15,6 +15,9 @@
     </template>
     <components />
     <examples />
+    <template #footer-middle>
+      Footer middle content
+    </template>
   </sds-layout-app-internal>
 </template>
 
