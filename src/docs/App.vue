@@ -53,7 +53,7 @@ export default defineComponent({
     }
   },
   methods: {
-    navigate(item: any, event: any) {
+    navigate({ item, event }: any) {
       event.preventDefault()
       this.pageNav = this.pageNav.map((i) => {
         i.active = i.id === item.id

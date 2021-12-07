@@ -392,6 +392,7 @@ export default defineComponent({
     document.addEventListener("keyup", this.handleDocumentKeyUp);
   },
   unmounted() {
+    // Destroy collapse functionality
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
   methods: {
