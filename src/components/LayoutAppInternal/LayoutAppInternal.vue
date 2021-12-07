@@ -382,10 +382,14 @@ export default defineComponent({
   watch: {
     showMobileMenu(value) {
       if (value) {
+        // prevent scrolling
+        document.documentElement.classList.add("layout-app-internal-prevent-scroll");
         this.$nextTick(() => {
           this.$refs.mobileMenuCloseBtn.focus()
         })
       } else {
+        // enable scrolling
+        document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
         this.$refs.mobileMenuOpenBtn.focus()
       }
     }
@@ -395,6 +399,9 @@ export default defineComponent({
     document.addEventListener("keyup", this.handleDocumentKeyUp);
   },
   unmounted() {
+    // enable scrolling
+    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+
     // Destroy collapse functionality
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
@@ -457,3 +464,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="postcss">
+.layout-app-internal-prevent-scroll {
+  overflow: hidden;
+}
+
+@screen md {
+  .layout-app-internal-prevent-scroll {
+    overflow: visible;
+  }
+}
+</style>
