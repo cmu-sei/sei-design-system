@@ -57,7 +57,7 @@
               >
                 <!-- @slot Nav content. @binding items, collapsed -->
                 <slot
-                  name="sidebar-nav"
+                  name="sidebar-navigation"
                   :items="pageNav"
                   :collapsed="collapsed"
                 >
@@ -123,7 +123,7 @@
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
-                name="sidebar-nav"
+                name="sidebar-navigation"
                 :items="pageNav"
                 :collapsed="collapsed"
               >
