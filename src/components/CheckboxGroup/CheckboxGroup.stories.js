@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A radio group form field.',
+        component: 'A checkbox group allows users to pick multiple options from a list. ',
       },
     },
   },

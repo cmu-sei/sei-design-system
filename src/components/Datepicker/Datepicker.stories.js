@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A date input field with the ability to display a calendar for easy selection.',
+        component: 'A date picker is a text input field that displays a calendar to allow users to select a single date.',
       },
     },
   },

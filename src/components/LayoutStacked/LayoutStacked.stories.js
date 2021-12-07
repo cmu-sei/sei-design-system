@@ -7,7 +7,7 @@ export default {
       inlineStories: false,
       iframeHeight: 250,
       description: {
-        component: 'A stacked layout that automatically stretches to the size of the viewport.',
+        component: 'A simple layout that automatically adjusts to the size of the viewport.',
       },
     },
   },

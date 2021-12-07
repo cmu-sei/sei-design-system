@@ -163,6 +163,9 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value) {
+        /**
+         * Emmitted when modelValue changes.
+         */
         emit("update:modelValue", value);
       },
     })

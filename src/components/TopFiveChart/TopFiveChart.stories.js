@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A bar chart that displays the top five listings.',
+        component: 'A top five chart visualizes the top five results as proportional horizontal rectangular blocks. ',
       },
     },
   },

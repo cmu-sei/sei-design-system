@@ -84,7 +84,7 @@ export default defineComponent({
   methods: {
     onClick() {
       /**
-       * Passthrough click event
+       * Emitted when the button is clicked.
        */
       this.$emit('click')
     }

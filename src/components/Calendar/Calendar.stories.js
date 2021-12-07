@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A calendar that allows for either a single or a range date selection.',
+        component: 'A calendar is a text input field that displays a calendar to allow users to select a single date or a date range.',
       },
     },
   },

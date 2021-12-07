@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A form field that presents itself as a search box.',
+        component: 'A search box is a text field allows users to type in search terms and execute it by clicking the magnifying glass icon.',
       },
     },
   },

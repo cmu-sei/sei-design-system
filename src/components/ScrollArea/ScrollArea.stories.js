@@ -3,9 +3,11 @@ import SdsScrollArea from './ScrollArea.vue';
 export default {
   title: 'Utility/ScrollArea',
   parameters: {
+    inlineStories: false,
+    iframeHeight: 300,
     docs: {
       description: {
-        component: 'An wrapper that provides a visible scroll bar.',
+        component: 'A scroll area is a wrapper that provides a visible scroll bar and enables users to scroll through content that exceeds the size of the frame.',
       },
     },
   },

@@ -2,12 +2,12 @@
 
 exports[`LoadingBox.vue matches snapshot 1`] = `
 <span
-  class="loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-1/2 h-48"
+  class="loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-full h-24"
 />
 `;
 
-exports[`LoadingBox.vue matches snapshot with no props assigned 1`] = `"<span class=\\"loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-1/2 h-48\\"></span>"`;
+exports[`LoadingBox.vue matches snapshot with no props assigned 1`] = `"<span class=\\"loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-full h-24\\"></span>"`;
 
 exports[`LoadingBox.vue matches snapshot with width and height prop assigned 1`] = `"<span class=\\"loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-1/2 h-32\\"></span>"`;
 
-exports[`LoadingBox.vue matches snapshot with width prop assigned 1`] = `"<span class=\\"loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-1/2 h-48\\"></span>"`;
+exports[`LoadingBox.vue matches snapshot with width prop assigned 1`] = `"<span class=\\"loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200 w-1/2 h-24\\"></span>"`;

@@ -141,6 +141,9 @@ export default {
         return this.modelValue;
       },
       set(val) {
+        /**
+         * Emitted when modelValue changes.
+         */
         this.$emit("update:modelValue", val);
       },
     },
@@ -175,6 +178,9 @@ export default {
     },
     search() {
       if (this.disabled || this.disableSearch) return;
+      /**
+       * Emitted when a search is triggered with a payload of the query.
+       */
       this.$emit("search", this.q);
     },
   },

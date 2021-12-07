@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A select box form field.',
+        component: 'A select is a form field that allows users to choose one option from a list.',
       },
     },
   },

@@ -19,7 +19,7 @@
         :value="option.value"
         :name="name ? name : `${id}__option`"
         :required="required"
-        @click="$emit('change', option.value)"
+        @click="onChange(option.value)"
       ><label
         :for="`${id}__option_${index}`"
       ><span>{{ option.text }}</span></label>
@@ -67,6 +67,9 @@ export default {
         return this.modelValue;
       },
       set(value) {
+        /**
+         * Emitted when modelValue changes.
+         */
         this.$emit("update:modelValue", value);
       },
     },
@@ -75,5 +78,13 @@ export default {
     id++;
     this.id = `sds-checkbox-group_${id}`;
   },
+  methods: {
+    onChange(value) {
+      /**
+       * Emitted when an option's value has changed.
+       */
+      this.$emit('change', value)
+    }
+  }
 };
 </script>

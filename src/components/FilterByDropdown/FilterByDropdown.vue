@@ -178,6 +178,9 @@ export default {
         return this.modelValue;
       },
       set(value) {
+        /**
+         * Emmitted when modelValue changes.
+         */
         this.$emit("update:modelValue", value);
       },
     },
@@ -215,6 +218,9 @@ export default {
       }
     },
     saveSelections() {
+      /**
+       * Emmitted when modelValue changes.
+       */
       this.$emit("update:modelValue", this.tmpOptions);
       this.closeDropdown();
     },

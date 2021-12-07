@@ -1,9 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PopperWrapper.vue matches snapshot 1`] = `
-<div>
-  <!-- @slot Popper wrapper content. @binding isOpen, open, close -->
-  
-  
-</div>
-`;
+exports[`PopperWrapper.vue matches snapshot 1`] = `<!---->`;

@@ -10,6 +10,7 @@ import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsInput from "./Input"
+import SdsLayoutAppInternal from "./LayoutAppInternal";
 import SdsLayoutFixedSidebar from "./LayoutFixedSidebar";
 import SdsLayoutSeiExternal from "./LayoutSeiExternal";
 import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
@@ -24,6 +25,7 @@ import SdsLoadingBox from "./LoadingBox";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
+import SdsPopover from "./Popover";
 import SdsPopperWrapper from "./PopperWrapper";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
@@ -53,6 +55,7 @@ const Components = {
   SdsDropdownItem,
   SdsFilterByDropdown,
   SdsInput,
+  SdsLayoutAppInternal,
   SdsLayoutFixedSidebar,
   SdsLayoutSeiExternal,
   SdsLayoutSeiExternalFooter,
@@ -67,6 +70,7 @@ const Components = {
   SdsModal,
   SdsMultiselect,
   SdsPaginator,
+  SdsPopover,
   SdsPopperWrapper,
   SdsRadioGroup,
   SdsScrollArea,
@@ -104,6 +108,7 @@ export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsInput } from "./Input"
+export { default as SdsLayoutAppInternal } from "./LayoutAppInternal";
 export { default as SdsLayoutFixedSidebar } from "./LayoutFixedSidebar";
 export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
 export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
@@ -118,6 +123,7 @@ export { default as SdsLoadingBox } from "./LoadingBox";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";
+export { default as SdsPopover } from "./Popover";
 export { default as SdsPopperWrapper } from "./PopperWrapper";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";

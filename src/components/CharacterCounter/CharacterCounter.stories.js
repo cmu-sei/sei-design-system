@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A component that displays number difference between a current and a max value.',
+        component: 'A character counter displays the current character number or number of characters over the maximum value in a given text field.',
       },
     },
   },

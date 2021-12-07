@@ -82,6 +82,9 @@ export default {
         return this.modelValue;
       },
       set(value) {
+        /**
+         * Emmitted when modelValue changes.
+         */
         this.$emit("update:modelValue", value);
       },
     },

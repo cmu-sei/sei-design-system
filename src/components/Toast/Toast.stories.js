@@ -5,12 +5,17 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An toast for use with the Toaster component.',
+        component: 'A toast serves as a feedback and confirmation mechanism after the user takes an action.',
       },
     },
   },
   component: SdsToast,
-  argTypes: {}
+  argTypes: {
+    variant: {
+      options: ['success', 'info', 'warning', 'danger'],
+      control: { type: 'select' }
+    },
+  }
 };
 
 const Template = (args) => ({
@@ -25,11 +30,9 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  toast: {
-    id: 1,
-    variant: 'success',
-    title: 'Title',
-    text: 'Text of the toast'
-  }
+  id: 1,
+  variant: 'success',
+  title: 'Title',
+  text: 'Text of the toast'
 };
 

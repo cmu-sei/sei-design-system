@@ -55,6 +55,9 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value) {
+        /**
+         * Emitted when modelValue changes.
+         */
         this.$emit("update:modelValue", value);
       }
     }

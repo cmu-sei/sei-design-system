@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A toggle switch is a form element that can be used for when user must choose between two mutually exclusive options.',
+        component: 'A toggle switch is a component that allows users to turn a system state on or off, which will trigger a change across the entire application.',
       },
     },
   },

@@ -46,7 +46,7 @@
             :title="
               collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
             "
-            class="w-auto px-2 ml-auto border-transparent rounded-none nav nav-block nav-dark"
+            class="w-auto px-2 ml-auto border-transparent rounded-none tab tab-block tab-dark"
             :class="{ 'w-full': collapsed, 'px-3': !collapsed }"
             @click="toggleCollapse"
           >
@@ -147,6 +147,9 @@ export default {
         return this.modelValue;
       },
       set(val) {
+        /**
+         * Emmitted when modelValue changes.
+         */
         this.$emit("update:modelValue", val);
       },
     },

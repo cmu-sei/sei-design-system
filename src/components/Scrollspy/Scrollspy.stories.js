@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A components that watches the scroll position of the viewport.',
+        component: 'A scrollspy listens to page scrolling and trigger events based on the scroll position and allows users to smoothly navigate through different page sections.',
       },
     },
   },
