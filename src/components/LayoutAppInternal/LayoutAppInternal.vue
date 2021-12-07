@@ -199,7 +199,7 @@
           <div class="bg-gray-900 text-white px-4 py-2 flex h-10">
             <button
               ref="mobileMenuOpenBtn"
-              class="flex gap-2 md:hidden -ml-1"
+              class="flex gap-2 md:hidden -ml-1 focus:outline-none"
               @click="showMobileMenu = !showMobileMenu"
             >
               <svg
