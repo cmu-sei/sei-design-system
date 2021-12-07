@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Tooltips are short messages related to specific UI elements that provide additional explanations and guide users towards taking specific actions. They\'re triggered when a user hovers over an on-page item or when they click on an icon, a hotspot, or another active element. Tooltips give users extra information that paves the way for product success.',
+        component: 'A tooltip is a hover component that can clarify a piece of content for users.',
       },
     },
   },
