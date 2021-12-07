@@ -7,8 +7,17 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
   <div
     class="flex flex-grow flex-shrink-0"
   >
+    <!-- Mobile sidebar close section -->
+    <transition-stub>
+      <!--v-if-->
+    </transition-stub>
+    <!-- Mobile sidebar -->
+    <transition-stub>
+      <!--v-if-->
+    </transition-stub>
+    <!-- Desktop sidebar -->
     <aside
-      class="bg-gray-900 text-white flex-shrink-0 w-60"
+      class="hidden md:block bg-gray-900 text-white flex-shrink-0 w-60"
     >
       <div
         class="h-screen flex flex-col sticky top-0"
@@ -22,6 +31,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         <!--v-if-->
       </div>
     </aside>
+    <!-- Main content -->
     <section
       class="flex flex-col items-stretch flex-grow min-w-0"
     >
@@ -31,6 +41,47 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         <div
           class="bg-gray-900 text-white px-4 py-2 flex h-10"
         >
+          <button
+            class="flex gap-2 md:hidden -ml-1 focus:outline-none"
+          >
+            <svg
+              aria-hidden="true"
+              class="text-white h-6 w-6 inline-block"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              viewBox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+              >
+                <path
+                  d="M7.95 11.95h32"
+                />
+                <path
+                  d="M7.95 23.95h32"
+                />
+                <path
+                  d="M7.95 35.95h32"
+                />
+              </g>
+            </svg>
+            <span
+              class="text-xl leading-6"
+            >
+              <span
+                class="text-red-400 font-bold"
+              >
+                SEI
+              </span>
+              <!--v-if-->
+            </span>
+          </button>
           <div
             class="ml-auto my-auto flex gap-2"
           >
@@ -40,7 +91,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           </div>
         </div>
         <div
-          class="bg-white shadow px-8 py-3 sticky top-0 z-50 flex gap-4 h-16"
+          class="bg-white shadow px-4 py-3 sticky top-0 z-40 flex gap-4 h-16"
         >
           <div
             class="flex-grow my-auto"
@@ -58,7 +109,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           </div>
         </div>
         <div
-          class="p-8"
+          class="p-4"
         >
           <!-- @slot Page content. @binding collapsed -->
           
@@ -66,12 +117,14 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           
         </div>
       </main>
+      <!-- Footer -->
       <footer
-        class="bg-gray-900 text-xs text-light px-8 py-4 flex gap-4"
+        class="bg-gray-900 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4"
       >
         <div
-          class="flex-shrink flex"
+          class="flex-shrink flex order-2 lg:order-1"
         >
+          
           <sds-link-stub
             class="my-auto"
             cta="false"
@@ -81,19 +134,32 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
             title="Software Engineering Institute"
             variant=""
           />
+          
         </div>
         <div
-          class="flex-shrink flex ml-auto"
+          class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
         >
           <div
             class="my-auto"
           >
+            
+            
+          </div>
+        </div>
+        <div
+          class="flex-shrink flex lg:ml-auto order-3"
+        >
+          <div
+            class="my-auto"
+          >
+            
             <p>
               © 2021 Carnegie Mellon University
             </p>
             <p>
               SEI Internal Use Only
             </p>
+            
           </div>
         </div>
       </footer>
