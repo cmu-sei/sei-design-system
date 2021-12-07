@@ -124,6 +124,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         <div
           class="flex-shrink flex order-2 lg:order-1"
         >
+          <!-- @slot Footer left (middle in mobile) content. -->
           
           <sds-link-stub
             class="my-auto"
@@ -142,6 +143,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           <div
             class="my-auto"
           >
+            <!-- @slot Footer middle (top in mobile) content. -->
             
             
           </div>
@@ -152,6 +154,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           <div
             class="my-auto"
           >
+            <!-- @slot Footer right (bottom in mobile) content. -->
             
             <p>
               © 2021 Carnegie Mellon University

@@ -256,6 +256,7 @@
         <!-- Footer -->
         <footer class="bg-gray-900 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink flex order-2 lg:order-1">
+            <!-- @slot Footer left (middle in mobile) content. -->
             <slot name="footer-left">
               <sds-link
                 href="https://sei.cmu.edu"
@@ -273,11 +274,13 @@
           </div>
           <div class="flex-shrink flex lg:mx-auto order-1 lg:order-2">
             <div class="my-auto">
+              <!-- @slot Footer middle (top in mobile) content. -->
               <slot name="footer-middle" />
             </div>
           </div>
           <div class="flex-shrink flex lg:ml-auto order-3">
             <div class="my-auto">
+              <!-- @slot Footer right (bottom in mobile) content. -->
               <slot name="footer-right">
                 <p>&copy; {{ year }} Carnegie Mellon University</p>
                 <p>SEI Internal Use Only</p>
