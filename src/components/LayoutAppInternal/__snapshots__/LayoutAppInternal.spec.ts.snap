@@ -17,7 +17,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
     </transition-stub>
     <!-- Desktop sidebar -->
     <aside
-      class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50 w-60"
+      class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50 w-64"
     >
       <div
         class="h-screen flex flex-col sticky top-0"

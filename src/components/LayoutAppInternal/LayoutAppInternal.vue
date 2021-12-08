@@ -44,12 +44,25 @@
           <div class="h-screen flex flex-col sticky top-0">
             <div class="overflow-y-auto flex-grow overscroll-contain">
               <div
-                v-if="appName"
-                class="sticky top-0 bg-gray-900 z-10"
+                v-if="appName || appIconUrl"
+                class="sticky top-0 bg-gray-900 z-10 flex gap-2 p-4"
               >
-                <p class="text-lg font-bold p-4">
+                <span
+                  v-if="appIconUrl"
+                  class="inline-block w-8 h-8 my-auto"
+                >
+                  <img
+                    :src="appIconUrl"
+                    :alt="appName"
+                    class="w-8 h-8"
+                  >
+                </span>
+                <span
+                  class="text-lg font-bold my-auto"
+                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                >
                   {{ appName }}
-                </p>
+                </span>
               </div>
               <nav
                 v-if="pageNavigation.length > 0"
@@ -73,11 +86,11 @@
                     @click="navigate(item, $event)"
                   >
                     <span
-                      v-if="item.imageUrl"
+                      v-if="item.iconUrl"
                       class="inline-block w-8 h-8 my-auto"
                     >
                       <img
-                        :src="item.imageUrl"
+                        :src="item.iconUrl"
                         :alt="item.title"
                         class="w-8 h-8"
                       >
@@ -100,15 +113,16 @@
       <!-- Desktop sidebar -->
       <aside
         class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50"
-        :class="[sidebarWidth]"
+        :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
           <div class="overflow-y-auto flex-grow overscroll-contain">
             <div
-              v-if="appSuite || appName"
+              v-if="appSuite || appName || appIconUrl"
               class="sticky top-0 bg-gray-900 z-10"
             >
               <div
+                v-if="appSuite"
                 class="px-4 py-2"
                 :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
               >
@@ -118,15 +132,32 @@
                 </p>
               </div>
               <p
-                class="text-lg font-bold p-4"
-                :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                v-if="appName || appIconUrl"
+                class="flex gap-2 p-4"
               >
-                {{ appName }}
+                <span
+                  v-if="appIconUrl"
+                  class="inline-block w-8 h-8 my-auto"
+                >
+                  <img
+                    :src="appIconUrl"
+                    :alt="appName"
+                    class="w-8 h-8"
+                  >
+                </span>
+                <span
+                  v-if="appName"
+                  class="text-lg font-bold my-auto"
+                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                >
+                  {{ appName }}
+                </span>
               </p>
             </div>
             <nav
               v-if="pageNavigation.length > 0"
               class="grid grid-cols-1"
+              :class="[collapsed && !appIconUrl ? 'mt-2' : '']"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -153,11 +184,11 @@
                         @click="navigate(item, $event)"
                       >
                         <span
-                          v-if="item.imageUrl"
+                          v-if="item.iconUrl"
                           class="inline-block w-8 h-8 my-auto"
                         >
                           <img
-                            :src="item.imageUrl"
+                            :src="item.iconUrl"
                             :alt="item.title"
                             class="w-8 h-8"
                           >
@@ -347,11 +378,11 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The width class of the sidebar, both min (collapsed) and max (expanded).
+     * The width class of the non-collapsed sidebar when not in a mobile repsonsive view.
      */
-    width: {
+    sidebarWidth: {
       type: String,
-      default: 'w-60'
+      default: 'w-64'
     },
     /**
      * Determines whether to enable collapsing functionality.
@@ -372,6 +403,10 @@ export default defineComponent({
      * The app name for the layout.
      */
     appName: { type: String, default: null },
+    /**
+     * The app icon url for the layout.
+     */
+    appIconUrl: { type: String, default: null },
     /**
      * The page title for the layout.
      */
@@ -395,9 +430,9 @@ export default defineComponent({
       const d = new Date();
       return d.getFullYear();
     },
-    sidebarWidth() {
-      if (!this.enableCollapsibleSidebar) return this.width
-      return this.collapsed ? 'w-auto' : this.width;
+    computedSidebarWidth() {
+      if (!this.enableCollapsibleSidebar) return this.sidebarWidth
+      return this.collapsed ? 'w-auto' : this.sidebarWidth;
     },
     collapsed: {
       get() {
