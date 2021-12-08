@@ -6,7 +6,7 @@
     <div class="inline-block">
       <div
         :id="triggerId"
-        :class="[triggerClass ? triggerClass : 'cursor-pointer']"
+        :class="[triggerClass]"
         :aria-describedby="popperId"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"

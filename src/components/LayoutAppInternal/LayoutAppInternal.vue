@@ -65,7 +65,7 @@
                     v-for="item in pageNavigation"
                     :key="item.id"
                     :href="item.href"
-                    class="flex gap-2 px-4 py-2 border-l-4"
+                    class="flex relative gap-2 pl-3 px-4 py-2 border-l-4"
                     :class="{
                       'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white': !item.active,
                       'text-white border-danger pointer-events-none': item.active
@@ -73,10 +73,17 @@
                     @click="navigate(item, $event)"
                   >
                     <span
-                      class="inline-block"
-                      v-html="item.title"
-                    />
-                    <span class="inline-block">
+                      v-if="item.imageUrl"
+                      class="inline-block w-8 h-8 my-auto"
+                    >
+                      <img
+                        :src="item.imageUrl"
+                        :alt="item.title"
+                        class="w-8 h-8"
+                      >
+                    </span>
+                    <span class="inline-block my-auto">{{ item.title }}</span>
+                    <span class="inline-block my-auto">
                       <span
                         v-if="item.badgeCount"
                         class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
@@ -343,11 +350,8 @@ export default defineComponent({
      * The width class of the sidebar, both min (collapsed) and max (expanded).
      */
     width: {
-      type: Object,
-      default: () => ({
-        min: 'w-auto',
-        max: 'w-60',
-      }),
+      type: String,
+      default: 'w-60'
     },
     /**
      * Determines whether to enable collapsing functionality.
@@ -392,8 +396,8 @@ export default defineComponent({
       return d.getFullYear();
     },
     sidebarWidth() {
-      if (!this.enableCollapsibleSidebar) return this.width.max
-      return this.collapsed ? this.width.min : this.width.max;
+      if (!this.enableCollapsibleSidebar) return this.width
+      return this.collapsed ? 'w-auto' : this.width;
     },
     collapsed: {
       get() {
