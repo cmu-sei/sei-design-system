@@ -130,7 +130,8 @@
               </div>
               <p
                 v-if="appName || appIconUrl"
-                class="flex gap-2 p-4"
+                class="flex gap-2"
+                :class="[appIconUrl ? 'p-4' : 'px-4 pt-4 pb-5']"
               >
                 <span
                   v-if="appIconUrl"
