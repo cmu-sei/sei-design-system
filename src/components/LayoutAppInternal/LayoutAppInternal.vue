@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen dark:text-gray-50">
     <div class="flex flex-grow flex-shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
@@ -31,7 +31,7 @@
         <aside
           v-if="showMobileMenu"
           ref="mobileSidebarContainer"
-          class="md:hidden fixed w-2/3 z-50 bg-gray-900 text-white flex-shrink-0"
+          class="md:hidden fixed w-2/3 z-50 bg-gray-900 dark:bg-gray-800 text-white flex-shrink-0"
           @keydown="checkKeyEvent"
         >
           <button
@@ -45,7 +45,7 @@
             <div class="overflow-y-auto flex-grow overscroll-contain">
               <div
                 v-if="appName || appIconUrl"
-                class="sticky top-0 bg-gray-900 z-10 flex gap-2 p-4"
+                class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10 flex gap-2 p-4"
               >
                 <span
                   v-if="appIconUrl"
@@ -77,7 +77,7 @@
                     :href="item.href"
                     class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                     :class="{
-                      'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
+                      'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
                       'text-white border-danger pointer-events-none': item.active
                     }"
                     @click="navigate(item, $event)"
@@ -109,14 +109,14 @@
 
       <!-- Desktop sidebar -->
       <aside
-        class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50"
+        class="hidden md:block bg-gray-900 dark:bg-gray-800 text-white flex-shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
           <div class="overflow-y-auto flex-grow overscroll-contain">
             <div
               v-if="appSuite || appName || appIconUrl"
-              class="sticky top-0 bg-gray-900 z-10"
+              class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10"
             >
               <div
                 v-if="appSuite"
@@ -176,7 +176,7 @@
                         :href="item.href"
                         class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                         :class="{
-                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
+                          'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
                           'text-white border-danger pointer-events-none': item.active
                         }"
                         @click="navigate(item, $event)"
@@ -257,8 +257,8 @@
 
       <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-100">
-          <div class="bg-gray-900 text-white px-4 py-2 flex h-12">
+        <main class="flex-grow pb-4 bg-gray-100 dark:bg-gray-900">
+          <div class="bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 flex h-12">
             <div class="md:hidden -ml-1 my-auto">
               <button
                 ref="mobileMenuOpenBtn"
@@ -297,9 +297,9 @@
               />
             </div>
           </div>
-          <div class="bg-white shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row">
+          <div class="bg-white dark:bg-gray-700 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row">
             <div class="flex-grow my-auto">
-              <p class="text-2xl font-semibold text-gray-700">
+              <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
                 {{ pageTitle }}
               </p>
             </div>
@@ -318,7 +318,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-gray-900 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink flex order-2 lg:order-1">
             <!-- @slot Footer left (middle in mobile) content. -->
             <slot name="footer-left">
