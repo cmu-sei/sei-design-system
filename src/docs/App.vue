@@ -13,7 +13,19 @@
       Suite header content
     </template>
     <template #page-header>
-      Page header content
+      <!-- <div class="flex flex-col lg:flex-row gap-2">
+        <sds-button variant="danger">
+          Add accomplishment
+        </sds-button>
+        <sds-search-box variant="danger" />
+      </div> -->
+      <!-- Page header content -->
+      <sds-button variant="default">
+        Export
+      </sds-button>
+      <sds-button variant="default">
+        Save Search
+      </sds-button>
     </template>
     <components />
     <examples />

@@ -297,13 +297,13 @@
               />
             </div>
           </div>
-          <div class="bg-white shadow px-4 py-3 sticky top-0 z-40 flex gap-4 h-16">
+          <div class="bg-white shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row">
             <div class="flex-grow my-auto">
               <p class="text-2xl font-semibold text-gray-700">
                 {{ pageTitle }}
               </p>
             </div>
-            <div class="flex-shrink-0 my-auto flex gap-2">
+            <div class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2">
               <!-- @slot Page header content. @binding collapsed -->
               <slot
                 name="page-header"
