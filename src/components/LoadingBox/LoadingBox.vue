@@ -12,14 +12,14 @@ export default {
      * Sets the height of the box. Accepts tailwind height classes.
      */
     height: {
-      default: 'h-64',
+      default: 'h-screen',
       type: String
     },
     /**
      * Sets the width of the box. Accepts tailwind width classes.
      */
     width: {
-      default: 'w-1/3',
+      default: 'w-full',
       type: String
     }
   }

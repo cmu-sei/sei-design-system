@@ -6,7 +6,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Loading strategies assure users that their request is in progress and can create the illusion of shorter load times in apps.',
+        component: 'A tooltip is a hover component that can clarify a piece of content for users.',
+
       },
     },
   },
