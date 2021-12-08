@@ -179,6 +179,7 @@ export default defineComponent({
     })
 
     const makeDomChanges = () => {
+      if (typeof document === "undefined") return;
       document.documentElement.classList.add("modal-prevent-scroll");
       setTimeout(() => {
         document.addEventListener("keyup", handleEscKey);
@@ -186,6 +187,7 @@ export default defineComponent({
     }
 
     const removeDomChanges = () => {
+      if (typeof document === "undefined") return;
       document.documentElement.classList.remove("modal-prevent-scroll");
       document.removeEventListener("keyup", handleEscKey);
     }

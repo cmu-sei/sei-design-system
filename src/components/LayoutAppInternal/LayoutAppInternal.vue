@@ -52,17 +52,17 @@
                 </p>
               </div>
               <nav
-                v-if="pageNav.length > 0"
+                v-if="pageNavigation.length > 0"
                 class="grid grid-cols-1"
               >
                 <!-- @slot Nav content. @binding items, collapsed -->
                 <slot
                   name="sidebar-navigation"
-                  :items="pageNav"
+                  :items="pageNavigation"
                   :collapsed="collapsed"
                 >
                   <a
-                    v-for="item in pageNav"
+                    v-for="item in pageNavigation"
                     :key="item.id"
                     :href="item.href"
                     class="flex gap-2 px-4 py-2 border-l-4"
@@ -92,7 +92,7 @@
 
       <!-- Desktop sidebar -->
       <aside
-        class="hidden md:block bg-gray-900 text-white flex-shrink-0"
+        class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50"
         :class="[sidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
@@ -118,37 +118,63 @@
               </p>
             </div>
             <nav
-              v-if="pageNav.length > 0"
+              v-if="pageNavigation.length > 0"
               class="grid grid-cols-1"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
                 name="sidebar-navigation"
-                :items="pageNav"
+                :items="pageNavigation"
                 :collapsed="collapsed"
               >
-                <a
-                  v-for="item in pageNav"
+                <template
+                  v-for="item in pageNavigation"
                   :key="item.id"
-                  :href="item.href"
-                  class="flex gap-2 px-4 py-2 border-l-4"
-                  :class="{
-                    'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white': !item.active,
-                    'text-white border-danger pointer-events-none': item.active
-                  }"
-                  @click="navigate(item, $event)"
                 >
-                  <span
-                    class="inline-block"
-                    v-html="item.title"
-                  />
-                  <span class="inline-block">
-                    <span
-                      v-if="item.badgeCount"
-                      class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
-                    >{{ item.badgeCount }}</span>
-                  </span>
-                </a>
+                  <sds-tooltip
+                    placement="right"
+                    :disabled="!collapsed"
+                  >
+                    <template #trigger>
+                      <a
+                        :href="item.href"
+                        class="flex relative gap-2 pl-3 px-4 py-2 border-l-4"
+                        :class="{
+                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white': !item.active,
+                          'text-white border-danger pointer-events-none': item.active
+                        }"
+                        @click="navigate(item, $event)"
+                      >
+                        <span
+                          v-if="item.imageUrl"
+                          class="inline-block w-8 h-8 my-auto"
+                        >
+                          <img
+                            :src="item.imageUrl"
+                            :alt="item.title"
+                            class="w-8 h-8"
+                          >
+                        </span>
+                        <span
+                          v-if="!collapsed"
+                          class="inline-block my-auto"
+                        >{{ item.title }}</span>
+                        <span
+                          class="inline-block my-auto"
+                          :class="{
+                            'absolute bottom-1 right-1': collapsed
+                          }"
+                        >
+                          <span
+                            v-if="item.badgeCount"
+                            class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                          >{{ item.badgeCount }}</span>
+                        </span>
+                      </a>
+                    </template>
+                    <p>{{ item.title }}</p>
+                  </sds-tooltip>
+                </template>
               </slot>
             </nav>
           </div>
@@ -296,12 +322,14 @@
 <script>
 import { defineComponent } from 'vue'
 import SdsLink from '../Link/Link.vue'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 export default defineComponent({
   name: 'SdsLayoutAppInternal',
   components: {
-    SdsLink
+    SdsLink,
+    SdsTooltip,
   },
   props: {
     /**
@@ -317,7 +345,7 @@ export default defineComponent({
     width: {
       type: Object,
       default: () => ({
-        min: 'w-12',
+        min: 'w-auto',
         max: 'w-60',
       }),
     },
@@ -347,7 +375,7 @@ export default defineComponent({
     /**
      * The page navigation for the layout.
      */
-    pageNav: { type: Array, default: () => [] },
+    pageNavigation: { type: Array, default: () => [] },
   },
   emits: ['update:modelValue', 'navigate'],
   data() {

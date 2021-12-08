@@ -4,7 +4,8 @@
     :app-suite="appSuite"
     :app-name="appName"
     :page-title="pageTitle"
-    :page-nav="pageNav"
+    :page-navigation="pageNavigation"
+    enable-collapsible-sidebar
     @navigate="navigate"
   >
     <template #suite-header>
@@ -39,23 +40,23 @@ export default defineComponent({
       appSuite: 'Net',
       appName: 'Accomplishments',
       pageTitle: 'Dashboard',
-      pageNav: [
-        { id: 1, title: 'Dashboard', active: true, href: '#' },
-        { id: 2, title: 'About SEI', active: false, href: '#' },
-        { id: 3, title: 'News &amp; Events', active: false, href: '#' },
-        { id: 4, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
-        { id: 5, title: 'Research &amp; Projects', active: false, href: '#' },
-        { id: 6, title: 'HR &amp; Benefits', active: false, href: '#' },
-        { id: 7, title: 'Policies', active: false, href: '#' },
-        { id: 8, title: 'Workplace Services', active: false, href: '#' },
-        { id: 9, title: 'Help &amp; FAQ', active: false, href: '#' },
+      pageNavigation: [
+        { id: 1, title: 'Dashboard', active: true, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 2, title: 'About SEI', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 3, title: 'News & Events', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 4, title: 'Divisions', active: false, href: '#', badgeCount: 9, imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 5, title: 'Research & Projects', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 6, title: 'HR & Benefits', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 7, title: 'Policies', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 8, title: 'Workplace Services', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { id: 9, title: 'Help & FAQ', active: false, href: '#', imageUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
       ]
     }
   },
   methods: {
     navigate({ item, event }: any) {
       event.preventDefault()
-      this.pageNav = this.pageNav.map((i) => {
+      this.pageNavigation = this.pageNavigation.map((i) => {
         i.active = i.id === item.id
         return i
       })
