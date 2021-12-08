@@ -65,17 +65,17 @@
                 </span>
               </div>
               <nav
-                v-if="pageNavigation.length > 0"
+                v-if="sidebarNavigationItems.length > 0"
                 class="grid grid-cols-1"
               >
                 <!-- @slot Nav content. @binding items, collapsed -->
                 <slot
                   name="sidebar-navigation"
-                  :items="pageNavigation"
+                  :items="sidebarNavigationItems"
                   :collapsed="collapsed"
                 >
                   <a
-                    v-for="item in pageNavigation"
+                    v-for="item in sidebarNavigationItems"
                     :key="item.id"
                     :href="item.href"
                     class="flex relative gap-2 pl-3 px-4 py-2 border-l-4"
@@ -155,18 +155,18 @@
               </p>
             </div>
             <nav
-              v-if="pageNavigation.length > 0"
+              v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1"
               :class="[collapsed && !appIconUrl ? 'mt-2' : '']"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
                 name="sidebar-navigation"
-                :items="pageNavigation"
+                :items="sidebarNavigationItems"
                 :collapsed="collapsed"
               >
                 <template
-                  v-for="item in pageNavigation"
+                  v-for="item in sidebarNavigationItems"
                   :key="item.id"
                 >
                   <sds-tooltip
@@ -386,6 +386,10 @@ export default defineComponent({
     },
     /**
      * Determines whether to enable collapsing functionality.
+     * 
+     * Ensure to have icons every item in the **sidebarNavigationItems** array for this to look nice.
+     * 
+     * Including an **appIconUrl** will also improve the user experience.
      */
     enableCollapsibleSidebar: {
       type: Boolean,
@@ -412,9 +416,15 @@ export default defineComponent({
      */
     pageTitle: { type: String, default: null },
     /**
-     * The page navigation for the layout.
+     * The sidebar navigation for the layout.
+     * 
+     * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
+     * 
+     * Item object:
+     * 
+     * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
      */
-    pageNavigation: { type: Array, default: () => [] },
+    sidebarNavigationItems: { type: Array, default: () => [] },
   },
   emits: ['update:modelValue', 'navigate'],
   data() {

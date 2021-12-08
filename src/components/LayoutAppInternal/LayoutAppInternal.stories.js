@@ -56,8 +56,8 @@ export const Default = Template.bind({});
 Default.args = {
   appSuite: 'SDS',
   appName: 'SEI Design System',
-  pageTitle: 'Dashboard',
-  pageNavigation: [
+  pageTitle: 'About',
+  sidebarNavigationItems: [
     { id: 1, title: 'About', active: true, href: '#' },
     { id: 2, title: 'Visual Language', active: false, href: '#' },
     { id: 3, title: 'Components', active: false, href: '#' },
