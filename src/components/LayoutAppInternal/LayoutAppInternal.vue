@@ -1,18 +1,126 @@
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="flex flex-col h-screen dark:text-gray-50">
     <div class="flex flex-grow flex-shrink-0">
+      <!-- Mobile sidebar close section -->
+      <transition
+        enter-active-class="transition-opacity ease-linear duration-150"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity ease-linear duration-150"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <button
+          v-if="showMobileMenu"
+          class="bg-black bg-opacity-40 fixed inset h-screen w-screen z-50 md:hidden"
+          @click="showMobileMenu = !showMobileMenu"
+        >
+          <span class="sr-only">Toggle mobile menu</span>
+        </button>
+      </transition>
+
+      <!-- Mobile sidebar -->
+      <transition
+        enter-active-class="transition-transform ease-linear duration-150"
+        enter-from-class="-translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-active-class="transition-transform ease-linear duration-150"
+        leave-from-class="translate-x-0"
+        leave-to-class="-translate-x-full"
+      >
+        <aside
+          v-if="showMobileMenu"
+          ref="mobileSidebarContainer"
+          class="md:hidden fixed w-2/3 z-50 bg-gray-900 dark:bg-gray-800 text-white flex-shrink-0"
+          @keydown="checkKeyEvent"
+        >
+          <button
+            ref="mobileMenuCloseBtn"
+            class="sr-only"
+            @click="showMobileMenu = !showMobileMenu"
+          >
+            <span class="sr-only">Toggle mobile menu</span>
+          </button>
+          <div class="h-screen flex flex-col sticky top-0">
+            <div class="overflow-y-auto flex-grow overscroll-contain">
+              <div
+                v-if="appName || appIconUrl"
+                class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10 flex gap-2 p-4"
+              >
+                <span
+                  v-if="appIconUrl"
+                  class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                >
+                  <img
+                    :src="appIconUrl"
+                    :alt="appName"
+                    class="w-8 h-8"
+                  >
+                </span>
+                <span class="text-lg font-bold my-auto">
+                  {{ appName }}
+                </span>
+              </div>
+              <nav
+                v-if="sidebarNavigationItems.length > 0"
+                class="grid grid-cols-1"
+              >
+                <!-- @slot Nav content. @binding items, collapsed -->
+                <slot
+                  name="sidebar-navigation"
+                  :items="sidebarNavigationItems"
+                  :collapsed="collapsed"
+                >
+                  <a
+                    v-for="item in sidebarNavigationItems"
+                    :key="item.id"
+                    :href="item.href"
+                    class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
+                    :class="{
+                      'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
+                      'text-white border-danger pointer-events-none': item.active
+                    }"
+                    @click="navigate(item, $event)"
+                  >
+                    <span
+                      v-if="item.iconUrl"
+                      class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                    >
+                      <img
+                        :src="item.iconUrl"
+                        :alt="item.title"
+                        class="w-8 h-8"
+                      >
+                    </span>
+                    <span class="inline-block my-auto">{{ item.title }}</span>
+                    <span class="inline-block my-auto">
+                      <span
+                        v-if="item.badgeCount"
+                        class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                      >{{ item.badgeCount }}</span>
+                    </span>
+                  </a>
+                </slot>
+              </nav>
+            </div>
+          </div>
+        </aside>
+      </transition>
+
+      <!-- Desktop sidebar -->
       <aside
-        class="bg-gray-900 text-white flex-shrink-0"
-        :class="[sidebarWidth]"
+        class="hidden md:block bg-gray-900 dark:bg-gray-800 text-white flex-shrink-0 z-50"
+        :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
           <div class="overflow-y-auto flex-grow overscroll-contain">
             <div
-              v-if="appSuite || appName"
-              class="sticky top-0 bg-gray-900 z-10"
+              v-if="appSuite || appName || appIconUrl"
+              class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10"
             >
               <div
-                class="px-4 py-2"
+                v-if="appSuite"
+                class="px-4 pt-3 pb-2"
                 :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
               >
                 <p class="text-xl">
@@ -20,45 +128,89 @@
                   <span>{{ appSuite }}</span>
                 </p>
               </div>
-              <h1
-                class="text-lg font-bold p-4"
-                :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+              <p
+                v-if="appName || appIconUrl"
+                class="flex gap-2"
+                :class="[appIconUrl ? 'p-4' : 'px-4 pt-4 pb-5']"
               >
-                {{ appName }}
-              </h1>
+                <span
+                  v-if="appIconUrl"
+                  class="block w-8 h-8 my-auto flex-shrink-0"
+                >
+                  <img
+                    :src="appIconUrl"
+                    :alt="appName"
+                    class="w-8 h-8"
+                  >
+                </span>
+                <span
+                  v-if="appName"
+                  class="text-lg font-bold my-auto"
+                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                >
+                  {{ appName }}
+                </span>
+              </p>
             </div>
             <nav
-              v-if="pageNav.length > 0"
+              v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1"
+              :class="[collapsed && !appIconUrl ? 'mt-4' : '']"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
-                name="sidebar-nav"
-                :items="pageNav"
+                name="sidebar-navigation"
+                :items="sidebarNavigationItems"
                 :collapsed="collapsed"
               >
-                <a
-                  v-for="item in pageNav"
+                <template
+                  v-for="item in sidebarNavigationItems"
                   :key="item.id"
-                  :href="item.href"
-                  class="flex gap-2 px-4 py-2 hover:bg-gray-800 hover:text-white"
-                  :class="{
-                    'bg-gray-900 text-gray-100': !item.active,
-                    'bg-gray-800 text-white': item.active
-                  }"
-                  @click="navigate(item, $event)"
                 >
-                  <span
-                    class="inline-block"
-                    v-html="item.title"
-                  />
-                  <span class="inline-block">
-                    <span
-                      v-if="item.badgeCount"
-                      class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
-                    >{{ item.badgeCount }}</span>
-                  </span>
-                </a>
+                  <sds-tooltip
+                    placement="right"
+                    :disabled="!collapsed"
+                  >
+                    <template #trigger>
+                      <a
+                        :href="item.href"
+                        class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
+                        :class="{
+                          'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
+                          'text-white border-danger pointer-events-none': item.active
+                        }"
+                        @click="navigate(item, $event)"
+                      >
+                        <span
+                          v-if="item.iconUrl"
+                          class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                        >
+                          <img
+                            :src="item.iconUrl"
+                            :alt="item.title"
+                            class="w-8 h-8"
+                          >
+                        </span>
+                        <span
+                          v-if="!collapsed"
+                          class="inline-block my-auto"
+                        >{{ item.title }}</span>
+                        <span
+                          class="inline-block my-auto"
+                          :class="{
+                            'absolute bottom-1 right-1': collapsed
+                          }"
+                        >
+                          <span
+                            v-if="item.badgeCount"
+                            class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                          >{{ item.badgeCount }}</span>
+                        </span>
+                      </a>
+                    </template>
+                    <p>{{ item.title }}</p>
+                  </sds-tooltip>
+                </template>
               </slot>
             </nav>
           </div>
@@ -102,9 +254,41 @@
           </div>
         </div>
       </aside>
+
+      <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-100">
-          <div class="bg-gray-900 text-white px-4 py-2 flex h-10">
+        <main class="flex-grow pb-4 bg-gray-100 dark:bg-gray-900">
+          <div class="bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 flex h-12">
+            <div class="md:hidden -ml-1 my-auto">
+              <button
+                ref="mobileMenuOpenBtn"
+                class="flex gap-2 focus:outline-none"
+                @click="showMobileMenu = !showMobileMenu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="text-white h-6 w-6 inline-block"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 48 48"
+                ><g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
+                <span class="text-xl leading-6">
+                  <span
+                    v-if="appSuitePrefix"
+                    class="text-red-400 font-bold"
+                  >{{ appSuitePrefix }}</span>
+                  <span v-if="appSuite">{{ appSuite }}</span>
+                </span>
+              </button>
+            </div>
             <div class="ml-auto my-auto flex gap-2">
               <!-- @slot Suite header content. @binding collapsed -->
               <slot
@@ -113,13 +297,13 @@
               />
             </div>
           </div>
-          <div class="bg-white shadow px-8 py-3 sticky top-0 z-50 flex gap-4 h-16">
+          <div class="bg-white dark:bg-gray-700 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row">
             <div class="flex-grow my-auto">
-              <p class="text-2xl font-semibold text-gray-700">
+              <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
                 {{ pageTitle }}
               </p>
             </div>
-            <div class="flex-shrink-0 my-auto flex gap-2">
+            <div class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2">
               <!-- @slot Page header content. @binding collapsed -->
               <slot
                 name="page-header"
@@ -127,30 +311,44 @@
               />
             </div>
           </div>
-          <div class="p-8">
+          <div class="p-4">
             <!-- @slot Page content. @binding collapsed -->
             <slot :collapsed="collapsed" />
           </div>
         </main>
-        <footer class="bg-gray-900 text-xs text-light px-8 py-4 flex gap-4">
-          <div class="flex-shrink flex">
-            <sds-link
-              href="https://sei.cmu.edu"
-              title="Software Engineering Institute"
-              class="my-auto"
-              external
-            >
-              <img
-                class="h-10"
-                :src="wordmark"
-                alt="Software Engineering Institute"
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4">
+          <div class="flex-shrink flex order-2 lg:order-1">
+            <!-- @slot Footer left (middle in mobile) content. -->
+            <slot name="footer-left">
+              <sds-link
+                href="https://sei.cmu.edu"
+                title="Software Engineering Institute"
+                class="my-auto"
+                external
               >
-            </sds-link>
+                <img
+                  class="h-10"
+                  :src="wordmark"
+                  alt="Software Engineering Institute"
+                >
+              </sds-link>
+            </slot>
           </div>
-          <div class="flex-shrink flex ml-auto">
+          <div class="flex-shrink flex lg:mx-auto order-1 lg:order-2">
             <div class="my-auto">
-              <p>&copy; {{ year }} Carnegie Mellon University</p>
-              <p>SEI Internal Use Only</p>
+              <!-- @slot Footer middle (top in mobile) content. -->
+              <slot name="footer-middle" />
+            </div>
+          </div>
+          <div class="flex-shrink flex lg:ml-auto order-3">
+            <div class="my-auto">
+              <!-- @slot Footer right (bottom in mobile) content. -->
+              <slot name="footer-right">
+                <p>&copy; {{ year }} Carnegie Mellon University</p>
+                <p>SEI Internal Use Only</p>
+              </slot>
             </div>
           </div>
         </footer>
@@ -162,12 +360,14 @@
 <script>
 import { defineComponent } from 'vue'
 import SdsLink from '../Link/Link.vue'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 export default defineComponent({
   name: 'SdsLayoutAppInternal',
   components: {
-    SdsLink
+    SdsLink,
+    SdsTooltip,
   },
   props: {
     /**
@@ -178,17 +378,18 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The width class of the sidebar, both min (collapsed) and max (expanded).
+     * The width class of the non-collapsed sidebar when not in a mobile repsonsive view.
      */
-    width: {
-      type: Object,
-      default: () => ({
-        min: 'w-12',
-        max: 'w-60',
-      }),
+    sidebarWidth: {
+      type: String,
+      default: 'w-64'
     },
     /**
      * Determines whether to enable collapsing functionality.
+     * 
+     * Ensure to have icons every item in the **sidebarNavigationItems** array for this to look nice.
+     * 
+     * Including an **appIconUrl** will also improve the user experience.
      */
     enableCollapsibleSidebar: {
       type: Boolean,
@@ -207,15 +408,30 @@ export default defineComponent({
      */
     appName: { type: String, default: null },
     /**
+     * The app icon url for the layout.
+     */
+    appIconUrl: { type: String, default: null },
+    /**
      * The page title for the layout.
      */
     pageTitle: { type: String, default: null },
     /**
-     * The page navigation for the layout.
+     * The sidebar navigation for the layout.
+     * 
+     * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
+     * 
+     * Item object:
+     * 
+     * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
      */
-    pageNav: { type: Array, default: () => [] },
+    sidebarNavigationItems: { type: Array, default: () => [] },
   },
   emits: ['update:modelValue', 'navigate'],
+  data() {
+    return {
+      showMobileMenu: false
+    }
+  },
   computed: {
     wordmark() {
       return wordmark
@@ -224,9 +440,9 @@ export default defineComponent({
       const d = new Date();
       return d.getFullYear();
     },
-    sidebarWidth() {
-      if (!this.enableCollapsibleSidebar) return this.width.max
-      return this.collapsed ? this.width.min : this.width.max;
+    computedSidebarWidth() {
+      if (!this.enableCollapsibleSidebar) return this.sidebarWidth
+      return this.collapsed ? 'w-auto' : this.sidebarWidth;
     },
     collapsed: {
       get() {
@@ -240,15 +456,36 @@ export default defineComponent({
       },
     },
   },
+  watch: {
+    showMobileMenu(value) {
+      if (value) {
+        // prevent scrolling
+        document.documentElement.classList.add("layout-app-internal-prevent-scroll");
+        this.$nextTick(() => {
+          this.$refs.mobileMenuCloseBtn.focus()
+        })
+      } else {
+        // enable scrolling
+        document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+        this.$refs.mobileMenuOpenBtn.focus()
+      }
+    }
+  },
   mounted() {
     // Setup collapse functionality
     document.addEventListener("keyup", this.handleDocumentKeyUp);
   },
   unmounted() {
+    // enable scrolling
+    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+
+    // Destroy collapse functionality
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
   methods: {
     navigate(item, event) {
+      // Close the mobile menu
+      this.showMobileMenu = false
       /**
        * Emmited when a navigation menu item has been clicked.
        *
@@ -270,6 +507,49 @@ export default defineComponent({
       // toggle collapse on "[" key
       if ($event.keyCode === 219) this.toggleCollapse();
     },
+    checkKeyEvent(event) {
+      // close modal and return early if escape
+      if (event.key === "Escape") {
+        this.showMobileMenu = false;
+        return;
+      }
+      const focusableList = this.$refs.mobileSidebarContainer.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      // escape early if only 1 or no elements to focus
+      if (focusableList.length < 2 && event.key === "Tab") {
+        event.preventDefault();
+        return;
+      }
+      const last = focusableList.length - 1;
+      if (
+        event.key === "Tab" &&
+        event.shiftKey === false &&
+        event.target === focusableList[last]
+      ) {
+        event.preventDefault();
+        focusableList[0].focus();
+      } else if (
+        event.key === "Tab" &&
+        event.shiftKey === true &&
+        event.target === focusableList[0]
+      ) {
+        event.preventDefault();
+        focusableList[last].focus();
+      }
+    }
   }
 })
 </script>
+
+<style lang="postcss">
+.layout-app-internal-prevent-scroll {
+  overflow: hidden;
+}
+
+@screen md {
+  .layout-app-internal-prevent-scroll {
+    overflow: visible;
+  }
+}
+</style>
