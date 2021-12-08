@@ -39,49 +39,53 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         class="flex-grow pb-4 bg-gray-100"
       >
         <div
-          class="bg-gray-900 text-white px-4 py-2 flex h-10"
+          class="bg-gray-900 text-white px-4 py-2 flex h-12"
         >
-          <button
-            class="flex gap-2 md:hidden -ml-1 focus:outline-none"
+          <div
+            class="md:hidden -ml-1 my-auto"
           >
-            <svg
-              aria-hidden="true"
-              class="text-white h-6 w-6 inline-block"
-              preserveAspectRatio="xMidYMid meet"
-              role="img"
-              viewBox="0 0 48 48"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <button
+              class="flex gap-2 focus:outline-none"
             >
-              <g
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="4"
+              <svg
+                aria-hidden="true"
+                class="text-white h-6 w-6 inline-block"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
               >
-                <path
-                  d="M7.95 11.95h32"
-                />
-                <path
-                  d="M7.95 23.95h32"
-                />
-                <path
-                  d="M7.95 35.95h32"
-                />
-              </g>
-            </svg>
-            <span
-              class="text-xl leading-6"
-            >
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                >
+                  <path
+                    d="M7.95 11.95h32"
+                  />
+                  <path
+                    d="M7.95 23.95h32"
+                  />
+                  <path
+                    d="M7.95 35.95h32"
+                  />
+                </g>
+              </svg>
               <span
-                class="text-red-400 font-bold"
+                class="text-xl leading-6"
               >
-                SEI
+                <span
+                  class="text-red-400 font-bold"
+                >
+                  SEI
+                </span>
+                <!--v-if-->
               </span>
-              <!--v-if-->
-            </span>
-          </button>
+            </button>
+          </div>
           <div
             class="ml-auto my-auto flex gap-2"
           >

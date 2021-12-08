@@ -49,7 +49,7 @@
               >
                 <span
                   v-if="appIconUrl"
-                  class="inline-block w-8 h-8 my-auto"
+                  class="inline-block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <img
                     :src="appIconUrl"
@@ -57,10 +57,7 @@
                     class="w-8 h-8"
                   >
                 </span>
-                <span
-                  class="text-lg font-bold my-auto"
-                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
-                >
+                <span class="text-lg font-bold my-auto">
                   {{ appName }}
                 </span>
               </div>
@@ -78,16 +75,16 @@
                     v-for="item in sidebarNavigationItems"
                     :key="item.id"
                     :href="item.href"
-                    class="flex relative gap-2 pl-3 px-4 py-2 border-l-4"
+                    class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                     :class="{
-                      'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white': !item.active,
+                      'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
                       'text-white border-danger pointer-events-none': item.active
                     }"
                     @click="navigate(item, $event)"
                   >
                     <span
                       v-if="item.iconUrl"
-                      class="inline-block w-8 h-8 my-auto"
+                      class="inline-block w-8 h-8 my-auto flex-shrink-0"
                     >
                       <img
                         :src="item.iconUrl"
@@ -123,7 +120,7 @@
             >
               <div
                 v-if="appSuite"
-                class="px-4 py-2"
+                class="px-4 pt-3 pb-2"
                 :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
               >
                 <p class="text-xl">
@@ -137,7 +134,7 @@
               >
                 <span
                   v-if="appIconUrl"
-                  class="inline-block w-8 h-8 my-auto"
+                  class="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <img
                     :src="appIconUrl"
@@ -157,7 +154,7 @@
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1"
-              :class="[collapsed && !appIconUrl ? 'mt-2' : '']"
+              :class="[collapsed && !appIconUrl ? 'mt-4' : '']"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -176,16 +173,16 @@
                     <template #trigger>
                       <a
                         :href="item.href"
-                        class="flex relative gap-2 pl-3 px-4 py-2 border-l-4"
+                        class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                         :class="{
-                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white': !item.active,
+                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
                           'text-white border-danger pointer-events-none': item.active
                         }"
                         @click="navigate(item, $event)"
                       >
                         <span
                           v-if="item.iconUrl"
-                          class="inline-block w-8 h-8 my-auto"
+                          class="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
                           <img
                             :src="item.iconUrl"
@@ -260,35 +257,37 @@
       <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
         <main class="flex-grow pb-4 bg-gray-100">
-          <div class="bg-gray-900 text-white px-4 py-2 flex h-10">
-            <button
-              ref="mobileMenuOpenBtn"
-              class="flex gap-2 md:hidden -ml-1 focus:outline-none"
-              @click="showMobileMenu = !showMobileMenu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                aria-hidden="true"
-                role="img"
-                class="text-white h-6 w-6 inline-block"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 48 48"
-              ><g
-                fill="none"
-                stroke="currentColor"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
-              <span class="text-xl leading-6">
-                <span
-                  v-if="appSuitePrefix"
-                  class="text-red-400 font-bold"
-                >{{ appSuitePrefix }}</span>
-                <span v-if="appSuite">{{ appSuite }}</span>
-              </span>
-            </button>
+          <div class="bg-gray-900 text-white px-4 py-2 flex h-12">
+            <div class="md:hidden -ml-1 my-auto">
+              <button
+                ref="mobileMenuOpenBtn"
+                class="flex gap-2 focus:outline-none"
+                @click="showMobileMenu = !showMobileMenu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="text-white h-6 w-6 inline-block"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 48 48"
+                ><g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
+                <span class="text-xl leading-6">
+                  <span
+                    v-if="appSuitePrefix"
+                    class="text-red-400 font-bold"
+                  >{{ appSuitePrefix }}</span>
+                  <span v-if="appSuite">{{ appSuite }}</span>
+                </span>
+              </button>
+            </div>
             <div class="ml-auto my-auto flex gap-2">
               <!-- @slot Suite header content. @binding collapsed -->
               <slot
