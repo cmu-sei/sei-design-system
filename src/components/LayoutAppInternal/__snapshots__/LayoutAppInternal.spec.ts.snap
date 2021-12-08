@@ -45,7 +45,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
             class="md:hidden -ml-1 my-auto"
           >
             <button
-              class="flex gap-2 focus:outline-none"
+              class="flex gap-1 focus:outline-none"
             >
               <svg
                 aria-hidden="true"
@@ -75,7 +75,7 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
                 </g>
               </svg>
               <span
-                class="text-xl leading-6"
+                class="text-xl leading-6 flex"
               >
                 <span
                   class="text-red-400 font-bold"
@@ -83,11 +83,12 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
                   SEI
                 </span>
                 <!--v-if-->
+                <!--v-if-->
               </span>
             </button>
           </div>
           <div
-            class="ml-auto my-auto flex gap-2"
+            class="ml-auto my-auto flex gap-2 flex-shrink-0"
           >
             <!-- @slot Suite header content. @binding collapsed -->
             
@@ -128,8 +129,6 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
         <div
           class="flex-shrink flex order-2 lg:order-1"
         >
-          <!-- @slot Footer left (middle in mobile) content. -->
-          
           <sds-link-stub
             class="my-auto"
             cta="false"
@@ -139,7 +138,6 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
             title="Software Engineering Institute"
             variant=""
           />
-          
         </div>
         <div
           class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
@@ -158,13 +156,10 @@ exports[`LayoutAppInternal should match its default snapshot 1`] = `
           <div
             class="my-auto"
           >
-            <!-- @slot Footer right (bottom in mobile) content. -->
+            <!-- @slot Footer right (bottom in mobile) content. @binding year -->
             
             <p>
               © 2021 Carnegie Mellon University
-            </p>
-            <p>
-              SEI Internal Use Only
             </p>
             
           </div>

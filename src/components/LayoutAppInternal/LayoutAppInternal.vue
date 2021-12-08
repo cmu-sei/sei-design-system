@@ -65,7 +65,7 @@
                 v-if="sidebarNavigationItems.length > 0"
                 class="grid grid-cols-1"
               >
-                <!-- @slot Nav content. @binding items, collapsed -->
+                <!-- @slot Sidebar navigation content wrapper. @binding items, collapsed -->
                 <slot
                   name="sidebar-navigation"
                   :items="sidebarNavigationItems"
@@ -262,7 +262,7 @@
             <div class="md:hidden -ml-1 my-auto">
               <button
                 ref="mobileMenuOpenBtn"
-                class="flex gap-2 focus:outline-none"
+                class="flex gap-1 focus:outline-none"
                 @click="showMobileMenu = !showMobileMenu"
               >
                 <svg
@@ -280,16 +280,23 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
-                <span class="text-xl leading-6">
+                <span class="text-xl leading-6 flex">
                   <span
                     v-if="appSuitePrefix"
                     class="text-red-400 font-bold"
                   >{{ appSuitePrefix }}</span>
-                  <span v-if="appSuite">{{ appSuite }}</span>
+                  <span
+                    v-if="appSuite"
+                  >{{ appSuite }}</span>
+                  <span
+                    v-if="appName && !hideAppNameInMobileHeader"
+                    class="text-sm text-left font-bold text-gray-200 overflow-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
+                    :class="[appSuite ? 'ml-1': '']"
+                  >{{ appName }}</span>
                 </span>
               </button>
             </div>
-            <div class="ml-auto my-auto flex gap-2">
+            <div class="ml-auto my-auto flex gap-2 flex-shrink-0">
               <!-- @slot Suite header content. @binding collapsed -->
               <slot
                 name="suite-header"
@@ -320,21 +327,18 @@
         <!-- Footer -->
         <footer class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink flex order-2 lg:order-1">
-            <!-- @slot Footer left (middle in mobile) content. -->
-            <slot name="footer-left">
-              <sds-link
-                href="https://sei.cmu.edu"
-                title="Software Engineering Institute"
-                class="my-auto"
-                external
+            <sds-link
+              href="https://sei.cmu.edu"
+              title="Software Engineering Institute"
+              class="my-auto"
+              external
+            >
+              <img
+                class="h-10"
+                :src="wordmark"
+                alt="Software Engineering Institute"
               >
-                <img
-                  class="h-10"
-                  :src="wordmark"
-                  alt="Software Engineering Institute"
-                >
-              </sds-link>
-            </slot>
+            </sds-link>
           </div>
           <div class="flex-shrink flex lg:mx-auto order-1 lg:order-2">
             <div class="my-auto">
@@ -344,10 +348,12 @@
           </div>
           <div class="flex-shrink flex lg:ml-auto order-3">
             <div class="my-auto">
-              <!-- @slot Footer right (bottom in mobile) content. -->
-              <slot name="footer-right">
+              <!-- @slot Footer right (bottom in mobile) content. @binding year -->
+              <slot
+                name="footer-right"
+                :year="year"
+              >
                 <p>&copy; {{ year }} Carnegie Mellon University</p>
-                <p>SEI Internal Use Only</p>
               </slot>
             </div>
           </div>
@@ -373,17 +379,11 @@ export default defineComponent({
     /**
      * The v-model that determines collapsed state.
      */
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
+    modelValue: { type: Boolean, default: false },
     /**
-     * The width class of the non-collapsed sidebar when not in a mobile repsonsive view.
+     * The width class of the non-collapsed sidebar when not in a mobile responsive view.
      */
-    sidebarWidth: {
-      type: String,
-      default: 'w-64'
-    },
+    sidebarWidth: { type: String, default: 'w-64' },
     /**
      * Determines whether to enable collapsing functionality.
      * 
@@ -391,10 +391,7 @@ export default defineComponent({
      * 
      * Including an **appIconUrl** will also improve the user experience.
      */
-    enableCollapsibleSidebar: {
-      type: Boolean,
-      default: false
-    },
+    enableCollapsibleSidebar: { type: Boolean, default: false },
     /**
      * The app suite name's prefix (styled in red) for the layout.
      */
@@ -407,6 +404,12 @@ export default defineComponent({
      * The app name for the layout.
      */
     appName: { type: String, default: null },
+    /**
+     * Determines whether to hide the **appName** in the mobile header.
+     * 
+     * This is useful when an application's name is very long.
+     */
+    hideAppNameInMobileHeader: { type: Boolean, default: false },
     /**
      * The app icon url for the layout.
      */

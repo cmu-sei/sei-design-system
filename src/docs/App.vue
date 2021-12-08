@@ -50,8 +50,8 @@ export default defineComponent({
   data() {
     return {
       collapsed: false,
-      appSuite: 'Net',
-      appName: 'Accomplishments',
+      appSuite: 'MIS',
+      appName: 'Travel Requests',
       pageTitle: 'Dashboard',
       // appIconUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png',
       // enableCollapsibleSidebar: true,
