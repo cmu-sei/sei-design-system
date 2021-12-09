@@ -7,6 +7,7 @@ export default {
     docs: {
       description: {
         component: 'A tooltip is a hover component that can clarify a piece of content for users.',
+
       },
     },
   },
