@@ -1,5 +1,5 @@
 <template>
-  <sds-layout-app-internal
+  <sds-layout-app
     v-model="collapsed"
     :app-suite="appSuite"
     :app-name="appName"
@@ -32,7 +32,7 @@
     <template #footer-middle>
       Footer middle content
     </template>
-  </sds-layout-app-internal>
+  </sds-layout-app>
 </template>
 
 <script lang="ts">

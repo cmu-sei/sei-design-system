@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import Component from './LayoutAppInternal.vue'
+import Component from './LayoutApp.vue'
 
-describe('LayoutAppInternal', () => {
+describe('LayoutApp', () => {
   it('should match its default snapshot', () => {
     const wrapper = shallowMount(Component, {
       slots: {

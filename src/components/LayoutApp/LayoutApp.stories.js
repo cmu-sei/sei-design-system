@@ -1,8 +1,8 @@
-import SdsLayoutAppInternal from './LayoutAppInternal.vue';
+import SdsLayoutApp from './LayoutApp.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Layouts/LayoutAppInternal',
+  title: 'Layouts/LayoutApp',
   parameters: {
     docs: {
       inlineStories: false,
@@ -12,17 +12,17 @@ export default {
       },
     },
   },
-  component: SdsLayoutAppInternal,
+  component: SdsLayoutApp,
   argTypes: {}
 };
 
 const Template = (args) => ({
-  components: { SdsLayoutAppInternal },
+  components: { SdsLayoutApp },
   setup() {
     return { args }
   },
   template: `
-    <sds-layout-app-internal v-model="localValue" v-bind="args" @navigate="navigate">
+    <sds-layout-app v-model="localValue" v-bind="args" @navigate="navigate">
       <template #suite-header>
         Suite header content area
       </template>
@@ -33,7 +33,7 @@ const Template = (args) => ({
       <template #footer-middle>
         Footer middle content area
       </template>
-    </sds-layout-app-internal>
+    </sds-layout-app>
   `,
   data() {
     return { localValue: this.$props.modelValue }
