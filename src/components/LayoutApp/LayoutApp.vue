@@ -387,7 +387,7 @@ export default defineComponent({
     /**
      * Determines whether to enable collapsing functionality.
      * 
-     * Ensure to have icons every item in the **sidebarNavigationItems** array for this to look nice.
+     * Ensure to have an icon for every item in the **sidebarNavigationItems** array for this to look nice.
      * 
      * Including an **appIconUrl** will also improve the user experience.
      */
@@ -419,7 +419,7 @@ export default defineComponent({
      */
     pageTitle: { type: String, default: null },
     /**
-     * The sidebar navigation for the layout.
+     * The sidebar navigation array for the layout.
      * 
      * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
      * 
