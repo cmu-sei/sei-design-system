@@ -12,7 +12,7 @@ export default {
      * Sets the height of the box. Accepts tailwind height classes.
      */
     height: {
-      default: 'h-screen',
+      default: 'h-full',
       type: String
     },
     /**

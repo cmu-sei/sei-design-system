@@ -17,7 +17,7 @@ export default {
       description :'Set the width of the box. Accepts tailwind width classes.'
     },
     height: {
-      options: ['h-2','h-4', 'h-8','h-16','h-32', 'h-48', 'h-64', 'h-72', 'h-screen'],
+      options: ['h-2','h-4', 'h-8','h-16','h-32', 'h-48', 'h-64', 'h-72', 'h-full', 'h-screen'],
       control: { type: 'select' },
       description :'Set the height of the box. Accepts tailwind height classes.'
     },
@@ -30,7 +30,10 @@ const Template = (args) => ({
     return { args }
   },
   template: `
+    <div class="w-full h-screen">
     <sds-loading-box v-bind="args" />
+    </div>
+
   `
 });
 
