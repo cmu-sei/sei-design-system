@@ -370,7 +370,7 @@ import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 export default defineComponent({
-  name: 'SdsLayoutAppInternal',
+  name: 'SdsLayoutApp',
   components: {
     SdsLink,
     SdsTooltip,

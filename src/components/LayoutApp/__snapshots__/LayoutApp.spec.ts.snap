@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LayoutAppInternal should match its default snapshot 1`] = `
+exports[`LayoutApp should match its default snapshot 1`] = `
 <div
   class="flex flex-col h-screen dark:text-gray-50"
 >

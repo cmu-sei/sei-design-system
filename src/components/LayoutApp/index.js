@@ -1,4 +1,4 @@
-import Component from "./LayoutAppInternal.vue";
+import Component from "./LayoutApp.vue";
 
 Component.install = (Vue) => {
   Vue.component(Component.name, Component);
