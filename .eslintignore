@@ -1,4 +1,4 @@
 public/**
-dist/**
+dist
 storybook-static/**
 index.html
