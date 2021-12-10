@@ -290,7 +290,7 @@
                   >{{ appSuite }}</span>
                   <span
                     v-if="appName && !hideAppNameInMobileHeader"
-                    class="text-sm text-left font-bold text-gray-200 overflow-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
+                    class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
                     :class="[appSuite ? 'ml-1': '']"
                   >{{ appName }}</span>
                 </span>
