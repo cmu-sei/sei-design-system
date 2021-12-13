@@ -1,6 +1,6 @@
 <template>
   <span
-      :class="['loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200', width, height]"
+    :class="['loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200', width, height]"
   />
 </template>
 
