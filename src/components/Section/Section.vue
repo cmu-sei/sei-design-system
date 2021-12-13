@@ -46,7 +46,7 @@
       </div>
     </header>
     <div
-      v-if="!hideContent || hasDefaultSlot"
+      v-if="!hideContent && hasDefaultSlot"
       :class="[contentClass]"
     >
       <!-- @slot Section content. -->
