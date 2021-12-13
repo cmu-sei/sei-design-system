@@ -4,11 +4,12 @@ import { action } from '@storybook/addon-actions';
 export default {
   title: 'Layouts/LayoutApp',
   parameters: {
+    layout: 'fullscreen',
     docs: {
       inlineStories: false,
       iframeHeight: 700,
       description: {
-        component: 'A styled layout for use on internal applications.',
+        component: 'A highly structured layout for internal and customer applications that includes a header, a branded footer, and a collapsible navigation sidebar.',
       },
     },
   },
