@@ -6,8 +6,6 @@ export default {
   parameters: {
     layout: 'fullscreen',
     docs: {
-      inlineStories: false,
-      iframeHeight: 700,
       description: {
         component: 'A highly structured layout for internal and customer applications that includes a header, a branded footer, and a collapsible navigation sidebar.',
       },
