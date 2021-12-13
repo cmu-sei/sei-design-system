@@ -14,11 +14,11 @@ export default {
   component: SdsButton,
   argTypes: {
     variant: {
-      options: ['', 'default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
       control: { type: 'select' }
     },
     size: {
-      options: ['', 'sm'],
+      options: ['md', 'sm'],
       control: { type: 'select' }
     },
     outline: {
