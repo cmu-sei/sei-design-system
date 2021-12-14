@@ -35,7 +35,7 @@ const Template = (args) => ({
         <template #trigger>
           <button class="btn btn-default" @click="onClick">I have a tooltip</button>
         </template>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum maximus blandit.</p>
+        <p>Lorem ipsum dolor.</p>
       </sds-tooltip>
     </div>
   `,

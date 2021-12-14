@@ -30,7 +30,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div class="w-full h-screen">
+    <div class="w-1/2 h-64">
     <sds-loading-box v-bind="args" />
     </div>
 
