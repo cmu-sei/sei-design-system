@@ -3,6 +3,7 @@ import SdsLayoutFixedSidebar from './LayoutFixedSidebar.vue';
 export default {
   title: 'Layouts/LayoutFixedSidebar',
   parameters: {
+    layout: 'fullscreen',
     docs: {
       inlineStories: false,
       iframeHeight: 250,

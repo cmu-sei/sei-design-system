@@ -1,7 +1,6 @@
 module.exports = {
   presets: [
-    require('@sds/tailwindcss-2')
+    require('@sds/tailwindcss-3')
   ],
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  mode: 'jit'
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
 };

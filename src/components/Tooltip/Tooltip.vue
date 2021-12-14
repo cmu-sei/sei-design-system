@@ -6,7 +6,7 @@
     <div class="inline-block">
       <div
         :id="triggerId"
-        :class="[triggerClass ? triggerClass : 'cursor-pointer']"
+        :class="[triggerClass]"
         :aria-describedby="popperId"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
@@ -94,6 +94,13 @@ export default {
       type: String,
       required: false,
       default: 'top'
+    },
+    /**
+     * Determines if the tooltip should display or not.
+     */
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['open', 'close'],
@@ -155,6 +162,7 @@ export default {
   methods: {
     handleOpen(open) {
       clearTimeout(this.timer)
+      if (this.disabled) return
       this.timer = setTimeout(() => {
         /**
          * Emitted when the tooltip opens.

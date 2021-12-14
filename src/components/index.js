@@ -10,7 +10,7 @@ import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsInput from "./Input"
-import SdsLayoutAppInternal from "./LayoutAppInternal";
+import SdsLayoutApp from "./LayoutApp";
 import SdsLayoutFixedSidebar from "./LayoutFixedSidebar";
 import SdsLayoutSeiExternal from "./LayoutSeiExternal";
 import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
@@ -55,7 +55,7 @@ const Components = {
   SdsDropdownItem,
   SdsFilterByDropdown,
   SdsInput,
-  SdsLayoutAppInternal,
+  SdsLayoutApp,
   SdsLayoutFixedSidebar,
   SdsLayoutSeiExternal,
   SdsLayoutSeiExternalFooter,
@@ -108,7 +108,7 @@ export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsInput } from "./Input"
-export { default as SdsLayoutAppInternal } from "./LayoutAppInternal";
+export { default as SdsLayoutApp } from "./LayoutApp";
 export { default as SdsLayoutFixedSidebar } from "./LayoutFixedSidebar";
 export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
 export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
