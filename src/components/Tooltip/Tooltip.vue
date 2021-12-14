@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal w-auto', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
+        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal ', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
       >
         <!-- @slot Tooltip content. -->
         <slot />
