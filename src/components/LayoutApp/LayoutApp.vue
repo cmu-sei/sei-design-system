@@ -47,16 +47,22 @@
                 v-if="appName || appIconUrl"
                 class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10 flex gap-2 p-4"
               >
-                <span
-                  v-if="appIconUrl"
-                  class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                <!-- @slot App icon content. @binding classList -->
+                <slot
+                  name="app-icon"
+                  classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
-                  <img
-                    :src="appIconUrl"
-                    :alt="appName"
-                    class="w-8 h-8"
+                  <span
+                    v-if="appIconUrl"
+                    class="block w-8 h-8 my-auto flex-shrink-0"
                   >
-                </span>
+                    <img
+                      :src="appIconUrl"
+                      :alt="appName"
+                      class="w-8 h-8"
+                    >
+                  </span>
+                </slot>
                 <span class="text-lg font-bold my-auto">
                   {{ appName }}
                 </span>
@@ -133,16 +139,22 @@
                 class="flex gap-2"
                 :class="[appIconUrl ? 'p-4' : 'px-4 pt-4 pb-5']"
               >
-                <span
-                  v-if="appIconUrl"
-                  class="block w-8 h-8 my-auto flex-shrink-0"
+                <!-- @slot App icon content. @binding classList -->
+                <slot
+                  name="app-icon"
+                  classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
-                  <img
-                    :src="appIconUrl"
-                    :alt="appName"
-                    class="w-8 h-8"
+                  <span
+                    v-if="appIconUrl"
+                    class="block w-8 h-8 my-auto flex-shrink-0"
                   >
-                </span>
+                    <img
+                      :src="appIconUrl"
+                      :alt="appName"
+                      class="w-8 h-8"
+                    >
+                  </span>
+                </slot>
                 <span
                   v-if="appName"
                   class="text-lg font-bold my-auto"
