@@ -123,7 +123,7 @@
                 class="px-4 pt-3 pb-2"
                 :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
               >
-                <p class="text-xl">
+                <p class="text-xl flex">
                   <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
                   <span>{{ appSuite }}</span>
                 </p>
