@@ -16,6 +16,10 @@ export default {
       options: ['auto', 'top', 'bottom', 'right', 'left'],
       control: {type: 'select'}
     },
+    strategy: {
+      options: ['absolute', 'fixed'],
+      control: {type: 'select'}
+    },
     size: {
       options: ['sm', 'lg'],
       control: {type: 'select'}

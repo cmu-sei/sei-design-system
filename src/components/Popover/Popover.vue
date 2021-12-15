@@ -95,6 +95,14 @@ export default {
       default: 'right'
     },
     /**
+     * The strategy of the popover on the screen.
+     */
+    strategy: {
+      type: String,
+      required: false,
+      default: 'absolute'
+    },
+    /**
      * Determines if the popover should display or not.
      */
     disabled: {
@@ -120,6 +128,7 @@ export default {
             },
           },
         ],
+        strategy: this.strategy,
       }
     },
     sizeClass() {

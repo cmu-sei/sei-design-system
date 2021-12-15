@@ -96,6 +96,14 @@ export default {
       default: 'top'
     },
     /**
+     * The strategy of the popover on the screen.
+     */
+    strategy: {
+      type: String,
+      required: false,
+      default: 'absolute'
+    },
+    /**
      * Determines if the tooltip should display or not.
      */
     disabled: {
@@ -122,6 +130,7 @@ export default {
             },
           },
         ],
+        strategy: this.strategy,
       }
     },
     variantClass() {

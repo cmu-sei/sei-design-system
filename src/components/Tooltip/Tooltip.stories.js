@@ -7,7 +7,6 @@ export default {
     docs: {
       description: {
         component: 'A tooltip is a hover component that can clarify a piece of content for users.',
-
       },
     },
   },
@@ -17,9 +16,17 @@ export default {
       options: ['auto', 'top', 'bottom', 'right', 'left'],
       control: { type: 'select' }
     },
+    strategy: {
+      options: ['absolute', 'fixed'],
+      control: {type: 'select'}
+    },
     size: {
       options: ['sm', 'md', 'lg', 'xl'],
       control: { type: 'select' }
+    },
+    variant: {
+      options: ['dark', 'light'],
+      control: {type: 'select'}
     }
   }
 };
