@@ -88,16 +88,23 @@
                     }"
                     @click="navigate(item, $event)"
                   >
-                    <span
-                      v-if="item.iconUrl"
-                      class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                    <!-- @slot Sidebar navigation item icon content. @binding item, classList -->
+                    <slot
+                      name="sidebar-navigation-item-icon"
+                      :item="item"
+                      classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                     >
-                      <img
-                        :src="item.iconUrl"
-                        :alt="item.title"
-                        class="w-8 h-8"
+                      <span
+                        v-if="item.iconUrl"
+                        class="inline-block w-8 h-8 my-auto flex-shrink-0"
                       >
-                    </span>
+                        <img
+                          :src="item.iconUrl"
+                          :alt="item.title"
+                          class="w-8 h-8"
+                        >
+                      </span>
+                    </slot>
                     <span class="inline-block my-auto">{{ item.title }}</span>
                     <span class="inline-block my-auto">
                       <span
@@ -193,16 +200,23 @@
                         }"
                         @click="navigate(item, $event)"
                       >
-                        <span
-                          v-if="item.iconUrl"
-                          class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                        <!-- @slot Sidebar navigation item icon content. @binding item, classList -->
+                        <slot
+                          name="sidebar-navigation-item-icon"
+                          :item="item"
+                          classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
-                          <img
-                            :src="item.iconUrl"
-                            :alt="item.title"
-                            class="w-8 h-8"
+                          <span
+                            v-if="item.iconUrl"
+                            class="inline-block w-8 h-8 my-auto flex-shrink-0"
                           >
-                        </span>
+                            <img
+                              :src="item.iconUrl"
+                              :alt="item.title"
+                              class="w-8 h-8"
+                            >
+                          </span>
+                        </slot>
                         <span
                           v-if="!collapsed"
                           class="inline-block my-auto"
