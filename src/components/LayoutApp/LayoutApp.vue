@@ -106,9 +106,11 @@
                       </span>
                     </slot>
                     <span class="inline-block my-auto">{{ item.title }}</span>
-                    <span class="inline-block my-auto">
+                    <span
+                      v-if="item.badgeCount"
+                      class="inline-block my-auto"
+                    >
                       <span
-                        v-if="item.badgeCount"
                         class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
                       >{{ item.badgeCount }}</span>
                     </span>
@@ -143,8 +145,7 @@
               </div>
               <p
                 v-if="appName || appIconUrl"
-                class="flex gap-2"
-                :class="[appIconUrl ? 'p-4' : 'px-4 pt-4 pb-5']"
+                class="flex gap-2 p-4"
               >
                 <!-- @slot App icon content. @binding classList -->
                 <slot
@@ -174,7 +175,6 @@
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1"
-              :class="[collapsed && !appIconUrl ? 'mt-4' : '']"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -222,13 +222,13 @@
                           class="inline-block my-auto"
                         >{{ item.title }}</span>
                         <span
+                          v-if="item.badgeCount"
                           class="inline-block my-auto"
                           :class="{
                             'absolute bottom-1 right-1': collapsed
                           }"
                         >
                           <span
-                            v-if="item.badgeCount"
                             class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
                           >{{ item.badgeCount }}</span>
                         </span>
