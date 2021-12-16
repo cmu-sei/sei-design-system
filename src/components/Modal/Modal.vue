@@ -179,14 +179,16 @@ export default defineComponent({
     })
 
     const makeDomChanges = () => {
-      document.documentElement.style.overflow = "hidden";
+      if (typeof document === "undefined") return;
+      document.documentElement.classList.add("modal-prevent-scroll");
       setTimeout(() => {
         document.addEventListener("keyup", handleEscKey);
       }, 0);
     }
 
     const removeDomChanges = () => {
-      document.documentElement.style.overflow = "auto";
+      if (typeof document === "undefined") return;
+      document.documentElement.classList.remove("modal-prevent-scroll");
       document.removeEventListener("keyup", handleEscKey);
     }
 
@@ -265,3 +267,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+.modal-prevent-scroll {
+  overflow: hidden;
+}
+</style>

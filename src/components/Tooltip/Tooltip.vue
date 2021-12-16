@@ -6,7 +6,7 @@
     <div class="inline-block">
       <div
         :id="triggerId"
-        :class="[triggerClass ? triggerClass : 'cursor-pointer']"
+        :class="[triggerClass]"
         :aria-describedby="popperId"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal w-auto', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
+        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal ', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
       >
         <!-- @slot Tooltip content. -->
         <slot />
@@ -94,6 +94,21 @@ export default {
       type: String,
       required: false,
       default: 'top'
+    },
+    /**
+     * The strategy of the popover on the screen.
+     */
+    strategy: {
+      type: String,
+      required: false,
+      default: 'absolute'
+    },
+    /**
+     * Determines if the tooltip should display or not.
+     */
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['open', 'close'],
@@ -115,6 +130,7 @@ export default {
             },
           },
         ],
+        strategy: this.strategy,
       }
     },
     variantClass() {
@@ -155,6 +171,7 @@ export default {
   methods: {
     handleOpen(open) {
       clearTimeout(this.timer)
+      if (this.disabled) return
       this.timer = setTimeout(() => {
         /**
          * Emitted when the tooltip opens.

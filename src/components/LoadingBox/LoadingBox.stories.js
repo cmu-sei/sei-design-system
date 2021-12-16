@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Loading strategies assure users that their request is in progress and can create the illusion of shorter load times in apps.',
+        component: 'A loading box assures users that their request is in progress, helping to create the illusion of shorter load times.',
       },
     },
   },
@@ -17,7 +17,7 @@ export default {
       description :'Set the width of the box. Accepts tailwind width classes.'
     },
     height: {
-      options: ['h-2','h-4', 'h-8','h-16','h-32', 'h-48', 'h-64', 'h-72', 'h-screen'],
+      options: ['h-2','h-4', 'h-8','h-16','h-32', 'h-48', 'h-64', 'h-72', 'h-full', 'h-screen'],
       control: { type: 'select' },
       description :'Set the height of the box. Accepts tailwind height classes.'
     },
@@ -30,7 +30,10 @@ const Template = (args) => ({
     return { args }
   },
   template: `
+    <div class="w-1/2 h-64">
     <sds-loading-box v-bind="args" />
+    </div>
+
   `
 });
 

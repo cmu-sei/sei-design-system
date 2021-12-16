@@ -16,9 +16,17 @@ export default {
       options: ['auto', 'top', 'bottom', 'right', 'left'],
       control: { type: 'select' }
     },
+    strategy: {
+      options: ['absolute', 'fixed'],
+      control: {type: 'select'}
+    },
     size: {
       options: ['sm', 'md', 'lg', 'xl'],
       control: { type: 'select' }
+    },
+    variant: {
+      options: ['dark', 'light'],
+      control: {type: 'select'}
     }
   }
 };
@@ -34,7 +42,7 @@ const Template = (args) => ({
         <template #trigger>
           <button class="btn btn-default" @click="onClick">I have a tooltip</button>
         </template>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent elementum maximus blandit.</p>
+        <p>Lorem ipsum dolor.</p>
       </sds-tooltip>
     </div>
   `,

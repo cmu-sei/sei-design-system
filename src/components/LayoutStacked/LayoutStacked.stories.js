@@ -3,6 +3,7 @@ import SdsLayoutStacked from './LayoutStacked.vue';
 export default {
   title: 'Layouts/LayoutStacked',
   parameters: {
+    layout: 'fullscreen',
     docs: {
       inlineStories: false,
       iframeHeight: 250,

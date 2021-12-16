@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An autosuggest is an input field that presents users with a list options based on history, context, or the first few typed letters.',
+        component: 'An autosuggest is an input field that presents users with a list of options based on history, context, or the first few typed letters.',
       },
     },
   },

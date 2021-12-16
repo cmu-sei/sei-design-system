@@ -6,7 +6,7 @@
     <div class="inline-block">
       <div
         :id="triggerId"
-        :class="[triggerClass ? triggerClass : 'cursor-pointer']"
+        :class="[triggerClass]"
         :aria-describedby="popperId"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
@@ -93,6 +93,21 @@ export default {
       type: String,
       required: false,
       default: 'right'
+    },
+    /**
+     * The strategy of the popover on the screen.
+     */
+    strategy: {
+      type: String,
+      required: false,
+      default: 'absolute'
+    },
+    /**
+     * Determines if the popover should display or not.
+     */
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['open', 'close'],
@@ -113,6 +128,7 @@ export default {
             },
           },
         ],
+        strategy: this.strategy,
       }
     },
     sizeClass() {
@@ -143,6 +159,7 @@ export default {
   methods: {
     handleOpen(open) {
       clearTimeout(this.timer)
+      if (this.disabled) return
       this.timer = setTimeout(() => {
         /**
          * Emitted when the popover will open.

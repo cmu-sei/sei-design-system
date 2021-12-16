@@ -47,7 +47,7 @@
       >
       <label
         :for="`filter_by_dropdown_select_all_${uuid}`"
-        class="text-gray-900 dark:text-gray-50"
+        class="text-gray-900 dark:text-gray-50 ml-1"
       >Select all</label>
     </div>
     <div class="scroll-area max-h-48">
@@ -66,7 +66,7 @@
             >
             <label
               :for="`filter_by_dropdown_selection_list_${o.id}`"
-              class="text-gray-900 dark:text-gray-50"
+              class="text-gray-900 dark:text-gray-50 ml-1"
             >{{ o.text }}</label>
           </div>
         </li>
