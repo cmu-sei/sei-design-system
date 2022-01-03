@@ -26,7 +26,12 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, process.env.LIB_ROOT, 'index.js'),
       name: process.env.LIB_NAME || 'SeiDesignSystem',
-      fileName: format => `index.${format}.js`
+      fileName: format => {
+        if (format === 'es') {
+          return `index.mjs`
+        }
+        return `index.${format}.js`
+      }
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
