@@ -19,7 +19,7 @@ rm -rf dist/
 # done
 
 printf "\nbuilding all components...\n"
-LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --root src/components --config vite-library.config.js
+LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
 
 #####################
 # Additional Clean Up

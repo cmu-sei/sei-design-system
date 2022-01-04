@@ -15,11 +15,6 @@ export default defineConfig({
     }),
     enforce: 'pre',
   }, vue()],
-  server: {
-    fs: {
-      strict: true
-    }
-  },
   publicDir: false,
   build: {
     target: 'esnext',

@@ -359,7 +359,7 @@
               :btn-text="filterByBtnText"
               enable-filter
               enable-sort-options
-              @update:modelValue="filtered"
+              @update:model-value="filtered"
             />
           </div>
           <div>
@@ -368,7 +368,7 @@
               :btn-text="filterByBtnText"
               btn-class="btn btn-primary"
               right
-              @update:modelValue="filtered"
+              @update:model-value="filtered"
             />
           </div>
           <ul v-if="filterBySelectedOptions.length > 0">
@@ -471,7 +471,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Examples",
+  name: "ExamplesSection",
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
