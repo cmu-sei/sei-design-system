@@ -1,5 +1,61 @@
 <template>
   <div class="flex flex-col h-screen dark:text-gray-50">
+    <div class="bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 flex flex-shrink-0">
+      <div class="my-auto">
+        <div
+          v-if="appSuite"
+          class="hidden md:block"
+        >
+          <p class="text-xl flex">
+            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span>{{ appSuite }}</span>
+          </p>
+        </div>
+        <button
+          v-if="appSuite || appName"
+          ref="mobileMenuOpenBtn"
+          class="flex md:hidden gap-1 focus:outline-none"
+          @click="showMobileMenu = !showMobileMenu"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            class="text-white h-6 w-6 inline-block"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 48 48"
+          ><g
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
+          <span class="text-xl leading-6 flex">
+            <span
+              v-if="appSuitePrefix"
+              class="text-red-400 font-bold"
+            >{{ appSuitePrefix }}</span>
+            <span
+              v-if="appSuite"
+            >{{ appSuite }}</span>
+            <span
+              v-if="appName && !hideAppNameInMobileHeader"
+              class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
+              :class="[appSuite ? 'ml-1': '']"
+            >{{ appName }}</span>
+          </span>
+        </button>
+      </div>
+      <div class="ml-auto my-auto flex gap-2 flex-shrink-0">
+        <!-- @slot Suite header content. @binding collapsed -->
+        <slot
+          name="suite-header"
+          :collapsed="collapsed"
+        />
+      </div>
+    </div>
     <div class="flex flex-grow flex-shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
@@ -69,7 +125,7 @@
               </div>
               <nav
                 v-if="sidebarNavigationItems.length > 0"
-                class="grid grid-cols-1"
+                class="grid grid-cols-1 pb-24"
               >
                 <!-- @slot Sidebar navigation content wrapper. @binding items, collapsed -->
                 <slot
@@ -130,19 +186,9 @@
         <div class="h-screen flex flex-col sticky top-0">
           <div class="overflow-y-auto flex-grow overscroll-contain">
             <div
-              v-if="appSuite || appName || appIconUrl"
+              v-if="appName"
               class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10"
             >
-              <div
-                v-if="appSuite"
-                class="px-4 pt-3 pb-2"
-                :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
-              >
-                <p class="text-xl flex">
-                  <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
-                  <span>{{ appSuite }}</span>
-                </p>
-              </div>
               <p
                 v-if="appName || appIconUrl"
                 class="flex gap-2 p-4"
@@ -174,7 +220,7 @@
             </div>
             <nav
               v-if="sidebarNavigationItems.length > 0"
-              class="grid grid-cols-1"
+              class="grid grid-cols-1 pb-24"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -242,7 +288,7 @@
           </div>
           <div
             v-if="enableCollapsibleSidebar"
-            class="flex-shrink-0 sticky bottom-0"
+            class="flex-shrink-0 sticky bottom-0 bg-gray-900 dark:bg-gray-800"
           >
             <button
               id="btn-collapse-toggle"
@@ -284,57 +330,18 @@
       <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
         <main class="flex-grow pb-4 bg-gray-100 dark:bg-gray-900">
-          <div class="bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 flex h-12">
-            <div class="md:hidden -ml-1 my-auto">
-              <button
-                ref="mobileMenuOpenBtn"
-                class="flex gap-1 focus:outline-none"
-                @click="showMobileMenu = !showMobileMenu"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  aria-hidden="true"
-                  role="img"
-                  class="text-white h-6 w-6 inline-block"
-                  preserveAspectRatio="xMidYMid meet"
-                  viewBox="0 0 48 48"
-                ><g
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
-                <span class="text-xl leading-6 flex">
-                  <span
-                    v-if="appSuitePrefix"
-                    class="text-red-400 font-bold"
-                  >{{ appSuitePrefix }}</span>
-                  <span
-                    v-if="appSuite"
-                  >{{ appSuite }}</span>
-                  <span
-                    v-if="appName && !hideAppNameInMobileHeader"
-                    class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
-                    :class="[appSuite ? 'ml-1': '']"
-                  >{{ appName }}</span>
-                </span>
-              </button>
-            </div>
-            <div class="ml-auto my-auto flex gap-2 flex-shrink-0">
-              <!-- @slot Suite header content. @binding collapsed -->
-              <slot
-                name="suite-header"
-                :collapsed="collapsed"
-              />
-            </div>
-          </div>
           <div class="bg-white dark:bg-gray-700 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row">
-            <div class="flex-grow my-auto">
-              <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
-                {{ pageTitle }}
-              </p>
+            <div class="flex-grow my-auto flex flex-row gap-2">
+              <!-- @slot Page title content. @binding collapsed -->
+              <slot
+                name="page-title"
+                :collapsed="collapsed"
+                classList="text-2xl font-semibold text-gray-700 dark:text-gray-100"
+              >
+                <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
+                  {{ pageTitle }}
+                </p>
+              </slot>
             </div>
             <div class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2">
               <!-- @slot Page header content. @binding collapsed -->
