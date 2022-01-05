@@ -127,9 +127,9 @@
                 v-if="sidebarNavigationItems.length > 0"
                 class="grid grid-cols-1 pb-24"
               >
-                <!-- @slot Sidebar navigation content wrapper. @binding items, collapsed -->
+                <!-- @slot Mobile sidebar navigation content wrapper. @binding items, collapsed -->
                 <slot
-                  name="sidebar-navigation"
+                  name="mobile-sidebar-navigation"
                   :items="sidebarNavigationItems"
                   :collapsed="collapsed"
                 >
@@ -144,9 +144,9 @@
                     }"
                     @click="navigate(item, $event)"
                   >
-                    <!-- @slot Sidebar navigation item icon content. @binding item, classList -->
+                    <!-- @slot Mobile sidebar navigation item icon content. @binding item, classList -->
                     <slot
-                      name="sidebar-navigation-item-icon"
+                      name="mobile-sidebar-navigation-item-icon"
                       :item="item"
                       classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                     >
