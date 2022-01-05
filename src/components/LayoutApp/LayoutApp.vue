@@ -6,7 +6,19 @@
           v-if="appSuite"
           class="hidden md:block"
         >
-          <p class="text-xl flex">
+          <a
+            v-if="appSuiteUrl"
+            :href="appSuiteUrl"
+            class="text-xl flex hover:underline"
+            @click="navigate({ title: appSuite, href: appSuiteUrl }, $event)"
+          >
+            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span>{{ appSuite }}</span>
+          </a>
+          <p
+            v-else
+            class="text-xl flex"
+          >
             <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </p>
@@ -112,14 +124,37 @@
                     v-if="appIconUrl"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
+                    <a
+                      v-if="appUrl"
+                      :href="appUrl"
+                      @click="navigate({ title: appName, href: appUrl }, $event)"
+                    >
+                      <img
+                        :src="appIconUrl"
+                        :alt="appName"
+                        class="w-8 h-8"
+                      >
+                    </a>
                     <img
+                      v-else
                       :src="appIconUrl"
                       :alt="appName"
                       class="w-8 h-8"
                     >
                   </span>
                 </slot>
-                <span class="text-lg font-bold my-auto">
+                <a
+                  v-if="appUrl"
+                  :href="appUrl"
+                  class="text-lg font-bold my-auto hover:underline"
+                  @click="navigate({ title: appName, href: appUrl }, $event)"
+                >
+                  {{ appName }}
+                </a>
+                <span
+                  v-else
+                  class="text-lg font-bold my-auto"
+                >
                   {{ appName }}
                 </span>
               </div>
@@ -202,15 +237,36 @@
                     v-if="appIconUrl"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
+                    <a
+                      v-if="appUrl"
+                      :href="appUrl"
+                      @click="navigate({ title: appName, href: appUrl }, $event)"
+                    >
+                      <img
+                        :src="appIconUrl"
+                        :alt="appName"
+                        class="w-8 h-8"
+                      >
+                    </a>
                     <img
+                      v-else
                       :src="appIconUrl"
                       :alt="appName"
                       class="w-8 h-8"
                     >
                   </span>
                 </slot>
+                <a
+                  v-if="appUrl && appName"
+                  :href="appUrl"
+                  class="text-lg font-bold my-auto hover:underline"
+                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                  @click="navigate({ title: appName, href: appUrl }, $event)"
+                >
+                  {{ appName }}
+                </a>
                 <span
-                  v-if="appName"
+                  v-else-if="appName"
                   class="text-lg font-bold my-auto"
                   :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
                 >
@@ -434,9 +490,17 @@ export default defineComponent({
      */
     appSuite: { type: String, default: null },
     /**
+     * The app suite url for the layout.
+     */
+    appSuiteUrl: { type: String, default: null },
+    /**
      * The app name for the layout.
      */
     appName: { type: String, default: null },
+    /**
+     * The app url for the layout.
+     */
+    appUrl: { type: String, default: null },
     /**
      * Determines whether to hide the **appName** in the mobile header.
      * 
