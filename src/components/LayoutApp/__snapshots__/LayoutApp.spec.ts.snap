@@ -68,13 +68,7 @@ exports[`LayoutApp should match its default snapshot 1`] = `
             />
             
           </div>
-          <div
-            class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2"
-          >
-            <!-- @slot Page header content. @binding collapsed -->
-            
-            
-          </div>
+          <!--v-if-->
         </div>
         <div
           class="p-4"
@@ -102,17 +96,7 @@ exports[`LayoutApp should match its default snapshot 1`] = `
             variant=""
           />
         </div>
-        <div
-          class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
-        >
-          <div
-            class="my-auto"
-          >
-            <!-- @slot Footer middle (top in mobile) content. -->
-            
-            
-          </div>
-        </div>
+        <!--v-if-->
         <div
           class="flex-shrink flex lg:ml-auto order-3"
         >
