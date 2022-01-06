@@ -399,7 +399,10 @@
                 </p>
               </slot>
             </div>
-            <div class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2">
+            <div
+              v-if="hasSlot('page-header')"
+              class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2"
+            >
               <!-- @slot Page header content. @binding collapsed -->
               <slot
                 name="page-header"
@@ -429,7 +432,10 @@
               >
             </sds-link>
           </div>
-          <div class="flex-shrink flex lg:mx-auto order-1 lg:order-2">
+          <div
+            v-if="hasSlot('page-header')"
+            class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
+          >
             <div class="my-auto">
               <!-- @slot Footer middle (top in mobile) content. -->
               <slot name="footer-middle" />
@@ -583,6 +589,9 @@ export default defineComponent({
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
   methods: {
+    hasSlot (title) {
+      return !!this.$slots[title]
+    },
     navigate(item, event) {
       // Close the mobile menu
       this.showMobileMenu = false
