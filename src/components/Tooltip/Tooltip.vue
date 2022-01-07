@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center z-40 font-normal ', variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
+        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center font-normal ', zIndexClass, variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
       >
         <!-- @slot Tooltip content. -->
         <slot />
@@ -62,6 +62,14 @@ export default {
       type: String,
       required: false,
       default: ""
+    },
+    /**
+     * The z-index for the tooltip.
+     */
+    zIndexClass: {
+      type: String,
+      required: false,
+      default: "z-40"
     },
     /**
      * Delays opening the toggle in ms.

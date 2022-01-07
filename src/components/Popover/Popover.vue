@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['popover rounded-lg p-4 text-xs absolute text-left z-40 font-normal w-auto bg-white border border-gray-300 text-dark', sizeClass, placement, popoverClass ? popoverClass : '']"
+        :class="['popover rounded-lg p-4 text-xs absolute text-left font-normal w-auto bg-white border border-gray-300 text-dark', zIndexClass, sizeClass, placement, popoverClass ? popoverClass : '']"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
       >
@@ -61,6 +61,14 @@ export default {
       type: String,
       required: false,
       default: ""
+    },
+    /**
+     * The z-index for the popover.
+     */
+    zIndexClass: {
+      type: String,
+      required: false,
+      default: "z-40"
     },
     /**
      * Delays opening the toggle in ms.
