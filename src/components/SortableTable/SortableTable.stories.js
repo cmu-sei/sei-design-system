@@ -19,7 +19,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-sortable-table v-bind="args">
+    <sds-sortable-table v-bind="args" class="table-prose">
       <template #default="{ entry, activeSortKey }">
         <td>{{ entry.id }}</td>
         <td>{{ entry.title }}</td>
