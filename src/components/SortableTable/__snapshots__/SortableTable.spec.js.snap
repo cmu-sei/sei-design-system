@@ -11,9 +11,21 @@ exports[`SortableTable.vue matches snapshot with entries and action col props as
   </colgroup><!-- Table header -->
   <thead>
     <tr>
-      <th class=\\"space-x-2 cursor-pointer\\"><span>Title</span><i class=\\"fas\\"></i></th>
-      <th class=\\"space-x-2 cursor-pointer\\"><span>Created</span><i class=\\"fas\\"></i></th>
-      <th class=\\"bg-white dark:bg-gray-700 space-x-2 cursor-pointer\\"><span>Last modified</span><i class=\\"fas\\"></i></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"bg-white dark:bg-gray-700 space-x-1 cursor-pointer select-none group\\"><span>Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-100\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
       <!--v-if-->
     </tr>
   </thead><!-- Table body -->
@@ -45,10 +57,22 @@ exports[`SortableTable.vue matches snapshot with entries but no action col props
   </colgroup><!-- Table header -->
   <thead>
     <tr>
-      <th class=\\"space-x-2 cursor-pointer\\"><span>Title</span><i class=\\"fas\\"></i></th>
-      <th class=\\"space-x-2 cursor-pointer\\"><span>Created</span><i class=\\"fas\\"></i></th>
-      <th class=\\"bg-white dark:bg-gray-700 space-x-2 cursor-pointer\\"><span>Last modified</span><i class=\\"fas\\"></i></th>
-      <th><span>Actions</span></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"bg-white dark:bg-gray-700 space-x-1 cursor-pointer select-none group\\"><span>Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-100\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"select-none\\"><span>Actions</span></th>
     </tr>
   </thead><!-- Table body -->
   <tbody>

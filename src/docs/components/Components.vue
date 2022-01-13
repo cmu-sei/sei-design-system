@@ -848,7 +848,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "Components",
+  name: "ComponentsSection",
   data() {
     return {
       openModal: false,

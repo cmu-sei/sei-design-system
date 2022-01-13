@@ -19,20 +19,44 @@
           v-for="key in localSortKeys"
           :key="key.id"
           :class="{ 'bg-white dark:bg-gray-700': localSortKey === key.id }"
-          class="space-x-2 cursor-pointer"
+          class="space-x-1 cursor-pointer select-none group"
           @click="sortBy(key.id)"
         >
           <span>{{ key.title }}</span>
-          <i
-            class="fas"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            class="inline-block w-4 h-4 group-hover:opacity-100"
             :class="{
-              'fa-sort': localSortOrders[key.id] === 0,
-              'fa-sort-up': localSortOrders[key.id] > 0,
-              'fa-sort-down': localSortOrders[key.id] < 0,
+              'opacity-100': localSortKey === key.id,
+              'opacity-50': localSortKey !== key.id,
             }"
-          />
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 320 512"
+          >
+            <path
+              v-if="localSortOrders[key.id] === 0"
+              d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+              fill="currentColor"
+            />
+            <path
+              v-if="localSortOrders[key.id] > 0"
+              d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+              fill="currentColor"
+            />
+            <path
+              v-if="localSortOrders[key.id] < 0"
+              d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+              fill="currentColor"
+            />
+          </svg>
         </th>
-        <th v-if="showActionColumn">
+        <th
+          v-if="showActionColumn"
+          class="select-none"
+        >
           <span>Actions</span>
         </th>
       </tr>
