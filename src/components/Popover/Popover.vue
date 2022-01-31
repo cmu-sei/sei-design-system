@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['popover rounded-lg p-4 text-xs absolute text-left font-normal w-auto bg-white border border-gray-300 text-dark', zIndexClass, sizeClass, placement, popoverClass ? popoverClass : '']"
+        :class="['popover rounded-lg p-4 text-xs absolute text-left font-normal w-auto bg-white border border-gray-300 text-dark', zIndexClass, sizeClass, popoverClass ? popoverClass : '']"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
       >
@@ -29,7 +29,7 @@
           :is-open="isOpen"
         />
         <div
-          :class="[popoverArrowClass, 'before:bg-white arrow  before:border-gray-300']"
+          class="arrow before:bg-white before:border-gray-300"
           data-popper-arrow
         />
       </div>
@@ -68,7 +68,7 @@ export default {
     zIndexClass: {
       type: String,
       required: false,
-      default: "z-40"
+      default: "z-50"
     },
     /**
      * Delays opening the toggle in ms.
@@ -100,7 +100,7 @@ export default {
     placement: {
       type: String,
       required: false,
-      default: 'right'
+      default: 'auto'
     },
     /**
      * The strategy of the popover on the screen.
@@ -148,20 +148,6 @@ export default {
         default:
           return 'w-80'
       }
-    },
-    popoverArrowClass() {
-      switch (this.placement) {
-        case 'top':
-          return 'before:border-r before:border-b'
-        case 'right':
-          return 'before:border-l before:border-b'
-        case 'bottom':
-          return 'before:border-l before:border-t'
-        case 'left':
-          return 'before:border-r before:border-t'
-        default:
-          return 'w-80'
-      }
     }
   },
   methods: {
@@ -190,19 +176,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.popover.top {
-  box-shadow: rgb(0 0 0 / 10%) 0 -4px 6px 0
-}
-.popover.right {
-  box-shadow: rgb(0 0 0 / 10%) 4px 4px 6px 0
-}
-.popover.bottom {
-  box-shadow: rgb(0 0 0 / 10%) 0 4px 6px 0
-}
-.popover.left {
-  box-shadow: rgb(0 0 0 / 10%) -4px 4px 6px 0
-}
+<style lang="postcss" scoped>
 .arrow,
 .arrow::before {
   position: absolute;
@@ -222,18 +196,26 @@ export default {
 }
 
 .popover[data-popper-placement^='top'] > .arrow {
+  @apply before:border-r before:border-b;
+  box-shadow: rgb(0 0 0 / 10%) 0 -4px 6px 0;
   bottom: -7px;
 }
 
 .popover[data-popper-placement^='bottom'] > .arrow {
+  @apply before:border-l before:border-t;
+  box-shadow: rgb(0 0 0 / 10%) 0 4px 6px 0;
   top: -7px;
 }
 
 .popover[data-popper-placement^='left'] > .arrow {
+  @apply before:border-r before:border-t;
+  box-shadow: rgb(0 0 0 / 10%) -4px 4px 6px 0;
   right: -7px;
 }
 
 .popover[data-popper-placement^='right'] > .arrow {
+  @apply before:border-l before:border-b;
+  box-shadow: rgb(0 0 0 / 10%) 4px 4px 6px 0;
   left: -7px;
 }
 </style>

@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center font-normal ', zIndexClass, variantClass, sizeClass, placement, tooltipClass ? tooltipClass : '']"
+        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center font-normal', zIndexClass, variantClass, sizeClass, tooltipClass ? tooltipClass : '']"
       >
         <!-- @slot Tooltip content. -->
         <slot />
@@ -69,7 +69,7 @@ export default {
     zIndexClass: {
       type: String,
       required: false,
-      default: "z-40"
+      default: "z-50"
     },
     /**
      * Delays opening the toggle in ms.
@@ -203,18 +203,6 @@ export default {
 </script>
 
 <style scoped>
-.tooltip.top {
-  box-shadow: rgb(0 0 0 / 15%) 0 -4px 6px 0
-}
-.tooltip.right {
-  box-shadow: rgb(0 0 0 / 15%) 4px 4px 6px 0
-}
-.tooltip.bottom {
-  box-shadow: rgb(0 0 0 / 15%) 0 4px 6px 0
-}
-.tooltip.left {
-  box-shadow: rgb(0 0 0 / 15%) -4px 4px 6px 0
-}
 .arrow,
 .arrow::before {
   position: absolute;
@@ -234,18 +222,22 @@ export default {
 }
 
 .tooltip[data-popper-placement^='top'] > .arrow {
+  box-shadow: rgb(0 0 0 / 15%) 0 -4px 6px 0;
   bottom: -4px;
 }
 
 .tooltip[data-popper-placement^='bottom'] > .arrow {
+  box-shadow: rgb(0 0 0 / 15%) 0 4px 6px 0;
   top: -4px;
 }
 
 .tooltip[data-popper-placement^='left'] > .arrow {
+  box-shadow: rgb(0 0 0 / 15%) -4px 4px 6px 0;
   right: -0px;
 }
 
 .tooltip[data-popper-placement^='right'] > .arrow {
+  box-shadow: rgb(0 0 0 / 15%) 4px 4px 6px 0;
   left: -8px;
 }
 </style>
