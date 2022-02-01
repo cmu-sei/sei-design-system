@@ -35,6 +35,7 @@ import SdsSection from "./Section";
 import SdsSelect from "./Select";
 import SdsSortableTable from "./SortableTable";
 import SdsTab from "./Tab";
+import SdsTable from "./Table";
 import SdsTextarea from "./Textarea";
 import SdsToast from "./Toast";
 import SdsToaster from "./Toaster";
@@ -80,6 +81,7 @@ const Components = {
   SdsSelect,
   SdsSortableTable,
   SdsTab,
+  SdsTable,
   SdsTextarea,
   SdsToast,
   SdsToaster,
@@ -133,6 +135,7 @@ export { default as SdsSection } from "./Section";
 export { default as SdsSelect } from "./Select";
 export { default as SdsSortableTable } from "./SortableTable";
 export { default as SdsTab } from "./Tab";
+export { default as SdsTable } from "./Table";
 export { default as SdsTextarea } from "./Textarea";
 export { default as SdsToast } from "./Toast";
 export { default as SdsToaster } from "./Toaster";
