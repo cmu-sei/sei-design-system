@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table.vue matches snapshot with entries but no action col props assigned 1`] = `
+"<table>
+  <!-- Table col definition -->
+  <colgroup>
+    <col class=\\"\\">
+    <col class=\\"\\">
+    <col class=\\"\\">
+  </colgroup><!-- Table header -->
+  <thead>
+    <tr>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th> Actions </th>
+    </tr>
+  </thead><!-- Table body -->
+  <tbody>
+    <!-- @slot Table content. Use this to override the table rows. @binding items -->
+    <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
+      </td>
+      <td>
+        <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->12/31/1999
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->11/11/2014
+      </td>
+      <td>
+        <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
+      </td>
+    </tr>
+  </tbody>
+</table>"
+`;
+
+exports[`Table.vue matches snapshot with items and action col props assigned 1`] = `
+"<table>
+  <!-- Table col definition -->
+  <colgroup>
+    <col class=\\"\\">
+    <col class=\\"\\">
+    <col class=\\"bg-gray-100 dark:bg-gray-800\\">
+  </colgroup><!-- Table header -->
+  <thead>
+    <tr>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"space-x-1 cursor-pointer select-none group\\"><span>Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+          <!--v-if-->
+        </svg></th>
+      <th class=\\"bg-white dark:bg-gray-700 space-x-1 cursor-pointer select-none group\\"><span>Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-100\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+          <!--v-if-->
+          <path d=\\"M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z\\" fill=\\"currentColor\\"></path>
+          <!--v-if-->
+        </svg></th>
+      <!--v-if-->
+    </tr>
+  </thead><!-- Table body -->
+  <tbody>
+    <!-- @slot Table content. Use this to override the table rows. @binding items -->
+    <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
+      </td>
+      <!--v-if-->
+    </tr>
+    <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->12/31/1999
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->11/11/2014
+      </td>
+      <!--v-if-->
+    </tr>
+  </tbody>
+</table>"
+`;
+
+exports[`Table.vue matches snapshot with no props assigned 1`] = `
+"<table>
+  <!-- Table col definition -->
+  <colgroup></colgroup><!-- Table header -->
+  <thead>
+    <tr>
+      <!--v-if-->
+    </tr>
+  </thead><!-- Table body -->
+  <tbody>
+    <!-- @slot Table content. Use this to override the table rows. @binding items -->
+  </tbody>
+</table>"
+`;
