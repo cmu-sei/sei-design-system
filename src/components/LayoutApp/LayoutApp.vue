@@ -436,7 +436,7 @@
             </sds-link>
           </div>
           <div
-            v-if="hasSlot('page-header')"
+            v-if="hasSlot('footer-middle')"
             class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
           >
             <div class="my-auto">
