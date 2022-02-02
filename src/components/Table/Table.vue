@@ -6,7 +6,7 @@
         v-for="field in fields"
         :key="field.key"
         :class="{
-          'bg-gray-100 dark:bg-gray-800': sortField === field.key
+          [sortedColumnClass]: sortField === field.key
         }"
       >
     </colgroup>
@@ -17,7 +17,7 @@
           v-for="field in fields"
           :key="field.key"
           :class="{ 
-            'bg-white dark:bg-gray-700': sortField === field.key,
+            [sortedColumnClass]: sortField === field.key,
             'pointer-events-none': !field.sortable
           }"
           class="space-x-1 cursor-pointer select-none group"
@@ -143,6 +143,13 @@ export default {
     showActionsColumn: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Determines the CSS classes used on the sorted column.
+     */
+    sortedColumnClass: {
+      type: String,
+      default: 'bg-gray-100 dark:bg-gray-800'
     }
   },
   data() {
