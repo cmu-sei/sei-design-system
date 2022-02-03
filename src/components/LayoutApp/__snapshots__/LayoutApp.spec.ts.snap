@@ -81,10 +81,10 @@ exports[`LayoutApp should match its default snapshot 1`] = `
       </main>
       <!-- Footer -->
       <footer
-        class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 py-4 flex flex-col lg:flex-row gap-4"
+        class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4"
       >
         <div
-          class="flex-shrink flex order-2 lg:order-1"
+          class="flex-shrink-0 flex order-2 lg:order-1"
         >
           <sds-link-stub
             class="my-auto"
@@ -98,7 +98,7 @@ exports[`LayoutApp should match its default snapshot 1`] = `
         </div>
         <!--v-if-->
         <div
-          class="flex-shrink flex lg:ml-auto order-3"
+          class="flex-shrink-0 flex lg:ml-auto order-3"
         >
           <div
             class="my-auto"
