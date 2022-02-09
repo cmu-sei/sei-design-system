@@ -60,7 +60,10 @@
           >
         </div>
         <template v-if="isRange">
-          <div class="flex my-auto flex-shrink-0">
+          <div
+            v-if="!hideArrow"
+            class="flex my-auto flex-shrink-0"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -162,6 +165,10 @@ export default defineComponent({
     Dropdown
 },
   props: {
+    /**
+     * Determines whether to display or hide the arrow for range selection
+     */
+    hideArrow: { type: Boolean, default: false },
     /**
      * Determines the sizing of the component.
      */
