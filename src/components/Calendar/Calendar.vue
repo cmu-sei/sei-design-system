@@ -87,11 +87,11 @@
         >
           <div class="grid grid-cols-7 w-56 place-content-start">
             <div
-              v-for="day of calendarDaysOfWeek"
+              v-for="day in calendarDaysOfWeek"
               :key="day"
-              class="text-sm font-bold text-gray-400 text-center uppercase w-8 mb-1"
+              class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
             >
-              {{ day }}
+              {{ day.charAt(0) }}
             </div>
             <div
               v-for="day of calendarDaysInMonth"
@@ -127,11 +127,11 @@
           <template v-if="isRange && !isMobile">
             <div class="grid grid-cols-7 w- place-content-start">
               <div
-                v-for="day of calendarDaysOfWeek"
+                v-for="day in calendarDaysOfWeek"
                 :key="day"
                 class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
               >
-                {{ day }}
+                {{ day.charAt(0) }}
               </div>
               <div
                 v-for="day of calendarNextDaysInMonth"
@@ -459,7 +459,7 @@ const date = computed<CalendarDate | CalendarRange>({
 })
 
 const displayedMonth = ref(new Date())
-const calendarDaysOfWeek = ["S", "M", "T", "W", "T", "F", "S"]
+const calendarDaysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const calendarMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const calendarYears = [...Array(200).keys()].map((i) => i + 1900)
 const calendarMonthTitle = computed(() => format(displayedMonth.value, 'MMMM'))
@@ -481,8 +481,6 @@ const setCalendarSelectMonthAndYear = () => {
   calendarMonthSelect.value = format(displayedMonth.value, 'MMMM')
   calendarYearSelect.value = format(displayedMonth.value, 'yyyy')
 }
-
-setCalendarSelectMonthAndYear()
 
 watch(() => view.value, () => {
   setCalendarSelectMonthAndYear()
