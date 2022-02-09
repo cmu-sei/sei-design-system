@@ -135,7 +135,6 @@
           :min="min"
           :max="max"
           :mode="mode"
-          :breakpoint="breakpoint"
           @update:model-value="focusCorrectInput"
         />
       </div>
@@ -155,7 +154,6 @@ export interface CalendarRange {
   end: CalendarDate
 }
 export type CalendarMode = 'date' | 'dateTime' | 'time'
-export type CalendarBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 export default defineComponent({
   name: 'SdsDatepicker',
@@ -172,11 +170,6 @@ export default defineComponent({
      * Determines the mode of the component.
      */
     mode: { type: String as PropType<CalendarMode>, default: 'date' },
-    /**
-     * Determines the responsive breakpoint in which range selection mode
-     * will collapse into a single calendar.
-     */
-    breakpoint: { type: String as PropType<CalendarBreakpoint>, default: 'sm' },
     /**
      * The v-model for the component.
      * 

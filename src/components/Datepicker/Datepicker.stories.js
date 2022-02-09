@@ -21,10 +21,6 @@ export default {
       options: ['date', 'dateTime', 'time'],
       control: { type: 'select' }
     },
-    breakpoint: {
-      options: ['sm', 'md', 'lg', 'xl', '2xl'],
-      control: { type: 'select' }
-    },
     modelValue: { control: { type: 'date' } },
     min: { control: { type: 'date' } },
     max: { control: { type: 'date' } }
