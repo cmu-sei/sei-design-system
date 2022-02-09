@@ -17,10 +17,6 @@ export default {
       options: ['date', 'dateTime', 'time'],
       control: { type: 'select' }
     },
-    breakpoint: {
-      options: ['sm', 'md', 'lg', 'xl', '2xl'],
-      control: { type: 'select' }
-    },
     min: { control: { type: 'date' } },
     max: { control: { type: 'date' } }
   }

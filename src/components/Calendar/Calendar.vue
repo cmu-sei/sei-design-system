@@ -1,13 +1,12 @@
 <template>
   <div
-    ref="el"
     data-testid="calendar"
     class="select-none"
   >
     <div v-if="showCalendars">
       <div
-        class="flex gap-1 mb-2"
-        :class="{ 'w-120': isRange && !isMobile, 'w-56': !isRange || isMobile }"
+        class="flex gap-1 mb-2 w-56"
+        :class="{ 'sm:w-120': isRange }"
       >
         <button
           v-if="view === 'days'"
@@ -45,9 +44,9 @@
             @click="view === 'days' ? view = 'years' : view = 'days'"
           >
             <span>{{ calendarMonthTitle }} {{ calendarYearTitle }}</span>
-            <template v-if="isRange && !isMobile">
-              <span>-</span>
-              <span>{{ calendarNextMonthTitle }} {{ calendarNextYearTitle }}</span>
+            <template v-if="isRange">
+              <span class="hidden sm:inline-block">-</span>
+              <span class="hidden sm:inline-block">{{ calendarNextMonthTitle }} {{ calendarNextYearTitle }}</span>
             </template>
           </button>
         </div>
@@ -82,8 +81,7 @@
       </div>
       <template v-if="view === 'days'">
         <div
-          class="flex"
-          :class="{ 'flex-col': isMobile || !showCalendars, 'gap-8': !isMobile && showCalendars }"
+          class="flex flex-col sm:flex-row sm:gap-8"
         >
           <div class="grid grid-cols-7 w-56 place-content-start">
             <div
@@ -124,8 +122,8 @@
             </div>
           </div>
 
-          <template v-if="isRange && !isMobile">
-            <div class="grid grid-cols-7 w- place-content-start">
+          <template v-if="isRange">
+            <div class="hidden sm:grid grid-cols-7 w- place-content-start">
               <div
                 v-for="day in calendarDaysOfWeek"
                 :key="day"
@@ -168,8 +166,8 @@
       </template>
       <template v-else>
         <div
-          class="grid gap-1"
-          :class="{ 'w-56': isMobile || !isRange, 'w-120': !isMobile && isRange }"
+          class="grid gap-1 w-56"
+          :class="{ 'sm:w-120': isRange }"
         >
           <div>
             <div class="text-sm uppercase font-semibold text-gray-500">
@@ -227,7 +225,7 @@
     <!-- Time pickers -->
     <div
       v-if="showTime && view === 'days'"
-      :class="{ 'flex gap-8 w-120': !isMobile && showCalendars && isRange }"
+      :class="{ 'sm:flex sm:gap-8 sm:w-120': showCalendars && isRange }"
     >
       <div
         class="w-56"
@@ -393,7 +391,6 @@ export interface CalendarRange {
   end: CalendarDate
 }
 export type CalendarMode = 'date' | 'dateTime' | 'time'
-export type CalendarBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 export default {
   name: 'SdsCalendar'
@@ -403,7 +400,6 @@ export default {
 <script lang="ts" setup>
 import { isWithinInterval, isBefore, isAfter, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format } from 'date-fns'
 import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
-import { useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -432,22 +428,10 @@ const props = defineProps({
   /**
    * Determines the maximum selectable date for this component.
    */
-  max: { type: [Date, null] as PropType<CalendarDate>, default: null },
-  /**
-   * Determines the responsive breakpoint in which range selection mode
-   * will collapse into a single calendar.
-   */
-  breakpoint: { type: String as PropType<CalendarBreakpoint>, default: 'sm' }
+  max: { type: [Date, null] as PropType<CalendarDate>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
-
-const el = ref(null)
-const breakpoints = useBreakpoints(breakpointsTailwind)
-const isMobile = ref(false)
-useResizeObserver(el, () => {
-  isMobile.value = breakpoints.isSmaller(props.breakpoint)
-})
 
 const date = computed<CalendarDate | CalendarRange>({
   get() {
