@@ -13,12 +13,16 @@ export default {
   },
   component: SdsDatepicker,
   argTypes: {
-    variant: {
-      options: ['primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger'],
-      control: { type: 'select' }
-    },
     size: {
       options: ['md', 'sm'],
+      control: { type: 'select' }
+    },
+    mode: {
+      options: ['date', 'dateTime', 'time'],
+      control: { type: 'select' }
+    },
+    breakpoint: {
+      options: ['sm', 'md', 'lg', 'xl', '2xl'],
       control: { type: 'select' }
     },
     modelValue: { control: { type: 'date' } },
@@ -66,3 +70,11 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Range = Template.bind({});
+Range.args = {
+  modelValue: { start: new Date('2022-01-26'), end: new Date('2022-02-09') },
+  mode: 'dateTime',
+  min: new Date('2021-11-15'),
+  max: new Date('2022-03-12')
+};

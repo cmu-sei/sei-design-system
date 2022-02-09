@@ -13,12 +13,14 @@ export default {
   },
   component: SdsCalendar,
   argTypes: {
-    variant: {
-      options: ['primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger'],
+    mode: {
+      options: ['date', 'dateTime', 'time'],
       control: { type: 'select' }
     },
-    date: { control: { type: 'date' } },
-    endDate: { control: { type: 'date' } },
+    breakpoint: {
+      options: ['sm', 'md', 'lg', 'xl', '2xl'],
+      control: { type: 'select' }
+    },
     min: { control: { type: 'date' } },
     max: { control: { type: 'date' } }
   }
@@ -30,37 +32,19 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-calendar
-      v-bind="args"
-      v-model:date="localDate"
-      v-model:end-date="localEndDate"
-      v-model:min="localMinDate"
-      v-model:max="localMaxDate"
-    />
-  `,
-  data() {
-    return {
-      localDate: null,
-      localEndDate: null,
-      localMinDate: null,
-      localMaxDate: null
-    }
-  },
-  watch: {
-    date(value) {
-      this.localDate = value
-    },
-    endDate(value) {
-      this.localEndDate = value
-    },
-    minDate(value) {
-      this.localMinDate = value
-    },
-    maxDate(value) {
-      this.localMaxDate = value
-    }
-  }
+    <sds-calendar v-bind="args" />
+  `
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  modelValue: new Date()
+};
+
+export const Range = Template.bind({});
+Range.args = {
+  modelValue: { start: new Date('2022-01-26'), end: new Date('2022-02-09') },
+  mode: 'dateTime',
+  min: new Date('2021-11-15'),
+  max: new Date('2022-03-12')
+};

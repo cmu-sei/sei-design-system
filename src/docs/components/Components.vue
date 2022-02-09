@@ -852,8 +852,7 @@ export default defineComponent({
   data() {
     return {
       openModal: false,
-      openDropdown: false,
-      calendarDate: ""
+      openDropdown: false
     };
   },
 });

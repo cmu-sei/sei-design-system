@@ -1,754 +1,817 @@
 <template>
-  <div class="select-none">
-    <header class="flex mb-1">
-      <div class="flex-grow my-auto">
-        <button
-          type="button"
-          class="
-            flex
-            p-1
-            space-x-1
-            text-xl
-            font-semibold
-            text-left text-gray-900
-            bg-transparent
-            border-0
-            rounded
-            cursor-pointer
-            whitespace-nowrap
-            hover:underline
-            focus:underline focus:outline-none
-          "
-          title="Toggle go to date view"
-          @click="switchView"
-        >
-          <span class="month">{{ format(visibleDay, "MMM") }}</span>
-          <span
-            class="year"
-            :class="{
-              'text-blue-500': variant === 'primary',
-              'text-gray-700': variant === 'secondary',
-              'text-gray-500': variant === 'tertiary',
-              'text-green-500': variant === 'success',
-              'text-teal-500': variant === 'info',
-              'text-orange-500': variant === 'warning',
-              'text-red-500': variant === 'danger',
-            }"
-          >{{ format(visibleDay, " yyyy") }}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-3 h-3 my-auto"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              v-if="view === 'calendar'"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M9 5l7 7-7 7"
-            />
-            <path
-              v-else
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
-      </div>
+  <div
+    ref="el"
+    data-testid="calendar"
+    class="select-none"
+  >
+    <div v-if="showCalendars">
       <div
-        v-if="view === 'calendar'"
-        class="my-auto"
+        class="flex gap-1 mb-2"
+        :class="{ 'w-120': isRange && !isMobile, 'w-56': !isRange || isMobile }"
       >
         <button
-          v-if="
-            (!isSameMonth(visibleDay, date) && date !== null) ||
-              (!isSameMonth(visibleDay, endDate) && endDate !== null)
-          "
+          v-if="view === 'days'"
+          class="text-gray-700 dark:text-gray-300 px-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
           type="button"
-          class="
-            p-1
-            mr-1
-            text-base text-gray-900
-            bg-transparent
-            border-0
-            rounded
-            cursor-pointer
-            hover:bg-gray-200
-            focus:bg-gray-200 focus:outline-none focus:ring
-          "
-          title="Go to selected date(s)"
-          @click="goToSelectedMonth"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              v-if="!isSameMonth(visibleDay, date) && date !== null"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M7 11l5-5m0 0l5 5m-5-5v12"
-            />
-            <path
-              v-else-if="!isSameMonth(visibleDay, endDate) && endDate !== null"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 13l-5 5m0 0l-5-5m5 5V6"
-            />
-          </svg>
-        </button>
-        <button
-          type="button"
-          class="
-            p-1
-            mr-1
-            text-base text-gray-900
-            bg-transparent
-            border-0
-            rounded
-            cursor-pointer
-            hover:bg-gray-200
-            focus:bg-gray-200 focus:outline-none focus:ring
-          "
-          title="Go to previous month"
+          tabindex="-1"
+          :disabled="!canGoToPrevMonth"
           @click="goToPrevMonth"
         >
+          <span class="sr-only">Go to previous month</span>
           <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
             class="w-5 h-5"
+            width="32"
+            height="32"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 512 512"
+          ><path
             fill="none"
+            stroke="currentColor"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="2"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M15 19l-7-7 7-7" />
-          </svg>
+            stroke-width="48"
+            d="M328 112L184 256l144 144"
+          /></svg>
         </button>
-        <button
-          type="button"
-          class="
-            p-1
-            text-base text-gray-900
-            bg-transparent
-            border-0
-            rounded
-            cursor-pointer
-            hover:bg-gray-200
-            focus:bg-gray-200 focus:outline-none focus:ring
-          "
-          title="Go to this month"
-          :disabled="isSameMonth(visibleDay, today)"
-          :class="{
-            'opacity-50 pointer-events-none': isSameMonth(visibleDay, today),
-          }"
-          @click="goToThisMonth"
-        >
-          <svg
-            class="w-5 h-5"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div class="flex-grow flex">
+          <button
+            class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+            type="button"
+            tabindex="-1"
+            @click="view === 'days' ? view = 'years' : view = 'days'"
           >
-            <path
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          </svg>
-        </button>
+            <span>{{ calendarMonthTitle }} {{ calendarYearTitle }}</span>
+            <template v-if="isRange && !isMobile">
+              <span>-</span>
+              <span>{{ calendarNextMonthTitle }} {{ calendarNextYearTitle }}</span>
+            </template>
+          </button>
+        </div>
         <button
+          v-if="view === 'days'"
+          class="text-gray-700 dark:text-gray-300 px-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
           type="button"
-          class="
-            p-1
-            mr-1
-            text-base text-gray-900
-            bg-transparent
-            border-0
-            rounded
-            cursor-pointer
-            hover:bg-gray-200
-            focus:bg-gray-200 focus:outline-none focus:ring
-          "
-          title="Go to next month"
+          tabindex="-1"
+          :disabled="!canGoToNextMonth"
           @click="goToNextMonth"
         >
+          <span class="sr-only">Go to next month</span>
           <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
             class="w-5 h-5"
+            width="32"
+            height="32"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 512 512"
+          ><path
             fill="none"
+            stroke="currentColor"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="2"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M9 5l7 7-7 7" />
-          </svg>
+            stroke-width="48"
+            d="M184 112l144 144l-144 144"
+          /></svg>
         </button>
       </div>
-    </header>
-    <div
-      v-if="view === 'calendar'"
-      class="calendar"
-    >
-      <table class="w-full border-0">
-        <thead>
-          <tr>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Sun
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Mon
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Tue
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Wed
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Thu
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Fri
-            </th>
-            <th class="text-xs font-light text-center text-gray-500 uppercase">
-              Sat
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(week, index) in calendarMatrix"
-            :key="index"
-          >
-            <td
-              v-for="(day, i) in week"
-              :key="i"
-              :class="{
-                'text-center': true,
-                'bg-gray-100': isInsideRange(day),
-                'font-bold': isSameDay(day),
-              }"
+      <template v-if="view === 'days'">
+        <div
+          class="flex"
+          :class="{ 'flex-col': isMobile || !showCalendars, 'gap-8': !isMobile && showCalendars }"
+        >
+          <div class="grid grid-cols-7 w-56 place-content-start">
+            <div
+              v-for="day of calendarDaysOfWeek"
+              :key="day"
+              class="text-sm font-bold text-gray-400 text-center uppercase w-8 mb-1"
+            >
+              {{ day }}
+            </div>
+            <div
+              v-for="day of calendarDaysInMonth"
+              :key="day"
+              :class="[
+                'w-8 h-8 mb-1',
+                day === 1 ? `col-start-${calendarStartOfMonth}` : '',
+                dateIsWithinInterval(day) ? 'bg-blue-200 dark:bg-blue-800' : '',
+                dateIsAtStartOfInterval(day) ? 'bg-blue-200 dark:bg-blue-800 rounded-l-full' : '',
+                dateIsAtEndOfInterval(day) ? 'bg-blue-200 dark:bg-blue-800 rounded-r-full' : '',
+              ]"
             >
               <button
+                class="disabled:pointer-events-none disabled:opacity-25"
                 type="button"
-                class="
-                  flex
-                  items-center
-                  justify-center
-                  w-8
-                  h-8
-                  mx-auto
-                  text-sm text-center text-gray-900
-                  bg-transparent
-                  border-0
-                  rounded
-                  cursor-pointer
-                  focus:outline-none focus:ring
-                "
+                tabindex="-1"
                 :class="{
-                  'text-gray-400': !isSameMonth(day, visibleDay),
-                  'font-extrabold': isSameDay(day) || isToday(day),
-                  'hover:font-extrabold hover:text-white hover:bg-gray-500':
-                    !isSameDay(day) && !isToday(day),
-                  'text-blue-500 hover:text-white hover:bg-blue-500':
-                    variant === 'primary' && !isSameDay(day) && isToday(day),
-                  'text-gray-700 hover:text-white hover:bg-gray-700':
-                    variant === 'secondary' && !isSameDay(day) && isToday(day),
-                  'text-gray-500 hover:text-white hover:bg-gray-500':
-                    variant === 'tertiary' && !isSameDay(day) && isToday(day),
-                  'text-green-500 hover:text-white hover:bg-green-500':
-                    variant === 'success' && !isSameDay(day) && isToday(day),
-                  'text-teal-500 hover:text-white hover:bg-teal-500':
-                    variant === 'info' && !isSameDay(day) && isToday(day),
-                  'text-orange-500 hover:text-white hover:bg-orange-500':
-                    variant === 'warning' && !isSameDay(day) && isToday(day),
-                  'text-red-500 hover:text-white hover:bg-red-500':
-                    variant === 'danger' && !isSameDay(day) && isToday(day),
-                  'opacity-50 pointer-events-none':
-                    isBeforeMin(day) || isAfterMax(day),
-                  'bg-gray-500 text-gray-100': isSameDay(day) && !isToday(day),
-                  'bg-blue-500 text-white':
-                    variant === 'primary' && isSameDay(day) && isToday(day),
-                  'bg-gray-700 text-white':
-                    variant === 'secondary' && isSameDay(day) && isToday(day),
-                  'bg-gray-500 text-white':
-                    variant === 'tertiary' && isSameDay(day) && isToday(day),
-                  'bg-green-500 text-white':
-                    variant === 'success' && isSameDay(day) && isToday(day),
-                  'bg-teal-500 text-white':
-                    variant === 'info' && isSameDay(day) && isToday(day),
-                  'bg-orange-500 text-white':
-                    variant === 'warning' && isSameDay(day) && isToday(day),
-                  'bg-red-500 text-white':
-                    variant === 'danger' && isSameDay(day) && isToday(day),
+                  'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
+                  'hover:bg-gray-300 dark:hover:bg-gray-600': !dateIsSameDay(day),
+                  'font-bold bg-blue-500 text-white': dateIsSameDay(day),
+                  'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
+                  'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
                 }"
-                :disabled="isBeforeMin(day) || isAfterMax(day)"
-                @click="changeDate(day, $event)"
+                :disabled="dateIsBeforeMin(day) || dateIsAfterMax(day)"
+                :title="dateIsToday(day) ? 'Today' : ''"
+                @click="setModelValueDate(day)"
               >
-                <span>{{ format(day, "d") }}</span>
+                {{ day }}
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+
+          <template v-if="isRange && !isMobile">
+            <div class="grid grid-cols-7 w- place-content-start">
+              <div
+                v-for="day of calendarDaysOfWeek"
+                :key="day"
+                class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+              >
+                {{ day }}
+              </div>
+              <div
+                v-for="day of calendarNextDaysInMonth"
+                :key="day"
+                :class="[
+                  'w-8 h-8 mb-1',
+                  day === 1 ? `col-start-${calendarNextStartOfMonth}` : '',
+                  dateIsWithinInterval(day, true) ? 'bg-blue-200 dark:bg-blue-800' : '',
+                  dateIsAtStartOfInterval(day, true) ? 'bg-blue-200 dark:bg-blue-800 rounded-l-full' : '',
+                  dateIsAtEndOfInterval(day, true) ? 'bg-blue-200 dark:bg-blue-800 rounded-r-full' : '',
+                ]"
+              >
+                <button
+                  class="disabled:pointer-events-none disabled:opacity-25"
+                  type="button"
+                  tabindex="-1"
+                  :class="{
+                    'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
+                    'hover:bg-gray-300 dark:hover:bg-gray-600': !dateIsSameDay(day, true),
+                    'font-bold bg-blue-500 text-white': dateIsSameDay(day, true),
+                    'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
+                    'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)
+                  }"
+                  :disabled="dateIsBeforeMin(day, true) || dateIsAfterMax(day, true)"
+                  :title="dateIsToday(day, true) ? 'Today' : ''"
+                  @click="setModelValueDate(day, true)"
+                >
+                  {{ day }}
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          class="grid gap-1"
+          :class="{ 'w-56': isMobile || !isRange, 'w-120': !isMobile && isRange }"
+        >
+          <div>
+            <div class="text-sm uppercase font-semibold text-gray-500">
+              Month
+            </div>
+            <select
+              v-model="calendarMonthSelect"
+              class="form-control form-control-sm"
+            >
+              <option
+                v-for="month of calendarMonths"
+                :key="month"
+              >
+                {{ month }}
+              </option>
+            </select>
+          </div>
+          <div class="mt-1">
+            <div class="text-sm uppercase font-semibold text-gray-500">
+              Year
+            </div>
+            <select
+              v-model="calendarYearSelect"
+              class="form-control form-control-sm"
+            >
+              <option
+                v-for="year of calendarYears"
+                :key="year"
+              >
+                {{ year }}
+              </option>
+            </select>
+          </div>
+          <button
+            class="mt-2 btn btn-primary btn-sm"
+            type="button"
+            tabindex="-1"
+            @click="goToSelectedMonth()"
+          >
+            Go to Date
+          </button>
+          <hr class="my-2">
+          <button
+            class="btn btn-default btn-sm"
+            type="button"
+            tabindex="-1"
+            @click="goToThisMonth()"
+          >
+            Go to Today
+          </button>
+        </div>
+      </template>
     </div>
+
+    <!-- Time pickers -->
     <div
-      v-else
-      class="grid gap-2"
+      v-if="showTime && view === 'days'"
+      :class="{ 'flex gap-8 w-120': !isMobile && showCalendars && isRange }"
     >
-      <label>
-        <span class="block mb-1 font-bold text-secondary">Month</span>
-        <select
-          v-model="selectViewMonth"
-          class="form-control form-control-sm"
+      <div
+        class="w-56"
+        :class="{ 'border-t my-2 pt-2 border-t': showCalendars }"
+      >
+        <div
+          class="uppercase text-sm text-gray-500 mb-2"
+          :class="{ 'opacity-50': !dateSelectionIsComplete}"
         >
-          <option
-            v-for="month in dateSelectionMonths"
-            :key="month.title"
-            :value="month.value"
+          <template v-if="date && date instanceof Date">
+            {{ formatDate(date, 'eee MMM dd yyyy') }}
+          </template>
+          <template v-else-if="date && !(date instanceof Date) && date.start instanceof Date">
+            {{ formatDate(date.start, 'eee MMM dd yyyy') }}
+          </template>
+          <template v-else>
+            --
+          </template>
+        </div>
+        <div class="flex gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            :class="{ 'opacity-50': !dateSelectionIsComplete}"
+            width="32"
+            height="32"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 512 512"
           >
-            {{ month.title }}
-          </option>
-        </select>
-      </label>
-      <label>
-        <span class="block mb-1 font-bold text-secondary">Year</span>
-        <select
-          v-model="selectViewYear"
-          class="form-control form-control-sm"
-        >
-          <option
-            v-for="year in dateSelectionYears"
-            :key="year"
-            :value="year"
+            <path
+              d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+              fill="currentColor"
+            />
+          </svg>
+          <select
+            v-model="startTimeHour"
+            :disabled="!startTimeHour || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('hour', ($event.target as HTMLSelectElement).value)"
           >
-            {{ year }}
-          </option>
-        </select>
-      </label>
-      <div class="my-1">
-        <button
-          type="button"
-          class="btn btn-primary btn-block btn-sm"
-          @click="goToDateSelection"
+            <option
+              v-for="hour of getCalendarHours"
+              :key="hour"
+            >
+              {{ hour }}
+            </option>
+          </select>
+          <span class="my-auto">:</span>
+          <select
+            v-model="startTimeMinutes"
+            :disabled="!startTimeMinutes || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('minutes', ($event.target as HTMLSelectElement).value)"
+          >
+            <option
+              v-for="minutes of getCalendarMinutes"
+              :key="minutes"
+            >
+              {{ minutes }}
+            </option>
+          </select>
+          <select
+            v-model="startTimeMeridian"
+            :disabled="!startTimeMeridian || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('meridian', ($event.target as HTMLSelectElement).value)"
+          >
+            <option
+              v-for="meridian of getCalendarMeridian"
+              :key="meridian"
+            >
+              {{ meridian }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div
+        v-if="isRange"
+        class="border-t my-2 pt-2 border-t w-56"
+      >
+        <div
+          class="uppercase text-sm text-gray-500 mb-2"
+          :class="{ 'opacity-50': !dateSelectionIsComplete}"
         >
-          Go to date
-        </button>
+          <template v-if="date && !(date instanceof Date) && date.end instanceof Date">
+            {{ formatDate(date.end, 'eee MMM dd yyyy') }}
+          </template>
+          <template v-else>
+            --
+          </template>
+        </div>
+        <div class="flex gap-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            aria-hidden="true"
+            role="img"
+            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            :class="{ 'opacity-50': !dateSelectionIsComplete}"
+            width="32"
+            height="32"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+              fill="currentColor"
+            />
+          </svg>
+          <select
+            v-model="endTimeHour"
+            :disabled="!endTimeHour || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('hour', ($event.target as HTMLSelectElement).value, true)"
+          >
+            <option
+              v-for="hour of getCalendarHours"
+              :key="hour"
+            >
+              {{ hour }}
+            </option>
+          </select>
+          <span class="my-auto">:</span>
+          <select
+            v-model="endTimeMinutes"
+            :disabled="!endTimeMinutes || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('minutes', ($event.target as HTMLSelectElement).value, true)"
+          >
+            <option
+              v-for="minutes of getCalendarMinutes"
+              :key="minutes"
+            >
+              {{ minutes }}
+            </option>
+          </select>
+          <select
+            v-model="endTimeMeridian"
+            :disabled="!endTimeMeridian || !dateSelectionIsComplete"
+            class="form-control form-control-sm"
+            @change="changeTime('meridian', ($event.target as HTMLSelectElement).value, true)"
+          >
+            <option
+              v-for="meridian of getCalendarMeridian"
+              :key="meridian"
+            >
+              {{ meridian }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import {
-  addDays,
-  startOfWeek,
-  startOfMonth,
-  format,
-  getYear,
-  getMonth,
-  isSameDay,
-  isToday,
-  isSameWeek,
-  isSameMonth,
-  isBefore,
-  isAfter,
-  subMonths,
-  addMonths,
-  closestTo,
-} from "date-fns";
+export type CalendarDate = Date | null
+export interface CalendarRange {
+  start: CalendarDate
+  end: CalendarDate
+}
+export type CalendarMode = 'date' | 'dateTime' | 'time'
+export type CalendarBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
-export default defineComponent({
-  name: "SdsCalendar",
-  props: {
-    /**
-     * Determines the theme color of the component.
-     */
-    variant: { type: String, default: 'primary' },
-    /**
-     * The start date for a range. The only date for a non-range. Should use .sync modifier.
-     */
-    date: { type: Date, default: null },
-    /**
-     * The end date for a range. Should use .sync modifier.
-     */
-    endDate: { type: Date, default: null },
-    /**
-     * The minimum allowed selectable date for the calendar. Should use .sync modifier.
-     */
-    min: { type: Date, default: null },
-    /**
-     * The maximum allowed selectable date for the calendar. Should use .sync modifier.
-     */
-    max: { type: Date, default: null },
-    /**
-     * The minimum allowed year allowed for the calendar.
-     */
-    minYear: { type: Number, default: 1900 },
-    /**
-     * The maximum allowed year allowed for the calendar.
-     */
-    maxYear: { type: Number, default: 2100 },
-    /**
-     * Toggles range and non-range capabilities.
-     */
-    multiple: { type: Boolean, default: false },
+export default {
+  name: 'SdsCalendar'
+}
+</script>
+
+<script lang="ts" setup>
+import { isWithinInterval, isBefore, isAfter, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format } from 'date-fns'
+import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
+import { useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+
+const props = defineProps({
+  /**
+   * The v-model for the component.
+   * 
+   * For single selections, this value can be null or a date object.
+   * 
+   * For range selections, this is an object with start and end keys
+   * that can either be null or a date object.
+   * 
+   * Range example:
+   * 
+   * **{ start: new Date(), end: null }**
+   */
+  modelValue: { type: [Object, Date, null] as PropType<CalendarDate | CalendarRange>, default: new Date() },
+  /**
+   * Determines the mode in which the calendar will function.
+   * 
+   * Options include 'date', 'dateTime', and 'time'.
+   */
+  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  /**
+   * Determines the minimum selectable date for this component.
+   */
+  min: { type: [Date, null] as PropType<CalendarDate>, default: null },
+  /**
+   * Determines the maximum selectable date for this component.
+   */
+  max: { type: [Date, null] as PropType<CalendarDate>, default: null },
+  /**
+   * Determines the responsive breakpoint in which range selection mode
+   * will collapse into a single calendar.
+   */
+  breakpoint: { type: String as PropType<CalendarBreakpoint>, default: 'sm' }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const el = ref(null)
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = ref(false)
+useResizeObserver(el, () => {
+  isMobile.value = breakpoints.isSmaller(props.breakpoint)
+})
+
+const date = computed<CalendarDate | CalendarRange>({
+  get() {
+    return props.modelValue
   },
-  emits: ['update:date', 'update:endDate', 'update:min', 'update:max'],
-  data() {
-    const visibleDay = this.date !== null ? this.date : new Date();
-    const today = new Date();
-    const selectViewMonth = format(visibleDay, "MM");
-    const selectViewYear = format(visibleDay, "yyyy");
-    return {
-      today,
-      visibleDay,
-      selectViewMonth,
-      selectViewYear,
-      view: "calendar",
-    };
-  },
-  computed: {
-    dateSelectionMonths() {
-      return [
-        { title: "January", value: 0 },
-        { title: "February", value: 1 },
-        { title: "March", value: 2 },
-        { title: "April", value: 3 },
-        { title: "May", value: 4 },
-        { title: "June", value: 5 },
-        { title: "July", value: 6 },
-        { title: "August", value: 7 },
-        { title: "September", value: 8 },
-        { title: "October", value: 9 },
-        { title: "November", value: 10 },
-        { title: "December", value: 11 },
-      ];
-    },
-    dateSelectionYears(): Date[] {
-      const rangeOfYears = (start: any, end: any) =>
-        Array(end - start + 1)
-          .fill(start)
-          .map((year, index) => year + index);
-      return rangeOfYears(this.minYear, this.maxYear);
-    },
-    localDate: {
-      get(): null|Date {
-        if (this.date === null) return null;
-        return this.date;
-      },
-      set(value: null|Date) {
-        /**
-         * Emitted when date changes.
-         */
-        this.$emit("update:date", value);
-      },
-    },
-    localEndDate: {
-      get(): null|Date {
-        if (this.endDate === null) return null;
-        return this.endDate;
-      },
-      set(value: null|Date) {
-        /**
-         * Emitted when endDate changes.
-         */
-        this.$emit("update:endDate", value);
-      },
-    },
-    localMin: {
-      get(): null|Date {
-        if (this.min === null) return null;
-        return this.min;
-      },
-      set(value: null|Date) {
-        /**
-         * Emitted when min changes.
-         */
-        this.$emit("update:min", value);
-      },
-    },
-    localMax: {
-      get(): null|Date {
-        if (this.max === null) return null;
-        return this.max;
-      },
-      set(value: null|Date) {
-        /**
-         * Emitted when max changes.
-         */
-        this.$emit("update:max", value);
-      },
-    },
-    selectedDate(): null|Date {
-      if (this.localDate === null) return null;
-      return this.localDate;
-    },
-    selectedEndDate(): null|Date {
-      if (this.localEndDate === null) return null;
-      return this.localEndDate;
-    },
-    minDate(): null|Date {
-      if (this.localMin === null) return null;
-      return this.localMin;
-    },
-    maxDate(): null|Date {
-      if (this.localMax === null) return null;
-      return this.localMax;
-    },
-    calendarMatrix() {
-      // 0 = Sunday
-      const weekStartsOn = 0;
-      const year = getYear(this.visibleDay);
-      const month = getMonth(this.visibleDay);
-      //  1. Generate the date from params, then get the firstDay and lastDay in the month
-      const date = new Date(year, month);
-      // const firstDay = startOfMonth(date);
-      // const lastDay = endOfMonth(date);
-      //  2. Get the start date for our matrix
-      const startDate = startOfWeek(date, { weekStartsOn });
-      //  3. Get the differences in weeks from lastDay to firstDay
-      //  Add (+1) to get total row we need for the matrix to cover all the days in the month
-      //  It'll be used as total rows needed for our matrix
-      // const matrixRows =
-      //   differenceInCalendarWeeks(lastDay, firstDay, { weekStartsOn }) + 1;
-      // **************************
-      // Instead of all that... we just always use 6 rows since
-      // it is the smallest number of rows that fits all months
-      const matrixRows = 6;
-      //  4. Set the number of days in a week.
-      //  It'll be used as total columns needed for our matrix
-      const matrixColumns = 7;
-      //  5. Get the total days that we are going to generate.
-      const totalDays = matrixRows * matrixColumns;
-      //  Preparations complete! Let's generate the calendar matrix
-      const calendar =
-        //  6. Generate an empty Array from the totalDays
-        Array.from({ length: totalDays })
-          //  7. Assign a Date value to each value of the array
-          //  We'll get an array with each value is a Date value
-          .map((_, index) => addDays(startDate, index))
-          //  8. use Array.reduce to transform our array for each week
-          //  We want to cut the array at the beginning of each week
-          .reduce(
-            (matrix, current, index, days) =>
-              index % matrixColumns === 0
-                ? [...matrix, days.slice(index, index + matrixColumns)]
-                : (matrix as any),
-            []
-          );
-      return calendar;
-    },
-  },
-  watch: {
-    localDate(value) {
-      if (value !== null) this.visibleDay = value;
-      this.correctStartDate();
-    },
-    localEndDate(value) {
-      if (this.multiple && value !== null) this.visibleDay = value;
-      this.correctEndDate();
-    },
-  },
-  methods: {
-    format,
-    isToday,
-    isSameMonth,
-    correctStartDate() {
-      if (this.localDate === null || this.localEndDate === null) return;
-      if (isAfter(this.localDate, this.localEndDate)) {
-        this.localEndDate = null;
-      }
-    },
-    correctEndDate() {
-      if (this.localDate === null || this.localEndDate === null) return;
-      if (isBefore(this.localEndDate, this.localDate)) {
-        this.localDate = this.localEndDate;
-        this.localEndDate = null;
-      }
-    },
-    changeDate(day: Date | null, e: { stopPropagation: () => void }) {
-      if (day === null) return;
-      this.setSelectedDates(day);
-      this.$nextTick(() => {
-        if (
-          this.multiple &&
-          (this.localDate === null || this.localEndDate === null)
-        ) {
-          e.stopPropagation();
-        }
-      });
-    },
-    goToSelectedMonth(e: { stopPropagation: () => void }) {
-      e.stopPropagation();
-      if (this.selectedDate === null) return;
-      if (!isSameDay(this.visibleDay, this.selectedDate)) {
-        this.visibleDay = this.selectedDate;
-      } else if (this.multiple && this.selectedEndDate !== null) {
-        this.visibleDay = this.selectedEndDate;
-      }
-    },
-    goToThisMonth(e: { stopPropagation: () => void }) {
-      e.stopPropagation();
-      this.visibleDay = this.today;
-    },
-    goToPrevMonth(e: { stopPropagation: () => void }) {
-      e.stopPropagation();
-      this.visibleDay = startOfMonth(subMonths(this.visibleDay, 1));
-    },
-    goToNextMonth(e: { stopPropagation: () => void }) {
-      e.stopPropagation();
-      this.visibleDay = startOfMonth(addMonths(this.visibleDay, 1));
-    },
-    isChangingTheStartDate(val: Date | null) {
-      if (!this.multiple) return true;
-      if (this.selectedDate === null) return true;
-      if (this.selectedEndDate === null) return false;
-      const date = val;
-      if (date == null) return true;
-      const closest = closestTo(date, [
-        this.selectedDate,
-        this.selectedEndDate,
-      ]);
-      return isSameDay(closest, this.selectedDate);
-    },
-    clampSelectedDates() {
-      // clamp max to min and reset date/endDate
-      if (this.isBeforeMin(this.maxDate)) {
-        this.localDate = null;
-        this.localEndDate = null;
-        this.localMax = this.localMin;
-        return;
-      }
-      // clamp min to max and reset date/endDate
-      if (this.isAfterMax(this.minDate)) {
-        this.localDate = null;
-        this.localEndDate = null;
-        this.localMin = this.localMax;
-        return;
-      }
-      // clamp date to min and max
-      if (this.localDate !== null) {
-        if (this.isBeforeMin(this.selectedDate)) {
-          this.localDate = this.localMin;
-        } else if (this.isAfterMax(this.selectedDate)) {
-          this.localDate = this.localMax;
-          this.localEndDate = null;
-        }
-      }
-      // clamp endDate to min and max
-      if (this.localEndDate !== null) {
-        if (this.isBeforeMin(this.selectedEndDate)) {
-          this.localDate = this.localMin;
-          this.localEndDate = null;
-        } else if (this.isAfterMax(this.selectedEndDate)) {
-          this.localEndDate = this.localMax;
-        }
-      }
-    },
-    setSelectedDates(val: Date | null) {
-      const isStartDate = this.isChangingTheStartDate(val);
-      if (isStartDate) {
-        if (
-          val !== null &&
-          isSameDay((this.localDate as Date), val) &&
-          this.localEndDate !== null
-        ) {
-          this.localDate = this.localEndDate;
-          this.localEndDate = null;
-        } else if (val !== null && isSameDay((this.localDate as Date), val)) {
-          this.localDate = null;
-        } else {
-          this.localDate = val;
+  set(value) {
+    emit('update:modelValue', value)
+  }
+})
+
+const displayedMonth = ref(new Date())
+const calendarDaysOfWeek = ["S", "M", "T", "W", "T", "F", "S"]
+const calendarMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+const calendarYears = [...Array(200).keys()].map((i) => i + 1900)
+const calendarMonthTitle = computed(() => format(displayedMonth.value, 'MMMM'))
+const calendarYearTitle = computed(() => format(displayedMonth.value, 'yyyy'))
+const calendarStartOfMonth = computed(() => getDay(startOfMonth(displayedMonth.value)) + 1)
+const calendarDaysInMonth = computed(() => getDaysInMonth(displayedMonth.value))
+
+const displayedNextMonth = ref(addMonths(displayedMonth.value, 1))
+const calendarNextMonthTitle = computed(() => format(displayedNextMonth.value, 'MMMM'))
+const calendarNextYearTitle = computed(() => format(displayedNextMonth.value, 'yyyy'))
+const calendarNextStartOfMonth = computed(() => getDay(startOfMonth(displayedNextMonth.value)) + 1)
+const calendarNextDaysInMonth = computed(() => getDaysInMonth(displayedNextMonth.value))
+
+const view = ref('days')
+const calendarMonthSelect = ref<string | null>(null)
+const calendarYearSelect = ref<string | null>(null)
+
+const setCalendarSelectMonthAndYear = () => {
+  calendarMonthSelect.value = format(displayedMonth.value, 'MMMM')
+  calendarYearSelect.value = format(displayedMonth.value, 'yyyy')
+}
+
+setCalendarSelectMonthAndYear()
+
+watch(() => view.value, () => {
+  setCalendarSelectMonthAndYear()
+})
+
+const showCalendars = computed(() => {
+  return props.mode === 'date' || props.mode === 'dateTime'
+})
+
+const showTime = computed(() => {
+  return props.mode === 'dateTime' || props.mode === 'time'
+})
+
+const startTimeHour = ref<string | null>(null)
+const startTimeMinutes = ref<string | null>(null)
+const startTimeMeridian = ref<string | null>(null)
+const endTimeHour = ref<string | null>(null)
+const endTimeMinutes = ref<string | null>(null)
+const endTimeMeridian = ref<string | null>(null)
+
+onMounted(() => {
+  initTimeMode()
+  moveToStartDate()
+  nextTick(() => {
+    updateTimeSelects()
+  })
+})
+
+watch(() => props.modelValue, () => {
+  updateTimeSelects()
+})
+
+const initTimeMode = () => {
+  if (props.mode === 'time') {
+    if (!date.value || (!(date.value instanceof Date) && (!date.value.start || !date.value.end))) {
+      const now = setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
+      if (isRange.value) {
+        date.value = {
+          start: now,
+          end: now
         }
       } else {
-        if (
-          (val !== null && isSameDay((this.localDate as Date), val)) ||
-          this.localDate === null
-        ) {
-          this.localDate = null;
-          this.localEndDate = null;
-        } else if (val !== null && isSameDay((this.localEndDate as Date), val)) {
-          this.localEndDate = null;
-        } else {
-          const date = val;
-          if (
-            date !== null &&
-            this.selectedDate !== null &&
-            isBefore(date, this.selectedDate)
-          ) {
-            this.localEndDate = this.localDate;
-            this.localDate = val;
-          } else {
-            this.localEndDate = val;
-          }
+        date.value = now
+      }
+    }
+  }
+}
+
+const moveToStartDate = () => {
+  if (date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+    displayedMonth.value = date.value.start
+  } else if (date.value && date.value instanceof Date) {
+    displayedMonth.value = date.value
+  } else if (props.min && props.min instanceof Date && isAfter(props.min, new Date())) {
+    displayedMonth.value = props.min
+  }
+  displayedNextMonth.value = addMonths(displayedMonth.value, 1)
+}
+
+const updateTimeSelects = () => {
+  if (isRange.value) {
+    if (date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+      startTimeHour.value = formatDate(date.value.start, 'hh')
+      startTimeMinutes.value = formatDate(date.value.start, 'mm')
+      startTimeMeridian.value = getHours(date.value.start) > 11 ? 'pm' : 'am'
+    } else {
+      startTimeHour.value = null
+      startTimeMinutes.value = null
+      startTimeMeridian.value = null
+    }
+    if (date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+      endTimeHour.value = formatDate(date.value.end, 'hh')
+      endTimeMinutes.value = formatDate(date.value.end, 'mm')
+      endTimeMeridian.value = getHours(date.value.end) > 11 ? 'pm' : 'am'
+    } else {
+      endTimeHour.value = null
+      endTimeMinutes.value = null
+      endTimeMeridian.value = null
+    }
+  } else if (date.value instanceof Date) {
+    startTimeHour.value = formatDate(date.value, 'hh')
+    startTimeMinutes.value = formatDate(date.value, 'mm')
+    startTimeMeridian.value = getHours(date.value) > 11 ? 'pm' : 'am'
+  } else {
+    startTimeHour.value = null
+    startTimeMinutes.value = null
+    startTimeMeridian.value = null
+  }
+}
+
+const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, isEndOfRange = false) => {
+  switch (interval) {
+    case 'hour':
+      if (isRange.value) {
+        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+          const currentHour = getHours(date.value.start)
+          const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
+          date.value.start = setHours(date.value.start, hours)
+        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+          const currentHour = getHours(date.value.end)
+          const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
+          date.value.end = setHours(date.value.end, hours)
         }
+      } else if (date.value instanceof Date) {
+        const currentHour = getHours(date.value)
+        const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
+        date.value = setHours(date.value, hours)
       }
-    },
-    isBeforeMin(date: Date | null): boolean {
-      if (date === null || this.minDate === null) return false;
-      return isBefore(date, this.minDate);
-    },
-    isAfterMax(date: Date | null): boolean {
-      if (date === null || this.maxDate === null) return false;
-      return isAfter(date, this.maxDate);
-    },
-    isInsideRange(day: Date | null): boolean {
-      if (day === null) return false;
-      return (
-        this.selectedDate !== null &&
-        (isAfter(day, this.selectedDate) ||
-          isSameDay(day, this.selectedDate)) &&
-        this.selectedEndDate !== null &&
-        (isBefore(day, this.selectedEndDate) ||
-          isSameDay(day, this.selectedEndDate))
-      );
-    },
-    isSameWeek(day: Date | null): boolean {
-      if (day === null) return false;
-      return (
-        this.selectedDate !== null &&
-        isSameWeek(day, this.selectedDate) &&
-        this.selectedEndDate === null
-      );
-    },
-    isSameDay(day: Date | null): boolean {
-      if (day === null) return false;
-      return (
-        (this.selectedDate !== null && isSameDay(day, this.selectedDate)) ||
-        (this.selectedEndDate !== null && isSameDay(day, this.selectedEndDate))
-      );
-    },
-    switchView() {
-      switch (this.view) {
-        case "calendar":
-          this.selectViewMonth = `${this.visibleDay.getMonth()}`;
-          this.selectViewYear = `${this.visibleDay.getFullYear()}`;
-          this.view = "select";
-          break;
-        case "select":
-        default:
-          this.view = "calendar";
-          break;
+      break
+    case 'minutes':
+      if (isRange.value) {
+        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+          date.value.start = setMinutes(date.value.start, parseInt(value))
+        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+          date.value.end = setMinutes(date.value.end, parseInt(value))
+        }
+      } else if (date.value instanceof Date) {
+        date.value = setMinutes(date.value, parseInt(value))
       }
-    },
-    goToDateSelection() {
-      this.visibleDay = new Date((this.selectViewYear as any), (this.selectViewMonth as any));
-      this.view = "calendar";
-    },
-  },
-});
+      break
+    case 'meridian':
+      if (isRange.value) {
+        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+          const currentHour = getHours(date.value.start)
+          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          date.value.start = setHours(date.value.start, hours)
+        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+          const currentHour = getHours(date.value.end)
+          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          date.value.end = setHours(date.value.end, hours)
+        }
+      } else if (date.value instanceof Date) {
+        const currentHour = getHours(date.value)
+        let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+        date.value = setHours(date.value, hours)
+      }
+      break
+    default:
+      break
+  }
+
+  if (isRange.value && date.value && !(date.value instanceof Date) && date.value.start instanceof Date && date.value.end instanceof Date) {
+    date.value = {
+      start: min([date.value.start, date.value.end]),
+      end: max([date.value.start, date.value.end])
+    }
+  }
+}
+
+const getCalendarHours = computed(() => {
+  const hours = [...Array(12).keys()]
+  return hours.map(i => (i + 1).toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  }))
+})
+
+const getCalendarMinutes = computed(() => {
+  const minutes = [...Array(60).keys()]
+  return minutes.map(i => i.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false
+  }))
+})
+
+const getCalendarMeridian = computed(() => {
+  return ['am', 'pm']
+})
+
+const goToPrevMonth = () => {
+  displayedMonth.value = subMonths(displayedMonth.value, 1)
+  displayedNextMonth.value = subMonths(displayedNextMonth.value, 1)
+}
+const goToNextMonth = () => {
+  displayedMonth.value = addMonths(displayedMonth.value, 1)
+  displayedNextMonth.value = addMonths(displayedNextMonth.value, 1)
+}
+const goToSelectedMonth = () => {
+  if (!calendarMonthSelect.value || !calendarYearSelect.value) return
+  const monthIndex = calendarMonths.findIndex((i) => i === calendarMonthSelect.value) + 1
+  if (typeof monthIndex === 'number') {
+    displayedMonth.value = new Date(parseInt(calendarYearSelect.value), monthIndex, 0, 0, 0, 0, 0)
+    displayedNextMonth.value = addMonths(displayedMonth.value, 1)
+    view.value = 'days'
+  }
+}
+const goToThisMonth = () => {
+  displayedMonth.value = new Date()
+  displayedNextMonth.value = addMonths(displayedMonth.value, 1)
+  view.value = 'days'
+}
+const canGoToPrevMonth = computed(() => {
+  if (!(props.min instanceof Date)) return true
+  return isBefore(startOfMonth(props.min), startOfMonth(displayedMonth.value))
+})
+const canGoToNextMonth = computed(() => {
+  if (!(props.max instanceof Date)) return true
+  if (isRange.value) {
+    return isAfter(startOfMonth(props.max), startOfMonth(displayedNextMonth.value))
+  }
+  return isAfter(startOfMonth(props.max), startOfMonth(displayedMonth.value))
+})
+
+const formatDate = (date: Date, output: string) => format(date, output)
+const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
+
+const dateSelectionIsComplete = computed(() => {
+  if (!date.value) return false
+  if (date.value && date.value instanceof Date) {
+    return true
+  }
+  if (date.value && !(date.value instanceof Date) && date.value.start instanceof Date && date.value.end instanceof Date) {
+    return true
+  }
+  return false
+})
+
+const setModelValueDate = (day: number, isNextMonth = false) => {
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  if (isRange.value && date.value) {
+    if ((date.value as CalendarRange).end || !(date.value as CalendarRange).start) {
+      (date.value as CalendarRange) = {
+        start: setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
+        end: null
+      }
+    } else {
+      if (
+        !(date.value instanceof Date) &&
+        (isDate(date.value.start) && date.value.start instanceof Date)
+      ) {
+        const start = date.value.start
+        const end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+        date.value = {
+          start: min([start, end]),
+          end: max([start, end])
+        }
+      } else {
+        (date.value as CalendarRange).end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      }
+    }
+  } else {
+    date.value = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+  }
+
+  nextTick(() => {
+    updateTimeSelects()
+  })
+}
+const dateIsBeforeMin = (day: number, isNextMonth = false) => {
+  if (!(props.min instanceof Date)) return false
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  return isBefore(setDate(month, day), props.min)
+}
+const dateIsAfterMax = (day: number, isNextMonth = false) => {
+  if (!(props.max instanceof Date)) return false
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  return isAfter(setDate(month, day), props.max)
+}
+const dateIsWithinInterval = (day: number, isNextMonth = false) => {
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  if (
+    date.value &&
+    !(date.value instanceof Date) &&
+    (
+      isDate(date.value.start) && date.value.start instanceof Date &&
+      isDate(date.value.end) && date.value.end instanceof Date
+    )
+  ) {
+    return isWithinInterval(
+      setDate(month, day),
+      { start: date.value.start, end: date.value.end }
+    )
+  }
+  return false
+}
+const dateIsAtStartOfInterval = (day: number, isNextMonth = false) => {
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  if (
+    date.value &&
+    !(date.value instanceof Date) &&
+    (
+      isDate(date.value.start) && date.value.start instanceof Date &&
+      isDate(date.value.end) && date.value.end instanceof Date
+    )
+  ) {
+    return isSameDay(setDate(month, day), date.value.start)
+  }
+  return false
+}
+const dateIsAtEndOfInterval = (day: number, isNextMonth = false) => {
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  if (
+    date.value &&
+    !(date.value instanceof Date) &&
+    (
+      isDate(date.value.start) && date.value.start instanceof Date &&
+      isDate(date.value.end) && date.value.end instanceof Date
+    )
+  ) {
+    return isSameDay(setDate(month, day), date.value.end)
+  }
+  return false
+}
+const dateIsSameDay = (day: number, isNextMonth = false) => {
+  // is null
+  if (!date.value) {
+    return false
+  }
+
+  // is a date
+  else if (isDate(date.value) && date.value instanceof Date) {
+    const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+    return isSameDay(setDate(month, day), date.value)
+  }
+
+  // is an object (range date)
+  else if (
+    !(date.value instanceof Date) &&
+    (
+      isDate(date.value.start) && date.value.start instanceof Date ||
+      isDate(date.value.end) && date.value.end instanceof Date
+    )
+  ) {
+    const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+    return (isDate(date.value.start) && date.value.start instanceof Date && isSameDay(setDate(month, day), date.value.start)) || (isDate(date.value.end) && date.value.end instanceof Date && isSameDay(setDate(month, day), date.value.end))
+  }
+}
+const dateIsToday = (day: number, isNextMonth = false) => {
+  const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
+  return isSameDay(setDate(month, day), new Date())
+}
 </script>
