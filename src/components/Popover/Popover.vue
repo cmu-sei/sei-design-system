@@ -22,7 +22,7 @@
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
       >
-        <!-- @slot Popover content. -->
+        <!-- @slot Popover content. @binding close, open, isOpen -->
         <slot
           :close="close"
           :open="open"

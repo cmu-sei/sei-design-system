@@ -3,33 +3,36 @@
     ref="root"
     class="relative inline-block text-left"
   >
-    <button
-      :id="id"
-      type="button"
-      class="inline-flex"
-      aria-haspopup="true"
-      :aria-expanded="isOpen"
-      :class="[btnClass]"
-      @click="handleClick"
-    >
-      <!-- @slot Title content of trigger button. -->
-      <slot name="title">
-        {{ title }}
-      </slot>
-      <svg
-        v-if="!hideCaret"
-        class="self-center w-5 h-5 -mr-1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
+    <!-- @slot Trigger content. Use if you want to override the default button trigger. Ensure to use the v-model to control open/close state. -->
+    <slot name="trigger">
+      <button
+        :id="id"
+        type="button"
+        class="inline-flex"
+        aria-haspopup="true"
+        :aria-expanded="isOpen"
+        :class="[btnClass]"
+        @click="handleClick"
       >
-        <path
-          fill-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
-    </button>
+        <!-- @slot Title content of trigger button. -->
+        <slot name="title">
+          {{ title }}
+        </slot>
+        <svg
+          v-if="!hideCaret"
+          class="self-center w-5 h-5 -mr-1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+    </slot>
     <transition
       :css="animated"
       enter-active-class="transition duration-100 ease-out"
@@ -53,6 +56,7 @@
           aria-orientation="vertical"
           :aria-labelledby="id"
         >
+          <!-- @slot Default slot content. This is the content of the dropdown menu. -->
           <slot />
         </div>
       </div>

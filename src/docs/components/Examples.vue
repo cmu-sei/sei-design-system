@@ -303,21 +303,21 @@
           Calendar
         </h4>
         <sds-calendar
-          v-model:date="calendar.date"
-          v-model:end-date="calendar.endDate"
-          v-model:min="calendar.min"
-          v-model:max="calendar.max"
-          v-model:multiple="calendar.multiple"
+          v-model="calendar.date"
+          :min="calendar.min"
+          :max="calendar.max"
+          :mode="calendar.mode"
+          :size="calendar.size"
         />
 
-        <form>
+        <form @submit.prevent>
           <sds-datepicker
             v-model="calendar.date"
-            v-model:min="calendar.min"
-            v-model:max="calendar.max"
-            class="mt-4"
+            :min="calendar.min"
+            :max="calendar.max"
+            :mode="calendar.mode"
+            :size="calendar.size"
             required
-            variant="danger"
           />
           <input
             type="submit"
@@ -485,11 +485,12 @@ export default defineComponent({
         input: "",
       },
       calendar: {
-        date: null,
-        endDate: null,
+        date: { start: null, end: null },
+        // date: null,
         max: null,
         min: null,
-        multiple: true,
+        mode: 'dateTime',
+        size: 'md'
       },
       paginator: {
         currentPage: 2,
