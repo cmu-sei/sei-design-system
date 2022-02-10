@@ -438,6 +438,9 @@ const date = computed<CalendarDate | CalendarRange>({
     return props.modelValue
   },
   set(value) {
+    /**
+     * Emitted when modelValue changes.
+     */
     emit('update:modelValue', value)
   }
 })
