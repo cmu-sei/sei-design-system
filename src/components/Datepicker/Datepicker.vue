@@ -148,7 +148,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { parse, format, isValid, min, max, isAfter, setHours, setMinutes, setMilliseconds, setSeconds } from 'date-fns'
+import { parse, format, isValid, min, max, isAfter, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays } from 'date-fns'
 import Calendar from '../Calendar/Calendar.vue';
 import Dropdown from '../Dropdown/Dropdown.vue';
 
@@ -342,6 +342,20 @@ export default defineComponent({
       }
     },
     formatDate(dateString: string) {
+      if (dateString === 'now') {
+        const date = new Date()
+        return { date, text: format(date, this.inputFormat) }
+      } else if (dateString === 'today') {
+        const date = setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
+        return { date, text: format(date, this.inputFormat) }
+      } else if (dateString === 'tomorrow') {
+        const date = addDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
+        return { date, text: format(date, this.inputFormat) }
+      } else if (dateString === 'yesterday') {
+        const date = subDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
+        return { date, text: format(date, this.inputFormat) }
+      }
+
       const formats = [
         'MM/dd/yyyy hh:mm aaa',
         'MM/dd/yyyy hh:mm a',
