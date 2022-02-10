@@ -4,82 +4,89 @@
     class="select-none"
   >
     <div v-if="showCalendars">
-      <div
-        class="flex gap-1 mb-2 w-56"
-        :class="{ 'sm:w-120': isRange }"
-      >
-        <button
-          v-if="view === 'days'"
-          class="text-gray-700 dark:text-gray-300 px-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
-          type="button"
-          tabindex="-1"
-          :disabled="!canGoToPrevMonth"
-          @click="goToPrevMonth"
+      <template v-if="view === 'days'">
+        <div
+          class="flex relative gap-1 mb-2 w-56"
+          :class="{ 'sm:w-120': isRange }"
         >
-          <span class="sr-only">Go to previous month</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="w-5 h-5"
-            width="32"
-            height="32"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 512 512"
-          ><path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
-            d="M328 112L184 256l144 144"
-          /></svg>
-        </button>
-        <div class="flex-grow flex">
           <button
-            class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
-            @click="view === 'days' ? view = 'years' : view = 'days'"
+            :disabled="!canGoToPrevMonth"
+            @click="goToPrevMonth"
           >
-            <span>{{ calendarMonthTitle }} {{ calendarYearTitle }}</span>
-            <template v-if="isRange">
-              <span class="hidden sm:inline-block">-</span>
-              <span class="hidden sm:inline-block">{{ calendarNextMonthTitle }} {{ calendarNextYearTitle }}</span>
-            </template>
+            <span class="sr-only">Go to previous month</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true"
+              role="img"
+              class="w-5 h-5"
+              width="32"
+              height="32"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 512 512"
+            ><path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="48"
+              d="M328 112L184 256l144 144"
+            /></svg>
+          </button>
+          <div class="flex-grow">
+            <button
+              class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+              type="button"
+              tabindex="-1"
+              @click="view = 'years'"
+            >
+              <span>{{ calendarMonthTitle }} {{ calendarYearTitle }}</span>
+            </button>
+          </div>
+          <div
+            v-if="isRange"
+            class="hidden flex-grow sm:block"
+          >
+            <button
+              class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+              type="button"
+              tabindex="-1"
+              @click="view = 'years'"
+            >
+              <span>{{ calendarNextMonthTitle }} {{ calendarNextYearTitle }}</span>
+            </button>
+          </div>
+          <button
+            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
+            type="button"
+            tabindex="-1"
+            :disabled="!canGoToNextMonth"
+            @click="goToNextMonth"
+          >
+            <span class="sr-only">Go to next month</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true"
+              role="img"
+              class="w-5 h-5"
+              width="32"
+              height="32"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 512 512"
+            ><path
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="48"
+              d="M184 112l144 144l-144 144"
+            /></svg>
           </button>
         </div>
-        <button
-          v-if="view === 'days'"
-          class="text-gray-700 dark:text-gray-300 px-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
-          type="button"
-          tabindex="-1"
-          :disabled="!canGoToNextMonth"
-          @click="goToNextMonth"
-        >
-          <span class="sr-only">Go to next month</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="w-5 h-5"
-            width="32"
-            height="32"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 512 512"
-          ><path
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
-            d="M184 112l144 144l-144 144"
-          /></svg>
-        </button>
-      </div>
-      <template v-if="view === 'days'">
         <div
           class="flex flex-col sm:flex-row sm:gap-8"
         >
@@ -170,7 +177,7 @@
           :class="{ 'sm:w-120': isRange }"
         >
           <div>
-            <div class="text-sm uppercase font-semibold text-gray-500">
+            <div class="mb-1 text-sm uppercase font-semibold text-gray-500">
               Month
             </div>
             <select
@@ -186,7 +193,7 @@
             </select>
           </div>
           <div class="mt-1">
-            <div class="text-sm uppercase font-semibold text-gray-500">
+            <div class="mb-1 text-sm uppercase font-semibold text-gray-500">
               Year
             </div>
             <select
@@ -209,14 +216,22 @@
           >
             Go to Date
           </button>
-          <hr class="my-2">
           <button
-            class="btn btn-default btn-sm"
+            class="mt-2 btn btn-default btn-sm"
             type="button"
             tabindex="-1"
             @click="goToThisMonth()"
           >
             Go to Today
+          </button>
+          <hr class="my-2">
+          <button
+            class="btn btn-default btn-sm"
+            type="button"
+            tabindex="-1"
+            @click="view = 'days'"
+          >
+            Cancel
           </button>
         </div>
       </template>
