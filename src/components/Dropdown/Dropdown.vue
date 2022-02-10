@@ -44,6 +44,7 @@
     >
       <div
         v-if="isOpen"
+        ref="menu"
         class="absolute z-10"
         :class="{
           'right-0': right,
@@ -86,20 +87,6 @@ export default defineComponent({
     title: {
       type: String,
       default: "",
-    },
-    /**
-     * Determines whether to right-align the dropdown menu.
-     */
-    right: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to position the dropdown menu above the trigger.
-     */
-    dropUp: {
-      type: Boolean,
-      default: false,
     },
     /**
      * Styling for the button trigger.
@@ -149,7 +136,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const id = `sds-dropdown__${uuid()}`;
     const root = ref(null)
+    const menu = ref(null)
     const isOpen = ref(false)
+
+    const dropUp = ref(false)
+    const right = ref(false)
 
     const emitter = mitt();
     provide('emitter', emitter);
@@ -161,6 +152,9 @@ export default defineComponent({
       document.addEventListener("mousedown", handleOutsideMouseDown);
       document.addEventListener("keyup", handleOutsideKeyUp);
       document.addEventListener("mouseover", debounceHandleOutsideMouseOver);
+      document.addEventListener("scroll", debounceHandleDocumentScroll);
+      handleDocumentScroll();
+      window.addEventListener("resize", debounceHandleWindowResize);
     })
 
     onUnmounted(() => {
@@ -170,6 +164,8 @@ export default defineComponent({
         "mouseover",
         debounceHandleOutsideMouseOver
       );
+      document.removeEventListener('scroll', debounceHandleDocumentScroll);
+      window.removeEventListener('resize', debounceHandleWindowResize);
     })
 
     watch(() => props.modelValue, (value: boolean) => {
@@ -178,6 +174,11 @@ export default defineComponent({
     })
 
     watch(isOpen, (value: boolean) => {
+      if (value) {
+        nextTick(() => {
+          handleWindowResize()
+        })
+      }
       if (value === props.modelValue) return;
       /**
        * Emmitted when modelValue changes.
@@ -235,17 +236,45 @@ export default defineComponent({
       props.hoverDelay
     );
 
+    const handleDocumentScroll = () => {
+      if (typeof window === "undefined" || typeof document === "undefined" || !root.value) {
+        return;
+      }
+      const { top } = (root.value as HTMLElement).getBoundingClientRect();
+      const vHeight = (window.innerHeight || document.documentElement.clientHeight);
+      dropUp.value = top > vHeight / 2;
+    }
+
+    const handleWindowResize = () => {
+      if (typeof window === "undefined" || typeof document === "undefined" || !root.value || !menu.value) {
+        return;
+      }
+      const { left } = (root.value as HTMLElement).getBoundingClientRect();
+      const { width } = (menu.value as HTMLElement).getBoundingClientRect();
+      const vWidth = (window.innerWidth || document.documentElement.clientWidth);
+      right.value = left + width > vWidth;
+    }
+
+    const debounceHandleDocumentScroll = debounce(handleDocumentScroll, 100);
+    const debounceHandleWindowResize = debounce(handleWindowResize, 250);
+
     return {
       root,
       id,
       isOpen,
+      right,
+      dropUp,
       open,
       close,
       handleClick,
       handleOutsideMouseDown,
       handleOutsideKeyUp,
       handleOutsideMouseOver,
-      debounceHandleOutsideMouseOver
+      debounceHandleOutsideMouseOver,
+      handleDocumentScroll,
+      handleWindowResize,
+      debounceHandleDocumentScroll,
+      debounceHandleWindowResize
     }
   },
 });
