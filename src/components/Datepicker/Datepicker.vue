@@ -212,7 +212,7 @@ export default defineComponent({
      */
     required: { type: Boolean, default: false },
   },
-  emits: ['update:modelValue', 'update:max', 'update:min'],
+  emits: ['update:modelValue'],
   data() {
     return {
       showDropdown: false,
