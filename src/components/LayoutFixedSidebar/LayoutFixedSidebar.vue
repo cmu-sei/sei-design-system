@@ -84,10 +84,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import debounce from "../../helpers/debounce";
 
-export default {
+export default defineComponent({
   name: 'SdsLayoutFixedSidebar',
   props: {
     /**
@@ -126,6 +127,7 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
+      debouncedSetElTop: null as null | EventListener,
       fixed: false,
       elTop: 0,
     };
@@ -146,7 +148,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(val) {
+      set(val: boolean) {
         /**
          * Emmitted when modelValue changes.
          */
@@ -169,7 +171,7 @@ export default {
   unmounted() {
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
     window.removeEventListener("scroll", this.handleFixedSidebar);
-    window.removeEventListener("resize", this.debouncedSetElTop);
+    window.removeEventListener("resize", (this.debouncedSetElTop as EventListener));
   },
   methods: {
     setElTop() {
@@ -180,7 +182,7 @@ export default {
         this.fixed = false;
         setTimeout(() => {
           this.elTop =
-            this.$refs.fixed.getBoundingClientRect().top + window.pageYOffset;
+            (this.$refs.fixed as HTMLElement).getBoundingClientRect().top + window.pageYOffset;
           this.handleFixedSidebar();
         }, 0);
       }
@@ -188,17 +190,17 @@ export default {
     async toggleCollapse() {
       this.collapsed = !this.collapsed;
     },
-    handleDocumentKeyUp($event) {
-      const tagName = $event.target.tagName.toLowerCase();
+    handleDocumentKeyUp($event: KeyboardEvent) {
+      const tagName = $event.target && ($event.target as HTMLElement).tagName.toLowerCase();
       if (tagName === "textarea") return;
       if (tagName === "input") return;
       // toggle collapse on "[" key
-      if ($event.keyCode === 219) this.toggleCollapse();
+      if ($event.key === '[') this.toggleCollapse();
     },
     handleFixedSidebar() {
       const distanceFromTop = this.elTop - this.topOffset - window.pageYOffset;
       this.fixed = distanceFromTop <= 0;
     },
   },
-};
+});
 </script>

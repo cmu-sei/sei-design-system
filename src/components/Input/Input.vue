@@ -21,10 +21,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
 
-export default {
+export default defineComponent({
   name: 'SdsInput',
   components: {
     CharacterCounter,
@@ -81,7 +82,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: string) {
         /**
          * Emmitted when modelValue changes.
          */
@@ -89,5 +90,5 @@ export default {
       },
     },
   },
-};
+});
 </script>

@@ -19,7 +19,7 @@ export default defineConfig({
   build: {
     target: 'esnext',
     lib: {
-      entry: resolve(__dirname, process.env.LIB_ROOT, 'index.js'),
+      entry: resolve(__dirname, process.env.LIB_ROOT, 'index.ts'),
       name: process.env.LIB_NAME || 'SeiDesignSystem',
       fileName: format => {
         if (format === 'es') {

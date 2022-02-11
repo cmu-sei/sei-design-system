@@ -4,8 +4,6 @@
     class="w-full"
     btn-class="w-full"
     menu-class="my-1 bg-white border rounded-md shadow-lg w-auto dark:border-gray-500 dark:bg-gray-700"
-    :right="right"
-    :drop-up="dropUp"
   >
     <template #trigger>
       <div
@@ -199,14 +197,6 @@ export default defineComponent({
      * The min date allowed for the datepicker.
      */
     min: { type: Date || null, default: null },
-    /**
-     * Determines if the datepicker is right-aligned or not.
-     */
-    right: { type: Boolean, default: false },
-    /**
-     * Determines if the datepicker positions itself above the input field.
-     */
-    dropUp: { type: Boolean, default: false },
     /**
      * Determines if the component is required.
      */

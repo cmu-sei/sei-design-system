@@ -82,7 +82,7 @@
           :style="{
             width: !multiple && showDropdown && canSearch ? '100%' : inputWidth,
           }"
-          :maxlength="maxlength >= 0 ? maxlength : false"
+          :maxlength="maxlength"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
@@ -215,24 +215,34 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
 import debounce from "../../helpers/debounce";
 
-export default {
+interface MultiselectOption {
+  [id: string | number]: any
+}
+
+interface MultiselectTag {
+  [id: string | number]: any
+  isNewTag?: boolean
+}
+
+export default defineComponent({
   name: 'SdsMultiselect',
   props: {
     /**
      * An array of the selected options.
      */
     selected: {
-      type: Array,
+      type: Array as PropType<MultiselectOption[]>,
       default: () => [],
     },
     /**
      * An array of options that can be selected.
      */
     options: {
-      type: Array,
+      type: Array as PropType<MultiselectOption[]>,
       default: () => [],
     },
     /**
@@ -436,8 +446,8 @@ export default {
      * Determines the maxlength of the input field.
      */
     maxlength: {
-      type: Number,
-      default: -1,
+      type: Number as PropType<number | undefined>,
+      default: undefined,
     },
     /**
      * Determines the max number of items that can be selected.
@@ -457,9 +467,10 @@ export default {
   emits: ['update:modelValue', 'update-selected', 'update-options', 'open', 'close', 'focus'],
   data() {
     return {
+      debouncePositionDropdown: null as null | EventListener,
       isOpen: false,
       active: false,
-      inputWidth: 0,
+      inputWidth: 0 as number | string,
       arrowCounter: 0,
       bottom: "auto",
       dropUp: false,
@@ -539,7 +550,7 @@ export default {
       const options = this.options;
       if (this.taggable && this.trimmedValue !== "") {
         if (
-          !options.some((i) => {
+          !options.some((i: MultiselectOption) => {
             return this.enforceLowercaseNewTag
               ? i[this.labelKey].trim().toLowerCase() ===
                   this.trimmedValue.toLowerCase()
@@ -561,7 +572,7 @@ export default {
       return options;
     },
     newTag() {
-      const tag = {};
+      const tag: MultiselectTag = {};
       // random number between 100,000 and 1,000,000
       const uniqueId = Math.floor(Math.random() * (1000000 - 100000) + 100000);
       tag[this.valueKey] = uniqueId;
@@ -584,7 +595,7 @@ export default {
     this.resizeInput();
     setTimeout(() => {
       if (this.autofocus) {
-        this.$refs.input.focus();
+        (this.$refs.input as HTMLInputElement).focus();
         this.active = true;
       }
     }, 0);
@@ -598,19 +609,19 @@ export default {
   unmounted() {
     document.removeEventListener("click", this.handleOutsideClick);
     document.removeEventListener("keyup", this.handleOutsideKeyUp);
-    document.removeEventListener("scroll", this.debouncePositionDropdown);
-    window.removeEventListener("resize", this.debouncePositionDropdown);
+    document.removeEventListener("scroll", (this.debouncePositionDropdown as EventListener));
+    window.removeEventListener("resize", (this.debouncePositionDropdown as EventListener));
   },
   methods: {
-    detectHtml(str) {
+    detectHtml(str: string) {
       return str.match(/<[^\s]|&[^\s;]*;/gi) !== null;
     },
     selectText() {
-      this.$refs.input.setSelectionRange(0, this.modelValue.length);
+      (this.$refs.input as HTMLInputElement).setSelectionRange(0, this.modelValue.length);
     },
-    search($event) {
-      if (!this.canSearch) return;
-      this.input($event.target.value);
+    search($event: Event) {
+      if (!this.canSearch || !$event.target) return;
+      this.input(($event.target as HTMLInputElement).value);
     },
     resizeInput() {
       setTimeout(() => {
@@ -620,7 +631,7 @@ export default {
           const minWidth = 20;
           const fauxInputWidth =
             typeof this.$refs["faux-input"] !== "undefined"
-              ? this.$refs["faux-input"].clientWidth + 20
+              ? (this.$refs["faux-input"] as HTMLElement).clientWidth + 20
               : 0;
           let elWidth = this.$el.clientWidth - 20;
           if (this.showCaret || (this.showClear && this.selected.length > 0))
@@ -643,13 +654,13 @@ export default {
       this.updateSelected(s);
       this.positionDropdown();
     },
-    add(selection) {
+    add(selection: MultiselectOption) {
       if (!this.canAddItem) return;
       if (this.isSelectedOption(selection)) {
         if (this.toggleSelectedOptions) this.remove(selection);
         return;
       }
-      let s = [];
+      let s: MultiselectOption[] = [];
       if (this.multiple) s = this.selected;
       s.push(selection);
       this.updateSelected(s);
@@ -658,7 +669,7 @@ export default {
       this.handleCloseOnSelection();
       this.positionDropdown();
     },
-    remove(selection) {
+    remove(selection: MultiselectOption) {
       this.updateSelected(
         this.selected.filter(
           (i) => i[this.valueKey] !== selection[this.valueKey]
@@ -667,7 +678,7 @@ export default {
       this.handleCloseOnSelection();
       this.positionDropdown();
     },
-    isSelectedOption(option) {
+    isSelectedOption(option: MultiselectOption) {
       return this.selected.some(
         (s) => s[this.labelKey] === option[this.labelKey]
       );
@@ -677,7 +688,7 @@ export default {
        * Emmitted when input is focused.
        */
       this.$emit("focus");
-      this.$refs.input.focus();
+      (this.$refs.input as HTMLInputElement).focus();
     },
     clearInput() {
       this.input("");
@@ -688,7 +699,7 @@ export default {
     clearOptions() {
       this.updateOptions([]);
     },
-    input(value) {
+    input(value: string) {
       /**
        * Emmitted when modelValue changes.
        */
@@ -696,7 +707,7 @@ export default {
       this.resizeInput();
       this.positionDropdown();
     },
-    updateSelected(s) {
+    updateSelected(s: MultiselectOption[]) {
       /**
        * Emmitted when selections have changed with payload of selections.
        */
@@ -706,7 +717,7 @@ export default {
         this.arrowCounter = this.filteredOptions.length - 1;
       }
     },
-    updateOptions(s) {
+    updateOptions(s: MultiselectOption[]) {
       /**
        * Emmitted when options have changed with payload of options.
        */
@@ -743,7 +754,7 @@ export default {
       this.focusInput();
       this.positionDropdown();
     },
-    handleArrows(direction) {
+    handleArrows(direction: string) {
       if (!this.showDropdown) return;
       const min = 0;
       switch (direction) {
@@ -775,31 +786,31 @@ export default {
     handleDropdownScroll(jumpToLast = false) {
       if (!this.showDropdown || typeof this.$refs.dropdownMenu === "undefined")
         return;
-      const element =
-        this.$refs.dropdownMenu.children[this.arrowCounter] || false;
-      const itemHeight = element ? element.offsetHeight : 0;
+      const element: Element =
+        (this.$refs.dropdownMenu as HTMLElement).children[this.arrowCounter] || false;
+      const itemHeight = element ? (element as HTMLElement).offsetHeight : 0;
       let pixelsToItemTop = 0;
       for (let i = 0; i < this.arrowCounter; i++) {
-        pixelsToItemTop += this.$refs.dropdownMenu.children[i].offsetHeight;
+        pixelsToItemTop += ((this.$refs.dropdownMenu as HTMLElement).children[i] as HTMLElement).offsetHeight;
       }
       const pixelsToItemBottom = pixelsToItemTop + itemHeight;
       const viewport = {
-        top: this.$refs.dropdownMenu.scrollTop || 0,
+        top: (this.$refs.dropdownMenu as HTMLElement).scrollTop || 0,
         bottom:
-          this.$refs.dropdownMenu.offsetHeight +
-            this.$refs.dropdownMenu.scrollTop || 0,
+          (this.$refs.dropdownMenu as HTMLElement).offsetHeight +
+            (this.$refs.dropdownMenu as HTMLElement).scrollTop || 0,
       };
 
       // scroll to item
       if (jumpToLast) {
-        this.$refs.dropdownMenu.scrollTop = pixelsToItemBottom;
+        (this.$refs.dropdownMenu as HTMLElement).scrollTop = pixelsToItemBottom;
       } else if (pixelsToItemTop <= viewport.top) {
-        this.$refs.dropdownMenu.scrollTop = pixelsToItemTop;
+        (this.$refs.dropdownMenu as HTMLElement).scrollTop = pixelsToItemTop;
       } else if (pixelsToItemBottom >= viewport.bottom) {
-        this.$refs.dropdownMenu.scrollTop = viewport.top + itemHeight;
+        (this.$refs.dropdownMenu as HTMLElement).scrollTop = viewport.top + itemHeight;
       }
     },
-    handleKeyUp($event) {
+    handleKeyUp($event: KeyboardEvent) {
       if (this.disabled) return;
       const keys = [
         "Enter",
@@ -845,7 +856,7 @@ export default {
         this.open();
       }
     },
-    handleKeyDown($event) {
+    handleKeyDown($event: KeyboardEvent) {
       if (this.disabled) return;
       // Space bar
       if (!this.canSearch && $event.keyCode === 32) $event.preventDefault();
@@ -892,12 +903,12 @@ export default {
         this.focusInput();
       }
     },
-    handleOutsideClick($event) {
+    handleOutsideClick($event: MouseEvent) {
       if (this.$el.contains($event.target)) return;
       if (this.active) this.active = false;
       this.close();
     },
-    handleOutsideKeyUp($event) {
+    handleOutsideKeyUp($event: KeyboardEvent) {
       if (this.$el.contains($event.target)) return;
       if (this.active) this.active = false;
     },
@@ -923,11 +934,11 @@ export default {
       this.close();
     },
     handleRequired() {
-      this.$refs.input.focus();
+      (this.$refs.input as HTMLInputElement).focus();
       if (!this.active) this.active = true;
     },
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

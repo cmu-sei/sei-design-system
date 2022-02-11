@@ -77,8 +77,10 @@
   </table>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: 'SdsSortableTable',
   props: {
     /**
@@ -125,9 +127,9 @@ export default {
   },
   data() {
     return {
-      localSortKey: this.sortKey,
-      localSortKeys: this.sortKeys,
-      localSortOrders: {},
+      localSortKey: this.sortKey as any,
+      localSortKeys: this.sortKeys as any,
+      localSortOrders: {} as any,
     };
   },
   computed: {
@@ -138,9 +140,9 @@ export default {
       if (this.localSortKey !== "") {
         const order = this.localSortOrders[this.localSortKey] || 1;
         const sortObject = this.localSortKeys.find(
-          (i) => i.id === this.localSortKey
+          (i: any) => i.id === this.localSortKey
         );
-        data = data.slice().sort((a, b) => {
+        data = data.slice().sort((a: any, b: any) => {
           switch (sortObject.type) {
             case "object":
               if (
@@ -154,8 +156,8 @@ export default {
               break;
             case "objectArray":
               if (
-                a[this.localSortKey].every((i) => i[sortObject.key] === null) ||
-                b[this.localSortKey].every((i) => i[sortObject.key] === null)
+                a[this.localSortKey].every((i: any) => i[sortObject.key] === null) ||
+                b[this.localSortKey].every((i: any) => i[sortObject.key] === null)
               ) {
                 return order === 1 ? -1 : 1;
               }
@@ -200,7 +202,7 @@ export default {
     },
 
     // Sorting
-    sortBy(key, desc = false) {
+    sortBy(key: any, desc = false) {
       this.localSortKey = key;
       Object.keys(this.localSortOrders).forEach((i) => {
         if (i !== key) this.localSortOrders[i] = 0;
@@ -213,5 +215,5 @@ export default {
       }
     },
   },
-};
+});
 </script>

@@ -21,7 +21,7 @@ export default {
       control: {type: 'select'}
     },
     size: {
-      options: ['sm', 'md', 'lg', 'xl'],
+      options: ['sm', 'md', 'lg', 'xl', 'auto'],
       control: { type: 'select' }
     },
     variant: {

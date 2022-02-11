@@ -4,8 +4,6 @@
     :hide-caret="hideCaret"
     :btn-class="btnClass"
     :menu-class="menuClass"
-    :right="right"
-    :drop-up="dropUp"
   >
     <template #title>
       {{ btnText }}
@@ -89,11 +87,18 @@
   </dropdown>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
 import Dropdown from '../Dropdown/Dropdown.vue';
 import uuid from '../../helpers/uuid';
 
-export default {
+interface FilterByDropdownOption {
+  id: string | number
+  selected: boolean
+  text: string
+}
+
+export default defineComponent({
   name: "SdsFilterByDropdown",
   components: {
     Dropdown,
@@ -103,7 +108,7 @@ export default {
      * The v-model for this component. Determines opened/closed state.
      */
     modelValue: {
-      type: Array,
+      type: Array as PropType<FilterByDropdownOption[]>,
       default: () => [],
     },
     /**
@@ -135,20 +140,6 @@ export default {
       default: "p-2 my-1 bg-gray-100 border rounded-md shadow-lg w-72 dark:border-gray-500 dark:bg-gray-700",
     },
     /**
-     * Determines whether to right-align the menu.
-     */
-    right: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to position the menu above the toggle button.
-     */
-    dropUp: {
-      type: Boolean,
-      default: false,
-    },
-    /**
      * Determine whether to enable option filtering on the dropdown.
      */
     enableFilter: {
@@ -166,7 +157,7 @@ export default {
   emits: ['update:modelValue'],
   data() {
     return {
-      uuid: null,
+      uuid: null as string | null,
       filterText: "",
       tmpOptions: [],
       open: false,
@@ -177,7 +168,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: FilterByDropdownOption[]) {
         /**
          * Emmitted when modelValue changes.
          */
@@ -185,17 +176,17 @@ export default {
       },
     },
     allSelected() {
-      return this.tmpOptions.every((i) => i.selected);
+      return this.tmpOptions.every((i: FilterByDropdownOption) => i.selected);
     },
     someSelected() {
-      return this.tmpOptions.some((i) => i.selected);
+      return this.tmpOptions.some((i: FilterByDropdownOption) => i.selected);
     },
     indeterminate() {
       return this.someSelected && !this.allSelected;
     },
-    filteredTmpOptions() {
+    filteredTmpOptions(): FilterByDropdownOption[] {
       return this.tmpOptions.filter(
-        (i) =>
+        (i: FilterByDropdownOption) =>
           i.text && i.text.toLowerCase().includes(this.filterText.toLowerCase())
       );
     },
@@ -236,14 +227,14 @@ export default {
       const options = JSON.parse(JSON.stringify(this.options));
       if (this.enableSortOptions) {
         this.tmpOptions = options
-          .sort((a, b) => {
+          .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
             return a.text.toLowerCase() < b.text.toLowerCase()
               ? -1
               : a.text.toLowerCase() > b.text.toLowerCase()
                 ? 1
                 : 0;
           })
-          .sort((a, b) => {
+          .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
             return a.selected > b.selected
               ? -1
               : a.selected < b.selected
@@ -255,12 +246,12 @@ export default {
       }
     },
     deselectAllOptions() {
-      this.tmpOptions.forEach((i) => {
+      this.tmpOptions.forEach((i: FilterByDropdownOption) => {
         i.selected = false;
       });
     },
     selectAllOptions() {
-      this.tmpOptions.forEach((i) => {
+      this.tmpOptions.forEach((i: FilterByDropdownOption) => {
         i.selected = true;
       });
     },
@@ -274,5 +265,5 @@ export default {
       this.open = false;
     },
   },
-};
+});
 </script>

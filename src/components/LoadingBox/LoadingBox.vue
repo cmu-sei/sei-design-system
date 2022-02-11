@@ -4,8 +4,10 @@
   />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: 'SdsLoadingBox',
   props: {
     /**
@@ -23,7 +25,7 @@ export default {
       type: String
     }
   }
-}
+})
 </script>
 
 <style scoped>

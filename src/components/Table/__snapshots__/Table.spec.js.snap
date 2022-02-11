@@ -32,19 +32,8 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
     <!-- @slot Table content. Use this to override the table rows. @binding items -->
     <tr>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
       </td>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
-      </td>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
-      </td>
-      <td>
-        <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
-      </td>
-    </tr>
-    <tr>
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
       </td>
@@ -53,6 +42,23 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
       </td>
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->11/11/2014
+      </td>
+      <td>
+        <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
+      </td>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
       </td>
       <td>
         <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
@@ -94,6 +100,9 @@ exports[`Table.vue matches snapshot with items and action col props assigned 1`]
     <!-- @slot Table content. Use this to override the table rows. @binding items -->
     <tr>
       <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
+      </td>
+      <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
       </td>
       <td>
@@ -105,6 +114,9 @@ exports[`Table.vue matches snapshot with items and action col props assigned 1`]
       <!--v-if-->
     </tr>
     <tr>
+      <td>
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
+      </td>
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
       </td>

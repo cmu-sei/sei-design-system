@@ -3,6 +3,7 @@
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[linkClass, variantClass, ctaClass, disabledClass]"
+    :tabindex="disabled ? -1 : undefined"
   ><!-- @slot Link content. --><slot /></a>
 </template>
 

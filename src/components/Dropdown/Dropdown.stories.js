@@ -1,4 +1,6 @@
 import SdsDropdown from './Dropdown.vue';
+import SdsDropdownHeader from '../DropdownHeader';
+import SdsDropdownDivider from '../DropdownDivider';
 import SdsDropdownItem from '../DropdownItem';
 
 import { action } from '@storybook/addon-actions';
@@ -17,14 +19,14 @@ export default {
 };
 
 const Template = (args) => ({
-  components: { SdsDropdown, SdsDropdownItem },
+  components: { SdsDropdown, SdsDropdownItem, SdsDropdownHeader, SdsDropdownDivider },
   setup() {
     return { args }
   },
   template: `
   <div style="height: 28rem">
     <sds-dropdown
-      v-bind="$props"
+      v-bind="args"
       v-model="localValue"
       @input="onInput"
       @btn-click="onBtnClick"
@@ -59,4 +61,6 @@ const Template = (args) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  btnClass: 'btn btn-default'
+};

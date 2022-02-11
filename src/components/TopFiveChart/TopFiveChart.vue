@@ -20,7 +20,7 @@
                 <div
                   class="h-6 mr-2 rounded"
                   role="progressbar"
-                  :title="result.count"
+                  :title="`${result.count}`"
                   :aria-valuenow="result.count"
                   aria-valuemin="0"
                   :aria-valuemax="maxResultValue"
@@ -80,8 +80,17 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from "vue"
+
+interface TopFiveChartResult {
+  id: string | number
+  count: number
+  title: string
+  url?: string
+}
+
+export default defineComponent({
   name: 'SdsTopFiveChart',
   props: {
     /**
@@ -100,7 +109,7 @@ export default {
      * Example object: { id: 1, title: "Entry title", url: "https://seinet.sei.cmu.edu", count: 20 }
      */
     entries: {
-      type: Array,
+      type: Array as PropType<TopFiveChartResult[]>,
       default: () => [],
     },
     /**
@@ -157,7 +166,7 @@ export default {
   },
   emits: ['result-click'],
   computed: {
-    results() {
+    results(): TopFiveChartResult[] {
       // if entries are okay, only use at most 5 of them
       // otherwise, set the results to empty
       return this.entriesHaveAllRequiredProps ? this.entries.slice(0, 5) : [];
@@ -176,21 +185,21 @@ export default {
     maxResultValue() {
       return Math.max.apply(
         Math,
-        this.results.map((o) => o.count)
+        this.results.map((o: TopFiveChartResult) => o.count)
       );
     },
   },
   methods: {
-    resultValue(value) {
+    resultValue(value: number) {
       return (value * 100) / this.maxResultValue;
     },
-    resultCountDisplay(count) {
+    resultCountDisplay(count: number) {
       return this.showPercent ? `${count}%` : count;
     },
-    resultHasUrl(result) {
+    resultHasUrl(result: TopFiveChartResult) {
       return typeof result.url !== "undefined";
     },
-    resultClick(result) {
+    resultClick(result: TopFiveChartResult) {
       /**
        * Sends the object of the clicked result to the parent component.
        *
@@ -198,7 +207,7 @@ export default {
        */
       this.$emit("result-click", result);
     },
-    getProgressColor(index) {
+    getProgressColor(index: number) {
       switch (this.progressColor) {
         case "teal":
           if (index === 0) {
@@ -321,5 +330,5 @@ export default {
       }
     }
   },
-};
+});
 </script>

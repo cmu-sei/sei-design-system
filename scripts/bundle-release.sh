@@ -20,6 +20,7 @@ rm -rf dist/
 
 printf "\nbuilding all components...\n"
 LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
+npx vue-tsc --declaration --emitDeclarationOnly --outDir dist/types
 
 #####################
 # Additional Clean Up

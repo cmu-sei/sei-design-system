@@ -21,18 +21,20 @@ export default {
       control: {type: 'select'}
     },
     size: {
-      options: ['sm', 'lg'],
+      options: ['sm', 'lg', 'auto'],
       control: {type: 'select'}
     }
   }
 }
 
-const Template = (_args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SdsPopover},
-  props: Object.keys(argTypes),
+  setup() {
+    return { args }
+  },
   template: `
     <div class="p-48 text-center">
-      <sds-popover v-model="localValue" v-bind="$props" @open="onOpen" @close="onClose">
+      <sds-popover v-model="localValue" v-bind="args" @open="onOpen" @close="onClose">
         <template #trigger>
           <button class="btn btn-default" @click="onClick">I have a popover</button>
         </template>

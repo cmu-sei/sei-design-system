@@ -22,7 +22,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-layout-stacked v-bind="$props">
+    <sds-layout-stacked v-bind="args">
       <template #header>
         <div class="border border-dashed">
           Header area

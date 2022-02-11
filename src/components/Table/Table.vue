@@ -93,8 +93,22 @@
   </table>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from "vue"
+
+interface TableItem {
+  id: number | string
+  [propName: string | number]: any;
+}
+
+interface TableField {
+  key: string
+  label: string
+  sortable?: boolean
+  format?: Function
+}
+
+export default defineComponent({
   name: 'SdsTable',
   props: {
     /**
@@ -108,7 +122,7 @@ export default {
      * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
      */
     items: {
-      type: Array,
+      type: Array as PropType<TableItem[]>,
       default: () => [],
     },
     /**
@@ -129,7 +143,7 @@ export default {
      * **{ key: "lastModifiedDate", label: 'Last Modified', sortable: true, format: (date) => date.toLocaleDateString() }**
      */
     fields: {
-      type: Array,
+      type: Array as PropType<TableField[]>,
       default: () => [],
     },
     sortBy: { type: String, default: '' },
@@ -159,9 +173,9 @@ export default {
     }
   },
   computed: {
-    filteredItems() {
+    filteredItems(): TableItem[] {
       return this.items && this.items.map((i) => {
-        const item = {}
+        const item: TableItem = { id: 0 }
         this.fields.forEach((x) => {
           item[x.key] = i[x.key]
         })
@@ -178,18 +192,18 @@ export default {
     }
   },
   methods: {
-    originalItem(item) {
+    originalItem(item: TableItem) {
       return this.items.find((i) => i.id === item.id)
     },
-    formatItem (value, key) {
+    formatItem (value: any, key: string | number) {
       const field = this.fields.filter((i) => i.key === key)
       return field.length && field[0].format ? field[0].format(value) : value
     },
-    handleSortBy(field) {
+    handleSortBy(field: TableField) {
       this.sortField = field.key
       this.sortOrder = this.sortOrder === 0 ? 1 : this.sortOrder === 1 ? -1 : 1
     },
-    sortCompare(aRow, bRow, key) {
+    sortCompare(aRow: TableItem, bRow: TableItem, key: string) {
       const a = aRow[key]
       const b = bRow[key]
       if (
@@ -200,22 +214,22 @@ export default {
         return (a < b ? -1 : a > b ? 1 : 0) * this.sortOrder
       } else {
         // Otherwise stringify the field data and use String.prototype.localeCompare
-        return this.toString(a).localeCompare(toString(b)) * this.sortOrder
+        return this.toString(a).localeCompare(this.toString(b)) * this.sortOrder
       }
     },
     // Helper function to stringify the values of an Object
-    toString(value) {
+    toString(value: TableItem): string {
       if (value === null || typeof value === 'undefined') {
         return ''
       } else if (value instanceof Object) {
         return Object.keys(value)
           .sort()
-          .map(key => toString(value[key]))
+          .map(key => this.toString(value[key]))
           .join(' ')
       } else {
         return String(value)
       }
     }
   }
-};
+});
 </script>

@@ -461,11 +461,20 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
+
+interface LayoutAppSidebarNavItem {
+  id: number | string
+  href: string
+  active: boolean
+  title: string
+  badgeCount?: number
+  iconUrl?: string
+}
 
 export default defineComponent({
   name: 'SdsLayoutApp',
@@ -537,7 +546,7 @@ export default defineComponent({
      * 
      * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
      */
-    sidebarNavigationItems: { type: Array, default: () => [] },
+    sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
   },
   emits: ['update:modelValue', 'navigate'],
   data() {
@@ -561,7 +570,7 @@ export default defineComponent({
       get() {
         return this.modelValue;
       },
-      set(val) {
+      set(val: boolean) {
         /**
          * Emmitted when modelValue changes.
          */
@@ -575,12 +584,12 @@ export default defineComponent({
         // prevent scrolling
         document.documentElement.classList.add("layout-app-internal-prevent-scroll");
         this.$nextTick(() => {
-          this.$refs.mobileMenuCloseBtn.focus()
+          (this.$refs.mobileMenuCloseBtn as HTMLButtonElement).focus()
         })
       } else {
         // enable scrolling
         document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
-        this.$refs.mobileMenuOpenBtn.focus()
+        (this.$refs.mobileMenuOpenBtn as HTMLButtonElement).focus()
       }
     }
   },
@@ -596,10 +605,10 @@ export default defineComponent({
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
   methods: {
-    hasSlot (title) {
+    hasSlot (title: string) {
       return !!this.$slots[title]
     },
-    navigate(item, event) {
+    navigate(item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
       // Close the mobile menu
       this.showMobileMenu = false
       /**
@@ -616,20 +625,21 @@ export default defineComponent({
         this.collapsed = !this.collapsed;
       }
     },
-    handleDocumentKeyUp($event) {
-      const tagName = $event.target.tagName.toLowerCase();
+    handleDocumentKeyUp($event: KeyboardEvent) {
+      if (!$event.target) return
+      const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
       if (tagName === "textarea") return;
       if (tagName === "input") return;
       // toggle collapse on "[" key
-      if ($event.keyCode === 219) this.toggleCollapse();
+      if ($event.key === "[") this.toggleCollapse();
     },
-    checkKeyEvent(event) {
+    checkKeyEvent(event: KeyboardEvent) {
       // close modal and return early if escape
       if (event.key === "Escape") {
         this.showMobileMenu = false;
         return;
       }
-      const focusableList = this.$refs.mobileSidebarContainer.querySelectorAll(
+      const focusableList = (this.$refs.mobileSidebarContainer as HTMLElement).querySelectorAll(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       );
       // escape early if only 1 or no elements to focus
@@ -644,14 +654,14 @@ export default defineComponent({
         event.target === focusableList[last]
       ) {
         event.preventDefault();
-        focusableList[0].focus();
+        (focusableList[0] as HTMLElement).focus();
       } else if (
         event.key === "Tab" &&
         event.shiftKey === true &&
         event.target === focusableList[0]
       ) {
         event.preventDefault();
-        focusableList[last].focus();
+        (focusableList[last] as HTMLElement).focus();
       }
     }
   }

@@ -21,8 +21,15 @@
   </select>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+
+type SelectModel = boolean | string | number | null
+interface SelectOption {
+  id: number | string
+  value: number | string
+  text: string
+}
 
 export default defineComponent({
   name: 'SdsSelect',
@@ -30,11 +37,11 @@ export default defineComponent({
     /**
      * The v-model of the component.
      */
-    modelValue: { type: [Boolean, String, Number, null], default: null },
+    modelValue: { type: [Boolean, String, Number, null] as PropType<SelectModel>, default: null },
     /**
      * The options for the component. Expects { id, value, text }.
      */
-    options: { type: Array, default: () => [] },
+    options: { type: Array as PropType<SelectOption[]>, default: () => [] },
     /**
      * Determines if the component can have multiple selections.
      */
@@ -54,7 +61,7 @@ export default defineComponent({
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: SelectModel) {
         /**
          * Emitted when modelValue changes.
          */
