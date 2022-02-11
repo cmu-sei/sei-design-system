@@ -165,7 +165,7 @@ export default defineComponent({
 },
   props: {
     /**
-     * Determines whether to display or hide the arrow for range selection
+     * Determines whether to display or hide the arrow for range selection.
      */
     hideArrow: { type: Boolean, default: false },
     /**
