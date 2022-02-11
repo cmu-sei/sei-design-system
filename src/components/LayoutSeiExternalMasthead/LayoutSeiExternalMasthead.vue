@@ -25,11 +25,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import LayoutSeiExternalNav from "../LayoutSeiExternalNav/LayoutSeiExternalNav.vue";
 import LayoutSeiExternalHeaderContent from "../LayoutSeiExternalHeaderContent/LayoutSeiExternalHeaderContent.vue";
 
-export default {
+export default defineComponent({
   name: 'SdsLayoutSeiExternalMasthead',
   components: {
     LayoutSeiExternalNav,
@@ -44,5 +45,5 @@ export default {
       default: () => ({}),
     },
   },
-};
+});
 </script>

@@ -135,8 +135,10 @@
   </nav>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: 'SdsPaginator',
   props: {
     /**
@@ -211,7 +213,7 @@ export default {
           return i + 1;
         });
       } else if (this.currentPage < this.threshold) {
-        const list = Array.apply(null, Array(this.threshold)).map((x, i) => {
+        const list: Array<number | string> = Array.apply(null, Array(this.threshold)).map((x, i) => {
           return i + 1;
         });
         return list.concat(["...", this.totalPages]);
@@ -240,12 +242,12 @@ export default {
     },
   },
   methods: {
-    goToPage(page, event) {
+    goToPage(page: number | string, event: MouseEvent) {
       /**
        * Passes an object to be used by a parent component: { page, event }
        */
       this.$emit("go-to-page", { page, event });
     },
   },
-};
+});
 </script>

@@ -18,7 +18,7 @@
         v-show="isOpen"
         :id="popperId"
         role="tooltip"
-        :class="['popover rounded-lg p-4 text-xs absolute text-left font-normal w-auto bg-white border border-gray-300 text-dark', zIndexClass, sizeClass, popoverClass ? popoverClass : '']"
+        :class="['popover rounded-lg p-4 text-xs absolute text-left font-normal bg-white border border-gray-300 text-dark', zIndexClass, sizeClass, popoverClass ? popoverClass : '']"
         @mouseover="handleOpen(open)"
         @mouseleave="handleClose(close)"
       >
@@ -37,10 +37,11 @@
   </PopperWrapper>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import PopperWrapper from "../PopperWrapper/PopperWrapper.vue";
 
-export default {
+export default defineComponent({
   name: 'SdsPopover',
   components: {
     PopperWrapper
@@ -121,7 +122,7 @@ export default {
   emits: ['open', 'close'],
   data () {
     return {
-      timer: null
+      timer: null as number | null
     }
   },
   computed: {
@@ -145,14 +146,18 @@ export default {
           return 'w-80'
         case 'lg':
           return 'w-96'
+        case 'auto':
+          return 'w-auto'
         default:
           return 'w-80'
       }
     }
   },
   methods: {
-    handleOpen(open) {
-      clearTimeout(this.timer)
+    handleOpen(open: Function) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
       if (this.disabled) return
       this.timer = setTimeout(() => {
         /**
@@ -162,8 +167,10 @@ export default {
         open()
       }, this.openDelay)
     },
-    handleClose(close) {
-      clearTimeout(this.timer)
+    handleClose(close: Function) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
       this.timer = setTimeout(() => {
         /**
          * Emitted when the popover will close.
@@ -173,7 +180,7 @@ export default {
       }, this.closeDelay)
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

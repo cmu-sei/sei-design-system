@@ -66,8 +66,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: "SdsSearchBox",
   props: {
     /**
@@ -140,7 +142,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(val) {
+      set(val: string) {
         /**
          * Emitted when modelValue changes.
          */
@@ -169,12 +171,12 @@ export default {
     },
   },
   mounted() {
-    if (this.autofocus) this.$refs.input.focus();
+    if (this.autofocus) (this.$refs.input as HTMLInputElement).focus();
   },
   methods: {
     clearSearch() {
       this.q = "";
-      this.$refs.input.focus();
+      (this.$refs.input as HTMLInputElement).focus();
     },
     search() {
       if (this.disabled || this.disableSearch) return;
@@ -184,5 +186,5 @@ export default {
       this.$emit("search", this.q);
     },
   },
-};
+});
 </script>

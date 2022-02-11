@@ -24,8 +24,11 @@
     </button>
   </div>
 </template>
-<script>
-export default {
+
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: 'SdsToggleSwitch',
   props: {
     /**
@@ -70,7 +73,7 @@ export default {
       get() {
         return this.modelValue
       },
-      set(value) {
+      set(value: boolean) {
         /**
          * Emitted when modelValue changes.
          */
@@ -117,7 +120,7 @@ export default {
       this.isToggled = !this.isToggled
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -130,5 +133,4 @@ box-shadow: -2px 0 4px rgb(0 0 0 / 40%) !important;
 button:disabled .toggle-on-shadow, button:disabled .toggle-off-shadow {
   box-shadow: none !important;
 }
-
 </style>

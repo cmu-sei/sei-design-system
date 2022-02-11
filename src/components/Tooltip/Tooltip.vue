@@ -31,10 +31,11 @@
   </PopperWrapper>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import PopperWrapper from "../PopperWrapper/PopperWrapper.vue";
 
-export default {
+export default defineComponent({
   name: 'SdsTooltip',
   components: {
     PopperWrapper
@@ -123,7 +124,7 @@ export default {
 
   data () {
     return {
-      timer: null
+      timer: null as number | null
     }
   },
   computed: {
@@ -171,14 +172,18 @@ export default {
           return 'w-56'
         case 'xl':
           return 'w-72'
+        case 'auto':
+          return 'w-auto'
         default:
           return 'w-56'
       }
     }
   },
   methods: {
-    handleOpen(open) {
-      clearTimeout(this.timer)
+    handleOpen(open: Function) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
       if (this.disabled) return
       this.timer = setTimeout(() => {
         /**
@@ -188,8 +193,10 @@ export default {
         open()
       }, this.openDelay)
     },
-    handleClose(close) {
-      clearTimeout(this.timer)
+    handleClose(close: Function) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
       this.timer = setTimeout(() => {
         /**
          * Emitted when the tooltip closes.
@@ -199,7 +206,7 @@ export default {
       }, this.closeDelay)
     }
   }
-}
+})
 </script>
 
 <style scoped>

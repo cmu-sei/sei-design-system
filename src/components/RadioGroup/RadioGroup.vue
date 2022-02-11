@@ -27,16 +27,25 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+
 let id = 0;
 
-export default {
+type RadioModel = boolean | string | number | null
+
+interface RadioOption {
+  value: string | number
+  text: string
+}
+
+export default defineComponent({
   name: "SdsRadioGroup",
   props: {
     /**
      * The v-model of the radio group.
      */
-    modelValue: { type: [Boolean, String, Number, null], default: null },
+    modelValue: { type: [Boolean, String, Number, null] as PropType<RadioModel>, default: null },
     /**
      * The name of the radio form field.
      */
@@ -44,7 +53,7 @@ export default {
     /**
      * An array of options for the radio group.
      */
-    options: { type: Array, default: () => [] },
+    options: { type: Array as PropType<RadioOption[]>, default: () => [] },
     /**
      * Determines whether the radio group is required or not.
      */
@@ -65,7 +74,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: RadioModel) {
         /**
          * Emmitted when modelValue changes.
          */
@@ -78,12 +87,12 @@ export default {
     this.id = `sds-radio-group_${id}`;
   },
   methods: {
-    onChange(value) {
+    onChange(value: string) {
       /**
        * Emitted when an option's value has changed.
        */
       this.$emit('change', value)
     }
   }
-};
+});
 </script>

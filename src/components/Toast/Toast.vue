@@ -106,8 +106,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   name: 'SdsToast',
   props: {
     /**
@@ -138,7 +140,7 @@ export default {
   emits: ['remove'],
   data() {
     return {
-      timer: null,
+      timer: null as null | number,
     };
   },
   mounted() {
@@ -157,6 +159,7 @@ export default {
       this.$emit("remove", this.id);
     },
     clearTimer() {
+      if (!this.timer) return;
       clearTimeout(this.timer);
     },
     setTimer() {
@@ -167,5 +170,5 @@ export default {
       }, this.autoHideDelay);
     },
   },
-};
+});
 </script>

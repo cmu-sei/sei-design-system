@@ -101,10 +101,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue"
 import uniq from "lodash/uniq";
 
-export default {
+interface AutoSuggestResult {
+  term: string
+}
+
+export default defineComponent({
   name: "SdsAutosuggest",
   props: {
     /**
@@ -208,7 +213,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(val) {
+      set(val: string) {
         /**
          * Emitted when modelValue changes.
          */
@@ -248,14 +253,14 @@ export default {
     },
   },
   mounted() {
-    if (this.autofocus) this.$refs.input.focus();
+    if (this.autofocus) (this.$refs.input as HTMLInputElement).focus();
     document.addEventListener("click", this.handleClickOutside);
   },
   unmounted() {
     document.removeEventListener("click", this.handleClickOutside);
   },
   methods: {
-    formatTerm(text) {
+    formatTerm(text: string) {
       return text.replace(/<\/?b>/gi, "").trim();
     },
     // Filter results based on query
@@ -266,7 +271,7 @@ export default {
       const items = JSON.parse(JSON.stringify(this.items));
       this.results = uniq(
         items
-          .filter((item) => {
+          .filter((item: AutoSuggestResult) => {
             const terms = this.q.toLowerCase().replace('"', "").split(" ");
             let termFound = false;
             terms.forEach((term) => {
@@ -279,7 +284,7 @@ export default {
             });
             return termFound;
           })
-          .map((item) => {
+          .map((item: AutoSuggestResult) => {
             item.term = item.term.trim();
             return item;
           }),
@@ -289,11 +294,11 @@ export default {
       if (this.originalQ === "") this.originalQ = (" " + this.q).slice(1);
     },
     // Html version of result used in dropdown list with original query highlighting
-    resultWithHightlight(result) {
+    resultWithHightlight(result: AutoSuggestResult) {
       if (!this.useBuiltInHighlighting) return result.term;
-      let terms = this.originalQ.replace('"', "").split(" ");
-      terms = terms.join("|").replace(/[-[\]{}()*+?.,\\^$]/g, "\\$&");
-      const matcher = new RegExp(terms, "gi");
+      const terms = this.originalQ.replace('"', "").split(" ");
+      const termsString = terms.join("|").replace(/[-[\]{}()*+?.,\\^$]/g, "\\$&");
+      const matcher = new RegExp(termsString, "gi");
       return result.term.replace(matcher, (match) => `<b>${match}</b>`);
     },
     // Reset the dropdown
@@ -323,7 +328,7 @@ export default {
       this.autosuggest();
     },
     // Up/Down arrow key logic
-    handleArrows(direction) {
+    handleArrows(direction: string) {
       // Allow an open state
       this.preventDisplay = false;
 
@@ -354,7 +359,7 @@ export default {
           this.results.length > 0 &&
           typeof this.results[this.arrowCounter] !== "undefined"
         ) {
-          this.q = this.formatTerm(this.results[this.arrowCounter].term);
+          this.q = this.formatTerm((this.results[this.arrowCounter] as AutoSuggestResult).term);
         }
         // If not on a result, use the original query
         if (this.arrowCounter === -1) this.q = this.originalQ;
@@ -366,14 +371,14 @@ export default {
       this.resetDropdown();
     },
     // Click outside of search box and dropdown handler
-    handleClickOutside(evt) {
+    handleClickOutside(evt: MouseEvent) {
       if (!this.$el.contains(evt.target)) {
         this.resetDropdown();
       }
     },
     handleClearSearchBtn() {
       this.q = "";
-      this.$refs.input.focus();
+      (this.$refs.input as HTMLInputElement).focus();
     },
     // Handle Search button logic
     handleSearchBtn() {
@@ -385,7 +390,7 @@ export default {
       this.$emit("search", this.q);
     },
     // Handle click on dropdown results
-    async handleDropdownClick(result) {
+    async handleDropdownClick(result: AutoSuggestResult) {
       if (this.disabled || this.disableSearch) return;
       this.q = this.formatTerm(result.term);
       this.resetDropdown();
@@ -409,7 +414,7 @@ export default {
           : null;
       this.q =
         result !== null
-          ? this.formatTerm(this.results[this.arrowCounter].term)
+          ? this.formatTerm((this.results[this.arrowCounter] as AutoSuggestResult).term)
           : this.originalQ || this.q;
       this.resetDropdown();
       if (result !== null) {
@@ -418,5 +423,5 @@ export default {
       this.$nextTick(() => this.$emit("search", this.q));
     },
   },
-};
+});
 </script>

@@ -33,10 +33,11 @@
   </header>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import LayoutSeiExternalWordmark from "../LayoutSeiExternalWordmark/LayoutSeiExternalWordmark.vue";
 
-export default {
+export default defineComponent({
   name: 'SdsLayoutSeiExternalHeader',
   components: {
     LayoutSeiExternalWordmark,
@@ -50,5 +51,5 @@ export default {
       default: () => ({}),
     },
   },
-};
+});
 </script>

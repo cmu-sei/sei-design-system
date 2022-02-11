@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { createPopper } from '@popperjs/core';
 import uuid from '../../helpers/uuid';
 
-export default {
+export default defineComponent({
   name: 'SdsPopperWrapper',
   props: {
     /**
@@ -18,9 +19,9 @@ export default {
   data() {
     return {
       isOpen: false,
-      triggerEl: null,
-      popperEl: null,
-      popper: null
+      triggerEl: null as HTMLElement | null,
+      popperEl: null as HTMLElement | null,
+      popper: null as any
     };
   },
   computed: {
@@ -57,10 +58,13 @@ export default {
       this.isOpen = false;
     },
     setupPopper() {
-      if (!this.popper) {
-        this.popper = new createPopper(this.triggerEl, this.popperEl, this.config);
-      } else {
-        this.popper.update();
+      if (this.triggerEl && this.popperEl) {
+        const initPopper = createPopper(this.triggerEl, this.popperEl, this.config);
+        if (!this.popper) {
+          this.popper = new (initPopper as any);
+        } else {
+          this.popper.update();
+        }
       }
     },
     destroyPopper() {
@@ -80,5 +84,5 @@ export default {
       popperId: this.popperId
     });
   },
-};
+});
 </script>

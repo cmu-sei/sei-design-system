@@ -27,16 +27,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+
 let id = 0;
 
-export default {
+type CheckboxGroupOptionValue = string | number
+interface CheckboxGroupOption {
+  value: CheckboxGroupOptionValue
+  text: string
+}
+
+export default defineComponent({
   name: "SdsCheckboxGroup",
   props: {
     /**
      * The v-model for the checkbox group.
      */
-    modelValue: { type: Array, default: () => [] },
+    modelValue: { type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] },
     /**
      * The name for the input form field.
      */
@@ -45,7 +53,7 @@ export default {
      * An array of options available for the checkbox group.
      * Each option should have a `value` and a `text` parameter.
      */
-    options: { type: Array, default: () => [] },
+    options: { type: Array as PropType<CheckboxGroupOption[]>, default: () => [] },
     /**
      * Determines whether this field is required or not.
      */
@@ -66,7 +74,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: CheckboxGroupOptionValue) {
         /**
          * Emitted when modelValue changes.
          */
@@ -79,12 +87,12 @@ export default {
     this.id = `sds-checkbox-group_${id}`;
   },
   methods: {
-    onChange(value) {
+    onChange(value: CheckboxGroupOptionValue) {
       /**
        * Emitted when an option's value has changed.
        */
       this.$emit('change', value)
     }
   }
-};
+});
 </script>

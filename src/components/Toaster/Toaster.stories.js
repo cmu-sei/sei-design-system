@@ -23,7 +23,7 @@ const Template = (args) => ({
   template: `
     <div>
       <button class="btn btn-default" @click="addToast">Add Toast</button>
-      <sds-toaster v-bind="$props" v-model="localValue" />
+      <sds-toaster v-bind="args" v-model="localValue" />
     </div>
   `,
   data() {

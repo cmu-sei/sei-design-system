@@ -33,12 +33,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import LayoutSeiExternalHeader from "../LayoutSeiExternalHeader/LayoutSeiExternalHeader.vue";
 import LayoutSeiExternalFooter from "../LayoutSeiExternalFooter/LayoutSeiExternalFooter.vue";
 import LayoutSeiExternalMasthead from "../LayoutSeiExternalMasthead/LayoutSeiExternalMasthead.vue";
 
-export default {
+export default defineComponent({
   name: 'SdsLayoutSeiExternal',
   components: {
     LayoutSeiExternalHeader,
@@ -69,5 +70,5 @@ export default {
       default: false,
     },
   },
-};
+});
 </script>

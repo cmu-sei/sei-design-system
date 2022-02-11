@@ -463,11 +463,23 @@
           @change="$emit('radioGroupChange')"
         />
       </div>
+      <sds-table
+        class="table-prose"
+        :fields="fields"
+        :items="tableItems"
+      >
+        <template #cell(title)="{ item }">
+          <p><strong>{{ item.title }}</strong></p>
+          <p class="text-gray-500 text-sm">
+            {{ item.author }}
+          </p>
+        </template>
+      </sds-table>
     </sds-section>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -475,8 +487,19 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      fields: [
+        { key: 'id', label: 'ID' },
+        { key: 'title', label: 'Title', sortable: true },
+        { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
+      ],
+      tableItems: [
+        { id: 1, title: 'First entry', author: 'Jason Shimkoski', lastModified: new Date() },
+        { id: 2, title: 'Second entry', author: 'Steve Scholnick', lastModified: new Date('2021-12-01') },
+        { id: 3, title: 'Third entry', author: 'Damon Morda', lastModified: new Date('2021-11-15') },
+        { id: 4, title: 'Fourth entry', author: 'Matt Winwood', lastModified: new Date('2022-01-03') }
+      ],
       countText: "",
-      toasts: [],
+      toasts: [] as any,
       showDropdown: false,
       showModal: false,
       showModalSizeDropdown: false,
@@ -533,7 +556,7 @@ export default defineComponent({
         idsText: null,
       },
       text: "",
-      items: [],
+      items: [] as any,
       fakeAjaxItems: [
         { term: "Apple", payload: "test" },
         {
@@ -633,21 +656,21 @@ export default defineComponent({
       ];
       this.toasts.unshift(toasts[index]);
     },
-    changeModalSize(size) {
+    changeModalSize(size: string) {
       this.modalSize = size;
     },
 
-    updateSelected(selections) {
+    updateSelected(selections: any) {
       this.multiselect.selected = selections;
     },
-    filtered(options) {
+    filtered(options: any) {
       this.filterby.idsText = options
-        .filter((i) => i.selected)
-        .map((i) => i.id)
+        .filter((i: any) => i.selected)
+        .map((i: any) => i.id)
         .join(", ");
     },
     // Perform a search
-    search(q) {
+    search(q: any) {
       this.$emit("hello", q);
       this.searchText = this.text;
     },

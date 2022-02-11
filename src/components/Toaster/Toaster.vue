@@ -35,10 +35,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
 import SdsToast from "../Toast/Toast.vue";
 
-export default {
+interface ToasterToast {
+  id: number
+  variant: string
+  title: string
+  text: string
+  autoHideDelay: number
+  noAutoHide: boolean
+}
+
+export default defineComponent({
   name: 'SdsToaster',
   components: {
     SdsToast,
@@ -48,7 +58,7 @@ export default {
      * The v-model for this component. It accepts an array of toasts. See the Toast component for guidance.
      */
     modelValue: {
-      type: Array,
+      type: Array as PropType<ToasterToast[]>,
       default: () => [],
     },
   },
@@ -63,7 +73,7 @@ export default {
       get() {
         return this.modelValue;
       },
-      set(value) {
+      set(value: ToasterToast[]) {
         /**
          * Emitted when current array of toasts changes.
          */
@@ -72,9 +82,9 @@ export default {
     },
   },
   methods: {
-    removeToast(id) {
+    removeToast(id: number | string) {
       this.toasts = this.toasts.filter((i) => id !== i.id);
     },
   },
-};
+});
 </script>
