@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A date picker is a text input field that displays a calendar to allow users to select a single date.',
+        component: 'A date picker is a text input field that displays a calendar to allow users to select past, present, or future dates or times.',
       },
     },
   },
@@ -33,7 +33,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div style="height: 28rem">
+    <div class="py-96">
       <sds-datepicker
         v-model="localValue"
         v-model:min="parentMin"
