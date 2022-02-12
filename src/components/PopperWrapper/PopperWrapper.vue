@@ -16,6 +16,7 @@ export default defineComponent({
       }),
     },
   },
+  emits: ['open', 'close'],
   data() {
     return {
       isOpen: false,
@@ -51,17 +52,24 @@ export default defineComponent({
       this.isOpen = true;
       this.$nextTick(() => {
         this.setupPopper();
+        /**
+         * Emitted when the popper wrapper opens.
+         */
+        this.$emit('open');
       });
     },
     close() {
       if (!this.isOpen) return;
       this.isOpen = false;
+      /**
+       * Emitted when the popper wrapper closes.
+       */
+      this.$emit('close');
     },
     setupPopper() {
       if (this.triggerEl && this.popperEl) {
-        const initPopper = createPopper(this.triggerEl, this.popperEl, this.config);
         if (!this.popper) {
-          this.popper = new (initPopper as any);
+          this.popper = createPopper(this.triggerEl, this.popperEl, this.config);
         } else {
           this.popper.update();
         }
