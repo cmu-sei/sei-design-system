@@ -38,7 +38,7 @@ const Template = (args) => ({
   },
   template: `
     <div class="p-48">
-      <sds-tooltip v-model="localValue" v-bind="args" @open="onOpen" @close="onClose">
+      <sds-tooltip v-model="localValue" v-bind="args" @open="onOpen" @close="onClose" @before-open="onBeforeOpen" @before-close="onBeforeClose">
         <template #trigger>
           <button class="btn btn-default" @click="onClick">I have a tooltip</button>
         </template>
@@ -57,6 +57,8 @@ const Template = (args) => ({
   methods: {
     onOpen: action('open'),
     onClose: action('close'),
+    onBeforeOpen: action('before-open'),
+    onBeforeClose: action('before-close'),
     onClick: action('onClick')
   }
 });

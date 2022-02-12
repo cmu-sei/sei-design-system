@@ -2,6 +2,8 @@
   <PopperWrapper
     v-slot="{ isOpen, open, close, triggerId, popperId }"
     :config="config"
+    @open="handlePopperWrapperOpen"
+    @close="handlePopperWrapperClose"
   >
     <div class="inline-block">
       <div
@@ -119,10 +121,11 @@ export default defineComponent({
       default: false
     }
   },
-  emits: ['open', 'close'],
+  emits: ['open', 'close', 'before-open', 'before-close'],
   data () {
     return {
-      timer: null as number | null
+      timer: null as number | null,
+      hovered: false
     }
   },
   computed: {
@@ -154,30 +157,39 @@ export default defineComponent({
     }
   },
   methods: {
+    handlePopperWrapperOpen() {
+      this.hovered = true
+      /**
+       * Emitted when the popover opens.
+       */
+      this.$emit('open')
+    },
+    handlePopperWrapperClose() {
+      this.hovered = false
+      /**
+       * Emitted when the popover opens.
+       */
+      this.$emit('close')
+    },
     handleOpen(open: Function) {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-      if (this.disabled) return
-      this.timer = setTimeout(() => {
+      clearTimeout((this.timer as number))
+      if (!this.hovered) {
         /**
-         * Emitted when the popover will open.
+         * Emitted before openDelay triggers the popover to open.
          */
-        this.$emit('open')
-        open()
-      }, this.openDelay)
+        this.$emit('before-open')
+        this.timer = setTimeout(() => open(), this.openDelay)
+      }
     },
     handleClose(close: Function) {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-      this.timer = setTimeout(() => {
+      clearTimeout((this.timer as number))
+      if (this.hovered) {
         /**
-         * Emitted when the popover will close.
+         * Emitted before closeDelay triggers the popover to close.
          */
-        this.$emit('close')
-        close()
-      }, this.closeDelay)
+        this.$emit('before-close')
+        this.timer = setTimeout(() => close(), this.closeDelay)
+      }
     }
   }
 })
