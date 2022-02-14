@@ -45,7 +45,7 @@
       <div
         v-if="isOpen"
         ref="menu"
-        class="absolute z-10"
+        class="absolute z-50"
         :class="{
           'right-0': right,
           'bottom-full': dropUp,

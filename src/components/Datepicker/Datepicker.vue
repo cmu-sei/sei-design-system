@@ -146,7 +146,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { parse, format, isValid, min, max, isAfter, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays } from 'date-fns'
+import { parse, format, isValid, min, max, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays } from 'date-fns'
 import Calendar from '../Calendar/Calendar.vue';
 import Dropdown from '../Dropdown/Dropdown.vue';
 
@@ -482,7 +482,12 @@ export default defineComponent({
           const days = format(new Date(), 'yyyy-MM-dd')
           date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
         }
-        return { date, text: format(date, this.inputFormat) }
+        const dateIsBeforeMin = isBefore(date, this.min)
+        const dateIsAfterMax = isAfter(date, this.max)
+        const dateEqualsMax = isEqual(date, this.max)
+        if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
+          return { date, text: format(date, this.inputFormat) }
+        }
       }
       return { date: null, text: '' }
     }
