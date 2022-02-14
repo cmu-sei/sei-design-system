@@ -120,7 +120,7 @@
                   'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
                   'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
                 }"
-                :disabled="dateIsBeforeMin(day) || dateIsAfterMax(day)"
+                :disabled="dateIsNotSelectable(day)"
                 :title="dateIsToday(day) ? 'Today' : ''"
                 @click="setModelValueDate(day)"
               >
@@ -160,7 +160,7 @@
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
                     'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)
                   }"
-                  :disabled="dateIsBeforeMin(day, true) || dateIsAfterMax(day, true)"
+                  :disabled="dateIsNotSelectable(day, true)"
                   :title="dateIsToday(day, true) ? 'Today' : ''"
                   @click="setModelValueDate(day, true)"
                 >
@@ -413,7 +413,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isWithinInterval, isBefore, isAfter, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format } from 'date-fns'
+import { isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format } from 'date-fns'
 import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
 
 const props = defineProps({
@@ -680,9 +680,6 @@ const canGoToPrevMonth = computed(() => {
 })
 const canGoToNextMonth = computed(() => {
   if (!(props.max instanceof Date)) return true
-  if (isRange.value) {
-    return isAfter(startOfMonth(props.max), startOfMonth(displayedNextMonth.value))
-  }
   return isAfter(startOfMonth(props.max), startOfMonth(displayedMonth.value))
 })
 
@@ -734,12 +731,17 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
 const dateIsBeforeMin = (day: number, isNextMonth = false) => {
   if (!(props.min instanceof Date)) return false
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
-  return isBefore(setDate(month, day), props.min)
+  return isBefore(setDate(month, day - 1), setHours(setMinutes(setSeconds(setMilliseconds(props.min, 0), 0), 0), 0))
 }
 const dateIsAfterMax = (day: number, isNextMonth = false) => {
   if (!(props.max instanceof Date)) return false
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
-  return isAfter(setDate(month, day), props.max)
+  const date = setDate(month, day - 1)
+  const startOfMax = setHours(setMinutes(setSeconds(setMilliseconds(props.max, 0), 0), 0), 0)
+  return isAfter(date, startOfMax) || isEqual(date, startOfMax)
+}
+const dateIsNotSelectable = (day: number, isNextMonth = false) => {
+  return dateIsBeforeMin(day, isNextMonth) || dateIsAfterMax(day, isNextMonth)
 }
 const dateIsWithinInterval = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
