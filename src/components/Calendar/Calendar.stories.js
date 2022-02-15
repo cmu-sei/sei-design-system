@@ -34,13 +34,15 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  modelValue: new Date()
+  modelValue: new Date('02-06-2022'),
+  min: new Date('02-03-2022'),
+  max: new Date('03-18-2022')
 };
 
 export const Range = Template.bind({});
 Range.args = {
-  modelValue: { start: new Date('2022-01-26'), end: new Date('2022-02-09') },
   mode: 'dateTime',
-  min: new Date('2021-11-15'),
-  max: new Date('2022-03-12')
+  modelValue: { start: new Date('02-09-2022'), end: new Date('03-05-2022') },
+  min: new Date('02-03-2022'),
+  max: new Date('03-18-2022')
 };

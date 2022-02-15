@@ -731,7 +731,7 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
 const dateIsBeforeMin = (day: number, isNextMonth = false) => {
   if (!(props.min instanceof Date)) return false
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
-  return isBefore(setDate(month, day - 1), setHours(setMinutes(setSeconds(setMilliseconds(props.min, 0), 0), 0), 0))
+  return isBefore(setDate(month, day), setHours(setMinutes(setSeconds(setMilliseconds(props.min, 0), 0), 0), 0))
 }
 const dateIsAfterMax = (day: number, isNextMonth = false) => {
   if (!(props.max instanceof Date)) return false
