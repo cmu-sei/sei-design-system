@@ -12,7 +12,7 @@ export default {
   component: SdsInput,
   argTypes: {
     type: {
-      options: ['date', 'datetime-local', 'email', 'month', 'number', 'password', 'search', 'tel', 'text', 'time', 'url', 'week'],
+      options: ['email', 'number', 'password', 'search', 'tel', 'text', 'url'],
       control: { type: 'select' }
     }
   }
