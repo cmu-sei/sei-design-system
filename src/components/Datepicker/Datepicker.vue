@@ -483,8 +483,8 @@ export default defineComponent({
           date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
         }
         const dateIsBeforeMin = isBefore(date, this.min)
-        const dateIsAfterMax = isAfter(date, this.max)
-        const dateEqualsMax = isEqual(date, this.max)
+        const dateIsAfterMax = isAfter(subDays(date, 1), this.max)
+        const dateEqualsMax = isEqual(subDays(date, 1), this.max)
         if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
           return { date, text: format(date, this.inputFormat) }
         }
