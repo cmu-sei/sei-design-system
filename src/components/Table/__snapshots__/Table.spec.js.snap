@@ -31,9 +31,7 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
   <tbody>
     <!-- @slot Table content. Use this to override the table rows. @binding items -->
     <tr>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
-      </td>
+      <!--v-if-->
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
       </td>
@@ -48,9 +46,7 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
       </td>
     </tr>
     <tr>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
-      </td>
+      <!--v-if-->
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
       </td>
@@ -99,9 +95,7 @@ exports[`Table.vue matches snapshot with items and action col props assigned 1`]
   <tbody>
     <!-- @slot Table content. Use this to override the table rows. @binding items -->
     <tr>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
-      </td>
+      <!--v-if-->
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
       </td>
@@ -114,9 +108,7 @@ exports[`Table.vue matches snapshot with items and action col props assigned 1`]
       <!--v-if-->
     </tr>
     <tr>
-      <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->0
-      </td>
+      <!--v-if-->
       <td>
         <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
       </td>

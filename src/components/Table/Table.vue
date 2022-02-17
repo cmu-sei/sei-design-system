@@ -68,18 +68,20 @@
           v-for="item in filteredItems"
           :key="item.id"
         >
-          <td
+          <template
             v-for="(value, key) in item"
             :key="key"
           >
-            <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->
-            <slot
-              :name="`cell(${key})`"
-              :item="originalItem(item)"
-            >
-              {{ formatItem(value, key) }}
-            </slot>
-          </td>
+            <td v-if="shouldShowCell(key)">
+              <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->
+              <slot
+                :name="`cell(${key})`"
+                :item="originalItem(item)"
+              >
+                {{ formatItem(value, key) }}
+              </slot>
+            </td>
+          </template>
           <td v-if="showActionsColumn">
             <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item -->
             <slot
@@ -175,7 +177,7 @@ export default defineComponent({
   computed: {
     filteredItems(): TableItem[] {
       return this.items && this.items.map((i) => {
-        const item: TableItem = { id: 0 }
+        const item: TableItem = { id: i.id }
         this.fields.forEach((x) => {
           item[x.key] = i[x.key]
         })
@@ -194,6 +196,9 @@ export default defineComponent({
   methods: {
     originalItem(item: TableItem) {
       return this.items.find((i) => i.id === item.id)
+    },
+    shouldShowCell(key: keyof TableItem) {
+      return this.fields.find((i) => i.key === key)
     },
     formatItem (value: any, key: string | number) {
       const field = this.fields.filter((i) => i.key === key)
