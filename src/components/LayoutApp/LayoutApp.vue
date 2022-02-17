@@ -112,7 +112,7 @@
           <div class="h-screen flex flex-col sticky top-0">
             <div class="overflow-y-auto flex-grow overscroll-contain">
               <div
-                v-if="appName || appIconUrl"
+                v-if="appName"
                 class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10 flex gap-2 p-4"
               >
                 <!-- @slot App icon content. @binding classList -->
@@ -121,26 +121,42 @@
                   classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
-                    v-if="appIconUrl"
+                    v-if="!hidePlaceholderIcons"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
-                    <a
-                      v-if="appUrl"
-                      :href="appUrl"
-                      @click="navigate({ title: appName, href: appUrl }, $event)"
-                    >
+                    <template v-if="appUrl">
+                      <a
+                        :href="appUrl"
+                        @click="navigate({ title: appName, href: appUrl }, $event)"
+                      >
+                        <img
+                          v-if="appIconUrl"
+                          :src="appIconUrl"
+                          :alt="appName"
+                          class="w-8 h-8"
+                        >
+                        <svg
+                          v-else
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 576 512"
+                          class="w-8 h-8 fill-current text-blue-400"
+                        ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                      </a>
+                    </template>
+                    <template v-else>
                       <img
+                        v-if="appIconUrl"
                         :src="appIconUrl"
                         :alt="appName"
                         class="w-8 h-8"
                       >
-                    </a>
-                    <img
-                      v-else
-                      :src="appIconUrl"
-                      :alt="appName"
-                      class="w-8 h-8"
-                    >
+                      <svg
+                        v-else
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 576 512"
+                        class="w-8 h-8 fill-current text-blue-400"
+                      ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                    </template>
                   </span>
                 </slot>
                 <a
@@ -186,14 +202,21 @@
                       classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                     >
                       <span
-                        v-if="item.iconUrl"
+                        v-if="!hidePlaceholderIcons"
                         class="inline-block w-8 h-8 my-auto flex-shrink-0"
                       >
                         <img
+                          v-if="item.iconUrl"
                           :src="item.iconUrl"
                           :alt="item.title"
                           class="w-8 h-8"
                         >
+                        <svg
+                          v-else
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 512 512"
+                          class="w-8 h-8 fill-current"
+                        ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                       </span>
                     </slot>
                     <span class="inline-block my-auto">{{ item.title }}</span>
@@ -225,7 +248,7 @@
               class="sticky top-0 bg-gray-900 dark:bg-gray-800 z-10"
             >
               <p
-                v-if="appName || appIconUrl"
+                v-if="appName"
                 class="flex gap-2 p-4"
               >
                 <!-- @slot App icon content. @binding classList -->
@@ -234,26 +257,42 @@
                   classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
-                    v-if="appIconUrl"
+                    v-if="!hidePlaceholderIcons"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
-                    <a
-                      v-if="appUrl"
-                      :href="appUrl"
-                      @click="navigate({ title: appName, href: appUrl }, $event)"
-                    >
+                    <template v-if="appUrl">
+                      <a
+                        :href="appUrl"
+                        @click="navigate({ title: appName, href: appUrl }, $event)"
+                      >
+                        <img
+                          v-if="appIconUrl"
+                          :src="appIconUrl"
+                          :alt="appName"
+                          class="w-8 h-8"
+                        >
+                        <svg
+                          v-else
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 576 512"
+                          class="w-8 h-8 fill-current text-blue-400"
+                        ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                      </a>
+                    </template>
+                    <template v-else>
                       <img
+                        v-if="appIconUrl"
                         :src="appIconUrl"
                         :alt="appName"
                         class="w-8 h-8"
                       >
-                    </a>
-                    <img
-                      v-else
-                      :src="appIconUrl"
-                      :alt="appName"
-                      class="w-8 h-8"
-                    >
+                      <svg
+                        v-else
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 576 512"
+                        class="w-8 h-8 fill-current text-blue-400"
+                      ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                    </template>
                   </span>
                 </slot>
                 <a
@@ -309,14 +348,21 @@
                           classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
                           <span
-                            v-if="item.iconUrl"
+                            v-if="!hidePlaceholderIcons"
                             class="inline-block w-8 h-8 my-auto flex-shrink-0"
                           >
                             <img
+                              v-if="item.iconUrl"
                               :src="item.iconUrl"
                               :alt="item.title"
                               class="w-8 h-8"
                             >
+                            <svg
+                              v-else
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                              class="w-8 h-8 fill-current"
+                            ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                           </span>
                         </slot>
                         <span
@@ -547,6 +593,12 @@ export default defineComponent({
      * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
      */
     sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
+    /**
+     * Determines whether to hide the default icons.
+     *
+     * Set this to **false** if you are using your own icons as well.
+     */
+    hidePlaceholderIcons: { type: Boolean, default: false },
   },
   emits: ['update:modelValue', 'navigate'],
   data() {
