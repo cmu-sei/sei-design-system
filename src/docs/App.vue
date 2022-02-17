@@ -30,6 +30,11 @@
     </template>
     <components />
     <examples />
+    <template #footer-top>
+      <div class="px-4 py-2 border">
+        Testing
+      </div>
+    </template>
     <template #footer-middle>
       Footer middle content
     </template>
