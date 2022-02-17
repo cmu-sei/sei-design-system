@@ -79,6 +79,9 @@ exports[`LayoutApp should match its default snapshot 1`] = `
           
         </div>
       </main>
+      <!-- @slot Footer top content. Great for application-specific footer content. -->
+      
+      
       <!-- Footer -->
       <footer
         class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4"

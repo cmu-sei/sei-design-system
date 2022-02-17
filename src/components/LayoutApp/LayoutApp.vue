@@ -465,6 +465,9 @@
           </div>
         </main>
 
+        <!-- @slot Footer top content. Great for application-specific footer content. -->
+        <slot name="footer-top" />
+
         <!-- Footer -->
         <footer class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
