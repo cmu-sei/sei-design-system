@@ -198,6 +198,7 @@ export default defineComponent({
       this.$emit('close')
     },
     handleOpen(open: Function) {
+      if (this.disabled) return
       clearTimeout((this.timer as number))
       if (!this.hovered) {
         /**
