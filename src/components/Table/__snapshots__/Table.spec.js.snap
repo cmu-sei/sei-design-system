@@ -33,13 +33,13 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
     <tr>
       <!--v-if-->
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->A title
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->12/31/1999
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->12/31/1999
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->11/11/2014
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->11/11/2014
       </td>
       <td>
         <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
@@ -48,13 +48,13 @@ exports[`Table.vue matches snapshot with entries but no action col props assigne
     <tr>
       <!--v-if-->
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->B title
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->1/31/2013
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->10/9/2013
       </td>
       <td>
         <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
@@ -97,26 +97,26 @@ exports[`Table.vue matches snapshot with items and action col props assigned 1`]
     <tr>
       <!--v-if-->
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->B title
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->B title
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->1/31/2013
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->1/31/2013
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->10/9/2013
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->10/9/2013
       </td>
       <!--v-if-->
     </tr>
     <tr>
       <!--v-if-->
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->A title
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->A title
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->12/31/1999
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->12/31/1999
       </td>
       <td>
-        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->11/11/2014
+        <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->11/11/2014
       </td>
       <!--v-if-->
     </tr>

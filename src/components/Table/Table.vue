@@ -73,10 +73,11 @@
             :key="key"
           >
             <td v-if="shouldShowCell(key)">
-              <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item -->
+              <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->
               <slot
                 :name="`cell(${key})`"
                 :item="originalItem(item)"
+                :value="formatItem(value, key)"
               >
                 {{ formatItem(value, key) }}
               </slot>

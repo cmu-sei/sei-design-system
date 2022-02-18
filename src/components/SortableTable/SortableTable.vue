@@ -80,6 +80,10 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
+/**
+ * THIS COMPONENT IS DEPRECATED and marked for DELETION.
+ */
+
 export default defineComponent({
   name: 'SdsSortableTable',
   props: {

@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'ALPHA: A table shows information in columns and rows and can be sorted by the column.',
+        component: 'BETA: A table shows information in columns and rows and can be sorted by the column.',
       },
     },
   },
@@ -20,8 +20,8 @@ const Template = (args) => ({
   },
   template: `
     <sds-table v-bind="args" class="table-prose">
-      <template #cell(title)="{ item }">
-        <p>{{ item.title }}</p>
+      <template #cell(title)="{ item, value }">
+        <p>{{ value }}</p>
         <p class="text-sm text-gray-500">
           Created on {{ item.createdDate.toLocaleDateString() }}
         </p>

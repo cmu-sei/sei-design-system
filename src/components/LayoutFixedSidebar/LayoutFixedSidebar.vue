@@ -88,6 +88,10 @@
 import { defineComponent } from "vue";
 import debounce from "../../helpers/debounce";
 
+/**
+ * THIS COMPONENT IS DEPRECATED and marked for DELETION.
+ */
+
 export default defineComponent({
   name: 'SdsLayoutFixedSidebar',
   props: {

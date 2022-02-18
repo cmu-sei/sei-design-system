@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A sortable table shows information in columns and rows and can be sorted by the column.',
+        component: 'DEPRECATED: A sortable table shows information in columns and rows and can be sorted by the column.',
       },
     },
   },
