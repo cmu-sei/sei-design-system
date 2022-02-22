@@ -468,11 +468,29 @@
         :fields="fields"
         :items="tableItems"
       >
-        <template #cell(title)="{ item }">
-          <p><strong>{{ item.title }}</strong></p>
+        <template #cell(title)="{ value, item }">
+          <p><strong>{{ value }}</strong></p>
           <p class="text-gray-500 text-sm">
             {{ item.author }}
           </p>
+        </template>
+        <template #cell(actions)="{ item }">
+          <sds-button
+            variant="default"
+            size="sm"
+          >
+            Do something for: {{ item.id }}
+          </sds-button>
+        </template>
+        <template #head(actions)="{ field }">
+          {{ field.label }}
+          <sds-button
+            variant="default"
+            size="sm"
+            @click="addField"
+          >
+            Add field
+          </sds-button>
         </template>
       </sds-table>
     </sds-section>
@@ -490,7 +508,8 @@ export default defineComponent({
       fields: [
         { key: 'id', label: 'ID' },
         { key: 'title', label: 'Title', sortable: true },
-        { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
+        { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() },
+        { key: 'actions', label: 'Actions' }
       ],
       tableItems: [
         { id: 1, title: 'First entry', author: 'Jason Shimkoski', lastModified: new Date() },
@@ -683,6 +702,9 @@ export default defineComponent({
         });
       }, 250);
     },
+    addField() {
+      this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
+    }
   },
 });
 </script>

@@ -1,114 +1,122 @@
 <template>
   <table>
-    <!-- Table col definition -->
+    <caption v-if="!!$slots.caption || caption">
+      <!-- @slot Caption content. This will override the **caption** prop. -->
+      <slot name="caption">
+        {{ caption }}
+      </slot>
+    </caption>
     <colgroup>
-      <col
-        v-for="field in fields"
-        :key="field.key"
-        :class="{
-          [sortedColumnClass]: sortField === field.key
-        }"
-      >
+      <template v-for="field in displayedFields">
+        <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+        <slot
+          :name="`col(${field.key})`"
+          :active="sortField === field.key"
+          :active-class="sortedColumnClass"
+        >
+          <col
+            :key="field.key"
+            :class="{
+              [sortedColumnClass]: sortField === field.key
+            }"
+          >
+        </slot>
+      </template>
     </colgroup>
-    <!-- Table header -->
     <thead>
       <tr>
         <th
-          v-for="field in fields"
+          v-for="field in displayedFields"
           :key="field.key"
           :class="{ 
             [sortedColumnClass]: sortField === field.key,
-            'pointer-events-none': !field.sortable
+            'cursor-pointer': field.sortable
           }"
-          class="space-x-1 cursor-pointer select-none group"
-          @click="handleSortBy(field)"
+          class="space-x-1 select-none group"
+          @click="field.sortable ? handleSortBy(field) : undefined"
         >
-          <span>{{ field.label }}</span>
-          <svg
-            v-if="field.sortable"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="inline-block w-4 h-4 group-hover:opacity-100"
-            :class="{
-              'opacity-100': sortField === field.key,
-              'opacity-50': sortField !== field.key,
-            }"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 320 512"
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
+          <slot
+            :name="`head(${field.key})`"
+            :field="field"
+            :active="sortField === field.key"
           >
-            <path
-              v-if="sortField !== field.key"
-              d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
-              fill="currentColor"
-            />
-            <path
-              v-if="sortField === field.key && sortOrder > 0"
-              d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
-              fill="currentColor"
-            />
-            <path
-              v-if="sortField === field.key && sortOrder < 0"
-              d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
-              fill="currentColor"
-            />
-          </svg>
-        </th>
-        <th v-if="showActionsColumn">
-          Actions
+            {{ field.label }}
+            <svg
+              v-if="field.sortable"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              aria-hidden="true"
+              role="img"
+              class="inline-block w-4 h-4 group-hover:opacity-100"
+              :class="{
+                'opacity-100': sortField === field.key,
+                'opacity-50': sortField !== field.key,
+              }"
+              preserveAspectRatio="xMidYMid meet"
+              viewBox="0 0 320 512"
+            >
+              <path
+                v-if="sortField !== field.key"
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                fill="currentColor"
+              />
+              <path
+                v-if="sortField === field.key && sortOrder > 0"
+                d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+                fill="currentColor"
+              />
+              <path
+                v-if="sortField === field.key && sortOrder < 0"
+                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+                fill="currentColor"
+              />
+            </svg>
+          </slot>
         </th>
       </tr>
     </thead>
-    <!-- Table body -->
     <tbody>
-      <!-- @slot Table content. Use this to override the table rows. @binding items -->
-      <slot :items="filteredItems">
-        <tr
-          v-for="item in filteredItems"
-          :key="item.id"
+      <tr
+        v-for="item in sortedItems"
+        :key="item.id"
+      >
+        <template
+          v-for="key in displayedFieldKeys"
+          :key="key"
         >
-          <template
-            v-for="(value, key) in item"
-            :key="key"
-          >
-            <td v-if="shouldShowCell(key)">
-              <!-- @slot Dynamic table cell content. Use this to target a table cell using a slot cell(FIELD_KEY) format. @binding item, value -->
-              <slot
-                :name="`cell(${key})`"
-                :item="originalItem(item)"
-                :value="formatItem(value, key)"
-              >
-                {{ formatItem(value, key) }}
-              </slot>
-            </td>
-          </template>
-          <td v-if="showActionsColumn">
-            <!-- @slot Actions column content. Use this to add content to the actions column when not using the default slot. @binding item -->
+          <component :is="cellElement(key)">
+            <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
             <slot
-              name="actions-column"
-              :item="originalItem(item)"
-            />
-          </td>
-        </tr>
-      </slot>
+              :name="`cell(${key})`"
+              :value="format(item, key)"
+              :item="item"
+              :format="(k: string) => format(item, k)"
+            >
+              {{ format(item, key) }}
+            </slot>
+          </component>
+        </template>
+      </tr>
     </tbody>
   </table>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
-
-interface TableItem {
-  id: number | string
-  [propName: string | number]: any;
-}
+import { defineComponent, PropType } from 'vue'
 
 interface TableField {
   key: string
   label: string
-  sortable?: boolean
   format?: Function
+  sortable?: boolean
+  hidden?: boolean
+  header?: boolean
+}
+
+interface TableItem {
+  id: number
+  [key: string]: unknown
 }
 
 export default defineComponent({
@@ -149,18 +157,18 @@ export default defineComponent({
       type: Array as PropType<TableField[]>,
       default: () => [],
     },
+    /**
+     * Determines the field key to sort by.
+     */
     sortBy: { type: String, default: '' },
+    /**
+     * Determines if sorting should be descending by default.
+     */
     sortDesc: { type: Boolean, default: false },
     /**
-     * Determines whether to append an unsortable "Actions" column to the table. When set to true, an additional column is added
-     * to the right side of the table.
-     * 
-     * The "actions-column" slot can be used to add action buttons for each entry row (edit, remove, etc).
+     * Determines the caption for the table if desired.
      */
-    showActionsColumn: {
-      type: Boolean,
-      default: false
-    },
+    caption: { type: String, default: null },
     /**
      * Determines the CSS classes used on the sorted column.
      */
@@ -176,34 +184,25 @@ export default defineComponent({
     }
   },
   computed: {
-    filteredItems(): TableItem[] {
-      return this.items && this.items.map((i) => {
-        const item: TableItem = { id: i.id }
-        this.fields.forEach((x) => {
-          item[x.key] = i[x.key]
-        })
-        return item
-      }).sort((a, b) => this.sortCompare(a, b, this.sortField)) || []
-    }
-  },
-  watch: {
-    sortBy (value) {
-      this.sortField = value
+    sortedItems() {
+      const items = this.items
+      return items.sort((a, b) => this.sortCompare(a, b, this.sortField))
     },
-    sortDesc (value) {
-      this.sortOrder = value ? -1 : 1
+    displayedFields() {
+      return this.fields.filter((i) => !i.hidden)
+    },
+    displayedFieldKeys() {
+      return Object.entries(this.displayedFields).map(([_key, value]) => value.key)
     }
   },
   methods: {
-    originalItem(item: TableItem) {
-      return this.items.find((i) => i.id === item.id)
+    cellElement(key: string) {
+      const field = this.fields.find((f) => f.key === key)
+      return field && field.header ? 'th' : 'td'
     },
-    shouldShowCell(key: keyof TableItem) {
-      return this.fields.find((i) => i.key === key)
-    },
-    formatItem (value: any, key: string | number) {
-      const field = this.fields.filter((i) => i.key === key)
-      return field.length && field[0].format ? field[0].format(value) : value
+    format(item: TableItem, key: string) {
+      const field = this.fields.find((f) => f.key === key)
+      return field && field.format ? field.format(item[key]) : item[key]
     },
     handleSortBy(field: TableField) {
       this.sortField = field.key
@@ -220,7 +219,7 @@ export default defineComponent({
         return (a < b ? -1 : a > b ? 1 : 0) * this.sortOrder
       } else {
         // Otherwise stringify the field data and use String.prototype.localeCompare
-        return this.toString(a).localeCompare(this.toString(b)) * this.sortOrder
+        return this.toString(a as TableItem).localeCompare(this.toString(b as TableItem)) * this.sortOrder
       }
     },
     // Helper function to stringify the values of an Object
@@ -230,12 +229,12 @@ export default defineComponent({
       } else if (value instanceof Object) {
         return Object.keys(value)
           .sort()
-          .map(key => this.toString(value[key]))
+          .map(key => this.toString(value[key] as TableItem))
           .join(' ')
       } else {
         return String(value)
       }
     }
   }
-});
+})
 </script>

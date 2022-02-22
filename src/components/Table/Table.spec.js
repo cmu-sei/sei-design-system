@@ -63,12 +63,12 @@ describe("Table.vue", () => {
           label: "Last modified",
           sortable: true, format: (date) => date.toLocaleDateString()
         },
-      ],
-      showActionsColumn: true
+        { key: "actions", label: "Actions" }
+      ]
     };
     const slots = {
-      'actions-column': `
-        <template #actions-column="{item}">
+      'cell(actions)': `
+        <template #cell(actions)="{item}">
           <button
             class="btn btn-link text-red-300 btn-sm"
             @click="remove(entry)"
