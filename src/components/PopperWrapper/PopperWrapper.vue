@@ -39,7 +39,7 @@ export default defineComponent({
       this.setupPopper()
     }
   },
-  mounted: function mounted() {
+  mounted() {
     this.triggerEl = document.querySelector(`#${this.triggerId}`);
     this.popperEl = document.querySelector(`#${this.popperId}`);
   },
