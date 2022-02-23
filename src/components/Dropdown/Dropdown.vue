@@ -6,7 +6,8 @@
     <!-- @slot Trigger content. Use if you want to override the default button trigger. Ensure to use the v-model to control open/close state. -->
     <slot name="trigger">
       <button
-        :id="id"
+        ref="button"
+        v-uid
         type="button"
         class="inline-flex"
         aria-haspopup="true"
@@ -55,7 +56,7 @@
           :class="menuClass"
           role="menu"
           aria-orientation="vertical"
-          :aria-labelledby="id"
+          :aria-labelledby="button && (button as HTMLElement).id || undefined"
         >
           <!-- @slot Default slot content. This is the content of the dropdown menu. -->
           <slot />
@@ -68,11 +69,14 @@
 <script lang="ts">
 import { defineComponent, ref, provide, onMounted, onUnmounted, nextTick, watch } from "vue";
 import debounce from "../../helpers/debounce";
-import uuid from '../../helpers/uuid';
+import { Uid } from '@shimyshack/uid'
 import mitt from 'mitt';
 
 export default defineComponent({
   name: "SdsDropdown",
+  directives: {
+    uid: Uid
+  },
   props: {
     /**
      * The v-model for the component (determines if the menu is displayed or hidden).
@@ -134,8 +138,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'btn-click'],
   setup(props, { emit }) {
-    const id = `sds-dropdown__${uuid()}`;
     const root = ref(null)
+    const button = ref(null)
     const menu = ref(null)
     const isOpen = ref(false)
 
@@ -260,7 +264,7 @@ export default defineComponent({
 
     return {
       root,
-      id,
+      button,
       isOpen,
       right,
       dropUp,

@@ -1,10 +1,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { createPopper } from '@popperjs/core';
-import uuid from '../../helpers/uuid';
+import { Uid } from '@shimyshack/uid'
 
 export default defineComponent({
   name: 'SdsPopperWrapper',
+  directives: {
+    uid: Uid
+  },
   props: {
     /**
      * The popper.js configuration to pass into the component.
@@ -20,18 +23,12 @@ export default defineComponent({
   data() {
     return {
       isOpen: false,
+      triggerId: undefined as string | undefined,
+      popperId: undefined as string | undefined,
       triggerEl: null as HTMLElement | null,
       popperEl: null as HTMLElement | null,
       popper: null as any
     };
-  },
-  computed: {
-    triggerId() {
-      return `sds-popper-wrapper__trigger-${uuid()}`;
-    },
-    popperId() {
-      return `sds-popper-wrapper__popper-${uuid()}`;
-    },
   },
   watch: {
     config() {
@@ -40,8 +37,8 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.triggerEl = document.querySelector(`#${this.triggerId}`);
-    this.popperEl = document.querySelector(`#${this.popperId}`);
+    this.triggerId = `sds-popper-wrapper__trigger-${this.$el.id}`
+    this.popperId = `sds-popper-wrapper__popper-${this.$el.id}`
   },
   beforeUnmount() {
     this.destroyPopper()
@@ -67,6 +64,8 @@ export default defineComponent({
       this.$emit('close');
     },
     setupPopper() {
+      this.triggerEl = document.querySelector(`#${this.triggerId}`);
+      this.popperEl = document.querySelector(`#${this.popperId}`);
       if (this.triggerEl && this.popperEl) {
         if (!this.popper) {
           this.popper = createPopper(this.triggerEl, this.popperEl, this.config);
@@ -83,14 +82,21 @@ export default defineComponent({
       this.popper = null;
     }
   },
-  render() {
-    return this.$slots && this.$slots.default && this.$slots.default({
-      isOpen: this.isOpen,
-      open: this.open,
-      close: this.close,
-      triggerId: this.triggerId,
-      popperId: this.popperId
-    });
-  },
 });
 </script>
+
+<template>
+  <div
+    v-uid
+    class="inline-block"
+  >
+    {{ $attrs.triggerId }}
+    <slot
+      :is-open="isOpen"
+      :open="open"
+      :close="close"
+      :trigger-id="triggerId"
+      :popper-id="popperId"
+    />
+  </div>
+</template>

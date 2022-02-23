@@ -1,3 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PopperWrapper.vue matches snapshot 1`] = `<!---->`;
+exports[`PopperWrapper.vue matches snapshot 1`] = `
+<div
+  class="inline-block"
+  id="kzzz8vix4zgxofi31h9"
+>
+   
+  
+  
+</div>
+`;
