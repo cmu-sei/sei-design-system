@@ -35,7 +35,7 @@
         <div
           v-if="showContent"
           role="dialog"
-          :aria-labelledby="id"
+          :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
           class="
             relative
             z-50
@@ -60,7 +60,8 @@
           <header class="flex items-center p-6 pb-0">
             <div
               v-if="hasTitleSlot"
-              :id="id"
+              ref="titleWrapper"
+              v-uid
               class="text-xl leading-tight"
             >
               <!-- @slot Modal title content. -->
@@ -117,13 +118,14 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch, onMounted, onUnmounted, Directive } from "vue";
-import uuid from '../../helpers/uuid';
+import { Uid } from '@shimyshack/uid';
 
 export default defineComponent({
   name: "SdsModal",
   directives: {
+    uid: Uid,
     focus: {
-      inserted(el: HTMLElement) {
+      mounted(el: HTMLElement) {
         el.focus();
       },
     } as Directive,
@@ -146,7 +148,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit, slots }) {
-    const id = ref('')
+    const titleWrapper = ref(null)
     const modalContainer = ref(null)
     const showContent = ref(false)
 
@@ -168,10 +170,6 @@ export default defineComponent({
          */
         emit("update:modelValue", value);
       },
-    })
-
-    onMounted(() => {
-      id.value = `sds-modal__${uuid()}`;
     })
 
     onUnmounted(() => {
@@ -250,7 +248,7 @@ export default defineComponent({
     }, { immediate: true })
 
     return {
-      id,
+      titleWrapper,
       modalContainer,
       showContent,
 

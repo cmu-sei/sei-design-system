@@ -224,12 +224,17 @@
           count-characters
         />
 
-        <button
-          class="btn btn-blue"
-          @click="showModal = true"
-        >
-          Show Modal Component
-        </button>
+        <sds-tooltip>
+          <template #trigger>
+            <button
+              class="btn btn-blue"
+              @click="showModal = true"
+            >
+              Show Modal Component
+            </button>
+          </template>
+          <p>Click this to show a modal!</p>
+        </sds-tooltip>
         <sds-modal
           v-model="showModal"
           :size="modalSize"
@@ -467,6 +472,8 @@
         class="table-prose"
         :fields="fields"
         :items="tableItems"
+        sort-by="lastModified"
+        sort-desc
       >
         <template #cell(title)="{ value, item }">
           <p><strong>{{ value }}</strong></p>

@@ -5,7 +5,7 @@
     @open="handlePopperWrapperOpen"
     @close="handlePopperWrapperClose"
   >
-    <div class="inline-block">
+    <div class="inline-block w-full">
       <div
         :id="triggerId"
         :class="[triggerClass]"

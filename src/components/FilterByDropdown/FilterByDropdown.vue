@@ -36,17 +36,18 @@
       v-if="!enableFilter"
       class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
     >
-      <input
-        :id="`filter_by_dropdown_select_all_${uuid}`"
-        type="checkbox"
-        :checked="allSelected"
-        :indeterminate.prop="indeterminate"
-        @click="toggleSelect"
-      >
       <label
-        :for="`filter_by_dropdown_select_all_${uuid}`"
-        class="text-gray-900 dark:text-gray-50 ml-1"
-      >Select all</label>
+        class="text-gray-900 dark:text-gray-50 flex gap-1 w-max"
+      >
+        <input
+          type="checkbox"
+          class="my-auto"
+          :checked="allSelected"
+          :indeterminate.prop="indeterminate"
+          @click="toggleSelect"
+        >
+        <span class="my-auto">Select all</span>
+      </label>
     </div>
     <div class="scroll-area max-h-48">
       <ul>
@@ -90,7 +91,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import Dropdown from '../Dropdown/Dropdown.vue';
-import uuid from '../../helpers/uuid';
 
 interface FilterByDropdownOption {
   id: string | number
@@ -157,7 +157,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
   data() {
     return {
-      uuid: null as string | null,
       filterText: "",
       tmpOptions: [],
       open: false,
@@ -196,9 +195,6 @@ export default defineComponent({
       this.resetTmpOptions();
       this.filterText = "";
     }
-  },
-  created() {
-    this.uuid = `sds-filter-by-dropdown__${uuid()}`;
   },
   methods: {
     toggleSelect() {
