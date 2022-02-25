@@ -13,6 +13,10 @@ export default {
   },
   component: SdsFilterByDropdown,
   argTypes: {
+    placement: {
+      options: ['auto', 'top', 'right'],
+      control: {type: 'select'}
+    },
   }
 };
 
