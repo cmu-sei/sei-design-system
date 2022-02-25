@@ -188,15 +188,15 @@ export default defineComponent({
      * 
      * **{ start: new Date(), end: null }**
      */
-    modelValue: { type: [Object, Date, null] as PropType<CalendarRange | CalendarDate>, default: null },
+    modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
     /**
      * The max date allowed for the datepicker.
      */
-    max: { type: Date || null, default: null },
+    max: { type: Date, default: null },
     /**
      * The min date allowed for the datepicker.
      */
-    min: { type: Date || null, default: null },
+    min: { type: Date, default: null },
     /**
      * Determines if the component is required.
      */
