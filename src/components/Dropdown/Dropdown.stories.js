@@ -15,7 +15,12 @@ export default {
     },
   },
   component: SdsDropdown,
-  argTypes: {}
+  argTypes: {
+    placement: {
+      options: ['auto', 'top', 'right'],
+      control: {type: 'select'}
+    },
+  }
 };
 
 const Template = (args) => ({

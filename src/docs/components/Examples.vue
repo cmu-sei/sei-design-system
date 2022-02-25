@@ -177,6 +177,7 @@
           <sds-dropdown
             :title="`Modal Size: ${modalSize}`"
             btn-class="btn btn-default"
+            placement="right"
             animated
           >
             <sds-dropdown-header> Select the modal's size </sds-dropdown-header>
