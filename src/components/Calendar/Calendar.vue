@@ -429,7 +429,7 @@ const props = defineProps({
    * 
    * **{ start: new Date(), end: null }**
    */
-  modelValue: { type: [Object, Date, null] as PropType<CalendarDate | CalendarRange>, default: new Date() },
+  modelValue: { type: [Object, Date] as PropType<CalendarDate | CalendarRange>, default: new Date() },
   /**
    * Determines the mode in which the calendar will function.
    * 
@@ -439,11 +439,11 @@ const props = defineProps({
   /**
    * Determines the minimum selectable date for this component.
    */
-  min: { type: [Date, null] as PropType<CalendarDate>, default: null },
+  min: { type: Date as PropType<CalendarDate>, default: null },
   /**
    * Determines the maximum selectable date for this component.
    */
-  max: { type: [Date, null] as PropType<CalendarDate>, default: null }
+  max: { type: Date as PropType<CalendarDate>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
