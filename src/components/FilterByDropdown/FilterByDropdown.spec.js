@@ -10,7 +10,6 @@ describe("FilterByDropdown.vue", () => {
   it("matches snapshot with no props assigned", async () => {
     const props = {};
     const wrapper = shallowMount(Component, { props });
-    await wrapper.setData({ uuid: 'testing123' })
     expect(wrapper.html()).toMatchSnapshot();
   });
 });

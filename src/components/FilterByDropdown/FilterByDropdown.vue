@@ -4,6 +4,7 @@
     :hide-caret="hideCaret"
     :btn-class="btnClass"
     :menu-class="menuClass"
+    :placement="placement"
   >
     <template #title>
       {{ btnText }}
@@ -98,6 +99,8 @@ interface FilterByDropdownOption {
   text: string
 }
 
+type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
+
 export default defineComponent({
   name: "SdsFilterByDropdown",
   components: {
@@ -153,6 +156,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the placement of the dropdown on the screen.
+     */
+    placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'auto' }
   },
   emits: ['update:modelValue'],
   data() {
