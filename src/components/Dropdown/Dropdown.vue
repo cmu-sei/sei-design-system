@@ -48,8 +48,8 @@
         ref="menu"
         class="absolute z-50"
         :class="{
-          'right-0': right,
-          'bottom-full': dropUp,
+          'right-0': right || placement === 'right',
+          'bottom-full': dropUp || placement === 'top',
         }"
       >
         <div
@@ -67,10 +67,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, provide, onMounted, onUnmounted, nextTick, watch } from "vue";
+import { defineComponent, ref, provide, onMounted, onUnmounted, nextTick, watch, PropType } from "vue";
 import debounce from "../../helpers/debounce";
 import { Uid } from '@shimyshack/uid'
 import mitt from 'mitt';
+
+type DropdownPlacement = 'auto' | 'top' | 'right'
 
 export default defineComponent({
   name: "SdsDropdown",
@@ -135,6 +137,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * Determines the placement of the dropdown on the screen.
+     */
+    placement: { type: String as PropType<DropdownPlacement>, default: 'auto' }
   },
   emits: ['update:modelValue', 'btn-click'],
   setup(props, { emit }) {
