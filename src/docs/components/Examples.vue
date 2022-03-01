@@ -536,7 +536,7 @@ export default defineComponent({
       },
       calendar: {
         // date: { start: null, end: null },
-        date: null,
+        date: new Date('03/23/2001'),
         max: null,
         min: null,
         mode: 'date',

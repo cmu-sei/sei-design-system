@@ -286,7 +286,8 @@ export default defineComponent({
           }
         }
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   },
   methods: {
