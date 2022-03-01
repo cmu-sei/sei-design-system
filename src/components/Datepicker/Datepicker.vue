@@ -472,7 +472,11 @@ export default defineComponent({
         'h BBB',
         'h:mm BBB',
         'hh BBB',
-        'hh:mm BBB'
+        'hh:mm BBB',
+        'hBBB',
+        'h:mmBBB',
+        'hhBBB',
+        'hh:mmBBB'
       ]
       const validDates = formats.filter((format) => {
         return isValid(parse(dateString, format, new Date()))
