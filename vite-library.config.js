@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 const { resolve } = require('path')
 const eslint = require('@rollup/plugin-eslint');
 import { defineConfig } from 'vite'
@@ -42,5 +44,9 @@ export default defineConfig({
         }
       }
     }
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom',
   },
 })

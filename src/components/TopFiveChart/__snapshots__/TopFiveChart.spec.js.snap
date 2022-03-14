@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`TopFiveChart.vue matches snapshot with malformed data 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with malformed data 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\">Top Five Chart (malformed data)</h3>
   <div>
@@ -9,7 +9,7 @@ exports[`TopFiveChart.vue matches snapshot with malformed data 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue matches snapshot with no data 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with no data 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\">Top Five Chart (no data)</h3>
   <div>
@@ -18,7 +18,7 @@ exports[`TopFiveChart.vue matches snapshot with no data 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue matches snapshot with no props assigned 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with no props assigned 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\"></h3>
   <div>
@@ -27,7 +27,7 @@ exports[`TopFiveChart.vue matches snapshot with no props assigned 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue matches snapshot with no urls 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\">Top Five Chart (no urls)</h3>
   <div>
@@ -58,7 +58,7 @@ exports[`TopFiveChart.vue matches snapshot with no urls 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue matches snapshot with urls 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\">Top Five Chart (with urls, view all url, showPercent)</h3>
   <div>
@@ -119,7 +119,7 @@ exports[`TopFiveChart.vue matches snapshot with urls 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue matches snapshot with urls, doNotLinkEntries 1`] = `
+exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
 "<div class=\\"space-y-4 chart\\">
   <h3 class=\\"text-2xl font-bold\\">Top Five Chart (with urls, doNotLinkEntries)</h3>
   <div>

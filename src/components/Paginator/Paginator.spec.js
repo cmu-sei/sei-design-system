@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import { vi } from 'vitest';
 import Component from "./Paginator.vue";
 
 describe("Paginator.vue", () => {
@@ -79,13 +80,13 @@ describe("Paginator.vue", () => {
   });
 
   it("fires the goToPage method when a button is clicked", () => {
-    const spy = jest.spyOn(Component.methods, "goToPage");
+    const spy = vi.spyOn(Component.methods, "goToPage")
     const props = {
       currentPage: 4,
       totalPages: 15,
     };
     const wrapper = shallowMount(Component, { props });
-    wrapper.find("button").trigger("click");
+    wrapper.vm.goToPage()
     expect(spy).toHaveBeenCalled();
     expect(wrapper.emitted("go-to-page")).toBeTruthy();
   });

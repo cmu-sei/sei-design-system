@@ -1,11 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Tooltip.vue matches snapshot 1`] = `
+exports[`Tooltip.vue > matches snapshot 1`] = `
 <popper-wrapper-stub
   config="[object Object]"
+  data-v-3a154857=""
 />
 `;
 
-exports[`Tooltip.vue matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;
+exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-3a154857=\\"\\"></popper-wrapper-stub>"`;
 
-exports[`Tooltip.vue matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;
+exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-3a154857=\\"\\"></popper-wrapper-stub>"`;

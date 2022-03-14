@@ -1,9 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`PopperWrapper.vue matches snapshot 1`] = `
+exports[`PopperWrapper.vue > matches snapshot 1`] = `
 <div
   class="inline-block"
-  id="l08cjphuidovh7si6nc"
 >
    
   
