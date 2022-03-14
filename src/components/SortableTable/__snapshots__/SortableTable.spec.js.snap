@@ -1,13 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`SortableTable.vue matches snapshot with entries and action col props assigned 1`] = `
+exports[`SortableTable.vue > matches snapshot with entries and action col props assigned 1`] = `
 "<table>
   <!-- Table col definition -->
   <colgroup>
-    <col class=\\"\\">
-    <col class=\\"\\">
-    <col class=\\"bg-gray-100 dark:bg-gray-800\\">
-    <col>
+    <col class=\\"\\" />
+    <col class=\\"\\" />
+    <col class=\\"bg-gray-100 dark:bg-gray-800\\" />
+    <col />
   </colgroup><!-- Table header -->
   <thead>
     <tr>
@@ -46,14 +46,14 @@ exports[`SortableTable.vue matches snapshot with entries and action col props as
 </table>"
 `;
 
-exports[`SortableTable.vue matches snapshot with entries but no action col props assigned 1`] = `
+exports[`SortableTable.vue > matches snapshot with entries but no action col props assigned 1`] = `
 "<table>
   <!-- Table col definition -->
   <colgroup>
-    <col class=\\"\\">
-    <col class=\\"\\">
-    <col class=\\"bg-gray-100 dark:bg-gray-800\\">
-    <col>
+    <col class=\\"\\" />
+    <col class=\\"\\" />
+    <col class=\\"bg-gray-100 dark:bg-gray-800\\" />
+    <col />
   </colgroup><!-- Table header -->
   <thead>
     <tr>
@@ -94,11 +94,11 @@ exports[`SortableTable.vue matches snapshot with entries but no action col props
 </table>"
 `;
 
-exports[`SortableTable.vue matches snapshot with no props assigned 1`] = `
+exports[`SortableTable.vue > matches snapshot with no props assigned 1`] = `
 "<table>
   <!-- Table col definition -->
   <colgroup>
-    <col>
+    <col />
   </colgroup><!-- Table header -->
   <thead>
     <tr>

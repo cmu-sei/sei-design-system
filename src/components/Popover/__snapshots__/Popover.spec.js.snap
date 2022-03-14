@@ -1,11 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
-exports[`Popover.vue matches snapshot 1`] = `
+exports[`Popover.vue > matches snapshot 1`] = `
 <popper-wrapper-stub
   config="[object Object]"
+  data-v-45093cca=""
 />
 `;
 
-exports[`Popover.vue matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;
+exports[`Popover.vue > matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-45093cca=\\"\\"></popper-wrapper-stub>"`;
 
-exports[`Popover.vue matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\"></popper-wrapper-stub>"`;
+exports[`Popover.vue > matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-45093cca=\\"\\"></popper-wrapper-stub>"`;

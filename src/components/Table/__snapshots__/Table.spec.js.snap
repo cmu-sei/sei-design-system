@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1
 
 exports[`Table.vue > matches snapshot with entries but no action col props assigned 1`] = `
 "<table>
@@ -51,7 +51,7 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
       </td>
       <td>
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
       </td>
     </tr>
     <tr>
@@ -65,7 +65,7 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
       </td>
       <td>
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format --><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button>
       </td>
     </tr>
   </tbody>
@@ -134,104 +134,6 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
 `;
 
 exports[`Table.vue > matches snapshot with no props assigned 1`] = `
-"<table>
-  <!--v-if-->
-  <colgroup></colgroup>
-  <thead>
-    <tr></tr>
-  </thead>
-  <tbody></tbody>
-</table>"
-`;
-
-exports[`Table.vue matches snapshot with entries but no action col props assigned 1`] = `
-"<table>
-  <!--v-if-->
-  <colgroup>
-    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class=\\"cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Title <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-          <!--v-if-->
-        </svg>
-      </th>
-      <th class=\\"cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Created <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-          <!--v-if-->
-        </svg>
-      </th>
-      <th class=\\"cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Last modified <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-          <!--v-if-->
-        </svg>
-      </th>
-      <th class=\\"space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Actions
-        <!--v-if-->
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr></tr>
-    <tr></tr>
-  </tbody>
-</table>"
-`;
-
-exports[`Table.vue matches snapshot with items and action col props assigned 1`] = `
-"<table>
-  <!--v-if-->
-  <colgroup>
-    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"\\"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=\\"bg-gray-100 dark:bg-gray-800\\">
-  </colgroup>
-  <thead>
-    <tr>
-      <th class=\\"cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Title <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-          <!--v-if-->
-        </svg>
-      </th>
-      <th class=\\"cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Created <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-          <!--v-if-->
-        </svg>
-      </th>
-      <th class=\\"bg-gray-100 dark:bg-gray-800 cursor-pointer space-x-1 select-none group\\">
-        <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->Last modified <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-100\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
-          <!--v-if-->
-          <path d=\\"M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z\\" fill=\\"currentColor\\"></path>
-          <!--v-if-->
-        </svg>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr></tr>
-    <tr></tr>
-  </tbody>
-</table>"
-`;
-
-exports[`Table.vue matches snapshot with no props assigned 1`] = `
 "<table>
   <!--v-if-->
   <colgroup></colgroup>
