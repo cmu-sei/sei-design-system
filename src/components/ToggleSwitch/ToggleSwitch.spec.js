@@ -1,6 +1,6 @@
+import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Component from "./ToggleSwitch.vue";
-
 
 describe("ToggleSwitch.vue", () => {
   it("is a Vue instance", () => {

@@ -1,8 +1,6 @@
-/// <reference types="vitest" />
-
 const { resolve } = require('path')
 const eslint = require('@rollup/plugin-eslint');
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
@@ -46,7 +44,6 @@ export default defineConfig({
     }
   },
   test: {
-    globals: true,
     environment: 'happy-dom',
   },
 })

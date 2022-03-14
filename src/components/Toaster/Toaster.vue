@@ -63,11 +63,6 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      timer: null,
-    };
-  },
   computed: {
     toasts: {
       get() {

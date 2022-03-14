@@ -140,7 +140,7 @@ export default defineComponent({
   emits: ['remove'],
   data() {
     return {
-      timer: null as null | number,
+      timer: null as null | ReturnType<typeof setTimeout>,
     };
   },
   mounted() {
