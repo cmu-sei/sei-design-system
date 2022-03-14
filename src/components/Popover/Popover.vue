@@ -124,7 +124,7 @@ export default defineComponent({
   emits: ['open', 'close', 'before-open', 'before-close'],
   data () {
     return {
-      timer: null as number | null,
+      timer: null as null | ReturnType<typeof setTimeout>,
       hovered: false
     }
   },
@@ -173,7 +173,7 @@ export default defineComponent({
     },
     handleOpen(open: Function) {
       if (this.disabled) return
-      clearTimeout((this.timer as number))
+      clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (!this.hovered) {
         /**
          * Emitted before openDelay triggers the popover to open.
@@ -183,7 +183,7 @@ export default defineComponent({
       }
     },
     handleClose(close: Function) {
-      clearTimeout((this.timer as number))
+      clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (this.hovered) {
         /**
          * Emitted before closeDelay triggers the popover to close.

@@ -1,6 +1,6 @@
+import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Component from "./Popover.vue";
-
 
 describe("Popover.vue", () => {
   it("is a Vue instance", () => {

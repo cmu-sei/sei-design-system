@@ -1,6 +1,6 @@
+import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Component from "./Tooltip.vue";
-
 
 describe("Tooltip.vue", () => {
   it("is a Vue instance", () => {

@@ -1,5 +1,5 @@
+import { describe, expect, it, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-import { vi } from 'vitest';
 import Component from "./Paginator.vue";
 
 describe("Paginator.vue", () => {
