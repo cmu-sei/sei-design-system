@@ -124,6 +124,13 @@ export default defineComponent({
      * Allows for code execution prior to opening the popover.
      * 
      * This overrides the "before-open" event if set to a function.
+     * 
+     * Unlike the "before-open" event, this prop prevents
+     * the popover from opening until it is returned.
+     * 
+     * For example, this can prevent the popover from opening
+     * until a call to a backend API populates data within
+     * the popover's default slot.
      */
     beforeOpen: {
       type: Function,
@@ -133,6 +140,12 @@ export default defineComponent({
      * Allows for code execution prior to closing the popover.
      * 
      * This overrides the "before-close" event if set to a function.
+     * 
+     * Unlike the "before-close" event, this prop prevents
+     * the popover from closing until it is returned.
+     * 
+     * For example, this can prevent the popover from closing
+     * until a call to a backend API completes.
      */
     beforeClose: {
       type: Function,
