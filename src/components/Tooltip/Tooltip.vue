@@ -120,6 +120,24 @@ export default defineComponent({
     disabled: {
       type: Boolean,
       default: false
+    },
+    /**
+     * Allows for code execution prior to opening the tooltip.
+     * 
+     * This overrides the "before-open" event if set.
+     */
+    beforeOpen: {
+      type: Function,
+      default: null
+    },
+    /**
+     * Allows for code execution prior to closing the tooltip.
+     * 
+     * This overrides the "before-close" event if set.
+     */
+    beforeClose: {
+      type: Function,
+      default: null
     }
   },
   emits: ['open', 'close', 'before-open', 'before-close'],
@@ -197,24 +215,36 @@ export default defineComponent({
        */
       this.$emit('close')
     },
-    handleOpen(open: Function) {
+    async handleOpen(open: Function) {
       if (this.disabled) return
       clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (!this.hovered) {
-        /**
-         * Emitted before openDelay triggers the tooltip to open.
-         */
-        this.$emit('before-open')
+        if (this.beforeOpen) {
+          await this.beforeOpen()
+        } else {
+          /**
+           * Emitted before openDelay triggers the tooltip to open.
+           *
+           * This event is superceded by the beforeOpen prop.
+           */
+          this.$emit('before-open')
+        }
         this.timer = setTimeout(() => open(), this.openDelay)
       }
     },
-    handleClose(close: Function) {
+    async handleClose(close: Function) {
       clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (this.hovered) {
-        /**
-         * Emitted before closeDelay triggers the tooltip to close.
-         */
-        this.$emit('before-close')
+        if (this.beforeClose) {
+          await this.beforeClose()
+        } else {
+          /**
+           * Emitted before closeDelay triggers the tooltip to close.
+           * 
+           * This event is superceded by the beforeClose prop.
+           */
+          this.$emit('before-close')
+        }
         this.timer = setTimeout(() => close(), this.closeDelay)
       }
     }

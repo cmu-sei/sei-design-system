@@ -97,13 +97,18 @@
       </template>
       <div>
         <section class="mb-4">
-          <sds-link
-            href="#"
-            variant="primary"
-            external
-          >
-            External link
-          </sds-link>
+          <sds-popover :before-open="beforeOpenPopover">
+            <template #trigger>
+              <sds-link
+                href="#"
+                variant="primary"
+                external
+              >
+                External link
+              </sds-link>
+            </template>
+            <p>Popover content</p>
+          </sds-popover>
         </section>
         <section class="mb-4">
           <h3 class="my-4 text-lg">
@@ -513,6 +518,7 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      disablePopover: true,
       fields: [
         { key: 'id', label: 'ID' },
         { key: 'title', label: 'Title', sortable: true },
@@ -712,6 +718,10 @@ export default defineComponent({
     },
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
+    },
+    async beforeOpenPopover() {
+      await new Promise(r => setTimeout(r, 2000))
+      console.log('im here')
     }
   },
 });
