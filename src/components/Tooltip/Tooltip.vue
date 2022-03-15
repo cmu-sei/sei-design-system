@@ -125,6 +125,13 @@ export default defineComponent({
      * Allows for code execution prior to opening the tooltip.
      * 
      * This overrides the "before-open" event if set.
+     * 
+     * Unlike the "before-open" event, this prop prevents
+     * the tooltip from opening until it is returned.
+     * 
+     * For example, this can prevent the tooltip from opening
+     * until a call to a backend API populates data within
+     * the tooltip's default slot.
      */
     beforeOpen: {
       type: Function,
@@ -134,6 +141,12 @@ export default defineComponent({
      * Allows for code execution prior to closing the tooltip.
      * 
      * This overrides the "before-close" event if set.
+     * 
+     * Unlike the "before-close" event, this prop prevents
+     * the tooltip from closing until it is returned.
+     * 
+     * For example, this can prevent the tooltip from closing
+     * until a call to a backend API completes.
      */
     beforeClose: {
       type: Function,
