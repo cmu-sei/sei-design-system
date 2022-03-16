@@ -541,11 +541,11 @@ export default defineComponent({
         input: "",
       },
       calendar: {
-        // date: { start: null, end: null },
-        date: new Date('03/23/2001'),
+        date: { start: null, end: null },
+        // date: new Date('03/23/2001'),
         max: null,
         min: null,
-        mode: 'date',
+        mode: 'dateTime',
         size: 'md'
       },
       paginator: {

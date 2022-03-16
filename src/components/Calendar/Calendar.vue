@@ -248,7 +248,6 @@
       >
         <div
           class="uppercase text-sm text-gray-500 mb-2"
-          :class="{ 'opacity-50': !dateSelectionIsComplete}"
         >
           <template v-if="date && date instanceof Date">
             {{ formatDate(date, 'eee MMM dd yyyy') }}
@@ -267,7 +266,6 @@
             aria-hidden="true"
             role="img"
             class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-            :class="{ 'opacity-50': !dateSelectionIsComplete}"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
@@ -280,7 +278,7 @@
           </svg>
           <select
             v-model="startTimeHour"
-            :disabled="!startTimeHour || !dateSelectionIsComplete"
+            :disabled="!startTimeHour"
             class="form-control form-control-sm"
             @change="changeTime('hour', ($event.target as HTMLSelectElement).value)"
           >
@@ -294,7 +292,7 @@
           <span class="my-auto">:</span>
           <select
             v-model="startTimeMinutes"
-            :disabled="!startTimeMinutes || !dateSelectionIsComplete"
+            :disabled="!startTimeMinutes"
             class="form-control form-control-sm"
             @change="changeTime('minutes', ($event.target as HTMLSelectElement).value)"
           >
@@ -307,7 +305,7 @@
           </select>
           <select
             v-model="startTimeMeridian"
-            :disabled="!startTimeMeridian || !dateSelectionIsComplete"
+            :disabled="!startTimeMeridian"
             class="form-control form-control-sm"
             @change="changeTime('meridian', ($event.target as HTMLSelectElement).value)"
           >
@@ -326,7 +324,6 @@
       >
         <div
           class="uppercase text-sm text-gray-500 mb-2"
-          :class="{ 'opacity-50': !dateSelectionIsComplete}"
         >
           <template v-if="date && !(date instanceof Date) && date.end instanceof Date">
             {{ formatDate(date.end, 'eee MMM dd yyyy') }}
@@ -342,7 +339,6 @@
             aria-hidden="true"
             role="img"
             class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-            :class="{ 'opacity-50': !dateSelectionIsComplete}"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
@@ -355,7 +351,7 @@
           </svg>
           <select
             v-model="endTimeHour"
-            :disabled="!endTimeHour || !dateSelectionIsComplete"
+            :disabled="!endTimeHour"
             class="form-control form-control-sm"
             @change="changeTime('hour', ($event.target as HTMLSelectElement).value, true)"
           >
@@ -369,7 +365,7 @@
           <span class="my-auto">:</span>
           <select
             v-model="endTimeMinutes"
-            :disabled="!endTimeMinutes || !dateSelectionIsComplete"
+            :disabled="!endTimeMinutes"
             class="form-control form-control-sm"
             @change="changeTime('minutes', ($event.target as HTMLSelectElement).value, true)"
           >
@@ -382,7 +378,7 @@
           </select>
           <select
             v-model="endTimeMeridian"
-            :disabled="!endTimeMeridian || !dateSelectionIsComplete"
+            :disabled="!endTimeMeridian"
             class="form-control form-control-sm"
             @change="changeTime('meridian', ($event.target as HTMLSelectElement).value, true)"
           >
@@ -413,7 +409,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format } from 'date-fns'
+import { isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
 import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
 
 const props = defineProps({
@@ -686,17 +682,6 @@ const canGoToNextMonth = computed(() => {
 const formatDate = (date: Date, output: string) => format(date, output)
 const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 
-const dateSelectionIsComplete = computed(() => {
-  if (!date.value) return false
-  if (date.value && date.value instanceof Date) {
-    return true
-  }
-  if (date.value && !(date.value instanceof Date) && date.value.start instanceof Date && date.value.end instanceof Date) {
-    return true
-  }
-  return false
-})
-
 const setModelValueDate = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (isRange.value && date.value) {
@@ -711,10 +696,16 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
         (isDate(date.value.start) && date.value.start instanceof Date)
       ) {
         const start = date.value.start
-        const end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
-        date.value = {
-          start: min([start, end]),
-          end: max([start, end])
+        const end = endOfDay(setDate(month, day))
+        if (isSameDay(start, end) && isAfter(end, start)) {
+          date.value = { start, end }
+        } else {
+          const minDate = min([start, end])
+          const maxDate = max([start, end])
+          date.value = {
+            start: isEqual(start, minDate) ? minDate : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0),
+            end: maxDate
+          }
         }
       } else {
         (date.value as CalendarRange).end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
