@@ -943,7 +943,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .sds-multiselect {
-  @apply block relative text-gray-900 bg-white border-gray-500 bg-opacity-50 border-opacity-50 border rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-10;
+  @apply block relative text-gray-900 bg-white border-gray-500 bg-opacity-75 border-opacity-75 border rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-10;
 }
 
 .sds-multiselect.active,
