@@ -97,7 +97,7 @@
       </template>
       <div>
         <section class="mb-4">
-          <sds-popover :before-open="beforeOpenPopover">
+          <sds-popover :will-open="willOpen">
             <template #trigger>
               <sds-link
                 href="#"
@@ -230,7 +230,7 @@
           count-characters
         />
 
-        <sds-tooltip>
+        <sds-tooltip :will-open="willOpen">
           <template #trigger>
             <button
               class="btn btn-blue"
@@ -719,9 +719,10 @@ export default defineComponent({
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
     },
-    async beforeOpenPopover() {
-      await new Promise(r => setTimeout(r, 2000))
-      console.log('im here')
+    async willOpen(open: Function, cancel: Function) {
+      console.log('Pause for 3 seconds to get fake api request')
+      await new Promise(r => setTimeout(r, 3000))
+      return open()
     }
   },
 });

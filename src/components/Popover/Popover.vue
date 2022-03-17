@@ -123,31 +123,62 @@ export default defineComponent({
     /**
      * Allows for code execution prior to opening the popover.
      * 
-     * This overrides the "before-open" event if set to a function.
+     * Unlike the `before-open` event, this prop prevents
+     * the popover from opening until its `open()` callback is called.
      * 
-     * Unlike the "before-open" event, this prop prevents
-     * the popover from opening until it is returned.
+     * A `cancel()` callback can be called as well to cancel
+     * the opening process.
      * 
      * For example, this can prevent the popover from opening
-     * until a call to a backend API populates data within
-     * the popover's default slot.
+     * until a call to a backend API completes.
+     * 
+     * Example definition in parent component:
+     * 
+     * ```
+     * async willOpen(open, cancel) {
+     *  try {
+     *    await SOME_API_CALL_RESPONSE()
+     *    // let the open process continue
+     *    open()
+     *  } catch (e) {
+     *    // cancel the open process
+     *    cancel()
+     *  }
+     * }
+     * ```
      */
-    beforeOpen: {
+    willOpen: {
       type: Function,
       default: null
     },
     /**
      * Allows for code execution prior to closing the popover.
      * 
-     * This overrides the "before-close" event if set to a function.
+     * Unlike the `before-close` event, this prop prevents
+     * the popover from closing until its `close()` callback is called.
      * 
-     * Unlike the "before-close" event, this prop prevents
-     * the popover from closing until it is returned.
+     * A `cancel()` callback can be called as well to cancel
+     * the opening process.
      * 
      * For example, this can prevent the popover from closing
      * until a call to a backend API completes.
+     * 
+     * Example definition in parent component:
+     * 
+     * ```
+     * async willClose(close, cancel) {
+     *  try {
+     *    await SOME_API_CALL_RESPONSE()
+     *    // let the close process continue
+     *    close()
+     *  } catch (e) {
+     *    // cancel the close process
+     *    cancel()
+     *  }
+     * }
+     * ```
      */
-    beforeClose: {
+    willClose: {
       type: Function,
       default: null
     }
@@ -156,7 +187,9 @@ export default defineComponent({
   data () {
     return {
       timer: null as null | ReturnType<typeof setTimeout>,
-      hovered: false
+      hovered: false,
+      isOpening: false,
+      isClosing: false
     }
   },
   computed: {
@@ -202,37 +235,59 @@ export default defineComponent({
        */
       this.$emit('close')
     },
-    async handleOpen(open: Function) {
+    async fireOpen(open: Function) {
+      if (this.willOpen) {
+        this.isOpening = true
+        this.willOpen(() => {
+          if (this.isOpening) {
+            open()
+            this.isOpening = false
+          }
+        }, () => {
+          this.isOpening = false
+          clearTimeout(this.timer as ReturnType<typeof setTimeout>)
+        })
+      } else {
+        open()
+      }
+    },
+    async fireClose(close: Function) {
+      if (this.willClose) {
+        this.isClosing = true
+        this.willClose(() => {
+          if (this.isClosing) {
+            close()
+            this.isClosing = false
+          }
+        }, () => {
+          this.isClosing = false
+          clearTimeout(this.timer as ReturnType<typeof setTimeout>)
+        })
+      } else {
+        close()
+      }
+    },
+    handleOpen(open: Function) {
       if (this.disabled) return
+      this.isClosing = false
       clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (!this.hovered) {
-        if (this.beforeOpen) {
-          await this.beforeOpen()
-        } else {
-          /**
-           * Emitted before openDelay triggers the popover to open.
-           *
-           * This event is overridden by the beforeOpen prop.
-           */
-          this.$emit('before-open')
-        }
-        this.timer = setTimeout(() => open(), this.openDelay)
+        /**
+         * Emitted before openDelay triggers the popover to open.
+         */
+        this.$emit('before-open')
+        this.timer = setTimeout(() => this.fireOpen(open), this.openDelay)
       }
     },
     async handleClose(close: Function) {
+      this.isOpening = false
       clearTimeout(this.timer as ReturnType<typeof setTimeout>)
       if (this.hovered) {
-        if (this.beforeClose) {
-          await this.beforeClose()
-        } else {
-          /**
-           * Emitted before closeDelay triggers the popover to close.
-           * 
-           * This event is overridden by the beforeClose prop.
-           */
-          this.$emit('before-close')
-        }
-        this.timer = setTimeout(() => close(), this.closeDelay)
+        /**
+         * Emitted before closeDelay triggers the popover to close.
+         */
+        this.$emit('before-close')
+        this.timer = setTimeout(() => this.fireClose(close), this.closeDelay)
       }
     }
   }
