@@ -13,6 +13,17 @@
     <template #suite-header>
       Suite header content
     </template>
+    <!-- <template #sidebar-navigation-item-icon="{ item, classList }">
+      <img
+        v-if="item.iconUrl"
+        :src="item.iconUrl"
+        :class="classList"
+      >
+      <div
+        v-else
+        :class="classList"
+      />
+    </template> -->
     <template #page-header>
       Page header content
       <!-- <sds-button variant="default">
@@ -79,24 +90,62 @@ export default defineComponent({
       enableCollapsibleSidebar: true,
       sidebarNavigationItems: [
         { id: 1, title: 'Dashboard', active: true, href: '#' },
-        { id: 2, title: 'About SEI', active: false, href: '#' },
-        { id: 3, title: 'News & Events', active: false, href: '#' },
-        { id: 4, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
-        { id: 5, title: 'Research & Projects', active: false, href: '#', badgeCount: 999 },
-        { id: 6, title: 'HR & Benefits', active: false, href: '#' },
-        { id: 7, title: 'Policies', active: false, href: '#' },
-        { id: 8, title: 'Workplace Services', active: false, href: '#' },
-        { id: 9, title: 'Help & FAQ', active: false, href: '#' },
+        { 
+          id: 2, 
+          title: 'About SEI',
+          iconUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png',
+          items: [
+            { id: 1, title: 'First item', active: false, href: '#' },
+            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 22 },
+            { id: 3, title: 'Third item', active: false, href: '#' },
+            { id: 4, title: 'Fourth item', active: false, href: '#' },
+          ]
+        },
+        { 
+          id: 3, 
+          title: 'Another one',
+          items: [
+            { id: 1, title: 'First item', active: false, href: '#' },
+            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 3 },
+            { id: 3, title: 'Third item', active: false, href: '#', badgeCount: 2 },
+            { id: 4, title: 'Fourth item', active: false, href: '#' },
+          ]
+        },
+        { id: 4, title: 'News & Events', active: false, href: '#' },
+        { id: 5, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
+        { id: 6, title: 'Research & Projects', active: false, href: '#', badgeCount: 999 },
+        { id: 7, title: 'HR & Benefits', active: false, href: '#' },
+        { id: 8, title: 'Policies', active: false, href: '#' },
+        { id: 9, title: 'Workplace Services', active: false, href: '#' },
+        { id: 10, title: 'Help & FAQ', active: false, href: '#' },
       ]
     }
   },
   methods: {
-    navigate({ item, event }: any) {
+    navigate({ group, item, event }: any) {
       event.preventDefault()
       this.sidebarNavigationItems = this.sidebarNavigationItems.map((i) => {
-        i.active = i.id === item.id
+        if (group) {
+          if (group.id === i.id) {
+            i.items && i.items.forEach((x) => {
+              x.active = x.id === item.id
+              return x
+            })
+          } else {
+            i.active = false
+            i.items && i.items.forEach((x) => {
+              x.active = false
+            })
+          }
+        } else {
+          i.items && i.items.forEach((x) => {
+            x.active = false
+          })
+          i.active = i.id === item.id
+        }
         return i
       })
+      console.log(item)
     }
   }
 });

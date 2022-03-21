@@ -10,7 +10,7 @@
             v-if="appSuiteUrl"
             :href="appSuiteUrl"
             class="text-xl flex hover:underline"
-            @click="navigate({ title: appSuite, href: appSuiteUrl }, $event)"
+            @click="navigate(null, { title: appSuite, href: appSuiteUrl }, $event)"
           >
             <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
@@ -55,7 +55,7 @@
             <span
               v-if="appName && !hideAppNameInMobileHeader"
               class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
-              :class="[appSuite ? 'ml-1': '']"
+              :class="[appSuite ? 'ml-1' : '']"
             >{{ appName }}</span>
           </span>
         </button>
@@ -121,13 +121,13 @@
                   classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
-                    v-if="!hidePlaceholderIcons"
+                    v-if="!hideAppIcon"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
                     <template v-if="appUrl">
                       <a
                         :href="appUrl"
-                        @click="navigate({ title: appName, href: appUrl }, $event)"
+                        @click="navigate(null, { title: appName, href: appUrl }, $event)"
                       >
                         <img
                           v-if="appIconUrl"
@@ -151,7 +151,6 @@
                         class="w-8 h-8"
                       >
                       <svg
-                        v-else
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 576 512"
                         class="w-8 h-8 fill-current text-blue-400"
@@ -163,7 +162,7 @@
                   v-if="appUrl"
                   :href="appUrl"
                   class="text-lg font-bold my-auto hover:underline"
-                  @click="navigate({ title: appName, href: appUrl }, $event)"
+                  @click="navigate(null, { title: appName, href: appUrl }, $event)"
                 >
                   {{ appName }}
                 </a>
@@ -184,51 +183,149 @@
                   :items="sidebarNavigationItems"
                   :collapsed="collapsed"
                 >
-                  <a
+                  <template
                     v-for="item in sidebarNavigationItems"
                     :key="item.id"
-                    :href="item.href"
-                    class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
-                    :class="{
-                      'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
-                      'text-white border-danger pointer-events-none': item.active
-                    }"
-                    @click="navigate(item, $event)"
                   >
-                    <!-- @slot Mobile sidebar navigation item icon content. @binding item, classList -->
-                    <slot
-                      name="mobile-sidebar-navigation-item-icon"
-                      :item="item"
-                      classList="inline-block w-8 h-8 my-auto flex-shrink-0"
-                    >
-                      <span
-                        v-if="!hidePlaceholderIcons"
-                        class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                    <template v-if="item.items">
+                      <button
+                        :href="item.href"
+                        class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
+                        :class="{
+                          'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
+                          'text-white border-danger': itemsGroupIsActive(item) && !showItemsGroup(item)
+                        }"
+                        @click="toggleItemsGroup(item)"
                       >
-                        <img
-                          v-if="item.iconUrl"
-                          :src="item.iconUrl"
-                          :alt="item.title"
-                          class="w-8 h-8"
+                        <!-- @slot Mobile sidebar navigation item icon content. @binding item, classList -->
+                        <slot
+                          name="mobile-sidebar-navigation-item-icon"
+                          :item="item"
+                          classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
+                          <span
+                            v-if="!hideSidebarIcons"
+                            class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          >
+                            <img
+                              v-if="item.iconUrl"
+                              :src="item.iconUrl"
+                              :alt="item.title"
+                              class="w-8 h-8"
+                            >
+                            <svg
+                              v-else
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                              class="w-8 h-8 fill-current"
+                            ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
+                          </span>
+                        </slot>
+                        <span class="inline-block my-auto">{{ item.title }}</span>
+                        <span
+                          v-if="itemsGroupBadgeCount(item) && !showItemsGroup(item)"
+                          class="inline-block my-auto"
+                        >
+                          <span
+                            class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                          >{{ itemsGroupBadgeCount(item) }}</span>
+                        </span>
                         <svg
-                          v-else
+                          class="absolute w-4 h-4 right-2 top-1/3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 512 512"
-                          class="w-8 h-8 fill-current"
-                        ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
-                      </span>
-                    </slot>
-                    <span class="inline-block my-auto">{{ item.title }}</span>
-                    <span
-                      v-if="item.badgeCount"
-                      class="inline-block my-auto"
+                        >
+                          <path
+                            v-if="showItemsGroup(item)"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="3"
+                            d="M19 9l-7 7-7-7"
+                          />
+                          <path
+                            v-else
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="3"
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </button>
+                      <template v-if="showItemsGroup(item)">
+                        <a
+                          v-for="subitem in item.items"
+                          :key="subitem.id"
+                          :href="subitem.href"
+                          class="flex relative gap-2 px-4 py-2 border-l-8"
+                          :class="{
+                            'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
+                            'text-white border-danger pointer-events-none': subitem.active,
+                            'pl-12': !hideSidebarIcons,
+                            'pl-8': hideSidebarIcons
+                          }"
+                          @click="navigate(item, subitem, $event)"
+                        >
+                          <span
+                            class="inline-block my-auto"
+                          >{{ subitem.title }}</span>
+                          <span
+                            v-if="subitem.badgeCount"
+                            class="inline-block my-auto"
+                          >
+                            <span
+                              class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                            >{{ subitem.badgeCount }}</span>
+                          </span>
+                        </a>
+                      </template>
+                    </template>
+                    <a
+                      v-else
+                      :href="item.href"
+                      class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
+                      :class="{
+                        'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
+                        'text-white border-danger pointer-events-none': item.active
+                      }"
+                      @click="navigate(null, item, $event)"
                     >
+                      <!-- @slot Mobile sidebar navigation item icon content. @binding item, classList -->
+                      <slot
+                        name="mobile-sidebar-navigation-item-icon"
+                        :item="item"
+                        classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                      >
+                        <span
+                          v-if="!hideSidebarIcons"
+                          class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                        >
+                          <img
+                            v-if="item.iconUrl"
+                            :src="item.iconUrl"
+                            :alt="item.title"
+                            class="w-8 h-8"
+                          >
+                          <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            class="w-8 h-8 fill-current"
+                          ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
+                        </span>
+                      </slot>
+                      <span class="inline-block my-auto">{{ item.title }}</span>
                       <span
-                        class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
-                      >{{ item.badgeCount }}</span>
-                    </span>
-                  </a>
+                        v-if="item.badgeCount"
+                        class="inline-block my-auto"
+                      >
+                        <span
+                          class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                        >{{ item.badgeCount }}</span>
+                      </span>
+                    </a>
+                  </template>
                 </slot>
               </nav>
             </div>
@@ -257,13 +354,13 @@
                   classList="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
-                    v-if="!hidePlaceholderIcons"
+                    v-if="!hideAppIcon"
                     class="block w-8 h-8 my-auto flex-shrink-0"
                   >
                     <template v-if="appUrl">
                       <a
                         :href="appUrl"
-                        @click="navigate({ title: appName, href: appUrl }, $event)"
+                        @click="navigate(null, { title: appName, href: appUrl }, $event)"
                       >
                         <img
                           v-if="appIconUrl"
@@ -287,7 +384,6 @@
                         class="w-8 h-8"
                       >
                       <svg
-                        v-else
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 576 512"
                         class="w-8 h-8 fill-current text-blue-400"
@@ -300,7 +396,7 @@
                   :href="appUrl"
                   class="text-lg font-bold my-auto hover:underline"
                   :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
-                  @click="navigate({ title: appName, href: appUrl }, $event)"
+                  @click="navigate(null, { title: appName, href: appUrl }, $event)"
                 >
                   {{ appName }}
                 </a>
@@ -327,7 +423,117 @@
                   v-for="item in sidebarNavigationItems"
                   :key="item.id"
                 >
+                  <template v-if="item.items">
+                    <sds-tooltip
+                      placement="right"
+                      :disabled="!collapsed"
+                    >
+                      <template #trigger>
+                        <button
+                          :href="item.href"
+                          class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
+                          :class="{
+                            'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
+                            'text-white border-danger': itemsGroupIsActive(item) && (!showItemsGroup(item) || collapsed)
+                          }"
+                          @click="toggleItemsGroup(item)"
+                        >
+                          <!-- @slot Sidebar navigation item icon content. @binding item, classList -->
+                          <slot
+                            name="sidebar-navigation-item-icon"
+                            :item="item"
+                            classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          >
+                            <span
+                              v-if="!hideSidebarIcons"
+                              class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                            >
+                              <img
+                                v-if="item.iconUrl"
+                                :src="item.iconUrl"
+                                :alt="item.title"
+                                class="w-8 h-8"
+                              >
+                              <svg
+                                v-else
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                                class="w-8 h-8 fill-current"
+                              ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
+                            </span>
+                          </slot>
+                          <span
+                            v-if="!collapsed"
+                            class="inline-block my-auto"
+                          >{{ item.title }}</span>
+                          <span
+                            v-if="itemsGroupBadgeCount(item) && !showItemsGroup(item)"
+                            class="inline-block my-auto"
+                            :class="{
+                              'absolute bottom-1 right-1': collapsed
+                            }"
+                          >
+                            <span
+                              class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                            >{{ itemsGroupBadgeCount(item) }}</span>
+                          </span>
+                          <svg
+                            v-if="!collapsed"
+                            class="absolute w-4 h-4 right-2 top-1/3"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              v-if="showItemsGroup(item)"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="3"
+                              d="M19 9l-7 7-7-7"
+                            />
+                            <path
+                              v-else
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="3"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                        </button>
+                      </template>
+                      <p>{{ item.title }}</p>
+                    </sds-tooltip>
+                    <template v-if="!collapsed && showItemsGroup(item)">
+                      <a
+                        v-for="subitem in item.items"
+                        :key="subitem.id"
+                        :href="subitem.href"
+                        class="flex relative gap-2 px-4 py-2 border-l-8"
+                        :class="{
+                          'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
+                          'text-white border-danger pointer-events-none': subitem.active,
+                          'pl-12': !hideSidebarIcons,
+                          'pl-8': hideSidebarIcons
+                        }"
+                        @click="navigate(item, subitem, $event)"
+                      >
+                        <span
+                          class="inline-block my-auto"
+                        >{{ subitem.title }}</span>
+                        <span
+                          v-if="subitem.badgeCount"
+                          class="inline-block my-auto"
+                        >
+                          <span
+                            class="flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full bg-danger"
+                          >{{ subitem.badgeCount }}</span>
+                        </span>
+                      </a>
+                    </template>
+                  </template>
                   <sds-tooltip
+                    v-else
                     placement="right"
                     :disabled="!collapsed"
                   >
@@ -339,7 +545,7 @@
                           'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100  dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !item.active,
                           'text-white border-danger pointer-events-none': item.active
                         }"
-                        @click="navigate(item, $event)"
+                        @click="navigate(null, item, $event)"
                       >
                         <!-- @slot Sidebar navigation item icon content. @binding item, classList -->
                         <slot
@@ -348,7 +554,7 @@
                           classList="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
                           <span
-                            v-if="!hidePlaceholderIcons"
+                            v-if="!hideSidebarIcons"
                             class="inline-block w-8 h-8 my-auto flex-shrink-0"
                           >
                             <img
@@ -523,6 +729,7 @@ interface LayoutAppSidebarNavItem {
   title: string
   badgeCount?: number
   iconUrl?: string
+  items?: LayoutAppSidebarNavItem[]
 }
 
 export default defineComponent({
@@ -597,16 +804,19 @@ export default defineComponent({
      */
     sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
     /**
-     * Determines whether to hide the default icons.
-     *
-     * Set this to **false** if you are using your own icons as well.
+     * Determines whether to hide the app icon.
      */
-    hidePlaceholderIcons: { type: Boolean, default: false },
+    hideAppIcon: { type: Boolean, default: false },
+    /**
+     * Determines whether to hide the icons in the sidebar.
+     */
+    hideSidebarIcons: { type: Boolean, default: false },
   },
   emits: ['update:modelValue', 'navigate'],
   data() {
     return {
-      showMobileMenu: false
+      showMobileMenu: false,
+      openItemsGroups: [] as LayoutAppSidebarNavItem[]
     }
   },
   computed: {
@@ -646,6 +856,11 @@ export default defineComponent({
         document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
         (this.$refs.mobileMenuOpenBtn as HTMLButtonElement).focus()
       }
+    },
+    collapsed(value) {
+      if (value) {
+        this.openItemsGroups = []
+      }
     }
   },
   mounted() {
@@ -660,18 +875,44 @@ export default defineComponent({
     document.removeEventListener("keyup", this.handleDocumentKeyUp);
   },
   methods: {
-    hasSlot (title: string) {
+    itemsGroupBadgeCount(item: LayoutAppSidebarNavItem) {
+      if (!item.items) { return null }
+      let count = 0
+      item.items.forEach(i => {
+        if (i.badgeCount) {
+          count = count + i.badgeCount
+        }
+      })
+      return count
+    },
+    itemsGroupIsActive(item: LayoutAppSidebarNavItem) {
+      return item.items && item.items.filter(i => i.active).length
+    },
+    showItemsGroup(item: LayoutAppSidebarNavItem) {
+      return this.openItemsGroups.filter(i => i.id === item.id).length
+    },
+    toggleItemsGroup(item: LayoutAppSidebarNavItem) {
+      this.collapsed = false
+      if (this.showItemsGroup(item)) {
+        this.openItemsGroups = this.openItemsGroups.filter(
+          i => i.id !== item.id
+        )
+      } else {
+        this.openItemsGroups.push(item)
+      }
+    },
+    hasSlot(title: string) {
       return !!this.$slots[title]
     },
-    navigate(item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
+    navigate(group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
       // Close the mobile menu
       this.showMobileMenu = false
       /**
        * Emmited when a navigation menu item has been clicked.
        *
-       * Sends a payload of the clicked item and the click event: { item, event }
+       * Sends a payload of the clicked item and the click event: { group, item, event }
        */
-      this.$emit('navigate', { item, event })
+      this.$emit('navigate', { group, item, event })
     },
     toggleCollapse() {
       if (!this.enableCollapsibleSidebar) {

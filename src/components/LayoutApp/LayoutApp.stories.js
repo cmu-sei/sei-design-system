@@ -43,9 +43,9 @@ const Template = (args) => ({
     }
   },
   methods: {
-    navigate({ item, event }) {
+    navigate({ group, item, event }) {
       event.preventDefault()
-      this.navigateAction({item, event })
+      this.navigateAction({ group, item, event })
     },
     navigateAction: action('navigate')
   }
@@ -58,9 +58,25 @@ Default.args = {
   pageTitle: 'About',
   sidebarNavigationItems: [
     { id: 1, title: 'About', active: true, href: '#' },
-    { id: 2, title: 'Visual Language', active: false, href: '#' },
+    {
+      id: 2,
+      title: 'Visual Language',
+      items: [
+        { id: 1, title: 'Color', active: false, href: '#', badgeCount: 2 },
+        { id: 2, title: 'Grid', active: false, href: '#', badgeCount: 3 },
+        { id: 3, title: 'Typography', active: false, href: '#' },
+      ]
+    },
     { id: 3, title: 'Components', active: false, href: '#' },
-    { id: 4, title: 'Downloads', active: false, href: '#', badgeCount: 9 },
-    { id: 9, title: 'Help & Support', active: false, href: '#' },
+    {
+      id: 5,
+      title: 'Downloads',
+      items: [
+        { id: 1, title: 'Typefaces', active: false, href: '#' },
+        { id: 2, title: 'UI Kit', active: false, href: '#' },
+        { id: 3, title: 'Unitmarks', active: false, href: '#' },
+      ]
+    },
+    { id: 6, title: 'Help & Support', active: false, href: '#' },
   ]
 };
