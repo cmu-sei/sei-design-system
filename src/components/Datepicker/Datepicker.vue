@@ -18,7 +18,11 @@
             type="button"
             tabindex="-1"
             class="input-group-text fill-current"
-            :class="{ 'p-1': size === 'sm' }"
+            :class="{
+              'p-1': size === 'sm',
+              'pointer-events-none opacity-50': disabled || readonly
+            }"
+            :disabled="disabled || readonly"
             @click="showDropdown = !showDropdown; ($refs.startDateInput as HTMLElement).focus()"
           >
             <svg
@@ -46,6 +50,8 @@
             :class="{ 'px-1': size === 'sm' }"
             :title="`${placeholder}`"
             :placeholder="placeholder"
+            :readonly="readonly"
+            :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
             @focusin="showDropdown = true"
@@ -61,6 +67,9 @@
           <div
             v-if="!hideArrow"
             class="flex my-auto flex-shrink-0"
+            :class="{
+              'opacity-50': disabled || readonly
+            }"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +97,11 @@
               type="button"
               tabindex="-1"
               class="input-group-text fill-current"
-              :class="{ 'p-1': size === 'sm' }"
+              :class="{
+                'p-1': size === 'sm',
+                'pointer-events-none opacity-50': disabled || readonly
+              }"
+              :disabled="disabled || readonly"
               @click="showDropdown = !showDropdown; ($refs.endDateInput as HTMLElement).focus()"
             >
               <svg
@@ -116,6 +129,8 @@
               :class="{ 'px-1': size === 'sm' }"
               :title="`${placeholder}`"
               :placeholder="placeholder"
+              :readonly="readonly"
+              :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
               @focusin="showDropdown = true"
@@ -201,6 +216,14 @@ export default defineComponent({
      * Determines if the component is required.
      */
     required: { type: Boolean, default: false },
+    /**
+     * Determines if the component is readonly.
+     */
+    readonly: { type: Boolean, default: false },
+    /**
+     * Determines if the component is disabled.
+     */
+    disabled: { type: Boolean, default: false },
   },
   emits: ['update:modelValue'],
   data() {
