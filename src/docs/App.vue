@@ -39,8 +39,8 @@
         <sds-search-box variant="danger" />
       </div> -->
     </template>
-    <components />
     <examples />
+    <components />
     <template #footer-top>
       <div class="px-4 py-2 border">
         Testing
