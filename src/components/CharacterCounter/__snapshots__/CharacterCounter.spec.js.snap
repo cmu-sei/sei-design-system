@@ -1,0 +1,9 @@
+// Vitest Snapshot v1
+
+exports[`CharacterCounter > should match its default snapshot 1`] = `
+<div
+  class=""
+>
+  0
+</div>
+`;

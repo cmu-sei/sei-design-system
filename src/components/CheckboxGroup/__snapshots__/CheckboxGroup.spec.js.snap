@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`CheckboxGroup > should match its default snapshot 1`] = `
+<div
+  class="focus:outline-none"
+  id=""
+  role="checkboxgroup"
+  tabindex="-1"
+>
+  
+  
+</div>
+`;

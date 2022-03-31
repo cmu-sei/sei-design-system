@@ -1,0 +1,32 @@
+// Vitest Snapshot v1
+
+exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
+<div
+  class="flex flex-col w-full min-h-screen text-gray-900 bg-white"
+>
+  <!-- @slot Header content. -->
+  
+  <layout-sei-external-header-stub
+    page="[object Object]"
+  />
+  
+  <!-- @slot Masthead content. -->
+  <!--v-if-->
+  <main
+    class="flex-grow"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="container p-4 mx-auto md:p-8"
+      >
+        <!-- @slot Page content. -->
+        
+        
+      </div>
+    </div>
+  </main>
+  <layout-sei-external-footer-stub />
+</div>
+`;
