@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`Modal > should match its default snapshot 1`] = `
+<transition-stub>
+  <!--v-if-->
+</transition-stub>
+`;

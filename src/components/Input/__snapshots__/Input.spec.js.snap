@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`Input > should match its default snapshot 1`] = `
+<div>
+  <input
+    class="form-control"
+    maxlength="524288"
+    placeholder=""
+    type="text"
+  />
+  <!--v-if-->
+</div>
+`;

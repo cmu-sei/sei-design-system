@@ -1,0 +1,16 @@
+// Vitest Snapshot v1
+
+exports[`Datepicker > should match its default snapshot 1`] = `
+<dropdown-stub
+  animated="false"
+  btnclass="w-full"
+  class="w-full"
+  hidecaret="false"
+  hover="false"
+  hoverdelay="100"
+  menuclass="my-1 bg-white border rounded-md shadow-lg w-auto dark:border-gray-500 dark:bg-gray-700"
+  modelvalue="false"
+  placement="auto"
+  title=""
+/>
+`;

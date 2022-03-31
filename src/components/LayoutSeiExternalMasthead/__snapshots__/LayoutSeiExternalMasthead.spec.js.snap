@@ -1,0 +1,15 @@
+// Vitest Snapshot v1
+
+exports[`LayoutSeiExternalMasthead > should match its default snapshot 1`] = `
+<div
+  class="py-8 bg-white"
+>
+  <div
+    class="container px-4 mx-auto md:px-8"
+  >
+    
+    <!--v-if-->
+    
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`RadioGroup > should match its default snapshot 1`] = `
+<div
+  class="focus:outline-none"
+  id=""
+  role="radiogroup"
+  tabindex="-1"
+>
+  
+  
+</div>
+`;
