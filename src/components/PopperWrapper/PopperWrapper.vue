@@ -90,7 +90,6 @@ export default defineComponent({
     v-uid
     class="inline-block"
   >
-    {{ $attrs.triggerId }}
     <slot
       :is-open="isOpen"
       :open="open"
