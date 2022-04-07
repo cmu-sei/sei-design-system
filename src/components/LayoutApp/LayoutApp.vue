@@ -118,7 +118,7 @@
                 <!-- @slot App icon content. @binding classList -->
                 <slot
                   name="app-icon"
-                  classList="block w-8 h-8 my-auto flex-shrink-0"
+                  class-list="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
                     v-if="!hideAppIcon"
@@ -201,7 +201,7 @@
                         <slot
                           name="mobile-sidebar-navigation-item-icon"
                           :item="item"
-                          classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
@@ -295,7 +295,7 @@
                       <slot
                         name="mobile-sidebar-navigation-item-icon"
                         :item="item"
-                        classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                        class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
                       >
                         <span
                           v-if="!hideSidebarIcons"
@@ -351,7 +351,7 @@
                 <!-- @slot App icon content. @binding classList -->
                 <slot
                   name="app-icon"
-                  classList="block w-8 h-8 my-auto flex-shrink-0"
+                  class-list="block w-8 h-8 my-auto flex-shrink-0"
                 >
                   <span
                     v-if="!hideAppIcon"
@@ -442,7 +442,7 @@
                           <slot
                             name="sidebar-navigation-item-icon"
                             :item="item"
-                            classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                            class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
                           >
                             <span
                               v-if="!hideSidebarIcons"
@@ -551,7 +551,7 @@
                         <slot
                           name="sidebar-navigation-item-icon"
                           :item="item"
-                          classList="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
@@ -647,7 +647,7 @@
               <slot
                 name="page-title"
                 :collapsed="collapsed"
-                classList="text-2xl font-semibold text-gray-700 dark:text-gray-100"
+                class-list="text-2xl font-semibold text-gray-700 dark:text-gray-100"
               >
                 <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
                   {{ pageTitle }}

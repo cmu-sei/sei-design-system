@@ -133,7 +133,7 @@
         <!-- @slot Loading template content. @binding loadingMsg -->
         <slot
           name="loadingTemplate"
-          :loadingMsg="loadingMsg"
+          :loading-msg="loadingMsg"
         >
           {{ loadingMsg }}
         </slot>
@@ -154,7 +154,7 @@
             :option="o"
             :add="add"
             :disabled="disabled"
-            :isSelectedOption="isSelectedOption(o)"
+            :is-selected-option="isSelectedOption(o)"
           >
             {{ o[labelKey] }}
             <template v-if="o.isNewTag && !isSelectedOption(o)">
@@ -170,7 +170,7 @@
         <!-- @slot Default template content. @binding defaultMsg -->
         <slot
           name="defaultTemplate"
-          :defaultMsg="defaultMsg"
+          :default-msg="defaultMsg"
         >
           {{ defaultMsg }}
         </slot>
@@ -182,7 +182,7 @@
         <!-- @slot No results template content. @binding noResultsMsg -->
         <slot
           name="noResultsTemplate"
-          :noResultsMsg="noResultsMsg"
+          :no-results-msg="noResultsMsg"
         >
           {{ noResultsMsg }}
         </slot>
@@ -194,7 +194,7 @@
         <!-- @slot Cannot add results content. @binding cannotAddResultsMsg -->
         <slot
           name="cannotAddResultsTemplate"
-          :cannotAddResultsMsg="cannotAddResultsMsg"
+          :cannot-add-results-msg="cannotAddResultsMsg"
         >
           {{ cannotAddResultsMsg }}
         </slot>
@@ -206,7 +206,7 @@
         <!-- @slot Invalid input content. @binding invalidInputMsg -->
         <slot
           name="invalidInputTemplate"
-          :invalidInputMsg="invalidInputMsg"
+          :invalid-input-msg="invalidInputMsg"
         >
           {{ invalidInputMsg }}
         </slot>
