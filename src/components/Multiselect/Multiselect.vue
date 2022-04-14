@@ -429,7 +429,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Determines whether to show the primary clear button or not.
+     * Determines whether to show the clear field button or not.
      */
     showClear: {
       type: Boolean,

@@ -9,6 +9,7 @@ import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
 import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
+import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsInput from "./Input"
 import SdsLayoutApp from "./LayoutApp";
@@ -59,6 +60,7 @@ const Components: ComponentList = {
   SdsDropdownDivider,
   SdsDropdownHeader,
   SdsDropdownItem,
+  SdsFileUploader,
   SdsFilterByDropdown,
   SdsInput,
   SdsLayoutApp,
@@ -113,6 +115,7 @@ export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
 export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
+export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsInput } from "./Input"
 export { default as SdsLayoutApp } from "./LayoutApp";
