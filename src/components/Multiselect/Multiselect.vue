@@ -7,7 +7,7 @@
       disabled,
       up: dropUp,
       canSearch,
-      showCaret,
+      hideCaret,
       showClear,
       hasTags: !hideTags && selected.length > 0,
       showResults,
@@ -116,7 +116,7 @@
       </svg>
     </button>
     <div
-      v-if="showCaret && !(showClear && selected.length > 0)"
+      v-if="!hideCaret && !(showClear && selected.length > 0)"
       aria-hidden="true"
       class="multiselect-caret"
     />
@@ -422,9 +422,9 @@ export default defineComponent({
       default: 200,
     },
     /**
-     * Determines whether to show the caret or not.
+     * Determines whether to hide the caret or not.
      */
-    showCaret: {
+    hideCaret: {
       type: Boolean,
       default: false,
     },
@@ -634,7 +634,7 @@ export default defineComponent({
               ? (this.$refs["faux-input"] as HTMLElement).clientWidth + 20
               : 0;
           let elWidth = this.$el.clientWidth - 20;
-          if (this.showCaret || (this.showClear && this.selected.length > 0))
+          if (!this.hideCaret || (this.showClear && this.selected.length > 0))
             elWidth = elWidth - 10;
           const width = Math.min(Math.max(fauxInputWidth, minWidth), elWidth);
           this.inputWidth = width + "px";
@@ -1114,7 +1114,7 @@ fieldset[disabled] .sds-multiselect * {
   padding: 2px 4px;
 }
 
-.showCaret .tag-list,
+.hideCaret .tag-list,
 .showClear .tag-list {
   margin-right: 26px;
 }
@@ -1158,7 +1158,7 @@ fieldset[disabled] .sds-multiselect * {
   width: 100%;
 }
 
-.showCaret:not(.hasTags) .tag-list.single {
+.hideCaret:not(.hasTags) .tag-list.single {
   width: auto;
 }
 

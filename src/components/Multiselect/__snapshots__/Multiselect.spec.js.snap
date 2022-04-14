@@ -8,7 +8,7 @@ exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
     </li>
   </ul>
   <!--v-if-->
-  <!--v-if-->
+  <div aria-hidden=\\"true\\" class=\\"multiselect-caret\\" data-v-1cd2ff8a=\\"\\"></div>
   <!--v-if-->
 </div>"
 `;
