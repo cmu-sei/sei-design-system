@@ -373,7 +373,6 @@
           v-model="multiselect.input"
           :selected="multiselect.selected"
           :options="filteredMultiselectOptions"
-          show-caret
           show-clear
           multiple
           taggable
