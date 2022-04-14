@@ -35,7 +35,7 @@
       </button>
     </slot>
     <transition
-      :css="animated"
+      :css="!disableAnimation"
       enter-active-class="transition duration-100 ease-out"
       enter-from-class="transform scale-95 opacity-0"
       enter-to-class="transform scale-100 opacity-100"
@@ -131,9 +131,9 @@ export default defineComponent({
       default: 100,
     },
     /**
-     * Determines whether the dropdown menu is animated when shown/hidden.
+     * Determines whether to disable the animation when the dropdown menu is shown/hidden.
      */
-    animated: {
+    disableAnimation: {
       type: Boolean,
       default: false,
     },

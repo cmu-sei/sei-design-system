@@ -1,13 +1,11 @@
 <template>
   <select
     v-model="localValue"
-    :multiple="multiple"
     :disabled="disabled"
     :readonly="readonly"
     class="form-control"
   >
     <option
-      v-if="!multiple"
       disabled
       value=""
     />
@@ -42,10 +40,6 @@ export default defineComponent({
      * The options for the component. Expects { id, value, text }.
      */
     options: { type: Array as PropType<SelectOption[]>, default: () => [] },
-    /**
-     * Determines if the component can have multiple selections.
-     */
-    multiple: { type: Boolean, default: false },
     /**
      * Disables the component to prevent user interaction.
      */

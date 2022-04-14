@@ -2,9 +2,9 @@
 
 exports[`Datepicker > should match its default snapshot 1`] = `
 <dropdown-stub
-  animated="false"
   btnclass="w-full"
   class="w-full"
+  disableanimation="false"
   hidecaret="false"
   hover="false"
   hoverdelay="100"

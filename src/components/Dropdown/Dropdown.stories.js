@@ -10,7 +10,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A dropdown displays a list of actions or options in a temporary modal menu to allow users to perform an action such as filtering or sorting existing content.',
+        component: 'A dropdown displays a list of options in a temporary modal menu so that a user can make a selection and complete a task such as downloading or exporting.',
       },
     },
   },

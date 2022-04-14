@@ -1,5 +1,27 @@
 <template>
   <div class="guide">
+    <p>File Uploader</p>
+    <div class="p-8 bg-white">
+      <sds-file-uploader
+        accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json"
+        helper-text="Use a JSON, JPG, JPEG, PNG, DOC, DOCX, XLS, XLSX or CSV under 1MB."
+        :allowed-filetypes="[
+          'image/jpeg',
+          'image/png',
+          'text/csv',
+          'application/json',
+          'application/msword',
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'application/vnd.ms-excel',
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ]"
+        :filesize="1"
+        multiple
+      />
+    </div>
+    <div class="p-8 bg-white">
+      <sds-file-uploader />
+    </div>
     <p>Scroll area</p>
     <div class="nav-group">
       <sds-scrollspy
@@ -139,6 +161,7 @@
             btn-class="rounded-none btn btn-black"
             menu-class="h-48 p-4 -ml-6 overflow-auto text-gray-100 bg-gray-900 rounded-b w-224"
             hover
+            disable-animation
             :hover-delay="0"
           >
             <div class="text-sm">
@@ -183,7 +206,6 @@
             :title="`Modal Size: ${modalSize}`"
             btn-class="btn btn-default"
             placement="right"
-            animated
           >
             <sds-dropdown-header> Select the modal's size </sds-dropdown-header>
             <sds-dropdown-divider />
@@ -267,7 +289,6 @@
             v-model="showModalSizeDropdown"
             :title="`Modal Size: ${modalSize}`"
             btn-class="btn btn-default"
-            animated
           >
             <sds-dropdown-header>
               <p class="font-semibold text-gray-500">
