@@ -22,7 +22,8 @@
           @input="handleChange"
           @keydown.down="handleArrows('down')"
           @keydown.up="handleArrows('up')"
-          @keyup.enter.self="handleEnter"
+          @keydown.enter.prevent.self
+          @keyup.enter.prevent.self="handleEnterKeyUp"
           @keyup.esc="handleEsc"
           @blur="resetDropdown"
         >
@@ -390,7 +391,7 @@ export default defineComponent({
       this.$emit("search", this.q);
     },
     // Handle click on dropdown results
-    async handleDropdownClick(result: AutoSuggestResult) {
+    handleDropdownClick(result: AutoSuggestResult) {
       if (this.disabled || this.disableSearch) return;
       this.q = this.formatTerm(result.term);
       this.resetDropdown();
@@ -400,13 +401,15 @@ export default defineComponent({
          */
         this.$emit("result", result);
       }
-      /**
-       * Emitted whenever a search is triggered.
-       */
-      this.$nextTick(() => this.$emit("search", this.q));
+      this.$nextTick(() => {
+        /**
+         * Emitted whenever a search is triggered.
+         */
+        this.$emit("search", this.q)
+      });
     },
     // Handle Enter key logic
-    async handleEnter() {
+    handleEnterKeyUp() {
       if (this.disabled || this.disableSearch) return;
       const result =
         typeof this.results[this.arrowCounter] !== "undefined"
@@ -418,9 +421,17 @@ export default defineComponent({
           : this.originalQ || this.q;
       this.resetDropdown();
       if (result !== null) {
+        /**
+         * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
+         */
         this.$emit("result", result);
       }
-      this.$nextTick(() => this.$emit("search", this.q));
+      this.$nextTick(() => {
+        /**
+         * Emitted whenever a search is triggered.
+         */
+        this.$emit("search", this.q)
+      });
     },
   },
 });
