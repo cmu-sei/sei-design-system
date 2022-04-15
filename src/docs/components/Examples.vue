@@ -426,6 +426,7 @@
             placeholder="Search for a fruit"
             variant="primary"
             use-built-in-highlighting
+            @result="result"
             @search="search"
           />
           <p class="mt-3">
@@ -721,6 +722,9 @@ export default defineComponent({
         .filter((i: any) => i.selected)
         .map((i: any) => i.id)
         .join(", ");
+    },
+    result(result: any) {
+      console.log(result)
     },
     // Perform a search
     search(q: any) {
