@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-dashed border-4 dark:border-gray-700 rounded p-4 space-y-2 relative">
+  <div class="border border-dashed border-2 dark:border-gray-700 rounded p-4 space-y-2 relative">
     <input
       ref="fileInput"
       v-uid
@@ -15,17 +15,7 @@
       <div class="flex gap-2">
         <label
           :for="fileInput?.id"
-          class="btn cursor-pointer z-10"
-          :class="{
-            'btn-default': variant === 'default',
-            'btn-primary': variant === 'primary',
-            'btn-success': variant === 'success',
-            'btn-info': variant === 'info',
-            'btn-warning': variant === 'warning',
-            'btn-danger': variant === 'danger',
-            'btn-light border border-gray-300 dark:border-gray-700': variant === 'light',
-            'btn-dark border border-gray-700 dark:border-gray-300': variant === 'dark',
-          }"
+          class="btn btn-default cursor-pointer z-10"
         >Browse</label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +162,6 @@ const emit = defineEmits(['add', 'remove', 'remove-invalid'])
 
 const props = defineProps({
   /**
-   * Determines the theme color for the component.
-   */
-  variant: { type: String, default: 'light' },
-  /**
    * Determines the form name to use for the upload input field.
    */
   name: { type: String, default: 'sdsFileUploader' },
@@ -275,7 +261,7 @@ const processSingleFile = (file: File) => {
   if (!fileInput.value) return
 
   const dt = new DataTransfer()
-  const filesize = parseInt(((file.size / 1024) / 1024).toFixed(4)) // MB
+  const filesize = parseFloat(((file.size / 1024) / 1024).toFixed(4)) // MB
   const filetype = file.type
   const filetypeCheckSuccessful = (props.allowedFiletypes.length > 0 && props.allowedFiletypes.includes(filetype)) || props.allowedFiletypes.length < 1
   
