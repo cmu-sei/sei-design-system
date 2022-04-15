@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'BETA: A table shows information in columns and rows and can be sorted by the column.',
+        component: 'A table shows information in columns and rows and can be sorted by the column.',
       },
     },
   },
