@@ -336,7 +336,7 @@
         <sds-textarea
           v-model="maxTextarea.input"
           placeholder="Enter text here"
-          :maxlength="200"
+          :maxlength="2000"
           count-characters
         />
         <sds-input
