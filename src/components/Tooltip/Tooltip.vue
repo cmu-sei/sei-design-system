@@ -1,131 +1,93 @@
 <template>
-  <PopperWrapper
-    v-slot="{ isOpen, open, close, triggerId, popperId }"
-    :config="config"
-    @open="handlePopperWrapperOpen"
-    @close="handlePopperWrapperClose"
+  <floating-ui
+    :strategy="strategy"
+    :placement="placement"
+    :disabled="disabled"
+    :will-open="willOpen"
+    :will-close="willClose"
+    :popper-class="`absolute text-xs shadow rounded-lg text-center ${variantClass} ${sizeClass} ${zIndexClass}`"
+    :arrow-class="`absolute w-2 h-2 rotate-45 ${variantArrowClass}`"
+    placement-top-arrow-class="-bottom-1"
+    placement-right-arrow-class="-left-1"
+    placement-bottom-arrow-class="-top-1"
+    placement-left-arrow-class="-right-1"
+    disable-animation
+    shift
   >
-    <div class="inline-block w-full">
+    <template #trigger="{ open, close }">
       <div
-        :id="triggerId"
-        :class="[triggerClass]"
-        :aria-describedby="popperId"
-        @mouseover="handleOpen(open)"
-        @mouseleave="handleClose(close)"
+        @mouseover="open(openDelay)"
+        @mouseleave="close(closeDelay)"
       >
         <!-- @slot Trigger content. -->
         <slot name="trigger" />
       </div>
+    </template>
+    <template #default="{ open, close, toggle, isOpen }">
       <div
-        v-show="isOpen"
-        :id="popperId"
-        role="tooltip"
-        :class="['tooltip rounded-lg p-2 text-xs absolute border-0 text-center font-normal', zIndexClass, variantClass, sizeClass, tooltipClass ? tooltipClass : '']"
+        class="p-2"
+        @mouseover="open"
+        @mouseout="close(closeDelay)"
       >
-        <!-- @slot Tooltip content. -->
-        <slot />
-        <div
-          :class="[variantArrowClass, 'arrow']"
-          data-popper-arrow
+        <!-- @slot Tooltip content. @binding close, open, toggle, isOpen -->
+        <slot
+          :close="close"
+          :open="open"
+          :toggle="toggle"
+          :is-open="isOpen"
         />
       </div>
-    </div>
-  </PopperWrapper>
+    </template>
+  </floating-ui>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import PopperWrapper from "../PopperWrapper/PopperWrapper.vue";
+import { defineComponent, PropType } from "vue";
+import FloatingUi from "../FloatingUi/FloatingUi.vue";
+
+import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
+type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 export default defineComponent({
-  name: 'SdsTooltip',
+  name: 'SdsPopover',
   components: {
-    PopperWrapper
+    FloatingUi
   },
   props: {
     /**
-     * The styling for the tooltip.
+     * The z-index for the popover.
      */
-    tooltipClass: {
-      type: String,
-      required: false,
-      default: ""
-    },
+    zIndexClass: { type: String, required: false, default: 'z-50' },
     /**
      * Determines the theme color of the component.
      */
-    variant: {
-      type: String,
-      default: 'dark'
-    },
-    /**
-     * The styling for the trigger.
-     */
-    triggerClass: {
-      type: String,
-      required: false,
-      default: ""
-    },
-    /**
-     * The z-index for the tooltip.
-     */
-    zIndexClass: {
-      type: String,
-      required: false,
-      default: "z-50"
-    },
+    variant: { type: String, default: 'dark' },
     /**
      * Delays opening the toggle in ms.
      */
-    openDelay: {
-      type: Number,
-      required: false,
-      default: 0
-    },
+    openDelay: { type: Number, default: 0 },
     /**
      * Delays closing the toggle in ms.
      */
-    closeDelay: {
-      type: Number,
-      required: false,
-      default: 0
-    },
+    closeDelay: { type: Number, default: 0 },
     /**
-     * The width of the tooltip.
+     * The width of the popover.
      */
-    size: {
-      type: String,
-      required: false,
-      default: 'sm'
-    },
+    size: { type: String, default: 'sm' },
     /**
-     * The placement of the tooltip on the screen.
+     * The strategy of the popover on the screen.
      */
-    placement: {
-      type: String,
-      required: false,
-      default: 'top'
-    },
+    strategy: { type: String as PropType<Strategy>, default: 'absolute' },
     /**
-     * The strategy of the tooltip on the screen.
+     * The placement of the popover on the screen.
      */
-    strategy: {
-      type: String,
-      required: false,
-      default: 'absolute'
-    },
+    placement: { type: String as PropType<Placement>, default: 'top' },
     /**
-     * Determines if the tooltip should display or not.
+     * Determines if the popover should display or not.
      */
-    disabled: {
-      type: Boolean,
-      default: false
-    },
+    disabled: { type: Boolean, default: false },
     /**
      * Allows for code execution prior to opening the tooltip.
-     * 
-     * Unlike the `before-open` event, this prop prevents
-     * the tooltip from opening until its `open()` callback is called.
      * 
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
@@ -148,15 +110,9 @@ export default defineComponent({
      * }
      * ```
      */
-    willOpen: {
-      type: Function,
-      default: null
-    },
+    willOpen: { type: Function, default: null },
     /**
      * Allows for code execution prior to closing the tooltip.
-     * 
-     * Unlike the `before-close` event, this prop prevents
-     * the tooltip from closing until its `close()` callback is called.
      * 
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
@@ -179,36 +135,9 @@ export default defineComponent({
      * }
      * ```
      */
-    willClose: {
-      type: Function,
-      default: null
-    }
-  },
-  emits: ['open', 'close', 'before-open', 'before-close'],
-
-  data () {
-    return {
-      timer: null as null | ReturnType<typeof setTimeout>,
-      hovered: false,
-      isOpening: false,
-      isClosing: false
-    }
+    willClose: { type: Function, default: null }
   },
   computed: {
-    config() {
-      return {
-        placement: this.placement,
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0,8]
-            },
-          },
-        ],
-        strategy: this.strategy,
-      }
-    },
     variantClass() {
       switch (this.variant) {
         case 'dark':
@@ -222,11 +151,11 @@ export default defineComponent({
     variantArrowClass() {
       switch (this.variant) {
         case 'dark':
-          return 'before:bg-dark'
+          return 'bg-dark'
         case 'light':
-          return 'before:bg-light'
+          return 'bg-light'
         default:
-          return 'before:bg-dark'
+          return 'bg-dark'
       }
     },
     sizeClass() {
@@ -242,122 +171,9 @@ export default defineComponent({
         case 'auto':
           return 'w-auto'
         default:
-          return 'w-56'
+          return 'w-32'
       }
     }
   },
-  methods: {
-    handlePopperWrapperOpen() {
-      this.hovered = true
-      /**
-       * Emitted when the tooltip opens.
-       */
-      this.$emit('open')
-    },
-    handlePopperWrapperClose() {
-      this.hovered = false
-      /**
-       * Emitted when the tooltip opens.
-       */
-      this.$emit('close')
-    },
-    async fireOpen(open: Function) {
-      if (this.willOpen) {
-        this.isOpening = true
-        this.willOpen(() => {
-          if (this.isOpening) {
-            open()
-            this.isOpening = false
-          }
-        }, () => {
-          this.isOpening = false
-          clearTimeout(this.timer as ReturnType<typeof setTimeout>)
-        })
-      } else {
-        open()
-      }
-    },
-    async fireClose(close: Function) {
-      if (this.willClose) {
-        this.isClosing = true
-        this.willClose(() => {
-          if (this.isClosing) {
-            close()
-            this.isClosing = false
-          }
-        }, () => {
-          this.isClosing = false
-          clearTimeout(this.timer as ReturnType<typeof setTimeout>)
-        })
-      } else {
-        close()
-      }
-    },
-    handleOpen(open: Function) {
-      if (this.disabled) return
-      this.isClosing = false
-      clearTimeout(this.timer as ReturnType<typeof setTimeout>)
-      if (!this.hovered) {
-        /**
-         * Emitted before openDelay triggers the tooltip to open.
-         *
-         * This event is overridden by the beforeOpen prop.
-         */
-        this.$emit('before-open')
-        this.timer = setTimeout(() => this.fireOpen(open), this.openDelay)
-      }
-    },
-    async handleClose(close: Function) {
-      this.isOpening = false
-      clearTimeout(this.timer as ReturnType<typeof setTimeout>)
-      if (this.hovered) {
-        /**
-         * Emitted before closeDelay triggers the tooltip to close.
-         */
-        this.$emit('before-close')
-        this.timer = setTimeout(() => this.fireClose(close), this.closeDelay)
-      }
-    }
-  }
 })
 </script>
-
-<style scoped>
-.arrow,
-.arrow::before {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 0 0 0 2px;
-}
-
-.arrow {
-  visibility: hidden;
-}
-
-.arrow::before {
-  visibility: visible;
-  content: '';
-  transform: rotate(45deg);
-}
-
-.tooltip[data-popper-placement^='top'] > .arrow {
-  box-shadow: rgb(0 0 0 / 15%) 0 -4px 6px 0;
-  bottom: -4px;
-}
-
-.tooltip[data-popper-placement^='bottom'] > .arrow {
-  box-shadow: rgb(0 0 0 / 15%) 0 4px 6px 0;
-  top: -4px;
-}
-
-.tooltip[data-popper-placement^='left'] > .arrow {
-  box-shadow: rgb(0 0 0 / 15%) -4px 4px 6px 0;
-  right: -0px;
-}
-
-.tooltip[data-popper-placement^='right'] > .arrow {
-  box-shadow: rgb(0 0 0 / 15%) 4px 4px 6px 0;
-  left: -8px;
-}
-</style>

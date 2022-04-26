@@ -1,11 +1,16 @@
 <template>
-  <dropdown
-    v-model="showDropdown"
+  <floating-ui
     class="w-full"
-    btn-class="w-full"
-    menu-class="my-1 bg-white border rounded-md shadow-lg w-auto dark:border-gray-500 dark:bg-gray-700"
+    placement="bottom"
+    :disabled="disabled"
+    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-700 dark:border-gray-600 shadow-lg rounded-md w-auto ${zIndexClass}`"
+    arrow-class="absolute bg-white border dark:bg-gray-700 dark:border-gray-600 w-3 h-3 rotate-45"
+    placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
+    placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
+    placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
+    placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
   >
-    <template #trigger>
+    <template #trigger="{ open, close, toggle }">
       <div
         class="flex w-full"
         :class="{ 'gap-1': size === 'sm', 'gap-2': size !== 'sm' }"
@@ -23,7 +28,7 @@
               'pointer-events-none opacity-50': disabled || readonly
             }"
             :disabled="disabled || readonly"
-            @click="showDropdown = !showDropdown; ($refs.startDateInput as HTMLElement).focus()"
+            @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,12 +59,12 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="showDropdown = true"
-            @keydown.tab="showDropdown = false"
-            @mousedown.stop="showDropdown = !showDropdown"
-            @keyup.up="showDropdown = false"
-            @keyup.down="showDropdown = true"
-            @keydown.enter.prevent="updateDatesFromInput(); showDropdown = !showDropdown"
+            @focusin="open()"
+            @keydown.tab="close()"
+            @mousedown.stop="toggle()"
+            @keyup.up="close()"
+            @keyup.down="open()"
+            @keydown.enter.prevent="updateDatesFromInput(); toggle()"
             @change="updateDatesFromInput"
           >
         </div>
@@ -102,7 +107,7 @@
                 'pointer-events-none opacity-50': disabled || readonly
               }"
               :disabled="disabled || readonly"
-              @click="showDropdown = !showDropdown; ($refs.endDateInput as HTMLElement).focus()"
+              @click="toggle(); ($refs.endDateInput as HTMLElement).focus()"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -133,12 +138,12 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="showDropdown = true"
-              @keydown.tab="showDropdown = false"
-              @mousedown.stop="showDropdown = !showDropdown"
-              @keyup.up="showDropdown = false"
-              @keyup.down="showDropdown = true"
-              @keydown.enter.prevent="updateDatesFromInput(); showDropdown = !showDropdown"
+              @focusin="open()"
+              @keydown.tab="close()"
+              @mousedown.stop="toggle()"
+              @keyup.up="close()"
+              @keyup.down="open()"
+              @keydown.enter.prevent="updateDatesFromInput(); toggle()"
               @change="updateDatesFromInput"
             >
           </div>
@@ -156,14 +161,14 @@
         />
       </div>
     </template>
-  </dropdown>
+  </floating-ui>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { parse, format, isValid, min, max, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays } from 'date-fns'
 import Calendar from '../Calendar/Calendar.vue';
-import Dropdown from '../Dropdown/Dropdown.vue';
+import FloatingUi from '../FloatingUi/FloatingUi.vue';
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -176,9 +181,13 @@ export default defineComponent({
   name: 'SdsDatepicker',
   components: {
     Calendar,
-    Dropdown
-},
+    FloatingUi
+  },
   props: {
+    /**
+     * The z-index for the popover.
+     */
+    zIndexClass: { type: String, required: false, default: 'z-50' },
     /**
      * Determines whether to display or hide the arrow for range selection.
      */
@@ -228,7 +237,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
   data() {
     return {
-      showDropdown: false,
       inputDate: { start: '', end: '' },
     }
   },

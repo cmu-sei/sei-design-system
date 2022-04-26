@@ -20,8 +20,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-
 type SelectModel = boolean | string | number | null
 interface SelectOption {
   id: number | string
@@ -29,39 +27,44 @@ interface SelectOption {
   text: string
 }
 
-export default defineComponent({
-  name: 'SdsSelect',
-  props: {
-    /**
-     * The v-model of the component.
-     */
-    modelValue: { type: [Boolean, String, Number, null] as PropType<SelectModel>, default: null },
-    /**
-     * The options for the component. Expects { id, value, text }.
-     */
-    options: { type: Array as PropType<SelectOption[]>, default: () => [] },
-    /**
-     * Disables the component to prevent user interaction.
-     */
-    disabled: { type: Boolean, default: false },
-    /**
-     * Determines if the component is read-only.
-     */
-    readonly: { type: Boolean, default: false },
+export default {
+  name: 'SdsSelect'
+}
+</script>
+
+<script setup lang="ts">
+import { PropType, computed } from 'vue'
+
+const props = defineProps({
+  /**
+   * The v-model of the component.
+   */
+  modelValue: { type: [Boolean, String, Number, null] as PropType<SelectModel>, default: null },
+  /**
+   * The options for the component. Expects { id, value, text }.
+   */
+  options: { type: Array as PropType<SelectOption[]>, default: () => [] },
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled: { type: Boolean, default: false },
+  /**
+   * Determines if the component is read-only.
+   */
+  readonly: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const localValue = computed({
+  get() {
+    return props.modelValue;
   },
-  emits: ['update:modelValue'],
-  computed: {
-    localValue: {
-      get() {
-        return this.modelValue;
-      },
-      set(value: SelectModel) {
-        /**
-         * Emitted when modelValue changes.
-         */
-        this.$emit("update:modelValue", value);
-      }
-    }
+  set(value: SelectModel) {
+    /**
+     * Emitted when modelValue changes.
+     */
+    emit("update:modelValue", value);
   }
 })
 </script>

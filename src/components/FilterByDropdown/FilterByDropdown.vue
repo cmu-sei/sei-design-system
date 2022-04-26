@@ -1,97 +1,133 @@
 <template>
-  <dropdown
-    v-model="open"
-    :hide-caret="hideCaret"
-    :btn-class="btnClass"
-    :menu-class="menuClass"
+  <floating-ui
     :placement="placement"
+    :popper-class="`absolute border shadow-lg rounded-md bg-gray-100 dark:border-gray-600 dark:bg-gray-700 w-72 ${zIndexClass}`"
+    arrow-class="absolute bg-gray-100 border dark:border-gray-600 dark:bg-gray-700 w-3 h-3 rotate-45"
+    placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
+    placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
+    placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
+    placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
   >
-    <template #title>
-      {{ btnText }}
-    </template>
-    <div
-      v-if="enableFilter"
-      class="input-group input-group-sm mb-2 pb-2 border-b"
-    >
-      <input
-        v-model="filterText"
-        type="text"
-        class="form-control"
-        placeholder="Type to filter"
+    <template #trigger="{ isOpen, toggle }">
+      <button
+        ref="button"
+        v-uid
+        :class="variantClass"
+        type="button"
+        aria-haspopup="true"
+        :aria-expanded="isOpen"
+        @click="toggle(); resetTmpOptions()"
       >
-      <span class="input-group-text">
+        <!-- @slot Title content of trigger button. -->
+        <slot name="title">
+          <span>{{ title }}</span>
+        </slot>
         <svg
+          class="inline-block self-center w-5 h-5 -mr-1"
+          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          class="w-5 h-5"
         >
           <path
             fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
             clip-rule="evenodd"
           />
         </svg>
-      </span>
-    </div>
-    <div
-      v-if="!enableFilter"
-      class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
-    >
-      <label
-        class="text-gray-900 dark:text-gray-50 flex gap-1 w-max"
+      </button>
+    </template>
+    <template #default="{ close }">
+      <div
+        class="p-2"
+        aria-orientation="vertical"
+        :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
-        <input
-          type="checkbox"
-          class="my-auto"
-          :checked="allSelected"
-          :indeterminate.prop="indeterminate"
-          @click="toggleSelect"
+        <div
+          v-if="enableFilter"
+          class="input-group input-group-sm mb-2 pb-2 border-b"
         >
-        <span class="my-auto">Select all</span>
-      </label>
-    </div>
-    <div class="scroll-area max-h-48">
-      <ul>
-        <li
-          v-for="o in filteredTmpOptions"
-          :key="o.id"
-        >
-          <div class="space-x-1">
-            <input
-              :id="`filter_by_dropdown_selection_list_${o.id}`"
-              v-model="o.selected"
-              type="checkbox"
-              class="focus:ring-0"
-              :value="o.id"
+          <input
+            v-model="filterText"
+            type="text"
+            class="form-control"
+            placeholder="Type to filter"
+          >
+          <span class="input-group-text">
+            <svg
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="w-5 h-5"
             >
-            <label
-              :for="`filter_by_dropdown_selection_list_${o.id}`"
-              class="text-gray-900 dark:text-gray-50 ml-1"
-            >{{ o.text }}</label>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="pt-4 space-y-2">
-      <button
-        class="btn btn-blue btn-block btn-sm"
-        @click="saveSelections"
-      >
-        Apply filter
-      </button>
-      <button
-        class="btn btn-default btn-block btn-sm"
-        @click="cancelSelections"
-      >
-        Cancel
-      </button>
-    </div>
-  </dropdown>
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+        <div
+          v-if="!enableFilter"
+          class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
+        >
+          <label
+            class="text-gray-900 dark:text-gray-50 flex gap-1 w-max"
+          >
+            <input
+              type="checkbox"
+              class="my-auto"
+              :checked="allSelected"
+              :indeterminate.prop="indeterminate"
+              @click="toggleSelect()"
+            >
+            <span class="my-auto">Select all</span>
+          </label>
+        </div>
+        <div class="scroll-area max-h-48">
+          <ul>
+            <li
+              v-for="o in filteredTmpOptions"
+              :key="o.id"
+            >
+              <div class="space-x-1">
+                <input
+                  :id="`filter_by_dropdown_selection_list_${o.id}`"
+                  v-model="o.selected"
+                  type="checkbox"
+                  class="focus:ring-0"
+                  :value="o.id"
+                >
+                <label
+                  :for="`filter_by_dropdown_selection_list_${o.id}`"
+                  class="text-gray-900 dark:text-gray-50 ml-1"
+                >{{ o.text }}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="pt-4 space-y-2">
+          <button
+            class="btn btn-blue btn-block btn-sm"
+            @click="saveSelections(); close()"
+          >
+            Apply filter
+          </button>
+          <button
+            class="btn btn-default btn-block btn-sm"
+            @click="cancelSelections(); close()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </template>
+  </floating-ui>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import Dropdown from '../Dropdown/Dropdown.vue';
+import { defineComponent, PropType, ref } from 'vue';
+import FloatingUi from '../FloatingUi/FloatingUi.vue';
+import { Uid } from '@shimyshack/uid'
 
 interface FilterByDropdownOption {
   id: string | number
@@ -104,64 +140,46 @@ type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 export default defineComponent({
   name: "SdsFilterByDropdown",
   components: {
-    Dropdown,
+    FloatingUi,
+  },
+  directives: {
+    uid: Uid
   },
   props: {
     /**
      * The v-model for this component. Determines opened/closed state.
      */
-    modelValue: {
-      type: Array as PropType<FilterByDropdownOption[]>,
-      default: () => [],
-    },
+    modelValue: { type: Array as PropType<FilterByDropdownOption[]>, default: () => [] },
     /**
-     * The text for the toggle button.
+     * Determines the theme color of the component.
      */
-    btnText: {
-      type: String,
-      default: "Filter",
-    },
+    variant: { type: String, default: 'secondary' },
     /**
-     * Determines whether to show or hide the caret.
+     * The z-index for the popover.
      */
-    hideCaret: {
-      type: Boolean,
-      default: false,
-    },
+    zIndexClass: { type: String, required: false, default: 'z-50' },
     /**
-     * Determines the class list to use on the toggle button.
+     * The title for the toggle button.
      */
-    btnClass: {
-      type: String,
-      default: "link link-secondary",
-    },
-    /**
-     * Determines the class list to use on the menu.
-     */
-    menuClass: {
-      type: String,
-      default: "p-2 my-1 bg-gray-100 border rounded-md shadow-lg w-72 dark:border-gray-500 dark:bg-gray-700",
-    },
+    title: { type: String, default: "Filter" },
     /**
      * Determine whether to enable option filtering on the dropdown.
      */
-    enableFilter: {
-      type: Boolean,
-      default: false,
-    },
+    enableFilter: { type: Boolean, default: false },
     /**
      * Determines whether to alphabetically sort the options.
      */
-    enableSortOptions: {
-      type: Boolean,
-      default: false,
-    },
+    enableSortOptions: { type: Boolean, default: false },
     /**
      * Determines the placement of the dropdown on the screen.
      */
-    placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'auto' }
+    placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' }
   },
   emits: ['update:modelValue'],
+  setup() {
+    const button = ref(null)
+    return { button }
+  },
   data() {
     return {
       filterText: "",
@@ -196,11 +214,29 @@ export default defineComponent({
           i.text && i.text.toLowerCase().includes(this.filterText.toLowerCase())
       );
     },
-  },
-  watch: {
-    open() {
-      this.resetTmpOptions();
-      this.filterText = "";
+    variantClass() {
+      switch (this.variant) {
+         case 'primary':
+          return 'link-primary'
+        case 'secondary':
+          return 'link-secondary'
+        case 'tertiary':
+          return 'link-tertiary'
+        case 'success':
+          return 'link-success'
+        case 'info':
+          return 'link-info'
+        case 'warning':
+          return 'link-warning'
+        case 'danger':
+          return 'link-danger'
+        case 'light':
+          return 'link-light'
+        case 'dark':
+          return 'link-dark'
+        default:
+          return ''
+      }
     }
   },
   methods: {
@@ -216,15 +252,10 @@ export default defineComponent({
        * Emmitted when modelValue changes.
        */
       this.$emit("update:modelValue", this.tmpOptions);
-      this.closeDropdown();
     },
     cancelSelections() {
-      if (!this.open) {
-        return;
-      }
       // Make a unique copy of default list data
       this.resetTmpOptions();
-      this.closeDropdown();
     },
     resetTmpOptions() {
       const options = JSON.parse(JSON.stringify(this.options));
@@ -247,6 +278,7 @@ export default defineComponent({
       } else {
         this.tmpOptions = options;
       }
+      this.filterText = ''
     },
     deselectAllOptions() {
       this.tmpOptions.forEach((i: FilterByDropdownOption) => {
@@ -257,15 +289,6 @@ export default defineComponent({
       this.tmpOptions.forEach((i: FilterByDropdownOption) => {
         i.selected = true;
       });
-    },
-    toggleDropdown() {
-      this.resetTmpOptions();
-      this.filterText = "";
-      this.open = !this.open;
-    },
-    closeDropdown() {
-      this.filterText = "";
-      this.open = false;
     },
   },
 });

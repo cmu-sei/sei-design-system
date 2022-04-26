@@ -17,9 +17,21 @@ export default {
   component: SdsDropdown,
   argTypes: {
     placement: {
-      options: ['auto', 'top', 'right'],
+      options: ["auto", "left", "top", "right", "bottom", "auto-start", "auto-end", "left-start", "left-end", "top-start", "top-end", "right-start", "right-end", "bottom-start", "bottom-end"],
       control: {type: 'select'}
     },
+    strategy: {
+      options: ['absolute', 'fixed'],
+      control: {type: 'select'}
+    },
+    variant: {
+      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ["md", "sm"],
+      control: {type: 'select'}
+    }
   }
 };
 
@@ -67,5 +79,4 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  btnClass: 'btn btn-default'
 };
