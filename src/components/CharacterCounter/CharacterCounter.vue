@@ -20,7 +20,7 @@ export default defineComponent({
   },
   setup(props) {
     const count = computed(() => {
-      return props.maxValue - props.currentValue
+      return (props.maxValue - props.currentValue).toLocaleString()
     })
 
     return {
