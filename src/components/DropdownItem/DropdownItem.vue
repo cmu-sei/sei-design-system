@@ -9,7 +9,7 @@
     }"
     :disabled="disabled"
     role="menuitem"
-    @click="closeOnClick ? emitter.emit('dropdown-close') : null"
+    @click="closeOnClick ? emitter.emit('floating-ui-toggle', false) : null"
   >
     <!-- @slot Dropdown item content. -->
     <slot />

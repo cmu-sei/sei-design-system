@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'ALPHA: A file uploader allows users to select one or more files to upload to a specific location.',
+        component: 'A file uploader allows users to select one or more files to upload to a specific location.',
       },
     },
   },

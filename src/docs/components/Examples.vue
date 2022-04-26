@@ -1,5 +1,102 @@
 <template>
   <div class="guide">
+    <p>Select</p>
+    <div class="p-6">
+      <sds-select
+        v-model="selectModel"
+        :options="selectOptions"
+      />
+    </div>
+    <p>Floating UI</p>
+    <div class="p-6 bg-white">
+      Dropdown:
+      <sds-floating-ui
+        :offset="5"
+        placement="bottom-start"
+        popper-class="absolute border shadow-lg w-56 rounded-md bg-white dark:border-gray-500 dark:bg-gray-700"
+      >
+        <template #trigger="{ toggle }">
+          <sds-button
+            variant="primary"
+            @click="toggle"
+          >
+            Hello
+          </sds-button>
+        </template>
+        <template #default="{ close }">
+          <div class="py-2">
+            <p @click="close">
+              This is a dropdown
+            </p>
+          </div>
+        </template>
+      </sds-floating-ui>
+    </div>
+    <div class="p-6 bg-white">
+      Tooltip:
+      <sds-floating-ui
+        popper-class="absolute bg-black text-white text-xs shadow rounded-lg w-32 text-center"
+        arrow-class="absolute bg-black w-2 h-2 rotate-45"
+        placement-top-arrow-class="-bottom-1"
+        placement-right-arrow-class="-left-1"
+        placement-bottom-arrow-class="-top-1"
+        placement-left-arrow-class="-right-1"
+        :will-open="willOpen"
+        :will-close="willClose"
+      >
+        <template #trigger="{ open, close }">
+          <sds-button
+            variant="primary"
+            @mouseover="open"
+            @mouseout="close"
+          >
+            Hello
+          </sds-button>
+        </template>
+        <template #default>
+          <div class="p-2">
+            <p>News &amp; Events</p>
+          </div>
+        </template>
+      </sds-floating-ui>
+    </div>
+    <div class="p-6 bg-white">
+      Popover:
+      <sds-floating-ui
+        popper-class="absolute z-10 bg-white border shadow rounded-lg"
+        arrow-class="absolute bg-white border w-3 h-3 rotate-45"
+        placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
+        placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
+        placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
+        placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
+        shift
+      >
+        <template #trigger="{ open, close }">
+          <sds-button
+            variant="primary"
+            @mouseover="open(500)"
+            @mouseout="close(500)"
+          >
+            Hello
+          </sds-button>
+        </template>
+        <template #default="{ open, close }">
+          <div
+            class="p-4"
+            @mouseover="open"
+            @mouseout="close(500)"
+          >
+            <p @click="close">
+              This is a popover
+            </p>
+            <p>lkajsdflkjsdalf</p>
+            <p>lkajsdflkjsdalf</p>
+            <p>lkajsdflkjsdalf</p>
+            <p>lkajsdflkjsdalf</p>
+          </div>
+        </template>
+      </sds-floating-ui>
+    </div>
     <p>File Uploader</p>
     <div class="p-8 bg-white">
       <sds-file-uploader
@@ -119,14 +216,14 @@
       </template>
       <div>
         <section class="mb-4">
-          <sds-popover :will-open="willOpen">
+          <sds-popover>
             <template #trigger>
               <sds-link
                 href="#"
                 variant="primary"
                 external
               >
-                External link
+                External link (has a popover)
               </sds-link>
             </template>
             <p>Popover content</p>
@@ -158,13 +255,10 @@
           </h4>
           <sds-dropdown
             title="Dropdown"
-            btn-class="rounded-none btn btn-black"
-            menu-class="h-48 p-4 -ml-6 overflow-auto text-gray-100 bg-gray-900 rounded-b w-224"
-            hover
-            disable-animation
-            :hover-delay="0"
+            variant="dark"
+            auto
           >
-            <div class="text-sm">
+            <div class="text-sm px-2">
               This is going to be a lot of text. This is going to be a lot of
               text. This is going to be a lot of text. This is going to be a lot
               of text.
@@ -204,8 +298,8 @@
 
           <sds-dropdown
             :title="`Modal Size: ${modalSize}`"
-            btn-class="btn btn-default"
-            placement="right"
+            placement="bottom-end"
+            size="sm"
           >
             <sds-dropdown-header> Select the modal's size </sds-dropdown-header>
             <sds-dropdown-divider />
@@ -252,7 +346,7 @@
           count-characters
         />
 
-        <sds-tooltip :will-open="willOpen">
+        <sds-tooltip>
           <template #trigger>
             <button
               class="btn btn-blue"
@@ -387,7 +481,7 @@
           <div>
             <sds-filter-by-dropdown
               v-model="filterby.options"
-              :btn-text="filterByBtnText"
+              :title="filterByBtnText"
               enable-filter
               enable-sort-options
               @update:model-value="filtered"
@@ -396,8 +490,8 @@
           <div>
             <sds-filter-by-dropdown
               v-model="filterby.options"
-              :btn-text="filterByBtnText"
-              btn-class="btn btn-primary"
+              :title="filterByBtnText"
+              variant="primary"
               right
               @update:model-value="filtered"
             />
@@ -539,6 +633,12 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      selectModel: 2,
+      selectOptions: [
+        { id: 1, value: 1, text: 'Option 1' },
+        { id: 2, value: 2, text: 'Option 2' },
+        { id: 3, value: 3, text: 'Option 3' }
+      ],
       disablePopover: true,
       fields: [
         { key: 'id', label: 'ID' },
@@ -743,10 +843,17 @@ export default defineComponent({
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
     },
-    async willOpen(open: Function, cancel: Function) {
+    async willOpen(res: Function, rej: Function) {
       console.log('Pause for 3 seconds to get fake api request')
       await new Promise(r => setTimeout(r, 3000))
-      return open()
+      console.log('Open now!')
+      res()
+    },
+    async willClose(res: Function, rej: Function) {
+      console.log('Pause for 3 seconds to do something on close')
+      await new Promise(r => setTimeout(r, 3000))
+      console.log('Close now!')
+      res()
     }
   },
 });

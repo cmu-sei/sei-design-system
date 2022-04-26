@@ -14,8 +14,12 @@ export default {
   component: SdsFilterByDropdown,
   argTypes: {
     placement: {
-      options: ['auto', 'top', 'right'],
+      options: ["auto", "left", "top", "right", "bottom", "auto-start", "auto-end", "left-start", "left-end", "top-start", "top-end", "right-start", "right-end", "bottom-start", "bottom-end"],
       control: {type: 'select'}
+    },
+    variant: {
+      options: ['', 'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      control: { type: 'select' }
     },
   }
 };

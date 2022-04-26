@@ -1,16 +1,18 @@
 <template>
-  <transition
-    enter-active-class="transition-opacity duration-75"
-    enter-from-class="opacity-0"
-    leave-active-class="transition-opacity duration-75"
-    leave-to-class="opacity-0"
-    @after-enter="showContent = true"
-    @after-leave="showModal = false"
-  >
-    <div
-      v-if="showModal"
-      ref="modalContainer"
-      class="
+  <client-only>
+    <teleport to="body">
+      <transition
+        enter-active-class="transition-opacity duration-75"
+        enter-from-class="opacity-0"
+        leave-active-class="transition-opacity duration-75"
+        leave-to-class="opacity-0"
+        @after-enter="showContent = true"
+        @after-leave="showModal = false"
+      >
+        <div
+          v-if="showModal"
+          ref="modalContainer"
+          class="
         fixed
         inset-0
         z-50
@@ -22,23 +24,22 @@
         bg-black bg-opacity-50
         sds-modal
       "
-      @mousedown.self="close"
-      @keydown="checkKeyEvent"
-    >
-      <transition
-        enter-active-class="transition-all duration-75"
-        enter-from-class="transform scale-90 opacity-0"
-        leave-active-class="transition-all duration-75"
-        leave-to-class="transform scale-90 opacity-0"
-        @after-leave="showModal = false"
-      >
-        <div
-          v-if="showContent"
-          role="dialog"
-          :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
-          class="
+          @mousedown.self="close"
+          @keydown="checkKeyEvent"
+        >
+          <transition
+            enter-active-class="transition-all duration-75"
+            enter-from-class="transform scale-90 opacity-0"
+            leave-active-class="transition-all duration-75"
+            leave-to-class="transform scale-90 opacity-0"
+            @after-leave="showModal = false"
+          >
+            <div
+              v-if="showContent"
+              role="dialog"
+              :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
+              class="
             relative
-            z-50
             block
             w-full
             mx-auto
@@ -50,27 +51,28 @@
             dark:bg-gray-800 dark:border-gray-700
             md:my-8
           "
-          :class="{
-            'md:max-w-sm': size === 'sm',
-            'md:max-w-xl': size === 'md',
-            'md:max-w-xl lg:max-w-4xl': size === 'lg',
-            'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
-          }"
-        >
-          <header class="flex items-center p-6 pb-0">
-            <div
-              v-if="hasTitleSlot"
-              ref="titleWrapper"
-              v-uid
-              class="text-xl leading-tight"
+              :class="{
+                [zIndexClass]: true,
+                'md:max-w-sm': size === 'sm',
+                'md:max-w-xl': size === 'md',
+                'md:max-w-xl lg:max-w-4xl': size === 'lg',
+                'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
+              }"
             >
-              <!-- @slot Modal title content. -->
-              <slot name="title" />
-            </div>
-            <button
-              v-focus
-              aria-label="close"
-              class="
+              <header class="flex items-center p-6 pb-0">
+                <div
+                  v-if="hasTitleSlot"
+                  ref="titleWrapper"
+                  v-uid
+                  class="text-xl leading-tight"
+                >
+                  <!-- @slot Modal title content. -->
+                  <slot name="title" />
+                </div>
+                <button
+                  v-focus
+                  aria-label="close"
+                  class="
                 inline-block
                 p-0
                 ml-auto
@@ -84,44 +86,50 @@
                 active:text-gray-500
                 dark:active:text-gray-600
               "
-              @click="close"
-            >
-              <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+                  @click="close"
+                >
+                  <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </header>
+              <main class="p-6">
+                <!-- @slot Modal content. -->
+                <slot />
+              </main>
+              <footer
+                v-if="hasFooterSlot"
+                class="p-6 pt-0"
               >
-                <path d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </header>
-          <main class="p-6">
-            <!-- @slot Modal content. -->
-            <slot />
-          </main>
-          <footer
-            v-if="hasFooterSlot"
-            class="p-6 pt-0"
-          >
-            <!-- @slot Modal footer content. -->
-            <slot name="footer" />
-          </footer>
+                <!-- @slot Modal footer content. -->
+                <slot name="footer" />
+              </footer>
+            </div>
+          </transition>
         </div>
       </transition>
-    </div>
-  </transition>
+    </teleport>
+  </client-only>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch, onMounted, onUnmounted, Directive } from "vue";
+import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { Uid } from '@shimyshack/uid';
 
 export default defineComponent({
   name: "SdsModal",
+  components: {
+    ClientOnly
+  },
   directives: {
     uid: Uid,
     focus: {
@@ -145,6 +153,10 @@ export default defineComponent({
       type: String,
       default: "md",
     },
+    /**
+     * The z-index for the popover.
+     */
+    zIndexClass: { type: String, required: false, default: 'z-50' },
   },
   emits: ['update:modelValue'],
   setup(props, { emit, slots }) {

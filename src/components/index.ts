@@ -4,6 +4,7 @@ import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCharacterCounter from "./CharacterCounter"
 import SdsCheckboxGroup from "./CheckboxGroup";
+import SdsClientOnly from "./ClientOnly";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
@@ -11,9 +12,9 @@ import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
 import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
+import SdsFloatingUi from "./FloatingUi";
 import SdsInput from "./Input"
 import SdsLayoutApp from "./LayoutApp";
-import SdsLayoutFixedSidebar from "./LayoutFixedSidebar";
 import SdsLayoutSeiExternal from "./LayoutSeiExternal";
 import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
 import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader";
@@ -28,14 +29,12 @@ import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
 import SdsPopover from "./Popover";
-import SdsPopperWrapper from "./PopperWrapper";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
 import SdsSearchBox from "./SearchBox";
 import SdsSection from "./Section";
 import SdsSelect from "./Select";
-import SdsSortableTable from "./SortableTable";
 import SdsTab from "./Tab";
 import SdsTable from "./Table";
 import SdsTextarea from "./Textarea";
@@ -55,6 +54,7 @@ const Components: ComponentList = {
   SdsCalendar,
   SdsCharacterCounter,
   SdsCheckboxGroup,
+  SdsClientOnly,
   SdsDatepicker,
   SdsDropdown,
   SdsDropdownDivider,
@@ -62,9 +62,9 @@ const Components: ComponentList = {
   SdsDropdownItem,
   SdsFileUploader,
   SdsFilterByDropdown,
+  SdsFloatingUi,
   SdsInput,
   SdsLayoutApp,
-  SdsLayoutFixedSidebar,
   SdsLayoutSeiExternal,
   SdsLayoutSeiExternalFooter,
   SdsLayoutSeiExternalHeader,
@@ -79,14 +79,12 @@ const Components: ComponentList = {
   SdsMultiselect,
   SdsPaginator,
   SdsPopover,
-  SdsPopperWrapper,
   SdsRadioGroup,
   SdsScrollArea,
   SdsScrollspy,
   SdsSearchBox,
   SdsSection,
   SdsSelect,
-  SdsSortableTable,
   SdsTab,
   SdsTable,
   SdsTextarea,
@@ -110,6 +108,7 @@ export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCharacterCounter } from "./CharacterCounter"
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
+export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
@@ -117,9 +116,9 @@ export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
 export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
+export { default as SdsFloatingUi } from "./FloatingUi"
 export { default as SdsInput } from "./Input"
 export { default as SdsLayoutApp } from "./LayoutApp";
-export { default as SdsLayoutFixedSidebar } from "./LayoutFixedSidebar";
 export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
 export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
 export { default as SdsLayoutSeiExternalHeader } from "./LayoutSeiExternalHeader";
@@ -134,14 +133,12 @@ export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";
 export { default as SdsPopover } from "./Popover";
-export { default as SdsPopperWrapper } from "./PopperWrapper";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSearchBox } from "./SearchBox";
 export { default as SdsSection } from "./Section";
 export { default as SdsSelect } from "./Select";
-export { default as SdsSortableTable } from "./SortableTable";
 export { default as SdsTab } from "./Tab";
 export { default as SdsTable } from "./Table";
 export { default as SdsTextarea } from "./Textarea";

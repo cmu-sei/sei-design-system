@@ -1,5 +1,5 @@
 import { App } from "vue";
-import Component from "./SortableTable.vue";
+import Component from "./ClientOnly.vue";
 
 Component.install = (Vue: App) => {
   Vue.component(Component.name, Component);

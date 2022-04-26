@@ -1,291 +1,230 @@
 <template>
-  <div
-    ref="root"
-    class="relative inline-block text-left"
+  <floating-ui
+    :offset="offset"
+    :strategy="strategy"
+    :placement="placement"
+    :disabled="disabled"
+    :will-open="willOpen"
+    :will-close="willClose"
+    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-600 dark:bg-gray-700 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
   >
-    <!-- @slot Trigger content. Use if you want to override the default button trigger. Ensure to use the v-model to control open/close state. -->
-    <slot name="trigger">
-      <button
-        ref="button"
-        v-uid
-        type="button"
-        class="inline-flex"
-        aria-haspopup="true"
-        :aria-expanded="isOpen"
-        :class="[btnClass]"
-        @click="handleClick"
+    <template #trigger="{ open, close, isOpen, toggle }">
+      <!-- @slot Trigger content (used to replace trigger button). @binding open, close, isOpen, toggle -->
+      <slot
+        name="trigger"
+        :open="open"
+        :close="close"
+        :is-open="isOpen"
+        :toggle="toggle"
       >
-        <!-- @slot Title content of trigger button. -->
-        <slot name="title">
-          {{ title }}
-        </slot>
-        <svg
-          v-if="!hideCaret"
-          class="self-center w-5 h-5 -mr-1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+        <button
+          ref="button"
+          v-uid
+          type="button"
+          class="btn space-x"
+          aria-haspopup="true"
+          :aria-expanded="isOpen"
+          :class="[variantClass, sizeClass]"
+          @click="handleClick(isOpen, open, close)"
         >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
-    </slot>
-    <transition
-      :css="!disableAnimation"
-      enter-active-class="transition duration-100 ease-out"
-      enter-from-class="transform scale-95 opacity-0"
-      enter-to-class="transform scale-100 opacity-100"
-      leave-active-class="transition duration-75 ease-in"
-      leave-from-class="transform scale-100 opacity-100"
-      leave-to-class="transform scale-95 opacity-0"
-    >
+          <!-- @slot Title content of trigger button. -->
+          <slot name="title">
+            {{ title }}
+          </slot>
+          <svg
+            class="inline-block self-center w-5 h-5 -mr-1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </slot>
+    </template>
+    <template #default="{ open, close, toggle, isOpen }">
       <div
-        v-if="isOpen"
-        ref="menu"
-        class="absolute z-50"
-        :class="{
-          'right-0': right || placement === 'right',
-          'bottom-full': dropUp || placement === 'top',
-        }"
+        class="py-2"
+        aria-orientation="vertical"
+        :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
-        <div
-          :class="menuClass"
-          role="menu"
-          aria-orientation="vertical"
-          :aria-labelledby="button && (button as HTMLElement).id || undefined"
-        >
-          <!-- @slot Default slot content. This is the content of the dropdown menu. -->
-          <slot />
-        </div>
+        <!-- @slot Dropdown content. @binding close, open, toggle, isOpen -->
+        <slot
+          :close="close"
+          :open="open"
+          :toggle="toggle"
+          :is-open="isOpen"
+        />
       </div>
-    </transition>
-  </div>
+    </template>
+  </floating-ui>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, provide, onMounted, onUnmounted, nextTick, watch, PropType } from "vue";
-import debounce from "../../helpers/debounce";
+import { defineComponent, ref, PropType } from 'vue';
+import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { Uid } from '@shimyshack/uid'
-import mitt from 'mitt';
 
-type DropdownPlacement = 'auto' | 'top' | 'right'
+import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
+type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 export default defineComponent({
-  name: "SdsDropdown",
+  name: 'SdsPopover',
+  components: {
+    FloatingUi
+  },
   directives: {
     uid: Uid
   },
   props: {
     /**
-     * The v-model for the component (determines if the menu is displayed or hidden).
-     */
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-    /**
      * The content of the dropdown trigger.
      */
-    title: {
-      type: String,
-      default: "",
-    },
+    title: { type: String, default: '' },
     /**
      * Styling for the button trigger.
      */
-    btnClass: {
-      type: String,
-      default: "",
-    },
+    variant: { type: String, default: 'default' },
     /**
-     * Styling for the dropdown menu.
+     * The z-index for the popover.
      */
-    menuClass: {
-      type: String,
-      default:
-        "py-2 border shadow-lg my-1 w-56 rounded-md bg-white dark:border-gray-500 dark:bg-gray-700",
-    },
+    zIndexClass: { type: String, required: false, default: 'z-50' },
     /**
-     * Determines whether to hide or show the caret.
+     * The distance between the popper and the trigger.
      */
-    hideCaret: {
-      type: Boolean,
-      default: false,
-    },
+    offset: { type: Number, default: 5 },
     /**
-     * Determines whether to activate the dropdown on hover instead of click.
+     * Delays opening the toggle in ms.
      */
-    hover: {
-      type: Boolean,
-      default: false,
-    },
+    openDelay: { type: Number, default: 0 },
     /**
-     * Determines the time to delay the hover trigger in milliseconds.
+     * Delays closing the toggle in ms.
      */
-    hoverDelay: {
-      type: Number,
-      default: 100,
-    },
+    closeDelay: { type: Number, default: 0 },
     /**
-     * Determines whether to disable the animation when the dropdown menu is shown/hidden.
+     * Determines the size of the trigger button.
      */
-    disableAnimation: {
-      type: Boolean,
-      default: false,
-    },
+    size: { type: String, default: 'md' },
     /**
-     * Determines the placement of the dropdown on the screen.
+     * Determines whether the content of the popper will set the width of the popper.
      */
-    placement: { type: String as PropType<DropdownPlacement>, default: 'auto' }
+    auto: { type: Boolean, default: false },
+    /**
+     * The strategy of the popover on the screen.
+     */
+    strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+    /**
+     * The placement of the popover on the screen.
+     */
+    placement: { type: String as PropType<Placement>, default: 'bottom-start' },
+    /**
+     * Determines if the popover should display or not.
+     */
+    disabled: { type: Boolean, default: false },
+    /**
+     * Allows for code execution prior to opening the popover.
+     * 
+     * A `cancel()` callback can be called as well to cancel
+     * the opening process.
+     * 
+     * For example, this can prevent the popover from opening
+     * until a call to a backend API completes.
+     * 
+     * Example definition in parent component:
+     * 
+     * ```
+     * async willOpen(open, cancel) {
+     *  try {
+     *    await SOME_API_CALL_RESPONSE()
+     *    // let the open process continue
+     *    open()
+     *  } catch (e) {
+     *    // cancel the open process
+     *    cancel()
+     *  }
+     * }
+     * ```
+     */
+    willOpen: { type: Function, default: null },
+    /**
+     * Allows for code execution prior to closing the popover.
+     * 
+     * A `cancel()` callback can be called as well to cancel
+     * the opening process.
+     * 
+     * For example, this can prevent the popover from closing
+     * until a call to a backend API completes.
+     * 
+     * Example definition in parent component:
+     * 
+     * ```
+     * async willClose(close, cancel) {
+     *  try {
+     *    await SOME_API_CALL_RESPONSE()
+     *    // let the close process continue
+     *    close()
+     *  } catch (e) {
+     *    // cancel the close process
+     *    cancel()
+     *  }
+     * }
+     * ```
+     */
+    willClose: { type: Function, default: null }
   },
-  emits: ['update:modelValue', 'btn-click'],
-  setup(props, { emit }) {
-    const root = ref(null)
+  setup(props) {
     const button = ref(null)
-    const menu = ref(null)
-    const isOpen = ref(false)
 
-    const dropUp = ref(false)
-    const right = ref(false)
-
-    const emitter = mitt();
-    provide('emitter', emitter);
-    emitter.on("dropdown-close", () => {
-      close()
-    });
-
-    onMounted(() => {
-      document.addEventListener("mousedown", handleOutsideMouseDown);
-      document.addEventListener("keyup", handleOutsideKeyUp);
-      document.addEventListener("mouseover", debounceHandleOutsideMouseOver);
-      document.addEventListener("scroll", debounceHandleDocumentScroll);
-      handleDocumentScroll();
-      window.addEventListener("resize", debounceHandleWindowResize);
-    })
-
-    onUnmounted(() => {
-      document.removeEventListener("mousedown", handleOutsideMouseDown);
-      document.removeEventListener("keyup", handleOutsideKeyUp);
-      document.removeEventListener(
-        "mouseover",
-        debounceHandleOutsideMouseOver
-      );
-      document.removeEventListener('scroll', debounceHandleDocumentScroll);
-      window.removeEventListener('resize', debounceHandleWindowResize);
-    })
-
-    watch(() => props.modelValue, (value: boolean) => {
-      if (value === isOpen.value) return;
-      isOpen.value = value;
-    })
-
-    watch(isOpen, (value: boolean) => {
-      if (value) {
-        nextTick(() => {
-          handleWindowResize()
-        })
-      }
-      if (value === props.modelValue) return;
-      /**
-       * Emmitted when modelValue changes.
-       */
-      emit("update:modelValue", value);
-    })
-
-    const open = () => {
-      if (isOpen.value) return;
-      nextTick(() => {
-        isOpen.value = true;
-      });
-    }
-
-    const close = () => {
-      if (!isOpen.value) return;
-      nextTick(() => {
-        isOpen.value = false;
-      });
-    }
-
-    const handleClick = () => {
-      /**
-       * Emmitted on trigger button click.
-       */
-      emit("btn-click");
-      if (props.hover) return;
-      isOpen.value = !isOpen.value;
-    }
-
-    const handleOutsideMouseDown = ($event: MouseEvent) => {
-      if (!isOpen.value) return;
-      if ((root.value as any).contains($event.target)) return;
-      close();
-    }
-
-    const handleOutsideKeyUp = ($event: KeyboardEvent) => {
-      if (!isOpen.value) return;
-      if ($event.key === 'Escape') close();
-      if ((root.value as any).contains($event.target)) return;
-    }
-
-    const handleOutsideMouseOver = ($event: MouseEvent) => {
-      if (!props.hover) return;
-      const hoveringDropdown = (root.value as any).contains($event.target);
-      if (!isOpen.value && hoveringDropdown) {
-        open();
-      } else if (isOpen.value && !hoveringDropdown) {
-        close();
+    const handleClick = (isOpen: boolean, open: Function, close: Function) => {
+      if (isOpen) {
+        close(props.closeDelay)
+      } else {
+        open(props.openDelay)
       }
     }
-
-    const debounceHandleOutsideMouseOver = debounce(
-      handleOutsideMouseOver,
-      props.hoverDelay
-    );
-
-    const handleDocumentScroll = () => {
-      if (typeof window === "undefined" || typeof document === "undefined" || !root.value) {
-        return;
-      }
-      const { top } = (root.value as HTMLElement).getBoundingClientRect();
-      const vHeight = (window.innerHeight || document.documentElement.clientHeight);
-      dropUp.value = top > vHeight / 2;
-    }
-
-    const handleWindowResize = () => {
-      if (typeof window === "undefined" || typeof document === "undefined" || !root.value || !menu.value) {
-        return;
-      }
-      const { left } = (root.value as HTMLElement).getBoundingClientRect();
-      const { width } = (menu.value as HTMLElement).getBoundingClientRect();
-      const vWidth = (window.innerWidth || document.documentElement.clientWidth);
-      right.value = left + width > vWidth;
-    }
-
-    const debounceHandleDocumentScroll = debounce(handleDocumentScroll, 100);
-    const debounceHandleWindowResize = debounce(handleWindowResize, 250);
 
     return {
-      root,
       button,
-      isOpen,
-      right,
-      dropUp,
-      open,
-      close,
-      handleClick,
-      handleOutsideMouseDown,
-      handleOutsideKeyUp,
-      handleOutsideMouseOver,
-      debounceHandleOutsideMouseOver,
-      handleDocumentScroll,
-      handleWindowResize,
-      debounceHandleDocumentScroll,
-      debounceHandleWindowResize
+      handleClick
     }
   },
-});
+  computed: {
+    sizeClass() {
+      switch (this.size) {
+        case 'md':
+          return ''
+        case 'sm':
+          return 'btn-sm'
+        default:
+          return ''
+      }
+    },
+    variantClass() {
+      switch (this.variant) {
+        case 'default':
+          return 'btn-default'
+        case 'primary':
+          return 'btn-primary'
+        case 'success':
+          return 'btn-success'
+        case 'info':
+          return 'btn-info'
+        case 'warning':
+          return 'btn-warning'
+        case 'danger':
+          return 'btn-danger'
+        case 'light':
+          return 'btn-light'
+        case 'dark':
+          return 'btn-dark'
+        default:
+          return ''
+      }
+    }
+  }
+})
 </script>

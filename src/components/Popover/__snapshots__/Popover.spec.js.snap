@@ -1,12 +1,25 @@
 // Vitest Snapshot v1
 
 exports[`Popover.vue > matches snapshot 1`] = `
-<popper-wrapper-stub
-  config="[object Object]"
-  data-v-45093cca=""
+<floating-ui-stub
+  arrowclass="absolute bg-white dark:bg-gray-700 dark:border-gray-600 border w-3 h-3 rotate-45"
+  arrowpadding="5"
+  disableanimation="false"
+  disabled="false"
+  inline="false"
+  offset="10"
+  overflowpadding="5"
+  placement="auto"
+  placementbottomarrowclass="-top-1.5 border-b-0 border-r-0"
+  placementleftarrowclass="-right-1.5 border-b-0 border-l-0"
+  placementrightarrowclass="-left-1.5 border-t-0 border-r-0"
+  placementtoparrowclass="-bottom-1.5 border-t-0 border-l-0"
+  popperclass="absolute bg-white dark:text-gray-50 dark:bg-gray-700 dark:border-gray-600 border shadow-lg rounded-md w-96 z-50"
+  shift="false"
+  strategy="absolute"
 />
 `;
 
-exports[`Popover.vue > matches snapshot with no props assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-45093cca=\\"\\"></popper-wrapper-stub>"`;
+exports[`Popover.vue > matches snapshot with no props assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"auto\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"false\\" disableanimation=\\"false\\" popperclass=\\"absolute bg-white dark:text-gray-50 dark:bg-gray-700 dark:border-gray-600 border shadow-lg rounded-md w-96 z-50\\" arrowclass=\\"absolute bg-white dark:bg-gray-700 dark:border-gray-600 border w-3 h-3 rotate-45\\" placementtoparrowclass=\\"-bottom-1.5 border-t-0 border-l-0\\" placementrightarrowclass=\\"-left-1.5 border-t-0 border-r-0\\" placementbottomarrowclass=\\"-top-1.5 border-b-0 border-r-0\\" placementleftarrowclass=\\"-right-1.5 border-b-0 border-l-0\\"></floating-ui-stub>"`;
 
-exports[`Popover.vue > matches snapshot with prop assigned 1`] = `"<popper-wrapper-stub config=\\"[object Object]\\" data-v-45093cca=\\"\\"></popper-wrapper-stub>"`;
+exports[`Popover.vue > matches snapshot with prop assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"bottom\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"false\\" disableanimation=\\"false\\" popperclass=\\"absolute bg-white dark:text-gray-50 dark:bg-gray-700 dark:border-gray-600 border shadow-lg rounded-md w-80 z-50\\" arrowclass=\\"absolute bg-white dark:bg-gray-700 dark:border-gray-600 border w-3 h-3 rotate-45\\" placementtoparrowclass=\\"-bottom-1.5 border-t-0 border-l-0\\" placementrightarrowclass=\\"-left-1.5 border-t-0 border-r-0\\" placementbottomarrowclass=\\"-top-1.5 border-b-0 border-r-0\\" placementleftarrowclass=\\"-right-1.5 border-b-0 border-l-0\\" popoverclass=\\"test\\" triggerclass=\\"test\\"></floating-ui-stub>"`;
