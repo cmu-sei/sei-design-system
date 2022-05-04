@@ -372,13 +372,6 @@
               class="link link-primary"
             >Go home</a>
           </div>
-
-          <button
-            class="btn btn-default"
-            @click="showModalSizeDropdown = !showModalSizeDropdown"
-          >
-            Toggle Dropdown
-          </button>
           <sds-dropdown
             v-model="showModalSizeDropdown"
             :title="`Modal Size: ${modalSize}`"
