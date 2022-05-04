@@ -6,7 +6,7 @@ import SdsDropdownItem from '../DropdownItem';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Buttons/Dropdowns/Dropdown',
+  title: 'Buttons/Dropdowns/Dropdown/Dropdown',
   parameters: {
     docs: {
       description: {
@@ -29,7 +29,7 @@ export default {
       control: { type: 'select' }
     },
     size: {
-      options: ["md", "sm"],
+      options: ['sm', 'md'],
       control: {type: 'select'}
     }
   }

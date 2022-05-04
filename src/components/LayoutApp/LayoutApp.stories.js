@@ -2,7 +2,7 @@ import SdsLayoutApp from './LayoutApp.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Layouts/LayoutApp',
+  title: 'Layouts/Layout App',
   parameters: {
     layout: 'fullscreen',
     docs: {

@@ -14,7 +14,7 @@ export default {
   component: SdsDatepicker,
   argTypes: {
     size: {
-      options: ['md', 'sm'],
+      options: ['sm', 'md'],
       control: { type: 'select' }
     },
     mode: {

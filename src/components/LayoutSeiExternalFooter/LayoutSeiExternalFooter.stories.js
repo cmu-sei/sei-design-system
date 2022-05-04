@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternalFooter from './LayoutSeiExternalFooter.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternalFooter',
+  title: 'Layouts/Layout SEI External/Layout SEI External Footer',
   parameters: {
     docs: {
       description: {

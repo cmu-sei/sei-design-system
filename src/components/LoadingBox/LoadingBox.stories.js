@@ -1,7 +1,7 @@
 import SdsLoadingBox from './LoadingBox.vue';
 
 export default {
-  title: 'Feedback/LoadingBox',
+  title: 'Feedback/Loading Box',
   parameters: {
     docs: {
       description: {

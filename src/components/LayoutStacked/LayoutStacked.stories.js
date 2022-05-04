@@ -1,7 +1,7 @@
 import SdsLayoutStacked from './LayoutStacked.vue';
 
 export default {
-  title: 'Layouts/LayoutStacked',
+  title: 'Layouts/Layout Stacked',
   parameters: {
     layout: 'fullscreen',
     docs: {

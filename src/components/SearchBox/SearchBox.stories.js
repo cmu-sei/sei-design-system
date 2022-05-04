@@ -1,7 +1,7 @@
 import SdsSearchBox from './SearchBox.vue';
 
 export default {
-  title: 'Inputs/SearchBox',
+  title: 'Inputs/Search Box',
   parameters: {
     docs: {
       description: {

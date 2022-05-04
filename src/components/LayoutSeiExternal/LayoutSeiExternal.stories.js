@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternal from './LayoutSeiExternal.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternal',
+  title: 'Layouts/Layout SEI External/Layout SEI External',
   parameters: {
     layout: 'fullscreen',
     docs: {

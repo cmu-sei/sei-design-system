@@ -46,7 +46,8 @@
     </div>
     <button
       :disabled="disabled || disableSearch"
-      :class="[variantClass, btnClass]"
+      :class="[variantClass]"
+      class="px-3"
       type="button"
       @click="search"
     >
@@ -113,13 +114,6 @@ export default defineComponent({
     variant: {
       type: String,
       default: "default",
-    },
-    /**
-     * The class list of the search button.
-     */
-    btnClass: {
-      type: String,
-      default: "px-3",
     },
     /**
      * Determines if a search should be performed on key up.
