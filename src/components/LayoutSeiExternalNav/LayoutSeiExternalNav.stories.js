@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternalNav from './LayoutSeiExternalNav.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternalNav',
+  title: 'Layouts/Layout SEI External/Layout SEI External Nav',
   parameters: {
     docs: {
       description: {

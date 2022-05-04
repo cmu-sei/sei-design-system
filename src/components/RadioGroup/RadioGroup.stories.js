@@ -1,7 +1,7 @@
 import SdsRadioGroup from './RadioGroup.vue';
 
 export default {
-  title: 'Inputs/Selections/RadioGroup',
+  title: 'Inputs/Selections/Radio Group',
   parameters: {
     docs: {
       description: {

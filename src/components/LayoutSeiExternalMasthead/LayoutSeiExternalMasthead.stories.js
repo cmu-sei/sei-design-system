@@ -1,7 +1,7 @@
 import SdsLayoutSeiExternalMasthead from './LayoutSeiExternalMasthead.vue';
 
 export default {
-  title: 'Layouts/LayoutSeiExternal/LayoutSeiExternalMasthead',
+  title: 'Layouts/Layout SEI External/Layout SEI External Masthead',
   parameters: {
     docs: {
       description: {

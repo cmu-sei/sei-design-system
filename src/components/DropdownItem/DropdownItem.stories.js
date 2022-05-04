@@ -1,7 +1,7 @@
 import SdsDropdownItem from './DropdownItem.vue';
 
 export default {
-  title: 'Buttons/Dropdowns/DropdownItem',
+  title: 'Buttons/Dropdowns/Dropdown/Dropdown Item',
   parameters: {
     docs: {
       description: {

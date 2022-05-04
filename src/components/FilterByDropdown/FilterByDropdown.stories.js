@@ -3,7 +3,7 @@ import SdsFilterByDropdown from './FilterByDropdown.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Buttons/Dropdowns/FilterByDropdown',
+  title: 'Buttons/Dropdowns/Filter by Dropdown',
   parameters: {
     docs: {
       description: {
