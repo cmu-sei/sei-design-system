@@ -137,13 +137,6 @@ export default defineComponent({
   name: 'SdsPaginator',
   props: {
     /**
-     * Determines the theme color of the component.
-     */
-    variant: {
-      type: String,
-      default: "default",
-    },
-    /**
      * The active page number.
      */
     currentPage: {
