@@ -14,7 +14,7 @@ export default {
   component: SdsAutosuggest,
   argTypes: {
     variant: {
-      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['default', 'primary', 'danger'],
       control: { type: 'select' }
     }
   }
