@@ -282,6 +282,14 @@ const processSingleFile = (file: File) => {
     if (props.multiple) {
       (file as FileWithInvalidDefinitions).invalidSize = true
       invalidFileList.value.push(file)
+      invalidFileList.value = invalidFileList.value.filter((file, index, self) =>
+        index === self.findIndex((i) => (
+          i.name === file.name &&
+          i.lastModified === file.lastModified &&
+          i.size === file.size &&
+          i.type === file.type
+        ))
+      )
     } else {
       fileList.value = []
       fileInput.value.files = dt.files;
@@ -292,6 +300,14 @@ const processSingleFile = (file: File) => {
     if (props.multiple) {
       (file as FileWithInvalidDefinitions).invalidType = true
       invalidFileList.value.push(file)
+      invalidFileList.value = invalidFileList.value.filter((file, index, self) =>
+        index === self.findIndex((i) => (
+          i.name === file.name &&
+          i.lastModified === file.lastModified &&
+          i.size === file.size &&
+          i.type === file.type
+        ))
+      )
     } else {
       fileList.value = []
       fileInput.value.files = dt.files;
