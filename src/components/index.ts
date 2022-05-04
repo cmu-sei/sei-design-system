@@ -2,7 +2,6 @@ import { App, Component } from "vue";
 import SdsAutosuggest from "./Autosuggest";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
-import SdsCharacterCounter from "./CharacterCounter"
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
 import SdsDatepicker from "./Datepicker";
@@ -52,7 +51,6 @@ const Components: ComponentList = {
   SdsAutosuggest,
   SdsButton,
   SdsCalendar,
-  SdsCharacterCounter,
   SdsCheckboxGroup,
   SdsClientOnly,
   SdsDatepicker,
@@ -106,7 +104,6 @@ export default {
 export { default as SdsAutosuggest } from "./Autosuggest";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
-export { default as SdsCharacterCounter } from "./CharacterCounter"
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsDatepicker } from "./Datepicker";
