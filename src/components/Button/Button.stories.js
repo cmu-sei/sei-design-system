@@ -18,7 +18,7 @@ export default {
       control: { type: 'select' }
     },
     size: {
-      options: ['', 'sm'],
+      options: ['md', 'sm'],
       control: { type: 'select' }
     },
     outline: {
