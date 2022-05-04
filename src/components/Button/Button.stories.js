@@ -14,7 +14,7 @@ export default {
   component: SdsButton,
   argTypes: {
     variant: {
-      options: ['', 'default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['', 'default', 'primary', 'success', 'danger', 'light'],
       control: { type: 'select' }
     },
     size: {

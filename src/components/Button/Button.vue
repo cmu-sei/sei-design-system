@@ -49,16 +49,10 @@ export default defineComponent({
           return 'btn-primary'
         case 'success':
           return 'btn-success'
-        case 'info':
-          return 'btn-info'
-        case 'warning':
-          return 'btn-warning'
         case 'danger':
           return 'btn-danger'
         case 'light':
           return 'btn-light'
-        case 'dark':
-          return 'btn-dark'
         default:
           return ''
       }

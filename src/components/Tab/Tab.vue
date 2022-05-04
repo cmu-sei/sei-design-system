@@ -41,18 +41,8 @@ export default defineComponent({
       switch (this.variant) {
         case 'primary':
           return 'tab-primary'
-        case 'success':
-          return 'tab-success'
-        case 'info':
-          return 'tab-info'
-        case 'warning':
-          return 'tab-warning'
         case 'danger':
           return 'tab-danger'
-        case 'light':
-          return 'tab-light'
-        case 'dark':
-          return 'tab-dark'
         default:
           return ''
       }

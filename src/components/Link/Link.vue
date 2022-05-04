@@ -43,18 +43,8 @@ export default defineComponent({
           return 'link-secondary'
         case 'tertiary':
           return 'link-tertiary'
-        case 'success':
-          return 'link-success'
-        case 'info':
-          return 'link-info'
-        case 'warning':
-          return 'link-warning'
         case 'danger':
           return 'link-danger'
-        case 'light':
-          return 'link-light'
-        case 'dark':
-          return 'link-dark'
         default:
           return ''
       }

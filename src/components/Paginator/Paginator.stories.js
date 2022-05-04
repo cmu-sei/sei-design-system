@@ -11,10 +11,6 @@ export default {
   },
   component: SdsPaginator,
   argTypes: {
-    variant: {
-      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
-      control: { type: 'select' }
-    },
   }
 };
 

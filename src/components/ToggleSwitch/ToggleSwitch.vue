@@ -82,16 +82,8 @@ export default defineComponent({
     },
     variantClass() {
       switch (this.variant) {
-        case 'disabled':
-          return 'bg-gray-700 bg-opacity-50 disabled:bg-opacity-50'
         case 'primary':
           return 'bg-blue-500'
-        case 'success':
-          return 'bg-green-500'
-        case 'info':
-          return 'bg-blue-500'
-        case 'warning':
-          return 'bg-yellow-500'
         case 'danger':
           return 'bg-red-500'
         default:
@@ -102,12 +94,6 @@ export default defineComponent({
       switch (this.variant) {
         case 'primary':
           return 'fill-current text-blue-500'
-        case 'success':
-          return 'fill-current text-green-500'
-        case 'info':
-          return 'fill-current text-blue-500'
-        case 'warning':
-          return 'fill-current text-yellow-500'
         case 'danger':
           return 'fill-current text-red-500'
         default:
