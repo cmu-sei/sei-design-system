@@ -153,18 +153,8 @@ export default defineComponent({
       switch (this.variant) {
         case "primary":
           return "btn btn-default text-primary dark:text-blue-400";
-        case "success":
-          return "btn btn-default text-success dark:text-green-400";
-        case "info":
-          return "btn btn-default text-info dark:text-teal-400";
-        case "warning":
-          return "btn btn-default text-warning dark:text-orange-400";
         case "danger":
           return "btn btn-default text-danger dark:text-red-400";
-        case "light":
-          return "btn btn-default text-light";
-        case "dark":
-          return "btn btn-default text-dark";
         default:
           return "btn btn-default text-secondary dark:text-gray-300";
       }

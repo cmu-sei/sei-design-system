@@ -25,7 +25,7 @@ export default {
       control: {type: 'select'}
     },
     variant: {
-      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['default', 'primary', 'success', 'danger', 'light'],
       control: { type: 'select' }
     },
     size: {

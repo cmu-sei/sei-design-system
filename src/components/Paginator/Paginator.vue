@@ -11,9 +11,8 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1"
+          class="flex space-x-1 btn btn-default"
           title="First"
-          :class="[variantClass]"
           @click.prevent="goToPage(1, $event)"
         >
           <svg
@@ -34,9 +33,8 @@
         </button>
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1"
+          class="flex space-x-1 btn btn-default"
           title="Prev"
-          :class="[variantClass]"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <svg
@@ -66,12 +64,11 @@
         >
           <button
             :class="{
-              [variantClass]: true,
               'shadow-none border-transparent': page === '...',
               active: currentPage === page,
             }"
             :disabled="page === '...' || loading"
-            class="btn"
+            class="btn btn-default"
             @click.prevent="goToPage(page, $event)"
           >
             {{ page.toLocaleString() }}
@@ -86,9 +83,8 @@
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1"
+          class="flex space-x-1 btn btn-default"
           title="Next"
-          :class="[variantClass]"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
           <span class="sr-only sm:not-sr-only">Next</span>
@@ -109,9 +105,8 @@
         </button>
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1"
+          class="flex space-x-1 btn btn-default"
           title="Last"
-          :class="[variantClass]"
           @click.prevent="goToPage(totalPages, $event)"
         >
           <span class="sr-only sm:not-sr-only">Last</span>
@@ -179,28 +174,6 @@ export default defineComponent({
   },
   emits: ['go-to-page'],
   computed: {
-    variantClass() {
-      switch (this.variant) {
-        case 'default':
-          return 'btn btn-default'
-        case 'primary':
-          return 'btn btn-primary'
-        case 'success':
-          return 'btn btn-success'
-        case 'info':
-          return 'btn btn-info'
-        case 'warning':
-          return 'btn btn-warning'
-        case 'danger':
-          return 'btn btn-danger'
-        case 'light':
-          return 'btn btn-light'
-        case 'dark':
-          return 'btn btn-dark'
-        default:
-          return 'btn btn-default'
-      }
-    },
     prevDisabled() {
       return this.currentPage <= 1 || this.loading;
     },

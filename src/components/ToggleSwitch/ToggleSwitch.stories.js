@@ -12,7 +12,7 @@ export default {
   component: SdsToggleSwitch,
   argTypes: {
     variant: {
-      options: ['primary', 'success', 'info', 'warning', 'danger'],
+      options: ['primary', 'danger'],
       control: {type: 'select'}
     }
   }

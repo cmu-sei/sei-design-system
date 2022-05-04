@@ -12,7 +12,7 @@ export default {
   component: SdsLink,
   argTypes: {
     variant: {
-      options: ['', 'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['', 'primary', 'secondary', 'tertiary', 'danger'],
       control: { type: 'select' }
     },
     cta: {

@@ -16,7 +16,7 @@ export default {
       control: { type: 'select' }
     },
     variant: {
-      options: ['', 'primary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['', 'primary', 'danger'],
       control: { type: 'select' }
     },
     type: {

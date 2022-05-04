@@ -255,7 +255,6 @@
           </h4>
           <sds-dropdown
             title="Dropdown"
-            variant="dark"
             auto
           >
             <div class="text-sm px-2">
