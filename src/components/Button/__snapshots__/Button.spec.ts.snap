@@ -3,7 +3,6 @@
 exports[`Button > should match its default snapshot 1`] = `
 <button
   class=""
-  disabled="false"
 >
   <!-- @slot Button content. -->
   
@@ -15,7 +14,6 @@ exports[`Button > should match its default snapshot 1`] = `
 exports[`Button > should match its variant primary snapshot 1`] = `
 <button
   class="btn btn-primary"
-  disabled="false"
 >
   <!-- @slot Button content. -->
   
