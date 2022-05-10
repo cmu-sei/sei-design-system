@@ -11,6 +11,10 @@ export default {
   },
   component: SdsSelect,
   argTypes: {
+    size: {
+      options: ['sm', 'md'],
+      control: { type: 'select' }
+    }
   }
 };
 
