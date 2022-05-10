@@ -103,17 +103,17 @@ export default defineComponent({
         },
         { 
           id: 3, 
-          title: 'Another one',
+          title: 'Research & Projects With A Large Badge Count',
           items: [
             { id: 1, title: 'First item', active: false, href: '#' },
-            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 3 },
-            { id: 3, title: 'Third item', active: false, href: '#', badgeCount: 2 },
+            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 93 },
+            { id: 3, title: 'Third item With A Large Badge Count With A Large Badge Count', active: false, href: '#', badgeCount: 400 },
             { id: 4, title: 'Fourth item', active: false, href: '#' },
           ]
         },
         { id: 4, title: 'News & Events', active: false, href: '#' },
         { id: 5, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
-        { id: 6, title: 'Research & Projects', active: false, href: '#', badgeCount: 999 },
+        { id: 6, title: 'Research & Projects With A Large Badge Count', active: false, href: '#', badgeCount: 999 },
         { id: 7, title: 'HR & Benefits', active: false, href: '#' },
         { id: 8, title: 'Policies', active: false, href: '#' },
         { id: 9, title: 'Workplace Services', active: false, href: '#' },
