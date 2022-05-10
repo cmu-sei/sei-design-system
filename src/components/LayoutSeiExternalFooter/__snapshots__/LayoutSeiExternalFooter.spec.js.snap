@@ -78,7 +78,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
               class="inline-block hover:border-b-0 hover:opacity-50 focus:border-b-0 focus:opacity-50 facebook"
               href="https://www.facebook.com/SEICMU/"
               rel="noopener"
-              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-position: 0 0; background-size: auto 100%;"
+              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-size: auto 100%;"
               target="_blank"
             >
               <span
@@ -95,7 +95,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
               class="inline-block hover:border-b-0 hover:opacity-50 focus:border-b-0 focus:opacity-50 twitter"
               href="https://twitter.com/sei_cmu"
               rel="noopener"
-              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-position: -32px 0; background-size: auto 100%;"
+              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-size: auto 100%;"
               target="_blank"
             >
               <span
@@ -112,7 +112,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
               class="inline-block hover:border-b-0 hover:opacity-50 focus:border-b-0 focus:opacity-50 linkedin"
               href="https://www.linkedin.com/company/software-engineering-institute"
               rel="noopener"
-              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-position: -96px 0; background-size: auto 100%;"
+              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-size: auto 100%;"
               target="_blank"
             >
               <span
@@ -129,7 +129,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
               class="inline-block hover:border-b-0 hover:opacity-50 focus:border-b-0 focus:opacity-50 youtube"
               href="https://www.youtube.com/user/TheSEICMU"
               rel="noopener"
-              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-position: -129px 0; background-size: auto 100%;"
+              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-size: auto 100%;"
               target="_blank"
             >
               <span
@@ -146,7 +146,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
               class="inline-block hover:border-b-0 hover:opacity-50 focus:border-b-0 focus:opacity-50 itunes"
               href="https://podcasts.apple.com/us/podcast/software-engineering-institute-sei-podcast-series/id566573552?mt=2"
               rel="noopener"
-              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-position: -161px 0; background-size: auto 100%; border-radius: 50%;"
+              style="height: 30px; width: 30px; background-repeat: no-repeat; background-image: url(/src/assets/images/sprites-social.png); background-size: auto 100%; border-radius: 50%;"
               target="_blank"
             >
               <span

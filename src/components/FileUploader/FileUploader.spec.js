@@ -1,10 +1,18 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Component from './FileUploader.vue'
 
-describe.skip('FileUploader', () => {
+describe('FileUploader', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {})
+    const wrapper = shallowMount(Component, {
+      directives: {
+        'uid': {
+          created(el) {
+            el.setAttribute('id', 'unique-id')
+          }
+        }
+      }
+    })
     expect(wrapper.element).toMatchSnapshot()
   })
 })

@@ -152,9 +152,17 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Uid } from '@shimyshack/uid'
+export default {
+  directives: {
+    uid: Uid
+  }
+}
+</script>
+
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Uid } from '@shimyshack/uid'
 
 type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
 
@@ -190,8 +198,6 @@ const props = defineProps({
    */
   helperText: { type: String, default: undefined }
 })
-
-const vUid = Uid
 
 const fileInput = ref<null | HTMLInputElement>(null)
 const fileList = ref<File[]>([])
