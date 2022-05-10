@@ -40,7 +40,7 @@ const props = defineProps({
   /**
    * The v-model of the component.
    */
-  modelValue: { type: [Boolean, String, Number, null] as PropType<SelectModel>, default: null },
+  modelValue: { type: [Boolean, String, Number, Array, Object, null] as PropType<SelectModel>, default: null },
   /**
    * The options for the component.
    * 
