@@ -4,6 +4,7 @@
     :disabled="disabled"
     :readonly="readonly"
     class="form-control"
+    :class="{ 'form-control-sm': size === 'sm' }"
   >
     <option
       disabled
@@ -41,7 +42,9 @@ const props = defineProps({
    */
   modelValue: { type: [Boolean, String, Number, null] as PropType<SelectModel>, default: null },
   /**
-   * The options for the component. Expects { id, value, text }.
+   * The options for the component.
+   * 
+   * Expects: `{ id, value, text }`
    */
   options: { type: Array as PropType<SelectOption[]>, default: () => [] },
   /**
@@ -52,6 +55,10 @@ const props = defineProps({
    * Determines if the component is read-only.
    */
   readonly: { type: Boolean, default: false },
+  /**
+   * Determines the size of the component.
+   */
+  size: { type: String, default: 'md' },
 })
 
 const emit = defineEmits(['update:modelValue'])
