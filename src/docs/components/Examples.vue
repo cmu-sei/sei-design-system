@@ -1,5 +1,47 @@
 <template>
   <div class="guide">
+    <p>Tabs</p>
+    <div class="p-6">
+      <sds-tabs
+        v-model="tabs"
+        class="mb-8 bg-white dark:bg-gray-800 border rounded-b p-4"
+        @change="changeTab"
+      >
+        <template #tab(groups)>
+          <i>Directorates</i>
+        </template>
+        <template #content(groups)>
+          <div class="p-4">
+            This is the content for groups.
+          </div>
+        </template>
+        <template #content(workplace-services)>
+          <div class="p-4">
+            This is the content for workplace services.
+          </div>
+        </template>
+      </sds-tabs>
+      <sds-tabs
+        v-model="tabs"
+        type="underline"
+        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        @change="changeTab"
+      >
+        <template #tab(groups)>
+          <i>Directorates</i>
+        </template>
+        <template #content(groups)>
+          <div class="p-4">
+            This is the content for groups.
+          </div>
+        </template>
+        <template #content(workplace-services)>
+          <div class="p-4">
+            This is the content for workplace services.
+          </div>
+        </template>
+      </sds-tabs>
+    </div>
     <p>Select</p>
     <div class="p-6">
       <sds-select
@@ -625,6 +667,14 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      tabs: [
+        { key: 'home', title: 'Home', disabled: true },
+        { key: 'about', title: 'About Us', active: true },
+        { key: 'workplace-services', title: 'Workplace Services' },
+        { key: 'link-to-google', title: 'Link to Google', tag: 'a', href: 'https://google.com', external: true, disabled: true },
+        { key: 'link-trigger', title: 'Link Trigger', href: 'https://google.com' },
+        { key: 'groups' }
+      ],
       selectModel: 2,
       selectOptions: [
         { id: 1, value: 1, text: 'Option 1' },
@@ -836,16 +886,25 @@ export default defineComponent({
       this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
     },
     async willOpen(res: Function, rej: Function) {
-      console.log('Pause for 3 seconds to get fake api request')
-      await new Promise(r => setTimeout(r, 3000))
+      console.log('Pause for 1 seconds to get fake api request')
+      await new Promise(r => setTimeout(r, 1000))
       console.log('Open now!')
       res()
     },
     async willClose(res: Function, rej: Function) {
-      console.log('Pause for 3 seconds to do something on close')
-      await new Promise(r => setTimeout(r, 3000))
+      console.log('Pause for 1 seconds to do something on close')
+      await new Promise(r => setTimeout(r, 1000))
       console.log('Close now!')
       res()
+    },
+    async willChangeTab(tab: any, res: Function, rej: Function) {
+      console.log('Pause for 1/2 second to get fake api request', tab)
+      await new Promise(r => setTimeout(r, 500))
+      console.log('Open now!')
+      res()
+    },
+    changeTab(tab: any) {
+      console.log(tab)
     }
   },
 });

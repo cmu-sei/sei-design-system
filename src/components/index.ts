@@ -34,7 +34,7 @@ import SdsScrollspy from "./Scrollspy";
 import SdsSearchBox from "./SearchBox";
 import SdsSection from "./Section";
 import SdsSelect from "./Select";
-import SdsTab from "./Tab";
+import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
 import SdsTextarea from "./Textarea";
 import SdsToast from "./Toast";
@@ -83,7 +83,7 @@ const Components: ComponentList = {
   SdsSearchBox,
   SdsSection,
   SdsSelect,
-  SdsTab,
+  SdsTabs,
   SdsTable,
   SdsTextarea,
   SdsToast,
@@ -136,7 +136,7 @@ export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSearchBox } from "./SearchBox";
 export { default as SdsSection } from "./Section";
 export { default as SdsSelect } from "./Select";
-export { default as SdsTab } from "./Tab";
+export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
 export { default as SdsTextarea } from "./Textarea";
 export { default as SdsToast } from "./Toast";
