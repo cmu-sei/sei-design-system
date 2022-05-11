@@ -1,0 +1,18 @@
+// Vitest Snapshot v1
+
+exports[`Tabs > should match its default snapshot 1`] = `
+<div>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap border-b dark:border-gray-500"
+    >
+      
+      
+    </ul>
+  </div>
+  
+  
+</div>
+`;
