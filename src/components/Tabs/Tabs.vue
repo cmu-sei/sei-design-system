@@ -1,35 +1,53 @@
 <template>
-  <div>
-    <div class="overflow-x-auto">
+  <div
+    ref="root"
+    v-uid
+  >
+    <div
+      class="overflow-x-auto"
+      :class="{
+        'bg-gray-100 dark:bg-gray-700 rounded-t': type === 'folder'
+      }"
+    >
       <ul
-        class="flex whitespace-nowrap"
-        :class="{
-          'border-b dark:border-gray-500': type === 'folder'
-        }"
+        role="tablist"
+        class="flex whitespace-nowrap z-10"
       >
         <li
           v-for="tab in tabs"
           :key="tab.key"
-          :class="{ '-mb-px': type === 'folder' && tab.active }"
+          role="presentation"
+          :class="{
+            'mr-auto': tab.align === 'left',
+            'ml-auto': tab.align === 'right',
+            'mx-auto': tab.align === 'center'
+          }"
         >
           <component
             :is="tab.tag || 'button'"
+            :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
               'opacity-50': tab.disabled,
               'pointer-events-none': tab.disabled || tab.active,
               'text-sm inline-block rounded-t py-2 px-4 font-bold': type === 'folder',
               'bg-white dark:bg-gray-800 border-l border-t border-r text-gray-700 dark:border-gray-500 dark:text-gray-100': type === 'folder' && tab.active,
-              'text-blue-500 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-100':
+              'text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
                 type === 'folder' && !tab.active,
               'tab tab-underline tab-red': type === 'underline',
-              'active': type === 'underline' && tab.active,
-              'disabled': type === 'underline' && tab.disabled,
+              'tab tab-block tab-red': type === 'block',
+              'active': (type === 'underline' || type === 'block') && tab.active,
+              'disabled': (type === 'underline' || type === 'block') && tab.disabled,
             }"
             :href="tab.tag === 'a' && tab.href || undefined"
             :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
             :rel="tab.tag === 'a' && tab.href && tab.external ? 'noopener noreferrer' : undefined"
             :type="tab.tag === 'button' ? 'button' : undefined"
             :disabled="tab.disabled"
+            :tabindex="tab.disabled ? -1 : undefined"
+            :aria-selected="tab.active"
+            :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
+            :data-active="tab.active ? true : undefined"
+            role="tab"
             @click="changeTab(tab)"
           >
             <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
@@ -41,33 +59,48 @@
       </ul>
     </div>
     <template v-for="tab in tabs">
-      <!-- @slot Dynamic tab content. Used to inject content into page for an active tab. -->
-      <slot
+      <div
         v-if="tab.active"
-        :name="`content(${tab.key})`"
-      />
+        :id="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
+        :key="tab.key"
+        :aria-labelby="`sds-tabs-${root?.id}__${tab.key}__tab`"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!-- @slot Dynamic tab content. Used to inject content into page for an active tab. -->
+        <slot
+          v-if="tab.active"
+          :name="`content(${tab.key})`"
+        />
+      </div>
     </template>
   </div>
 </template>
 
 <script lang="ts">
+import { Uid } from '@shimyshack/uid'
+
 interface ITab {
   key: string
   tag?: 'button' | 'a'
   title?: string
   href?: string
+  align?: 'left' | 'right' | 'center'
   external?: boolean
   active?: boolean
   disabled?: boolean
 }
 
 export default {
-  name: 'SdsTabs'
+  name: 'SdsTabs',
+  directives: {
+    uid: Uid
+  }
 }
 </script>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { PropType, ref, computed } from 'vue'
 
 const props = defineProps({
   /**
@@ -77,13 +110,14 @@ const props = defineProps({
    * 
    * ```
    * {
-   *   id,
-   *   tag?,
-   *   title?,
-   *   href?,
-   *   external?,
-   *   active?,
-   *   disabled?
+   *   key: string
+   *   tag?: 'button' | 'a'
+   *   title?: string
+   *   href?: string
+   *   align?: 'left' | 'right' | 'center'
+   *   external?: boolean
+   *   active?: boolean
+   *   disabled?: boolean
    * }
    * ```
    */
@@ -91,7 +125,7 @@ const props = defineProps({
   /**
    * The overall look and feel of the component.
    */
-  type: { type: String as PropType<'folder' | 'underline'>, default: 'folder' },
+  type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
   /**
    * Allows for code execution prior to changing tabs.
    * 
@@ -122,6 +156,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
+
+const root = ref<HTMLElement>()
 
 const tabs = computed({
   get(): ITab[] {

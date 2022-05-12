@@ -1,10 +1,10 @@
 <template>
   <div class="guide">
     <p>Tabs</p>
-    <div class="p-6">
+    <div class="p-6 space-y-8">
       <sds-tabs
         v-model="tabs"
-        class="mb-8 bg-white dark:bg-gray-800 border rounded-b p-4"
+        class="bg-white dark:bg-gray-800 p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -29,6 +29,26 @@
       >
         <template #tab(groups)>
           <i>Directorates</i>
+        </template>
+        <template #content(groups)>
+          <div class="p-4">
+            This is the content for groups.
+          </div>
+        </template>
+        <template #content(workplace-services)>
+          <div class="p-4">
+            This is the content for workplace services.
+          </div>
+        </template>
+      </sds-tabs>
+      <sds-tabs
+        v-model="tabs"
+        type="block"
+        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        @change="changeTab"
+      >
+        <template #tab(groups)>
+          <i>Groups (custom style)</i>
         </template>
         <template #content(groups)>
           <div class="p-4">
@@ -673,7 +693,7 @@ export default defineComponent({
         { key: 'workplace-services', title: 'Workplace Services' },
         { key: 'link-to-google', title: 'Link to Google', tag: 'a', href: 'https://google.com', external: true, disabled: true },
         { key: 'link-trigger', title: 'Link Trigger', href: 'https://google.com' },
-        { key: 'groups' }
+        { key: 'groups', align: 'right' }
       ],
       selectModel: 2,
       selectOptions: [

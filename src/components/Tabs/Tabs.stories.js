@@ -14,7 +14,7 @@ export default {
   component: SdsTabs,
   argTypes: {
     type: {
-      options: ['folder', 'underline'],
+      options: ['folder', 'underline', 'block'],
       control: { type: 'select' }
     }
   }
