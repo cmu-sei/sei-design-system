@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A calendar is a text input field that displays a calendar to allow users to select a single date or a date range.',
+        component: 'A calendar displays a calendar grid to show users the full month or a range of two months.',
       },
     },
   },

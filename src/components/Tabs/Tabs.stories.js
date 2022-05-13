@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Tabs is a textual component that organizes information of the same hierarchy across different views or interactions.',
+        component: 'Tabs provide navigation between sets of content on a page.',
       },
     },
   },
