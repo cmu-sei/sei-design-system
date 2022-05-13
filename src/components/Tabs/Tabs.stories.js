@@ -32,24 +32,32 @@ const Template = (args) => ({
       @change="onChange"
       @update:model-value="onUpdateModelValue"
     >
-      <template #tab(groups)>
-        <i>Directorates</i>
+      <template #tab(tab4)>
+        Tab 4
       </template>
-      <template #content(groups)>
+      <template #panel(tab1)>
         <div class="p-4">
-          This is the content for groups.
+          This is the content for tab 1.
         </div>
       </template>
-      <template #content(workplace-services)>
+      <template #panel(tab2)>
         <div class="p-4">
-          This is the content for workplace services.
+          This is the content for tab 2.
         </div>
       </template>
-      <template #content(link-trigger)>
+      <template #panel(tab3)>
         <div class="p-4">
-          <p>A <code>@change</code> event is fired when changing tabs.</p>
-          <p>This event provides the selected <strong>tab</strong> so you can act upon it, e.g., trigger a Nuxt router change.</p>
-          <p>In this example, this tab has a defined <strong>href</strong> property, that could be acted upon.</p>
+          This is the content for tab 3.
+        </div>
+      </template>
+      <template #panel(tab4)>
+        <div class="p-4">
+          This is the content for tab 4.
+        </div>
+      </template>
+      <template #panel(tab5)>
+        <div class="p-4">
+          This is the content for tab 5.
         </div>
       </template>
     </sds-tabs>
@@ -71,12 +79,11 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   modelValue: [
-    { key: 'home', title: 'Home', disabled: true },
-    { key: 'about', title: 'About Us', active: true },
-    { key: 'workplace-services', title: 'Workplace Services' },
-    { key: 'groups' },
-    { key: 'link-trigger', title: 'Link Trigger', href: '/internal-link' },
-    { key: 'link-to-sei', title: 'Link to SEI', tag: 'a', href: 'https://sei.cmu.edu', external: true },
+    { key: 'tab1', title: 'Tab 1', disabled: true },
+    { key: 'tab2', title: 'Tab 2', active: true },
+    { key: 'tab3', title: 'Tab 3' },
+    { key: 'tab4' },
+    { key: 'tab5', title: 'Tab 5', href: '/internal-link' },
   ]
 };
 

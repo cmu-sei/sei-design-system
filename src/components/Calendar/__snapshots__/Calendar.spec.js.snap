@@ -267,9 +267,9 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600"
             tabindex="-1"
-            title="Today"
+            title=""
             type="button"
           >
             12
@@ -279,9 +279,9 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800"
             tabindex="-1"
-            title=""
+            title="Today"
             type="button"
           >
             13
