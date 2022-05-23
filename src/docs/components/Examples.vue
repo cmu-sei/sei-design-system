@@ -10,12 +10,12 @@
         <template #tab(groups)>
           <i>Directorates</i>
         </template>
-        <template #content(groups)>
+        <template #panel(groups)>
           <div class="p-4">
             This is the content for groups.
           </div>
         </template>
-        <template #content(workplace-services)>
+        <template #panel(workplace-services)>
           <div class="p-4">
             This is the content for workplace services.
           </div>
@@ -30,12 +30,12 @@
         <template #tab(groups)>
           <i>Directorates</i>
         </template>
-        <template #content(groups)>
+        <template #panel(groups)>
           <div class="p-4">
             This is the content for groups.
           </div>
         </template>
-        <template #content(workplace-services)>
+        <template #panel(workplace-services)>
           <div class="p-4">
             This is the content for workplace services.
           </div>
@@ -50,12 +50,12 @@
         <template #tab(groups)>
           <i>Groups (custom style)</i>
         </template>
-        <template #content(groups)>
+        <template #panel(groups)>
           <div class="p-4">
             This is the content for groups.
           </div>
         </template>
-        <template #content(workplace-services)>
+        <template #panel(workplace-services)>
           <div class="p-4">
             This is the content for workplace services.
           </div>
