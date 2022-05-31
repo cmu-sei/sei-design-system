@@ -15,7 +15,6 @@
           class="
         fixed
         inset-0
-        z-50
         block
         h-full
         px-2
@@ -24,6 +23,7 @@
         bg-black bg-opacity-50
         sds-modal
       "
+          :class="[zIndexClass]"
           @mousedown.self="close"
           @keydown="checkKeyEvent"
         >
@@ -121,7 +121,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch, onMounted, onUnmounted, Directive } from "vue";
+import { defineComponent, ref, computed, watch, onUnmounted, Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { Uid } from '@shimyshack/uid';
 
@@ -156,7 +156,7 @@ export default defineComponent({
     /**
      * The z-index for the popover.
      */
-    zIndexClass: { type: String, required: false, default: 'z-50' },
+    zIndex: { type: String, required: false, default: '50' },
   },
   emits: ['update:modelValue'],
   setup(props, { emit, slots }) {
@@ -182,6 +182,27 @@ export default defineComponent({
          */
         emit("update:modelValue", value);
       },
+    })
+
+    const zIndexClass = computed(() => {
+      switch (props.zIndex) {
+        case '0':
+          return 'z-0'
+        case '10':
+          return 'z-10'
+        case '20':
+          return 'z-20'
+        case '30':
+          return 'z-30'
+        case '40':
+          return 'z-40'
+        case '50':
+          return 'z-50'
+        case 'auto':
+          return 'z-auto'
+        default:
+          return ''
+      }
     })
 
     onUnmounted(() => {
@@ -267,6 +288,7 @@ export default defineComponent({
       hasTitleSlot,
       hasFooterSlot,
       showModal,
+      zIndexClass,
 
       makeDomChanges,
       removeDomChanges,

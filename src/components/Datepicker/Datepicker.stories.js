@@ -23,7 +23,11 @@ export default {
     },
     modelValue: { control: { type: 'date' } },
     min: { control: { type: 'date' } },
-    max: { control: { type: 'date' } }
+    max: { control: { type: 'date' } },
+    zIndex: {
+      options: ['0', '10', '20', '30', '40', '50', 'auto'],
+      control: {type: 'select'}
+    }
   }
 };
 
