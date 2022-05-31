@@ -1,7 +1,9 @@
 // Vitest Snapshot v1
 
 exports[`Scrollspy > should match its default snapshot 1`] = `
-<div>
+<div
+  data-id="sds-scrollspy"
+>
   <!-- @slot Scrollspy content. @binding href, active, scrollIntoView -->
   
   

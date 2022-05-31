@@ -5,6 +5,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
   arrowclass="absolute bg-white border dark:bg-gray-700 dark:border-gray-600 w-3 h-3 rotate-45"
   arrowpadding="5"
   class="w-full"
+  data-id="sds-datepicker"
   disableanimation="false"
   disabled="false"
   inline="false"

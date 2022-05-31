@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer data-id="sds-layout-sei-external-footer">
     <div class="py-8 text-white bg-gray-500">
       <div class="container px-4 mx-auto space-y-6 md:px-8">
         <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">

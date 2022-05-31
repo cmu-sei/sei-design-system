@@ -1,6 +1,7 @@
 <template>
   <select
     v-model="localValue"
+    data-id="sds-select"
     :disabled="disabled"
     :readonly="readonly"
     class="form-control"

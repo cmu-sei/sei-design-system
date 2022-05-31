@@ -1,5 +1,6 @@
 <template>
   <a
+    data-id="sds-link"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[linkClass, variantClass, ctaClass, disabledClass]"

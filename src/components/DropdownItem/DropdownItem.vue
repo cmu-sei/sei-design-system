@@ -1,6 +1,7 @@
 <template>
   <component
     :is="tag"
+    data-id="sds-dropdown-item"
     class="block w-full select-none px-4 py-2 text-sm leading-5 text-left hover:no-underline hover:bg-blue-500 dark:hover:bg-blue-600 hover:text-white focus:outline-none focus:bg-blue-500 dark:focus:bg-blue-600 focus:text-white"
     :class="{
       'bg-blue-500 dark:bg-blue-600 text-white': active,

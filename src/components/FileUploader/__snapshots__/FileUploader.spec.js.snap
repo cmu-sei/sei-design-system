@@ -3,6 +3,7 @@
 exports[`FileUploader > should match its default snapshot 1`] = `
 <div
   class="border border-dashed border-2 dark:border-gray-700 rounded p-4 space-y-2 relative"
+  data-id="sds-file-uploader"
 >
   <input
     class="absolute inset-0 opacity-0 cursor-pointer"

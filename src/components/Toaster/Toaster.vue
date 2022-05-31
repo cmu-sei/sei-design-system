@@ -1,6 +1,7 @@
 <template>
   <div
     v-if="toasts.length > 0"
+    data-id="sds-toaster"
     class="fixed inset-0 z-50 p-4 pointer-events-none sm:p-6"
   >
     <transition-group

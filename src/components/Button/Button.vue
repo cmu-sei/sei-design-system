@@ -1,5 +1,6 @@
 <template>
   <button
+    data-id="sds-button"
     :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, blockClass]"
     :disabled="disabled"
     @click="onClick"

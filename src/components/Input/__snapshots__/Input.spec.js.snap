@@ -1,7 +1,9 @@
 // Vitest Snapshot v1
 
 exports[`Input > should match its default snapshot 1`] = `
-<div>
+<div
+  data-id="sds-input"
+>
   <input
     class="form-control"
     maxlength="524288"

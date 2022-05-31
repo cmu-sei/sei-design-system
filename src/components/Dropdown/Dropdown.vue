@@ -1,5 +1,6 @@
 <template>
   <floating-ui
+    data-id="sds-dropdown"
     :offset="offset"
     :strategy="strategy"
     :placement="placement"

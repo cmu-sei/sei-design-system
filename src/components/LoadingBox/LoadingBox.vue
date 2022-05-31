@@ -1,5 +1,6 @@
 <template>
   <span
+    data-id="sds-loading-box"
     :class="['loadingBox rounded flex flex-row relative overflow-hidden bg-gray-200', width, height]"
   />
 </template>

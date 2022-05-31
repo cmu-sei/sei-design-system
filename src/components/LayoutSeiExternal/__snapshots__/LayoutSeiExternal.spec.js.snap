@@ -3,6 +3,7 @@
 exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
 <div
   class="flex flex-col w-full min-h-screen text-gray-900 bg-white"
+  data-id="sds-layout-sei-external"
 >
   <!-- @slot Header content. -->
   

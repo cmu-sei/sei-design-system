@@ -1,5 +1,8 @@
 <template>
-  <div class="space-y-4">
+  <div
+    data-id="sds-layout-sei-external-nav"
+    class="space-y-4"
+  >
     <div
       v-for="item in page.nav"
       :key="item.title"

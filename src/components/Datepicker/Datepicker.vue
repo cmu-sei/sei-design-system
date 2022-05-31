@@ -1,5 +1,6 @@
 <template>
   <floating-ui
+    data-id="sds-datepicker"
     class="w-full"
     placement="bottom"
     :disabled="disabled"

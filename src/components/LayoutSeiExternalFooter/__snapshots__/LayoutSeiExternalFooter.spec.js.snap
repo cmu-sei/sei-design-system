@@ -1,7 +1,9 @@
 // Vitest Snapshot v1
 
 exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
-<footer>
+<footer
+  data-id="sds-layout-sei-external-footer"
+>
   <div
     class="py-8 text-white bg-gray-500"
   >

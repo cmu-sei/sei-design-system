@@ -12,6 +12,7 @@
         <div
           v-if="showModal"
           ref="modalContainer"
+          data-id="sds-modal"
           class="
         fixed
         inset-0

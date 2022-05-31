@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen text-gray-900 bg-white">
+  <div
+    data-id="sds-layout-sei-external"
+    class="flex flex-col w-full min-h-screen text-gray-900 bg-white"
+  >
     <!-- @slot Header content. -->
     <slot name="header">
       <layout-sei-external-header :page="page" />

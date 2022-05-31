@@ -1,6 +1,9 @@
 <template>
-  <div :class="{ 'text-danger': count < 0 }">
-    {{ count }}
+  <div
+    data-id="sds-character-counter"
+    :class="{ 'text-danger': count < 0 }"
+  >
+    {{ count.toLocaleString() }}
   </div>
 </template>
 
@@ -20,7 +23,7 @@ export default defineComponent({
   },
   setup(props) {
     const count = computed(() => {
-      return (props.maxValue - props.currentValue).toLocaleString()
+      return props.maxValue - props.currentValue
     })
 
     return {

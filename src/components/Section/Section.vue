@@ -1,5 +1,6 @@
 <template>
   <div
+    data-id="sds-section"
     class="block bg-white dark:bg-gray-800 dark:border-gray-700"
     :class="{
       border: type === 'simple' || type === 'raised',

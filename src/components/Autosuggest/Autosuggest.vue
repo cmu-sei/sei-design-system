@@ -1,5 +1,8 @@
 <template>
-  <div class="relative">
+  <div
+    data-id="sds-autosuggest"
+    class="relative"
+  >
     <div class="input-group">
       <div
         class="relative w-full input-group"

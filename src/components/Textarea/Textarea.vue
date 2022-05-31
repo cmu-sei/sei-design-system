@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-id="sds-textarea">
     <textarea
       v-model="text"
       class="form-control"

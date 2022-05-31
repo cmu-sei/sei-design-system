@@ -1,5 +1,8 @@
 <template>
-  <div class="py-8 bg-white">
+  <div
+    data-id="sds-layout-sei-external-masthead"
+    class="py-8 bg-white"
+  >
     <div class="container px-4 mx-auto md:px-8">
       <div
         v-if="page.nav"

@@ -2,6 +2,7 @@
 
 exports[`Tabs > should match its default snapshot 1`] = `
 <div
+  data-id="sds-tabs"
   id="unique-id"
 >
   <div

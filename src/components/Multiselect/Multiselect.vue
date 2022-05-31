@@ -1,5 +1,6 @@
 <template>
   <div
+    data-id="sds-multiselect"
     class="sds-multiselect"
     :class="{
       open: showDropdown,

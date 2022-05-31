@@ -1,6 +1,7 @@
 <template>
   <div
     :id="id"
+    data-id="sds-radio-group"
     role="radiogroup"
     tabindex="-1"
     class="focus:outline-none"
