@@ -3,6 +3,7 @@
 exports[`DropdownHeader > should match its default snapshot 1`] = `
 <div
   class="px-4 py-1 text-sm font-semibold leading-5 text-gray-500 dark:text-gray-300"
+  data-id="sds-dropdown-header"
 >
   <!-- @slot Dropdown header content. -->
   

@@ -3,6 +3,7 @@
 exports[`SearchBox > should match its default snapshot 1`] = `
 <div
   class="input-group"
+  data-id="sds-search-box"
 >
   <div
     class="relative w-full input-group"

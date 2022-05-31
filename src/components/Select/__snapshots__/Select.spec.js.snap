@@ -3,6 +3,7 @@
 exports[`Select > should match its default snapshot 1`] = `
 <select
   class="form-control"
+  data-id="sds-select"
 >
   <option
     disabled=""

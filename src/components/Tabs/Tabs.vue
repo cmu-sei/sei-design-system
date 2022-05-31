@@ -2,6 +2,7 @@
   <div
     ref="root"
     v-uid
+    data-id="sds-tabs"
   >
     <div
       class="overflow-x-auto"

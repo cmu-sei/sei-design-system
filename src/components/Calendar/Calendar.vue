@@ -1,6 +1,6 @@
 <template>
   <div
-    data-testid="calendar"
+    data-id="sds-calendar"
     class="select-none"
   >
     <div v-if="showCalendars">

@@ -1,5 +1,8 @@
 <template>
-  <div class="space-y-4 chart">
+  <div
+    data-id="sds-top-five-chart"
+    class="space-y-4 chart"
+  >
     <h3
       :class="{
         'text-lg font-bold': smallHeading,

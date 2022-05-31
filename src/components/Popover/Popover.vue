@@ -1,5 +1,6 @@
 <template>
   <floating-ui
+    data-id="sds-popover"
     :strategy="strategy"
     :placement="placement"
     :disabled="disabled"

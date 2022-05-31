@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header data-id="sds-layout-sei-external-header">
     <div class="bg-red-500">
       <div class="container px-4 py-2 mx-auto md:px-8">
         <a

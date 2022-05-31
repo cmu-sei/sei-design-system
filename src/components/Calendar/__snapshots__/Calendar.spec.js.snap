@@ -3,7 +3,7 @@
 exports[`Calendar > should match its default snapshot 1`] = `
 <div
   class="select-none"
-  data-testid="calendar"
+  data-id="sds-calendar"
 >
   <div>
     

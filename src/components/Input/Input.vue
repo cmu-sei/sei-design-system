@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-id="sds-input">
     <input
       v-model="text"
       class="form-control"

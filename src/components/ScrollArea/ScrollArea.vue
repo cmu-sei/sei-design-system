@@ -1,5 +1,8 @@
 <template>
-  <div class="scroll-area">
+  <div
+    data-id="sds-scroll-area"
+    class="scroll-area"
+  >
     <!-- @slot Scroll area content. -->
     <slot />
   </div>

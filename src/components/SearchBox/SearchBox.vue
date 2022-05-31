@@ -1,5 +1,8 @@
 <template>
-  <div class="input-group">
+  <div
+    data-id="sds-search-box"
+    class="input-group"
+  >
     <div
       class="relative w-full input-group"
       :class="{

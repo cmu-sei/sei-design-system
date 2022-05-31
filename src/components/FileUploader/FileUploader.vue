@@ -1,5 +1,8 @@
 <template>
-  <div class="border border-dashed border-2 dark:border-gray-700 rounded p-4 space-y-2 relative">
+  <div
+    data-id="sds-file-uploader"
+    class="border border-dashed border-2 dark:border-gray-700 rounded p-4 space-y-2 relative"
+  >
     <input
       ref="fileInput"
       v-uid

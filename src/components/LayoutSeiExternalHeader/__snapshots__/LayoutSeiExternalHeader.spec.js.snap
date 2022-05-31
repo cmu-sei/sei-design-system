@@ -1,7 +1,9 @@
 // Vitest Snapshot v1
 
 exports[`LayoutSeiExternalHeader > should match its default snapshot 1`] = `
-<header>
+<header
+  data-id="sds-layout-sei-external-header"
+>
   <div
     class="bg-red-500"
   >

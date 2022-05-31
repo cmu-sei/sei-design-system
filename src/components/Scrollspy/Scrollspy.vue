@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-id="sds-scrollspy">
     <!-- @slot Scrollspy content. @binding href, active, scrollIntoView -->
     <slot
       :href="href"

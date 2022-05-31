@@ -1,5 +1,6 @@
 <template>
   <floating-ui
+    data-id="sds-filter-by-dropdown"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-md bg-gray-100 dark:border-gray-600 dark:bg-gray-700 w-72 ${zIndexClass}`"
     arrow-class="absolute bg-gray-100 border dark:border-gray-600 dark:bg-gray-700 w-3 h-3 rotate-45"

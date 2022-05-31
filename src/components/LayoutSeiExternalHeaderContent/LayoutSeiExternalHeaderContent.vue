@@ -1,5 +1,8 @@
 <template>
-  <div class="space-y-4">
+  <div
+    data-id="sds-layout-sei-external-header-content"
+    class="space-y-4"
+  >
     <h3
       v-if="page.title"
       class="text-3xl text-gray-500 break-words font-extralight"

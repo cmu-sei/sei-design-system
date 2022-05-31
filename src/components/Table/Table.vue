@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table data-id="sds-table">
     <caption v-if="!!$slots.caption || caption">
       <!-- @slot Caption content. This will override the **caption** prop. -->
       <slot name="caption">

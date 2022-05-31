@@ -1,6 +1,7 @@
 <template>
   <nav
     v-if="totalPages > 1"
+    data-id="sds-paginator"
     class="paginator"
     aria-label="Page navigation"
   >

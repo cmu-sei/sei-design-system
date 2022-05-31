@@ -3,6 +3,7 @@
 exports[`CheckboxGroup > should match its default snapshot 1`] = `
 <div
   class="focus:outline-none"
+  data-id="sds-checkbox-group"
   id=""
   role="checkboxgroup"
   tabindex="-1"

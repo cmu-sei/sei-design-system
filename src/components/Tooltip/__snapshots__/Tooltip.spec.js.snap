@@ -4,6 +4,7 @@ exports[`Tooltip.vue > matches snapshot 1`] = `
 <floating-ui-stub
   arrowclass="absolute w-2 h-2 rotate-45 bg-dark"
   arrowpadding="5"
+  data-id="sds-tooltip"
   disableanimation="true"
   disabled="false"
   inline="false"
@@ -20,6 +21,6 @@ exports[`Tooltip.vue > matches snapshot 1`] = `
 />
 `;
 
-exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"top\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"true\\" disableanimation=\\"true\\" popperclass=\\"absolute text-xs shadow rounded-lg text-center bg-dark text-light w-32 z-50\\" arrowclass=\\"absolute w-2 h-2 rotate-45 bg-dark\\" placementtoparrowclass=\\"-bottom-1\\" placementrightarrowclass=\\"-left-1\\" placementbottomarrowclass=\\"-top-1\\" placementleftarrowclass=\\"-right-1\\"></floating-ui-stub>"`;
+exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"top\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"true\\" disableanimation=\\"true\\" popperclass=\\"absolute text-xs shadow rounded-lg text-center bg-dark text-light w-32 z-50\\" arrowclass=\\"absolute w-2 h-2 rotate-45 bg-dark\\" placementtoparrowclass=\\"-bottom-1\\" placementrightarrowclass=\\"-left-1\\" placementbottomarrowclass=\\"-top-1\\" placementleftarrowclass=\\"-right-1\\" data-id=\\"sds-tooltip\\"></floating-ui-stub>"`;
 
-exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"bottom\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"true\\" disableanimation=\\"true\\" popperclass=\\"absolute text-xs shadow rounded-lg text-center bg-dark text-light w-32 z-50\\" arrowclass=\\"absolute w-2 h-2 rotate-45 bg-dark\\" placementtoparrowclass=\\"-bottom-1\\" placementrightarrowclass=\\"-left-1\\" placementbottomarrowclass=\\"-top-1\\" placementleftarrowclass=\\"-right-1\\" tooltipclass=\\"test\\" triggerclass=\\"test\\"></floating-ui-stub>"`;
+exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `"<floating-ui-stub disabled=\\"false\\" placement=\\"bottom\\" strategy=\\"absolute\\" overflowpadding=\\"5\\" arrowpadding=\\"5\\" offset=\\"10\\" inline=\\"false\\" shift=\\"true\\" disableanimation=\\"true\\" popperclass=\\"absolute text-xs shadow rounded-lg text-center bg-dark text-light w-32 z-50\\" arrowclass=\\"absolute w-2 h-2 rotate-45 bg-dark\\" placementtoparrowclass=\\"-bottom-1\\" placementrightarrowclass=\\"-left-1\\" placementbottomarrowclass=\\"-top-1\\" placementleftarrowclass=\\"-right-1\\" data-id=\\"sds-tooltip\\" tooltipclass=\\"test\\" triggerclass=\\"test\\"></floating-ui-stub>"`;

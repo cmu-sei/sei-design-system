@@ -1,5 +1,8 @@
 <template>
-  <svg viewBox="0 0 728.14 64.49">
+  <svg
+    data-id="sds-layout-sei-external-wordmark"
+    viewBox="0 0 728.14 64.49"
+  >
     <polygon
       class="cls-1"
       points="213.53 18.71 213.53 45.54 218 45.54 218 47.31 200.12 47.31 200.12 45.54 204.59 45.54 204.59 20.6 201.12 20.6 201.12 18.71 213.53 18.71"

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col w-full min-h-screen">
+  <div
+    data-id="sds-layout-stacked"
+    class="flex flex-col w-full min-h-screen"
+  >
     <header
       v-if="hasHeaderSlot"
       class="z-30 flex-shrink"

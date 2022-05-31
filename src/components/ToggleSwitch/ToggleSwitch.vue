@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center">
+  <div
+    data-id="sds-toggle-switch"
+    class="flex items-center"
+  >
     <button
       type="button"
       :class="[isToggled ? variantClass : 'bg-gray-700 disabled:bg-opacity-50', styles.button]"

@@ -1,6 +1,7 @@
 <template>
   <div
     :id="id"
+    data-id="sds-checkbox-group"
     role="checkboxgroup"
     tabindex="-1"
     class="focus:outline-none"

@@ -2,6 +2,7 @@
 
 exports[`LayoutSeiExternalWordmark > should match its default snapshot 1`] = `
 <svg
+  data-id="sds-layout-sei-external-wordmark"
   viewBox="0 0 728.14 64.49"
 >
   <polygon

@@ -1,5 +1,6 @@
 <template>
   <div
+    data-id="sds-toast"
     role="alert"
     aria-live="polite"
     class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-700"
