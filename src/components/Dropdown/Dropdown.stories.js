@@ -31,6 +31,10 @@ export default {
     size: {
       options: ['sm', 'md'],
       control: {type: 'select'}
+    },
+    zIndex: {
+      options: ['0', '10', '20', '30', '40', '50', 'auto'],
+      control: {type: 'select'}
     }
   }
 };

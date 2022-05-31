@@ -92,7 +92,7 @@ export default defineComponent({
     /**
      * The z-index for the popover.
      */
-    zIndexClass: { type: String, required: false, default: 'z-50' },
+    zIndex: { type: String, required: false, default: '50' },
     /**
      * The distance between the popper and the trigger.
      */
@@ -193,6 +193,26 @@ export default defineComponent({
     }
   },
   computed: {
+    zIndexClass() {
+      switch (this.zIndex) {
+        case '0':
+          return 'z-0'
+        case '10':
+          return 'z-10'
+        case '20':
+          return 'z-20'
+        case '30':
+          return 'z-30'
+        case '40':
+          return 'z-40'
+        case '50':
+          return 'z-50'
+        case 'auto':
+          return 'z-auto'
+        default:
+          return ''
+      }
+    },
     sizeClass() {
       switch (this.size) {
         case 'md':
