@@ -71,6 +71,7 @@
                   />
                 </svg>
                 <span class="my-auto">{{ file.name }}</span>
+                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(file.size) }})</span>
               </div>
               <button
                 class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
@@ -116,6 +117,7 @@
                   />
                 </svg>
                 <span class="my-auto">{{ file.name }}</span>
+                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(file.size) }})</span>
               </div>
               <button
                 class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
@@ -324,5 +326,13 @@ const processSingleFile = (file: File) => {
       invalidFileList.value = [file]
     }
   }
+}
+
+const byteToSize = (bytes: number): string => {
+  const sizes = ['b', 'kb', 'mb', 'gb', 'tb']
+  if (bytes <= 0 || bytes > 999999999999999) { return 'n/a' }
+  const i = parseInt(`${Math.floor(Math.log(bytes) / Math.log(1024))}`, 10)
+  if (i === 0) { return `${bytes}${sizes[i]}` }
+  return `${Math.ceil(bytes / 1024 ** i)}${sizes[i]}`
 }
 </script>
