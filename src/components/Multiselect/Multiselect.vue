@@ -248,6 +248,9 @@ export default defineComponent({
     },
     /**
      * The key used for an option's value.
+     * 
+     * Be careful when setting this as it can trigger `undefined`
+     * errors if it doesn't exist in the options object.
      */
     valueKey: {
       type: String,
@@ -255,6 +258,9 @@ export default defineComponent({
     },
     /**
      * The key used for an option's label.
+     *
+     * Be careful when setting this as it can trigger `undefined`
+     * and `trim()` errors if it doesn't exist in the options object.
      */
     labelKey: {
       type: String,
