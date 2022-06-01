@@ -148,7 +148,7 @@
               v-if="file.invalidSize"
               class="text-danger text-xs ml-5 mt-1"
             >
-              File size is over {{ filesize }}MB.
+              File size is over {{ filesize }} MB.
             </p>
           </li>
         </ul>
@@ -333,6 +333,6 @@ const byteToSize = (bytes: number): string => {
   if (bytes <= 0 || bytes > 999999999999999) { return 'n/a' }
   const i = parseInt(`${Math.floor(Math.log(bytes) / Math.log(1024))}`, 10)
   if (i === 0) { return `${bytes}${sizes[i]}` }
-  return `${Math.ceil(bytes / 1024 ** i)}${sizes[i]}`
+  return `${Math.ceil(bytes / 1024 ** i)} ${sizes[i]}`
 }
 </script>
