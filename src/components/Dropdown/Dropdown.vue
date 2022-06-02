@@ -7,6 +7,7 @@
     :disabled="disabled"
     :will-open="willOpen"
     :will-close="willClose"
+    :class="[block ? 'w-full' : '']"
     :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-600 dark:bg-gray-700 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
     hide-arrow
     shift

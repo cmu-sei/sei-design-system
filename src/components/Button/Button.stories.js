@@ -20,18 +20,6 @@ export default {
     size: {
       options: ['sm', 'md'],
       control: { type: 'select' }
-    },
-    outline: {
-      options: [true, false],
-      control: { type: 'radio' }
-    },
-    block: {
-      options: [true, false],
-      control: { type: 'radio' }
-    },
-    disabled: {
-      options: [true, false],
-      control: { type: 'radio' }
     }
   }
 };
