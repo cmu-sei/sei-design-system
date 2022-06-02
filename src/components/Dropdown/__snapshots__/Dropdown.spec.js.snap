@@ -3,6 +3,7 @@
 exports[`Dropdown > should match its default snapshot 1`] = `
 <floating-ui-stub
   arrowpadding="5"
+  class=""
   data-id="sds-dropdown"
   disableanimation="false"
   disabled="false"
