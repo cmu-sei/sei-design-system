@@ -6,12 +6,13 @@ exports[`Dropdown > should match its default snapshot 1`] = `
   data-id="sds-dropdown"
   disableanimation="false"
   disabled="false"
+  hidearrow="true"
   inline="false"
   offset="5"
   overflowpadding="5"
   placement="bottom-start"
   popperclass="absolute border shadow-lg rounded-md bg-white dark:border-gray-600 dark:bg-gray-700 w-56 z-50"
-  shift="false"
+  shift="true"
   strategy="absolute"
 />
 `;

@@ -8,6 +8,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
   data-id="sds-datepicker"
   disableanimation="false"
   disabled="false"
+  hidearrow="false"
   inline="false"
   offset="10"
   overflowpadding="5"
