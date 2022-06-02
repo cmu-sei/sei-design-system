@@ -8,6 +8,8 @@
     :will-open="willOpen"
     :will-close="willClose"
     :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-600 dark:bg-gray-700 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
+    hide-arrow
+    shift
   >
     <template #trigger="{ open, close, isOpen, toggle }">
       <!-- @slot Trigger content (used to replace trigger button). @binding open, close, isOpen, toggle -->
@@ -25,7 +27,8 @@
           class="btn space-x"
           aria-haspopup="true"
           :aria-expanded="isOpen"
-          :class="[variantClass, sizeClass]"
+          :disabled="disabled"
+          :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -122,6 +125,14 @@ export default defineComponent({
      * The placement of the popover on the screen.
      */
     placement: { type: String as PropType<Placement>, default: 'bottom-start' },
+    /**
+     * Determines whether to use the outline styling on the trigger button or not.
+     */
+    outline: { type: Boolean, default: false },
+    /**
+     * Determines whether to use the block styling on the trigger button or not.
+     */
+    block: { type: Boolean, default: false },
     /**
      * Determines if the popover should display or not.
      */
@@ -239,6 +250,15 @@ export default defineComponent({
         default:
           return ''
       }
+    },
+    outlineClass() {
+      return this.outline ? 'btn-outline' : ''
+    },
+    disabledClass() {
+      return this.disabled ? 'disabled' : ''
+    },
+    blockClass() {
+      return this.block ? 'btn-block' : ''
     }
   }
 })

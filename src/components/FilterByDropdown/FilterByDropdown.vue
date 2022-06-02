@@ -8,6 +8,7 @@
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
     placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
     placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
+    shift
   >
     <template #trigger="{ isOpen, toggle }">
       <button
@@ -238,9 +239,9 @@ export default defineComponent({
     variantClass() {
       switch (this.variant) {
          case 'primary':
-          return 'link-primary'
+          return 'link link-primary'
         case 'secondary':
-          return 'link-secondary'
+          return 'link link-secondary'
         default:
           return ''
       }

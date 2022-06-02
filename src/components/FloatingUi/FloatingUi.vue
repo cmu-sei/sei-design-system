@@ -163,6 +163,7 @@ const props = defineProps({
   shift: { type: Boolean, default: false },
   disableAnimation: { type: Boolean, default: false },
   popperClass: { type: String, default: undefined },
+  hideArrow: { type: Boolean, default: false },
   arrowClass: { type: String, default: undefined },
   placementTopArrowClass: { type: String, default: undefined },
   placementRightArrowClass: { type: String, default: undefined },
@@ -170,16 +171,6 @@ const props = defineProps({
   placementLeftArrowClass: { type: String, default: undefined },
   willOpen: { type: Function, default: null },
   willClose: { type: Function, default: null },
-})
-
-const hideArrow = computed(() => {
-  return (
-    props.arrowClass === '' &&
-    props.placementTopArrowClass === '' &&
-    props.placementRightArrowClass === '' &&
-    props.placementBottomArrowClass === '' &&
-    props.placementLeftArrowClass === ''
-  )
 })
 
 const arrowPlacementClass = computed(() => {
@@ -206,6 +197,11 @@ const update = async () => {
   }
   const isPlacementAuto = props.placement.startsWith('auto')
 
+  // Offset
+  if (props.offset) {
+    options.middleware.push(offset(props.offset))
+  }
+
   // Placement (auto vs specified)
   if (isPlacementAuto) {
     options.middleware.push(autoPlacement({
@@ -215,14 +211,16 @@ const update = async () => {
     options.placement = props.placement as BasePlacement
   }
 
-  // Offset
-  if (props.offset) {
-    options.middleware.push(offset(props.offset))
-  }
-
   // Inline
   if (props.inline) {
     options.middleware.push(inline())
+  }
+
+  // Flip - not used with auto placement
+  if (!isPlacementAuto) {
+    options.middleware.push(flip({
+      padding: props.overflowPadding
+    }))
   }
 
   // Shift
@@ -232,15 +230,8 @@ const update = async () => {
     }))
   }
 
-  // Flip
-  if (!isPlacementAuto) {
-    options.middleware.push(flip({
-      padding: props.overflowPadding
-    }))
-  }
-
   // Arrow
-  if (!hideArrow.value && arrowRef.value) {
+  if (!props.hideArrow && arrowRef.value) {
     options.middleware.push(arrow({
       element: arrowRef.value,
       padding: props.arrowPadding,
@@ -256,7 +247,7 @@ const update = async () => {
     top: y ? `${y}px` : ''
   }
 
-  if (!hideArrow.value) {
+  if (!props.hideArrow) {
     const { x: arrowX, y: arrowY } = middlewareData.arrow as { x: number, y: number }
     currentPlacement.value = placement
     arrowPosition.value = {

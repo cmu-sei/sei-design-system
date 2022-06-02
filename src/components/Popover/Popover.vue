@@ -12,6 +12,7 @@
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
     placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
     placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
+    shift
   >
     <template #trigger="{ open, close }">
       <div
