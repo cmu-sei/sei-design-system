@@ -182,39 +182,22 @@
       <sds-file-uploader />
     </div>
     <p>Scroll area</p>
-    <div class="nav-group">
-      <sds-scrollspy
-        href="#scrollspy-test"
-        parent="#scrollspy-parent"
-      >
-        <template #default="{ scrollIntoView, active }">
-          <button
-            class="nav nav-underline"
-            :class="{ active }"
-            @click="scrollIntoView"
-          >
-            Test
-          </button>
-        </template>
-      </sds-scrollspy>
-      <sds-scrollspy
-        href="#scrollspy-test-2"
-        parent="#scrollspy-parent"
-      >
-        <template #default="{ scrollIntoView, active }">
-          <button
-            class="nav nav-underline"
-            :class="{ active }"
-            @click="scrollIntoView"
-          >
-            Test 2
-          </button>
-        </template>
-      </sds-scrollspy>
-    </div>
+    <sds-scrollspy
+      :items="[
+        { id: 'scrollspy-test', text: 'Test 1' },
+        { id: 'scrollspy-test-2', text: 'Test 2' },
+        { id: 'scrollspy-test-3', text: 'Test 3' },
+        { id: 'scrollspy-test-4', text: 'Test 4' },
+        { id: 'scrollspy-test-5', text: 'Test 5' }
+      ]"
+      parent="#scrollspy-parent"
+      item-class="nav nav-primary nav-underline"
+      active-class="active"
+      class="nav-group"
+    />
     <sds-scroll-area
       id="scrollspy-parent"
-      class="h-32 mb-4"
+      class="h-96 mb-4"
     >
       <p
         id="scrollspy-test"
@@ -237,6 +220,48 @@
         class="mb-48 text-4xl text-success"
       >
         test 2
+      </p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p
+        id="scrollspy-test-3"
+        class="mb-48 text-4xl text-success"
+      >
+        test 3
+      </p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p
+        id="scrollspy-test-4"
+        class="mb-48 text-4xl text-success"
+      >
+        test 4
+      </p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p>test</p>
+      <p
+        id="scrollspy-test-5"
+        class="mb-48 text-4xl text-success"
+      >
+        test 5
       </p>
       <p>test</p>
       <p>test</p>
@@ -641,7 +666,13 @@
           required
           stacked
           @change="$emit('radioGroupChange')"
-        />
+        >
+          <template #label="{ optionId, option }">
+            <label :for="optionId">
+              Cool: {{ option.text }}
+            </label>
+          </template>
+        </sds-radio-group>
       </div>
       <sds-table
         class="table-prose"
