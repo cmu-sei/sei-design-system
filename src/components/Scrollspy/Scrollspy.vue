@@ -1,12 +1,21 @@
 <template>
-  <div data-id="sds-scrollspy">
-    <!-- @slot Scrollspy content. @binding href, active, scrollIntoView -->
-    <slot
-      :href="href"
-      :active="active"
-      :scroll-into-view="scrollIntoView"
-    />
-  </div>
+  <nav>
+    <a
+      v-for="i in items"
+      :key="i.id"
+      :href="`#${i.id}`"
+      data-id="sds-scrollspy"
+      :class="{
+        [itemClass]: true,
+        [activeClass]: activeId === i.id,
+        [inactiveClass]: activeId !== i.id
+      }"
+      @click="parent ? scrollToIdTarget(i.id, $event) : undefined"
+    >
+      <!-- @slot Default content. Determines the content of the item link. @binding item -->
+      <slot :item="i">{{ i.text }}</slot>
+    </a>
+  </nav>
 </template>
 
 <script lang="ts">
@@ -16,110 +25,116 @@ export default {
 </script>
 
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-  onMounted,
-  onUnmounted,
-} from "vue";
-import throttle from "../../helpers/throttle";
-import mitt from "mitt";
+import { PropType, watch, ref, computed } from 'vue'
 
 const props = defineProps({
   /**
-   * The HTML selector that this scrollspy spies on.
+   * Determines the items list that is observed when the page scrolls.
+   * 
+   * This accepts an array of objects.
+   * 
+   * Example object:
+   * 
+   * `{ id: string, text: string }`
+   * 
+   * The object's `id` property should be a unique id for an HTML element. For example,
+   * if you want the item to observe `<div id="test">`, the `id` would
+   * be `test`.
+   * 
+   * The object's `text` property should be the content of the link that is observing
+   * the page.
    */
-  href: {
-    type: String,
-    default: null,
+  items: {
+    type: Array as PropType<{ id: string, text: string }[]>,
+    default: () => [],
   },
   /**
    * The HTML selector of the container for the element being spied upon.
    */
-  parent: {
-    type: String,
-    default: null,
-  },
+  parent: { type: String, default: undefined },
   /**
-   * The offset top for more precise control.
+   * Determines the delay before observation begins.
+   * 
+   * This is useful when you may encounter timing issues in SPAs.
    */
-  offset: {
-    type: Number,
-    default: 0,
-  },
+  observeDelay: { type: Number, default: 0 },
   /**
-   * The throttle used to help with scroll performance.
+   * Determines the CSS class list for each item.
    */
-  throttle: {
-    type: Number,
-    default: 250,
-  },
+  itemClass: { type: String, default: '' },
+  /**
+   * Determines the CSS class list for the active item.
+   */
+  activeClass: { type: String, default: '' },
+  /**
+   * Determines the CSS class list for the inactive items.
+   */
+  inactiveClass: { type: String, default: '' }
 })
 
-const emitter = mitt();
-emitter.on("scrollspy-href", (value) => {
-  active.value = value === props.href;
-});
+const observer = ref()
+const onScreenIds = ref<string[]>([])
+const lastRemovedFromScreenId = ref()
 
-const active = ref(false);
+const parentEl = computed<HTMLElement | null>(() => {
+  if (typeof document === 'undefined') return null
+  return props.parent ? document.querySelector(props.parent) : null
+})
 
-const parentEl = computed(() => {
-  if (!document || !window) return;
-  return props.parent === null
-    ? window
-    : document.querySelector(props.parent);
-});
-
-const el = computed(() => {
-  if (!document) return;
-  return document.querySelector(props.href);
-});
-
-onMounted(() => {
-  (
-    parentEl.value as (Window & typeof globalThis) | HTMLElement
-  ).addEventListener("scroll", throttleScroll);
-  handleScroll();
-});
-
-onUnmounted(() => {
-  (
-    parentEl.value as (Window & typeof globalThis) | HTMLElement
-  ).removeEventListener("scroll", throttleScroll);
-});
-
-const handleScroll = () => {
-  if (el.value === null) return;
-
-  const parentElTop =
-    props.parent !== null
-      ? (parentEl.value as HTMLElement).getBoundingClientRect().top
-      : 0;
-  const parentElHeight =
-    props.parent !== null
-      ? (parentEl.value as HTMLElement).getBoundingClientRect().height
-      : 0;
-  const parentElMiddle = parentElHeight / 2;
-
-  const elTop =
-    (el.value as HTMLElement).getBoundingClientRect().top -
-    parentElTop -
-    props.offset;
-
-  if (elTop <= parentElMiddle) {
-    emitter.emit("scrollspy-href", props.href);
+const activeId = computed(() => {
+  const firstId = props.items.find((i) => onScreenIds.value.includes(i.id))
+  if (typeof firstId === 'undefined') {
+    return lastRemovedFromScreenId.value
+  } else {
+    return firstId.id
   }
-};
+})
 
-const throttleScroll = throttle(handleScroll, props.throttle);
+watch(() => props.items, () => {
+  setTimeout(() => {
+    initObserver()
+  }, props.observeDelay)
+}, { immediate: true, deep: true })
 
-const scrollIntoView = (e: MouseEvent) => {
-  e.preventDefault();
-  if (parentEl.value === null) return;
-  if (el.value === null) return;
-  (parentEl.value as (Window & typeof globalThis) | Element).scrollTo({
-    top: (el.value as HTMLElement).offsetTop - props.offset,
-    behavior: "smooth",
-  });
-};
+const initObserver = () => {
+  if (typeof IntersectionObserver === 'undefined') return
+  destroyObserver()
+  observer.value = new IntersectionObserver(onElementObserved, {
+    root: parentEl.value
+  })
+  props.items.forEach((i) => {
+    const el = document.getElementById(i.id)
+    if (el) {
+      observer.value.observe(el)
+    }
+  })
+}
+
+const destroyObserver = () => {
+  observer.value && observer.value.disconnect()
+  onScreenIds.value = []
+  lastRemovedFromScreenId.value = null
+  observer.value = null
+}
+
+const onElementObserved = (entries: { target: any; isIntersecting: any; }[]) => {
+  entries.forEach(({ target, isIntersecting }) => {
+    const id = target.getAttribute('id')
+    if (isIntersecting) {
+      onScreenIds.value.push(id)
+      lastRemovedFromScreenId.value = null
+    } else {
+      onScreenIds.value = onScreenIds.value.filter((i) => i !== id)
+      lastRemovedFromScreenId.value = id
+    }
+  })
+}
+
+const scrollToIdTarget = (id: string, event: Event) => {
+  if (!parentEl.value) return
+  const el = document.getElementById(id)
+  if (!el) return
+  event.preventDefault();
+  parentEl.value.scrollTop = el.offsetTop - parentEl.value.offsetTop
+}
 </script>

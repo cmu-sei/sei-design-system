@@ -116,6 +116,8 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
           </div>
         </div>
       </footer>
+      <!-- @slot Actions content. Great for application-specific actionable content. -->
+      <!--v-if-->
     </section>
   </div>
 </div>

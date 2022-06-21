@@ -20,19 +20,80 @@ const Template = (args) => ({
   },
   template: `
     <div>
-      <sds-scrollspy
-        v-bind="args"
-        v-slot="{ scrollIntoView, active }"
-      >
-        <button
-          :class="{ 'font-bold': active }"
-          @click="scrollIntoView"
-        >Go to section</button>
-      </sds-scrollspy>
-      <div id="content" class="overflow-scroll h-48 border border-dashed">
-        <div class="my-96">spacer</div>
-        <div id="section" class="bg-gray-100">Section</h2>
-        <div class="my-96">spacer</div>
+      <sds-scrollspy v-bind="args" class="nav-group" />
+      <div id="scrollspy-parent" class="scroll-area h-96 mb-4 border p-4">
+        <p
+          id="scrollspy-test"
+          class="text-4xl text-success"
+        >
+          test 1
+        </p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p
+          id="scrollspy-test-2"
+          class="text-4xl text-success"
+        >
+          test 2
+        </p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p
+          id="scrollspy-test-3"
+          class="text-4xl text-success"
+        >
+          test 3
+        </p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p
+          id="scrollspy-test-4"
+          class="text-4xl text-success"
+        >
+          test 4
+        </p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p
+          id="scrollspy-test-5"
+          class="text-4xl text-success"
+        >
+          test 5
+        </p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
       </div>
     </div>
   `
@@ -40,7 +101,15 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  href: '#section',
-  parent: '#content'
+  items: [
+    { id: 'scrollspy-test', text: 'Test 1' },
+    { id: 'scrollspy-test-2', text: 'Test 2' },
+    { id: 'scrollspy-test-3', text: 'Test 3' },
+    { id: 'scrollspy-test-4', text: 'Test 4' },
+    { id: 'scrollspy-test-5', text: 'Test 5' }
+  ],
+  parent: "#scrollspy-parent",
+  itemClass: "nav nav-primary nav-underline",
+  activeClass: "active"
 };
 

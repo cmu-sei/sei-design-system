@@ -21,9 +21,17 @@
         :name="name ? name : `${id}__option`"
         :required="required"
         @click="onChange(option.value)"
-      ><label
-        :for="`${id}__option_${index}`"
-      ><span>{{ option.text }}</span></label>
+      >
+      <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+      <slot
+        name="label"
+        :option-id="`${id}__option_${index}`"
+        :option="option"
+      >
+        <label
+          :for="`${id}__option_${index}`"
+        ><span>{{ option.text }}</span></label>
+      </slot>
     </div>
   </div>
 </template>
