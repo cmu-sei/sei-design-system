@@ -1,5 +1,20 @@
 <template>
   <div class="guide">
+    <p>Spinner</p>
+    <div class="p-6 space-y-8">
+      <sds-loading-spinner size="sm" />
+      <sds-loading-spinner />
+      <sds-loading-spinner size="lg" />
+      <sds-button
+        variant="primary"
+        class="flex gap-2"
+      >
+        <sds-loading-spinner
+          size="sm"
+          class="my-auto"
+        /> Testing
+      </sds-button>
+    </div>
     <p>Tabs</p>
     <div class="p-6 space-y-8">
       <sds-tabs

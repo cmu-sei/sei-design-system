@@ -27,7 +27,7 @@
     <template #default="{ open, close, toggle, isOpen }">
       <div
         class="p-2"
-        @mouseover="open"
+        @mouseover="open()"
         @mouseout="close(closeDelay)"
       >
         <!-- @slot Tooltip content. @binding close, open, toggle, isOpen -->
