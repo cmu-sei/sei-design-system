@@ -26,7 +26,7 @@
     <template #default="{ open, close, toggle, isOpen }">
       <div
         class="p-4"
-        @mouseover="open"
+        @mouseover="open()"
         @mouseout="close(closeDelay)"
       >
         <!-- @slot Popover content. @binding close, open, toggle, isOpen -->
