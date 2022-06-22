@@ -29,6 +29,9 @@ const Template = (args) => ({
         Page header content area
       </template>
       Page content area
+      <template #actions-bar>
+        Actions bar content area
+      </template>
       <template #footer-middle>
         Footer middle content area
       </template>
