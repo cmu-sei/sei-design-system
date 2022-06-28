@@ -30,7 +30,9 @@ const Template = (args) => ({
       </template>
       Page content area
       <template #actions-bar>
-        Actions bar content area
+        <div class="bg-white dark:bg-gray-700 border shadow px-4 py-3">
+          Actions bar content area
+        </div>
       </template>
       <template #footer-middle>
         Footer middle content area

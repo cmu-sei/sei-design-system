@@ -42,18 +42,20 @@
     <examples />
     <components />
     <template #actions-bar>
-      <div class="flex gap-2">
-        <sds-button
-          variant="primary"
-          class="ml-auto"
-        >
-          Save something
-        </sds-button>
-        <sds-button
-          variant="default"
-        >
-          Cancel
-        </sds-button>
+      <div class="bg-white dark:bg-gray-800 px-6 py-2 border shadow">
+        <div class="flex gap-2">
+          <sds-button
+            variant="primary"
+            class="ml-auto"
+          >
+            Save something
+          </sds-button>
+          <sds-button
+            variant="default"
+          >
+            Cancel
+          </sds-button>
+        </div>
       </div>
     </template>
     <template #footer-top>
