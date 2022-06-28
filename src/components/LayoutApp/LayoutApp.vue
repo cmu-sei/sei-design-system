@@ -717,7 +717,7 @@
 
         <div
           v-if="hasSlot('actions-bar')"
-          class="bg-white dark:bg-gray-700 border shadow px-4 py-3 sticky bottom-0 z-40"
+          class="sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
