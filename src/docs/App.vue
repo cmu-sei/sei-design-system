@@ -39,6 +39,7 @@
         <sds-search-box variant="danger" />
       </div> -->
     </template>
+    <DatepickerExample />
     <examples />
     <components />
     <template #actions-bar>
@@ -72,12 +73,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import DatepickerExample from './components/DatepickerExample.vue'
 import Components from './components/Components.vue'
 import Examples from './components/Examples.vue'
 
 export default defineComponent({
   name: "AppPage",
   components: {
+    DatepickerExample,
     Components,
     Examples,
   },

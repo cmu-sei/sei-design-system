@@ -539,6 +539,14 @@
             :size="calendar.size"
             required
           />
+          <sds-datepicker
+            v-model="calendar2.date"
+            :min="calendar2.min"
+            :max="calendar2.max"
+            :mode="calendar2.mode"
+            :size="calendar2.size"
+            required
+          />
           <input
             type="submit"
             value="Submit"
@@ -770,6 +778,14 @@ export default defineComponent({
         input: "",
       },
       calendar: {
+        date: { start: null, end: null },
+        // date: new Date('03/23/2001'),
+        max: null,
+        min: null,
+        mode: 'dateTime',
+        size: 'md'
+      },
+      calendar2: {
         date: { start: null, end: null },
         // date: new Date('03/23/2001'),
         max: null,

@@ -167,7 +167,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { parse, format, isValid, min, max, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays } from 'date-fns'
+import { parse, format, isValid, min, max, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays, addYears } from 'date-fns'
 import Calendar from '../Calendar/Calendar.vue';
 import FloatingUi from '../FloatingUi/FloatingUi.vue';
 
@@ -506,6 +506,8 @@ export default defineComponent({
         'LLLL',
         'LLL yyyy',
         'LLLL yyyy',
+        'LLL dd yyyy',
+        'LLLL dd yyyy',
         'hh:mm aaa',
         'hh:mm a',
         'h:mm aaa',
@@ -534,9 +536,15 @@ export default defineComponent({
         'hhBBB',
         'hh:mmBBB'
       ]
+
+      // validate the format and store the found format for later processing
+      let foundFormat
       const validDates = formats.filter((format) => {
-        return isValid(parse(dateString, format, new Date()))
+        const valid = isValid(parse(dateString, format, new Date()))
+        if (valid) foundFormat = format
+        return valid
       })
+
       if (validDates.length > 0) {
         let date = parse(dateString, validDates[0], new Date())
         if (this.mode === 'date') {
@@ -546,6 +554,13 @@ export default defineComponent({
           const days = format(new Date(), 'yyyy-MM-dd')
           date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
         }
+
+        // Fix double-digit year issue using foundFormat and full year value
+        const fullYear = date.getFullYear()
+        if (foundFormat === 'LLLL dd yyyy' && fullYear < 1000) {
+          date = addYears(date, 2000)
+        }
+
         const dateIsBeforeMin = isBefore(date, this.min)
         const dateIsAfterMax = isAfter(subDays(date, 1), this.max)
         const dateEqualsMax = isEqual(subDays(date, 1), this.max)

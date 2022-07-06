@@ -50,7 +50,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           type="button"
         >
           <span>
-            June 2022
+            December 2021
           </span>
         </button>
       </div>
@@ -91,7 +91,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
       class="flex flex-col sm:flex-row sm:gap-8"
     >
       <div
-        class="grid grid-cols-7 w-56 place-content-start"
+        class="grid grid-cols-7 w-56 h-60 place-content-start"
       >
         
         <div
@@ -351,9 +351,9 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800"
             tabindex="-1"
-            title=""
+            title="Today"
             type="button"
           >
             19
@@ -471,9 +471,9 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600"
             tabindex="-1"
-            title="Today"
+            title=""
             type="button"
           >
             29
@@ -489,6 +489,18 @@ exports[`Calendar > should match its default snapshot 1`] = `
             type="button"
           >
             30
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-600"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            31
           </button>
         </div>
         
