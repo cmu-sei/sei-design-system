@@ -7,7 +7,10 @@ OUTPUT="
 for d in ./src/components/*; do
   if [ -d "$d" ]; then
     name=$(basename $d)
-    OUTPUT="$OUTPUT\n\t\tSds$name: typeof import(\"@sds/components-vue3\")[\"Sds$name\"];"
+    # Don't include CharacterCounter, since it isn't exposed
+    if [ $name != "CharacterCounter" ]; then
+      OUTPUT="$OUTPUT\n\t\tSds$name: typeof import(\"@sds/components-vue3\")[\"Sds$name\"];"
+    fi
   fi
 done
 

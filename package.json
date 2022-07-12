@@ -30,7 +30,8 @@
       "types": "./dist/types/components/index.d.ts"
     },
     "./dist/*": "./dist/*",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./volar": "./volar.d.ts"
   },
   "bugs": {
     "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
