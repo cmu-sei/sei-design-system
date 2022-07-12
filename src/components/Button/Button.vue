@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   name: 'SdsButton',
@@ -19,11 +19,11 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String, default: '' },
+    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: '' },
     /**
      * Determines the size.
      */
-    size: { type: String, default: '' },
+    size: { type: String as PropType<'sm' | ''>, default: '' },
     /**
      * Determines whether to use the outline styling or not.
      */

@@ -11,11 +11,13 @@
     "bundle:release": "./scripts/bundle-release.sh",
     "release": "./scripts/release.sh",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "gen-volar-dts": "./scripts/gen-component-declarations.sh"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "volar.d.ts"
   ],
   "sideEffects": false,
   "main": "./dist/index.umd.js",
