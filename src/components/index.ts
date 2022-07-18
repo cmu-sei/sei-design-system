@@ -1,5 +1,6 @@
 import { App, Component } from "vue";
 import SdsAutosuggest from "./Autosuggest";
+import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCheckboxGroup from "./CheckboxGroup";
@@ -50,6 +51,7 @@ interface ComponentList {
 
 const Components: ComponentList = {
   SdsAutosuggest,
+  SdsBadge,
   SdsButton,
   SdsCalendar,
   SdsCheckboxGroup,
@@ -104,6 +106,7 @@ export default {
 };
 
 export { default as SdsAutosuggest } from "./Autosuggest";
+export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
