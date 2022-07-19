@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-badge"
-    class="inline-block max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded"
+    class="inline-block tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded"
     :class="variantClass"
   >
     <!-- @slot Badge content.  -->
@@ -30,8 +30,8 @@ const props = defineProps({
    * Determines the theme color of the component.
    */
   variant: {
-    type: String as PropType<'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'gray' | 'tan' | 'yellow' | 'orange' | 'pink' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
-    default: 'default'
+    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'pink' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
+    default: 'gray'
   }
 })
 
@@ -45,7 +45,6 @@ const variantClass = computed(() => {
   }
 
   switch(props.variant) {
-    case 'primary':
     case 'blue':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-blue-100'
@@ -58,7 +57,6 @@ const variantClass = computed(() => {
         textClass = 'text-white'
       }
       break
-    case 'success':
     case 'green':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-green-100'
@@ -71,7 +69,6 @@ const variantClass = computed(() => {
         textClass = 'text-white'
       }
       break
-    case 'info':
     case 'teal':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-teal-100'
@@ -84,7 +81,6 @@ const variantClass = computed(() => {
         textClass = 'text-white'
       }
       break
-    case 'warning':
     case 'orange':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-orange-100'
@@ -97,7 +93,6 @@ const variantClass = computed(() => {
         textClass = 'text-white'
       }
       break
-    case 'danger':
     case 'red':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-red-100'
@@ -116,7 +111,7 @@ const variantClass = computed(() => {
         textClass = 'text-tan-800'
       } else if (props.type === 'medium') {
         bgClass = 'bg-tan-600'
-        textClass = 'text-tan-800'
+        textClass = 'text-gray-800'
       } else if (props.type === 'dark') {
         bgClass = 'bg-tan-800'
         textClass = 'text-white'
@@ -128,7 +123,7 @@ const variantClass = computed(() => {
         textClass = 'text-yellow-800'
       } else if (props.type === 'medium') {
         bgClass = 'bg-yellow-500'
-        textClass = 'text-yellow-900'
+        textClass = 'text-gray-800'
       } else if (props.type === 'dark') {
         bgClass = 'bg-yellow-700'
         textClass = 'text-white'

@@ -12,7 +12,7 @@ export default {
   component: SdsBadge,
   argTypes: {
     variant: {
-      options: ['default', 'primary', 'success', 'info', 'warning', 'danger', 'gray', 'tan', 'yellow', 'orange', 'pink', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
+      options: ['gray', 'tan', 'yellow', 'orange', 'pink', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
       control: { type: 'select' }
     },
     type: {
