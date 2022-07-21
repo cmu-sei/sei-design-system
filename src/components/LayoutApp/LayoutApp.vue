@@ -193,7 +193,7 @@
                     <template v-if="item.items">
                       <button
                         :href="item.href"
-                        class="flex relative w-full gap-2 pl-2 px-8 py-2 border-l-8"
+                        class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
                         :class="{
                           'border-transparent bg-gray-900 dark:bg-gray-800 text-gray-100 dark:text-gray-50 hover:bg-gray-800 dark:hover:bg-gray-700 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
                           'text-white border-danger': itemsGroupIsActive(item) && !showItemsGroup(item)

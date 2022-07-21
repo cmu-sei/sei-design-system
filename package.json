@@ -11,11 +11,13 @@
     "bundle:release": "./scripts/bundle-release.sh",
     "release": "./scripts/release.sh",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "gen-volar-dts": "./scripts/gen-component-declarations.sh"
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "volar.d.ts"
   ],
   "sideEffects": false,
   "main": "./dist/index.umd.js",
@@ -28,7 +30,8 @@
       "types": "./dist/types/components/index.d.ts"
     },
     "./dist/*": "./dist/*",
-    "./src/*": "./src/*"
+    "./src/*": "./src/*",
+    "./volar": "./volar.d.ts"
   },
   "bugs": {
     "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
@@ -46,9 +49,9 @@
     "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "@floating-ui/dom": "^0.5.4",
+    "@floating-ui/dom": "^1.0.0",
     "@rollup/plugin-eslint": "^8.0.2",
-    "@sds/tailwindcss-3": "^2.0.1",
+    "@sds/tailwindcss-3": "^2.0.2",
     "@shimyshack/uid": "^0.1.6",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-docs": "^6.3.12",
@@ -59,31 +62,31 @@
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.5.2",
     "@tailwindcss/line-clamp": "^0.4.0",
-    "@tailwindcss/typography": "^0.5.2",
-    "@typescript-eslint/eslint-plugin": "^5.30.0",
-    "@typescript-eslint/parser": "^5.30.0",
-    "@vitejs/plugin-vue": "^2.3.3",
+    "@tailwindcss/typography": "^0.5.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "@vitejs/plugin-vue": "^3.0.1",
     "@vue/compiler-sfc": "^3.0.5",
-    "@vue/test-utils": "^2.0.0",
-    "@vueuse/core": "^8.7.5",
+    "@vue/test-utils": "^2.0.2",
+    "@vueuse/core": "^8.9.4",
     "autoprefixer": "^10.4.7",
     "date-fns": "^2.28.0",
-    "esbuild": "^0.14.47",
-    "eslint": "^8.18.0",
-    "eslint-plugin-vue": "^9.1.1",
+    "esbuild": "^0.14.49",
+    "eslint": "^8.20.0",
+    "eslint-plugin-vue": "^9.2.0",
     "jsdom": "^20.0.0",
     "mitt": "^3.0.0",
     "postcss": "^8.4.14",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "storybook-builder-vite": "^0.1.23",
-    "tailwindcss": "^3.1.4",
+    "tailwindcss": "^3.1.6",
     "typescript": "^4.7.4",
-    "vite": "^2.9.13",
-    "vitest": "^0.16.0",
+    "vite": "^3.0.2",
+    "vitest": "^0.18.1",
     "vue": "^3.0.0",
     "vue-loader": "^17.0.0",
-    "vue-tsc": "^0.38.2"
+    "vue-tsc": "^0.38.9"
   },
   "engines": {
     "node": ">=12.13.0"

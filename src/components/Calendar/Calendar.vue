@@ -90,7 +90,7 @@
         <div
           class="flex flex-col sm:flex-row sm:gap-8"
         >
-          <div class="grid grid-cols-7 w-56 place-content-start">
+          <div class="grid grid-cols-7 w-56 h-60 place-content-start">
             <div
               v-for="day in calendarDaysOfWeek"
               :key="day"

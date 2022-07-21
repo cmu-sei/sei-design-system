@@ -1,5 +1,282 @@
 <template>
   <div class="guide">
+    <p>Badge</p>
+    <div class="p-6 space-y-4">
+      <div class="space-x-4">
+        <sds-badge type="light-border">
+          Badge Content
+        </sds-badge>
+        <sds-badge type="light">
+          Badge Content
+        </sds-badge>
+        <sds-badge type="medium">
+          Badge Content
+        </sds-badge>
+        <sds-badge type="dark">
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="tan"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="tan"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="tan"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="tan"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="yellow"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="yellow"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="yellow"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="yellow"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="orange"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="orange"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="orange"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="orange"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="pink"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="pink"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="pink"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="pink"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="red"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="red"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="red"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="red"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="purple"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="purple"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="purple"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="purple"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="indigo"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="indigo"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="indigo"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="indigo"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="blue"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="blue"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="blue"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="blue"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="teal"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="teal"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="teal"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="teal"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+      <div class="space-x-4">
+        <sds-badge
+          type="light-border"
+          variant="green"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="light"
+          variant="green"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="medium"
+          variant="green"
+        >
+          Badge Content
+        </sds-badge>
+        <sds-badge
+          type="dark"
+          variant="green"
+        >
+          Badge Content
+        </sds-badge>
+      </div>
+    </div>
     <p>Spinner</p>
     <div class="p-6 space-y-8">
       <sds-loading-spinner size="sm" />
@@ -539,6 +816,14 @@
             :size="calendar.size"
             required
           />
+          <sds-datepicker
+            v-model="calendar2.date"
+            :min="calendar2.min"
+            :max="calendar2.max"
+            :mode="calendar2.mode"
+            :size="calendar2.size"
+            required
+          />
           <input
             type="submit"
             value="Submit"
@@ -770,6 +1055,14 @@ export default defineComponent({
         input: "",
       },
       calendar: {
+        date: { start: null, end: null },
+        // date: new Date('03/23/2001'),
+        max: null,
+        min: null,
+        mode: 'dateTime',
+        size: 'md'
+      },
+      calendar2: {
         date: { start: null, end: null },
         // date: new Date('03/23/2001'),
         max: null,
