@@ -108,10 +108,10 @@ import { defineComponent, PropType } from 'vue'
 interface TableField {
   key: string
   label: string
-  format?: Function
-  sortable?: boolean
-  hidden?: boolean
-  header?: boolean
+  format?: Function | undefined
+  sortable?: boolean | undefined
+  hidden?: boolean | undefined
+  header?: boolean | undefined
 }
 
 interface TableItem {

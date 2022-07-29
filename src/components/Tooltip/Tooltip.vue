@@ -58,11 +58,11 @@ export default defineComponent({
     /**
      * The z-index for the popover.
      */
-    zIndex: { type: String, required: false, default: '50' },
+    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String, default: 'dark' },
+    variant: { type: String as PropType<'dark' | 'light'>, default: 'dark' },
     /**
      * Delays opening the toggle in ms.
      */
@@ -74,7 +74,7 @@ export default defineComponent({
     /**
      * The width of the popover.
      */
-    size: { type: String, default: 'sm' },
+    size: { type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'sm' },
     /**
      * The strategy of the popover on the screen.
      */

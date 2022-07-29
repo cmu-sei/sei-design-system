@@ -25,7 +25,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType, watch, ref, computed } from 'vue'
+import { PropType, computed, ref, onMounted, onUnmounted } from 'vue'
+import { throttleAndDebounce } from '../../helpers/throttleAndDebounce'
 
 const props = defineProps({
   /**
@@ -53,12 +54,6 @@ const props = defineProps({
    */
   parent: { type: String, default: undefined },
   /**
-   * Determines the delay before observation begins.
-   * 
-   * This is useful when you may encounter timing issues in SPAs.
-   */
-  observeDelay: { type: Number, default: 0 },
-  /**
    * Determines the CSS class list for each item.
    */
   itemClass: { type: String, default: '' },
@@ -72,63 +67,114 @@ const props = defineProps({
   inactiveClass: { type: String, default: '' }
 })
 
-const observer = ref()
-const onScreenIds = ref<string[]>([])
-const lastRemovedFromScreenId = ref()
-
 const parentEl = computed<HTMLElement | null>(() => {
   if (typeof document === 'undefined') return null
   return props.parent ? document.querySelector(props.parent) : null
 })
 
-const activeId = computed(() => {
-  const firstId = props.items.find((i) => onScreenIds.value.includes(i.id))
-  if (typeof firstId === 'undefined') {
-    return lastRemovedFromScreenId.value
+const activeId = ref()
+const lastActiveId = ref()
+
+// magic number to avoid repeated retrieval
+const PAGE_OFFSET = 56
+
+const getAnchorTop = (item: { id: string, text: string }): number => {
+  const anchor = document.getElementById(item.id) as HTMLAnchorElement
+  return anchor ? anchor.getBoundingClientRect().top  - PAGE_OFFSET - 15 : 0
+}
+
+const isItemActive = (
+  index: number,
+  item: { id: string, text: string },
+  nextItem: { id: string, text: string } | undefined
+): [boolean, string | null] => {
+  const scrollTop = parentEl.value && parentEl.value.getBoundingClientRect().top || window.scrollY
+
+  if (index === 0 && scrollTop === 0) {
+    return [true, null]
+  }
+
+  if (scrollTop < getAnchorTop(item)) {
+    return [false, null]
+  }
+
+  if (!nextItem || scrollTop < getAnchorTop(nextItem)) {
+    return [true, item.id]
+  }
+
+  return [false, null]
+}
+
+const isInViewport = (item: { id: string, text: string }) => {
+  const anchor = document.getElementById(item.id) as HTMLAnchorElement
+  const rect = anchor.getBoundingClientRect();
+  if (parentEl.value) {
+    const parentRect = parentEl.value.getBoundingClientRect()
+    return (
+      rect.top >= parentRect.top &&
+      rect.bottom <= parentRect.bottom
+    )
   } else {
-    return firstId.id
+    return (
+      rect.top >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    )
+  }
+}
+
+const setActiveItem = () => {
+  const itemsInViewport = [] as { id: string, text: string }[]
+  lastActiveId.value = activeId.value
+
+  props.items.forEach(item => {
+    if (isInViewport(item)) {
+      itemsInViewport.push(item)
+    }
+  })
+
+  if (itemsInViewport.length) {
+    activeId.value = itemsInViewport[0].id
+    return
+  }
+
+  if (lastActiveId.value) {
+    activeId.value = lastActiveId.value
+    return
+  }
+
+  if (props.items.length && !activeId.value) {
+    for (let i = 0; i < props.items.length; i++) {
+      const anchor = props.items[i]
+      const nextAnchor = props.items[i + 1]
+
+      const [isActive, id] = isItemActive(i, anchor, nextAnchor)
+
+      if (isActive) {
+        activeId.value = id
+      }
+    }
+    return
+  }
+}
+
+const onScroll = throttleAndDebounce(setActiveItem, 100)
+
+onMounted(() => {
+  requestAnimationFrame(setActiveItem)
+  if (parentEl.value) {
+    parentEl.value.addEventListener('scroll', onScroll)
+  } else {
+    window.addEventListener('scroll', onScroll)
   }
 })
 
-watch(() => props.items, () => {
-  setTimeout(() => {
-    initObserver()
-  }, props.observeDelay)
-}, { immediate: true, deep: true })
-
-const initObserver = () => {
-  if (typeof IntersectionObserver === 'undefined') return
-  destroyObserver()
-  observer.value = new IntersectionObserver(onElementObserved, {
-    root: parentEl.value
-  })
-  props.items.forEach((i) => {
-    const el = document.getElementById(i.id)
-    if (el) {
-      observer.value.observe(el)
-    }
-  })
-}
-
-const destroyObserver = () => {
-  observer.value && observer.value.disconnect()
-  onScreenIds.value = []
-  lastRemovedFromScreenId.value = null
-  observer.value = null
-}
-
-const onElementObserved = (entries: { target: any; isIntersecting: any; }[]) => {
-  entries.forEach(({ target, isIntersecting }) => {
-    const id = target.getAttribute('id')
-    if (isIntersecting) {
-      onScreenIds.value.push(id)
-      lastRemovedFromScreenId.value = null
-    } else {
-      onScreenIds.value = onScreenIds.value.filter((i) => i !== id)
-      lastRemovedFromScreenId.value = id
-    }
-  })
-}
+onUnmounted(() => {
+  if (parentEl.value) {
+    parentEl.value.removeEventListener('scroll', onScroll)
+  } else {
+    window.removeEventListener('scroll', onScroll)
+  }
+})
 
 const scrollToIdTarget = (id: string, event: Event) => {
   if (!parentEl.value) return

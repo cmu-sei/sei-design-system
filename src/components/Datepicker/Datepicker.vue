@@ -188,7 +188,7 @@ export default defineComponent({
     /**
      * The z-index for the popover.
      */
-    zIndex: { type: String, required: false, default: '50' },
+    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
     /**
      * Determines whether to display or hide the arrow for range selection.
      */
@@ -196,7 +196,7 @@ export default defineComponent({
     /**
      * Determines the sizing of the component.
      */
-    size: { type: String, default: 'md' },
+    size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
     /**
      * Determines the mode of the component.
      */

@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
 
 export default defineComponent({
   name: 'SdsLoadingSpinner',
@@ -40,7 +40,7 @@ export default defineComponent({
     /**
      * Sets the size of the spinner.
      */
-    size: { type: String, default: 'md' },
+    size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'md' },
     /**
      * Sets the accessiblity label for the spinner.
      */

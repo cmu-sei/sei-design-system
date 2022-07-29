@@ -8,7 +8,7 @@
   >
     <div
       v-for="(option, index) in options"
-      :key="option.value"
+      :key="option.text"
       class="space-x-1"
       :class="{ 'inline-block mr-4': !stacked }"
     >
@@ -44,7 +44,7 @@ let id = 0;
 type RadioModel = boolean | string | number | null
 
 interface RadioOption {
-  value: string | number
+  value: string | number | boolean
   text: string
 }
 
