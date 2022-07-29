@@ -8,7 +8,7 @@
   >
     <div
       v-for="(option, index) in options"
-      :key="option.value"
+      :key="option.text"
       class="space-x-1"
       :class="{ 'inline-block mr-4': !stacked }"
     >
@@ -41,7 +41,7 @@ import { defineComponent, PropType } from "vue";
 
 let id = 0;
 
-type CheckboxGroupOptionValue = string | number
+type CheckboxGroupOptionValue = string | number | boolean
 interface CheckboxGroupOption {
   value: CheckboxGroupOptionValue
   text: string

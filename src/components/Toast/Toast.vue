@@ -108,7 +108,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
 
 export default defineComponent({
   name: 'SdsToast',
@@ -120,7 +120,7 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String, default: 'success' },
+    variant: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: 'success' },
     /**
      * Determines the title content of the component.
      */

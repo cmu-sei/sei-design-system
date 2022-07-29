@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
 import uniq from "lodash/uniq";
 
 interface AutoSuggestResult {
@@ -163,7 +163,7 @@ export default defineComponent({
      * Determines the theme color of the component.
      */
     variant: {
-      type: String,
+      type: String as PropType<'default' | 'primary' | 'danger'>,
       default: "default",
     },
     /**

@@ -59,7 +59,7 @@ const props = defineProps({
   /**
    * Determines the size of the component.
    */
-  size: { type: String, default: 'md' },
+  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
 })
 
 const emit = defineEmits(['update:modelValue'])

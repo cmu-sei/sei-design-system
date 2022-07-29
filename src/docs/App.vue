@@ -43,18 +43,23 @@
     <examples />
     <components />
     <template #actions-bar>
-      <div class="bg-white dark:bg-gray-800 px-6 py-2 border shadow">
+      <div class="bg-blue-500/90 backdrop-blur dark:bg-blue-800 px-6 py-2 shadow">
         <div class="flex gap-2">
+          <p class="my-auto text-white font-semibold">
+            This is a text message
+          </p>
           <sds-button
-            variant="primary"
+            variant="light"
             class="ml-auto"
+            outline
           >
-            Save something
+            Cancel
           </sds-button>
           <sds-button
             variant="default"
+            class="text-primary hover:text-black hover:bg-white"
           >
-            Cancel
+            Save something
           </sds-button>
         </div>
       </div>

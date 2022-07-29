@@ -93,11 +93,11 @@ export default defineComponent({
     /**
      * Styling for the button trigger.
      */
-    variant: { type: String, default: 'default' },
+    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
     /**
      * The z-index for the popover.
      */
-    zIndex: { type: String, required: false, default: '50' },
+    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
     /**
      * The distance between the popper and the trigger.
      */
@@ -113,7 +113,7 @@ export default defineComponent({
     /**
      * Determines the size of the trigger button.
      */
-    size: { type: String, default: 'md' },
+    size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
     /**
      * Determines whether the content of the popper will set the width of the popper.
      */

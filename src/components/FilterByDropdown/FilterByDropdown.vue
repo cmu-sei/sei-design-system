@@ -155,11 +155,11 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String, default: 'secondary' },
+    variant: { type: String as PropType<'primary' | 'secondary' | ''>, default: 'secondary' },
     /**
      * The z-index for the popover.
      */
-    zIndex: { type: String, required: false, default: '50' },
+    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
     /**
      * The title for the toggle button.
      */

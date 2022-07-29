@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
 
 export default defineComponent({
   name: 'SdsToggleSwitch',
@@ -45,7 +45,7 @@ export default defineComponent({
      * Determines the theme color of the component.
      */
     variant: {
-      type: String,
+      type: String as PropType<'default' | 'primary' | 'danger'>,
       default: 'primary'
     },
     /**

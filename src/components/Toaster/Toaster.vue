@@ -42,7 +42,7 @@ import SdsToast from "../Toast/Toast.vue";
 
 interface ToasterToast {
   id: number
-  variant: string
+  variant: 'success' | 'info' | 'warning' | 'danger'
   title: string
   text: string
   autoHideDelay: number

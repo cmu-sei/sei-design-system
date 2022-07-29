@@ -23,7 +23,7 @@ export default defineComponent({
     /**
      * Determines the size.
      */
-    size: { type: String as PropType<'sm' | ''>, default: '' },
+    size: { type: String as PropType<'md' | 'sm' | ''>, default: '' },
     /**
      * Determines whether to use the outline styling or not.
      */

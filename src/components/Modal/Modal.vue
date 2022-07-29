@@ -122,7 +122,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch, onUnmounted, Directive } from "vue";
+import { defineComponent, ref, computed, watch, onUnmounted, Directive, PropType } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { Uid } from '@shimyshack/uid';
 
@@ -151,13 +151,13 @@ export default defineComponent({
      * Determines the size of the modal.
      */
     size: {
-      type: String,
+      type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | ''>,
       default: "md",
     },
     /**
      * The z-index for the popover.
      */
-    zIndex: { type: String, required: false, default: '50' },
+    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
   },
   emits: ['update:modelValue'],
   setup(props, { emit, slots }) {

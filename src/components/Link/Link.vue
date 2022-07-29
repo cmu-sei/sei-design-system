@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, PropType } from 'vue'
 
 export default defineComponent({
   name: 'SdsLink',
@@ -17,7 +17,7 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String, default: '' },
+    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | ''>, default: '' },
     /**
      * Applies the appropriate attributes for external links.
      */
