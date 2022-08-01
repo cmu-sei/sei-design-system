@@ -151,14 +151,14 @@
         </template>
       </div>
     </template>
-    <template #default>
+    <template #default="{ close }">
       <div class="p-4">
         <calendar
           v-model="localDate"
           :min="min"
           :max="max"
           :mode="mode"
-          @update:model-value="focusCorrectInput"
+          @update:model-value="($event) => focusCorrectInput($event, close)"
         />
       </div>
     </template>
@@ -343,7 +343,7 @@ export default defineComponent({
     }
   },
   methods: {
-    focusCorrectInput(value: CalendarDate | CalendarRange) {
+    focusCorrectInput(value: CalendarDate | CalendarRange, close: Function) {
       if (value && value instanceof Date) {
         (this.$refs.startDateInput as HTMLElement).focus()
       } else if (value && !(value instanceof Date) && !value.start) {
@@ -355,6 +355,14 @@ export default defineComponent({
       } else {
         (this.$refs.startDateInput as HTMLElement).focus()
       }
+
+      this.$nextTick(() => {
+        if (this.isRange && this.inputDate.start && this.inputDate.end) {
+          close()
+        } else if (!this.isRange && this.inputDate.start) {
+          close()
+        }
+      })
     },
     updateDatesFromInput() {
       if (this.isRange) {
