@@ -1,30 +1,37 @@
 <template>
   <SdsSection type="accented">
     <template #title>
-      <strong>Props</strong>
+      <strong class="text-sm uppercase">Props</strong>
     </template>
     <SdsTable
       class="table-prose"
       :fields="propFields"
       :items="propItems"
-      sort-by="title"
+      sort-by="name"
     >
-      <template #cell(title)="{ value, item }">
-        <strong class="font-semibold">{{ value }}<sup
+      <template #cell(name)="{ value, item }">
+        <strong class="font-semibold text-sm">{{ value }}<sup
           v-if="item.required"
           class="text-red-500"
         >*</sup></strong>
       </template>
-      <template #cell(type)="{ value }">
-        <code
-          v-if="value"
-          class="bg-gray-100 p-1 text-xs rounded-sm lowercase"
-        >{{ value.join(', ') }}</code>
+      <template #cell(description)="{ value, item }">
+        <div class="space-y-2">
+          <div
+            v-if="value"
+            class="text-sm"
+            v-html="value"
+          />
+          <div>
+            <code
+              v-if="item.type"
+              class="bg-gray-100 p-1 text-xs rounded-sm lowercase"
+            >{{ item.type.join(', ') }}</code>
+          </div>
+        </div>
       </template>
       <template #cell(default)="{ value }">
-        <code
-          class="bg-gray-100 p-1 text-xs rounded-sm"
-        >{{ value }}</code>
+        <code class="bg-gray-100 p-1 text-xs rounded-sm">{{ value }}</code>
       </template>
     </SdsTable>
     <p class="mt-4">
@@ -41,14 +48,14 @@ const props = defineProps({
 })
 
 const propFields = ref([
-  { key: 'title', label: 'Title', sortable: true },
+  { key: 'name', label: 'Name', sortable: true },
   { key: 'description', label: 'Description' },
-  { key: 'type', label: 'Type' },
   { key: 'default', label: 'Default' }
 ])
 const propDefinitions = computed(() => props.component.props)
+const docsDefinitions = computed(() => props.component.docs)
 
-const propItems = ref<{ title: string, type?: string[], required?: boolean, default?: unknown }[]>([])
+const propItems = ref<{ name: string, description?: string, type?: string[], required?: boolean, default?: unknown }[]>([])
 
 for (const prop in propDefinitions.value) {
   const value = propDefinitions.value[prop]
@@ -75,11 +82,22 @@ for (const prop in propDefinitions.value) {
   } else {
     defaultValue = value.default
   }
-  
+
+  let description
+  const tmpDoc = (
+    docsDefinitions.value &&
+    docsDefinitions.value.props &&
+    docsDefinitions.value.props.find((i: { name: string, description: string }) => i.name === prop)
+  )
+  if (tmpDoc) {
+    description = tmpDoc.description
+  }
+
   propItems.value.push({
-    title: prop,
+    name: prop,
     // ...propDefinitions.value[prop],
     type,
+    description,
     default: defaultValue
   })
 }
