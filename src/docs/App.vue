@@ -39,7 +39,10 @@
         <sds-search-box variant="danger" />
       </div> -->
     </template>
-    <DatepickerExample />
+    <p class="my-8 text-2xl">
+      Datepicker
+    </p>
+    <DocTables :component="Datepicker" />
     <examples />
     <components />
     <template #actions-bar>
@@ -78,19 +81,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import DatepickerExample from './components/DatepickerExample.vue'
+import Datepicker from "../components/Datepicker/Datepicker.vue"
+import DocTables from './components/DocTables.vue'
 import Components from './components/Components.vue'
 import Examples from './components/Examples.vue'
 
 export default defineComponent({
   name: "AppPage",
   components: {
-    DatepickerExample,
+    DocTables,
     Components,
     Examples,
   },
   data() {
     return {
+      Datepicker,
       collapsed: false,
       appSuite: 'MIS',
       appName: 'Travel Requests',

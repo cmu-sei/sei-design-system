@@ -49,7 +49,7 @@ const Template = (args) => ({
     <sds-dropdown
       v-bind="args"
       v-model="localValue"
-      @input="onInput"
+      @update:model-value="onUpdateModelValue"
       @btn-click="onBtnClick"
     >
       <template #title>Dropdown</template>
@@ -73,7 +73,7 @@ const Template = (args) => ({
     }
   },
   methods: {
-    onInput: action('input'),
+    onUpdateModelValue: action('update:model-value'),
     onBtnClick: action('btn-click'),
     onClick() {
       console.log('item clicked')
