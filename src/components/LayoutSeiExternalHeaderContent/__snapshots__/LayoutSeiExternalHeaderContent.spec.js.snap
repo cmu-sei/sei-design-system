@@ -5,8 +5,8 @@ exports[`LayoutSeiExternalHeaderContent > should match its default snapshot 1`] 
   class="space-y-4"
   data-id="sds-layout-sei-external-header-content"
 >
-  <!--v-if-->
-  <!--v-if-->
-  <!--v-if-->
+  <!---->
+  <!---->
+  <!---->
 </div>
 `;

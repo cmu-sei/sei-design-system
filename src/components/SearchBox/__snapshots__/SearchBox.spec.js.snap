@@ -18,7 +18,7 @@ exports[`SearchBox > should match its default snapshot 1`] = `
       spellcheck="false"
       type="text"
     />
-    <!--v-if-->
+    <!---->
   </div>
   <button
     class="btn btn-default text-secondary dark:text-gray-300 px-3"

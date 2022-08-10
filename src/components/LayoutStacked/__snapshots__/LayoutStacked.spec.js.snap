@@ -5,14 +5,13 @@ exports[`LayoutStacked > should match its default snapshot 1`] = `
   class="flex flex-col w-full min-h-screen"
   data-id="sds-layout-stacked"
 >
-  <!--v-if-->
+  <!---->
   <main
     class="flex-grow"
   >
-    <!-- @slot Page content. -->
     
     
   </main>
-  <!--v-if-->
+  <!---->
 </div>
 `;

@@ -5,7 +5,6 @@ exports[`Badge > should match its default snapshot 1`] = `
   class="inline-block tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-white bg-gray-500"
   data-id="sds-badge"
 >
-  <!-- @slot Badge content.  -->
   
   Badge
   
@@ -17,7 +16,6 @@ exports[`Badge > should match its variant primary, type light-border snapshot 1`
   class="inline-block tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-gray-500 bg-gray-100 border border-current"
   data-id="sds-badge"
 >
-  <!-- @slot Badge content.  -->
   
   Badge
   

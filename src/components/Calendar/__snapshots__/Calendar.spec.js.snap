@@ -54,7 +54,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </span>
         </button>
       </div>
-      <!--v-if-->
+      <!---->
       <button
         class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-600 rounded disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
@@ -505,11 +505,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
         </div>
         
       </div>
-      <!--v-if-->
+      <!---->
     </div>
     
   </div>
-  <!-- Time pickers -->
-  <!--v-if-->
+  <!---->
 </div>
 `;
