@@ -49,9 +49,8 @@ exports[`FileUploader > should match its default snapshot 1`] = `
     >
       Use a file under 10 MB.
     </p>
-    <!-- @slot File list content. @binding files, invalidFiles -->
     
-    <!--v-if-->
+    <!---->
     
   </div>
 </div>

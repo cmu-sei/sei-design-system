@@ -52,7 +52,7 @@ exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
           </div>
         </div>
       </li>
-      <!--v-if-->
+      <!---->
     </ul>
   </div>
 </div>"
@@ -174,7 +174,7 @@ exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
           </div>
         </div>
       </li>
-      <!--v-if-->
+      <!---->
     </ul>
   </div>
 </div>"

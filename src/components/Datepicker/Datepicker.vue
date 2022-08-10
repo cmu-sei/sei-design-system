@@ -158,7 +158,7 @@
           :min="min"
           :max="max"
           :mode="mode"
-          @update:model-value="($event) => focusCorrectInput($event, close)"
+          @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
         />
       </div>
     </template>

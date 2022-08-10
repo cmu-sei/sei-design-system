@@ -14,12 +14,12 @@ exports[`Section > should match its default snapshot 1`] = `
       <div
         class="self-center flex-grow"
       >
-        <!--v-if-->
-        <!--v-if-->
+        <!---->
+        <!---->
       </div>
-      <!--v-if-->
+      <!---->
     </div>
   </header>
-  <!--v-if-->
+  <!---->
 </div>
 `;

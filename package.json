@@ -25,9 +25,9 @@
   "types": "./dist/types/components/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/components/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.umd.js",
-      "types": "./dist/types/components/index.d.ts"
+      "require": "./dist/index.umd.js"
     },
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
@@ -71,7 +71,7 @@
     "@vueuse/core": "^9.1.0",
     "autoprefixer": "^10.4.8",
     "date-fns": "^2.29.1",
-    "esbuild": "^0.14.54",
+    "esbuild": "^0.15.0",
     "eslint": "^8.21.0",
     "eslint-plugin-vue": "^9.3.0",
     "jsdom": "^20.0.0",
@@ -86,7 +86,7 @@
     "vitest": "^0.21.1",
     "vue": "^3.0.0",
     "vue-loader": "^17.0.0",
-    "vue-tsc": "^0.39.5"
+    "vue-tsc": "^0.40.0"
   },
   "engines": {
     "node": ">=12.13.0"

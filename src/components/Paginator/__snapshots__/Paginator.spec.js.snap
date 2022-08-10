@@ -95,7 +95,7 @@ exports[`Paginator.vue > matches snapshot with loading and totalPages prop assig
 </nav>"
 `;
 
-exports[`Paginator.vue > matches snapshot with no props assigned 1`] = `"<!--v-if-->"`;
+exports[`Paginator.vue > matches snapshot with no props assigned 1`] = `"<!---->"`;
 
 exports[`Paginator.vue > matches snapshot with threshold and totalPages prop assigned 1`] = `
 "<nav data-id=\\"sds-paginator\\" class=\\"paginator\\" aria-label=\\"Page navigation\\">

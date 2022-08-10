@@ -9,7 +9,7 @@ exports[`LayoutSeiExternalMasthead > should match its default snapshot 1`] = `
     class="container px-4 mx-auto md:px-8"
   >
     
-    <!--v-if-->
+    <!---->
     
   </div>
 </div>
