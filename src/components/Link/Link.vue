@@ -17,7 +17,7 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | ''>, default: '' },
+    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark' | ''>, default: '' },
     /**
      * Applies the appropriate attributes for external links.
      */
@@ -46,6 +46,10 @@ export default defineComponent({
           return 'link-tertiary'
         case 'danger':
           return 'link-danger'
+        case 'light':
+          return 'link-light'
+        case 'dark':
+          return 'link-dark'
         default:
           return ''
       }
