@@ -816,6 +816,12 @@
             :size="calendar.size"
             required
           />
+          <sds-button
+            variant="primary"
+            :disabled="calendar.date.start === null || calendar.date.end === null"
+          >
+            Test button
+          </sds-button>
           <sds-datepicker
             v-model="calendar2.date"
             :min="calendar2.min"
@@ -825,10 +831,42 @@
             required
           />
           <sds-datepicker
+            v-model="calendar2.date"
+            :min="calendar2.min"
+            :max="calendar2.max"
+            mode="date"
+            :size="calendar2.size"
+            required
+          />
+          <sds-datepicker
+            v-model="calendar2.date"
+            :min="calendar2.min"
+            :max="calendar2.max"
+            mode="time"
+            :size="calendar2.size"
+            required
+          />
+          <sds-datepicker
             v-model="calendarSingle.date"
             :min="calendarSingle.min"
             :max="calendarSingle.max"
             :mode="calendarSingle.mode"
+            :size="calendarSingle.size"
+            required
+          />
+          <sds-datepicker
+            v-model="calendarSingle.date"
+            :min="calendarSingle.min"
+            :max="calendarSingle.max"
+            mode="date"
+            :size="calendarSingle.size"
+            required
+          />
+          <sds-datepicker
+            v-model="calendarSingle.date"
+            :min="calendarSingle.min"
+            :max="calendarSingle.max"
+            mode="time"
             :size="calendarSingle.size"
             required
           />

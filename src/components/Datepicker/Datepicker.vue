@@ -61,7 +61,7 @@
             :required="required"
             :pattern="inputPattern"
             @focusin="open()"
-            @keydown.tab="close()"
+            @keydown.tab="updateDatesFromInput(); close()"
             @mousedown.stop="toggle()"
             @keyup.up="close()"
             @keyup.down="open()"
@@ -140,7 +140,7 @@
               :required="required"
               :pattern="inputPattern"
               @focusin="open()"
-              @keydown.tab="close()"
+              @keydown.tab="updateDatesFromInput(); close()"
               @mousedown.stop="toggle()"
               @keyup.up="close()"
               @keyup.down="open()"
@@ -356,13 +356,15 @@ export default defineComponent({
         (this.$refs.startDateInput as HTMLElement).focus()
       }
 
-      this.$nextTick(() => {
-        if (this.isRange && this.inputDate.start && this.inputDate.end) {
-          close()
-        } else if (!this.isRange && this.inputDate.start) {
-          close()
-        }
-      })
+      if (this.mode === 'date') {
+        this.$nextTick(() => {
+          if (this.isRange && this.inputDate.start && this.inputDate.end) {
+            close()
+          } else if (!this.isRange && this.inputDate.start) {
+            close()
+          }
+        })
+      }
     },
     updateDatesFromInput() {
       if (this.isRange) {
