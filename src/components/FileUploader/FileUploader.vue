@@ -48,8 +48,8 @@
       >
         <ul v-if="fileList.length > 0 || invalidFileList.length > 0">
           <li
-            v-for="file in fileList"
-            :key="file.name + file.size + file.type + file.lastModified"
+            v-for="f in fileList"
+            :key="f.name + f.size + f.type + f.lastModified"
             class="py-2 border-b only:border-0 last:pb-0 last:border-0"
           >
             <div class="flex">
@@ -70,12 +70,12 @@
                     d="M243.8 339.8c-10.9 10.9-28.7 10.9-39.6 0l-64-64c-10.9-10.9-10.9-28.7 0-39.6c10.9-10.9 28.7-10.9 39.6 0l44.2 44.2l108.2-108.2c10.9-10.9 28.7-10.9 39.6 0c10.9 10.9 10.9 28.7 0 39.6l-128 128zM512 256c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0s256 114.6 256 256zM256 48C141.1 48 48 141.1 48 256s93.1 208 208 208s208-93.1 208-208S370.9 48 256 48z"
                   />
                 </svg>
-                <span class="my-auto">{{ file.name }}</span>
-                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(file.size) }})</span>
+                <span class="my-auto">{{ f.name }}</span>
+                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(f.size) }})</span>
               </div>
               <button
                 class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
-                @click="removeFile(file)"
+                @click="removeFile(f)"
               >
                 <svg
                   viewBox="0 0 20 20"
@@ -94,8 +94,8 @@
             </div>
           </li>
           <li
-            v-for="file in invalidFileList"
-            :key="file.name + file.size + file.type + file.lastModified"
+            v-for="f in invalidFileList"
+            :key="f.name + f.size + f.type + f.lastModified"
             class="py-2 border-b only:border-0 last:pb-0 last:border-0"
           >
             <div class="flex">
@@ -116,12 +116,12 @@
                     d="M175 175c9.4-9.3 24.6-9.3 33.1 0l47 47.1L303 175c9.4-9.3 24.6-9.3 33.1 0c10.2 9.4 10.2 24.6 0 33.1l-46.2 47l46.2 47.9c10.2 9.4 10.2 24.6 0 33.1c-8.5 10.2-23.7 10.2-33.1 0l-47.9-46.2l-47 46.2c-8.5 10.2-23.7 10.2-33.1 0c-9.3-8.5-9.3-23.7 0-33.1l47.1-47.9l-47.1-47c-9.3-8.5-9.3-23.7 0-33.1zm337 81c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0s256 114.6 256 256zM256 48C141.1 48 48 141.1 48 256s93.1 208 208 208s208-93.1 208-208S370.9 48 256 48z"
                   />
                 </svg>
-                <span class="my-auto">{{ file.name }}</span>
-                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(file.size) }})</span>
+                <span class="my-auto">{{ f.name }}</span>
+                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(f.size) }})</span>
               </div>
               <button
                 class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
-                @click="removeInvalidFile(file)"
+                @click="removeInvalidFile(f)"
               >
                 <svg
                   viewBox="0 0 20 20"
@@ -139,13 +139,13 @@
               </button>
             </div>
             <p
-              v-if="file.invalidType"
+              v-if="f.invalidType"
               class="text-danger text-xs ml-5 mt-1"
             >
               Invalid file type
             </p>
             <p
-              v-if="file.invalidSize"
+              v-if="f.invalidSize"
               class="text-danger text-xs ml-5 mt-1"
             >
               File size is over {{ filesize }} MB.
@@ -167,13 +167,26 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, PropType, watch } from 'vue'
 
 type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid'])
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'update:model-value'])
 
 const props = defineProps({
+  /**
+   * An array of files. This prop is optional.
+   * 
+   * This syncs with the internal fileList and invalidFileList
+   * to give developers more control over files.
+   * 
+   * Each file has `name`, `type`, `size`, `lastModified` properties.
+   * 
+   * You can check a file's validity using its `invalidType`
+   * and `invalidSize` boolean properties. They are only
+   * present if the file is invalid
+   */
+  modelValue: { type: Array as PropType<File[]>, default: () => [] },
   /**
    * Determines the form name to use for the upload input field.
    */
@@ -227,6 +240,7 @@ const removeFile = (file: File) => {
    * Emitted when a valid file is removed.
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
+  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
 }
 
 const removeInvalidFile = (file: File) => {
@@ -241,6 +255,7 @@ const removeInvalidFile = (file: File) => {
    * Emitted when an invalid file is removed.
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
+  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
 }
 
 const findFile = (file: File) => {
@@ -266,6 +281,7 @@ const processFiles = (event: Event) => {
    * Emitted when a file or files have been added.
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
+  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
 }
 
 const processSingleFile = (file: File) => {
@@ -335,4 +351,16 @@ const byteToSize = (bytes: number): string => {
   if (i === 0) { return `${bytes}${sizes[i]}` }
   return `${Math.ceil(bytes / 1024 ** i)} ${sizes[i]}`
 }
+
+watch(() => props.modelValue, value => {
+  if (!fileInput.value) return
+  const dt = new DataTransfer()
+  value.forEach(file => dt.items.add(file))
+  fileInput.value.files = dt.files
+  fileList.value = []
+  invalidFileList.value = []
+  Array.from(dt.files).forEach(file => {
+    processSingleFile(file)
+  })
+}, { immediate: true, deep: true })
 </script>
