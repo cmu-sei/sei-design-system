@@ -454,6 +454,7 @@
     <p>File Uploader</p>
     <div class="p-8 bg-white">
       <sds-file-uploader
+        v-model="fileUploaderModel"
         accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json"
         helper-text="Use a JSON, JPG, JPEG, PNG, DOC, DOCX, XLS, XLSX or CSV under 1MB."
         :allowed-filetypes="[
@@ -469,6 +470,29 @@
         :filesize="1"
         multiple
       />
+      <div class="grid grid-cols-4 gap-4 my-4">
+        <div
+          v-for="image in uploadedImages"
+          :key="image.src"
+          class="border rounded p-4"
+        >
+          <img
+            :src="image.src"
+            :title="image.caption"
+            class="w-64 h-auto"
+          >
+          <p>{{ image.caption }}</p>
+          <sds-input v-model="image.caption" />
+          <p>{{ image.name }}</p>
+          <p>{{ image.type }}</p>
+        </div>
+      </div>
+      <sds-button
+        variant="default"
+        @click="fileUploaderModel = []"
+      >
+        Clear files
+      </sds-button>
     </div>
     <div class="p-8 bg-white">
       <sds-file-uploader />
@@ -1064,6 +1088,8 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      fileUploaderModel: [],
+      uploadedImages: [] as any,
       tabs: [
         { key: 'home', title: 'Home', disabled: true },
         { key: 'about', title: 'About Us', active: true },
@@ -1232,6 +1258,21 @@ export default defineComponent({
     filterBySelectedOptions() {
       return this.filterby.options.filter((i) => i.selected);
     },
+  },
+  watch: {
+    fileUploaderModel(value) {
+      this.uploadedImages = value.map((file: any) => {
+        return {
+          src: URL.createObjectURL(file),
+          isInvalid: file.invalidType || file.invalidSize,
+          caption: '',
+          name: file.name,
+          lastModified: file.lastModified,
+          size: file.size,
+          type: file.type
+        }
+      }).filter((file: any) => !file.isInvalid)
+    }
   },
   methods: {
     generateToast() {
