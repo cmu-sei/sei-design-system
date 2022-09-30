@@ -842,6 +842,7 @@
           />
           <sds-button
             variant="primary"
+            type="button"
             :disabled="calendar.date.start === null || calendar.date.end === null"
           >
             Test button
