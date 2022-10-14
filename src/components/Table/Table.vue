@@ -172,10 +172,7 @@ export default defineComponent({
     /**
      * Determines the CSS classes used on the sorted column.
      */
-    sortedColumnClass: {
-      type: String,
-      default: 'bg-gray-100 dark:bg-gray-800'
-    }
+    sortedColumnClass: { type: String, default: null }
   },
   data() {
     return {
