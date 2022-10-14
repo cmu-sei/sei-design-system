@@ -1,5 +1,42 @@
 <template>
   <div class="guide">
+    <p>Datapoint</p>
+    <div class="p-6 space-y-4">
+      <sds-datapoint
+        size="lg"
+        variant="red"
+        label="Super Mario"
+      >
+        5,124
+        <template #label>
+          Super Mario
+        </template>
+        <template #context>
+          <sds-badge
+            variant="teal"
+            type="light-border"
+          >
+            Yahoo!
+          </sds-badge>
+        </template>
+      </sds-datapoint>
+      <sds-datapoint>
+        400
+        <template #label>
+          Label
+        </template>
+        <template #context>
+          Context
+        </template>
+      </sds-datapoint>
+      <sds-datapoint
+        v-model="datapointModel"
+        size="sm"
+        variant="orange"
+        label="Coffee"
+        context="Cups"
+      />
+    </div>
     <p>Badge</p>
     <div class="p-6 space-y-4">
       <div class="space-x-4">
@@ -1089,6 +1126,7 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      datapointModel: 4000,
       fileUploaderModel: [],
       uploadedImages: [] as any,
       tabs: [
