@@ -5,6 +5,7 @@ import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
+import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
@@ -56,6 +57,7 @@ const Components: ComponentList = {
   SdsCalendar,
   SdsCheckboxGroup,
   SdsClientOnly,
+  SdsDatapoint,
   SdsDatepicker,
   SdsDropdown,
   SdsDropdownDivider,
@@ -111,6 +113,7 @@ export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
+export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
