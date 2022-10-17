@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A datapoint displays at-a-glance data for a user to quickly view key metrics.',
+        component: 'BETA: A datapoint displays at-a-glance data for a user to quickly view key metrics.',
       },
     },
   },
