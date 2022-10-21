@@ -5,9 +5,8 @@
       <sds-datapoint
         size="lg"
         variant="red"
-        label="Super Mario"
       >
-        5,124
+        {{ datapointModel.toLocaleString() }}
         <template #label>
           Super Mario
         </template>
@@ -31,7 +30,7 @@
       </sds-datapoint>
       <sds-datapoint
         v-model="datapointModel"
-        size="sm"
+        size="lg"
         variant="orange"
         label="Coffee"
         context="Cups"
@@ -1126,7 +1125,7 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
-      datapointModel: 4000,
+      datapointModel: 4567,
       fileUploaderModel: [],
       uploadedImages: [] as any,
       tabs: [
