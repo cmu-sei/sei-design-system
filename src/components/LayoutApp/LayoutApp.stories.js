@@ -30,8 +30,25 @@ const Template = (args) => ({
       </template>
       Page content area
       <template #actions-bar>
-        <div class="bg-white dark:bg-gray-700 border shadow px-4 py-3">
-          Actions bar content area
+      <div class="bg-blue-500/90 backdrop-blur dark:bg-blue-800 px-6 py-2 shadow">
+          <div class="flex gap-2">
+            <p class="my-auto text-white font-semibold">
+              Action bar content area
+            </p>
+            <sds-button
+              variant="light"
+              class="ml-auto"
+              outline
+            >
+              Cancel
+            </sds-button>
+            <sds-button
+              variant="default"
+              class="text-primary hover:text-black hover:bg-white"
+            >
+              Save something
+            </sds-button>
+          </div>
         </div>
       </template>
       <template #footer-middle>
