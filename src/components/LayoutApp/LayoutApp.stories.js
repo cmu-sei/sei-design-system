@@ -1,4 +1,5 @@
 import SdsLayoutApp from './LayoutApp.vue';
+import SdsButton from '../Button/Button.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -16,7 +17,7 @@ export default {
 };
 
 const Template = (args) => ({
-  components: { SdsLayoutApp },
+  components: { SdsLayoutApp, SdsButton },
   setup() {
     return { args }
   },

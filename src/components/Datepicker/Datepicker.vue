@@ -158,6 +158,7 @@
           :min="min"
           :max="max"
           :mode="mode"
+          :use-current-time-for-today="useCurrentTimeForToday"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
         />
       </div>
@@ -234,6 +235,12 @@ export default defineComponent({
      * Determines if the component is disabled.
      */
     disabled: { type: Boolean, default: false },
+    /**
+     * Determines whether to use the current time when selecting a date that is equal to today.
+     * 
+     * If false, this sets the time to the start of the date.
+     */
+    useCurrentTimeForToday: { type: Boolean, default: false }
   },
   emits: ['update:modelValue'],
   data() {

@@ -875,6 +875,7 @@
             :mode="calendar.mode"
             :size="calendar.size"
             required
+            use-current-time-for-today
           />
           <sds-button
             variant="primary"
