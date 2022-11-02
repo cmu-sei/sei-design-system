@@ -409,7 +409,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
+import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
 import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
 
 const props = defineProps({
@@ -439,7 +439,13 @@ const props = defineProps({
   /**
    * Determines the maximum selectable date for this component.
    */
-  max: { type: Date as PropType<CalendarDate>, default: null }
+  max: { type: Date as PropType<CalendarDate>, default: null },
+  /**
+   * Determines whether to use the current time when selecting a date that is equal to today.
+   * 
+   * If false, this sets the time to the start of the date.
+   */
+   useCurrentTimeForToday: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -652,10 +658,12 @@ const goToPrevMonth = () => {
   displayedMonth.value = subMonths(displayedMonth.value, 1)
   displayedNextMonth.value = subMonths(displayedNextMonth.value, 1)
 }
+
 const goToNextMonth = () => {
   displayedMonth.value = addMonths(displayedMonth.value, 1)
   displayedNextMonth.value = addMonths(displayedNextMonth.value, 1)
 }
+
 const goToSelectedMonth = () => {
   if (!calendarMonthSelect.value || !calendarYearSelect.value) return
   const monthIndex = calendarMonths.findIndex((i) => i === calendarMonthSelect.value) + 1
@@ -665,15 +673,18 @@ const goToSelectedMonth = () => {
     view.value = 'days'
   }
 }
+
 const goToThisMonth = () => {
   displayedMonth.value = new Date()
   displayedNextMonth.value = addMonths(displayedMonth.value, 1)
   view.value = 'days'
 }
+
 const canGoToPrevMonth = computed(() => {
   if (!(props.min instanceof Date)) return true
   return isBefore(startOfMonth(props.min), startOfMonth(displayedMonth.value))
 })
+
 const canGoToNextMonth = computed(() => {
   if (!(props.max instanceof Date)) return true
   return isAfter(startOfMonth(props.max), startOfMonth(displayedMonth.value))
@@ -687,7 +698,7 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
   if (isRange.value && date.value) {
     if ((date.value as CalendarRange).end || !(date.value as CalendarRange).start) {
       (date.value as CalendarRange) = {
-        start: setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
+        start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
         end: null
       }
     } else {
@@ -703,8 +714,8 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
           const minDate = min([start, end])
           const maxDate = max([start, end])
           date.value = {
-            start: isEqual(start, minDate) ? minDate : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0),
-            end: maxDate
+            start: isEqual(start, minDate) ? minDate : (props.useCurrentTimeForToday && isToday(minDate) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0)),
+            end: endOfDay(maxDate)
           }
         }
       } else {
@@ -712,18 +723,20 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
       }
     }
   } else {
-    date.value = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+    date.value = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
   }
 
   nextTick(() => {
     updateTimeSelects()
   })
 }
+
 const dateIsBeforeMin = (day: number, isNextMonth = false) => {
   if (!(props.min instanceof Date)) return false
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   return isBefore(setDate(month, day), setHours(setMinutes(setSeconds(setMilliseconds(props.min, 0), 0), 0), 0))
 }
+
 const dateIsAfterMax = (day: number, isNextMonth = false) => {
   if (!(props.max instanceof Date)) return false
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
@@ -731,9 +744,11 @@ const dateIsAfterMax = (day: number, isNextMonth = false) => {
   const startOfMax = setHours(setMinutes(setSeconds(setMilliseconds(props.max, 0), 0), 0), 0)
   return isAfter(date, startOfMax) || isEqual(date, startOfMax)
 }
+
 const dateIsNotSelectable = (day: number, isNextMonth = false) => {
   return dateIsBeforeMin(day, isNextMonth) || dateIsAfterMax(day, isNextMonth)
 }
+
 const dateIsWithinInterval = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (
@@ -751,6 +766,7 @@ const dateIsWithinInterval = (day: number, isNextMonth = false) => {
   }
   return false
 }
+
 const dateIsAtStartOfInterval = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (
@@ -765,6 +781,7 @@ const dateIsAtStartOfInterval = (day: number, isNextMonth = false) => {
   }
   return false
 }
+
 const dateIsAtEndOfInterval = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (
@@ -779,6 +796,7 @@ const dateIsAtEndOfInterval = (day: number, isNextMonth = false) => {
   }
   return false
 }
+
 const dateIsSameDay = (day: number, isNextMonth = false) => {
   // is null
   if (!date.value) {
