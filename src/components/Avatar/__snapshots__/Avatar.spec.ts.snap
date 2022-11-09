@@ -2,7 +2,7 @@
 
 exports[`Avatar > should match its default snapshot 1`] = `
 <div
-  class="inline-flex items-center justify-center bg-green-200 w-16 h-20"
+  class="inline-flex items-center justify-center bg-indigo-200 w-16 h-20"
   data-id="sds-avatar"
 >
   <span
@@ -14,7 +14,7 @@ exports[`Avatar > should match its default snapshot 1`] = `
 
 exports[`Avatar > should match its variant: random, size: lg, shape: circle, name: Matt Winwood, and src snapshot 1`] = `
 <div
-  class="inline-flex items-center justify-center bg-purple-200 w-44 h-44 rounded-full"
+  class="inline-flex items-center justify-center bg-blue-200 w-44 h-44 rounded-full"
   data-id="sds-avatar"
 >
   <div
