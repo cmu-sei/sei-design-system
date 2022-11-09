@@ -12,7 +12,7 @@
     <span
       v-else
       :title="name"
-      :class="['leading-none text-black cursor-pointer uppercase', textClass]"
+      :class="['leading-none text-black cursor-default uppercase', textClass]"
     >
       {{ initials }}
     </span>
