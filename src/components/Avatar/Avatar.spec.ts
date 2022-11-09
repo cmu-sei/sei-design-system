@@ -5,14 +5,18 @@ import Component from './Avatar.vue'
 
 describe('Avatar', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {})
+    const wrapper = shallowMount(Component, {
+      props: {
+        variant: 'blue'
+    }
+    })
     expect(wrapper.element).toMatchSnapshot()
   })
 
   it('should match its variant: random, size: lg, shape: circle, name: Matt Winwood, and src snapshot', () => {
     const wrapper = shallowMount(Component, {
-      propsData: {
-        variant: 'random',
+      props: {
+        variant: 'red',
         size: 'lg',
         shape: 'circle',
         name: 'Matt Winwood',
