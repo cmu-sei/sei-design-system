@@ -5,7 +5,7 @@ export default {
     parameters: {
         docs: {
             description: {
-                component: 'An Avatar is a visual component used to represent a person or entity.',
+                component: 'An avatar is a visual component used to represent a person or entity.',
             },
         },
     },
@@ -17,7 +17,7 @@ export default {
             description: 'Set the size of the avatar. Accepts "sm", "md" and "lg". Defaults to "md".'
         },
         variant: {
-            options: ['random', 'gray', 'red', 'pink', 'orange', 'yellow', 'green', 'teal', 'blue', 'indigo', 'purple'],
+            options: ['random', 'gray', 'tan', 'yellow', 'orange', 'pink', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
             control: {type: 'select'},
             description: 'Set the background color of the avatar when no image is present. Defaults to "random".'
         },
