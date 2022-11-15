@@ -16,64 +16,84 @@
       </template>
       <ul>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-primary"
-          >Primary Link</a>
+          >
+            Primary Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-secondary"
-          >Secondary Link</a>
+          >
+            Secondary Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-tertiary"
-          >Tertiary Link</a>
+          >
+            Tertiary Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-success"
-          >Success Link</a>
+          >
+            Success Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-info"
-          >Info Link</a>
+          >
+            Info Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-warning"
-          >Warning Link</a>
+          >
+            Warning Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-danger"
-          >Danger Link</a>
+          >
+            Danger Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-light"
-          >Light Link</a>
+          >
+            Light Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-dark"
-          >Dark Link</a>
+          >
+            Dark Link
+          </sds-link>
         </li>
         <li>
-          <a
+          <sds-link
             href="#"
             class="link link-primary link-cta"
-          >Primary CTA Link</a>
+          >
+            Primary CTA Link
+          </sds-link>
         </li>
       </ul>
     </sds-section>
@@ -846,9 +866,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SdsLink from '../../components/Link/Link.vue';
 
 export default defineComponent({
   name: "ComponentsSection",
+  components: {
+    SdsLink,
+  },
   data() {
     return {
       openModal: false,
