@@ -5,7 +5,7 @@ export default {
     parameters: {
         docs: {
             description: {
-                component: 'An avatar is a visual component used to represent a person or entity.',
+                component: 'Beta: An avatar is a visual component used to represent a person or entity.',
             },
         },
     },
