@@ -16,8 +16,8 @@ export default {
       control: { type: 'select' }
     },
     cta: {
-      options: [true, false],
-      control: { type: 'radio' }
+      options: ['', 'link-cta', 'link-cta-right', 'link-cta-left', 'link-cta-up', 'link-cta-down', true, false],
+      control: { type: 'select' }
     },
     disabled: {
       options: [true, false],

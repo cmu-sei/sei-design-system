@@ -75,6 +75,30 @@
             class="link link-primary link-cta"
           >Primary CTA Link</a>
         </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-right"
+          >Primary CTA Link (right)</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-left"
+          >Primary CTA Link (left)</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-up"
+          >Primary CTA Link (up)</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-down"
+          >Primary CTA Link (down)</a>
+        </li>
       </ul>
     </sds-section>
 

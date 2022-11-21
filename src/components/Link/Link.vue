@@ -25,7 +25,7 @@ export default defineComponent({
     /**
      * Gives the link a "Call to Action" styling.
      */
-    cta: { type: Boolean, default: false },
+    cta: { type: [Boolean,String], default: false },
     /**
      * Disables the component to prevent user interaction.
      */
@@ -56,7 +56,21 @@ export default defineComponent({
     })
 
     const ctaClass = computed(() => {
-      return props.cta ? 'link-cta' : ''
+      return props.cta ? ctaType : ''
+      const ctaType = computed(() => {
+        switch (props.cta) {
+          case 'link-cta-right':
+            return 'link-cta link-cta-right'
+          case 'link-cta-left':
+            return 'link-cta link-cta-left'
+          case 'link-cta-up':
+            return 'link-cta link-cta-up'
+          case 'link-cta-down':
+            return 'link-cta link-cta-down'
+          default:
+            return 'link-cta'
+        }
+      })
     })
 
     const disabledClass = computed(() => {
