@@ -17,7 +17,7 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark' | ''>, default: '' },
+    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | ''>, default: '' },
     /**
      * Applies the appropriate attributes for external links.
      */
@@ -25,7 +25,7 @@ export default defineComponent({
     /**
      * Gives the link a "Call to Action" styling.
      */
-    cta: { type: [Boolean,String], default: false },
+    cta: { type: [Boolean, String] as PropType<'up' | 'right' | 'down' | 'left' | true | false> , default: false },
     /**
      * Disables the component to prevent user interaction.
      */
@@ -72,11 +72,7 @@ export default defineComponent({
         case 'down':
           return 'link-cta link-cta-down'
         case true:
-        case 'true':
           return 'link-cta'
-        case false:
-        case 'false':
-          return ''
         default:
           return ''
       }

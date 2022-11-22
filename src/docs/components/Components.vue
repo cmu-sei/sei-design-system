@@ -94,28 +94,28 @@
           >Primary CTA Link (up)</a>
         </li>
         <li>
-          <sds-link
+          <SdsLink
             variant="success"
             cta="left"
           >
             Success CTA Link (left)
-          </sds-link>
+          </SdsLink>
         </li>
         <li>
-          <sds-link
+          <SdsLink
             variant="danger"
             cta="right"
           >
             Danger CTA Link (right)
-          </sds-link>
+          </SdsLink>
         </li>
         <li>
-          <sds-link
-            cta
+          <SdsLink
             variant="warning"
+            cta
           >
             Warning CTA Link
-          </sds-link>
+          </SdsLink>
         </li>
       </ul>
     </sds-section>
