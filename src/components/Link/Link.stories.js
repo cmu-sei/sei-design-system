@@ -12,11 +12,11 @@ export default {
   component: SdsLink,
   argTypes: {
     variant: {
-      options: ['', 'primary', 'secondary', 'tertiary', 'danger', 'light', 'dark'],
+      options: ['', 'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
       control: { type: 'select' }
     },
     cta: {
-      options: ['', 'link-cta', 'link-cta-right', 'link-cta-left', 'link-cta-up', 'link-cta-down', true, false],
+      options: ['', 'right', 'left', 'up', 'down', true, false],
       control: { type: 'select' }
     },
     disabled: {

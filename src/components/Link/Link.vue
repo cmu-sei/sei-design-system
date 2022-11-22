@@ -44,6 +44,12 @@ export default defineComponent({
           return 'link-secondary'
         case 'tertiary':
           return 'link-tertiary'
+        case 'success':
+          return 'link-success'
+        case 'info':
+          return 'link-info'
+        case 'warning':
+          return 'link-warning'
         case 'danger':
           return 'link-danger'
         case 'light':
@@ -56,21 +62,24 @@ export default defineComponent({
     })
 
     const ctaClass = computed(() => {
-      return props.cta ? ctaType : ''
-      const ctaType = computed(() => {
-        switch (props.cta) {
-          case 'link-cta-right':
-            return 'link-cta link-cta-right'
-          case 'link-cta-left':
-            return 'link-cta link-cta-left'
-          case 'link-cta-up':
-            return 'link-cta link-cta-up'
-          case 'link-cta-down':
-            return 'link-cta link-cta-down'
-          default:
-            return 'link-cta'
-        }
-      })
+      switch (props.cta) {
+        case 'right':
+          return 'link-cta link-cta-right'
+        case 'left':
+          return 'link-cta link-cta-left'
+        case 'up':
+          return 'link-cta link-cta-up'
+        case 'down':
+          return 'link-cta link-cta-down'
+        case true:
+        case 'true':
+          return 'link-cta'
+        case false:
+        case 'false':
+          return ''
+        default:
+          return ''
+      }
     })
 
     const disabledClass = computed(() => {
