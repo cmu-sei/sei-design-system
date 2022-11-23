@@ -75,6 +75,48 @@
             class="link link-primary link-cta"
           >Primary CTA Link</a>
         </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-right"
+          >Primary CTA Link (right)</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-left"
+          >Primary CTA Link (left)</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="link link-primary link-cta link-cta-up"
+          >Primary CTA Link (up)</a>
+        </li>
+        <li>
+          <SdsLink
+            variant="success"
+            cta="left"
+          >
+            Success CTA Link (left)
+          </SdsLink>
+        </li>
+        <li>
+          <SdsLink
+            variant="danger"
+            cta="right"
+          >
+            Danger CTA Link (right)
+          </SdsLink>
+        </li>
+        <li>
+          <SdsLink
+            variant="warning"
+            cta
+          >
+            Warning CTA Link
+          </SdsLink>
+        </li>
       </ul>
     </sds-section>
 
@@ -846,9 +888,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SdsLink from '../../components/Link/Link.vue'
 
 export default defineComponent({
   name: "ComponentsSection",
+  components: {
+    SdsLink,
+  },
   data() {
     return {
       openModal: false,
