@@ -25,7 +25,7 @@ export default defineComponent({
     /**
      * Gives the link a "Call to Action" styling.
      */
-    cta: { type: [Boolean, String] as PropType<'up' | 'right' | 'down' | 'left' | true | false> , default: false },
+    cta: { type: [Boolean, String] as PropType<'up' | 'right' | 'down' | 'left' | boolean> , default: false },
     /**
      * Disables the component to prevent user interaction.
      */
