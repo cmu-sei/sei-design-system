@@ -17,7 +17,7 @@ export default defineComponent({
     /**
      * Determines the theme color of the component.
      */
-    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark' | ''>, default: '' },
+    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | ''>, default: '' },
     /**
      * Applies the appropriate attributes for external links.
      */
@@ -25,7 +25,7 @@ export default defineComponent({
     /**
      * Gives the link a "Call to Action" styling.
      */
-    cta: { type: Boolean, default: false },
+    cta: { type: [Boolean, String] as PropType<'up' | 'right' | 'down' | 'left' | boolean> , default: false },
     /**
      * Disables the component to prevent user interaction.
      */
@@ -44,6 +44,12 @@ export default defineComponent({
           return 'link-secondary'
         case 'tertiary':
           return 'link-tertiary'
+        case 'success':
+          return 'link-success'
+        case 'info':
+          return 'link-info'
+        case 'warning':
+          return 'link-warning'
         case 'danger':
           return 'link-danger'
         case 'light':
@@ -56,7 +62,20 @@ export default defineComponent({
     })
 
     const ctaClass = computed(() => {
-      return props.cta ? 'link-cta' : ''
+      switch (props.cta) {
+        case 'right':
+          return 'link-cta link-cta-right'
+        case 'left':
+          return 'link-cta link-cta-left'
+        case 'up':
+          return 'link-cta link-cta-up'
+        case 'down':
+          return 'link-cta link-cta-down'
+        case true:
+          return 'link-cta'
+        default:
+          return ''
+      }
     })
 
     const disabledClass = computed(() => {
