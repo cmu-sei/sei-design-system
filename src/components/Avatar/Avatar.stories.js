@@ -12,9 +12,9 @@ export default {
     component: SdsAvatar,
     argTypes: {
         size: {
-            options: ['sm', 'md', 'lg', 'auto'],
+            options: ['xs', 'sm', 'md', 'lg', 'auto'],
             control: {type: 'select'},
-            description: 'Set the size of the avatar. Accepts "sm", "md" and "lg". Defaults to "md".'
+            description: 'Set the size of the avatar. Accepts "xs", "sm", "md" and "lg". Defaults to "md".'
         },
         variant: {
             options: ['random', 'gray', 'tan', 'yellow', 'orange', 'pink', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
