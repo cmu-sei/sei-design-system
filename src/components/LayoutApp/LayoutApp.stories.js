@@ -1,5 +1,8 @@
 import SdsLayoutApp from './LayoutApp.vue';
 import SdsButton from '../Button/Button.vue';
+import SdsAvatar from '../Avatar/Avatar.vue';
+import SdsTooltip from '../Tooltip/Tooltip.vue';
+
 import { action } from '@storybook/addon-actions';
 
 export default {
@@ -17,7 +20,7 @@ export default {
 };
 
 const Template = (args) => ({
-  components: { SdsLayoutApp, SdsButton },
+  components: { SdsLayoutApp, SdsButton, SdsAvatar, SdsTooltip },
   setup() {
     return { args }
   },
@@ -25,6 +28,14 @@ const Template = (args) => ({
     <sds-layout-app v-model="localValue" v-bind="args" @navigate="navigate">
       <template #suite-header>
         Suite header content area
+        <sds-tooltip data-id="avatarContainer" size="auto" variant="light" placement="left">
+          <template data-id="avatarTooltipTrigger" #trigger>
+            <sds-avatar size="xs" shape="circle" name="John Smith" />
+          </template>
+          <p data-id="avatarTooltipContent">
+            John Smith
+          </p>
+        </sds-tooltip>
       </template>
       <template #page-header>
         Page header content area
