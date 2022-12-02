@@ -47,7 +47,7 @@ const props = defineProps({
    * Set the size of the avatar.
    */
   size: {
-    type: String as PropType<'sm' | 'md' | 'lg' | 'auto'>,
+    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'auto'>,
     default: 'md'
   },
   /**
@@ -74,6 +74,8 @@ const sizeClass = computed(() => {
         return 'w-16 h-16'
       case 'sm':
         return 'w-12 h-12'
+      case 'xs':
+        return 'w-8 h-8'
     }
   } else if (props.shape === 'portrait') {
     switch (props.size) {
@@ -83,6 +85,8 @@ const sizeClass = computed(() => {
         return 'w-16 h-20'
       case 'sm':
         return 'w-10 h-11'
+      case 'xs':
+        return 'w-7 h-8'
     }
   }
   return 'w-full h-full'
@@ -92,6 +96,8 @@ const textClass = computed(() => {
     return 'text-6xl font-light'
   } else if (props.size === 'sm') {
     return 'text-xl font-semibold'
+  } else if (props.size === 'xs') {
+    return 'text-sm font-semibold'
   }
   return 'text-2xl'
 
