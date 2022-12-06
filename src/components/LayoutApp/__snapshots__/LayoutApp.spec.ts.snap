@@ -15,7 +15,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
       <!---->
     </div>
     <div
-      class="ml-auto my-auto flex gap-2 flex-shrink-0"
+      class="ml-auto my-auto items-center flex gap-2 flex-shrink-0"
     >
       
       

@@ -63,7 +63,7 @@
           </span>
         </button>
       </div>
-      <div class="ml-auto my-auto flex gap-2 flex-shrink-0">
+      <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
         <!-- @slot Suite header content. @binding collapsed -->
         <slot
           name="suite-header"
@@ -760,9 +760,9 @@ export default defineComponent({
     sidebarWidth: { type: String, default: 'w-72' },
     /**
      * Determines whether to enable collapsing functionality.
-     * 
+     *
      * Ensure to have an icon for every item in the **sidebarNavigationItems** array for this to look nice.
-     * 
+     *
      * Including an **appIconUrl** will also improve the user experience.
      */
     enableCollapsibleSidebar: { type: Boolean, default: false },
@@ -788,7 +788,7 @@ export default defineComponent({
     appUrl: { type: String, default: null },
     /**
      * Determines whether to hide the **appName** in the mobile header.
-     * 
+     *
      * This is useful when an application's name is very long.
      */
     hideAppNameInMobileHeader: { type: Boolean, default: false },
@@ -806,11 +806,11 @@ export default defineComponent({
     hidePageHeader: { type: Boolean, default: false },
     /**
      * The sidebar navigation array for the layout.
-     * 
+     *
      * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
-     * 
+     *
      * Item object:
-     * 
+     *
      * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
      */
     sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
