@@ -444,7 +444,7 @@ exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
         <div
           class="text-sm"
         >
-           © 2022 Carnegie Mellon University 
+           © 2023 Carnegie Mellon University 
         </div>
       </div>
     </div>
