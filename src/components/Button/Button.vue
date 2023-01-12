@@ -1,7 +1,7 @@
 <template>
   <button
     data-id="sds-button"
-    :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, blockClass]"
+    :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, activeClass, blockClass]"
     :disabled="disabled"
     @click="onClick"
   >
@@ -28,6 +28,10 @@ export default defineComponent({
      * Determines whether to use the outline styling or not.
      */
     outline: { type: Boolean, default: false },
+    /**
+     * Sets the active state of a button.
+     */
+    active: { type: Boolean, default: false },
     /**
      * Disables the component to prevent user interaction.
      */
@@ -71,6 +75,9 @@ export default defineComponent({
     },
     disabledClass() {
       return this.disabled ? 'disabled' : ''
+    },
+    activeClass() {
+      return this.active ? 'active' : ''
     },
     blockClass() {
       return this.block ? 'btn-block' : ''
