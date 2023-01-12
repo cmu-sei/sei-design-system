@@ -1067,17 +1067,40 @@
         </h4>
         <sds-radio-group
           v-model="radioModel"
-          :options="[
-            { text: 'Yes', value: true },
-            { text: 'No', value: false },
-          ]"
+          :options="radioOptions"
           required
           stacked
           @change="$emit('radioGroupChange')"
         >
           <template #label="{ optionId, option }">
             <label :for="optionId">
-              Cool: {{ option.text }}
+              Radio Group: {{ option.text }}
+            </label>
+          </template>
+        </sds-radio-group>
+        <sds-radio-group
+          v-model="radio2Model"
+          :options="radioOptions"
+          required
+          stacked
+          @change="$emit('radioGroupChange')"
+        >
+          <template #label="{ optionId, option }">
+            <label :for="optionId">
+              Radio Group 2: {{ option.text }}
+            </label>
+          </template>
+        </sds-radio-group>
+        <sds-radio-group
+          v-model="radio3Model"
+          :options="radioOptions"
+          required
+          stacked
+          @change="$emit('radioGroupChange')"
+        >
+          <template #label="{ optionId, option }">
+            <label :for="optionId">
+              Radio Group 2: {{ option.text }}
             </label>
           </template>
         </sds-radio-group>
@@ -1249,6 +1272,12 @@ export default defineComponent({
       ],
       searchText: "",
       radioModel: true,
+      radio2Model: true,
+      radio3Model: true,
+      radioOptions: [
+        { text: 'Yes', value: true },
+        { text: 'No', value: false },
+      ],
       topFiveEntries: [
         {
           id: 1,

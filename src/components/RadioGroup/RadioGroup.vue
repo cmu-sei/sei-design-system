@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="loaded"
     :id="id"
     data-id="sds-radio-group"
     role="radiogroup"
@@ -76,6 +77,7 @@ export default defineComponent({
   data() {
     return {
       id: "",
+      loaded: false,
     };
   },
   computed: {
@@ -94,6 +96,7 @@ export default defineComponent({
   mounted() {
     id++;
     this.id = `sds-radio-group_${id}`;
+    this.loaded = true
   },
   methods: {
     onChange(value: string) {
