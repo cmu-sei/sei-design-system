@@ -64,7 +64,7 @@
         v-if="tab.active"
         :id="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
         :key="tab.key"
-        :aria-labelby="`sds-tabs-${root?.id}__${tab.key}__tab`"
+        :aria-labelledby="`sds-tabs-${root?.id}__${tab.key}__tab`"
         role="tabpanel"
         tabindex="0"
       >
