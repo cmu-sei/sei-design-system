@@ -95,7 +95,6 @@
               :value="format(item, key)"
               :item="item"
               :format="(k: string) => format(item, k)"
-              @hover:="() => console.log('hover')"
             >
               {{ format(item, key) }}
             </slot>

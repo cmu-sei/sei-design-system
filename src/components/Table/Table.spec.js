@@ -42,6 +42,7 @@ describe("Table.vue", () => {
 
   it("matches snapshot with entries but no action col props assigned", () => {
     const props = {
+      enableDrawer: false,
       items: [
         {
           id: 1,
