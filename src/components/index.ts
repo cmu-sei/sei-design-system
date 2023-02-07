@@ -18,6 +18,7 @@ import SdsFloatingActionButton from "./FloatingActionButton";
 import SdsFloatingUi from "./FloatingUi";
 import SdsInput from "./Input"
 import SdsLayoutApp from "./LayoutApp";
+import SdsLayoutAppSimple from "./LayoutAppSimple";
 import SdsLayoutSeiExternal from "./LayoutSeiExternal";
 import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
 import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader";
@@ -72,6 +73,7 @@ const Components: ComponentList = {
   SdsFloatingUi,
   SdsInput,
   SdsLayoutApp,
+  SdsLayoutAppSimple,
   SdsLayoutSeiExternal,
   SdsLayoutSeiExternalFooter,
   SdsLayoutSeiExternalHeader,
@@ -130,6 +132,7 @@ export { default as SdsFloatingActionButton } from "./FloatingActionButton"
 export { default as SdsFloatingUi } from "./FloatingUi"
 export { default as SdsInput } from "./Input"
 export { default as SdsLayoutApp } from "./LayoutApp";
+export { default as SdsLayoutAppSimple } from "./LayoutAppSimple";
 export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
 export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
 export { default as SdsLayoutSeiExternalHeader } from "./LayoutSeiExternalHeader";
