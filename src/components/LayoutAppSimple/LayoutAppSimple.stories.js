@@ -2,6 +2,7 @@ import SdsLayoutAppSimple from './LayoutAppSimple.vue';
 import SdsButton from '../Button/Button.vue';
 import SdsAvatar from '../Avatar/Avatar.vue';
 import SdsTooltip from '../Tooltip/Tooltip.vue';
+
 export default {
   title: 'Layouts/Layout App Simple',
   parameters: {

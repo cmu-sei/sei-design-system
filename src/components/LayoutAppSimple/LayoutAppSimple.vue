@@ -145,7 +145,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import SdsLink from '../Link/Link.vue'
-import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 interface LayoutAppSidebarNavItem {
@@ -162,7 +161,6 @@ export default defineComponent({
   name: 'SdsLayoutAppSimple',
   components: {
     SdsLink,
-    SdsTooltip,
   },
   props: {
     /**
