@@ -164,10 +164,6 @@ export default defineComponent({
   },
   props: {
     /**
-     * The v-model that determines collapsed state.
-     */
-    modelValue: { type: Boolean, default: false },
-    /**
      * The app suite name's prefix (styled in red) for the layout.
      */
     appSuitePrefix: { type: String, default: 'SEI' },
@@ -184,20 +180,6 @@ export default defineComponent({
      */
     appName: { type: String, default: null },
     /**
-     * The app url for the layout.
-     */
-    appUrl: { type: String, default: null },
-    /**
-     * Determines whether to hide the **appName** in the mobile header.
-     *
-     * This is useful when an application's name is very long.
-     */
-    hideAppNameInMobileHeader: { type: Boolean, default: false },
-    /**
-     * The app icon url for the layout.
-     */
-    appIconUrl: { type: String, default: null },
-    /**
      * The page title for the layout.
      */
     pageTitle: { type: String, default: null },
@@ -205,27 +187,7 @@ export default defineComponent({
      * Determines whether to hide the page header.
      */
     hidePageHeader: { type: Boolean, default: false },
-    /**
-     * The sidebar navigation array for the layout.
-     *
-     * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
-     *
-     * Item object:
-     *
-     * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
-     */
-    sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
-    /**
-     * Determines whether to hide the app icon.
-     */
-    hideAppIcon: { type: Boolean, default: false },
-    /**
-     * Determines whether to hide the icons in the sidebar.
-     */
-    hideSidebarIcons: { type: Boolean, default: false },
   },
-  emits: ['update:modelValue', 'navigate'],
-
   computed: {
     wordmark() {
       return wordmark
@@ -235,41 +197,10 @@ export default defineComponent({
       return d.getFullYear();
     },
   },
-  mounted() {
-    // Setup collapse functionality
-    document.addEventListener("keyup", this.handleDocumentKeyUp);
-  },
-  unmounted() {
-    // enable scrolling
-    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
-
-    // Destroy collapse functionality
-    document.removeEventListener("keyup", this.handleDocumentKeyUp);
-  },
   methods: {
     hasSlot(title: string) {
       return !!this.$slots[title]
     },
-
-    handleDocumentKeyUp($event: KeyboardEvent) {
-      if (!$event.target) return
-      const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
-      if (tagName === "textarea") return;
-      if (tagName === "input") return;
-      // toggle collapse on "[" key
-    }
   }
 })
 </script>
-
-<style lang="postcss">
-.layout-app-internal-prevent-scroll {
-  overflow: hidden;
-}
-
-@screen md {
-  .layout-app-internal-prevent-scroll {
-    overflow: visible;
-  }
-}
-</style>
