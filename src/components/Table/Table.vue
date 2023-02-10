@@ -83,7 +83,18 @@
         :key="item.id"
     >
       <tr>
-        <td v-if="enableDrawer" @click="toggleDrawer(item)" class="cursor-pointer w-12">{{item.id === openDrawerID  ? '⌄' : '›'}}</td>
+        <td v-if="enableDrawer" @click="toggleDrawer(item)" class="cursor-pointer w-4">
+          <div v-if="item.id === openDrawerID">
+            <svg height="16" class="mt-1 text-gray-800" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" fill="currentColor"/>
+          </svg>
+          </div>
+          <div v-else>
+            <svg height="16" class="mt-1 text-gray-200 hover:text-blue-500" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/>
+          </svg>
+          </div>
+        </td>
         <template
           v-for="key in displayedFieldKeys"
           :key="key"
@@ -257,6 +268,7 @@ export default defineComponent({
         return String(value)
       }
     }
-  }
+
+}
 })
 </script>
