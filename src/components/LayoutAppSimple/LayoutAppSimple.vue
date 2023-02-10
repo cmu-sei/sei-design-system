@@ -7,7 +7,7 @@
       <div class="my-auto">
         <div
           v-if="appSuite"
-          class="hidden md:block"
+          class="block"
         >
           <a
             v-if="appSuiteUrl"
@@ -26,26 +26,6 @@
             <span>{{ appSuite }}</span>
           </p>
         </div>
-        <button
-          v-if="appSuite || appName"
-          ref="mobileMenuOpenBtn"
-          class="flex md:hidden gap-1 focus:outline-none"
-        >
-          <span class="text-xl leading-6 flex">
-            <span
-              v-if="appSuitePrefix"
-              class="text-red-400 font-bold"
-            >{{ appSuitePrefix }}</span>
-            <span
-              v-if="appSuite"
-            >{{ appSuite }}</span>
-            <span
-              v-if="appName && !hideAppNameInMobileHeader"
-              class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
-              :class="[appSuite ? 'ml-1' : '']"
-            >{{ appName }}</span>
-          </span>
-        </button>
       </div>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
         <!-- @slot Suite header content. -->
