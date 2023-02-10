@@ -401,7 +401,6 @@
     <div class="p-6 space-y-8">
       <sds-tabs
         v-model="tabs"
-        class="bg-white dark:bg-gray-800 p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -421,7 +420,7 @@
       <sds-tabs
         v-model="tabs"
         type="underline"
-        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -441,7 +440,7 @@
       <sds-tabs
         v-model="tabs"
         type="block"
-        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -467,7 +466,7 @@
       />
     </div>
     <p>Floating UI</p>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Dropdown:
       <sds-floating-ui
         :offset="5"
@@ -491,7 +490,7 @@
         </template>
       </sds-floating-ui>
     </div>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Tooltip:
       <sds-floating-ui
         popper-class="absolute bg-black text-white text-xs shadow rounded-lg w-32 text-center"
@@ -519,7 +518,7 @@
         </template>
       </sds-floating-ui>
     </div>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Popover:
       <sds-floating-ui
         popper-class="absolute z-10 bg-white border shadow rounded-lg"
@@ -557,7 +556,7 @@
       </sds-floating-ui>
     </div>
     <p>File Uploader</p>
-    <div class="p-8 bg-white">
+    <div class="p-8 bg-white dark:bg-gray-900">
       <sds-file-uploader
         v-model="fileUploaderModel"
         accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json"
@@ -599,7 +598,7 @@
         Clear files
       </sds-button>
     </div>
-    <div class="p-8 bg-white">
+    <div class="p-8 bg-white dark:bg-gray-900">
       <sds-file-uploader />
     </div>
     <p>Scroll area</p>

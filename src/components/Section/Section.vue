@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-section"
-    class="block bg-white dark:bg-gray-800 dark:border-gray-700"
+    class="block bg-white dark:bg-gray-900 dark:border-gray-700"
     :class="{
       border: type === 'simple' || type === 'raised',
       'shadow border rounded': type === 'raised',
@@ -12,13 +12,13 @@
       :class="{
         'border-b dark:border-gray-700':
           type === 'simple' || type === 'raised',
-        'border-0 border-t-2 border-gray-900 dark:border-gray-100':
+        'border-0 border-t-2 border-gray-900 dark:border-gray-300':
           type === 'accented',
       }"
     >
       <div
         class="flex px-4 py-3"
-        :class="{ 'border-b border-gray-300': type === 'accented' }"
+        :class="{ 'border-b border-gray-300 dark:border-gray-700': type === 'accented' }"
       >
         <div class="self-center flex-grow">
           <div
@@ -30,7 +30,7 @@
           </div>
           <div
             v-if="hasSubtitleSlot"
-            class="text-sm text-gray-500"
+            class="text-sm text-gray-500 dark:text-gray-400"
           >
             <!-- @slot Section subtitle content. -->
             <slot name="subtitle" />
