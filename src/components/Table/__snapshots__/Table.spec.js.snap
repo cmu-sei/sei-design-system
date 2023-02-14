@@ -11,6 +11,7 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
   </colgroup>
   <thead>
     <tr>
+      <!---->
       <th class=\\"cursor-pointer space-x-1 select-none group\\">Title <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
@@ -33,17 +34,21 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
   </thead>
   <tbody>
     <tr>
+      <!---->
       <td>A title</td>
       <td>12/31/1999</td>
       <td>11/11/2014</td>
       <td><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button></td>
     </tr>
+    <!---->
     <tr>
+      <!---->
       <td>B title</td>
       <td>1/31/2013</td>
       <td>10/9/2013</td>
       <td><button class=\\"btn btn-link text-red-300 btn-sm\\"><i class=\\"fas fa-trash\\"></i> Remove entry </button></td>
     </tr>
+    <!---->
   </tbody>
 </table>"
 `;
@@ -58,6 +63,7 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
   </colgroup>
   <thead>
     <tr>
+      <!---->
       <th class=\\"cursor-pointer space-x-1 select-none group\\">Title <svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
@@ -77,15 +83,19 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
   </thead>
   <tbody>
     <tr>
+      <!---->
       <td>B title</td>
       <td>1/31/2013</td>
       <td>10/9/2013</td>
     </tr>
+    <!---->
     <tr>
+      <!---->
       <td>A title</td>
       <td>12/31/1999</td>
       <td>11/11/2014</td>
     </tr>
+    <!---->
   </tbody>
 </table>"
 `;
@@ -95,7 +105,9 @@ exports[`Table.vue > matches snapshot with no props assigned 1`] = `
   <!---->
   <colgroup></colgroup>
   <thead>
-    <tr></tr>
+    <tr>
+      <!---->
+    </tr>
   </thead>
   <tbody></tbody>
 </table>"

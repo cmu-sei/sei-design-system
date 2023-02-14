@@ -168,6 +168,7 @@ export default defineComponent({
      */
     hidePageHeader: { type: Boolean, default: false },
   },
+  emits: ['navigate'],
   computed: {
     wordmark() {
       return wordmark
@@ -180,6 +181,14 @@ export default defineComponent({
   methods: {
     hasSlot(title: string) {
       return !!this.$slots[title]
+    },
+    navigate(group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
+      /**
+       * Emmited when the app suite has been clicked.
+       *
+       * Sends a payload of the clicked item and the click event: { group, item, event }
+       */
+      this.$emit('navigate', { group, item, event })
     },
   }
 })
