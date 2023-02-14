@@ -25,10 +25,11 @@
     </colgroup>
     <thead>
       <tr>
+        <th v-if="enableDrawer"></th>
         <th
           v-for="field in displayedFields"
           :key="field.key"
-          :class="{ 
+          :class="{
             [sortedColumnClass]: sortField === field.key,
             'cursor-pointer': field.sortable
           }"
@@ -77,10 +78,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr
+    <template
         v-for="item in sortedItems"
         :key="item.id"
-      >
+    >
+      <tr>
+        <td v-if="enableDrawer" @click="toggleDrawer(item)" class="cursor-pointer w-4">
+          <div v-if="item.id === openDrawerID">
+            <svg height="16" class="mt-1 text-gray-800" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" fill="currentColor"/>
+          </svg>
+          </div>
+          <div v-else>
+            <svg height="16" class="mt-1 text-gray-200 hover:text-blue-500" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/>
+          </svg>
+          </div>
+        </td>
         <template
           v-for="key in displayedFieldKeys"
           :key="key"
@@ -98,6 +112,16 @@
           </component>
         </template>
       </tr>
+      <tr v-if="enableDrawer" :class="[openDrawerID !== item.id && 'invisible collapse']">
+        <td :colspan="displayedFieldKeys.length + 1">
+          <slot
+              name="drawer"
+              :item="item">
+            {{ format(item, key) }}
+          </slot>
+        </td>
+      </tr>
+    </template>
     </tbody>
   </table>
 </template>
@@ -124,12 +148,12 @@ export default defineComponent({
   props: {
     /**
      * An array of objects. Each object must have a unique "id" but everything else is optional.
-     * 
+     *
      * Please note that the **items** keys map 1:1 to the **fields** keys, meaning that, any key found in the items
      * array that is not in the fields array will be ignored and not displayed.
      *
      * Example object:
-     * 
+     *
      * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
      */
     items: {
@@ -138,19 +162,19 @@ export default defineComponent({
     },
     /**
      * An array of objects. These objects determine the column headers.
-     * 
+     *
      * Each object must contain a unique "key" and a "label" for use in the table column header.
-     * 
+     *
      * Optional object properties include a "sortable" boolean and a "format" function. The "sortable"
      * key indicates whether a table column is sortable. The "format" key allows you to customize
      * the way the item's data appears in the table.
      *
      * Basic example object (not sortable):
-     * 
+     *
      * **{ key: "id", label: "ID" }**
-     * 
+     *
      * Advanced example object (sortable with custom formatter):
-     * 
+     *
      * **{ key: "lastModifiedDate", label: 'Last Modified', sortable: true, format: (date) => date.toLocaleDateString() }**
      */
     fields: {
@@ -172,12 +196,17 @@ export default defineComponent({
     /**
      * Determines the CSS classes used on the sorted column.
      */
-    sortedColumnClass: { type: String, default: null }
+    sortedColumnClass: { type: String, default: null },
+    /**
+     * Toggles on/off a drawer below each table row
+     */
+    enableDrawer: { type: Boolean , default: false }
   },
   data() {
     return {
       sortField: this.sortBy,
-      sortOrder: this.sortDesc ? -1 : 1
+      sortOrder: this.sortDesc ? -1 : 1,
+      openDrawerID: -1
     }
   },
   computed: {
@@ -193,6 +222,13 @@ export default defineComponent({
     }
   },
   methods: {
+    toggleDrawer(item: TableItem) {
+      if(this.openDrawerID === item.id) {
+        this.openDrawerID = -1
+      } else {
+        this.openDrawerID = item.id
+      }
+    },
     cellElement(key: string) {
       const field = this.fields.find((f) => f.key === key)
       return field && field.header ? 'th' : 'td'
@@ -232,6 +268,7 @@ export default defineComponent({
         return String(value)
       }
     }
-  }
+
+}
 })
 </script>
