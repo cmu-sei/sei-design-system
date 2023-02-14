@@ -25,7 +25,7 @@
     </colgroup>
     <thead>
       <tr>
-        <th v-if="enableDrawer"></th>
+        <th v-if="enableDrawer" />
         <th
           v-for="field in displayedFields"
           :key="field.key"
@@ -78,50 +78,76 @@
       </tr>
     </thead>
     <tbody>
-    <template
+      <template
         v-for="item in sortedItems"
         :key="item.id"
-    >
-      <tr>
-        <td v-if="enableDrawer" @click="toggleDrawer(item)" class="cursor-pointer w-4">
-          <div v-if="item.id === openDrawerID">
-            <svg height="16" class="mt-1 text-gray-800" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg">
-            <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" fill="currentColor"/>
-          </svg>
-          </div>
-          <div v-else>
-            <svg height="16" class="mt-1 text-gray-200 hover:text-blue-500" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
-            <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"/>
-          </svg>
-          </div>
-        </td>
-        <template
-          v-for="key in displayedFieldKeys"
-          :key="key"
+      >
+        <tr>
+          <td
+            v-if="enableDrawer"
+            class="cursor-pointer w-4"
+          >
+            <button @click="toggleDrawer(item)">
+              <svg
+                v-if="item.id === openDrawerID"
+                height="16"
+                class="mt-1 text-gray-800"
+                viewBox="0 0 512 512"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                  fill="currentColor"
+                />
+              </svg>
+              <svg
+                v-else
+                height="16"
+                class="mt-1 text-gray-500 hover:text-blue-500"
+                viewBox="0 0 384 512"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                  fill="currentColor"
+                />
+              </svg>
+              <span class="sr-only">Toggle drawer</span>
+            </button>
+          </td>
+          <template
+            v-for="key in displayedFieldKeys"
+            :key="key"
+          >
+            <component :is="cellElement(key)">
+              <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+              <slot
+                :name="`cell(${key})`"
+                :value="format(item, key)"
+                :item="item"
+                :format="(k: string) => format(item, k)"
+              >
+                {{ format(item, key) }}
+              </slot>
+            </component>
+          </template>
+        </tr>
+        <tr
+          v-if="enableDrawer"
+          :class="[openDrawerID !== item.id && 'invisible collapse']"
         >
-          <component :is="cellElement(key)">
-            <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+          <td :colspan="displayedFieldKeys.length + 1">
             <slot
-              :name="`cell(${key})`"
-              :value="format(item, key)"
-              :item="item"
-              :format="(k: string) => format(item, k)"
-            >
-              {{ format(item, key) }}
-            </slot>
-          </component>
-        </template>
-      </tr>
-      <tr v-if="enableDrawer" :class="[openDrawerID !== item.id && 'invisible collapse']">
-        <td :colspan="displayedFieldKeys.length + 1">
-          <slot
               name="drawer"
-              :item="item">
-            {{ format(item, key) }}
-          </slot>
-        </td>
-      </tr>
-    </template>
+              :item="item"
+            >
+              {{ format(item) }}
+            </slot>
+          </td>
+        </tr>
+      </template>
     </tbody>
   </table>
 </template>
@@ -200,7 +226,7 @@ export default defineComponent({
     /**
      * Toggles on/off a drawer below each table row
      */
-    enableDrawer: { type: Boolean , default: false }
+    enableDrawer: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -223,7 +249,7 @@ export default defineComponent({
   },
   methods: {
     toggleDrawer(item: TableItem) {
-      if(this.openDrawerID === item.id) {
+      if (this.openDrawerID === item.id) {
         this.openDrawerID = -1
       } else {
         this.openDrawerID = item.id
@@ -233,7 +259,7 @@ export default defineComponent({
       const field = this.fields.find((f) => f.key === key)
       return field && field.header ? 'th' : 'td'
     },
-    format(item: TableItem, key: string) {
+    format(item: TableItem, key: string = '') {
       const field = this.fields.find((f) => f.key === key)
       return field && field.format ? field.format(item[key]) : item[key]
     },
@@ -269,6 +295,6 @@ export default defineComponent({
       }
     }
 
-}
+  }
 })
 </script>
