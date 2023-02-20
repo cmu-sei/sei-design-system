@@ -17,7 +17,7 @@ export default {
             description: 'Set the size of the avatar. Accepts "xs", "sm", "md" and "lg". Defaults to "md".'
         },
         variant: {
-            options: ['random', 'gray', 'tan', 'yellow', 'orange', 'pink', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
+            options: ['random', 'gray', 'red', 'yellow', 'green', 'blue', 'purple'],
             control: {type: 'select'},
             description: 'Set the background color of the avatar when no image is present. Defaults to "random".'
         },

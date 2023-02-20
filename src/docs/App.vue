@@ -45,7 +45,7 @@
     <DocTables :component="Datepicker" />
     <examples />
     <components />
-    <template #actions-bar>
+    <!-- <template #actions-bar>
       <div class="bg-blue-500/90 backdrop-blur dark:bg-blue-800 px-6 py-2 shadow">
         <div class="flex gap-2">
           <p class="my-auto text-white font-semibold">
@@ -66,7 +66,7 @@
           </sds-button>
         </div>
       </div>
-    </template>
+    </template> -->
     <template #footer-top>
       <div class="px-4 py-2 border">
         Testing

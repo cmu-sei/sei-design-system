@@ -1,5 +1,74 @@
 <template>
   <div class="guide">
+    <div class="my-12">
+      <p>Floating Action Button</p>
+      <div class="p-6 space-y-4">
+        <sds-floating-action-button
+          v-model="fabTabs"
+          @open="fabOpen"
+          @close="fabClose"
+        >
+          <template #tab-icon(tab1)>
+            <svg
+              class="w-4 h-4"
+              aria-hidden="true"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 576 512"
+            >
+              <path
+                fill="currentColor"
+                d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
+              />
+            </svg>
+          </template>
+          <template #trigger-icon>
+            <img
+              src="https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png"
+              alt="About SEI"
+            >
+          </template>
+          <template #tab(tab1)="{ tab }">
+            <p>Hello, there! This is {{ tab.title }}.</p>
+          </template>
+          <template #tab(tab2)>
+            <p>Hello, there! This is tab 2.</p>
+          </template>
+          <template #tab(tab3)>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+            <p>Hello, there! This is tab 3.</p>
+          </template>
+          <template #tab(tab4)>
+            <p>Hello, there! This is tab 4.</p>
+          </template>
+        </sds-floating-action-button>
+      </div>
+    </div>
     <p>Datapoint</p>
     <div class="p-6 space-y-4">
       <sds-datapoint
@@ -332,7 +401,6 @@
     <div class="p-6 space-y-8">
       <sds-tabs
         v-model="tabs"
-        class="bg-white dark:bg-gray-800 p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -352,7 +420,7 @@
       <sds-tabs
         v-model="tabs"
         type="underline"
-        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -372,7 +440,7 @@
       <sds-tabs
         v-model="tabs"
         type="block"
-        class="bg-white dark:bg-gray-800 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -398,7 +466,7 @@
       />
     </div>
     <p>Floating UI</p>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Dropdown:
       <sds-floating-ui
         :offset="5"
@@ -422,7 +490,7 @@
         </template>
       </sds-floating-ui>
     </div>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Tooltip:
       <sds-floating-ui
         popper-class="absolute bg-black text-white text-xs shadow rounded-lg w-32 text-center"
@@ -450,7 +518,7 @@
         </template>
       </sds-floating-ui>
     </div>
-    <div class="p-6 bg-white">
+    <div class="p-6 bg-white dark:bg-gray-900">
       Popover:
       <sds-floating-ui
         popper-class="absolute z-10 bg-white border shadow rounded-lg"
@@ -488,7 +556,7 @@
       </sds-floating-ui>
     </div>
     <p>File Uploader</p>
-    <div class="p-8 bg-white">
+    <div class="p-8 bg-white dark:bg-gray-900">
       <sds-file-uploader
         v-model="fileUploaderModel"
         accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json"
@@ -530,7 +598,7 @@
         Clear files
       </sds-button>
     </div>
-    <div class="p-8 bg-white">
+    <div class="p-8 bg-white dark:bg-gray-900">
       <sds-file-uploader />
     </div>
     <p>Scroll area</p>
@@ -1149,6 +1217,12 @@ export default defineComponent({
   emits: ['radioGroupChange', 'hello'],
   data() {
     return {
+      fabTabs: [
+        { key: 'tab1', tabName: 'Tab 1', title: 'Active Tab 1', active: true },
+        { key: 'tab2', tabName: 'Tab 2', title: 'Active Tab 2', active: false, iconSrc: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
+        { key: 'tab3', tabName: 'Tab 3', title: 'Active Tab 3', active: false },
+        { key: 'tab4', tabName: 'Tab 4', title: 'Active Tab 4', active: false }
+      ],
       datapointModel: 4567,
       fileUploaderModel: [],
       uploadedImages: [] as any,
@@ -1343,6 +1417,12 @@ export default defineComponent({
     }
   },
   methods: {
+    fabOpen() {
+      console.log('open')
+    },
+    fabClose() {
+      console.log('close')
+    },
     generateToast() {
       const index = Math.floor(Math.random() * Math.floor(4));
       const toasts = [

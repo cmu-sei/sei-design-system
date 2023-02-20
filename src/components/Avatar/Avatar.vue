@@ -33,7 +33,7 @@ const props = defineProps({
    * Determines the theme color of the component.
    */
   variant: {
-    type: String as PropType<'random' | 'gray' | 'red' | 'pink' | 'orange' | 'yellow' | 'green' | 'teal' | 'blue' | 'indigo' | 'purple'>,
+    type: String as PropType<'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
     default: 'random'
   },
   /**
@@ -84,9 +84,9 @@ const sizeClass = computed(() => {
       case 'md':
         return 'w-16 h-20'
       case 'sm':
-        return 'w-10 h-11'
+        return 'w-10 h-12'
       case 'xs':
-        return 'w-7 h-8'
+        return 'w-6 h-8'
     }
   }
   return 'w-full h-full'
@@ -110,7 +110,7 @@ const shapeClass = computed(() => {
 })
 
 const variantClass = computed(() => {
-  const colorOptions = ['bg-gray-200', 'bg-red-200', 'bg-pink-200', 'bg-orange-200', 'bg-yellow-200', 'bg-green-200', 'bg-teal-200', 'bg-blue-200', 'bg-indigo-200', 'bg-purple-200']
+  const colorOptions = ['bg-gray-200', 'bg-red-200', 'bg-yellow-200', 'bg-green-200', 'bg-blue-200', 'bg-purple-200']
   if (props.variant && props.variant !== 'random') {
     return colorOptions.filter((color) => color.includes(props.variant))[0]
   } else {
