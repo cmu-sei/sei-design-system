@@ -9,7 +9,7 @@ export default {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'A highly structured layout for simple internal and customer applications that includes a header, a branded footer.',
+        component: 'A structured layout for internal and customer applications that includes a header and a branded footer.',
       },
     },
   },
