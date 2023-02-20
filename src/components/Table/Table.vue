@@ -114,6 +114,7 @@
       </tr>
       <tr v-if="enableDrawer" :class="[openDrawerID !== item.id && 'invisible collapse']">
         <td :colspan="displayedFieldKeys.length + 1">
+          <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
           <slot
               name="drawer"
               :item="item">
