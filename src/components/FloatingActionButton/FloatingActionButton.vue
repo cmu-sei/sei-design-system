@@ -16,9 +16,6 @@
               aria-haspopup="true"
               :class="{
                 'btn-primary': variant === 'primary',
-                'btn-success': variant === 'success',
-                'btn-info': variant === 'info',
-                'btn-warning': variant === 'warning',
                 'btn-danger': variant === 'danger',
               }"
               :aria-expanded="open"
@@ -78,9 +75,6 @@
                   class="p-6 rounded-t-lg flex gap-4"
                   :class="{
                     'text-white bg-primary': variant === 'primary',
-                    'text-white bg-success': variant === 'success',
-                    'text-white bg-info': variant === 'info',
-                    'text-black bg-warning': variant === 'warning',
                     'text-white bg-danger': variant === 'danger',
                   }"
                 >
@@ -114,7 +108,10 @@
                     :tab="activeTab"
                   />
                 </div>
-                <div class="border-t border-gray-100 dark:border-gray-600">
+                <div
+                  v-if="tabs.length > 1"
+                  class="border-t border-gray-100 dark:border-gray-600"
+                >
                   <nav class="flex justify-around">
                     <button
                       v-for="tab in tabs"
@@ -194,7 +191,7 @@ const props = defineProps({
    * Determines the theme color of the component.
    */
   variant: {
-    type: String as PropType<'primary' | 'success' | 'info' | 'warning' | 'danger'>,
+    type: String as PropType<'primary' | 'danger'>,
     default: 'primary'
   }
 })
