@@ -112,7 +112,7 @@
                   v-if="tabs.length > 1"
                   class="border-t border-gray-100 dark:border-gray-600"
                 >
-                  <nav class="flex justify-around">
+                  <nav class="grid grid-flow-col auto-cols-fr">
                     <button
                       v-for="tab in tabs"
                       :key="tab.key"

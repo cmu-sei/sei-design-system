@@ -1252,7 +1252,7 @@ export default defineComponent({
   data() {
     return {
       fabTabs: [
-        { key: 'tab1', tabName: 'Tab 1', title: 'Active Tab 1', active: true },
+        { key: 'tab1', tabName: 'Tab 1 is the title', title: 'Active Tab 1', active: true },
         { key: 'tab2', tabName: 'Tab 2', title: 'Active Tab 2', active: false, iconSrc: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
         { key: 'tab3', tabName: 'Tab 3', title: 'Active Tab 3', active: false },
         { key: 'tab4', tabName: 'Tab 4', title: 'Active Tab 4', active: false }
