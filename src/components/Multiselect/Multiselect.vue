@@ -1011,7 +1011,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .multiselect-clear {
-  @apply text-gray-400 dark:text-gray-600;
+  @apply text-gray-400;
   position: absolute;
   top: 0;
   right: 0;
@@ -1042,7 +1042,7 @@ fieldset[disabled] .sds-multiselect * {
 
 .dark .dropdown-list {
   border: 1px solid theme("colors.blue.600");
-  background: theme("colors.gray.700");
+  background: theme("colors.gray.800");
 }
 
 .open:not(.up) .dropdown-list {
@@ -1056,7 +1056,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .showResults.open:not(.up) .dropdown-list {
-  border-top: 1px solid theme("colors.gray.700");
+  border-top: 1px solid theme("colors.gray.800");
 }
 
 .open.up .dropdown-list {
@@ -1070,7 +1070,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .showResults.open.up .dropdown-list {
-  border-bottom: 1px solid theme("colors.gray.700");
+  border-bottom: 1px solid theme("colors.gray.800");
 }
 
 .dropdown-list-item {
@@ -1089,17 +1089,17 @@ fieldset[disabled] .sds-multiselect * {
 
 .dark .dropdown-list-item.selected {
   background: theme("colors.gray.600");
-  color: theme("colors.gray.800");
+  color: theme("colors.gray.900");
 }
 
 .dropdown-list-item.active.selected {
   background: theme("colors.gray.300");
-  color: theme("colors.gray.600");
+  color: theme("colors.gray.800");
 }
 
 .dark .dropdown-list-item.active.selected {
   background: theme("colors.gray.500");
-  color: theme("colors.gray.700");
+  color: theme("colors.gray.800");
 }
 
 .dropdown-list-item.loading {
@@ -1215,7 +1215,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .open.hasTags.canSearch .single .tag-list-item.input input {
-  border: 1px solid theme("colors.gray.700");
+  border: 1px solid theme("colors.gray.800");
 }
 
 .hasTags:not(.open) .single .tag-list-item.input input {

@@ -11,6 +11,7 @@
     />
     <span
       v-else
+      role="img"
       :title="name"
       :class="['leading-none text-black cursor-default uppercase', textClass]"
     >

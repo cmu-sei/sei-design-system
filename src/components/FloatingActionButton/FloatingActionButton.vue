@@ -3,59 +3,65 @@
     <teleport to="body">
       <div
         ref="container"
+        data-id="sds-floating-action-button"
         class="hidden sm:block fixed inset-0 h-screen w-screen pointer-events-none z-50"
         @keydown="checkKeyEvent"
       >
         <div class="p-4 flex h-screen w-screen">
           <div class="ml-auto mt-auto relative">
-            <button
-              ref="button"
-              v-uid
-              type="button"
-              class="ml-auto mt-auto btn border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
-              aria-haspopup="true"
-              :class="{
-                'btn-primary': variant === 'primary',
-                'btn-danger': variant === 'danger',
-              }"
-              :aria-expanded="open"
-              @click="open = !open"
+            <SdsIndicator
+              :hide-indicator="!showIndicator"
+              :variant="indicatorVariant"
             >
-              <div class="w-6 h-6">
-                <svg
-                  v-if="open"
-                  class="inline-block h-6 w-6"
-                  aria-hidden="true"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <path 
-                    fill="currentColor"
-                    d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                  />
-                </svg>
-                <!-- @slot Icon replacement for the unopened trigger button. -->
-                <slot
-                  v-if="!open"
-                  name="trigger-icon"
-                >
+              <button
+                ref="button"
+                v-uid
+                type="button"
+                class="ml-auto mt-auto btn border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
+                aria-haspopup="true"
+                :class="{
+                  'btn-primary': variant === 'primary',
+                  'btn-danger': variant === 'danger',
+                }"
+                :aria-expanded="open"
+                @click="open = !open"
+              >
+                <div class="w-6 h-6">
                   <svg
+                    v-if="open"
                     class="inline-block h-6 w-6"
                     aria-hidden="true"
                     role="img"
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 576 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
                   >
-                    <path
+                    <path 
                       fill="currentColor"
-                      d="M544 32c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V64c0-17.7 14.3-32 32-32zM64 190.3L480 64V448L348.9 408.2C338.2 449.5 300.7 480 256 480c-53 0-96-43-96-96c0-11 1.9-21.7 5.3-31.5L64 321.7C63.1 338.6 49.1 352 32 352c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32c17.1 0 31.1 13.4 32 30.3zm239 203.9l-91.6-27.8c-2.1 5.4-3.3 11.4-3.3 17.6c0 26.5 21.5 48 48 48c23 0 42.2-16.2 46.9-37.8z"
+                      d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
                     />
                   </svg>
-                </slot>
-              </div>
-              <span class="sr-only">{{ open ? 'close' : 'open' }}</span>
-            </button>
+                  <!-- @slot Icon replacement for the unopened trigger button. -->
+                  <slot
+                    v-if="!open"
+                    name="trigger-icon"
+                  >
+                    <svg
+                      class="inline-block h-6 w-6"
+                      aria-hidden="true"
+                      role="img"
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 576 512"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M544 32c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V64c0-17.7 14.3-32 32-32zM64 190.3L480 64V448L348.9 408.2C338.2 449.5 300.7 480 256 480c-53 0-96-43-96-96c0-11 1.9-21.7 5.3-31.5L64 321.7C63.1 338.6 49.1 352 32 352c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32c17.1 0 31.1 13.4 32 30.3zm239 203.9l-91.6-27.8c-2.1 5.4-3.3 11.4-3.3 17.6c0 26.5 21.5 48 48 48c23 0 42.2-16.2 46.9-37.8z"
+                      />
+                    </svg>
+                  </slot>
+                </div>
+                <span class="sr-only">{{ open ? 'close' : 'open' }}</span>
+              </button>
+            </SdsIndicator>
             <transition
               enter-active-class="transition duration-75 ease-out"
               enter-from-class="transform scale-95 opacity-0"
@@ -166,6 +172,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, ref, computed, watch } from 'vue'
+import SdsIndicator from '../Indicator/Indicator.vue'
 
 const props = defineProps({
   /**
@@ -193,7 +200,20 @@ const props = defineProps({
   variant: {
     type: String as PropType<'primary' | 'danger'>,
     default: 'primary'
-  }
+  },
+  /**
+   * Determines whether to display the indicator or not.
+   */
+   showIndicator: {
+    type: Boolean, default: false
+  },
+  /**
+   * Determines the theme color of the trigger button's indictor.
+   */
+   indicatorVariant: {
+    type: String as PropType<'gray' | 'blue' | 'green' | 'teal' | 'orange' | 'red'>,
+    default: 'primary'
+  },
 })
 
 const emit = defineEmits(['update:model-value', 'open', 'close'])

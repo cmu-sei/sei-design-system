@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`TopFiveChart.vue > matches snapshot with malformed data 1`] = `
 "<div data-id=\\"sds-top-five-chart\\" class=\\"space-y-4 chart\\">

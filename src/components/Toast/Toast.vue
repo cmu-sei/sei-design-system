@@ -3,7 +3,7 @@
     data-id="sds-toast"
     role="alert"
     aria-live="polite"
-    class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-700"
+    class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-800 dark:border dark:border-gray-700"
     @mouseenter="clearTimer"
     @mouseleave="setTimer"
   >

@@ -1,10 +1,137 @@
 <template>
   <div class="guide">
     <div class="my-12">
+      <p>Indicator</p>
+      <div class="p-6 flex flex-wrap gap-6">
+        <SdsIndicator
+          size="sm"
+          variant="gray"
+          placement="top-left"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="sm"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          placement="top-right"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          size="lg"
+          placement="bottom-left"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="lg"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          size="sm"
+          variant="gray"
+          placement="bottom-right"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="sm"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          placement="bottom-right"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          size="lg"
+          placement="bottom-right"
+          placement-over="circle"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="lg"
+            shape="circle"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          size="sm"
+          placement="bottom-right"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="sm"
+          />
+        </SdsIndicator>
+        <SdsIndicator placement="bottom-right">
+          <SdsAvatar name="Jason Shimkoski" />
+        </SdsIndicator>
+        <SdsIndicator
+          size="lg"
+          placement="bottom-right"
+        >
+          <SdsAvatar
+            name="Jason Shimkoski"
+            size="lg"
+          />
+        </SdsIndicator>
+        <SdsIndicator
+          variant="green"
+          size="sm"
+          placement="top-left"
+        >
+          <SdsButton variant="primary">
+            Cool
+          </SdsButton>
+        </SdsIndicator>
+        <SdsIndicator
+          variant="red"
+          size="sm"
+          placement="top-right"
+        >
+          <SdsButton variant="primary">
+            Cool
+          </SdsButton>
+        </SdsIndicator>
+        <SdsIndicator
+          variant="teal"
+          size="sm"
+          placement="bottom-left"
+        >
+          <SdsButton variant="primary">
+            Cool
+          </SdsButton>
+        </SdsIndicator>
+        <SdsIndicator
+          variant="orange"
+          placement="top-right"
+          status="This is awesome"
+        >
+          <SdsButton variant="primary">
+            Cool
+          </SdsButton>
+        </SdsIndicator>
+      </div>
+    </div>
+    <div class="my-12">
       <p>Floating Action Button</p>
       <div class="p-6 space-y-4">
         <sds-floating-action-button
           v-model="fabTabs"
+          show-indicator
           @open="fabOpen"
           @close="fabClose"
         >
