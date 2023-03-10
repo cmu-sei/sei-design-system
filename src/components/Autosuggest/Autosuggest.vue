@@ -76,7 +76,7 @@
     </div>
     <ul
       v-if="isOpen && !preventDisplay"
-      class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow dark:border-gray-600 dark:bg-gray-700"
+      class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow dark:border-gray-700 dark:bg-gray-800"
     >
       <li
         v-for="(result, i) in results"

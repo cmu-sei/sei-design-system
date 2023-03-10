@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Paginator.vue > matches snapshot when currentPage > totalPages - threshold + 1 1`] = `
 "<nav data-id=\\"sds-paginator\\" class=\\"paginator\\" aria-label=\\"Page navigation\\">

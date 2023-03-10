@@ -1,14 +1,14 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-"<div data-v-00d7dde3=\\"\\" data-id=\\"sds-multiselect\\" class=\\"sds-multiselect canSearch\\">
-  <ul data-v-00d7dde3=\\"\\" class=\\"tag-list single\\">
-    <li data-v-00d7dde3=\\"\\" style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span data-v-00d7dde3=\\"\\" class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
-      <!----><input data-v-00d7dde3=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocapitalize=\\"off\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\">
+"<div data-v-38fa99e2=\\"\\" data-id=\\"sds-multiselect\\" class=\\"sds-multiselect canSearch\\">
+  <ul data-v-38fa99e2=\\"\\" class=\\"tag-list single\\">
+    <li data-v-38fa99e2=\\"\\" style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span data-v-38fa99e2=\\"\\" class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
+      <!----><input data-v-38fa99e2=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocapitalize=\\"off\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\">
     </li>
   </ul>
   <!---->
-  <div data-v-00d7dde3=\\"\\" aria-hidden=\\"true\\" class=\\"multiselect-caret\\"></div>
+  <div data-v-38fa99e2=\\"\\" aria-hidden=\\"true\\" class=\\"multiselect-caret\\"></div>
   <!---->
 </div>"
 `;
