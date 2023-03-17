@@ -45,7 +45,7 @@
             :type="tab.tag === 'button' ? 'button' : undefined"
             :disabled="tab.disabled"
             :tabindex="tab.disabled ? -1 : undefined"
-            :aria-selected="tab.active"
+            :aria-selected="tab.active ? 'true' : 'false'"
             :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
             :data-active="tab.active ? true : undefined"
             role="tab"

@@ -1,14 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-"<div data-v-38fa99e2=\\"\\" data-id=\\"sds-multiselect\\" class=\\"sds-multiselect canSearch\\">
-  <ul data-v-38fa99e2=\\"\\" class=\\"tag-list single\\">
-    <li data-v-38fa99e2=\\"\\" style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span data-v-38fa99e2=\\"\\" class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
-      <!----><input data-v-38fa99e2=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocapitalize=\\"off\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\">
+"<div data-v-f4e4c6ff=\\"\\" data-id=\\"sds-multiselect\\" class=\\"sds-multiselect canSearch\\">
+  <ul data-v-f4e4c6ff=\\"\\" class=\\"tag-list single\\">
+    <li data-v-f4e4c6ff=\\"\\" style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span data-v-f4e4c6ff=\\"\\" class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
+      <!----><label data-v-f4e4c6ff=\\"\\"><input data-v-f4e4c6ff=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\"><span data-v-f4e4c6ff=\\"\\" class=\\"sr-only\\">Enter text</span></label>
     </li>
   </ul>
   <!---->
-  <div data-v-38fa99e2=\\"\\" aria-hidden=\\"true\\" class=\\"multiselect-caret\\"></div>
+  <div data-v-f4e4c6ff=\\"\\" aria-hidden=\\"true\\" class=\\"multiselect-caret\\"></div>
   <!---->
 </div>"
 `;
