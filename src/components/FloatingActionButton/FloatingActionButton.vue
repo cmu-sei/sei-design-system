@@ -212,7 +212,7 @@ const props = defineProps({
    */
    indicatorVariant: {
     type: String as PropType<'gray' | 'blue' | 'green' | 'teal' | 'orange' | 'red'>,
-    default: 'primary'
+    default: 'blue'
   },
 })
 
