@@ -74,24 +74,26 @@
         >
           <option />
         </select>
-        <input
-          ref="input"
-          :value="modelValue"
-          :placeholder="showPlaceholder ? placeholder : ''"
-          :readonly="isReadonlyInput"
-          :disabled="disabled"
-          :style="{
-            width: !multiple && showDropdown && canSearch ? '100%' : inputWidth,
-          }"
-          :maxlength="maxlength"
-          autocapitalize="off"
-          autocomplete="off"
-          spellcheck="false"
-          autocorrect="off"
-          type="text"
-          class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
-          @input="search($event)"
-        >
+        <label>
+          <input
+            ref="input"
+            :value="modelValue"
+            :placeholder="showPlaceholder ? placeholder : ''"
+            :readonly="isReadonlyInput"
+            :disabled="disabled"
+            :style="{
+              width: !multiple && showDropdown && canSearch ? '100%' : inputWidth,
+            }"
+            :maxlength="maxlength"
+            autocomplete="off"
+            spellcheck="false"
+            autocorrect="off"
+            type="text"
+            class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
+            @input="search($event)"
+          >
+          <span class="sr-only">Enter text</span>
+        </label>
       </li>
     </ul>
     <button
