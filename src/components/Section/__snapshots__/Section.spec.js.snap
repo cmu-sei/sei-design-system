@@ -2,7 +2,7 @@
 
 exports[`Section > should match its default snapshot 1`] = `
 <div
-  class="block bg-white dark:bg-gray-900 dark:border-gray-700"
+  class="block bg-white dark:bg-gray-900"
   data-id="sds-section"
 >
   <header

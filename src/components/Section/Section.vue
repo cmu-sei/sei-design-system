@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-section"
-    class="block bg-white dark:bg-gray-900 dark:border-gray-700"
+    class="block bg-white dark:bg-gray-900"
     :class="{
       border: type === 'simple' || type === 'raised',
       'shadow border rounded': type === 'raised',
@@ -10,15 +10,15 @@
     <header
       v-if="!hideHeader"
       :class="{
-        'border-b dark:border-gray-700':
+        'border-b dark:border-gray-800':
           type === 'simple' || type === 'raised',
-        'border-0 border-t-2 border-gray-900 dark:border-gray-300':
+        'border-0 border-t-2 border-gray-900 dark:border-gray-500':
           type === 'accented',
       }"
     >
       <div
         class="flex px-4 py-3"
-        :class="{ 'border-b border-gray-300 dark:border-gray-700': type === 'accented' }"
+        :class="{ 'border-b border-gray-300 dark:border-gray-800': type === 'accented' }"
       >
         <div class="self-center flex-grow">
           <div
