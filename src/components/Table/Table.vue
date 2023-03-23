@@ -1,5 +1,8 @@
 <template>
-  <table data-id="sds-table">
+  <table
+    data-id="sds-table"
+    class="table-prose dark:table-prose-invert"
+  >
     <caption v-if="!!$slots.caption || caption">
       <!-- @slot Caption content. This will override the **caption** prop. -->
       <slot name="caption">
@@ -23,17 +26,22 @@
         </slot>
       </template>
     </colgroup>
-    <thead>
+    <thead class="border-t dark:border-gray-800">
       <tr>
-        <th v-if="enableDrawer" />
+        <th
+          v-if="enableDrawer"
+          class="bg-gray-50 dark:bg-gray-800/30"
+        >
+          <span class="sr-only">Drawers</span>
+        </th>
         <th
           v-for="field in displayedFields"
           :key="field.key"
           :class="{
-            [sortedColumnClass]: sortField === field.key,
+            [sortedColumnClass || '']: sortField === field.key,
             'cursor-pointer': field.sortable
           }"
-          class="space-x-1 select-none group"
+          class="space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30"
           @click="field.sortable ? handleSortBy(field) : undefined"
         >
           <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
@@ -42,17 +50,24 @@
             :field="field"
             :active="sortField === field.key"
           >
-            {{ field.label }}
+            <span
+              :class="{
+                'text-gray-600 dark:text-gray-500': sortField !== field.key,
+                'text-gray-900 dark:text-gray-100': sortField === field.key
+              }"
+            >{{ field.label }}</span>
             <svg
               v-if="field.sortable"
               xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink"
               aria-hidden="true"
               role="img"
-              class="inline-block w-4 h-4 group-hover:opacity-100"
+              class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
               :class="{
                 'opacity-100': sortField === field.key,
-                'opacity-50': sortField !== field.key,
+                'opacity-0 -mb-1': sortField !== field.key,
+                '-mb-3': sortField === field.key && sortOrder > 0,
+                '-mt-2': sortField === field.key && sortOrder < 0,
               }"
               preserveAspectRatio="xMidYMid meet"
               viewBox="0 0 320 512"
@@ -91,7 +106,7 @@
               <svg
                 v-if="item.id === openDrawerID"
                 height="16"
-                class="mt-1 text-gray-800"
+                class="mt-1 text-gray-600 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400"
                 viewBox="0 0 512 512"
                 width="16"
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +119,7 @@
               <svg
                 v-else
                 height="16"
-                class="mt-1 text-gray-500 hover:text-blue-500"
+                class="mt-1 text-gray-600 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400"
                 viewBox="0 0 384 512"
                 width="16"
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +151,7 @@
         </tr>
         <tr
           v-if="enableDrawer"
-          :class="[openDrawerID !== item.id && 'invisible collapse']"
+          :class="[openDrawerID !== item.id && 'collapse']"
         >
           <td :colspan="displayedFieldKeys.length + 1">
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -229,6 +244,7 @@ export default defineComponent({
      */
     enableDrawer: { type: Boolean, default: false }
   },
+  emits: ['open-drawer'],
   data() {
     return {
       sortField: this.sortBy,
@@ -254,6 +270,7 @@ export default defineComponent({
         this.openDrawerID = -1
       } else {
         this.openDrawerID = item.id
+        this.$emit('open-drawer', item)
       }
     },
     cellElement(key: string) {

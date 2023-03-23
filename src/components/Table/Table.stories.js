@@ -19,7 +19,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-table v-bind="args" class="table-prose">
+    <sds-table v-bind="args">
       <template #cell(title)="{ item, value, format }">
         <p>{{ value }}</p>
         <p class="text-sm text-gray-500">
