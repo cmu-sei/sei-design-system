@@ -47,7 +47,7 @@ const props = defineProps({
    * Determines the theme color of the component.
    */
   variant: {
-    type: String as PropType<'gray' | 'blue' | 'green' | 'teal' | 'orange' | 'red'>,
+    type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,
     default: 'primary'
   },
   /**
@@ -79,8 +79,6 @@ const variantClass = computed(() => {
       return 'bg-gray-300'
     case 'green':
       return 'bg-green-500 dark:bg-green-400'
-    case 'teal':
-      return 'bg-teal-500 dark:bg-teal-400'
     case 'orange':
       return 'bg-orange-500 dark:bg-orange-400'
     case 'red':
