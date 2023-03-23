@@ -1335,12 +1335,16 @@
         </sds-radio-group>
       </div>
       <sds-table
-        class="table-prose"
         :fields="fields"
         :items="tableItems"
         sort-by="lastModified"
         sort-desc
+        enable-drawer
+        @open-drawer="handleDrawerOpen"
       >
+        <template #drawer="{ item }">
+          {{ item }}
+        </template>
         <template #cell(title)="{ value, item }">
           <p><strong>{{ value }}</strong></p>
           <p class="text-gray-500 text-sm">
@@ -1358,8 +1362,6 @@
         <template #head(actions)="{ field }">
           {{ field.label }}
           <sds-button
-            variant="default"
-            size="sm"
             @click="addField"
           >
             Add field
@@ -1668,6 +1670,9 @@ export default defineComponent({
     },
     changeTab(tab: any) {
       console.log(tab)
+    },
+    handleDrawerOpen(item: any) {
+      console.log(item)
     }
   },
 });
