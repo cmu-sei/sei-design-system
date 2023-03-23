@@ -13,7 +13,7 @@ export default {
   component: SdsIndicator,
   argTypes: {
     variant: {
-      options: ['gray', 'blue', 'green', 'teal', 'orange', 'red'],
+      options: ['gray', 'blue', 'green', 'orange', 'red'],
       control: { type: 'select' }
     },
     size: {
