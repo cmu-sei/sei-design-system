@@ -12,22 +12,22 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
   <thead class=\\"border-t dark:border-gray-800\\">
     <tr>
       <!---->
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
           <!---->
         </svg></th>
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"\\">Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
           <!---->
         </svg></th>
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"\\">Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
           <!---->
         </svg></th>
-      <th class=\\"space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Actions</span>
+      <th class=\\"space-x-1 select-none group\\"><span class=\\"\\">Actions</span>
         <!---->
       </th>
     </tr>
@@ -64,17 +64,17 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
   <thead class=\\"border-t dark:border-gray-800\\">
     <tr>
       <!---->
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
           <!---->
         </svg></th>
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-600 dark:text-gray-500\\">Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"\\">Created</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <path d=\\"M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z\\" fill=\\"currentColor\\"></path>
           <!---->
           <!---->
         </svg></th>
-      <th class=\\"cursor-pointer space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30\\"><span class=\\"text-gray-900 dark:text-gray-100\\">Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
+      <th class=\\"cursor-pointer space-x-1 select-none group\\"><span class=\\"text-gray-900 dark:text-gray-100\\">Last modified</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
           <!---->
           <path d=\\"M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z\\" fill=\\"currentColor\\"></path>
           <!---->

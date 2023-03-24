@@ -28,10 +28,7 @@
     </colgroup>
     <thead class="border-t dark:border-gray-800">
       <tr>
-        <th
-          v-if="enableDrawer"
-          class="bg-gray-50 dark:bg-gray-800/30"
-        >
+        <th v-if="enableDrawer">
           <span class="sr-only">Drawers</span>
         </th>
         <th
@@ -41,7 +38,7 @@
             [sortedColumnClass || '']: sortField === field.key,
             'cursor-pointer': field.sortable
           }"
-          class="space-x-1 select-none group bg-gray-50 dark:bg-gray-800/30"
+          class="space-x-1 select-none group"
           @click="field.sortable ? handleSortBy(field) : undefined"
         >
           <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
@@ -52,7 +49,6 @@
           >
             <span
               :class="{
-                'text-gray-600 dark:text-gray-500': sortField !== field.key,
                 'text-gray-900 dark:text-gray-100': sortField === field.key
               }"
             >{{ field.label }}</span>
