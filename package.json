@@ -47,7 +47,7 @@
   "devDependencies": {
     "@floating-ui/dom": "^1.2.5",
     "@rollup/plugin-eslint": "^8.0.5",
-    "@sds/tailwindcss-3": "^2.2.2",
+    "@sds/tailwindcss-3": "^2.3.0",
     "@shimyshack/uid": "^0.1.7",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-docs": "^6.5.15",
