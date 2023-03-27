@@ -32,7 +32,7 @@
               'pointer-events-none': tab.disabled || tab.active,
               'text-sm inline-block rounded-t py-2 px-4 font-bold': type === 'folder',
               'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-500 dark:text-gray-100': type === 'folder' && tab.active,
-              'text-blue-500 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
+              'text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
                 type === 'folder' && !tab.active,
               'tab tab-underline tab-red': type === 'underline',
               'tab tab-block tab-red': type === 'block',
