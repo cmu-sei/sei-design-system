@@ -27,7 +27,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
     <!---->
     <!---->
     <aside
-      class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50 w-72"
+      class="hidden md:block bg-gray-900 text-white border-r border-black flex-shrink-0 z-50 w-72"
     >
       <div
         class="h-screen flex flex-col sticky top-0"
