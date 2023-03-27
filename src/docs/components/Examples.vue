@@ -1345,11 +1345,11 @@
         <template #drawer="{ item }">
           {{ item }}
         </template>
-        <template #cell(title)="{ value, item }">
-          <p><strong>{{ value }}</strong></p>
+        <template #cell(author_title)="{ item, format }">
           <p class="text-gray-500 text-sm">
-            {{ item.author }}
+            {{ format('author') }}
           </p>
+          <p>{{ item.title }}</p>
         </template>
         <template #cell(actions)="{ item }">
           <sds-button
@@ -1405,8 +1405,14 @@ export default defineComponent({
       ],
       disablePopover: true,
       fields: [
-        { key: 'id', label: 'ID' },
-        { key: 'title', label: 'Title', sortable: true },
+        { key: 'id', label: 'ID', format: (id: number) => `${id} is the id` },
+        {
+          key: 'author_title',
+          fields: [
+            { key: 'author', label: 'Author', sortable: true, format: (id: number) => `${id} is the author` },
+            { key: 'title', label: 'Title', sortable: true }
+          ]
+        },
         { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() },
         { key: 'actions', label: 'Actions' }
       ],

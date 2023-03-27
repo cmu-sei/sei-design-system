@@ -338,7 +338,7 @@
 
       <!-- Desktop sidebar -->
       <aside
-        class="hidden md:block bg-gray-900 text-white flex-shrink-0 z-50"
+        class="hidden md:block bg-gray-900 text-white border-r border-black flex-shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">

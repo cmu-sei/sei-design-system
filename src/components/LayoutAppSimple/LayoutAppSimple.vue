@@ -3,7 +3,7 @@
     data-id="sds-layout-app-simple"
     class="flex flex-col h-screen dark:text-gray-50"
   >
-    <div class="bg-gray-900 dark:bg-gray-800 text-white px-4 py-2 flex flex-shrink-0">
+    <div class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0">
       <div class="my-auto">
         <div
           v-if="appSuite"
@@ -37,10 +37,10 @@
     <div class="flex flex-grow flex-shrink-0">
       <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-100 dark:bg-gray-900">
+        <main class="flex-grow pb-4 bg-gray-100 dark:bg-black">
           <div
             v-if="!hidePageHeader"
-            class="bg-white dark:bg-gray-700 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
+            class="bg-white dark:bg-gray-800 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
             <div class="flex-grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. -->
@@ -73,7 +73,7 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-gray-800 text-xs text-light px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 text-xs text-light px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
             <sds-link
               href="https://sei.cmu.edu"

@@ -31,61 +31,134 @@
         <th v-if="enableDrawer">
           <span class="sr-only">Drawers</span>
         </th>
-        <th
-          v-for="field in displayedFields"
-          :key="field.key"
-          :class="{
-            [sortedColumnClass || '']: sortField === field.key,
-            'cursor-pointer': field.sortable
-          }"
-          class="space-x-1 select-none group"
-          @click="field.sortable ? handleSortBy(field) : undefined"
-        >
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
-          <slot
-            :name="`head(${field.key})`"
-            :field="field"
-            :active="sortField === field.key"
-          >
-            <span
+        <template v-for="field in displayedFields">
+          <template v-if="field.fields">
+            <th
+              :key="field.key"
               :class="{
-                'text-gray-900 dark:text-gray-100': sortField === field.key
+                [sortedColumnClass || '']: sortField === field.key,
               }"
-            >{{ field.label }}</span>
-            <svg
-              v-if="field.sortable"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              aria-hidden="true"
-              role="img"
-              class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
-              :class="{
-                'opacity-100': sortField === field.key,
-                'opacity-0 -mb-1': sortField !== field.key,
-                '-mb-3': sortField === field.key && sortOrder > 0,
-                '-mt-2': sortField === field.key && sortOrder < 0,
-              }"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 320 512"
+              class="whitespace-nowrap select-none group"
             >
-              <path
-                v-if="sortField !== field.key"
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
-                fill="currentColor"
-              />
-              <path
-                v-if="sortField === field.key && sortOrder > 0"
-                d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
-                fill="currentColor"
-              />
-              <path
-                v-if="sortField === field.key && sortOrder < 0"
-                d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
-                fill="currentColor"
-              />
-            </svg>
-          </slot>
-        </th>
+              <button
+                v-for="f in field.fields"
+                :key="f.key"
+                type="button"
+                class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 after:mr-4 last:after:hidden"
+                :class="{
+                  'cursor-default': !f.sortable
+                }"
+                @click="f.sortable ? handleSortBy(f) : undefined"
+              >
+                <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
+                <slot
+                  :name="`head(${f.key})`"
+                  :field="f"
+                  :active="sortField === f.key"
+                >
+                  <span
+                    :class="{
+                      'text-gray-900 dark:text-gray-100': sortField === f.key
+                    }"
+                  >{{ f.label }}</span>
+                  <svg
+                    v-if="f.sortable"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    role="img"
+                    class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
+                    :class="{
+                      'opacity-100': sortField === f.key,
+                      'opacity-0 -mb-1': sortField !== f.key,
+                      '-mb-3': sortField === f.key && sortOrder > 0,
+                      '-mt-2': sortField === f.key && sortOrder < 0,
+                    }"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 320 512"
+                  >
+                    <path
+                      v-if="sortField !== f.key"
+                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                      fill="currentColor"
+                    />
+                    <path
+                      v-if="sortField === f.key && sortOrder > 0"
+                      d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+                      fill="currentColor"
+                    />
+                    <path
+                      v-if="sortField === f.key && sortOrder < 0"
+                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </slot>
+              </button>
+            </th>
+          </template>
+          <template v-else>
+            <th
+              :key="field.key"
+              :class="{
+                [sortedColumnClass || '']: sortField === field.key,
+              }"
+              class="whitespace-nowrap space-x-1 select-none group"
+            >
+              <button
+                :class="{
+                  'cursor-default': !field.sortable
+                }"
+                @click="field.sortable ? handleSortBy(field) : undefined"
+              >
+                <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
+                <slot
+                  :name="`head(${field.key})`"
+                  :field="field"
+                  :active="sortField === field.key"
+                >
+                  <span
+                    :class="{
+                      'text-gray-900 dark:text-gray-100': sortField === field.key
+                    }"
+                  >{{ field.label }}</span>
+                  <svg
+                    v-if="field.sortable"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    aria-hidden="true"
+                    role="img"
+                    class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
+                    :class="{
+                      'opacity-100': sortField === field.key,
+                      'opacity-0 -mb-1': sortField !== field.key,
+                      '-mb-3': sortField === field.key && sortOrder > 0,
+                      '-mt-2': sortField === field.key && sortOrder < 0,
+                    }"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 320 512"
+                  >
+                    <path
+                      v-if="sortField !== field.key"
+                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                      fill="currentColor"
+                    />
+                    <path
+                      v-if="sortField === field.key && sortOrder > 0"
+                      d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+                      fill="currentColor"
+                    />
+                    <path
+                      v-if="sortField === field.key && sortOrder < 0"
+                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </slot>
+              </button>
+            </th>
+          </template>
+        </template>
       </tr>
     </thead>
     <tbody>
@@ -154,9 +227,7 @@
             <slot
               name="drawer"
               :item="item"
-            >
-              {{ format(item) }}
-            </slot>
+            />
           </td>
         </tr>
       </template>
@@ -174,6 +245,7 @@ interface TableField {
   sortable?: boolean | undefined
   hidden?: boolean | undefined
   header?: boolean | undefined
+  fields?: TableField[] | undefined
 }
 
 interface TableItem {
@@ -249,6 +321,15 @@ export default defineComponent({
     }
   },
   computed: {
+    flatFields() {
+      return this.fields.flatMap(i => {
+        if (i.fields) {
+          return i.fields
+        } else {
+          return i
+        }
+      })
+    },
     sortedItems() {
       const items = this.items
       return items.sort((a, b) => this.sortCompare(a, b, this.sortField))
@@ -274,7 +355,7 @@ export default defineComponent({
       return field && field.header ? 'th' : 'td'
     },
     format(item: TableItem, key: string = '') {
-      const field = this.fields.find((f) => f.key === key)
+      const field = this.flatFields.find(i => i.key === key)
       return field && field.format ? field.format(item[key]) : item[key]
     },
     handleSortBy(field: TableField) {

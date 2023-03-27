@@ -211,7 +211,7 @@ const props = defineProps({
    * Determines the theme color of the trigger button's indictor.
    */
    indicatorVariant: {
-    type: String as PropType<'gray' | 'blue' | 'green' | 'teal' | 'orange' | 'red'>,
+    type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,
     default: 'blue'
   },
 })
