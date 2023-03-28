@@ -41,7 +41,7 @@
               class="whitespace-nowrap select-none group"
             >
               <button
-                v-for="f in field.fields"
+                v-for="f, index in field.fields"
                 :key="f.key"
                 type="button"
                 class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 after:mr-4 last:after:hidden"
@@ -58,7 +58,8 @@
                 >
                   <span
                     :class="{
-                      'text-gray-900 dark:text-gray-100': sortField === f.key
+                      'text-gray-900 dark:text-gray-100': sortField === f.key,
+                      'font-normal': sortField !== f.key && index !== 0 
                     }"
                   >{{ f.label }}</span>
                   <svg
@@ -67,10 +68,10 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     aria-hidden="true"
                     role="img"
-                    class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
+                    class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2"
                     :class="{
                       'opacity-100': sortField === f.key,
-                      'opacity-0 -mb-1': sortField !== f.key,
+                      'opacity-0 -mb-1 group-hover:opacity-50': sortField !== f.key,
                       '-mb-3': sortField === f.key && sortOrder > 0,
                       '-mt-2': sortField === f.key && sortOrder < 0,
                     }"
@@ -128,10 +129,10 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     aria-hidden="true"
                     role="img"
-                    class="inline-block w-4 h-4 group-hover:opacity-100 text-gray-900 dark:text-gray-100 -mt-2"
+                    class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2"
                     :class="{
                       'opacity-100': sortField === field.key,
-                      'opacity-0 -mb-1': sortField !== field.key,
+                      'opacity-0 -mb-1 group-hover:opacity-50': sortField !== field.key,
                       '-mb-3': sortField === field.key && sortOrder > 0,
                       '-mt-2': sortField === field.key && sortOrder < 0,
                     }"

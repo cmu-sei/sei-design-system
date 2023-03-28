@@ -1346,10 +1346,10 @@
           {{ item }}
         </template>
         <template #cell(author_title)="{ item, format }">
+          <p>{{ item.title }}</p>
           <p class="text-gray-500 text-sm">
             {{ format('author') }}
           </p>
-          <p>{{ item.title }}</p>
         </template>
         <template #cell(actions)="{ item }">
           <sds-button
@@ -1409,8 +1409,8 @@ export default defineComponent({
         {
           key: 'author_title',
           fields: [
-            { key: 'author', label: 'Author', sortable: true, format: (id: number) => `${id} is the author` },
-            { key: 'title', label: 'Title', sortable: true }
+            { key: 'title', label: 'Title', sortable: true },
+            { key: 'author', label: 'Author', sortable: true, format: (id: string) => `${id} is the author` }
           ]
         },
         { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() },
