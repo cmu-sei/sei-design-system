@@ -348,6 +348,9 @@ export default defineComponent({
         this.openDrawerID = -1
       } else {
         this.openDrawerID = item.id
+        /**
+         * Emitted when a drawer is opened. @binding item
+         */
         this.$emit('open-drawer', item)
       }
     },
