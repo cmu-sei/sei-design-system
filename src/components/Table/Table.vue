@@ -297,7 +297,7 @@ export default defineComponent({
      */
     sortBy: { type: String, default: '' },
     /**
-     * Determines if sorting should be descending by default.
+     * Determines if sorting should be descending or ascending.
      */
     sortDesc: { type: Boolean, default: false },
     /**
@@ -311,7 +311,31 @@ export default defineComponent({
     /**
      * Toggles on/off a drawer below each table row
      */
-    enableDrawer: { type: Boolean, default: false }
+    enableDrawer: { type: Boolean, default: false },
+    /**
+     * Overrides the built-in sorting behavior of the table.
+     * 
+     * This is useful when an external source should control
+     * the table's sorting.
+     *
+     * If the `onSort` prop is set, the table will not sort unless
+     * you provide the logic to update the table's `items` prop.
+     * 
+     * Furthermore, your logic must also set the `sortBy` and 
+     * `sortDesc` props on the table in order for the table's
+     * header to reflect your changes.
+     * 
+     * Method's definition:
+     * 
+     * `onSort({ field, sortBy, sortDesc })`
+     * 
+     * This method provides the following parameters for use:
+     * 
+     * * `field`: The field you are sorting on.
+     * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
+     * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
+     */
+    onSort: { type: Function, default: undefined }
   },
   emits: ['open-drawer'],
   data() {
@@ -332,6 +356,7 @@ export default defineComponent({
       })
     },
     sortedItems() {
+      if (this.onSort) return this.items
       const items = this.items
       return items.sort((a, b) => this.sortCompare(a, b, this.sortField))
     },
@@ -340,6 +365,14 @@ export default defineComponent({
     },
     displayedFieldKeys() {
       return Object.entries(this.displayedFields).map(([_key, value]) => value.key)
+    }
+  },
+  watch: {
+    sortBy(value) {
+      this.sortField = value
+    },
+    sortDesc(value) {
+      this.sortOrder = value ? -1 : 1
     }
   },
   methods: {
@@ -363,8 +396,16 @@ export default defineComponent({
       return field && field.format ? field.format(item[key]) : item[key]
     },
     handleSortBy(field: TableField) {
-      this.sortField = field.key
-      this.sortOrder = this.sortOrder === 0 ? 1 : this.sortOrder === 1 ? -1 : 1
+      if (this.onSort) {
+        this.onSort({
+          field,
+          sortBy: field.key,
+          sortDesc: this.sortOrder === 0 ? false : this.sortOrder === 1 ? true : false
+        })
+      } else {
+        this.sortField = field.key
+        this.sortOrder = this.sortOrder === 0 ? 1 : this.sortOrder === 1 ? -1 : 1
+      }
     },
     sortCompare(aRow: TableItem, bRow: TableItem, key: string) {
       const a = aRow[key]

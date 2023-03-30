@@ -96,7 +96,7 @@ export default defineComponent({
   data() {
     return {
       Datepicker,
-      collapsed: false,
+      collapsed: true,
       appSuite: 'MIS',
       appName: 'Travel Requests',
       pageTitle: 'Dashboard',
