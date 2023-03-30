@@ -72,6 +72,7 @@ Default.args = {
   ],
   enableDrawer: true,
   sortBy: 'lastDelivered',
-  sortDesc: true
+  sortDesc: true,
+  onSort: undefined
 };
 

@@ -1337,8 +1337,9 @@
       <sds-table
         :fields="fields"
         :items="tableItems"
-        sort-by="lastModified"
-        sort-desc
+        :on-sort="sortTableItems"
+        :sort-by="sortField"
+        :sort-desc="sortDesc"
         enable-drawer
         @open-drawer="handleDrawerOpen"
       >
@@ -1422,6 +1423,8 @@ export default defineComponent({
         { id: 3, title: 'Third entry', author: 'Damon Morda', lastModified: new Date('2021-11-15') },
         { id: 4, title: 'Fourth entry', author: 'Matt Winwood', lastModified: new Date('2022-01-03') }
       ],
+      sortField: 'lastModified',
+      sortDesc: true,
       countText: "",
       toasts: [] as any,
       showDropdown: false,
@@ -1679,6 +1682,16 @@ export default defineComponent({
     },
     handleDrawerOpen(item: any) {
       console.log(item)
+    },
+    sortTableItems({ field, sortBy, sortDesc }: any) {
+      console.log(field)
+      this.sortField = sortBy
+      this.sortDesc = sortDesc
+      // this.tableItems = [
+      //   { id: 1, title: 'A title', author: 'B Person Last', lastModified: new Date() },
+      //   { id: 2, title: 'B title', author: 'A Person Last', lastModified: new Date() },
+      // ]
+      this.tableItems = this.tableItems.reverse()
     }
   },
 });
