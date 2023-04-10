@@ -1,5 +1,8 @@
 <template>
   <div class="guide">
+    <div class="h-48 w-48">
+      <SdsLoadingBox />
+    </div>
     <div class="my-12">
       <p>Indicator</p>
       <div class="p-6 flex flex-wrap gap-6">
