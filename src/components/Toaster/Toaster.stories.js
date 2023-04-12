@@ -4,8 +4,10 @@ export default {
   title: 'Feedback/Toaster',
   parameters: {
     docs: {
-      inlineStories: false,
-      iframeHeight: 250,
+      story: {
+        inline: false,
+        iframeHeight: 250
+      },
       description: {
         component: 'A toaster is a wrapper that triggers the toast component.',
       },

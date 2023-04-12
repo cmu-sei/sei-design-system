@@ -4,8 +4,10 @@ export default {
   title: 'Buttons/Floating Action Button',
   parameters: {
     docs: {
-      inlineStories: false,
-      iframeHeight: 675,
+      story: {
+        inline: false,
+        iframeHeight: 675
+      },
       description: {
         component: 'A floating action button (FAB) is a component that is displayed on the bottom right corner of a page, housing important content like help links or announcements.',
       },

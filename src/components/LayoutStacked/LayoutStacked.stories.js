@@ -5,8 +5,10 @@ export default {
   parameters: {
     layout: 'fullscreen',
     docs: {
-      inlineStories: false,
-      iframeHeight: 250,
+      story: {
+        inline: false,
+        iframeHeight: 250
+      },
       description: {
         component: 'A simple layout that automatically adjusts to the size of the viewport.',
       },
