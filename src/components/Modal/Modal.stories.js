@@ -4,8 +4,10 @@ export default {
   title: 'Containers/Modal',
   parameters: {
     docs: {
-      inlineStories: false,
-      iframeHeight: 300,
+      story: {
+        inline: false,
+        iframeHeight: 300
+      },
       description: {
         component: 'A modal is an overlay component displayed on top of the page content to help focus users\' attention to a single task or message.',
       },

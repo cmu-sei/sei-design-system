@@ -1,4 +1,6 @@
-module.exports = {
+import { StorybookConfig } from '@storybook/vue3-vite'
+
+const config: StorybookConfig = {
   async viteFinal(config, { configType }) {
     // customize the Vite config here
     if (configType === 'DEVELOPMENT') {
@@ -10,16 +12,22 @@ module.exports = {
     // return the customized config
     return config;
   },
-  "stories": [
+  stories: [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
+  addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-storysource"
   ],
-  "core": {
-    "builder": "storybook-builder-vite"
-  }
-}
+  docs: {
+    autodocs: true
+  },
+  framework: {
+    name: '@storybook/vue3-vite',
+    options: {},
+  },
+};
+
+export default config;
