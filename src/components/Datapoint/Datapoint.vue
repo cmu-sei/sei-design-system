@@ -66,7 +66,7 @@ const props = defineProps({
     default: 'md'
   },
   /**
-   * Determines the theme color of the component.
+   * Determines the color of the component.
    */
   variant: {
     type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'pink' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,

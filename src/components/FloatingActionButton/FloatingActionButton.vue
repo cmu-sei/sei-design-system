@@ -195,7 +195,7 @@ const props = defineProps({
     required: true
   },
   /**
-   * Determines the theme color of the component.
+   * Determines the color of the component.
    * 
    * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
    * 
@@ -212,7 +212,7 @@ const props = defineProps({
     type: Boolean, default: false
   },
   /**
-   * Determines the theme color of the trigger button's indictor.
+   * Determines the color of the trigger button's indictor.
    */
    indicatorVariant: {
     type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,

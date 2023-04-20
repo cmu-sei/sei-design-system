@@ -112,7 +112,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Determines the theme color of the component.
+     * Determines the color of the component.
      * 
      * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
      * 

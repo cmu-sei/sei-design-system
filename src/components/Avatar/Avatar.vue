@@ -31,7 +31,7 @@ import {computed, PropType} from 'vue'
 
 const props = defineProps({
   /**
-   * Determines the theme color of the component.
+   * Determines the color of the component.
    */
   variant: {
     type: String as PropType<'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
