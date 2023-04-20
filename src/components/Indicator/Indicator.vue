@@ -44,7 +44,7 @@ const props = defineProps({
     type: Boolean, default: false
   },
   /**
-   * Determines the theme color of the component.
+   * Determines the color of the component.
    */
   variant: {
     type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,

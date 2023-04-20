@@ -64,7 +64,7 @@ export default defineComponent({
      */
     kind: { type: String as PropType<'dark' | 'light'>, default: null },
     /**
-     * Determines the theme color of the component.
+     * Determines the color of the component.
      * 
      * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
      * 

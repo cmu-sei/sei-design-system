@@ -130,14 +130,14 @@ export default defineComponent({
       default: null,
     },
     /**
-     * Determines the theme color of the progress bars.
+     * Determines the color of the progress bars.
      */
     variant: {
       type: String as PropType<'gray' | 'red' | 'green' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo' | 'pink'>,
       default: null,
     },
     /**
-     * Determines the theme color of the progress bars.
+     * Determines the color of the progress bars.
      * 
      * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
      * 
