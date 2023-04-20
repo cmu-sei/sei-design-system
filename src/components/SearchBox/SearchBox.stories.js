@@ -12,7 +12,7 @@ export default {
   component: SdsSearchBox,
   argTypes: {
     variant: {
-      options: ['default', 'primary', 'danger'],
+      options: ['gray', 'blue', 'red'],
       control: { type: 'select' }
     }
   }

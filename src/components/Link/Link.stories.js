@@ -11,6 +11,10 @@ export default {
   },
   component: SdsLink,
   argTypes: {
+    kind: {
+      options: ['primary', 'secondary', 'tertiary', 'danger', 'light', 'dark'],
+      control: { type: 'select' }
+    },
     variant: {
       options: ['', 'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
       control: { type: 'select' }

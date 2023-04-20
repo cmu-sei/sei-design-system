@@ -17,6 +17,10 @@ export default {
       options: ["auto", "left", "top", "right", "bottom", "auto-start", "auto-end", "left-start", "left-end", "top-start", "top-end", "right-start", "right-end", "bottom-start", "bottom-end"],
       control: {type: 'select'}
     },
+    kind: {
+      options: ['primary', 'secondary'],
+      control: { type: 'select' }
+    },
     variant: {
       options: ['', 'primary', 'secondary'],
       control: { type: 'select' }

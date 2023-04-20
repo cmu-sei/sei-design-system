@@ -130,8 +130,18 @@ export default defineComponent({
       default: null,
     },
     /**
-     * Options include:
-     * red, green, orange, blue, teal, purple, indigo, pink, and gray.
+     * Determines the theme color of the progress bars.
+     */
+    variant: {
+      type: String as PropType<'gray' | 'red' | 'green' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo' | 'pink'>,
+      default: null,
+    },
+    /**
+     * Determines the theme color of the progress bars.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     progressColor: {
       type: String,
@@ -211,7 +221,8 @@ export default defineComponent({
       this.$emit("result-click", result);
     },
     getProgressColor(index: number) {
-      switch (this.progressColor) {
+      const variant = this.variant || this.progressColor
+      switch (variant) {
         case "teal":
           if (index === 0) {
             return "bg-teal-900"

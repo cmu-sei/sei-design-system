@@ -11,6 +11,10 @@ export default {
   },
   component: SdsTopFiveChart,
   argTypes: {
+    variant: {
+      options: ['gray', 'red', 'green', 'orange', 'blue', 'teal', 'purple', 'indigo', 'pink'],
+      type: 'select'
+    },
     progressColor: {
       options: ['red', 'green', 'orange', 'blue', 'teal', 'purple', 'indigo', 'pink', 'gray'],
       type: 'select'

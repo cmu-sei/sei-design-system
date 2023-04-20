@@ -13,16 +13,16 @@
           <div class="flex-shrink-0">
             <!-- Heroicon name: check-circle -->
             <svg
-              v-if="variant"
+              v-if="localKind"
               :class="{
                 ' text-green-400 dark:text-green-300':
-                  variant && variant === 'success',
+                  localKind && localKind === 'success',
                 ' text-blue-400 dark:text-blue-300':
-                  variant && variant === 'info',
+                  localKind && localKind === 'info',
                 ' text-orange-500 dark:text-orange-400':
-                  variant && variant === 'warning',
+                  localKind && localKind === 'warning',
                 ' text-red-400 dark:text-red-300':
-                  variant && variant === 'danger',
+                  localKind && localKind === 'danger',
               }"
               class="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
             >
               <!-- Success -->
               <path
-                v-if="variant === 'success'"
+                v-if="localKind === 'success'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -41,7 +41,7 @@
 
               <!-- Info -->
               <path
-                v-if="variant === 'info'"
+                v-if="localKind === 'info'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -50,7 +50,7 @@
 
               <!-- Warning -->
               <path
-                v-if="variant === 'warning'"
+                v-if="localKind === 'warning'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -59,7 +59,7 @@
 
               <!-- Danger -->
               <path
-                v-if="variant === 'danger'"
+                v-if="localKind === 'danger'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -118,7 +118,15 @@ export default defineComponent({
      */
     id: { type: Number, required: true },
     /**
+     * Determines the purpose and particular function of the component.
+     */
+    kind: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+    /**
      * Determines the theme color of the component.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: 'success' },
     /**
@@ -143,6 +151,12 @@ export default defineComponent({
     return {
       timer: null as null | ReturnType<typeof setTimeout>,
     };
+  },
+  computed: {
+    localKind() {
+      // @deprecated set default for type prop to 'success'
+      return this.kind || this.variant
+    }
   },
   mounted() {
     this.setTimer();

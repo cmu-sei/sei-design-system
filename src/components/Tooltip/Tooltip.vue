@@ -60,7 +60,15 @@ export default defineComponent({
      */
     zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
     /**
+     * Determines the purpose and particular function of the component.
+     */
+    kind: { type: String as PropType<'dark' | 'light'>, default: null },
+    /**
      * Determines the theme color of the component.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'dark' | 'light'>, default: 'dark' },
     /**
@@ -160,23 +168,25 @@ export default defineComponent({
       }
     },
     variantClass() {
-      switch (this.variant) {
+      const kind = this.kind || this.variant
+      switch (kind) {
         case 'dark':
-          return 'bg-dark text-light'
+          return 'bg-black text-gray-50'
         case 'light':
-          return 'bg-light text-dark'
+          return 'bg-gray-50 text-gray-900'
         default:
-          return 'bg-dark text-light'
+          return 'bg-black text-gray-50'
       }
     },
     variantArrowClass() {
-      switch (this.variant) {
+      const kind = this.kind || this.variant
+      switch (kind) {
         case 'dark':
-          return 'bg-dark'
+          return 'bg-black'
         case 'light':
-          return 'bg-light'
+          return 'bg-gray-50'
         default:
-          return 'bg-dark'
+          return 'bg-black'
       }
     },
     sizeClass() {
