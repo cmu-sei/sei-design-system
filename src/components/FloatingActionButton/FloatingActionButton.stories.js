@@ -16,7 +16,7 @@ export default {
   component: SdsFloatingActionButton,
   argTypes: {
     variant: {
-      options: ['primary', 'danger'],
+      options: ['blue', 'red'],
       control: { type: 'select' }
     },
   }

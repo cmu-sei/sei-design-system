@@ -1,5 +1,6 @@
 <template>
   <div class="guide">
+    <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
       <SdsLoadingBox />
     </div>
@@ -1110,7 +1111,7 @@
             use-current-time-for-today
           />
           <sds-button
-            variant="primary"
+            kind="danger"
             type="button"
             :disabled="calendar.date.start === null || calendar.date.end === null"
           >
@@ -1380,322 +1381,319 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ExamplesSection",
-  emits: ['radioGroupChange', 'hello'],
-  data() {
-    return {
-      fabTabs: [
-        { key: 'tab1', tabName: 'Tab 1 is the title', title: 'Active Tab 1', active: true },
-        { key: 'tab2', tabName: 'Tab 2', title: 'Active Tab 2', active: false, iconSrc: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png' },
-        { key: 'tab3', tabName: 'Tab 3', title: 'Active Tab 3', active: false },
-        { key: 'tab4', tabName: 'Tab 4', title: 'Active Tab 4', active: false }
-      ],
-      datapointModel: 4567,
-      fileUploaderModel: [],
-      uploadedImages: [] as any,
-      tabs: [
-        { key: 'home', title: 'Home', disabled: true },
-        { key: 'about', title: 'About Us', active: true },
-        { key: 'workplace-services', title: 'Workplace Services' },
-        { key: 'link-to-google', title: 'Link to Google', tag: 'a', href: 'https://google.com', external: true, disabled: true },
-        { key: 'link-trigger', title: 'Link Trigger', href: 'https://google.com' },
-        { key: 'groups', align: 'right' }
-      ],
-      selectModel: 2,
-      selectOptions: [
-        { id: 1, value: 1, text: 'Option 1' },
-        { id: 2, value: 2, text: 'Option 2' },
-        { id: 3, value: 3, text: 'Option 3' }
-      ],
-      disablePopover: true,
-      fields: [
-        { key: 'id', label: 'ID', format: (id: number) => `${id} is the id` },
-        {
-          key: 'author_title',
-          fields: [
-            { key: 'title', label: 'Title', sortable: true },
-            { key: 'author', label: 'Author', sortable: true, format: (id: string) => `${id} is the author` }
-          ]
-        },
-        { key: 'lastModified', label: 'Last Modified', sortable: true, format: (date: Date) => date.toLocaleDateString() },
-        { key: 'actions', label: 'Actions' }
-      ],
-      tableItems: [
-        { id: 1, title: 'First entry', author: 'Jason Shimkoski', lastModified: new Date() },
-        { id: 2, title: 'Second entry', author: 'Steve Scholnick', lastModified: new Date('2021-12-01') },
-        { id: 3, title: 'Third entry', author: 'Damon Morda', lastModified: new Date('2021-11-15') },
-        { id: 4, title: 'Fourth entry', author: 'Matt Winwood', lastModified: new Date('2022-01-03') }
-      ],
-      sortField: 'lastModified',
-      sortDesc: true,
-      countText: "",
-      toasts: [] as any,
-      showDropdown: false,
-      showModal: false,
-      showModalSizeDropdown: false,
-      modalSize: "md",
-      maxTextarea: {
-        input: "",
-      },
-      calendar: {
-        date: { start: null, end: null },
-        // date: new Date('03/23/2001'),
-        max: null,
-        min: null,
-        mode: 'dateTime',
-        size: 'md'
-      },
-      calendarSingle: {
-        date: null,
-        // date: new Date('03/23/2001'),
-        max: null,
-        min: null,
-        mode: 'dateTime',
-        size: 'md'
-      },
-      calendar2: {
-        date: { start: null, end: null },
-        // date: new Date('03/23/2001'),
-        max: null,
-        min: null,
-        mode: 'dateTime',
-        size: 'md'
-      },
-      paginator: {
-        currentPage: 2,
-        totalPages: 23,
-      },
-      multiselect: {
-        input: "",
-        options: [
-          { key: 1, value: "Apple" },
-          { key: 2, value: "Banana" },
-          { key: 3, value: "Orange" },
-          { key: 4, value: "Lemon" },
-          { key: 5, value: "Pear" },
-        ],
-        selected: [],
-      },
-      filterby: {
-        options: [
-          { id: 1, text: "Option 1", selected: false },
-          { id: 2, text: "Option 2", selected: false },
-          { id: 3, text: "Option 3", selected: false },
-          { id: 4, text: "Option 4", selected: false },
-          { id: 5, text: "Option 5", selected: false },
-          { id: 6, text: "Option 6", selected: false },
-          { id: 7, text: "Option 7", selected: false },
-          { id: 8, text: "Option 8", selected: false },
-          { id: 9, text: "Option 9", selected: false },
-          { id: 10, text: "Option 10", selected: false },
-          { id: 11, text: "Option 11", selected: false },
-          { id: 12, text: "Option 12", selected: false },
-          { id: 13, text: "Option 13", selected: false },
-          { id: 14, text: "Option 14", selected: false },
-          { id: 15, text: "Option 15", selected: false },
-          { id: 16, text: "Option 16", selected: false },
-          { id: 17, text: "Option 17", selected: false },
-          { id: 18, text: "Option 18", selected: false },
-          { id: 19, text: "Option 19", selected: false },
-          { id: 20, text: "Option 20", selected: false },
-        ],
-        idsText: null,
-      },
-      text: "",
-      items: [] as any,
-      fakeAjaxItems: [
-        { term: "Apple", payload: "test" },
-        {
-          term: "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
-          payload: "test",
-        },
-        { term: "Banana", payload: "test" },
-        { term: "Orange", payload: "test" },
-        { term: "Pineapple", payload: "test" },
-        { term: "Kiwi", payload: "test" },
-        { term: "Pomegranate", payload: "test" },
-        { term: "Strawberry", payload: "test" },
-        { term: "Raspberry", payload: "test" },
-        { term: "Watermelon", payload: "test" },
-        { term: "Mango", payload: "test" },
-      ],
-      searchText: "",
-      radioModel: true,
-      radio2Model: true,
-      radio3Model: true,
-      radioOptions: [
-        { text: 'Yes', value: true },
-        { text: 'No', value: false },
-      ],
-      topFiveEntries: [
-        {
-          id: 1,
-          title: "Entry 1",
-          url: "https://seinet.sei.cmu.edu",
-          count: 20,
-        },
-        {
-          id: 2,
-          title: "Entry 2",
-          url: "https://seinet.sei.cmu.edu",
-          count: 18,
-        },
-        {
-          id: 3,
-          title: "Entry 3",
-          url: "https://seinet.sei.cmu.edu",
-          count: 12,
-        },
-        {
-          id: 4,
-          title: "Entry 4",
-          url: "https://seinet.sei.cmu.edu",
-          count: 8,
-        },
-        {
-          id: 5,
-          title: "Entry 5",
-          url: "https://seinet.sei.cmu.edu",
-          count: 2,
-        },
-      ],
-    };
-  },
-  computed: {
-    filteredMultiselectOptions() {
-      return this.multiselect.options.filter((i) =>
-        i.value.toLowerCase().includes(this.multiselect.input.toLowerCase())
-      );
-    },
-    filterByBtnText() {
-      return this.filterBySelectedOptions.length > 0
-        ? "One or more options selected"
-        : "No options are selected";
-    },
-    filterBySelectedOptions() {
-      return this.filterby.options.filter((i) => i.selected);
-    },
-  },
-  watch: {
-    fileUploaderModel(value) {
-      this.uploadedImages = value.map((file: any) => {
+    name: "ExamplesSection",
+    emits: ["radioGroupChange", "hello"],
+    data() {
         return {
-          src: URL.createObjectURL(file),
-          isInvalid: file.invalidType || file.invalidSize,
-          caption: '',
-          name: file.name,
-          lastModified: file.lastModified,
-          size: file.size,
-          type: file.type
+            toggleSwitchValue: false,
+            fabTabs: [
+                { key: "tab1", tabName: "Tab 1 is the title", title: "Active Tab 1", active: true },
+                { key: "tab2", tabName: "Tab 2", title: "Active Tab 2", active: false, iconSrc: "https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png" },
+                { key: "tab3", tabName: "Tab 3", title: "Active Tab 3", active: false },
+                { key: "tab4", tabName: "Tab 4", title: "Active Tab 4", active: false }
+            ],
+            datapointModel: 4567,
+            fileUploaderModel: [],
+            uploadedImages: [] as any,
+            tabs: [
+                { key: "home", title: "Home", disabled: true },
+                { key: "about", title: "About Us", active: true },
+                { key: "workplace-services", title: "Workplace Services" },
+                { key: "link-to-google", title: "Link to Google", tag: "a", href: "https://google.com", external: true, disabled: true },
+                { key: "link-trigger", title: "Link Trigger", href: "https://google.com" },
+                { key: "groups", align: "right" }
+            ],
+            selectModel: 2,
+            selectOptions: [
+                { id: 1, value: 1, text: "Option 1" },
+                { id: 2, value: 2, text: "Option 2" },
+                { id: 3, value: 3, text: "Option 3" }
+            ],
+            disablePopover: true,
+            fields: [
+                { key: "id", label: "ID", format: (id: number) => `${id} is the id` },
+                {
+                    key: "author_title",
+                    fields: [
+                        { key: "title", label: "Title", sortable: true },
+                        { key: "author", label: "Author", sortable: true, format: (id: string) => `${id} is the author` }
+                    ]
+                },
+                { key: "lastModified", label: "Last Modified", sortable: true, format: (date: Date) => date.toLocaleDateString() },
+                { key: "actions", label: "Actions" }
+            ],
+            tableItems: [
+                { id: 1, title: "First entry", author: "Jason Shimkoski", lastModified: new Date() },
+                { id: 2, title: "Second entry", author: "Steve Scholnick", lastModified: new Date("2021-12-01") },
+                { id: 3, title: "Third entry", author: "Damon Morda", lastModified: new Date("2021-11-15") },
+                { id: 4, title: "Fourth entry", author: "Matt Winwood", lastModified: new Date("2022-01-03") }
+            ],
+            sortField: "lastModified",
+            sortDesc: true,
+            countText: "",
+            toasts: [] as any,
+            showDropdown: false,
+            showModal: false,
+            showModalSizeDropdown: false,
+            modalSize: "md",
+            maxTextarea: {
+                input: "",
+            },
+            calendar: {
+                date: { start: null, end: null },
+                // date: new Date('03/23/2001'),
+                max: null,
+                min: null,
+                mode: "dateTime",
+                size: "md"
+            },
+            calendarSingle: {
+                date: null,
+                // date: new Date('03/23/2001'),
+                max: null,
+                min: null,
+                mode: "dateTime",
+                size: "md"
+            },
+            calendar2: {
+                date: { start: null, end: null },
+                // date: new Date('03/23/2001'),
+                max: null,
+                min: null,
+                mode: "dateTime",
+                size: "md"
+            },
+            paginator: {
+                currentPage: 2,
+                totalPages: 23,
+            },
+            multiselect: {
+                input: "",
+                options: [
+                    { key: 1, value: "Apple" },
+                    { key: 2, value: "Banana" },
+                    { key: 3, value: "Orange" },
+                    { key: 4, value: "Lemon" },
+                    { key: 5, value: "Pear" },
+                ],
+                selected: [],
+            },
+            filterby: {
+                options: [
+                    { id: 1, text: "Option 1", selected: false },
+                    { id: 2, text: "Option 2", selected: false },
+                    { id: 3, text: "Option 3", selected: false },
+                    { id: 4, text: "Option 4", selected: false },
+                    { id: 5, text: "Option 5", selected: false },
+                    { id: 6, text: "Option 6", selected: false },
+                    { id: 7, text: "Option 7", selected: false },
+                    { id: 8, text: "Option 8", selected: false },
+                    { id: 9, text: "Option 9", selected: false },
+                    { id: 10, text: "Option 10", selected: false },
+                    { id: 11, text: "Option 11", selected: false },
+                    { id: 12, text: "Option 12", selected: false },
+                    { id: 13, text: "Option 13", selected: false },
+                    { id: 14, text: "Option 14", selected: false },
+                    { id: 15, text: "Option 15", selected: false },
+                    { id: 16, text: "Option 16", selected: false },
+                    { id: 17, text: "Option 17", selected: false },
+                    { id: 18, text: "Option 18", selected: false },
+                    { id: 19, text: "Option 19", selected: false },
+                    { id: 20, text: "Option 20", selected: false },
+                ],
+                idsText: null,
+            },
+            text: "",
+            items: [] as any,
+            fakeAjaxItems: [
+                { term: "Apple", payload: "test" },
+                {
+                    term: "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
+                    payload: "test",
+                },
+                { term: "Banana", payload: "test" },
+                { term: "Orange", payload: "test" },
+                { term: "Pineapple", payload: "test" },
+                { term: "Kiwi", payload: "test" },
+                { term: "Pomegranate", payload: "test" },
+                { term: "Strawberry", payload: "test" },
+                { term: "Raspberry", payload: "test" },
+                { term: "Watermelon", payload: "test" },
+                { term: "Mango", payload: "test" },
+            ],
+            searchText: "",
+            radioModel: true,
+            radio2Model: true,
+            radio3Model: true,
+            radioOptions: [
+                { text: "Yes", value: true },
+                { text: "No", value: false },
+            ],
+            topFiveEntries: [
+                {
+                    id: 1,
+                    title: "Entry 1",
+                    url: "https://seinet.sei.cmu.edu",
+                    count: 20,
+                },
+                {
+                    id: 2,
+                    title: "Entry 2",
+                    url: "https://seinet.sei.cmu.edu",
+                    count: 18,
+                },
+                {
+                    id: 3,
+                    title: "Entry 3",
+                    url: "https://seinet.sei.cmu.edu",
+                    count: 12,
+                },
+                {
+                    id: 4,
+                    title: "Entry 4",
+                    url: "https://seinet.sei.cmu.edu",
+                    count: 8,
+                },
+                {
+                    id: 5,
+                    title: "Entry 5",
+                    url: "https://seinet.sei.cmu.edu",
+                    count: 2,
+                },
+            ],
+        };
+    },
+    computed: {
+        filteredMultiselectOptions() {
+            return this.multiselect.options.filter((i) => i.value.toLowerCase().includes(this.multiselect.input.toLowerCase()));
+        },
+        filterByBtnText() {
+            return this.filterBySelectedOptions.length > 0
+                ? "One or more options selected"
+                : "No options are selected";
+        },
+        filterBySelectedOptions() {
+            return this.filterby.options.filter((i) => i.selected);
+        },
+    },
+    watch: {
+        fileUploaderModel(value) {
+            this.uploadedImages = value.map((file: any) => {
+                return {
+                    src: URL.createObjectURL(file),
+                    isInvalid: file.invalidType || file.invalidSize,
+                    caption: "",
+                    name: file.name,
+                    lastModified: file.lastModified,
+                    size: file.size,
+                    type: file.type
+                };
+            }).filter((file: any) => !file.isInvalid);
         }
-      }).filter((file: any) => !file.isInvalid)
+    },
+    methods: {
+        fabOpen() {
+            console.log("open");
+        },
+        fabClose() {
+            console.log("close");
+        },
+        generateToast() {
+            const index = Math.floor(Math.random() * Math.floor(4));
+            const toasts = [
+                {
+                    id: Math.random(),
+                    title: "Success Toast",
+                    text: "This is the content of this toast.",
+                    variant: "success",
+                },
+                {
+                    id: Math.random(),
+                    title: "Info Toast",
+                    text: "This is the content of this toast.",
+                    variant: "info",
+                },
+                {
+                    id: Math.random(),
+                    title: "Warning Toast",
+                    text: "This is the content of this toast.",
+                    variant: "warning",
+                },
+                {
+                    id: Math.random(),
+                    title: "Danger Toast",
+                    text: "This is the content of this toast.",
+                    variant: "danger",
+                    noAutoHide: true,
+                },
+            ];
+            this.toasts.unshift(toasts[index]);
+        },
+        changeModalSize(size: string) {
+            this.modalSize = size;
+        },
+        updateSelected(selections: any) {
+            this.multiselect.selected = selections;
+        },
+        filtered(options: any) {
+            this.filterby.idsText = options
+                .filter((i: any) => i.selected)
+                .map((i: any) => i.id)
+                .join(", ");
+        },
+        result(result: any) {
+            console.log(result);
+        },
+        // Perform a search
+        search(q: any) {
+            this.$emit("hello", q);
+            this.searchText = this.text;
+        },
+        // Retrieve autosuggest items
+        autosuggest() {
+            setTimeout(() => {
+                this.items = this.fakeAjaxItems.filter((i) => {
+                    return i.term.toLowerCase().includes(this.text.toLowerCase());
+                });
+            }, 250);
+        },
+        addField() {
+            this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });
+        },
+        async willOpen(res: Function, rej: Function) {
+            console.log("Pause for 1 seconds to get fake api request");
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Open now!");
+            res();
+        },
+        async willClose(res: Function, rej: Function) {
+            console.log("Pause for 1 seconds to do something on close");
+            await new Promise(r => setTimeout(r, 1000));
+            console.log("Close now!");
+            res();
+        },
+        async willChangeTab(tab: any, res: Function, rej: Function) {
+            console.log("Pause for 1/2 second to get fake api request", tab);
+            await new Promise(r => setTimeout(r, 500));
+            console.log("Open now!");
+            res();
+        },
+        changeTab(tab: any) {
+            console.log(tab);
+        },
+        handleDrawerOpen(item: any) {
+            console.log(item);
+        },
+        sortTableItems({ field, sortBy, sortDesc }: any) {
+            console.log(field);
+            this.sortField = sortBy;
+            this.sortDesc = sortDesc;
+            // this.tableItems = [
+            //   { id: 1, title: 'A title', author: 'B Person Last', lastModified: new Date() },
+            //   { id: 2, title: 'B title', author: 'A Person Last', lastModified: new Date() },
+            // ]
+            this.tableItems = this.tableItems.reverse();
+        }
     }
-  },
-  methods: {
-    fabOpen() {
-      console.log('open')
-    },
-    fabClose() {
-      console.log('close')
-    },
-    generateToast() {
-      const index = Math.floor(Math.random() * Math.floor(4));
-      const toasts = [
-        {
-          id: Math.random(),
-          title: "Success Toast",
-          text: "This is the content of this toast.",
-          variant: "success",
-        },
-        {
-          id: Math.random(),
-          title: "Info Toast",
-          text: "This is the content of this toast.",
-          variant: "info",
-        },
-        {
-          id: Math.random(),
-          title: "Warning Toast",
-          text: "This is the content of this toast.",
-          variant: "warning",
-        },
-        {
-          id: Math.random(),
-          title: "Danger Toast",
-          text: "This is the content of this toast.",
-          variant: "danger",
-          noAutoHide: true,
-        },
-      ];
-      this.toasts.unshift(toasts[index]);
-    },
-    changeModalSize(size: string) {
-      this.modalSize = size;
-    },
-
-    updateSelected(selections: any) {
-      this.multiselect.selected = selections;
-    },
-    filtered(options: any) {
-      this.filterby.idsText = options
-        .filter((i: any) => i.selected)
-        .map((i: any) => i.id)
-        .join(", ");
-    },
-    result(result: any) {
-      console.log(result)
-    },
-    // Perform a search
-    search(q: any) {
-      this.$emit("hello", q);
-      this.searchText = this.text;
-    },
-
-    // Retrieve autosuggest items
-    autosuggest() {
-      setTimeout(() => {
-        this.items = this.fakeAjaxItems.filter((i) => {
-          return i.term.toLowerCase().includes(this.text.toLowerCase());
-        });
-      }, 250);
-    },
-    addField() {
-      this.fields.push({ key: (new Date).toLocaleDateString(), label: 'Test' })
-    },
-    async willOpen(res: Function, rej: Function) {
-      console.log('Pause for 1 seconds to get fake api request')
-      await new Promise(r => setTimeout(r, 1000))
-      console.log('Open now!')
-      res()
-    },
-    async willClose(res: Function, rej: Function) {
-      console.log('Pause for 1 seconds to do something on close')
-      await new Promise(r => setTimeout(r, 1000))
-      console.log('Close now!')
-      res()
-    },
-    async willChangeTab(tab: any, res: Function, rej: Function) {
-      console.log('Pause for 1/2 second to get fake api request', tab)
-      await new Promise(r => setTimeout(r, 500))
-      console.log('Open now!')
-      res()
-    },
-    changeTab(tab: any) {
-      console.log(tab)
-    },
-    handleDrawerOpen(item: any) {
-      console.log(item)
-    },
-    sortTableItems({ field, sortBy, sortDesc }: any) {
-      console.log(field)
-      this.sortField = sortBy
-      this.sortDesc = sortDesc
-      // this.tableItems = [
-      //   { id: 1, title: 'A title', author: 'B Person Last', lastModified: new Date() },
-      //   { id: 2, title: 'B title', author: 'A Person Last', lastModified: new Date() },
-      // ]
-      this.tableItems = this.tableItems.reverse()
-    }
-  },
 });
 </script>

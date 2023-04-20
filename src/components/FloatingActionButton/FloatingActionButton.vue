@@ -20,8 +20,8 @@
                 class="ml-auto mt-auto btn border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'btn-primary': variant === 'primary',
-                  'btn-danger': variant === 'danger',
+                  'btn-primary': localVariant === 'blue',
+                  'btn-danger': localVariant === 'red',
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
@@ -80,8 +80,8 @@
                 <div
                   class="p-6 rounded-t-lg flex gap-4"
                   :class="{
-                    'text-white bg-primary': variant === 'primary',
-                    'text-white bg-danger': variant === 'danger',
+                    'text-white bg-primary': localVariant === 'blue',
+                    'text-white bg-danger': localVariant === 'red',
                   }"
                 >
                   <h2 class="grow uppercase font-bold text-lg">
@@ -196,10 +196,14 @@ const props = defineProps({
   },
   /**
    * Determines the theme color of the component.
+   * 
+   * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
+   * 
+   * @deprecated since version 2.12.
    */
   variant: {
-    type: String as PropType<'primary' | 'danger'>,
-    default: 'primary'
+    type: String as PropType<'primary' | 'danger' | 'blue' | 'red'>,
+    default: 'blue'
   },
   /**
    * Determines whether to display the indicator or not.
@@ -217,6 +221,10 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:model-value', 'open', 'close'])
+
+const localVariant = computed<'blue' | 'red'>(() => {
+  return props.variant === 'primary' || props.variant === 'blue' ? 'blue' : 'red'
+})
 
 const tabs = computed({
   get () {

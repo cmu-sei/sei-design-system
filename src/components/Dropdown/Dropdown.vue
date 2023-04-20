@@ -91,7 +91,15 @@ export default defineComponent({
      */
     title: { type: String, default: '' },
     /**
+     * Determines the purpose and particular function of the button trigger.
+     */
+     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+    /**
      * Styling for the button trigger.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
     /**
@@ -237,7 +245,8 @@ export default defineComponent({
       }
     },
     variantClass() {
-      switch (this.variant) {
+      const kind = this.kind || this.variant
+      switch (kind) {
         case 'default':
           return 'btn-default'
         case 'primary':

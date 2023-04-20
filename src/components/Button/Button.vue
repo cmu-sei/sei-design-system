@@ -17,7 +17,15 @@ export default defineComponent({
   name: 'SdsButton',
   props: {
     /**
+     * Determines the purpose and particular function of the component.
+     */
+     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+    /**
      * Determines the theme color of the component.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: '' },
     /**
@@ -44,10 +52,12 @@ export default defineComponent({
   emits: ['click'],
   computed: {
     btnClass() {
-      return this.variant !== '' || this.size !== '' || this.outline || this.block ? 'btn' : ''
+      // @deprecated remove variant from this list
+      return this.kind || this.variant !== '' || this.size !== '' || this.outline || this.block ? 'btn' : ''
     },
     variantClass() {
-      switch (this.variant) {
+      const kind = this.kind || this.variant
+      switch (kind) {
         case 'default':
           return 'btn-default'
         case 'primary':

@@ -15,11 +15,19 @@ export default defineComponent({
   name: 'SdsLink',
   props: {
     /**
+     * Determines the purpose and particular function of the component.
+     */
+    kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark'>, default: null },
+    /**
      * Determines the theme color of the component.
+     * 
+     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | ''>, default: '' },
     /**
-     * Applies the appropriate attributes for external links.
+     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
      */
     external: { type: Boolean, default: false },
     /**
@@ -33,11 +41,14 @@ export default defineComponent({
   },
   setup (props) {
     const linkClass = computed(() => {
-      return props.variant !== '' || props.cta ? 'link' : ''
+      // @deprecated remove variant prop
+      return props.kind || props.variant !== '' || props.cta ? 'link' : ''
     })
 
     const variantClass = computed(() => {
-      switch (props.variant) {
+      // @deprecated remove extraneous variant types
+      const kind = (props.kind as 'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark') || props.variant
+      switch (kind) {
         case 'primary':
           return 'link-primary'
         case 'secondary':

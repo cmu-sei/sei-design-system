@@ -24,6 +24,10 @@ export default {
       options: ['sm', 'md', 'lg', 'xl', 'auto'],
       control: { type: 'select' }
     },
+    kind: {
+      options: ['dark', 'light'],
+      control: {type: 'select'}
+    },
     variant: {
       options: ['dark', 'light'],
       control: {type: 'select'}

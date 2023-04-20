@@ -24,6 +24,10 @@ export default {
       options: ['absolute', 'fixed'],
       control: {type: 'select'}
     },
+    kind: {
+      options: ['default', 'primary', 'success', 'danger', 'light'],
+      control: { type: 'select' }
+    },
     variant: {
       options: ['default', 'primary', 'success', 'danger', 'light'],
       control: { type: 'select' }

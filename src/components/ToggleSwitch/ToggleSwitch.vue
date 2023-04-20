@@ -11,7 +11,10 @@
       aria-checked="false"
       @click="update"
     >
-      <span :class="[isToggled ? 'translate-x-5 toggle-on-shadow' : 'translate-x-0 toggle-off-shadow', styles.switch]" />
+      <span
+        class="drop-shadow"
+        :class="[isToggled ? 'translate-x-5' : 'translate-x-0', styles.switch]"
+      />
       <svg
         :class="[isToggled ? 'translate-x-5 hidden' : 'translate-x-0 block', styles.offIcon, disabled && 'text-opacity-50']"
         viewBox="0 0 1792 1792"
@@ -43,10 +46,14 @@ export default defineComponent({
     },
     /**
      * Determines the theme color of the component.
+     * 
+     * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
+     * 
+     * @deprecated since version 2.12.
      */
     variant: {
-      type: String as PropType<'default' | 'primary' | 'danger'>,
-      default: 'primary'
+      type: String as PropType<'default' | 'primary' | 'danger' | 'gray' | 'blue' | 'red'>,
+      default: 'blue'
     },
     /**
      * Disables the component to prevent user interaction.
@@ -86,8 +93,10 @@ export default defineComponent({
     variantClass() {
       switch (this.variant) {
         case 'primary':
+        case 'blue':
           return 'bg-blue-500'
         case 'danger':
+        case 'red':
           return 'bg-red-500'
         default:
           return 'bg-gray-900'
@@ -96,8 +105,10 @@ export default defineComponent({
     variantFillClass() {
       switch (this.variant) {
         case 'primary':
+        case 'blue':
           return 'fill-current text-blue-500'
         case 'danger':
+        case 'red':
           return 'fill-current text-red-500'
         default:
           return 'fill-current text-gray-900'
@@ -111,15 +122,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="postcss" scoped>
-.toggle-on-shadow {
-box-shadow: -2px 0 4px rgb(0 0 0 / 40%) !important;
-}
-.toggle-off-shadow {
-  box-shadow: 2px 0 4px rgb(0 0 0 / 40%) !important;
-}
-button:disabled .toggle-on-shadow, button:disabled .toggle-off-shadow {
-  box-shadow: none !important;
-}
-</style>
