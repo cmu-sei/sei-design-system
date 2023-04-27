@@ -206,7 +206,7 @@
             v-for="key in displayedFieldKeys"
             :key="key"
           >
-            <component :is="cellElement(key)">
+            <component :is="cellElement(key) as unknown">
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
                 :name="`cell(${key})`"
@@ -237,7 +237,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { Component, defineComponent, PropType } from 'vue'
 
 interface TableField {
   key: string

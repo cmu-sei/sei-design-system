@@ -25,7 +25,7 @@
           }"
         >
           <component
-            :is="tab.tag || 'button'"
+            :is="tab.tag || 'button' as unknown"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
               'opacity-50': tab.disabled,
