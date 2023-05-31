@@ -117,7 +117,7 @@
                   'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
                   'hover:bg-gray-300 dark:hover:bg-gray-600': !dateIsSameDay(day),
                   'font-bold bg-blue-500 text-white': dateIsSameDay(day),
-                  'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-800': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
+                  'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
                   'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
                 }"
                 :disabled="dateIsNotSelectable(day)"

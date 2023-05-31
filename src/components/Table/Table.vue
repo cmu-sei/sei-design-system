@@ -26,7 +26,7 @@
         </slot>
       </template>
     </colgroup>
-    <thead class="border-t dark:border-gray-800">
+    <thead class="border-t dark:border-gray-700">
       <tr>
         <th v-if="enableDrawer">
           <span class="sr-only">Drawers</span>

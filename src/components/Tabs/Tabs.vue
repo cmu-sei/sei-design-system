@@ -7,7 +7,7 @@
     <div
       class="overflow-x-auto"
       :class="{
-        'bg-gray-100 dark:bg-gray-800 rounded-t': type === 'folder'
+        'bg-gray-100 dark:bg-gray-850 rounded-t': type === 'folder'
       }"
     >
       <ul
@@ -31,7 +31,7 @@
               'opacity-50': tab.disabled,
               'pointer-events-none': tab.disabled || tab.active,
               'text-sm inline-block rounded-t py-2 px-4 font-bold': type === 'folder',
-              'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-500 dark:text-gray-100': type === 'folder' && tab.active,
+              'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-700 dark:text-gray-100': type === 'folder' && tab.active,
               'text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
                 type === 'folder' && !tab.active,
               'tab tab-underline tab-red': type === 'underline',

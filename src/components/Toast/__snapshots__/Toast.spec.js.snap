@@ -3,12 +3,12 @@
 exports[`Toast > should match its default snapshot 1`] = `
 <div
   aria-live="polite"
-  class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-800 dark:border dark:border-gray-700"
+  class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
   data-id="sds-toast"
   role="alert"
 >
   <div
-    class="overflow-hidden rounded ring-1 ring-black ring-opacity-5"
+    class="overflow-hidden rounded ring-1 ring-black dark:ring-gray-700 ring-opacity-5"
   >
     <div
       class="p-4"
