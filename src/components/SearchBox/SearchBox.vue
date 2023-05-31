@@ -28,7 +28,7 @@
         v-if="q.length > 0"
         tabindex="-1"
         type="button"
-        class="absolute text-gray-500 right-2 top-3 hover:text-secondary focus:outline-none"
+        class="absolute text-gray-500 right-2 top-3 hover:text-gray-900 focus:outline-none"
         :disabled="disabled"
         @click="clearSearch"
       >
@@ -154,12 +154,12 @@ export default defineComponent({
       switch (this.variant) {
         case "primary":
         case 'blue':
-          return "btn btn-default text-primary dark:text-blue-400";
+          return "btn btn-default text-blue-700 dark:text-blue-400";
         case "danger":
         case 'red':
-          return "btn btn-default text-danger dark:text-red-400";
+          return "btn btn-default text-red-700 dark:text-red-400";
         default:
-          return "btn btn-default text-secondary dark:text-gray-300";
+          return "btn btn-default text-gray-900 dark:text-gray-300";
       }
     },
   },

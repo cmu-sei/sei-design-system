@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-character-counter"
-    :class="{ 'text-danger': count < 0 }"
+    :class="{ 'text-red-700': count < 0 }"
   >
     {{ count.toLocaleString() }}
   </div>
