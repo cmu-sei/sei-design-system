@@ -1,6 +1,7 @@
 <template>
   <div data-id="sds-input">
     <input
+      :id="id"
       v-model="text"
       class="form-control"
       :class="{ valid, invalid }"
@@ -43,6 +44,10 @@ export default defineComponent({
      * Determines the maxlength of the component.
      */
     maxlength: { type: Number, default: 524288 },
+    /**
+     * Determines the id of the input.
+     */
+    id: { type: String, default: undefined },
     /**
      * Determines the placeholder of the component.
      */

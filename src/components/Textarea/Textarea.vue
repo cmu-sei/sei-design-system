@@ -1,6 +1,7 @@
 <template>
   <div data-id="sds-textarea">
     <textarea
+      :id="id"
       v-model="text"
       class="form-control"
       :class="{ valid, invalid }"
@@ -43,6 +44,10 @@ export default defineComponent({
      * Determines the maxlength of the component.
      */
     maxlength: { type: Number, default: 524288 },
+    /**
+     * Determines the id of the textarea.
+     */
+    id: { type: String, default: undefined },
     /**
      * Determines the placeholder text of the component.
      */

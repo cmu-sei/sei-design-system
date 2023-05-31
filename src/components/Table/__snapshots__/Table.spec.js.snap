@@ -9,7 +9,7 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
     <col class=\\"\\">
     <col class=\\"\\">
   </colgroup>
-  <thead class=\\"border-t dark:border-gray-800\\">
+  <thead class=\\"border-t dark:border-gray-700\\">
     <tr>
       <!---->
       <th class=\\"whitespace-nowrap space-x-1 select-none group\\"><button class=\\"\\"><span class=\\"\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
@@ -61,7 +61,7 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
     <col class=\\"\\">
     <col class=\\"null\\">
   </colgroup>
-  <thead class=\\"border-t dark:border-gray-800\\">
+  <thead class=\\"border-t dark:border-gray-700\\">
     <tr>
       <!---->
       <th class=\\"whitespace-nowrap space-x-1 select-none group\\"><button class=\\"\\"><span class=\\"\\">Title</span><svg xmlns=\\"http://www.w3.org/2000/svg\\" xmlns:xlink=\\"http://www.w3.org/1999/xlink\\" aria-hidden=\\"true\\" role=\\"img\\" class=\\"inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50\\" preserveAspectRatio=\\"xMidYMid meet\\" viewBox=\\"0 0 320 512\\">
@@ -104,7 +104,7 @@ exports[`Table.vue > matches snapshot with no props assigned 1`] = `
 "<table data-id=\\"sds-table\\" class=\\"table-prose dark:table-prose-invert\\">
   <!---->
   <colgroup></colgroup>
-  <thead class=\\"border-t dark:border-gray-800\\">
+  <thead class=\\"border-t dark:border-gray-700\\">
     <tr>
       <!---->
     </tr>

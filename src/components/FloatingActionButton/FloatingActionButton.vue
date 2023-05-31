@@ -73,7 +73,7 @@
               <div
                 v-if="open"
                 ref="modal"
-                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-800 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-900 shadow-lg"
+                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-900 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
               >
@@ -116,7 +116,7 @@
                 </div>
                 <div
                   v-if="tabs.length > 1"
-                  class="border-t border-gray-100 dark:border-gray-800"
+                  class="border-t border-gray-100 dark:border-gray-700"
                 >
                   <nav class="grid grid-flow-col auto-cols-fr">
                     <button
