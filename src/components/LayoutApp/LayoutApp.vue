@@ -196,7 +196,7 @@
                         class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
                         :class="{
                           'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
-                          'text-white border-danger': itemsGroupIsActive(item) && !showItemsGroup(item)
+                          'text-white border-red-700': itemsGroupIsActive(item) && !showItemsGroup(item)
                         }"
                         @click="toggleItemsGroup(item)"
                       >
@@ -264,7 +264,7 @@
                           class="flex relative gap-2 px-4 py-2 border-l-8"
                           :class="{
                             'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
-                            'text-white border-danger pointer-events-none': subitem.active,
+                            'text-white border-red-700 pointer-events-none': subitem.active,
                             'pl-12': !hideSidebarIcons,
                             'pl-8': hideSidebarIcons
                           }"
@@ -278,7 +278,7 @@
                             class="inline-block my-auto"
                           >
                             <span
-                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-danger"
+                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
                             >{{ subitem.badgeCount }}</span>
                           </span>
                         </a>
@@ -290,7 +290,7 @@
                       class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                       :class="{
                         'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
-                        'text-white border-danger pointer-events-none': item.active
+                        'text-white border-red-700 pointer-events-none': item.active
                       }"
                       @click="navigate(null, item, $event)"
                     >
@@ -324,7 +324,7 @@
                         class="inline-block my-auto"
                       >
                         <span
-                          class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-danger"
+                          class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
                         >{{ item.badgeCount }}</span>
                       </span>
                     </a>
@@ -437,7 +437,7 @@
                           class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
                           :class="{
                             'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
-                            'text-white border-danger': itemsGroupIsActive(item) && (!showItemsGroup(item) || collapsed)
+                            'text-white border-red-700': itemsGroupIsActive(item) && (!showItemsGroup(item) || collapsed)
                           }"
                           @click="toggleItemsGroup(item)"
                         >
@@ -477,7 +477,7 @@
                             }"
                           >
                             <span
-                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-danger"
+                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
                             >{{ itemsGroupBadgeCount(item) }}</span>
                           </span>
                           <svg
@@ -515,7 +515,7 @@
                         class="flex relative gap-2 px-4 py-2 border-l-8"
                         :class="{
                           'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
-                          'text-white border-danger pointer-events-none': subitem.active,
+                          'text-white border-red-700 pointer-events-none': subitem.active,
                           'pl-12': !hideSidebarIcons,
                           'pl-8': hideSidebarIcons
                         }"
@@ -529,7 +529,7 @@
                           class="inline-block my-auto"
                         >
                           <span
-                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-danger"
+                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
                           >{{ subitem.badgeCount }}</span>
                         </span>
                       </a>
@@ -546,7 +546,7 @@
                         class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
                         :class="{
                           'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
-                          'text-white border-danger pointer-events-none': item.active
+                          'text-white border-red-700 pointer-events-none': item.active
                         }"
                         @click="navigate(null, item, $event)"
                       >
@@ -586,7 +586,7 @@
                           }"
                         >
                           <span
-                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-danger"
+                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
                           >{{ item.badgeCount }}</span>
                         </span>
                       </a>
@@ -678,7 +678,7 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-black text-xs text-light px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 dark:bg-black text-xs text-white px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
             <sds-link
               href="https://sei.cmu.edu"

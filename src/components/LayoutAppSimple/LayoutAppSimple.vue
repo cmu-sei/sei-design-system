@@ -73,7 +73,7 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-black text-xs text-light px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 dark:bg-black text-xs text-white px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
             <sds-link
               href="https://sei.cmu.edu"

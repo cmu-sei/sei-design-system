@@ -4,7 +4,11 @@
       :id="id"
       v-model="text"
       class="form-control"
-      :class="{ valid, invalid }"
+      :class="{
+        valid,
+        invalid,
+        'form-control-sm': size === 'sm'
+      }"
       :type="type"
       :maxlength="maxlength"
       :placeholder="placeholder"
@@ -23,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { PropType, defineComponent } from 'vue'
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
 
 export default defineComponent({
@@ -56,6 +60,10 @@ export default defineComponent({
      * Determines the type of the input field.
      */
     type: { type: String, default: "text" },
+    /**
+     * Determines the type of the input field.
+     */
+    size: { type: String as PropType<"sm" | "md">, default: "" },
     /**
      * Determines whether to autofocus the input or not.
      */

@@ -786,7 +786,7 @@
     >
       <p
         id="scrollspy-test"
-        class="mb-48 text-4xl text-success"
+        class="mb-48 text-4xl text-green-700"
       >
         test 1
       </p>
@@ -802,7 +802,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-2"
-        class="mb-48 text-4xl text-success"
+        class="mb-48 text-4xl text-green-700"
       >
         test 2
       </p>
@@ -816,7 +816,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-3"
-        class="mb-48 text-4xl text-success"
+        class="mb-48 text-4xl text-green-700"
       >
         test 3
       </p>
@@ -830,7 +830,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-4"
-        class="mb-48 text-4xl text-success"
+        class="mb-48 text-4xl text-green-700"
       >
         test 4
       </p>
@@ -844,7 +844,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-5"
-        class="mb-48 text-4xl text-success"
+        class="mb-48 text-4xl text-green-700"
       >
         test 5
       </p>
@@ -1298,11 +1298,11 @@
         <h4 class="my-4 text-lg">
           Radio Group
         </h4>
+        asdfsdf
         <sds-radio-group
           v-model="radioModel"
           :options="radioOptions"
           required
-          stacked
           @change="$emit('radioGroupChange')"
         >
           <template #label="{ optionId, option }">

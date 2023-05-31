@@ -25,7 +25,7 @@
           xmlns:xlink="http://www.w3.org/1999/xlink"
           aria-hidden="true"
           role="img"
-          class="my-auto h-4 w-4 text-tertiary"
+          class="my-auto h-4 w-4 text-gray-700"
           width="32"
           height="32"
           preserveAspectRatio="xMidYMid meet"
@@ -59,7 +59,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   aria-hidden="true"
                   role="img"
-                  class="w-4 h-4 my-auto text-success"
+                  class="w-4 h-4 my-auto text-green-700"
                   width="32"
                   height="32"
                   preserveAspectRatio="xMidYMid meet"
@@ -71,10 +71,10 @@
                   />
                 </svg>
                 <span class="my-auto">{{ f.name }}</span>
-                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(f.size) }})</span>
+                <span class="my-auto text-gray-700 text-sm uppercase">({{ byteToSize(f.size) }})</span>
               </div>
               <button
-                class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
+                class="my-auto z-10 link hover:text-red-700 dark:hover:text-red-400"
                 @click="removeFile(f)"
               >
                 <svg
@@ -105,7 +105,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   aria-hidden="true"
                   role="img"
-                  class="w-4 h-4 my-auto text-danger"
+                  class="w-4 h-4 my-auto text-red-700"
                   width="32"
                   height="32"
                   preserveAspectRatio="xMidYMid meet"
@@ -117,10 +117,10 @@
                   />
                 </svg>
                 <span class="my-auto">{{ f.name }}</span>
-                <span class="my-auto text-tertiary text-sm uppercase">({{ byteToSize(f.size) }})</span>
+                <span class="my-auto text-gray-700 text-sm uppercase">({{ byteToSize(f.size) }})</span>
               </div>
               <button
-                class="my-auto z-10 link hover:text-danger dark:hover:text-red-400"
+                class="my-auto z-10 link hover:text-red-700 dark:hover:text-red-400"
                 @click="removeInvalidFile(f)"
               >
                 <svg
@@ -140,13 +140,13 @@
             </div>
             <p
               v-if="f.invalidType"
-              class="text-danger text-xs ml-5 mt-1"
+              class="text-red-700 text-xs ml-5 mt-1"
             >
               Invalid file type
             </p>
             <p
               v-if="f.invalidSize"
-              class="text-danger text-xs ml-5 mt-1"
+              class="text-red-700 text-xs ml-5 mt-1"
             >
               File size is over {{ filesize }} MB.
             </p>

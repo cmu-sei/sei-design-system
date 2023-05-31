@@ -28,7 +28,7 @@
       >
         <a
           :href="item.seeAll.url"
-          class="inline-flex font-bold uppercase group text-secondary"
+          class="inline-flex font-bold uppercase group text-gray-900"
         >
           <span class="group-hover:underline">{{ item.seeAll.title }}</span>
           <svg

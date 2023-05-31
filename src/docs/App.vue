@@ -60,7 +60,7 @@
           </sds-button>
           <sds-button
             variant="default"
-            class="text-primary hover:text-black hover:bg-white"
+            class="text-blue-700 hover:text-black hover:bg-white"
           >
             Save something
           </sds-button>

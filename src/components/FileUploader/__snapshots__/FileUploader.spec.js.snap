@@ -24,7 +24,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       </label>
       <svg
         aria-hidden="true"
-        class="my-auto h-4 w-4 text-tertiary"
+        class="my-auto h-4 w-4 text-gray-700"
         height="32"
         preserveAspectRatio="xMidYMid meet"
         role="img"

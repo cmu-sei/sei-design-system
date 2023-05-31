@@ -14,6 +14,10 @@ export default {
     type: {
       options: ['email', 'number', 'password', 'search', 'tel', 'text', 'url'],
       control: { type: 'select' }
+    },
+    size: {
+      options: ['sm', 'md'],
+      control: { type: 'select' }
     }
   }
 };
