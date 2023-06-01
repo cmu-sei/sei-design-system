@@ -1298,32 +1298,35 @@
         <h4 class="my-4 text-lg">
           Radio Group
         </h4>
-        asdfsdf
-        <sds-radio-group
-          v-model="radioModel"
-          :options="radioOptions"
-          required
-          @change="$emit('radioGroupChange')"
-        >
-          <template #label="{ optionId, option }">
-            <label :for="optionId">
-              Radio Group: {{ option.text }}
-            </label>
-          </template>
-        </sds-radio-group>
-        <sds-radio-group
-          v-model="radio2Model"
-          :options="radioOptions"
-          required
-          stacked
-          @change="$emit('radioGroupChange')"
-        >
-          <template #label="{ optionId, option }">
-            <label :for="optionId">
-              Radio Group 2: {{ option.text }}
-            </label>
-          </template>
-        </sds-radio-group>
+        <div class="py-12">
+          <sds-radio-group
+            v-model="radioModel"
+            :options="radioOptions"
+            required
+            @change="$emit('radioGroupChange')"
+          >
+            <template #label="{ optionId, option }">
+              <label :for="optionId">
+                Radio Group: {{ option.text }}
+              </label>
+            </template>
+          </sds-radio-group>
+        </div>
+        <div class="py-12">
+          <sds-radio-group
+            v-model="radio2Model"
+            :options="radioOptions"
+            required
+            stacked
+            @change="$emit('radioGroupChange')"
+          >
+            <template #label="{ optionId, option }">
+              <label :for="optionId">
+                Radio Group 2: {{ option.text }}
+              </label>
+            </template>
+          </sds-radio-group>
+        </div>
         <sds-radio-group
           v-model="radio3Model"
           :options="radioOptions"
