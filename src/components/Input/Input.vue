@@ -61,7 +61,7 @@ export default defineComponent({
      */
     type: { type: String, default: "text" },
     /**
-     * Determines the type of the input field.
+     * Determines the size of the input field. Options are "sm" and "md".
      */
     size: { type: String as PropType<"sm" | "md">, default: "" },
     /**
