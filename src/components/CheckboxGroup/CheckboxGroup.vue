@@ -1,22 +1,25 @@
 <template>
   <div
+    v-if="loaded"
     :id="id"
     data-id="sds-checkbox-group"
     role="checkboxgroup"
     tabindex="-1"
-    class="focus:outline-none"
+    class="flex"
+    :class="{
+      'flex-col gap-2': stacked,
+      'gap-4': !stacked
+    }"
   >
     <div
       v-for="(option, index) in options"
       :key="option.text"
-      class="space-x-1"
-      :class="{ 'inline-block mr-4': !stacked }"
+      class="flex gap-2 items-center"
     >
       <input
         :id="`${id}__option_${index}`"
         v-model="localChecked"
         type="checkbox"
-        class="focus:outline-none"
         :value="option.value"
         :name="name ? name : `${id}__option`"
         :required="required"
@@ -76,6 +79,7 @@ export default defineComponent({
   data() {
     return {
       id: "",
+      loaded: false,
     };
   },
   computed: {
@@ -94,6 +98,7 @@ export default defineComponent({
   mounted() {
     id++;
     this.id = `sds-checkbox-group_${id}`;
+    this.loaded = true
   },
   methods: {
     onChange(value: CheckboxGroupOptionValue) {

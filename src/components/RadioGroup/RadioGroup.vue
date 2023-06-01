@@ -5,19 +5,21 @@
     data-id="sds-radio-group"
     role="radiogroup"
     tabindex="-1"
-    class="focus:outline-none"
+    class="flex"
+    :class="{
+      'flex-col gap-2': stacked,
+      'gap-4': !stacked
+    }"
   >
     <div
       v-for="(option, index) in options"
       :key="option.text"
-      class="space-x-1"
-      :class="{ 'inline-block mr-4': !stacked }"
+      class="flex gap-2 items-center"
     >
       <input
         :id="`${id}__option_${index}`"
         v-model="localChecked"
         type="radio"
-        class="focus:outline-none"
         :value="option.value"
         :name="name ? name : `${id}__option`"
         :required="required"
