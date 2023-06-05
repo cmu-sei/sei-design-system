@@ -409,7 +409,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min, max, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
+import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
 import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
 
 const props = defineProps({
@@ -628,8 +628,8 @@ const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, is
 
   if (isRange.value && date.value && !(date.value instanceof Date) && date.value.start instanceof Date && date.value.end instanceof Date) {
     date.value = {
-      start: min([date.value.start, date.value.end]),
-      end: max([date.value.start, date.value.end])
+      start: dateFnsMin([date.value.start, date.value.end]),
+      end: dateFnsMax([date.value.start, date.value.end])
     }
   }
 }
@@ -711,8 +711,8 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
         if (isSameDay(start, end) && isAfter(end, start)) {
           date.value = { start, end }
         } else {
-          const minDate = min([start, end])
-          const maxDate = max([start, end])
+          const minDate = dateFnsMin([start, end])
+          const maxDate = dateFnsMax([start, end])
           date.value = {
             start: isEqual(start, minDate) ? minDate : (props.useCurrentTimeForToday && isToday(minDate) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0)),
             end: endOfDay(maxDate)

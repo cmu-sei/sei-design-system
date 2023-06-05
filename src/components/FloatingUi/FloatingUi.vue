@@ -61,9 +61,9 @@ import {
   autoUpdate,
   autoPlacement,
   computePosition,
-  offset,
-  inline,
-  shift,
+  offset as fuiOffset,
+  inline as fuiInline,
+  shift as fuiShift,
   flip,
   arrow,
 } from '@floating-ui/dom'
@@ -199,7 +199,7 @@ const update = async () => {
 
   // Offset
   if (props.offset) {
-    options.middleware.push(offset(props.offset))
+    options.middleware.push(fuiOffset(props.offset))
   }
 
   // Placement (auto vs specified)
@@ -213,7 +213,7 @@ const update = async () => {
 
   // Inline
   if (props.inline) {
-    options.middleware.push(inline())
+    options.middleware.push(fuiInline())
   }
 
   // Flip - not used with auto placement
@@ -225,7 +225,7 @@ const update = async () => {
 
   // Shift
   if (props.shift) {
-    options.middleware.push(shift({
+    options.middleware.push(fuiShift({
       padding: props.overflowPadding
     }))
   }
