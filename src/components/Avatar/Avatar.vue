@@ -105,9 +105,9 @@ const textClass = computed(() => {
 })
 const shapeClass = computed(() => {
   if (props.shape === 'circle') {
-    return 'rounded-full'
+    return 'rounded-full aspect-square'
   }
-  return ''
+  return 'aspect-[16/9]'
 })
 
 const variantClass = computed(() => {
