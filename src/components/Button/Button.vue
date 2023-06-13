@@ -3,6 +3,7 @@
     data-id="sds-button"
     :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, activeClass, blockClass]"
     :disabled="disabled"
+    :aria-disabled="disabled"
     @click="onClick"
   >
     <!-- @slot Button content. -->

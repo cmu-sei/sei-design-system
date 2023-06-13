@@ -25,13 +25,13 @@
           <div>
             <code
               v-if="item.type"
-              class="bg-gray-100 p-1 text-xs rounded-sm lowercase"
+              class="bg-gray-100 dark:bg-gray-800 p-1 text-xs rounded-sm lowercase"
             >{{ item.type.join(', ') }}</code>
           </div>
         </div>
       </template>
       <template #cell(default)="{ value }">
-        <code class="bg-gray-100 p-1 text-xs rounded-sm">{{ value }}</code>
+        <code class="bg-gray-100 dark:bg-gray-800 p-1 text-xs rounded-sm">{{ value }}</code>
       </template>
     </SdsTable>
     <p class="mt-4">

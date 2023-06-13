@@ -44,6 +44,7 @@
             :rel="tab.tag === 'a' && tab.href && tab.external ? 'noopener noreferrer' : undefined"
             :type="tab.tag === 'button' ? 'button' : undefined"
             :disabled="tab.disabled"
+            :aria-disabled="tab.disabled"
             :tabindex="tab.disabled ? -1 : undefined"
             :aria-selected="tab.active ? 'true' : 'false'"
             :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"

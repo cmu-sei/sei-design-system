@@ -8,7 +8,7 @@
       :class="[isToggled ? variantClass : 'bg-gray-700 disabled:bg-opacity-50', styles.button]"
       :disabled="disabled"
       role="switch"
-      aria-checked="false"
+      :aria-checked="isToggled"
       @click="update"
     >
       <span
@@ -27,6 +27,7 @@
         viewBox="0 0 1792 1792"
         xmlns="http://www.w3.org/2000/svg"
       ><path :d="icons.on" /></svg>
+      <span class="sr-only">Toggle switch</span>
     </button>
   </div>
 </template>

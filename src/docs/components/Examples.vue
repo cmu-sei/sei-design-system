@@ -1,5 +1,11 @@
 <template>
   <div class="guide">
+    <SdsButton
+      disabled
+      kind="primary"
+    >
+      I am Testing A11y
+    </SdsButton>
     <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
       <SdsLoadingBox />
@@ -786,7 +792,7 @@
     >
       <p
         id="scrollspy-test"
-        class="mb-48 text-4xl text-green-700"
+        class="mb-48 text-4xl text-green-700 dark:text-green-300"
       >
         test 1
       </p>
@@ -802,7 +808,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-2"
-        class="mb-48 text-4xl text-green-700"
+        class="mb-48 text-4xl text-green-700 dark:text-green-300"
       >
         test 2
       </p>
@@ -816,7 +822,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-3"
-        class="mb-48 text-4xl text-green-700"
+        class="mb-48 text-4xl text-green-700 dark:text-green-300"
       >
         test 3
       </p>
@@ -830,7 +836,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-4"
-        class="mb-48 text-4xl text-green-700"
+        class="mb-48 text-4xl text-green-700 dark:text-green-300"
       >
         test 4
       </p>
@@ -844,7 +850,7 @@
       <p>test</p>
       <p
         id="scrollspy-test-5"
-        class="mb-48 text-4xl text-green-700"
+        class="mb-48 text-4xl text-green-700 dark:text-green-300"
       >
         test 5
       </p>

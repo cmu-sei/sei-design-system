@@ -3,7 +3,7 @@
     v-if="loaded"
     :id="id"
     data-id="sds-checkbox-group"
-    role="checkboxgroup"
+    role="group"
     tabindex="-1"
     class="flex"
     :class="{
