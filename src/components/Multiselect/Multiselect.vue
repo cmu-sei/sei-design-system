@@ -68,6 +68,7 @@
         <select
           v-if="required && selected.length < 1"
           class="faux-input"
+          aria-hidden="true"
           tabindex="-1"
           required
           @focus="handleRequired"
