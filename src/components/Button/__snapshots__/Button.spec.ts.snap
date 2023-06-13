@@ -2,6 +2,7 @@
 
 exports[`Button > should match its default snapshot 1`] = `
 <button
+  aria-disabled="false"
   class=""
   data-id="sds-button"
 >
@@ -13,6 +14,7 @@ exports[`Button > should match its default snapshot 1`] = `
 
 exports[`Button > should match its variant primary snapshot 1`] = `
 <button
+  aria-disabled="false"
   class="btn btn-primary"
   data-id="sds-button"
 >
