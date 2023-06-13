@@ -3,7 +3,6 @@
     v-if="loaded"
     :id="id"
     data-id="sds-radio-group"
-    role="group"
     tabindex="-1"
     class="flex"
     :class="{
