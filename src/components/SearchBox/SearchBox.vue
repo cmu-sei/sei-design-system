@@ -10,6 +10,7 @@
       }"
     >
       <input
+        :id="id"
         ref="input"
         v-model.trim="q"
         type="text"
@@ -76,6 +77,10 @@ import { defineComponent, PropType } from "vue"
 export default defineComponent({
   name: "SdsSearchBox",
   props: {
+    /**
+     * Determines the id of the input.
+     */
+    id: { type: String, default: undefined },
     /**
      * The v-model passed from the parent that is used to init the local state "this.q".
      */

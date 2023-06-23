@@ -446,7 +446,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Determines whehther the multiselect will accept new values from the input.
+     * Determines whether the multiselect will accept new values from the input.
      */
     taggable: {
       type: Boolean,
@@ -640,7 +640,7 @@ export default defineComponent({
         } else {
           const minWidth = 20;
           const fauxInputWidth =
-            typeof this.$refs["faux-input"] !== "undefined"
+            this.$refs["faux-input"] && typeof this.$refs["faux-input"] !== "undefined"
               ? (this.$refs["faux-input"] as HTMLElement).clientWidth + 20
               : 0;
           let elWidth = this.$el.clientWidth - 20;
