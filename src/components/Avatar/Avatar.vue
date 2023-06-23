@@ -35,7 +35,7 @@ const props = defineProps({
    */
   variant: {
     type: String as PropType<'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
-    default: 'random'
+    default: 'gray'
   },
   /**
    * Set the shape to a portrait or circle. Defaults to portrait.

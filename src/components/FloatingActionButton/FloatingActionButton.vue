@@ -80,8 +80,8 @@
                 <div
                   class="p-6 rounded-t-lg flex gap-4"
                   :class="{
-                    'text-white bg-blue-700': localVariant === 'blue',
-                    'text-white bg-red-700': localVariant === 'red',
+                    'text-white bg-blue-500': localVariant === 'blue',
+                    'text-white bg-red-500': localVariant === 'red',
                   }"
                 >
                   <h2 class="grow uppercase font-bold text-lg">
