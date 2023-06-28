@@ -34,7 +34,7 @@
           v-if="q.length > 0"
           tabindex="-1"
           type="button"
-          class="absolute text-gray-500 right-2 top-3 hover:text-gray-900 focus:outline-none"
+          class="absolute text-gray-500 right-2 top-3 hover:text-gray-900 dark:hover:text-gray-100"
           :disabled="disabled"
           @click="handleClearSearchBtn"
         >
