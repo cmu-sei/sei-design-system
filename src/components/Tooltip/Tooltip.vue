@@ -6,12 +6,12 @@
     :disabled="disabled"
     :will-open="willOpen"
     :will-close="willClose"
-    :popper-class="`absolute text-xs shadow rounded-lg text-center ${variantClass} ${sizeClass} ${zIndexClass}`"
+    :popper-class="`absolute text-xs shadow border rounded-md text-center ${variantClass} ${sizeClass} ${zIndexClass}`"
     :arrow-class="`absolute w-2 h-2 rotate-45 ${variantArrowClass}`"
-    placement-top-arrow-class="-bottom-1"
-    placement-right-arrow-class="-left-1"
-    placement-bottom-arrow-class="-top-1"
-    placement-left-arrow-class="-right-1"
+    placement-top-arrow-class="-bottom-1 border-b border-r"
+    placement-right-arrow-class="-left-1 border-b border-l"
+    placement-bottom-arrow-class="-top-1 border-t border-l"
+    placement-left-arrow-class="-right-1 border-t border-r"
     disable-animation
     shift
   >
@@ -170,23 +170,21 @@ export default defineComponent({
     variantClass() {
       const kind = this.kind || this.variant
       switch (kind) {
-        case 'dark':
-          return 'bg-black text-gray-50'
         case 'light':
-          return 'bg-gray-50 text-gray-900'
+          return 'bg-gray-50 text-gray-900 border-gray-200'
+        case 'dark':
         default:
-          return 'bg-black text-gray-50'
+          return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
       }
     },
     variantArrowClass() {
       const kind = this.kind || this.variant
       switch (kind) {
-        case 'dark':
-          return 'bg-black'
         case 'light':
-          return 'bg-gray-50'
+          return 'bg-gray-50 border-gray-200'
+        case 'dark':
         default:
-          return 'bg-black'
+          return 'bg-black border-gray-800'
       }
     },
     sizeClass() {
