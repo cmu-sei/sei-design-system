@@ -120,7 +120,7 @@ const textClass = computed(() => {
   if (props.size === 'lg') {
     return 'text-6xl font-light'
   } else if (props.size === 'sm') {
-    return 'text-xl font-semibold'
+    return 'text-xl font-medium'
   } else if (props.size === 'xs') {
     return 'text-sm font-semibold'
   }
