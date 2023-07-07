@@ -915,6 +915,19 @@ export default defineComponent({
     },
     handleOutsideClick($event: MouseEvent) {
       if (this.$el.contains($event.target)) return;
+
+      if (this.showDropdown) {
+        if (
+          this.arrowCounter <= this.filteredOptions.length - 1 &&
+          this.arrowCounter > -1 &&
+          this.canAddItem &&
+          this.filteredOptions[this.arrowCounter].isNewTag
+        ) {
+          this.add(this.filteredOptions[this.arrowCounter]);
+          $event.preventDefault();
+        }
+      }
+
       if (this.active) this.active = false;
       this.close();
     },
