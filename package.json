@@ -10,6 +10,7 @@
     "test:watch": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest -c vite-library.config.js",
     "bundle:release": "./scripts/bundle-release.sh",
     "release": "./scripts/release.sh",
+    "release-beta": "echo 'prerelease' | ./scripts/release-beta.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "gen-volar-dts": "./scripts/gen-component-declarations.sh"
