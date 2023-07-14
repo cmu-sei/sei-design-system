@@ -31,6 +31,8 @@ import SdsLayoutStacked from "./LayoutStacked";
 import SdsLink from "./Link";
 import SdsLoadingBox from "./LoadingBox";
 import SdsLoadingSpinner from "./LoadingSpinner";
+import SdsMegaMenu from "./MegaMenu";
+import SdsMegaMenuLink from "./MegaMenuLink";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
@@ -87,6 +89,8 @@ const Components: ComponentList = {
   SdsLink,
   SdsLoadingBox,
   SdsLoadingSpinner,
+  SdsMegaMenu,
+  SdsMegaMenuLink,
   SdsModal,
   SdsMultiselect,
   SdsPaginator,
@@ -147,6 +151,8 @@ export { default as SdsLayoutStacked } from "./LayoutStacked";
 export { default as SdsLink } from "./Link";
 export { default as SdsLoadingBox } from "./LoadingBox";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";
+export { default as SdsMegaMenu } from "./MegaMenu";
+export { default as SdsMegaMenuLink } from "./MegaMenuLink";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";

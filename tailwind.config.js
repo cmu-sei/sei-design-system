@@ -1,4 +1,7 @@
 module.exports = {
+  plugin: [
+    require('./src/components/MegaMenu/megamenu.js')
+  ],
   presets: [
     require('@sds/tailwindcss-3')
   ],

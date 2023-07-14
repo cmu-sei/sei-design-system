@@ -6,7 +6,337 @@
     >
       I am Testing A11y
     </SdsButton>
+    <br>
+    <SdsMegaMenu
+      v-model="topLinks"
+      type="underline"
+      @change="changeTab"
+    >
+      <template #panel(about)>
+        <div class="grid grid-cols-3 gap-x-10 p-4">
+          <div class="col-span-2">
+            <div class="grid grid-cols-2 gap-x-10">
+              <div class="col-span-2 p-8 pb-0">
+                <SdsMegaMenuLink
+                  label="About"
+                  variant="landing-page"
+                  href="https://sei.cmu.edu/about/index.cfm"
+                />
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <SdsMegaMenuLink
+                  label="Leadership"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/about/leadership/index.cfm"
+                >
+                  This page describes the leadership structure of the SEI and provides biographical information on SEI Fellows, the SEI leadership team, and the Board of Visitors.
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Work with Us"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/about/work-with-us/index.cfm"
+                >
+                  <p>As an FFRDC, the SEI works with government, industry, and academia to address issues in software engineering, cybersecurity, process improvement, and more.</p>
+                </SdsMegaMenuLink>
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <SdsMegaMenuLink
+                  label="Annual Reviews"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/publications/annual-reviews/index.cfm"
+                >
+                  <p>The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.</p>
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Collaboration with CMU"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm"
+                >
+                  <p>The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.</p>
+                </SdsMegaMenuLink>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1 border-l p-8">
+            <SdsMegaMenuLink
+              label="Divisions"
+              variant="landing-page"
+              href="https://sei.cmu.edu/about/divisions/index.cfm"
+            />
+            <SdsMegaMenuLink
+              label="Artificial Intelligence (AI) Division"
+              variant="simple"
+              href="https://sei.cmu.edu/about/divisions/artificial-intelligence-division/index.cfm"
+            />
+            <SdsMegaMenuLink
+              label="CERT Division"
+              variant="simple"
+              href="https://sei.cmu.edu/about/divisions/cert/index.cfm"
+            />
+            <SdsMegaMenuLink
+              label="Software Solutions Division"
+              variant="simple"
+              href="https://sei.cmu.edu/about/divisions/software-solutions-division/index.cfm"
+            />
+          </div>
+        </div>
+      </template>
+      <template #panel(research-and-development)>
+        <div class="grid grid-cols-3 gap-x-10 p-4">
+          <div class="col-span-2">
+            <div class="grid grid-cols-2 gap-x-10">
+              <div class="col-span-2 p-8 pb-0">
+                <SdsMegaMenuLink
+                  label="Topics"
+                  variant="landing-page"
+                  href="https://sei.cmu.edu/our-work/all-topics/index.cfm"
+                />
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <template
+                  v-for="topic in topics_1"
+                  :key="topic.key"
+                >
+                  <SdsMegaMenuLink
+                    :label="topic.title"
+                    variant="simple"
+                    href="topic.href"
+                  />
+                </template>
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <template
+                  v-for="topic in topics_2"
+                  :key="topic.key"
+                >
+                  <SdsMegaMenuLink
+                    :label="topic.title"
+                    variant="simple"
+                    href="topic.href"
+                  />
+                </template>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1 border-l p-8">
+            <SdsMegaMenuLink
+              cta
+              label="Projects"
+              variant="descriptive"
+              href="https://sei.cmu.edu/our-work/projects/index.cfm"
+            >
+              Explore all SEI research and development projects.
+            </SdsMegaMenuLink>
+            <SdsMegaMenuLink
+              cta
+              label="Software and Tools"
+              variant="descriptive"
+              href="https://sei.cmu.edu/publications/software-tools/index.cfm"
+            >
+              Access and download the software and tools that the SEI creates, tests, refines, and disseminates to improve the quality and security of software systems.
+            </SdsMegaMenuLink>
+          </div>
+        </div>
+      </template>
+      <template #panel(publications-and-media)>
+        <div class="grid grid-cols-3 gap-x-10 p-4">
+          <div class="col-span-2">
+            <div class="grid grid-cols-2 gap-x-10">
+              <div class="col-span-2 p-8 pb-0">
+                <SdsMegaMenuLink
+                  label="Topics"
+                  variant="landing-page"
+                  href="https://sei.cmu.edu/our-work/all-topics/index.cfm"
+                />
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <template
+                  v-for="topic in topics_1"
+                  :key="topic.key"
+                >
+                  <SdsMegaMenuLink
+                    :label="topic.title"
+                    variant="simple"
+                    href="topic.href"
+                  />
+                </template>
+              </div>
+              <div class="col-span-1 p-8 pt-0">
+                <template
+                  v-for="topic in topics_2"
+                  :key="topic.key"
+                >
+                  <SdsMegaMenuLink
+                    :label="topic.title"
+                    variant="simple"
+                    href="topic.href"
+                  />
+                </template>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1 border-l p-8">
+            <SdsMegaMenuLink
+              cta
+              label="Projects"
+              variant="descriptive"
+              href="https://sei.cmu.edu/our-work/projects/index.cfm"
+            >
+              Explore all SEI research and development projects.
+            </SdsMegaMenuLink>
+            <SdsMegaMenuLink
+              cta
+              label="Software and Tools"
+              variant="descriptive"
+              href="https://sei.cmu.edu/publications/software-tools/index.cfm"
+            >
+              Access and download the software and tools that the SEI creates, tests, refines, and disseminates to improve the quality and security of software systems.
+            </SdsMegaMenuLink>
+          </div>
+        </div>
+      </template>
+      <template #panel(education)>
+        <div class="grid grid-cols-3">
+          <div class="col-span-2">
+            <div class="grid grid-cols-2">
+              <div class="col-span-2">
+                <SdsMegaMenuLink
+                  label="About"
+                  variant="landing-page"
+                  href="https://sei.cmu.edu/about"
+                />
+              </div>
+              <div class="col-span-1">
+                <SdsMegaMenuLink
+                  label="Leadership"
+                  variant="descriptive"
+                  href="https://insights.sei.cmu.edu"
+                >
+                  <p>This page describes the leadership structure of the SEI and provides biographical information on SEI Fellows, the SEI leadership team, and the Board of Visitors.</p>
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Work with Us"
+                  variant="descriptive"
+                  href="https://insights.sei.cmu.edu"
+                >
+                  <p>As an FFRDC, the SEI works with government, industry, and academia to address issues in software engineering, cybersecurity, process improvement, and more.</p>
+                </SdsMegaMenuLink>
+              </div>
+              <div class="col-span-1">
+                <SdsMegaMenuLink
+                  label="Annual Reviews"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/annual-reviews/"
+                >
+                  <p>The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.</p>
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Collaboration with CMU"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/annual-reviews/"
+                >
+                  <p>The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.</p>
+                </SdsMegaMenuLink>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <SdsMegaMenuLink
+              label="Divisions"
+              variant="landing-page"
+              href="https://sei.cmu.edu/divisions/"
+            />
+            <SdsMegaMenuLink
+              label="Artificial Intelligence (AI) Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/ai"
+            />
+            <SdsMegaMenuLink
+              label="CERT Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/cert"
+            />
+            <SdsMegaMenuLink
+              label="Software Solutions Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/software-solutions"
+            />
+          </div>
+        </div>
+      </template>
+      <template #panel(careers)>
+        <div class="grid grid-cols-3">
+          <div class="col-span-2">
+            <div class="grid grid-cols-2">
+              <div class="col-span-2">
+                <SdsMegaMenuLink
+                  label="About"
+                  variant="landing-page"
+                  href="https://sei.cmu.edu/about"
+                />
+              </div>
+              <div class="col-span-1">
+                <SdsMegaMenuLink
+                  label="Leadership"
+                  variant="descriptive"
+                  href="https://insights.sei.cmu.edu"
+                >
+                  <p>This page describes the leadership structure of the SEI and provides biographical information on SEI Fellows, the SEI leadership team, and the Board of Visitors.</p>
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Work with Us"
+                  variant="descriptive"
+                  href="https://insights.sei.cmu.edu"
+                >
+                  <p>As an FFRDC, the SEI works with government, industry, and academia to address issues in software engineering, cybersecurity, process improvement, and more.</p>
+                </SdsMegaMenuLink>
+              </div>
+              <div class="col-span-1">
+                <SdsMegaMenuLink
+                  label="Annual Reviews"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/annual-reviews/"
+                >
+                  <p>The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.</p>
+                </SdsMegaMenuLink>
+                <SdsMegaMenuLink
+                  label="Collaboration with CMU"
+                  variant="descriptive"
+                  href="https://sei.cmu.edu/annual-reviews/"
+                >
+                  <p>The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.</p>
+                </SdsMegaMenuLink>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <SdsMegaMenuLink
+              label="Divisions"
+              variant="landing-page"
+              href="https://sei.cmu.edu/divisions/"
+            />
+            <SdsMegaMenuLink
+              label="Artificial Intelligence (AI) Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/ai"
+            />
+            <SdsMegaMenuLink
+              label="CERT Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/cert"
+            />
+            <SdsMegaMenuLink
+              label="Software Solutions Division"
+              variant="simple"
+              href="https://sei.cmu.edu/divisions/software-solutions"
+            />
+          </div>
+        </div>
+      </template>
+    </SdsMegaMenu>
+    <br>
     <SdsToggleSwitch v-model="toggleSwitchValue" />
+    <br>
     <div class="h-48 w-48">
       <SdsLoadingBox />
     </div>
@@ -1394,6 +1724,97 @@ export default defineComponent({
     emits: ["radioGroupChange", "hello"],
     data() {
         return {
+            topics_1: [
+              {
+                key: "agile",
+                title: "Agile",
+                href: "https://sei.cmu.edu/our-work/agile/index.cfm"
+              },
+              {
+                key: "artificial-intelligence-engineering",
+                title: "Artificial Intelligence Engineering",
+                href: "https://sei.cmu.edu/our-work/artificial-intelligence-engineering/index.cfm"
+              },
+              {
+                key: "cloud-computing",
+                title: "Cloud Computing",
+                href: "https://sei.cmu.edu/our-work/cloud-computing/index.cfm"
+              },
+              {
+                key: "cyber-workforce-development",
+                title: "Cyber Workforce Development",
+                href: "https://sei.cmu.edu/our-work/cyber-workforce-development/index.cfm"
+              },
+              {
+                key: "cybersecurity-center-development",
+                title: "Cybersecurity Center Development",
+                href: "https://sei.cmu.edu/our-work/cybersecurity-center-development/index.cfm"
+              },
+              {
+                key: "cybersecurity-engineering",
+                title: "Cybersecurity Engineering",
+                href: "https://sei.cmu.edu/our-work/cybersecurity-engineering/index.cfm"
+              },
+              {
+                key: "devsecops",
+                title: "DevSecOps",
+                href: "https://sei.cmu.edu/our-work/devsecops/index.cfm"
+              },
+              {
+                key: "edge-computing",
+                title: "Edge Computing",
+                href: "https://sei.cmu.edu/our-work/edge-computing/index.cfm"
+              }
+            ],
+            topics_2: [
+              {
+                key: "enterprise-risk-and-resilience-management",
+                title: "Engerprise Risk and Resilience Management",
+                href: "https://sei.cmu.edu/our-work/enterprise-risk-resilience-management/index.cfm"
+              },
+              {
+                key: "insider-threat",
+                title: "Insider Threat",
+                href: "https://sei.cmu.edu/our-work/insider-threat/index.cfm"
+              },
+              {
+                key: "quantum-computing",
+                title: "Quantum Computing",
+                href: "https://sei.cmu.edu/our-work/quantum-computing/index.cfm"
+              },
+              {
+                key: "reverse-engineering-for-malware-analysis",
+                title: "Reverse Engineering for Malware Analysis",
+                href: "https://sei.cmu.edu/our-work/reverse-engineering-for-malware-analysis/index.cfm"
+              },
+              {
+                key: "secure-development",
+                title: "Secure Development",
+                href: "https://www.sei.cmu.edu/our-work/secure-development/index.cfm"
+              },
+              {
+                key: "security-vulnerabilities",
+                title: "Security Vulnerabilities",
+                href: "https://sei.cmu.edu/our-work/security-vulnerabilities/index.cfm"
+              },
+              {
+                key: "situational-awareness",
+                title: "Situational Awareness",
+                href: "https://sei.cmu.edu/our-work/situational-awareness/index.cfm"
+              },
+              {
+                key: "software-architecture",
+                title: "Software Architecture",
+                href: "https://sei.cmu.edu/our-work/software-architecture/"
+              }
+            ],
+            topLinks: [
+              { key: "about", title: "About" },
+              { key: "research-and-development", title: "Research and Development" },
+              { key: "publications-and-media", title: "Publications and Media" },
+              { key: "education", title: "Education" },
+              { key: "careers", title: "Careers" },
+            ],
             toggleSwitchValue: false,
             fabTabs: [
                 { key: "tab1", tabName: "Tab 1 is the title", title: "Active Tab 1", active: true },
