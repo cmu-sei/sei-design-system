@@ -2,8 +2,8 @@
   <floating-ui
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md bg-gray-100 dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
-    arrow-class="absolute bg-gray-100 border dark:border-gray-700 dark:bg-gray-850 w-3 h-3 rotate-45"
+    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
+    arrow-class="absolute bg-white border dark:border-gray-700 dark:bg-gray-850 w-3 h-3 rotate-45"
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
     placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
