@@ -7,6 +7,7 @@ read -p 'Enter a version type (prerelease to bump beta version [recommended], or
 
 if [ "$version" == "premajor" ] || [ "$version" == "preminor" ] || [ "$version" == "prepatch" ] || [ "$version" == "prerelease" ] ;then
     echo Proceeding with $version beta release...
+    npm run bundle:release
     npm version $version --preid=beta
     git push --follow-tags
     npm publish --tag beta --@sds:registry=https://artifacts.sei.cmu.edu/artifactory/api/npm/sei-design-system/
