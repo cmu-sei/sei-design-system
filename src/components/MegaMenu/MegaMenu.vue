@@ -12,7 +12,7 @@
     >
       <ul
         role="tablist"
-        class="flex whitespace-nowrap z-10 border-b-4 border-b-gray-100/50"
+        class="flex whitespace-nowrap z-10 border-b-2 dark:border-b-gray-800"
       >
         <li
           v-for="topLink in topLinks"
@@ -34,7 +34,7 @@
               'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-700 dark:text-gray-100': type === 'folder' && topLink.active,
               'text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
                 type === 'folder' && !topLink.active,
-              'top-level-link top-level-link-underline top-level-link-red': type === 'underline',
+              'top-level-link top-level-link-underline': type === 'underline',
               'top-level-link top-level-link-block top-level-link-red': type === 'block',
               'active': (type === 'underline' || type === 'block') && topLink.active,
               'disabled': (type === 'underline' || type === 'block') && topLink.disabled,

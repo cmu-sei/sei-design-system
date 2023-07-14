@@ -6,11 +6,19 @@
     :class="[linkClass, variantClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
   >
-    <p class="mb-2 inline-block">
-      {{ label }}
+    <template v-if="image">
+      <img
+        class="mb-4"
+        :src="image"
+      >
+    </template>
+    <div :class="variant === 'descriptive' ? 'mb-2 inline-flex group' : 'inline-flex group'">
+      <p>
+        {{ label }}
+      </p>
       <svg
         v-if="cta || variant === 'landing-page'"
-        class="inline-block w-4 h-4 text-red-500 ml-1 mb-1"
+        class="w-4 h-4 text-red-500 ml-2 my-auto group-hover:ml-4 transition-all"
         xmlns="http://www.w3.org/2000/svg"
         width="28"
         height="32"
@@ -21,8 +29,8 @@
           d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
         />
       </svg>
-    </p>
-    <p class="text-sm">
+    </div>
+    <p class="text-sm dark:text-gray-500">
       <slot />
     </p>
   </a>
@@ -35,6 +43,7 @@ export default defineComponent({
   name: 'SdsMegaMenuLink',
   props: {
     label: { type: String, default: '' },
+    image: { type: String, default: '' },
     /**
      * Determines the component variant to use.
      *
@@ -56,7 +65,11 @@ export default defineComponent({
   setup (props) {
     const linkClass = computed(() => {
       // @deprecated remove variant prop
-      return props.variant !== '' || props.cta ? 'link w-full mb-4' : ''
+      let classes = props.variant !== '' || props.cta ? 'link mb-2 px-4 w-full hover:no-underline group' : 0
+      if (props.variant === 'descriptive') {
+        classes += ' hover:dark:bg-gray-900 transition-all rounded-lg py-4'
+      }
+      return classes
     })
 
     const variantClass = computed(() => {
@@ -64,11 +77,11 @@ export default defineComponent({
       const variant = (props.variant as 'landing-page' | 'descriptive' | 'simple')
       switch (variant) {
         case 'landing-page':
-          return 'mb-8'
+          return 'text-lg mb-8'
         case 'descriptive':
-          return 'mb-8'
+          return ''
         case 'simple':
-          return 'text-sm'
+          return 'mb-8 text-sm'
         default:
           return ''
       }
