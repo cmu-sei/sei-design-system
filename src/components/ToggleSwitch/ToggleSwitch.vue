@@ -53,7 +53,7 @@ export default defineComponent({
      * @deprecated since version 2.12.
      */
     variant: {
-      type: String as PropType<'default' | 'primary' | 'danger' | 'gray' | 'blue' | 'red'>,
+      type: String as PropType<'default' | 'primary' | 'danger' | 'blue' | 'red'>,
       default: 'blue'
     },
     /**
