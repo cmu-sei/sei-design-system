@@ -1,5 +1,5 @@
 <template>
-  <div class="guide">
+  <div class="guide dark">
     <SdsButton
       disabled
       kind="primary"
@@ -11,20 +11,21 @@
     <div class="border-b-2 my-10 sticky top-0 z-50">
       <SdsMegaMenu
         v-model="topLinks"
+        class="gap-x-8 mx-auto container"
         @change="changeTab"
       >
         <template #panel(about)>
-          <div class="grid grid-cols-3 gap-x-2 py-8">
+          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-x-2">
-                <div class="col-span-2 px-4">
+                <div class="col-span-2 px-8">
                   <SdsMegaMenuLink
                     label="About"
                     variant="landing-page"
                     href="https://sei.cmu.edu/about/index.cfm"
                   />
                 </div>
-                <div class="col-span-1 px-4">
+                <div class="col-span-1 px-8">
                   <SdsMegaMenuLink
                     label="Leadership"
                     variant="descriptive"
@@ -44,7 +45,7 @@
                     </p>
                   </SdsMegaMenuLink>
                 </div>
-                <div class="col-span-1 px-4">
+                <div class="col-span-1 px-8">
                   <SdsMegaMenuLink
                     label="Annual Reviews"
                     variant="descriptive"
@@ -68,7 +69,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 label="Divisions"
                 variant="landing-page"
@@ -96,14 +97,14 @@
           <div class="grid grid-cols-3 gap-x-2 py-8">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-x-2">
-                <div class="col-span-2 px-4">
+                <div class="col-span-2 px-8">
                   <SdsMegaMenuLink
                     label="Topics"
                     variant="landing-page"
                     href="https://sei.cmu.edu/our-work/all-topics/index.cfm"
                   />
                 </div>
-                <div class="col-span-1 px-4">
+                <div class="col-span-1 px-8">
                   <template
                     v-for="topic in topics_1"
                     :key="topic.key"
@@ -115,7 +116,7 @@
                     />
                   </template>
                 </div>
-                <div class="col-span-1 px-4">
+                <div class="col-span-1 px-8">
                   <template
                     v-for="topic in topics_2"
                     :key="topic.key"
@@ -129,7 +130,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 cta
                 label="Projects"
@@ -152,7 +153,7 @@
         </template>
         <template #panel(publications-and-media)>
           <div class="grid grid-cols-3 gap-x-2 py-8">
-            <div class="col-span-1 px-4">
+            <div class="col-span-1 px-8">
               <SdsMegaMenuLink
                 label="Publications and Media"
                 variant="landing-page"
@@ -189,7 +190,7 @@
                 href="https://sei.cmu.edu/publications/index.cfm"
               />
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 label="Blog"
                 variant="landing-page"
@@ -208,7 +209,7 @@
                 </SdsMegaMenuLink>
               </template>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 label="News"
                 variant="landing-page"
@@ -242,7 +243,7 @@
         </template>
         <template #panel(education)>
           <div class="grid grid-cols-3 gap-x-2 py-8">
-            <div class="col-span-1 px-4">
+            <div class="col-span-1 px-8">
               <SdsMegaMenuLink
                 label="Education"
                 variant="landing-page"
@@ -271,7 +272,7 @@
                 Learn how the SEI authorizes Partner organizations to deliver SEI training and services.
               </SdsMegaMenuLink>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 label="Training"
                 variant="landing-page"
@@ -303,7 +304,7 @@
                 href="https://sei.cmu.edu/publications/index.cfm"
               />
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-4">
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuLink
                 label="Events"
                 variant="landing-page"
@@ -321,7 +322,7 @@
           </div>
         </template>
         <template #panel(careers)>
-          <div class="grid grid-cols-3">
+          <div class="grid grid-cols-3 gap-x-2 py-8">
             <div class="col-span-2">
               <div class="grid grid-cols-2">
                 <div class="col-span-2">
@@ -1892,11 +1893,11 @@ export default defineComponent({
         }
       ],
       topLinks: [
-        { key: "about", title: "About", active: true },
-        { key: "research-and-development", title: "Research and Development", active: false },
-        { key: "publications-and-media", title: "Publications and Media", active: false },
-        { key: "education", title: "Education", active: false },
-        { key: "careers", title: "Careers", active: false },
+        { key: "about", title: "About", selected: true },
+        { key: "research-and-development", title: "Research and Development", selected: false },
+        { key: "publications-and-media", title: "Publications and Media", selected: false },
+        { key: "education", title: "Education", selected: false },
+        { key: "careers", title: "Careers", selected: false },
       ],
       toggleSwitchValue: false,
       fabTabs: [

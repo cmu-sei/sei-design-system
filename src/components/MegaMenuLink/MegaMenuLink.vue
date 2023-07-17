@@ -68,9 +68,9 @@ export default defineComponent({
   setup (props) {
     const linkClass = computed(() => {
       // @deprecated remove variant prop
-      let classes = props.variant || props.cta ? 'link mb-2 px-4 w-full hover:no-underline group' : 0
+      let classes = props.variant || props.cta ? 'link mb-2 w-full px-4 hover:no-underline group' : 0
       if (props.variant === 'descriptive') {
-        classes += ' hover:dark:bg-gray-900 transition-all rounded-lg py-4'
+        classes += ' hover:bg-gray-50 hover:dark:bg-gray-900 px-4 transition-all rounded-lg py-4'
       }
       return classes
     })

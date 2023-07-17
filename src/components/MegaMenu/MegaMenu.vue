@@ -9,7 +9,7 @@
       :offset="0"
       :overflow-padding="0"
       placement="bottom"
-      :popper-class="`absolute border shadow-lg bg-white dark:border-gray-700 dark:bg-gray-850 w-full z-50`"
+      :popper-class="`absolute border-t-2 border-gray-200 shadow-lg bg-white dark:bg-gray-850 w-full z-90`"
       hide-arrow
       shift
     >
@@ -18,23 +18,21 @@
           :is="topLink.tag ? topLink.tag : 'button'"
           :href="topLink.href ? topLink.href : undefined"
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          class="p-2 space-x border-b-2"
+          class="py-2 space-x border-b-2 group z-65 -mb-0.5 overflow-y-visible"
           aria-haspopup="true"
           :aria-expanded="isOpen"
-          :class="[isOpen || topLink.active ? 'text-red-500 border-red-500' : 'border-transparent']"
+          :class="[isOpen || topLink.selected ? 'text-red-500 border-red-500' : 'border-transparent hover:text-red-500 hover:border-red-500']"
           @click="changeTab(topLink, toggle, $event)"
         >
           {{ topLink.title }}
           <svg
-            class="inline-block self-center w-5 h-5 -mr-1"
+            :class="[isOpen || topLink.selected ? 'rotate-180' : '', 'relative mb-0.5 inline-block self-center w-5 h-5 -mr-1 transition-all']"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
+            viewBox="0 0 600 500"
             fill="currentColor"
           >
             <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
+              d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
             />
           </svg>
         </component>
@@ -64,6 +62,7 @@ interface ITab {
   align?: 'left' | 'right' | 'center'
   external?: boolean
   active?: boolean
+  selected?: boolean
   disabled?: boolean
 }
 
