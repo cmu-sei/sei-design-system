@@ -24,58 +24,52 @@
             'mx-auto': topLink.align === 'center'
           }"
         >
-          <component
-            :is="topLink.tag || 'button' as unknown"
-            :id="`sds-megamenu-${root?.id}__${topLink.key}__tab`"
-            :class="{
-              'opacity-50': topLink.disabled,
-              'pointer-events-none': topLink.disabled || topLink.active,
-              'text-sm inline-block rounded-t py-2 px-4 font-bold': type === 'folder',
-              'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-700 dark:text-gray-100': type === 'folder' && topLink.active,
-              'text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
-                type === 'folder' && !topLink.active,
-              'top-level-link top-level-link-underline': type === 'underline',
-              'top-level-link top-level-link-block top-level-link-red': type === 'block',
-              'active': (type === 'underline' || type === 'block') && topLink.active,
-              'disabled': (type === 'underline' || type === 'block') && topLink.disabled,
-            }"
-            :href="topLink.tag === 'a' && topLink.href || undefined"
-            :target="topLink.tag === 'a' && topLink.href && topLink.external ? '_blank' : undefined"
-            :rel="topLink.tag === 'a' && topLink.href && topLink.external ? 'noopener noreferrer' : undefined"
-            :type="topLink.tag === 'button' ? 'button' : undefined"
-            :disabled="topLink.disabled"
-            :aria-disabled="topLink.disabled"
-            :tabindex="topLink.disabled ? -1 : undefined"
-            :aria-selected="topLink.active ? 'true' : 'false'"
-            :aria-controls="`sds-megamenu-${root?.id}__${topLink.key}__tab-content`"
-            :data-active="topLink.active ? true : undefined"
-            role="tab"
-            @click="changeTab(topLink)"
+          <floating-ui
+            :offset="0"
+            :overflow-padding="0"
+            placement="bottom"
+            :popper-class="`absolute border shadow-lg bg-white dark:border-gray-700 dark:bg-gray-850 w-full z-50`"
+            hide-arrow
+            shift
           >
-            <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
-            <slot :name="`topLink(${topLink.key})`">
-              {{ topLink.title }}
-            </slot>
-          </component>
+            <template #trigger="{ isOpen, toggle }">
+              <button
+                type="button"
+                class="p-2 space-x border-b-2"
+                aria-haspopup="true"
+                :aria-expanded="isOpen"
+                :class="[isOpen ? 'text-red-500 border-red-500' : 'border-transparent']"
+                @click="changeTab(topLink, toggle)"
+              >
+                {{ topLink.title }}
+                <svg
+                  class="inline-block self-center w-5 h-5 -mr-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </template>
+            <template #default>
+              <div class="w-full">
+                <div class="container mx-auto">
+                  <slot
+                    v-if="topLink.active"
+                    :name="`panel(${topLink.key})`"
+                  />
+                </div>
+              </div>
+            </template>
+          </floating-ui>
         </li>
       </ul>
     </div>
-    <template v-for="topLink in topLinks">
-      <div
-        v-if="topLink.active"
-        :id="`sds-megamenu-${root?.id}__${topLink.key}__tab-content`"
-        :key="topLink.key"
-        :aria-labelledby="`sds-megamenu-${root?.id}__${topLink.key}__tab`"
-        role="tabpanel"
-        tabindex="0"
-      >
-        <!-- @slot Dynamic tab panel content. Used to inject content into the panel for an active tab. -->
-        <slot
-          v-if="topLink.active"
-          :name="`panel(${topLink.key})`"
-        />
-      </div>
-    </template>
   </div>
 </template>
 
@@ -103,6 +97,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, ref, computed } from 'vue'
+import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 const props = defineProps({
   /**
@@ -177,7 +172,7 @@ const willChangeTabStateDelay = (topLink: ITab, fn: Function) => new Promise<voi
   return fn ? await fn(topLink, res, rej) : res()
 })
 
-const changeTab = async (topLink: ITab) => {
+const changeTab = async (topLink: ITab, toggle) => {
   if (topLink.tag === 'a' && topLink.href) {
     return true
   } else {
@@ -192,6 +187,7 @@ const changeTab = async (topLink: ITab) => {
      * Provides the active `tab` object.
      */
     emit('change', topLink)
+    toggle()
   }
 }
 </script>

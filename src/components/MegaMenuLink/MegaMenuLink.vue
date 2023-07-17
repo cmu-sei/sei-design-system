@@ -6,33 +6,37 @@
     :class="[linkClass, variantClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
   >
-    <template v-if="image">
-      <img
-        class="mb-4"
-        :src="image"
-      >
-    </template>
-    <div :class="variant === 'descriptive' ? 'mb-2 inline-flex group' : 'inline-flex group'">
-      <p>
-        {{ label }}
-      </p>
-      <svg
-        v-if="cta || variant === 'landing-page'"
-        class="w-4 h-4 text-red-500 ml-2 my-auto group-hover:ml-4 transition-all"
-        xmlns="http://www.w3.org/2000/svg"
-        width="28"
-        height="32"
-        viewBox="0 0 448 512"
-      >
-        <path
-          fill="currentColor"
-          d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
-        />
-      </svg>
+    <div v-if="$slots.top">
+      <slot name="top" />
     </div>
-    <p class="text-sm dark:text-gray-500">
-      <slot />
-    </p>
+    <div class="flex gap-4">
+      <div v-if="$slots.left">
+        <slot name="left" />
+      </div>
+      <div>
+        <div :class="variant === 'descriptive' ? 'mb-2 inline-flex group' : 'inline-flex group'">
+          <p>
+            {{ label }}
+          </p>
+          <svg
+            v-if="cta || variant === 'landing-page'"
+            class="w-4 h-4 text-red-500 ml-2 my-auto group-hover:ml-4 transition-all"
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+          >
+            <path
+              fill="currentColor"
+              d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+            />
+          </svg>
+        </div>
+        <p class="text-sm dark:text-gray-500">
+          <slot />
+        </p>
+      </div>
+    </div>
   </a>
 </template>
 
@@ -43,12 +47,11 @@ export default defineComponent({
   name: 'SdsMegaMenuLink',
   props: {
     label: { type: String, default: '' },
-    image: { type: String, default: '' },
     /**
      * Determines the component variant to use.
      *
      */
-    variant: { type: String as PropType<'landing-page' | 'descriptive' | 'simple'>, default: '' },
+    variant: { type: String as PropType<'landing-page' | 'descriptive' | 'simple'>, default: 'simple' },
     /**
      * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
      */
@@ -65,7 +68,7 @@ export default defineComponent({
   setup (props) {
     const linkClass = computed(() => {
       // @deprecated remove variant prop
-      let classes = props.variant !== '' || props.cta ? 'link mb-2 px-4 w-full hover:no-underline group' : 0
+      let classes = props.variant || props.cta ? 'link mb-2 px-4 w-full hover:no-underline group' : 0
       if (props.variant === 'descriptive') {
         classes += ' hover:dark:bg-gray-900 transition-all rounded-lg py-4'
       }
