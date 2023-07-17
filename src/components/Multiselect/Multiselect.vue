@@ -881,7 +881,8 @@ export default defineComponent({
           if (
             this.arrowCounter <= this.filteredOptions.length - 1 &&
             this.arrowCounter > -1 &&
-            this.canAddItem
+            this.canAddItem &&
+            this.modelValue && this.modelValue.trim() !== ''
           ) {
             this.add(this.filteredOptions[this.arrowCounter]);
             $event.preventDefault();
@@ -921,7 +922,7 @@ export default defineComponent({
           this.arrowCounter <= this.filteredOptions.length - 1 &&
           this.arrowCounter > -1 &&
           this.canAddItem &&
-          this.filteredOptions[this.arrowCounter].isNewTag
+          this.modelValue && this.modelValue.trim() !== ''
         ) {
           this.add(this.filteredOptions[this.arrowCounter]);
           $event.preventDefault();
