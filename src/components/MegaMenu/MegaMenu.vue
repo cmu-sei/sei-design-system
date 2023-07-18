@@ -9,7 +9,7 @@
       :offset="0"
       :overflow-padding="0"
       placement="bottom"
-      popper-class="absolute border-t-2 border-gray-200 shadow-lg bg-white dark:bg-gray-850 w-full z-40"
+      popper-class="absolute w-full z-40 shadow-lg border-t-2 border-gray-200 bg-white dark:bg-gray-850 dark"
       hide-arrow
       shift
     >
@@ -26,7 +26,7 @@
         >
           {{ topLink.title }}
           <svg
-            :class="[isOpen || topLink.selected ? 'rotate-180' : '', 'relative mb-0.5 inline-block self-center w-5 h-5 -mr-1 transition-all']"
+            :class="[isOpen || topLink.selected ? 'rotate-180' : '', 'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-all']"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 600 500"
             fill="currentColor"
@@ -54,7 +54,7 @@
 <script lang="ts">
 import { Uid } from '@shimyshack/uid'
 
-interface ITab {
+interface ITopLink {
   key: string
   tag?: 'button' | 'a'
   title?: string
@@ -98,16 +98,16 @@ const props = defineProps({
    * }
    * ```
    */
-  modelValue: { type: Array as PropType<ITab[]>, default: () => [] },
+  modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
 
 const topLinks = computed({
-  get(): ITab[] {
+  get(): ITopLink[] {
     return props.modelValue
   },
-  set(value: ITab[]) {
+  set(value: ITopLink[]) {
     /**
      * Emmitted when the v-model has changed.
      */
@@ -115,7 +115,7 @@ const topLinks = computed({
   }
 })
 
-const changeTab = async (topLink: ITab, toggle, event) => {
+const changeTab = async (topLink: ITopLink, toggle, event) => {
   if (topLink.tag === 'a' && topLink.href) {
     return true
   } else {
