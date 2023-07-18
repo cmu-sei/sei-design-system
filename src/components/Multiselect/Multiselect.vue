@@ -967,7 +967,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .sds-multiselect {
-  @apply block relative text-gray-900 bg-white border-gray-500 bg-opacity-75 border-opacity-75 border rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-10;
+  @apply block relative text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
 }
 
 .sds-multiselect.active,
@@ -1059,7 +1059,7 @@ fieldset[disabled] .sds-multiselect * {
 
 .dark .dropdown-list {
   border: 1px solid theme("colors.blue.600");
-  background: theme("colors.gray.800");
+  background: theme("colors.gray.850");
 }
 
 .open:not(.up) .dropdown-list {
@@ -1073,7 +1073,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .showResults.open:not(.up) .dropdown-list {
-  border-top: 1px solid theme("colors.gray.800");
+  border-top: 1px solid theme("colors.gray.850");
 }
 
 .open.up .dropdown-list {
@@ -1087,7 +1087,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .showResults.open.up .dropdown-list {
-  border-bottom: 1px solid theme("colors.gray.800");
+  border-bottom: 1px solid theme("colors.gray.850");
 }
 
 .dropdown-list-item {
@@ -1101,22 +1101,22 @@ fieldset[disabled] .sds-multiselect * {
 
 .dropdown-list-item.selected {
   background: theme("colors.gray.100");
-  color: theme("colors.gray.300");
+  color: theme("colors.gray.700");
 }
 
 .dark .dropdown-list-item.selected {
-  background: theme("colors.gray.600");
-  color: theme("colors.gray.900");
+  background: theme("colors.gray.800");
+  color: theme("colors.gray.300");
 }
 
 .dropdown-list-item.active.selected {
-  background: theme("colors.gray.300");
+  background: theme("colors.gray.200");
   color: theme("colors.gray.800");
 }
 
 .dark .dropdown-list-item.active.selected {
-  background: theme("colors.gray.500");
-  color: theme("colors.gray.800");
+  background: theme("colors.gray.750");
+  color: theme("colors.gray.200");
 }
 
 .dropdown-list-item.loading {
@@ -1154,8 +1154,8 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .tag-list-item {
-  border: 1px solid theme("colors.gray.500");
-  background: theme("colors.gray.700");
+  border: 1px solid theme("colors.gray.700");
+  background: theme("colors.gray.800");
 }
 
 .tag-list-item .remove {
