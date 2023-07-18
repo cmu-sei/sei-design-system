@@ -203,6 +203,7 @@
                 <SdsMegaMenuLink
                   :label="blogPost.title"
                   variant="descriptive"
+                  :class="[blogPost.key === 0 ? '-mt-4' : '']"
                   href="https://sei.cmu.edu/publications/software-tools/index.cfm"
                 >
                   <span class="uppercase">{{ blogPost.published }}</span> •
@@ -219,6 +220,7 @@
               <SdsMegaMenuLink
                 label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
                 variant="descriptive"
+                class="-mt-4"
                 href="https://sei.cmu.edu/news/index.cfm"
               >
                 <template #top>
@@ -384,6 +386,7 @@
                   <SdsMegaMenuLink
                     label="Leadership"
                     variant="descriptive"
+                    class="-mt-4"
                     href="https://insights.sei.cmu.edu"
                   >
                     <p>
@@ -405,6 +408,7 @@
                 <div class="col-span-1">
                   <SdsMegaMenuLink
                     label="Annual Reviews"
+                    class="-mt-4"
                     variant="descriptive"
                     href="https://sei.cmu.edu/annual-reviews/"
                   >
