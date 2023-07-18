@@ -1,5 +1,5 @@
 <template>
-  <div class="guide dark">
+  <div class="guide">
     <SdsButton
       disabled
       kind="primary"
@@ -8,10 +8,10 @@
       I am Testing A11y
     </SdsButton>
     <p>MegaMenu</p>
-    <div class="border-b-2 my-10 sticky top-0 z-50">
+    <div class="border-b-2 my-10 -ml-4 -mr-4 sticky top-0 z-50 text-black dark:text-white bg-white dark:bg-gray-850">
       <SdsMegaMenu
         v-model="topLinks"
-        class="gap-x-8 mx-auto container"
+        class="gap-x-8 mx-auto container w-full"
         @change="changeTab"
       >
         <template #panel(about)>
@@ -25,7 +25,7 @@
                     href="https://sei.cmu.edu/about/index.cfm"
                   />
                 </div>
-                <div class="col-span-1 px-8">
+                <div class="col-span-1 px-8 -mt-4">
                   <SdsMegaMenuLink
                     label="Leadership"
                     variant="descriptive"
@@ -45,7 +45,7 @@
                     </p>
                   </SdsMegaMenuLink>
                 </div>
-                <div class="col-span-1 px-8">
+                <div class="col-span-1 px-8 -mt-4">
                   <SdsMegaMenuLink
                     label="Annual Reviews"
                     variant="descriptive"
@@ -94,7 +94,7 @@
           </div>
         </template>
         <template #panel(research-and-development)>
-          <div class="grid grid-cols-3 gap-x-2 py-8">
+          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-x-2">
                 <div class="col-span-2 px-8">
@@ -152,7 +152,7 @@
           </div>
         </template>
         <template #panel(publications-and-media)>
-          <div class="grid grid-cols-3 gap-x-2 py-8">
+          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-1 px-8">
               <SdsMegaMenuLink
                 label="Publications and Media"
@@ -205,7 +205,8 @@
                   variant="descriptive"
                   href="https://sei.cmu.edu/publications/software-tools/index.cfm"
                 >
-                  <span class="uppercase">{{ blogPost.published }}</span>
+                  <span class="uppercase">{{ blogPost.published }}</span> •
+                  <span class="uppercase">{{ blogPost.author }}</span>
                 </SdsMegaMenuLink>
               </template>
             </div>
@@ -226,23 +227,16 @@
                     src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
                   >
                 </template>
-                <template #left>
-                  <div class="bg-gray-100 text-gray-900 p-4 text-center">
-                    <div class="font-bold">
-                      Mar
-                    </div>
-                    <div>24</div>
-                  </div>
-                </template>
                 <template #default>
-                  <span class="uppercase">May 2, 2023</span>
+                  <span class="uppercase">May 2, 2023</span><br>
+                  <span class="uppercase text-xs text-gray-700">event</span>
                 </template>
               </SdsMegaMenuLink>
             </div>
           </div>
         </template>
         <template #panel(education)>
-          <div class="grid grid-cols-3 gap-x-2 py-8">
+          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-1 px-8">
               <SdsMegaMenuLink
                 label="Education"
@@ -252,6 +246,7 @@
               <SdsMegaMenuLink
                 label="Credentials"
                 variant="descriptive"
+                class="-mt-5"
                 href="https://sei.cmu.edu/publications/index.cfm"
               >
                 Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI
@@ -311,18 +306,71 @@
                 href="https://sei.cmu.edu/our-work/projects/index.cfm"
               />
               <SdsMegaMenuLink
-                label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                image="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
+                label="Insider Threat Analyst"
+                variant="descriptive"
+                class="-mt-4"
+                href="https://sei.cmu.edu/news/index.cfm"
+              >
+                <template #left>
+                  <div class="leading-5 bg-gray-100 dark:bg-gray-850 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                    <div class="font-bold uppercase">
+                      May
+                    </div>
+                    <div class="font-semibold">
+                      2
+                    </div>
+                  </div>
+                </template>
+                <template #default>
+                  <span class="uppercase">May 2-4, 2023</span><br>
+                  <span class="text-xs text-gray-700">This 3-day course presents strategies for collecting and analyzing data to prevent, detect...</span>
+                </template>
+              </SdsMegaMenuLink>
+              <SdsMegaMenuLink
+                label="Insider Threat Analyst"
                 variant="descriptive"
                 href="https://sei.cmu.edu/news/index.cfm"
               >
-                <span class="uppercase">May 2, 2023</span>
+                <template #left>
+                  <div class="leading-5 bg-gray-100 dark:bg-gray-850 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                    <div class="font-bold uppercase">
+                      Dec
+                    </div>
+                    <div class="font-semibold">
+                      20
+                    </div>
+                  </div>
+                </template>
+                <template #default>
+                  <span class="uppercase">May 2, 2023</span><br>
+                  <span class="text-xs text-gray-700">This 3-day course presents strategies for collecting and analyzing data to prevent, detect...</span>
+                </template>
+              </SdsMegaMenuLink>
+              <SdsMegaMenuLink
+                label="Insider Threat Analyst"
+                variant="descriptive"
+                href="https://sei.cmu.edu/news/index.cfm"
+              >
+                <template #left>
+                  <div class="leading-5 bg-gray-100 dark:bg-gray-850 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                    <div class="font-bold uppercase">
+                      SEP
+                    </div>
+                    <div class="font-semibold">
+                      2
+                    </div>
+                  </div>
+                </template>
+                <template #default>
+                  <span class="uppercase">May 2, 2023</span><br>
+                  <span class="text-xs text-gray-700">This 3-day course presents strategies for collecting and analyzing data to prevent, detect...</span>
+                </template>
               </SdsMegaMenuLink>
             </div>
           </div>
         </template>
         <template #panel(careers)>
-          <div class="grid grid-cols-3 gap-x-2 py-8">
+          <div class="grid grid-cols-3 gap-x-2 py-8 px-8 -mx-4">
             <div class="col-span-2">
               <div class="grid grid-cols-2">
                 <div class="col-span-2">
@@ -1879,21 +1927,24 @@ export default defineComponent({
         {
           key: 0,
           title: "Cybersecurity of Quantum Computing: A New Frontier",
-          published: "April 10, 2023"
+          published: "April 10, 2023",
+          author: "Douglas Schmidt"
         },
         {
           key: 1,
           title: "Security Analytics: Using SILK and Mothra to Identify Data Exfiltration via the Domain Name",
-          published: "April 3, 2023"
+          published: "April 3, 2023",
+          author: "Grace Lewis"
         },
         {
           key: 2,
           title: "How to Use Docker and NS-3 to Create Realistic Network Simulations",
-          published: "March 27, 2023"
+          published: "March 27, 2023",
+          author: "Cecilia Alberts"
         }
       ],
       topLinks: [
-        { key: "about", title: "About", selected: true },
+        { key: "about", title: "About", selected: false },
         { key: "research-and-development", title: "Research and Development", selected: false },
         { key: "publications-and-media", title: "Publications and Media", selected: false },
         { key: "education", title: "Education", selected: false },

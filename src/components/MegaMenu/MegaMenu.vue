@@ -9,7 +9,7 @@
       :offset="0"
       :overflow-padding="0"
       placement="bottom"
-      :popper-class="`absolute border-t-2 border-gray-200 shadow-lg bg-white dark:bg-gray-850 w-full z-90`"
+      popper-class="absolute border-t-2 border-gray-200 shadow-lg bg-white dark:bg-gray-850 w-full z-40"
       hide-arrow
       shift
     >
@@ -18,10 +18,10 @@
           :is="topLink.tag ? topLink.tag : 'button'"
           :href="topLink.href ? topLink.href : undefined"
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          class="py-2 space-x border-b-2 group z-65 -mb-0.5 overflow-y-visible"
+          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible"
           aria-haspopup="true"
           :aria-expanded="isOpen"
-          :class="[isOpen || topLink.selected ? 'text-red-500 border-red-500' : 'border-transparent hover:text-red-500 hover:border-red-500']"
+          :class="[isOpen || topLink.selected ? 'text-red-500 border-red-500 dark:text-red-200 dark:border-red-200' : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200']"
           @click="changeTab(topLink, toggle, $event)"
         >
           {{ topLink.title }}
@@ -38,7 +38,7 @@
         </component>
       </template>
       <template #default>
-        <div class="w-full">
+        <div class="w-full text-black dark:text-white bg-white dark:bg-gray-950">
           <div class="container mx-auto">
             <slot
               v-if="topLink.selected"

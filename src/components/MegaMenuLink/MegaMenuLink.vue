@@ -10,7 +10,10 @@
       <slot name="top" />
     </div>
     <div class="flex gap-4">
-      <div v-if="$slots.left">
+      <div
+        v-if="$slots.left"
+        class="mt-1"
+      >
         <slot name="left" />
       </div>
       <div>
@@ -20,7 +23,7 @@
           </p>
           <svg
             v-if="cta || variant === 'landing-page'"
-            class="w-4 h-4 text-red-500 ml-2 my-auto group-hover:ml-4 transition-all"
+            class="w-4 h-4 text-red-500 dark:text-red-200 ml-2 my-auto group-hover:ml-4 transition-all"
             xmlns="http://www.w3.org/2000/svg"
             width="28"
             height="32"
