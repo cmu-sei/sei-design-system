@@ -1,5 +1,5 @@
 <template>
-  <div class="guide dark">
+  <div class="guide">
     <SdsButton
       disabled
       kind="primary"
@@ -28,11 +28,12 @@
                 <div
                   v-for="row, index in megaMenu.about.aboutRows"
                   :key="index"
-                  class="-mt-4"
+                  class="-mt-6"
                 >
                   <div
                     v-for="item in row"
                     :key="item.key"
+                    class="mb-4"
                   >
                     <div class="col-span-1 px-8">
                       <SdsMegaMenuItem
@@ -99,6 +100,7 @@
               <div
                 v-for="item in megaMenu.researchAndDevelopment.extra"
                 :key="item.key"
+                class="mb-4"
               >
                 <SdsMegaMenuItem
                   :cta="[item.cta ?? false]"
@@ -134,9 +136,10 @@
                 variant="landing-page"
                 href="https://sei.cmu.edu/our-work/projects/index.cfm"
               />
-              <template
-                v-for="blogPost in megaMenu.blogPosts"
+              <div
+                v-for="blogPost in megaMenu.publicationsAndMedia.blogPosts"
                 :key="blogPost.key"
+                class="mb-2"
               >
                 <SdsMegaMenuItem
                   :label="blogPost.title"
@@ -150,7 +153,7 @@
                     <span>{{ blogPost.author }}</span>
                   </p>
                 </SdsMegaMenuItem>
-              </template>
+              </div>
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
@@ -183,184 +186,132 @@
         <template #panel(education)>
           <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-1 px-8">
-              <SdsMegaMenuItem
-                label="Education"
-                variant="landing-page"
-                href="https://sei.cmu.edu/education/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Credentials"
-                variant="descriptive"
-                class="-mt-5"
-                href="https://sei.cmu.edu/publications/index.cfm"
+              <div
+                v-for="educationLink, index in megaMenu.education.educationLinks"
+                :key="educationLink.key"
               >
-                <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                  Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn.
-                </p>
-              </SdsMegaMenuItem>
-              <SdsMegaMenuItem
-                label="Curricula"
-                variant="descriptive"
-                href="https://sei.cmu.edu/publications/index.cfm"
+                <SdsMegaMenuItem
+                  :class="[index === 1 ? '-mt-4' : '', 'mb-2']"
+                  :href="educationLink.href"
+                  :label="educationLink.label"
+                  :variant="educationLink.variant"
+                >
+                  <p
+                    v-if="educationLink.description"
+                    class="text-sm mt-2 text-gray-800 dark:text-gray-300"
+                  >
+                    {{ educationLink.description }}
+                  </p>
+                </SdsMegaMenuItem>
+              </div>
+            </div>
+            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+              <div
+                v-for="training in megaMenu.education.trainings"
+                :key="training.key"
               >
-                <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                  Learn about SEI-developed curricula and educational materials, including how you can use them.
-                </p>
-              </SdsMegaMenuItem>
-              <SdsMegaMenuItem
-                label="License SEI Materials"
-                variant="descriptive"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              >
-                <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                  Learn how the SEI authorizes Partner organizations to deliver SEI training and services.
-                </p>
-              </SdsMegaMenuItem>
+                <SdsMegaMenuItem
+                  :href="training.href"
+                  :label="training.label"
+                  :variant="training.variant"
+                />
+              </div>
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
-                label="Training"
-                variant="landing-page"
-                href="https://sei.cmu.edu/education/index.cfm"
+                :label="megaMenu.education.eventLink[0].label"
+                :variant="megaMenu.education.eventLink[0].variant"
+                :href="megaMenu.education.eventLink[0].href"
               />
-              <SdsMegaMenuItem
-                label="Fundamentals of Statistics Applied to Cybersecurity"
-                variant="simple"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Advanced Analytics: Netflow"
-                variant="simple"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Advanced Analytics: Malware"
-                variant="simple"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Advanced Analytics: Digital Forensics"
-                variant="simple"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="CERT Applied Data Science for Cybersecurity Certificate Package"
-                variant="simple"
-                href="https://sei.cmu.edu/publications/index.cfm"
-              />
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                label="Events"
-                variant="landing-page"
-                href="https://sei.cmu.edu/our-work/projects/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Insider Threat Analyst"
-                variant="descriptive"
-                class="-mt-4 group"
-                href="https://sei.cmu.edu/news/index.cfm"
+              <div
+                v-for="event, index in megaMenu.education.events"
+                :key="event.key"
               >
-                <template #left>
-                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
-                    <div class="font-bold uppercase">
-                      May
+                <SdsMegaMenuItem
+                  :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
+                  :href="event.href"
+                  :label="event.label"
+                  :variant="event.variant"
+                >
+                  <template #left>
+                    <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                      <div class="font-bold uppercase">
+                        {{ event.month }}
+                      </div>
+                      <div class="font-semibold text-sm">
+                        {{ event.startDay }}
+                      </div>
                     </div>
-                    <div class="font-semibold text-sm">
-                      2
-                    </div>
-                  </div>
-                </template>
-                <template #default>
-                  <p class="uppercase font-semibold text-xs mb-2">
-                    May 2-5, 2023
-                  </p>
-                  <p class="text-sm text-gray-700 dark:text-gray-500">
-                    This 3-day course presents strategies for collecting and analyzing data to prevent, detect...
-                  </p>
-                </template>
-              </SdsMegaMenuItem>
-              <SdsMegaMenuItem
-                label="Insider Threat Analyst"
-                variant="descriptive"
-                href="https://sei.cmu.edu/news/index.cfm"
-              >
-                <template #left>
-                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
-                    <div class="font-bold uppercase">
-                      Dec
-                    </div>
-                    <div class="font-semibold text-sm">
-                      20
-                    </div>
-                  </div>
-                </template>
-                <template #default>
-                  <p class="uppercase font-semibold text-xs mb-2">
-                    December 20-25, 2023
-                  </p>
-                  <p class="text-sm text-gray-700 dark:text-gray-500">
-                    This 3-day course presents strategies for collecting and analyzing data to prevent, detect...
-                  </p>
-                </template>
-              </SdsMegaMenuItem>
-              <SdsMegaMenuItem
-                label="Insider Threat Analyst"
-                variant="descriptive"
-                href="https://sei.cmu.edu/news/index.cfm"
-              >
-                <template #left>
-                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
-                    <div class="font-bold uppercase">
-                      SEP
-                    </div>
-                    <div class="font-semibold text-sm">
-                      2
-                    </div>
-                  </div>
-                </template>
-                <template #default>
-                  <p class="uppercase font-semibold text-xs mb-2">
-                    September 2-10, 2023
-                  </p>
-                  <p class="text-sm text-gray-700 dark:text-gray-500">
-                    This 3-day course presents strategies for collecting and analyzing data to prevent, detect...
-                  </p>
-                </template>
-              </SdsMegaMenuItem>
+                  </template>
+                  <template #default>
+                    <p class="uppercase font-semibold text-xs mb-2">
+                      {{ event.dateRange }}
+                    </p>
+                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
+                      {{ event.description }}
+                    </p>
+                  </template>
+                </SdsMegaMenuItem>
+              </div>
             </div>
           </div>
         </template>
         <template #panel(careers)>
           <div class="grid grid-cols-3 gap-x-2 py-8 px-8 -mx-4">
-            <div class="col-span-1">
+            <div class="col-span-1 px-8">
               <SdsMegaMenuItem
-                label="About"
-                variant="landing-page"
-                href="https://sei.cmu.edu/about"
+                :href="megaMenu.careers.careersLink[0].href"
+                :label="megaMenu.careers.careersLink[0].label"
+                :variant="megaMenu.careers.careersLink[0].variant"
               />
+              <div
+                v-for="careerLink, index in megaMenu.careers.careersLinks"
+                :key="careerLink.key"
+              >
+                <SdsMegaMenuItem
+                  :class="[index === 0 ? '-mt-4' : '', 'mb-2']"
+                  :href="careerLink.href"
+                  :label="careerLink.label"
+                  :variant="careerLink.variant"
+                >
+                  <p
+                    v-if="careerLink.description"
+                    class="text-xs mt-2 text-gray-800 dark:text-gray-300"
+                  >
+                    {{ careerLink.description }}
+                  </p>
+                </SdsMegaMenuItem>
+              </div>
             </div>
-            <div class="col-span-1 border-l-2 px-4">
+            <div class="col-span-2 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
-                label="Divisions"
-                variant="landing-page"
-                href="https://sei.cmu.edu/divisions/"
+                :href="megaMenu.careers.jobsLink[0].href"
+                :label="megaMenu.careers.jobsLink[0].label"
+                :variant="megaMenu.careers.jobsLink[0].variant"
               />
-              <SdsMegaMenuItem
-                label="Artificial Intelligence (AI) Division"
-                variant="simple"
-                href="https://sei.cmu.edu/divisions/ai"
-              />
-              <SdsMegaMenuItem
-                label="CERT Division"
-                variant="simple"
-                href="https://sei.cmu.edu/divisions/cert"
-              />
-              <SdsMegaMenuItem
-                label="Software Solutions Division"
-                variant="simple"
-                href="https://sei.cmu.edu/divisions/software-solutions"
-              />
+              <div
+                v-for="row, index in megaMenu.careers.jobs"
+                :key="index"
+                :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
+              >
+                <div
+                  v-for="job in row"
+                  :key="job.key"
+                  class="col-span-1"
+                >
+                  <SdsMegaMenuItem
+                    :href="job.href"
+                    :label="job.label"
+                    :variant="job.variant"
+                  >
+                    <p class="text-xs text-gray-800 dark:text-gray-300">
+                      <span>Posted {{ job.posted }}</span>
+                      <span> • </span>
+                      <span>{{ job.locations }}</span>
+                    </p>
+                  </SdsMegaMenuItem>
+                </div>
+              </div>
             </div>
           </div>
         </template>
@@ -1985,28 +1936,222 @@ export default defineComponent({
               key: "history-of-innovation-at-the-sei",
               label: "History of Innovation at the SEI"
             },
+          ],
+          blogPosts: [
+            {
+              key: 0,
+              title: "Cybersecurity of Quantum Computing: A New Frontier",
+              published: "April 10, 2023",
+              author: "Douglas Schmidt"
+            },
+            {
+              key: 1,
+              title: "Security Analytics: Using SILK and Mothra to Identify Data Exfiltration via the Domain Name",
+              published: "April 3, 2023",
+              author: "Grace Lewis"
+            },
+            {
+              key: 2,
+              title: "How to Use Docker and NS-3 to Create Realistic Network Simulations",
+              published: "March 27, 2023",
+              author: "Cecilia Alberts"
+            }
+          ],
+        },
+        education: {
+          educationLinks: [
+            {
+              href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
+              key: "education",
+              label: "Education",
+              variant: "landing-page"
+            },
+            {
+              href: "",
+              key: "credentials",
+              label: "Credentials",
+              variant: "descriptive",
+              description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
+            },
+            {
+              href: "",
+              key: "curricula",
+              label: "Curricula",
+              variant: "descriptive",
+              description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
+            },
+            {
+              href: "",
+              key: "license-sei-materials",
+              label: "License SEI Materials",
+              variant: "descriptive",
+              description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
+            },
+          ],
+          trainings: [
+            {
+              href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
+              key: "training",
+              label: "Training",
+              variant: "landing-page"
+            },
+            {
+              href: "",
+              key: "fundamentals-of-statistics-applied-to-cybersecurity",
+              label: "Fundamentals of Statistics Applied to Cybersecurity"
+            },
+            {
+              href: "",
+              key: "advanced-analytics-netflow",
+              label: "Advanced Analytics: Netflow"
+            },
+            {
+              href: "",
+              key: "advanced-analytics-malware",
+              label: "Advanced Analytics: Malware"
+            },
+            {
+              href: "",
+              key: "advanced-analytics-digital-forensics",
+              label: "Advanced Analytics: Digital Forensics"
+            },
+            {
+              href: "",
+              key: "cert-applied-data-science-for-cybersecurity-certificate-package",
+              label: "CERT Applied Data Science for Cybersecurity Certificate Package"
+            }
+          ],
+          eventLink: [
+            {
+              href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
+              key: "events",
+              label: "Events",
+              variant: "landing-page"
+            }
+          ],
+          events: [
+            {
+              dateRange: "Dec 5-7, 2023",
+              description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect...",
+              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P132",
+              key: "insider-threat-analyst",
+              label: "Insider Threat Analyst",
+              month: "Dec",
+              startDay: "5",
+              variant: "descriptive",
+            },
+            {
+              dateRange: "Nov 14-16, 2023",
+              description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect, and respond to insider activity. It discusses various techniques and methods for designing, implementing, and measuring the effectiveness of various components...",
+              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P133",
+              key: "insider-threat-program-evaluator",
+              label: "Insider Threat Program Evaluator",
+              month: "Nov",
+              startDay: "14",
+              variant: "descriptive"
+            },
+            {
+              dateRange: "Nov 6-9, 2023",
+              description: "This four-day course, designed for computer security incident response team (CSIRT) and security operations center (SOC) technical personnel with several months of incident handling experience, addresses techniques for detecting and responding...",
+              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P23B",
+              key: "advanced-topics-in-incident-handling",
+              label: "Advanced Topics in Incident Handling",
+              month: "Nov",
+              startDay: "6",
+              variant: "descriptive"
+            },
           ]
         },
-        blogPosts: [
-          {
-            key: 0,
-            title: "Cybersecurity of Quantum Computing: A New Frontier",
-            published: "April 10, 2023",
-            author: "Douglas Schmidt"
-          },
-          {
-            key: 1,
-            title: "Security Analytics: Using SILK and Mothra to Identify Data Exfiltration via the Domain Name",
-            published: "April 3, 2023",
-            author: "Grace Lewis"
-          },
-          {
-            key: 2,
-            title: "How to Use Docker and NS-3 to Create Realistic Network Simulations",
-            published: "March 27, 2023",
-            author: "Cecilia Alberts"
-          }
-        ],
+        careers: {
+          careersLink: [
+            {
+              href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
+              key: "careers",
+              label: "Careers",
+              variant: "landing-page"
+            }
+          ],
+          careersLinks: [
+            {
+              href: "",
+              key: "internship-opportunities",
+              label: "Internship Opportunities",
+              description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
+              variant: "descriptive"
+            },
+            {
+              href: "",
+              key: "diversity-equity-and-inclusion",
+              label: "Diversity, Equity and Inclusion",
+              description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
+              variant: "descriptive"
+            },
+          ],
+          jobsLink: [
+            {
+              href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
+              key: "job-postings",
+              label: "Job Postings",
+              variant: "landing-page"
+            }
+          ],
+          jobs: [
+            [
+              {
+                href: "",
+                key: "assistant-software-engineer",
+                label: "Assistant Software Engineer",
+                posted: "Yesterday",
+                locations: "2 Locations",
+                variant: "descriptive"
+              },
+              {
+                href: "",
+                key: "senior-assurance-researcher",
+                label: "Senior Assurance Researcher",
+                posted: "2 Days Ago",
+                locations: "3 Locations",
+                variant: "descriptive"
+              }
+            ],
+            [
+              {
+                href: "",
+                key: "cybersecurity-operations-researcher",
+                label: "Cybersecurity Operations Researcher",
+                posted: "Yesterday",
+                locations: "Arlington",
+                variant: "descriptive"
+              },
+              {
+                href: "",
+                key: "assistant-machine-learning-researcher",
+                label: "Assistant Machine Learning Researcher",
+                posted: "3 Days Ago",
+                locations: "Pittsburgh",
+                variant: "descriptive"
+              }
+            ],
+            [
+              {
+                href: "",
+                key: "associate-cybersecurity-operations-researcher",
+                label: "Associate Cybersecurity Operations Researcher",
+                posted: "Yesterday",
+                locations: "Arlington",
+                variant: "descriptive"
+              },
+              {
+                href: "",
+                key: "lead-nuclear-surety-software-engineer",
+                label: "Lead Nuclear Surety Software Engineer",
+                posted: "6 Days Ago",
+                locations: "Pittsburgh",
+                variant: "descriptive"
+              }
+            ]
+          ]
+        },
       },
       toggleSwitchValue: false,
       fabTabs: [

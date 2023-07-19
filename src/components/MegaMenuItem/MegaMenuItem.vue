@@ -47,7 +47,7 @@ export default defineComponent({
      */
     label: { type: String, default: "" },
     /**
-     * Determines the component variant to use.
+     * Determines the MegaMenuItem component variant to use.
      */
     variant: {
       type: String as PropType<"landing-page" | "descriptive" | "simple">,
@@ -68,20 +68,15 @@ export default defineComponent({
   },
   setup(props) {
     const linkClass = computed(() => {
-      // @deprecated remove variant prop
-      let classes =
-        props.variant || props.cta
-          ? "link group w-full px-4"
-          : 0;
-      if (props.variant === "descriptive") {
-        classes +=
-          " px-4 py-4 transition-all rounded-lg hover:bg-gray-50 hover:dark:bg-gray-900";
-      }
-      return classes;
+      /* If the variant is set, or if `cta` prop is set, apply styles */
+      let classes = props.variant || props.cta
+        ? 'link group w-full px-4'
+        : ''
+      return classes
     });
 
     const variantClass = computed(() => {
-      // @deprecated remove extraneous variant types
+      /* Apply styles based on variant class */
       const variant = props.variant as
         | "landing-page"
         | "descriptive"
@@ -90,7 +85,7 @@ export default defineComponent({
         case "landing-page":
           return "text-lg mb-8 hover:no-underline";
         case "descriptive":
-          return "hover:no-underline";
+          return "px-4 py-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-900";
         case "simple":
           return "mb-8 text-sm";
         default:

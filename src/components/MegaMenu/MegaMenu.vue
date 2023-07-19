@@ -9,7 +9,7 @@
       :offset="0"
       :overflow-padding="0"
       placement="bottom"
-      popper-class="absolute w-full z-40 shadow-lg border-t-2 border-gray-200 bg-white dark:bg-gray-850 dark"
+      popper-class="absolute w-full z-40 shadow-lg border-t-2 border-gray-200 bg-white dark:bg-gray-850"
       hide-arrow
       shift
     >
@@ -21,12 +21,21 @@
           class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible"
           aria-haspopup="true"
           :aria-expanded="isOpen"
-          :class="[isOpen || topLink.selected ? 'text-red-500 border-red-500 dark:text-red-200 dark:border-red-200' : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200']"
-          @click="changeTab(topLink, toggle, $event)"
+          :class="[
+            isOpen || topLink.selected
+              ? 'text-red-500 border-red-500 dark:text-red-200 dark:border-red-200'
+              : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200'
+          ]"
+          @click="changeMenuPanel(topLink, toggle, $event)"
         >
           {{ topLink.title }}
           <svg
-            :class="[isOpen || topLink.selected ? 'rotate-180' : '', 'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-all']"
+            :class="[
+              isOpen || topLink.selected
+                ? 'rotate-180'
+                : '',
+              'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-all'
+            ]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 600 500"
             fill="currentColor"
@@ -54,6 +63,7 @@
 <script lang="ts">
 import { Uid } from '@shimyshack/uid'
 
+/* Top Link navigation label type interface */
 interface ITopLink {
   key: string
   tag?: 'button' | 'a'
@@ -75,14 +85,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType, ref, computed } from 'vue'
+import { PropType, computed } from 'vue'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 const props = defineProps({
   /**
-   * Determines the array of tab objects.
+   * Determines the array of "topLink" objects.
    *
-   * Format of tab object:
+   * Format of "topLink" object:
    *
    * ```
    * {
@@ -104,9 +114,11 @@ const props = defineProps({
 const emit = defineEmits(['update:model-value', 'change'])
 
 const topLinks = computed({
+  /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {
     return props.modelValue
   },
+  /* Set SdsMegaMenu modelValue property */
   set(value: ITopLink[]) {
     /**
      * Emmitted when the v-model has changed.
@@ -115,15 +127,18 @@ const topLinks = computed({
   }
 })
 
-const changeTab = async (topLink: ITopLink, toggle, event) => {
+const changeMenuPanel = async (topLink: ITopLink, toggle: Function, event: Event) => {
   if (topLink.tag === 'a' && topLink.href) {
+    /* Treat anchor tags as normal links */
     return true
   } else {
+    /* Prevent default and change the active top-level navigation link */
     event.preventDefault()
     topLinks.value = topLinks.value.map((i) => {
       i.selected = topLink.key === i.key
       return i
     })
+    /* Toggle visibility */
     toggle()
   }
 }
