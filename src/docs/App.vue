@@ -1,18 +1,80 @@
 <template>
   <sds-layout-app
-    v-model="collapsed"
-    :app-suite="appSuite"
-    :app-name="appName"
-    :app-url="appUrl"
-    :app-icon-url="appIconUrl"
-    :page-title="pageTitle"
-    :sidebar-navigation-items="sidebarNavigationItems"
-    :enable-collapsible-sidebar="enableCollapsibleSidebar"
-    @navigate="navigate"
+      v-model="collapsed"
+      :app-icon-url="appIconUrl"
+      :app-name="appName"
+      :app-suite="appSuite"
+      :app-url="appUrl"
+      :enable-collapsible-sidebar="enableCollapsibleSidebar"
+      :page-title="pageTitle"
+      :sidebar-navigation-items="sidebarNavigationItems"
+      @navigate="navigate"
   >
     <template #suite-header>
       Suite header content
     </template>
+    <sds-button variant="default"
+                @click="showPanel = !showPanel">Show Panel
+    </sds-button>
+
+    {{ showPanel }}
+
+    <SdsPanel v-model="showPanel"
+              size="md"
+    >
+      <template #title>
+        Panel title
+      </template>
+      <template #navigationIcon>
+        <svg
+            class="w-6 h-6 cursor-pointer self-center mr-2"
+            height="32"
+            viewBox="0 0 24 24"
+            width="32"
+            xmlns="http://www.w3.org/2000/svg"
+            @click="onClose"
+        >
+          <path d="m12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2H7.825l5.6 5.6L12 20Z"
+                fill="currentColor" />
+        </svg>
+      </template>
+      <div class="relative h-full overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75">
+        <svg class="absolute inset-0 h-full w-full stroke-gray-900/10"
+             fill="none">
+          <defs>
+            <pattern id="pattern-510798f3-74a4-4150-a0cf-4e93e8f4fbdf"
+                     height="10"
+                     patternUnits="userSpaceOnUse"
+                     width="10"
+                     x="0"
+                     y="0">
+              <path d="M-3 13 15-5M-5 5l18-18M-1 21 17 3"></path>
+            </pattern>
+          </defs>
+          <rect fill="url(#pattern-510798f3-74a4-4150-a0cf-4e93e8f4fbdf)"
+                height="100%"
+                stroke="none"
+                width="100%"></rect>
+        </svg>
+      </div>
+
+      <template #footer>
+        <div class="space-x-2">
+          <SdsButton
+              variant="primary"
+              @click="showModal = false"
+          >Save
+          </SdsButton>
+          <SdsButton
+              variant="default"
+              @click="showModal = false"
+          >Cancel
+          </SdsButton>
+        </div>
+      </template>
+    </SdsPanel>
+
+
     <!-- <template #sidebar-navigation-item-icon="{ item, classList }">
       <img
         v-if="item.iconUrl"
@@ -79,11 +141,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent} from 'vue'
 
 import Datepicker from "../components/Datepicker/Datepicker.vue"
-import DocTables from './components/DocTables.vue'
 import Components from './components/Components.vue'
+import DocTables from './components/DocTables.vue'
 import Examples from './components/Examples.vue'
 
 export default defineComponent({
@@ -95,6 +157,7 @@ export default defineComponent({
   },
   data() {
     return {
+      showPanel: true,
       Datepicker,
       collapsed: true,
       appSuite: 'MIS',
@@ -119,40 +182,43 @@ export default defineComponent({
       appUrl: '#',
       enableCollapsibleSidebar: true,
       sidebarNavigationItems: [
-        { id: 1, title: 'Dashboard', active: true, href: '#' },
-        { 
-          id: 2, 
+        {id: 1, title: 'Dashboard', active: true, href: '#'},
+        {
+          id: 2,
           title: 'About SEI',
           iconUrl: 'https://www.shareicon.net/data/128x128/2017/01/17/872043_facebook_512x512.png',
           items: [
-            { id: 1, title: 'First item', active: false, href: '#' },
-            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 22 },
-            { id: 3, title: 'Third item', active: false, href: '#' },
-            { id: 4, title: 'Fourth item', active: false, href: '#' },
+            {id: 1, title: 'First item', active: false, href: '#'},
+            {id: 2, title: 'Second item', active: false, href: '#', badgeCount: 22},
+            {id: 3, title: 'Third item', active: false, href: '#'},
+            {id: 4, title: 'Fourth item', active: false, href: '#'},
           ]
         },
-        { 
-          id: 3, 
+        {
+          id: 3,
           title: 'Research & Projects With A Large Badge Count',
           items: [
-            { id: 1, title: 'First item', active: false, href: '#' },
-            { id: 2, title: 'Second item', active: false, href: '#', badgeCount: 93 },
-            { id: 3, title: 'Third item With A Large Badge Count With A Large Badge Count', active: false, href: '#', badgeCount: 400 },
-            { id: 4, title: 'Fourth item', active: false, href: '#' },
+            {id: 1, title: 'First item', active: false, href: '#'},
+            {id: 2, title: 'Second item', active: false, href: '#', badgeCount: 93},
+            {id: 3, title: 'Third item With A Large Badge Count With A Large Badge Count', active: false, href: '#', badgeCount: 400},
+            {id: 4, title: 'Fourth item', active: false, href: '#'},
           ]
         },
-        { id: 4, title: 'News & Events', active: false, href: '#' },
-        { id: 5, title: 'Divisions', active: false, href: '#', badgeCount: 9 },
-        { id: 6, title: 'Research & Projects With A Large Badge Count', active: false, href: '#', badgeCount: 999 },
-        { id: 7, title: 'HR & Benefits', active: false, href: '#' },
-        { id: 8, title: 'Policies', active: false, href: '#' },
-        { id: 9, title: 'Workplace Services', active: false, href: '#' },
-        { id: 10, title: 'Help & FAQ', active: false, href: '#' },
+        {id: 4, title: 'News & Events', active: false, href: '#'},
+        {id: 5, title: 'Divisions', active: false, href: '#', badgeCount: 9},
+        {id: 6, title: 'Research & Projects With A Large Badge Count', active: false, href: '#', badgeCount: 999},
+        {id: 7, title: 'HR & Benefits', active: false, href: '#'},
+        {id: 8, title: 'Policies', active: false, href: '#'},
+        {id: 9, title: 'Workplace Services', active: false, href: '#'},
+        {id: 10, title: 'Help & FAQ', active: false, href: '#'},
       ]
     }
   },
   methods: {
-    navigate({ group, item, event }: any) {
+    onClose() {
+      this.showPanel = false
+    },
+    navigate({group, item, event}: any) {
       event.preventDefault()
       this.sidebarNavigationItems = this.sidebarNavigationItems.map((i) => {
         if (group) {

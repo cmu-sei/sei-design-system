@@ -34,6 +34,7 @@ import SdsLoadingSpinner from "./LoadingSpinner";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsPaginator from "./Paginator";
+import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
@@ -90,6 +91,7 @@ const Components: ComponentList = {
   SdsModal,
   SdsMultiselect,
   SdsPaginator,
+  SdsPanel,
   SdsPopover,
   SdsRadioGroup,
   SdsScrollArea,
@@ -150,6 +152,7 @@ export { default as SdsLoadingSpinner } from "./LoadingSpinner";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsPaginator } from "./Paginator";
+export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";
