@@ -27,7 +27,7 @@ export default {
       control: { type: 'text' },
       description: 'Set the main text to display in this Mega Menu Item.',
     },
-    variant: {
+    kind: {
       options: ['simple', 'landing-page', 'descriptive'],
       control: { type: 'select' },
       description: 'Choose the link type to display.',
@@ -43,15 +43,15 @@ const Template = (args) => ({
   template: `
     <sds-mega-menu-item class="group" v-bind="args">
       <script>console.log(${JSON.stringify(args)})</script>
-      <template v-if="args.variant === 'descriptive'" #default>
+      <template v-if="args.kind === 'descriptive'" #default>
         <p class="text-sm text-gray-500">default</p>
       </template>
-      <template v-if="args.variant === 'descriptive'" #left>
+      <template v-if="args.kind === 'descriptive'" #left>
         <div class="w-10 h-10 flex transition-color bg-gray-100 group-hover:bg-gray-200 mt-1 text-center">
           <p class="self-center w-full">left</p>
         </div>
       </template>
-      <template v-if="args.variant === 'descriptive'" #top>
+      <template v-if="args.kind === 'descriptive'" #top>
         <div class="w-full h-40 flex transition-color bg-gray-100 group-hover:bg-gray-200 mb-4 text-center">
           <p class="self-center w-full">top</p>
         </div>

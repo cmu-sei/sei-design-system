@@ -61,8 +61,6 @@
 </template>
 
 <script lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 /* Top Link navigation label type interface */
 interface ITopLink {
   key: string
@@ -78,9 +76,6 @@ interface ITopLink {
 
 export default {
   name: 'SdsMegaMenu',
-  directives: {
-    uid: Uid
-  }
 }
 </script>
 
@@ -89,7 +84,6 @@ import { PropType, computed } from 'vue'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 const props = defineProps({
-  fullbleed: { type: Boolean, default: true },
   /**
    * Determines the array of "topLink" objects.
    *

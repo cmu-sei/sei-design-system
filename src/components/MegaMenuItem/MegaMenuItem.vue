@@ -3,7 +3,7 @@
     data-id="sds-megamenuitem"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
-    :class="[linkClass, variantClass, disabledClass]"
+    :class="[linkClass, kindClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
   >
     <div v-if="$slots.top">
@@ -17,7 +17,7 @@
         <div class="inline-flex group">
           <p>{{ label }}</p>
           <svg
-            v-if="cta || variant === 'landing-page'"
+            v-if="cta || kind === 'landing-page'"
             class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-200 group-hover:ml-4"
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -47,9 +47,9 @@ export default defineComponent({
      */
     label: { type: String, default: "" },
     /**
-     * Determines the MegaMenuItem component variant to use.
+     * Determines the MegaMenuItem component kind to use.
      */
-    variant: {
+    kind: {
       type: String as PropType<"landing-page" | "descriptive" | "simple">,
       default: "simple",
     },
@@ -68,20 +68,20 @@ export default defineComponent({
   },
   setup(props) {
     const linkClass = computed(() => {
-      /* If the variant is set, or if `cta` prop is set, apply styles */
-      let classes = props.variant || props.cta
+      /* If the kind is set, or if `cta` prop is set, apply styles */
+      let classes = props.kind || props.cta
         ? 'link group w-full px-4'
         : ''
       return classes
     });
 
-    const variantClass = computed(() => {
-      /* Apply styles based on variant class */
-      const variant = props.variant as
+    const kindClass = computed(() => {
+      /* Apply styles based on kind class */
+      const kind = props.kind as
         | "landing-page"
         | "descriptive"
         | "simple";
-      switch (variant) {
+      switch (kind) {
         case "landing-page":
           return "text-lg mb-8 hover:no-underline";
         case "descriptive":
@@ -97,7 +97,7 @@ export default defineComponent({
       return props.disabled ? "disabled" : "";
     });
 
-    return { linkClass, variantClass, disabledClass };
+    return { linkClass, kindClass, disabledClass };
   },
 });
 </script>

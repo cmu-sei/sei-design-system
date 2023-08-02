@@ -13,12 +13,6 @@ export default {
     },
   },
   component: SdsMegaMenu,
-  argTypes: {
-    fullbleed: {
-      control: { type: 'boolean' },
-      description: 'Set fullbleed to fill the width of the page.'
-    },
-  }
 };
 
 const Template = (args) => ({
@@ -42,7 +36,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -50,14 +44,14 @@ const Template = (args) => ({
               cta
               href="/"
               label="Descriptive Link CTA"
-              variant="descriptive"
+              kind="descriptive"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
             </sds-mega-menu-item>
             <sds-mega-menu-item
               class="mb-4"
               label="Descriptive Link"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle.</span>
@@ -66,7 +60,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -86,13 +80,13 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 gap-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
               class="mt-1"
               label="Descriptive Link Top"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #top>
@@ -102,7 +96,7 @@ const Template = (args) => ({
             </sds-mega-menu-item>
             <sds-mega-menu-item
               label="Descriptive Link Left"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #left>
@@ -121,7 +115,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -129,14 +123,14 @@ const Template = (args) => ({
               cta
               href="/"
               label="Descriptive Link CTA"
-              variant="descriptive"
+              kind="descriptive"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
             </sds-mega-menu-item>
             <sds-mega-menu-item
               class="mb-4"
               label="Descriptive Link"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle.</span>
@@ -145,7 +139,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -165,13 +159,13 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 gap-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
               class="mt-1"
               label="Descriptive Link Top"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #top>
@@ -181,7 +175,7 @@ const Template = (args) => ({
             </sds-mega-menu-item>
             <sds-mega-menu-item
               label="Descriptive Link Left"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #left>
@@ -200,7 +194,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -208,14 +202,14 @@ const Template = (args) => ({
               cta
               href="/"
               label="Descriptive Link CTA"
-              variant="descriptive"
+              kind="descriptive"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
             </sds-mega-menu-item>
             <sds-mega-menu-item
               class="mb-4"
               label="Descriptive Link"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle.</span>
@@ -224,7 +218,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -244,13 +238,13 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 gap-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
               class="mt-1"
               label="Descriptive Link Top"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #top>
@@ -260,7 +254,7 @@ const Template = (args) => ({
             </sds-mega-menu-item>
             <sds-mega-menu-item
               label="Descriptive Link Left"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #left>
@@ -279,7 +273,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -287,14 +281,14 @@ const Template = (args) => ({
               cta
               href="/"
               label="Descriptive Link CTA"
-              variant="descriptive"
+              kind="descriptive"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
             </sds-mega-menu-item>
             <sds-mega-menu-item
               class="mb-4"
               label="Descriptive Link"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle.</span>
@@ -303,7 +297,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -323,13 +317,13 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 gap-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
               class="mt-1"
               label="Descriptive Link Top"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #top>
@@ -339,7 +333,7 @@ const Template = (args) => ({
             </sds-mega-menu-item>
             <sds-mega-menu-item
               label="Descriptive Link Left"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #left>
@@ -358,7 +352,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -366,14 +360,14 @@ const Template = (args) => ({
               cta
               href="/"
               label="Descriptive Link CTA"
-              variant="descriptive"
+              kind="descriptive"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
             </sds-mega-menu-item>
             <sds-mega-menu-item
               class="mb-4"
               label="Descriptive Link"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle.</span>
@@ -382,7 +376,7 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
@@ -402,13 +396,13 @@ const Template = (args) => ({
           <div class="col-span-1 px-4 gap-4 border-l border-l-gray-200">
             <sds-mega-menu-item
               label="Landing Page Link"
-              variant="landing-page"
+              kind="landing-page"
               href="/"
             />
             <sds-mega-menu-item
               class="mt-1"
               label="Descriptive Link Top"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #top>
@@ -418,7 +412,7 @@ const Template = (args) => ({
             </sds-mega-menu-item>
             <sds-mega-menu-item
               label="Descriptive Link Left"
-              variant="descriptive"
+              kind="descriptive"
               href="/"
             >
               <template #left>
@@ -450,7 +444,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  fullbleed: false,
   modelValue: [
     { key: "topLink1", title: "Top Link 1", selected: false },
     { key: "topLink2", title: "Top Link 2", selected: false },

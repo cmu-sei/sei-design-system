@@ -21,7 +21,7 @@
                 <div class="col-span-2 px-8">
                   <SdsMegaMenuItem
                     :label="megaMenu.about.aboutLink[0].label"
-                    :variant="megaMenu.about.aboutLink[0].variant"
+                    :kind="megaMenu.about.aboutLink[0].kind"
                     :href="megaMenu.about.aboutLink[0].href"
                   />
                 </div>
@@ -38,7 +38,7 @@
                     <div class="col-span-1 px-8">
                       <SdsMegaMenuItem
                         :label="item.label"
-                        :variant="item.variant"
+                        :kind="item.kind"
                         :href="item.href"
                       >
                         <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
@@ -53,7 +53,7 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
                 :label="megaMenu.about.divisionLink[0].label"
-                :variant="megaMenu.about.divisionLink[0].variant"
+                :kind="megaMenu.about.divisionLink[0].kind"
                 :href="megaMenu.about.divisionLink[0].href"
               />
               <div
@@ -75,7 +75,7 @@
                 <div class="col-span-2 px-8">
                   <SdsMegaMenuItem
                     :label="megaMenu.researchAndDevelopment.topicsLink[0].label"
-                    :variant="megaMenu.researchAndDevelopment.topicsLink[0].variant"
+                    :kind="megaMenu.researchAndDevelopment.topicsLink[0].kind"
                     :href="megaMenu.researchAndDevelopment.topicsLink[0].href"
                   />
                 </div>
@@ -105,7 +105,7 @@
                 <SdsMegaMenuItem
                   :cta="[item.cta ?? false]"
                   :label="item.label"
-                  :variant="item.variant"
+                  :kind="item.kind"
                   :href="item.href"
                 >
                   <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
@@ -126,14 +126,14 @@
                 <SdsMegaMenuItem
                   :label="item.label"
                   :href="item.href"
-                  :variant="item.variant ? item.variant : 'simple'"
+                  :kind="item.kind ? item.kind : 'simple'"
                 />
               </div>
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
                 label="Blog"
-                variant="landing-page"
+                kind="landing-page"
                 href="https://sei.cmu.edu/our-work/projects/index.cfm"
               />
               <div
@@ -143,7 +143,7 @@
               >
                 <SdsMegaMenuItem
                   :label="blogPost.title"
-                  variant="descriptive"
+                  kind="descriptive"
                   :class="[blogPost.key === 0 ? '-mt-4' : '']"
                   href="https://sei.cmu.edu/publications/software-tools/index.cfm"
                 >
@@ -158,12 +158,12 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
                 label="News"
-                variant="landing-page"
+                kind="landing-page"
                 href="https://sei.cmu.edu/our-work/projects/index.cfm"
               />
               <SdsMegaMenuItem
                 label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                variant="descriptive"
+                kind="descriptive"
                 class="-mt-4"
                 href="https://sei.cmu.edu/news/index.cfm"
               >
@@ -194,7 +194,7 @@
                   :class="[index === 1 ? '-mt-4' : '', 'mb-2']"
                   :href="educationLink.href"
                   :label="educationLink.label"
-                  :variant="educationLink.variant"
+                  :kind="educationLink.kind"
                 >
                   <p
                     v-if="educationLink.description"
@@ -213,14 +213,14 @@
                 <SdsMegaMenuItem
                   :href="training.href"
                   :label="training.label"
-                  :variant="training.variant"
+                  :kind="training.kind"
                 />
               </div>
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
               <SdsMegaMenuItem
                 :label="megaMenu.education.eventLink[0].label"
-                :variant="megaMenu.education.eventLink[0].variant"
+                :kind="megaMenu.education.eventLink[0].kind"
                 :href="megaMenu.education.eventLink[0].href"
               />
               <div
@@ -231,7 +231,7 @@
                   :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
                   :href="event.href"
                   :label="event.label"
-                  :variant="event.variant"
+                  :kind="event.kind"
                 >
                   <template #left>
                     <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
@@ -262,7 +262,7 @@
               <SdsMegaMenuItem
                 :href="megaMenu.careers.careersLink[0].href"
                 :label="megaMenu.careers.careersLink[0].label"
-                :variant="megaMenu.careers.careersLink[0].variant"
+                :kind="megaMenu.careers.careersLink[0].kind"
               />
               <div
                 v-for="careerLink, index in megaMenu.careers.careersLinks"
@@ -272,7 +272,7 @@
                   :class="[index === 0 ? '-mt-4' : '', 'mb-2']"
                   :href="careerLink.href"
                   :label="careerLink.label"
-                  :variant="careerLink.variant"
+                  :kind="careerLink.kind"
                 >
                   <p
                     v-if="careerLink.description"
@@ -287,7 +287,7 @@
               <SdsMegaMenuItem
                 :href="megaMenu.careers.jobsLink[0].href"
                 :label="megaMenu.careers.jobsLink[0].label"
-                :variant="megaMenu.careers.jobsLink[0].variant"
+                :kind="megaMenu.careers.jobsLink[0].kind"
               />
               <div
                 v-for="row, index in megaMenu.careers.jobs"
@@ -302,7 +302,7 @@
                   <SdsMegaMenuItem
                     :href="job.href"
                     :label="job.label"
-                    :variant="job.variant"
+                    :kind="job.kind"
                   >
                     <p class="text-xs text-gray-800 dark:text-gray-300">
                       <span>Posted {{ job.posted }}</span>
@@ -1718,7 +1718,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/about/index.cfm",
               key: "about",
               label: "About",
-              variant: "landing-page",
+              kind: "landing-page",
             }
           ],
           aboutRows: [
@@ -1728,14 +1728,14 @@ export default defineComponent({
                 href: "https://sei.cmu.edu/about/leadership/index.cfm",
                 key: "leadership",
                 label: "Leadership",
-                variant: "descriptive"
+                kind: "descriptive"
               },
               {
                 description: "The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.",
                 href: "https://sei.cmu.edu/publications/annual-reviews/index.cfm",
                 key: "annual-reviews",
                 label: "Annual Reviews",
-                variant: "descriptive"
+                kind: "descriptive"
               },
             ],
             [
@@ -1744,14 +1744,14 @@ export default defineComponent({
                 href: "https://sei.cmu.edu/about/work-with-us/index.cfm",
                 key: "work-with-us",
                 label: "Work with Us",
-                variant: "descriptive"
+                kind: "descriptive"
               },
               {
                 description: "The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.",
                 href: "https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm",
                 key: "collaboration-with-cmu",
                 label: "Collaboration with CMU",
-                variant: "descriptive"
+                kind: "descriptive"
               },
             ],
           ],
@@ -1760,7 +1760,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/divisions/",
               key: "divisions",
               label: "Divisions",
-              variant: "landing-page",
+              kind: "landing-page",
             }
           ],
           divisionRows: [
@@ -1768,19 +1768,19 @@ export default defineComponent({
               href: "https://sei.cmu.edu/divisions/ai",
               key: "artificial-intelligence-division",
               label: "Artificial Intelligence (AI) Division",
-              variant: "simple",
+              kind: "simple",
             },
             {
               href: "https://sei.cmu.edu/divisions/cert",
               key: "cert-division",
               label: "CERT Division",
-              variant: "simple",
+              kind: "simple",
             },
             {
               href: "https://sei.cmu.edu/divisions/software-solutions",
               key: "software-solutions-division",
               label: "Software Solutions Division",
-              variant: "simple",
+              kind: "simple",
             },
           ],
         },
@@ -1790,7 +1790,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/our-work/all-topics/index.cfm",
               key: "topics",
               label: "Topics",
-              variant: "landing-page",
+              kind: "landing-page",
             }
           ],
           topicsColumns: [
@@ -1886,7 +1886,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/our-work/projects/index.cfm",
               key: "projects",
               label: "Projects",
-              variant: "descriptive"
+              kind: "descriptive"
             },
             {
               cta: true,
@@ -1894,7 +1894,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/publications/software-tools/index.cfm",
               key: "software-and-tools",
               label: "Software and Tools",
-              variant: "descriptive"
+              kind: "descriptive"
             },
           ]
         },
@@ -1904,7 +1904,7 @@ export default defineComponent({
               href: "https://sei.cmu.edu/publications/index.cfm",
               key: "publications-and-media",
               label: "Publications and Media",
-              variant: "landing-page"
+              kind: "landing-page"
             },
             {
               href: "https://sei.cmu.edu/publications/index.cfm",
@@ -1964,27 +1964,27 @@ export default defineComponent({
               href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
               key: "education",
               label: "Education",
-              variant: "landing-page"
+              kind: "landing-page"
             },
             {
               href: "",
               key: "credentials",
               label: "Credentials",
-              variant: "descriptive",
+              kind: "descriptive",
               description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
             },
             {
               href: "",
               key: "curricula",
               label: "Curricula",
-              variant: "descriptive",
+              kind: "descriptive",
               description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
             },
             {
               href: "",
               key: "license-sei-materials",
               label: "License SEI Materials",
-              variant: "descriptive",
+              kind: "descriptive",
               description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
             },
           ],
@@ -1993,7 +1993,7 @@ export default defineComponent({
               href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
               key: "training",
               label: "Training",
-              variant: "landing-page"
+              kind: "landing-page"
             },
             {
               href: "",
@@ -2026,7 +2026,7 @@ export default defineComponent({
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "events",
               label: "Events",
-              variant: "landing-page"
+              kind: "landing-page"
             }
           ],
           events: [
@@ -2038,7 +2038,7 @@ export default defineComponent({
               label: "Insider Threat Analyst",
               month: "Dec",
               startDay: "5",
-              variant: "descriptive",
+              kind: "descriptive",
             },
             {
               dateRange: "Nov 14-16, 2023",
@@ -2048,7 +2048,7 @@ export default defineComponent({
               label: "Insider Threat Program Evaluator",
               month: "Nov",
               startDay: "14",
-              variant: "descriptive"
+              kind: "descriptive"
             },
             {
               dateRange: "Nov 6-9, 2023",
@@ -2058,7 +2058,7 @@ export default defineComponent({
               label: "Advanced Topics in Incident Handling",
               month: "Nov",
               startDay: "6",
-              variant: "descriptive"
+              kind: "descriptive"
             },
           ]
         },
@@ -2068,7 +2068,7 @@ export default defineComponent({
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "careers",
               label: "Careers",
-              variant: "landing-page"
+              kind: "landing-page"
             }
           ],
           careersLinks: [
@@ -2077,14 +2077,14 @@ export default defineComponent({
               key: "internship-opportunities",
               label: "Internship Opportunities",
               description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
-              variant: "descriptive"
+              kind: "descriptive"
             },
             {
               href: "",
               key: "diversity-equity-and-inclusion",
               label: "Diversity, Equity and Inclusion",
               description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
-              variant: "descriptive"
+              kind: "descriptive"
             },
           ],
           jobsLink: [
@@ -2092,7 +2092,7 @@ export default defineComponent({
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "job-postings",
               label: "Job Postings",
-              variant: "landing-page"
+              kind: "landing-page"
             }
           ],
           jobs: [
@@ -2103,7 +2103,7 @@ export default defineComponent({
                 label: "Assistant Software Engineer",
                 posted: "Yesterday",
                 locations: "2 Locations",
-                variant: "descriptive"
+                kind: "descriptive"
               },
               {
                 href: "",
@@ -2111,7 +2111,7 @@ export default defineComponent({
                 label: "Senior Assurance Researcher",
                 posted: "2 Days Ago",
                 locations: "3 Locations",
-                variant: "descriptive"
+                kind: "descriptive"
               }
             ],
             [
@@ -2121,7 +2121,7 @@ export default defineComponent({
                 label: "Cybersecurity Operations Researcher",
                 posted: "Yesterday",
                 locations: "Arlington",
-                variant: "descriptive"
+                kind: "descriptive"
               },
               {
                 href: "",
@@ -2129,7 +2129,7 @@ export default defineComponent({
                 label: "Assistant Machine Learning Researcher",
                 posted: "3 Days Ago",
                 locations: "Pittsburgh",
-                variant: "descriptive"
+                kind: "descriptive"
               }
             ],
             [
@@ -2139,7 +2139,7 @@ export default defineComponent({
                 label: "Associate Cybersecurity Operations Researcher",
                 posted: "Yesterday",
                 locations: "Arlington",
-                variant: "descriptive"
+                kind: "descriptive"
               },
               {
                 href: "",
@@ -2147,7 +2147,7 @@ export default defineComponent({
                 label: "Lead Nuclear Surety Software Engineer",
                 posted: "6 Days Ago",
                 locations: "Pittsburgh",
-                variant: "descriptive"
+                kind: "descriptive"
               }
             ]
           ]

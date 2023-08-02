@@ -17,23 +17,23 @@ describe("MegaMenuItem.vue", () => {
     const wrapper = shallowMount(Component, { propsData });
     expect(wrapper.html()).toMatchSnapshot();
   });
-  it('matches snapshot with link variant "simple" prop assigned', () => {
+  it('matches snapshot with link kind "simple" prop assigned', () => {
     const propsData = {
-      variant: 'simple',
+      kind: 'simple',
     };
     const wrapper = shallowMount(Component, { propsData });
     expect(wrapper.html()).toMatchSnapshot();
   });
-  it('matches snapshot with link variant "descriptive" prop assigned', () => {
+  it('matches snapshot with link kind "descriptive" prop assigned', () => {
     const propsData = {
-      variant: 'descriptive',
+      kind: 'descriptive',
     };
     const wrapper = shallowMount(Component, { propsData });
     expect(wrapper.html()).toMatchSnapshot();
   });
-  it('matches snapshot with link variant "landing-page" prop assigned', () => {
+  it('matches snapshot with link kind "landing-page" prop assigned', () => {
     const propsData = {
-      variant: 'landing-page',
+      kind: 'landing-page',
     };
     const wrapper = shallowMount(Component, { propsData });
     expect(wrapper.html()).toMatchSnapshot();
