@@ -8,8 +8,4 @@ module.exports = {
       pattern: /col-start-(1|2|3|4|5|6|7)/,
     },
   ],
-  /* WIP on MegaMenu component */
-  plugins: [
-    require('./src/components/MegaMenu/megamenu')
-  ],
 };
