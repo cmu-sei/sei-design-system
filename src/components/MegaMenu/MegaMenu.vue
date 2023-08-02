@@ -32,8 +32,8 @@
           <svg
             :class="[
               isOpen || topLink.selected
-                ? 'rotate-180'
-                : '',
+                ? ''
+                : 'rotate-180',
               'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-all'
             ]"
             xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +89,7 @@ import { PropType, computed } from 'vue'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 const props = defineProps({
+  fullbleed: { type: Boolean, default: true },
   /**
    * Determines the array of "topLink" objects.
    *

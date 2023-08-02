@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MegaMenu.vue > matches snapshot 1`] = `
+<nav
+  class="flex whitespace-nowrap"
+  data-id="sds-megamenu"
+>
+  
+  
+</nav>
+`;
+
+exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `"<nav data-id=\\"sds-megamenu\\" class=\\"flex whitespace-nowrap\\"></nav>"`;
