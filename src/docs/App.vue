@@ -32,7 +32,7 @@
             viewBox="0 0 24 24"
             width="32"
             xmlns="http://www.w3.org/2000/svg"
-            @click="onClose"
+            @click="showPanel = false"
         >
           <path d="m12 20l-8-8l8-8l1.425 1.4l-5.6 5.6H20v2H7.825l5.6 5.6L12 20Z"
                 fill="currentColor" />
@@ -62,12 +62,12 @@
         <div class="space-x-2">
           <SdsButton
               variant="primary"
-              @click="showModal = false"
+              @click="showPanel= false"
           >Save
           </SdsButton>
           <SdsButton
               variant="default"
-              @click="showModal = false"
+              @click="showPanel = false"
           >Cancel
           </SdsButton>
         </div>
@@ -157,7 +157,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showPanel: true,
+      showPanel: false,
       Datepicker,
       collapsed: true,
       appSuite: 'MIS',
@@ -215,9 +215,6 @@ export default defineComponent({
     }
   },
   methods: {
-    onClose() {
-      this.showPanel = false
-    },
     navigate({group, item, event}: any) {
       event.preventDefault()
       this.sidebarNavigationItems = this.sidebarNavigationItems.map((i) => {
