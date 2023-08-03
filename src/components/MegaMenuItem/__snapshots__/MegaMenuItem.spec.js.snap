@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MegaMenuItem.vue > matches snapshot 1`] = `
+<a
+  class="link group w-full px-4 mb-8 text-sm"
+  data-id="sds-megamenuitem"
+>
+  <!---->
+  <div
+    class="flex flex-row gap-4"
+  >
+    <!---->
+    <div
+      class="flex flex-col gap-1"
+    >
+      <div
+        class="inline-flex group"
+      >
+        <p />
+        <!---->
+      </div>
+      <p>
+        
+        
+      </p>
+    </div>
+  </div>
+</a>
+`;
+
+exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop assigned 1`] = `
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 px-4 py-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-900\\">
+  <!---->
+  <div class=\\"flex flex-row gap-4\\">
+    <!---->
+    <div class=\\"flex flex-col gap-1\\">
+      <div class=\\"inline-flex group\\">
+        <p></p>
+        <!---->
+      </div>
+      <p></p>
+    </div>
+  </div>
+</a>"
+`;
+
+exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop assigned 1`] = `
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 text-lg mb-8 hover:no-underline\\">
+  <!---->
+  <div class=\\"flex flex-row gap-4\\">
+    <!---->
+    <div class=\\"flex flex-col gap-1\\">
+      <div class=\\"inline-flex group\\">
+        <p></p><svg class=\\"w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-200 group-hover:ml-4\\" xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"28\\" height=\\"32\\" viewBox=\\"0 0 448 512\\">
+          <path fill=\\"currentColor\\" d=\\"M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z\\"></path>
+        </svg>
+      </div>
+      <p></p>
+    </div>
+  </div>
+</a>"
+`;
+
+exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assigned 1`] = `
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\">
+  <!---->
+  <div class=\\"flex flex-row gap-4\\">
+    <!---->
+    <div class=\\"flex flex-col gap-1\\">
+      <div class=\\"inline-flex group\\">
+        <p></p>
+        <!---->
+      </div>
+      <p></p>
+    </div>
+  </div>
+</a>"
+`;
+
+exports[`MegaMenuItem.vue > matches snapshot with no props assigned 1`] = `
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\">
+  <!---->
+  <div class=\\"flex flex-row gap-4\\">
+    <!---->
+    <div class=\\"flex flex-col gap-1\\">
+      <div class=\\"inline-flex group\\">
+        <p></p>
+        <!---->
+      </div>
+      <p></p>
+    </div>
+  </div>
+</a>"
+`;
