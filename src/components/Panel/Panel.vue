@@ -1,7 +1,8 @@
 <template>
   <client-only>
     <teleport to="body">
-      <transition
+      <!-- Background -->
+      <Transition
           enter-active-class="transition-opacity delay-0 duration-75"
           enter-from-class="opacity-0"
           leave-active-class="transition-opacity delay-0 duration-75"
@@ -12,22 +13,14 @@
         <div v-if="showPanel"
              :class="[zIndexClass]"
              class="fixed inset-0 h-full w-full delay-500 inset-0 bg-black bg-opacity-75 transition-opacity" />
-      </transition>
+      </Transition>
 
+      <!-- Panel -->
       <div
           v-show="showPanel"
           ref="panelContainer"
           :class="[zIndexClass]"
-          class="
-              fixed
-              inset-0
-              h-full
-              px-2
-              py-0
-              overflow-auto
-              sds-panel
-              justify-between
-            "
+          class="fixed inset-0 h-full px-2 py-0 overflow-auto sds-panel justify-between"
           data-id="sds-panel"
           @keydown="checkKeyEvent"
           @mousedown.self="close"
@@ -40,6 +33,8 @@
             class="transform transition ease-in-out duration-500 sm:duration-700"
             @after-enter="showContent = true"
             @after-leave="showPanel = false">
+
+          <!-- Panel Content -->
           <div
               v-if="showContent"
               :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
@@ -66,13 +61,10 @@
                   v-uid
                   class="text-xl flex leading-tight"
               >
-                <div
-                    v-if="hasNavigationIconSlot"
-                >
+                <div v-if="hasNavigationIconSlot">
                   <!-- @slot Panel navigation icon. -->
                   <slot name="navigationIcon" />
                 </div>
-
                 <!-- @slot Panel title content. -->
                 <slot name="title" />
               </div>
