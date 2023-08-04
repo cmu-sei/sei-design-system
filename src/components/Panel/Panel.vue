@@ -31,7 +31,6 @@
             :leave-from-class="`${side === 'left' ? '-translate-x-0' : 'translate-x-0'}`"
             :leave-to-class="`${side === 'left' ? '-translate-x-full' : 'translate-x-full'}`"
             class="transform transition ease-in-out duration-500 sm:duration-700"
-            @after-enter="showContent = true"
             @after-leave="showPanel = false">
 
           <!-- Panel Content -->
