@@ -1,5 +1,6 @@
 <template>
   <table
+    :id="id || 'sds-table'"
     data-id="sds-table"
     class="table-prose dark:table-prose-invert"
   >
@@ -37,6 +38,9 @@
               :key="field.key"
               :class="{
                 [sortedColumnClass || '']: sortField === field.key,
+                'text-left': !field.align || field.align === 'left',
+                'text-center': field.align === 'center',
+                'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap select-none group"
             >
@@ -103,6 +107,9 @@
               :key="field.key"
               :class="{
                 [sortedColumnClass || '']: sortField === field.key,
+                'text-left': !field.align || field.align === 'left',
+                'text-center': field.align === 'center',
+                'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap space-x-1 select-none group"
             >
@@ -167,7 +174,12 @@
         v-for="item in sortedItems"
         :key="item.id"
       >
-        <tr>
+        <tr
+          :id="`${id || 'sds-table'}_tr_${item.id}`"
+          :class="{
+            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850': item.id === openDrawerID
+          }"
+        >
           <td
             v-if="enableDrawer"
             class="cursor-pointer w-4"
@@ -206,7 +218,14 @@
             v-for="key in displayedFieldKeys"
             :key="key"
           >
-            <component :is="cellElement(key) as unknown">
+            <component
+              :is="cellElement(key) as unknown"
+              :class="{
+                'text-left': displayedFields.find(i => i.key === key)?.align === 'left',
+                'text-center': displayedFields.find(i => i.key === key)?.align === 'center',
+                'text-right': displayedFields.find(i => i.key === key)?.align === 'right'
+              }"
+            >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
                 :name="`cell(${key})`"
@@ -220,8 +239,9 @@
           </template>
         </tr>
         <tr
-          v-if="enableDrawer"
-          :class="[openDrawerID !== item.id && 'collapse']"
+          v-if="item.id === openDrawerID"
+          :id="`${id || 'sds-table'}_tr_${item.id}_drawer`"
+          class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850"
         >
           <td :colspan="displayedFieldKeys.length + 1">
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -237,7 +257,7 @@
 </template>
 
 <script lang="ts">
-import { Component, defineComponent, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 interface TableField {
   key: string
@@ -246,6 +266,7 @@ interface TableField {
   sortable?: boolean | undefined
   hidden?: boolean | undefined
   header?: boolean | undefined
+  align?: 'left' | 'center' | 'right' | undefined
   fields?: TableField[] | undefined
 }
 
@@ -257,6 +278,13 @@ interface TableItem {
 export default defineComponent({
   name: 'SdsTable',
   props: {
+    /**
+     * A unique id used as a prefix for unique table row ids.
+     */
+    id: {
+      type: String,
+      default: null
+    },
     /**
      * An array of objects. Each object must have a unique "id" but everything else is optional.
      *
