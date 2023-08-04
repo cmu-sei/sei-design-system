@@ -1348,6 +1348,7 @@
         </sds-radio-group>
       </div>
       <sds-table
+        id="table_example"
         :fields="fields"
         :items="tableItems"
         :on-sort="sortTableItems"
@@ -1428,7 +1429,7 @@ export default defineComponent({
                         { key: "author", label: "Author", sortable: true, format: (id: string) => `${id} is the author` }
                     ]
                 },
-                { key: "lastModified", label: "Last Modified", sortable: true, format: (date: Date) => date.toLocaleDateString() },
+                { key: "lastModified", label: "Last Modified", align: "right", sortable: true, format: (date: Date) => date.toLocaleDateString() },
                 { key: "actions", label: "Actions" }
             ],
             tableItems: [
