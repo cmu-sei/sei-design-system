@@ -304,17 +304,24 @@ export default defineComponent({
      *
      * Each object must contain a unique "key" and a "label" for use in the table column header.
      *
-     * Optional object properties include a "sortable" boolean and a "format" function. The "sortable"
-     * key indicates whether a table column is sortable. The "format" key allows you to customize
-     * the way the item's data appears in the table.
+     * Optional object properties include a "sortable" boolean, a "format" function, and an "align"
+     * string. The "sortable" key indicates whether a table column is sortable. The "format" key allows for
+     * customization of the item's data. The "align" key enables you to align the content of that field's
+     * header and content to the "left", "center", or "right".
      *
      * Basic example object (not sortable):
      *
      * **{ key: "id", label: "ID" }**
      *
-     * Advanced example object (sortable with custom formatter):
+     * Advanced example object (sortable, custom formatter, and alignment):
      *
-     * **{ key: "lastModifiedDate", label: 'Last Modified', sortable: true, format: (date) => date.toLocaleDateString() }**
+     * **{
+     *   key: "lastModifiedDate",
+     *   label: "Last Modified",
+     *   align: "right"
+     *   sortable: true,
+     *   format: (date) => date.toLocaleDateString()
+     * }**
      */
     fields: {
       type: Array as PropType<TableField[]>,
