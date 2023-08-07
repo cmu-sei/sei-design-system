@@ -9,7 +9,7 @@
       >
         <div
           v-if="showModal"
-          data-id="sds-modal"
+          data-id="sds-modal-backdrop"
           class="
             fixed
             inset-0
@@ -17,7 +17,6 @@
             h-full
             overflow-auto
             bg-black bg-opacity-50
-            sds-panel
           "
           :class="[zIndexClass]"
         >
@@ -39,6 +38,7 @@
           v-if="showModal"
           ref="modalContainer"
           role="dialog"
+          data-id="sds-modal"
           :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
           class="fixed inset-0 z-50 p-2"
           @mousedown.self="close"

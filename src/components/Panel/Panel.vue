@@ -9,7 +9,7 @@
       >
         <div
           v-if="showPanel"
-          data-id="sds-panel"
+          data-id="sds-panel-backdrop"
           class="
             fixed
             inset-0
@@ -19,7 +19,6 @@
             py-0
             overflow-auto
             bg-black bg-opacity-50
-            sds-panel
           "
           :class="[zIndexClass]"
         >
@@ -43,6 +42,7 @@
           v-if="showPanel"
           ref="panelContainer"
           role="dialog"
+          data-id="sds-panel"
           :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
           :class="{
             [zIndexClass]: true,
