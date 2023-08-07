@@ -4,117 +4,121 @@
       <transition
         enter-active-class="transition-opacity duration-75"
         enter-from-class="opacity-0"
-        leave-active-class="transition-opacity duration-75"
+        leave-active-class="transition-opacity duration-75 delay-75"
         leave-to-class="opacity-0"
-        @after-enter="showContent = true"
-        @after-leave="showModal = false"
+      >
+        <div
+          v-if="showModal"
+          data-id="sds-modal-backdrop"
+          class="
+            fixed
+            inset-0
+            block
+            h-full
+            overflow-auto
+            bg-black bg-opacity-50
+          "
+          :class="[zIndexClass]"
+        >
+          <button
+            class="absolute inset-0"
+            @click="close"
+          >
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+      </transition>
+      <transition
+        enter-active-class="transition-all duration-75 delay-75"
+        enter-from-class="transform scale-90 opacity-0"
+        leave-active-class="transition-all duration-75"
+        leave-to-class="transform scale-90 opacity-0"
       >
         <div
           v-if="showModal"
           ref="modalContainer"
+          role="dialog"
           data-id="sds-modal"
-          class="
-        fixed
-        inset-0
-        block
-        h-full
-        px-2
-        py-0
-        overflow-auto
-        bg-black bg-opacity-50
-        sds-modal
-      "
-          :class="[zIndexClass]"
+          :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
+          class="fixed inset-0 z-50 p-2"
           @mousedown.self="close"
           @keydown="checkKeyEvent"
         >
-          <transition
-            enter-active-class="transition-all duration-75"
-            enter-from-class="transform scale-90 opacity-0"
-            leave-active-class="transition-all duration-75"
-            leave-to-class="transform scale-90 opacity-0"
-            @after-leave="showModal = false"
+          <div
+            class="
+              relative
+              block
+              w-full
+              mx-auto
+              bg-white
+              border
+              rounded
+              shadow-xl
+              dark:bg-gray-900 dark:border-gray-700
+              md:my-8
+            "
+            :class="{
+              [zIndexClass]: true,
+              'md:max-w-sm': size === 'sm',
+              'md:max-w-xl': size === 'md',
+              'md:max-w-xl lg:max-w-4xl': size === 'lg',
+              'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
+            }"
           >
-            <div
-              v-if="showContent"
-              role="dialog"
-              :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
-              class="
-            relative
-            block
-            w-full
-            mx-auto
-            my-2
-            bg-white
-            border
-            rounded
-            shadow-xl
-            dark:bg-gray-900 dark:border-gray-700
-            md:my-8
-          "
-              :class="{
-                [zIndexClass]: true,
-                'md:max-w-sm': size === 'sm',
-                'md:max-w-xl': size === 'md',
-                'md:max-w-xl lg:max-w-4xl': size === 'lg',
-                'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
-              }"
-            >
-              <header class="flex items-center p-6 pb-0">
-                <div
-                  v-if="hasTitleSlot"
-                  ref="titleWrapper"
-                  v-uid
-                  class="text-xl leading-tight"
-                >
-                  <!-- @slot Modal title content. -->
-                  <slot name="title" />
-                </div>
-                <button
-                  v-focus
-                  aria-label="close"
-                  class="
-                inline-block
-                p-0
-                ml-auto
-                text-3xl text-gray-500
-                bg-transparent
-                border-0
-                cursor-pointer
-                hover:text-gray-700 hover:outline-none
-                focus:text-gray-700 focus:outline-none
-                dark:hover:text-gray-300 dark:focus:text-gray-300
-                active:text-gray-500
-                dark:active:text-gray-600
-              "
-                  @click="close"
-                >
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </header>
-              <main class="p-6">
-                <!-- @slot Modal content. -->
-                <slot />
-              </main>
-              <footer
-                v-if="hasFooterSlot"
-                class="p-6 pt-0"
+            <header class="flex items-center p-6 pb-0">
+              <div
+                v-if="hasTitleSlot"
+                ref="titleWrapper"
+                v-uid
+                class="text-xl leading-tight"
               >
-                <!-- @slot Modal footer content. -->
-                <slot name="footer" />
-              </footer>
-            </div>
-          </transition>
+                <!-- @slot Modal title content. -->
+                <slot name="title" />
+              </div>
+              <button
+                v-focus
+                aria-label="close"
+                class="
+              inline-block
+              p-0
+              ml-auto
+              text-3xl text-gray-500
+              bg-transparent
+              border-0
+              cursor-pointer
+              hover:text-gray-700 hover:outline-none
+              focus:text-gray-700 focus:outline-none
+              dark:hover:text-gray-300 dark:focus:text-gray-300
+              active:text-gray-500
+              dark:active:text-gray-600
+            "
+                @click="close"
+              >
+                <svg
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </header>
+            <main class="p-6">
+              <!-- @slot Modal content. -->
+              <slot />
+            </main>
+            <footer
+              v-if="hasFooterSlot"
+              class="p-6 pt-0"
+            >
+              <!-- @slot Modal footer content. -->
+              <slot name="footer" />
+            </footer>
+          </div>
         </div>
       </transition>
     </teleport>
@@ -163,7 +167,6 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     const titleWrapper = ref(null)
     const modalContainer = ref(null)
-    const showContent = ref(false)
 
     const hasTitleSlot = computed(() => {
       return !!slots.title;
@@ -225,7 +228,7 @@ export default defineComponent({
     }
 
     const close = () => {
-      showContent.value = false;
+      showModal.value = false;
     }
 
     const handleEscKey = (e: KeyboardEvent) => {
@@ -272,7 +275,7 @@ export default defineComponent({
     }
 
     watch(showModal, (value) => {
-      showContent.value = (value as boolean);
+      showModal.value = (value as boolean);
       if (typeof document === "undefined") return;
       if (value) {
         makeDomChanges();
@@ -284,7 +287,6 @@ export default defineComponent({
     return {
       titleWrapper,
       modalContainer,
-      showContent,
 
       hasTitleSlot,
       hasFooterSlot,
