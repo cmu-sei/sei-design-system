@@ -3,14 +3,17 @@
     <div class="input-group my-10">
       <SdsInput />
       <SdsInput />
+      <SdsInput />
+      <SdsInput />
       <SdsButton
-        disabled
         kind="primary"
       >
         I am Testing A11y
       </SdsButton>
+      <SdsInput />
     </div>
     <div class="input-group my-10">
+      <SdsInput />
       <SdsInput />
       <SdsButton
         disabled
