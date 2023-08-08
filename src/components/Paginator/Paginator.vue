@@ -65,10 +65,9 @@
         >
           <button
             :class="{
-              'shadow-none border-transparent': page === '...',
-              active: currentPage === page,
+              'shadow-none border-transparent': page === '...'
             }"
-            :disabled="page === '...' || loading"
+            :disabled="page === '...' || loading || currentPage === page"
             class="btn btn-default"
             @click.prevent="goToPage(page, $event)"
           >
