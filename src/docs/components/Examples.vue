@@ -1,12 +1,27 @@
 <template>
   <div class="guide">
-    <SdsButton
-      disabled
-      kind="primary"
-      class="my-10"
-    >
-      I am Testing A11y
-    </SdsButton>
+    <div class="input-group my-10">
+      <SdsInput />
+      <SdsInput />
+      <SdsButton
+        disabled
+        kind="primary"
+      >
+        I am Testing A11y
+      </SdsButton>
+    </div>
+    <div class="input-group my-10">
+      <SdsInput />
+      <SdsButton
+        disabled
+        kind="primary"
+      >
+        I am Testing A11y
+      </SdsButton>
+    </div>
+    <div class="input-group my-10">
+      <SdsInput />
+    </div>
     <p>MegaMenu</p>
     <div class="border-b-2 my-10 -ml-4 -mr-4 sticky top-0 z-50 text-black dark:text-white bg-white dark:bg-gray-850">
       <SdsMegaMenu
