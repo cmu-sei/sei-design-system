@@ -103,7 +103,7 @@
           </main>
           <footer
             v-if="hasFooterSlot"
-            class="flex flex-shrink-0 sticky w-full bg-white dark:bg-black  bottom-0 p-6"
+            class="flex flex-shrink-0 sticky w-full bottom-0 p-6"
           >
             <!-- @slot Panel footer content. -->
             <slot name="footer" />
