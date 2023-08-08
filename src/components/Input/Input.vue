@@ -1,5 +1,8 @@
 <template>
-  <div data-id="sds-input">
+  <div
+    data-id="sds-input"
+    class="w-full"
+  >
     <input
       :id="id"
       v-model="text"
