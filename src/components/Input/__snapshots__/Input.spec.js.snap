@@ -2,6 +2,7 @@
 
 exports[`Input > should match its default snapshot 1`] = `
 <div
+  class="w-full"
   data-id="sds-input"
 >
   <input
