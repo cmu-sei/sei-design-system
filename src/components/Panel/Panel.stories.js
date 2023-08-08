@@ -16,7 +16,7 @@ export default {
   component: SdsPanel,
   argTypes: {
     size: {
-      options: ['sm', 'md', 'auto'],
+      options: [ 'auto', 'sm', 'md', 'lg', 'xl'],
       control: { type: 'select' }
     },
     side: {
