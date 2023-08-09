@@ -3,14 +3,17 @@
     <div class="input-group my-10">
       <SdsInput />
       <SdsInput />
+      <SdsInput />
+      <SdsInput />
       <SdsButton
-        disabled
         kind="primary"
       >
         I am Testing A11y
       </SdsButton>
+      <SdsInput />
     </div>
     <div class="input-group my-10">
+      <SdsInput />
       <SdsInput />
       <SdsButton
         disabled
@@ -20,7 +23,7 @@
       </SdsButton>
     </div>
     <div class="input-group my-10">
-      <SdsInput />
+      <SdsInput count-characters />
     </div>
     <p>MegaMenu</p>
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">

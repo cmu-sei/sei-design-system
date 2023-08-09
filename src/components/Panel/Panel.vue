@@ -46,13 +46,15 @@
           :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
           :class="{
             [zIndexClass]: true,
-            'md:max-w-sm': size === 'sm',
-            'md:max-w-xl': size === 'md',
-            'md:max-w-fit': size === 'auto',
+            'max-w-fit': size === 'auto',
+            'max-w-sm': size === 'sm',
+            'max-w-md': size === 'md',
+            'max-w-lg': size === 'lg',
+            'max-w-xl': size === 'xl',
             'right-0 rounded-r-none': side === 'right',
             'left-0 rounded-l-none': side === 'left'
           }"
-          class="fixed flex flex-col inset-y-0 max-w-full w-full bg-white overflow-y-scroll border rounded shadow-xl dark:bg-gray-900 dark:border-gray-700"
+          class="fixed flex flex-col inset-y-0 w-full bg-white overflow-y-scroll border rounded shadow-xl dark:bg-gray-900 dark:border-gray-700"
           @keydown="checkKeyEvent"
         >
           <header class="flex items-center p-6 pb-0">
@@ -103,7 +105,7 @@
           </main>
           <footer
             v-if="hasFooterSlot"
-            class="flex flex-shrink-0 sticky w-full bg-white dark:bg-black  bottom-0 p-6"
+            class="flex flex-shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur"
           >
             <!-- @slot Panel footer content. -->
             <slot name="footer" />
@@ -144,7 +146,7 @@ export default defineComponent({
      * Determines the size of the panel.
      */
     size: {
-      type: String as PropType<'md' | 'sm' | 'auto'>,
+      type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto'>,
       default: "md",
     },
     /**
