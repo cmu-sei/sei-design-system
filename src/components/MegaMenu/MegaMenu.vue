@@ -1,40 +1,34 @@
 <template>
   <nav
+    ref="target"
     data-id="sds-megamenu"
-    class="flex whitespace-nowrap"
+    class="w-full flex flex-col h-0"
   >
-    <floating-ui
-      v-for="topLink in topLinks"
-      :key="topLink.key"
-      :offset="0"
-      :overflow-padding="0"
-      placement="bottom"
-      popper-class="absolute w-full z-40 shadow-lg border-t-2 border-gray-200 bg-white dark:bg-gray-850"
-      hide-arrow
-      shift
-    >
-      <template #trigger="{ isOpen, toggle }">
+    <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850">
+      <div class="flex flex-row gap-x-8 px-8 container mx-auto">
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
+          v-for="topLink in topLinks"
+          :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible"
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :class="[
-            isOpen || topLink.selected
+            topLink.selected
               ? 'text-red-500 border-red-500 dark:text-red-200 dark:border-red-200'
-              : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200'
+              : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200',
+            `py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none ${topLink.key}`
           ]"
-          @click="changeMenuPanel(topLink, toggle, $event)"
+          @click="changeMenuPanel(topLink, $event)"
         >
           {{ topLink.title }}
           <svg
             :class="[
-              isOpen || topLink.selected
+              topLink.selected
                 ? ''
                 : 'rotate-180',
-              'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-all'
+              'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-transform'
             ]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 600 500"
@@ -45,18 +39,48 @@
             />
           </svg>
         </component>
-      </template>
-      <template #default>
-        <div class="w-full text-black dark:text-white bg-white dark:bg-gray-950">
+      </div>
+    </div>
+    <transition
+      enter-active-class="transition-all duration-1000 ease"
+      enter-from-class="opacity-0 max-h-0"
+      enter-to-class="opacity-100 max-h-none"
+      leave-active-class="transition-all duration-1000 ease"
+      leave-from-class="opacity-100 max-h-none"
+      leave-to-class="opacity-0 max-h-0'"
+    >
+      <div
+        v-if="isOpen"
+        class="w-full relative h-auto transition-transform duration-1000 ease"
+      >
+        <div
+          v-for="topLink in topLinks"
+          :key="topLink.key"
+          :class="[
+            topLink.selected
+              ? 'z-30'
+              : 'z-10',
+            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
+          ]"
+        >
           <div class="container mx-auto">
-            <slot
-              v-if="topLink.selected"
-              :name="`panel(${topLink.key})`"
-            />
+            <transition
+              enter-active-class="transition-all duration-50 ease"
+              enter-from-class="opacity-50"
+              enter-to-class="opacity-100"
+              leave-active-class="transition-all duration-50 ease"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-50"
+            >
+              <slot
+                v-if="topLink.selected"
+                :name="`panel(${topLink.key})`"
+              />
+            </transition>
           </div>
         </div>
-      </template>
-    </floating-ui>
+      </div>
+    </transition>
   </nav>
 </template>
 
@@ -80,8 +104,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
-import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import { PropType, computed, ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -106,8 +130,8 @@ const props = defineProps({
   modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
 })
 
+/* Used to emit model update */
 const emit = defineEmits(['update:model-value', 'change'])
-
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {
@@ -115,26 +139,41 @@ const topLinks = computed({
   },
   /* Set SdsMegaMenu modelValue property */
   set(value: ITopLink[]) {
-    /**
-     * Emmitted when the v-model has changed.
-     */
+    /* Emmitted when the v-model has changed. */
     emit('update:model-value', value)
   }
 })
 
-const changeMenuPanel = async (topLink: ITopLink, toggle: Function, event: Event) => {
+/* Used to track mega menu open/closed */
+const isOpen = ref(false)
+
+/* Needed for "onClickOutside" event */
+const target = ref(null)
+/* Close the mega menu when clicking somewhere on the document
+ * outside the mega menu component */
+onClickOutside(target, (_event: Event) => {
+  /* Deselect all mega menu panels */
+  topLinks.value = topLinks.value.map(i => {
+    i.selected = false
+    return i
+  })
+})
+
+/* Callback run when a topLink of the mega menu is clicked */
+const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
   if (topLink.tag === 'a' && topLink.href) {
     /* Treat anchor tags as normal links */
     return true
   } else {
     /* Prevent default and change the active top-level navigation link */
     event.preventDefault()
+    /* Set the selected menu item, or deselect if already selected */
     topLinks.value = topLinks.value.map((i) => {
-      i.selected = topLink.key === i.key
+      i.selected = i.selected ? false : topLink.key === i.key
+      if (isOpen.value === false)
+        isOpen.value = i.selected ? true : false
       return i
     })
-    /* Toggle visibility */
-    toggle()
   }
 }
 </script>

@@ -23,10 +23,10 @@
       <SdsInput />
     </div>
     <p>MegaMenu</p>
-    <div class="border-b-2 my-10 -ml-4 -mr-4 sticky top-0 z-50 text-black dark:text-white bg-white dark:bg-gray-850">
+    <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
         v-model="megaMenu.topLinks"
-        class="gap-x-8 mx-auto container w-full"
+        class="flex w-full"
         @change="changeTab"
       >
         <template #panel(about)>
@@ -118,7 +118,7 @@
                 class="mb-4"
               >
                 <SdsMegaMenuItem
-                  :cta="[item.cta ?? false]"
+                  :cta="item.cta ?? false"
                   :label="item.label"
                   :kind="item.kind"
                   :href="item.href"
@@ -272,7 +272,7 @@
           </div>
         </template>
         <template #panel(careers)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 px-8 -mx-4">
+          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
             <div class="col-span-1 px-8">
               <SdsMegaMenuItem
                 :href="megaMenu.careers.careersLink[0].href"
