@@ -2,10 +2,10 @@
   <nav
     ref="target"
     data-id="sds-megamenu"
-    class="w-full flex flex-col h-0"
+    class="w-full flex flex-col"
   >
     <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850">
-      <div class="flex flex-row gap-x-8 px-8 container mx-auto">
+      <div class="flex flex-row gap-x-8 px-8 h-12 container mx-auto">
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
@@ -41,46 +41,35 @@
         </component>
       </div>
     </div>
-    <transition
-      enter-active-class="transition-all duration-1000 ease"
-      enter-from-class="opacity-0 max-h-0"
-      enter-to-class="opacity-100 max-h-none"
-      leave-active-class="transition-all duration-1000 ease"
-      leave-from-class="opacity-100 max-h-none"
-      leave-to-class="opacity-0 max-h-0'"
+    <div
+      id="panelContainer"
+      class="w-full relative"
     >
       <div
-        v-if="isOpen"
-        class="w-full relative h-auto transition-transform duration-1000 ease"
+        v-for="topLink in topLinks"
+        :key="topLink.key"
+        :class="[
+          topLink.selected
+            ? 'z-30'
+            : 'z-10',
+          'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
+        ]"
       >
-        <div
-          v-for="topLink in topLinks"
-          :key="topLink.key"
-          :class="[
-            topLink.selected
-              ? 'z-30'
-              : 'z-10',
-            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
-          ]"
+        <transition
+          enter-active-class="transition-[transform_400ms,colors_50ms] ease"
+          enter-from-class="max-h-0 opacity-25"
+          enter-to-class="max-h-screen opacity-100"
+          leave-active-class="transition-[transform_400ms,colors_50ms] ease"
+          leave-from-class="opacity-25 max-h-screen"
+          leave-to-class="opacity-0 max-h-0"
         >
-          <div class="container mx-auto">
-            <transition
-              enter-active-class="transition-all duration-50 ease"
-              enter-from-class="opacity-50"
-              enter-to-class="opacity-100"
-              leave-active-class="transition-all duration-50 ease"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-50"
-            >
-              <slot
-                v-if="topLink.selected"
-                :name="`panel(${topLink.key})`"
-              />
-            </transition>
-          </div>
-        </div>
+          <slot
+            v-if="topLink.selected"
+            :name="`panel(${topLink.key})`"
+          />
+        </transition>
       </div>
-    </transition>
+    </div>
   </nav>
 </template>
 
@@ -146,6 +135,7 @@ const topLinks = computed({
 
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
+const isOpenDelay = ref(false)
 
 /* Needed for "onClickOutside" event */
 const target = ref(null)
@@ -157,6 +147,7 @@ onClickOutside(target, (_event: Event) => {
     i.selected = false
     return i
   })
+  setOpenValues('close')
 })
 
 /* Callback run when a topLink of the mega menu is clicked */
@@ -170,10 +161,34 @@ const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
     /* Set the selected menu item, or deselect if already selected */
     topLinks.value = topLinks.value.map((i) => {
       i.selected = i.selected ? false : topLink.key === i.key
-      if (isOpen.value === false)
-        isOpen.value = i.selected ? true : false
       return i
     })
+
+    setOpenValues()
   }
+}
+
+const setOpenValues = (toggle: string = '') => {
+  if (toggle === 'close') {
+    isOpen.value = false
+  } else {
+    let selected: number = 0
+    topLinks.value.forEach((link) => {
+      if (link.selected) {
+        selected++
+      }
+    })
+
+    if (selected) {
+      isOpen.value = true
+    } else {
+      isOpen.value = false
+    }
+  }
+
+  /* Get the "isOpen" value, but get it a moment later */
+  setTimeout(() => {
+    isOpenDelay.value = isOpen.value
+  }, 300)
 }
 </script>
