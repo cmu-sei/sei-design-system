@@ -2,12 +2,34 @@
 
 exports[`MegaMenu.vue > matches snapshot 1`] = `
 <nav
-  class="flex whitespace-nowrap"
+  class="w-full flex flex-col"
   data-id="sds-megamenu"
 >
-  
-  
+  <div
+    class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850"
+  >
+    <div
+      class="flex flex-row gap-x-8 px-8 h-12 container mx-auto"
+    >
+      
+      
+    </div>
+  </div>
+  <div
+    class="w-full relative"
+    id="panelContainer"
+  >
+    
+    
+  </div>
 </nav>
 `;
 
-exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `"<nav data-id=\\"sds-megamenu\\" class=\\"flex whitespace-nowrap\\"></nav>"`;
+exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
+"<nav data-id=\\"sds-megamenu\\" class=\\"w-full flex flex-col\\">
+  <div class=\\"w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850\\">
+    <div class=\\"flex flex-row gap-x-8 px-8 h-12 container mx-auto\\"></div>
+  </div>
+  <div id=\\"panelContainer\\" class=\\"w-full relative\\"></div>
+</nav>"
+`;

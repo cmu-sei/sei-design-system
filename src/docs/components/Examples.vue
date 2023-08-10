@@ -26,308 +26,318 @@
       <SdsInput count-characters />
     </div>
     <p>MegaMenu</p>
-    <div class="border-b-2 my-10 -ml-4 -mr-4 sticky top-0 z-50 text-black dark:text-white bg-white dark:bg-gray-850">
+    <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
         v-model="megaMenu.topLinks"
-        class="gap-x-8 mx-auto container w-full"
+        class="flex w-full"
         @change="changeTab"
       >
         <template #panel(about)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-2">
-              <div class="grid grid-cols-2 gap-2">
-                <div class="col-span-2 px-8">
-                  <SdsMegaMenuItem
-                    :label="megaMenu.about.aboutLink[0].label"
-                    :kind="megaMenu.about.aboutLink[0].kind"
-                    :href="megaMenu.about.aboutLink[0].href"
-                  />
-                </div>
-                <div
-                  v-for="row, index in megaMenu.about.aboutRows"
-                  :key="index"
-                  class="-mt-6"
-                >
+          <div class="mx-auto container">
+            <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+              <div class="col-span-2">
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="col-span-2 px-8">
+                    <SdsMegaMenuItem
+                      :label="megaMenu.about.aboutLink[0].label"
+                      :kind="megaMenu.about.aboutLink[0].kind"
+                      :href="megaMenu.about.aboutLink[0].href"
+                    />
+                  </div>
                   <div
-                    v-for="item in row"
-                    :key="item.key"
-                    class="mb-4"
+                    v-for="row, index in megaMenu.about.aboutRows"
+                    :key="index"
+                    class="-mt-6"
                   >
-                    <div class="col-span-1 px-8">
-                      <SdsMegaMenuItem
-                        :label="item.label"
-                        :kind="item.kind"
-                        :href="item.href"
-                      >
-                        <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                          {{ item.description }}
-                        </p>
-                      </SdsMegaMenuItem>
+                    <div
+                      v-for="item in row"
+                      :key="item.key"
+                      class="mb-4"
+                    >
+                      <div class="col-span-1 px-8">
+                        <SdsMegaMenuItem
+                          :label="item.label"
+                          :kind="item.kind"
+                          :href="item.href"
+                        >
+                          <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
+                            {{ item.description }}
+                          </p>
+                        </SdsMegaMenuItem>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                :label="megaMenu.about.divisionLink[0].label"
-                :kind="megaMenu.about.divisionLink[0].kind"
-                :href="megaMenu.about.divisionLink[0].href"
-              />
-              <div
-                v-for="division in megaMenu.about.divisionRows"
-                :key="division.key"
-              >
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
                 <SdsMegaMenuItem
-                  :label="division.label"
-                  :href="division.href"
+                  :label="megaMenu.about.divisionLink[0].label"
+                  :kind="megaMenu.about.divisionLink[0].kind"
+                  :href="megaMenu.about.divisionLink[0].href"
                 />
+                <div
+                  v-for="division in megaMenu.about.divisionRows"
+                  :key="division.key"
+                >
+                  <SdsMegaMenuItem
+                    :label="division.label"
+                    :href="division.href"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </template>
         <template #panel(research-and-development)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-2">
-              <div class="grid grid-cols-2 gap-x-2">
-                <div class="col-span-2 px-8">
-                  <SdsMegaMenuItem
-                    :label="megaMenu.researchAndDevelopment.topicsLink[0].label"
-                    :kind="megaMenu.researchAndDevelopment.topicsLink[0].kind"
-                    :href="megaMenu.researchAndDevelopment.topicsLink[0].href"
-                  />
-                </div>
-                <template
-                  v-for="column, index in megaMenu.researchAndDevelopment.topicsColumns"
-                  :key="index"
-                >
-                  <div
-                    v-for="topic in column"
-                    :key="topic.key"
-                    class="col-span-1 px-8"
-                  >
+          <div class="mx-auto container">
+            <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+              <div class="col-span-2">
+                <div class="grid grid-cols-2 gap-x-2">
+                  <div class="col-span-2 px-8">
                     <SdsMegaMenuItem
-                      :label="topic.title"
-                      :href="topic.href"
+                      :label="megaMenu.researchAndDevelopment.topicsLink[0].label"
+                      :kind="megaMenu.researchAndDevelopment.topicsLink[0].kind"
+                      :href="megaMenu.researchAndDevelopment.topicsLink[0].href"
                     />
                   </div>
-                </template>
+                  <template
+                    v-for="column, index in megaMenu.researchAndDevelopment.topicsColumns"
+                    :key="index"
+                  >
+                    <div
+                      v-for="topic in column"
+                      :key="topic.key"
+                      class="col-span-1 px-8"
+                    >
+                      <SdsMegaMenuItem
+                        :label="topic.title"
+                        :href="topic.href"
+                      />
+                    </div>
+                  </template>
+                </div>
               </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <div
-                v-for="item in megaMenu.researchAndDevelopment.extra"
-                :key="item.key"
-                class="mb-4"
-              >
-                <SdsMegaMenuItem
-                  :cta="[item.cta ?? false]"
-                  :label="item.label"
-                  :kind="item.kind"
-                  :href="item.href"
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+                <div
+                  v-for="item in megaMenu.researchAndDevelopment.extra"
+                  :key="item.key"
+                  class="mb-4"
                 >
-                  <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                    {{ item.description }}
-                  </p>
-                </SdsMegaMenuItem>
+                  <SdsMegaMenuItem
+                    :cta="item.cta ?? false"
+                    :label="item.label"
+                    :kind="item.kind"
+                    :href="item.href"
+                  >
+                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
+                      {{ item.description }}
+                    </p>
+                  </SdsMegaMenuItem>
+                </div>
               </div>
             </div>
           </div>
         </template>
         <template #panel(publications-and-media)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-1 px-8">
-              <div
-                v-for="item in megaMenu.publicationsAndMedia.links"
-                :key="item.key"
-              >
-                <SdsMegaMenuItem
-                  :label="item.label"
-                  :href="item.href"
-                  :kind="item.kind ? item.kind : 'simple'"
-                />
-              </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                label="Blog"
-                kind="landing-page"
-                href="https://sei.cmu.edu/our-work/projects/index.cfm"
-              />
-              <div
-                v-for="blogPost in megaMenu.publicationsAndMedia.blogPosts"
-                :key="blogPost.key"
-                class="mb-2"
-              >
-                <SdsMegaMenuItem
-                  :label="blogPost.title"
-                  kind="descriptive"
-                  :class="[blogPost.key === 0 ? '-mt-4' : '']"
-                  href="https://sei.cmu.edu/publications/software-tools/index.cfm"
+          <div class="mx-auto container">
+            <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+              <div class="col-span-1 px-8">
+                <div
+                  v-for="item in megaMenu.publicationsAndMedia.links"
+                  :key="item.key"
                 >
-                  <p class="uppercase text-xs mt-2 text-gray-800 dark:text-gray-300">
-                    <span>{{ blogPost.published }}</span>
-                    <span> • </span>
-                    <span>{{ blogPost.author }}</span>
-                  </p>
+                  <SdsMegaMenuItem
+                    :label="item.label"
+                    :href="item.href"
+                    :kind="item.kind ? item.kind : 'simple'"
+                  />
+                </div>
+              </div>
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+                <SdsMegaMenuItem
+                  label="Blog"
+                  kind="landing-page"
+                  href="https://sei.cmu.edu/our-work/projects/index.cfm"
+                />
+                <div
+                  v-for="blogPost in megaMenu.publicationsAndMedia.blogPosts"
+                  :key="blogPost.key"
+                  class="mb-2"
+                >
+                  <SdsMegaMenuItem
+                    :label="blogPost.title"
+                    kind="descriptive"
+                    :class="[blogPost.key === 0 ? '-mt-4' : '']"
+                    href="https://sei.cmu.edu/publications/software-tools/index.cfm"
+                  >
+                    <p class="uppercase text-xs mt-2 text-gray-800 dark:text-gray-300">
+                      <span>{{ blogPost.published }}</span>
+                      <span> • </span>
+                      <span>{{ blogPost.author }}</span>
+                    </p>
+                  </SdsMegaMenuItem>
+                </div>
+              </div>
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+                <SdsMegaMenuItem
+                  label="News"
+                  kind="landing-page"
+                  href="https://sei.cmu.edu/our-work/projects/index.cfm"
+                />
+                <SdsMegaMenuItem
+                  label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
+                  kind="descriptive"
+                  class="-mt-4"
+                  href="https://sei.cmu.edu/news/index.cfm"
+                >
+                  <template #top>
+                    <img
+                      class="mb-4"
+                      src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
+                    >
+                  </template>
+                  <template #default>
+                    <p class="uppercase">
+                      <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
+                      <span class="text-xs text-gray-800 dark:text-gray-300">event</span>
+                    </p>
+                  </template>
                 </SdsMegaMenuItem>
               </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                label="News"
-                kind="landing-page"
-                href="https://sei.cmu.edu/our-work/projects/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                kind="descriptive"
-                class="-mt-4"
-                href="https://sei.cmu.edu/news/index.cfm"
-              >
-                <template #top>
-                  <img
-                    class="mb-4"
-                    src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                  >
-                </template>
-                <template #default>
-                  <p class="uppercase">
-                    <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
-                    <span class="text-xs text-gray-800 dark:text-gray-300">event</span>
-                  </p>
-                </template>
-              </SdsMegaMenuItem>
             </div>
           </div>
         </template>
         <template #panel(education)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-1 px-8">
-              <div
-                v-for="educationLink, index in megaMenu.education.educationLinks"
-                :key="educationLink.key"
-              >
-                <SdsMegaMenuItem
-                  :class="[index === 1 ? '-mt-4' : '', 'mb-2']"
-                  :href="educationLink.href"
-                  :label="educationLink.label"
-                  :kind="educationLink.kind"
+          <div class="mx-auto container">
+            <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+              <div class="col-span-1 px-8">
+                <div
+                  v-for="educationLink, index in megaMenu.education.educationLinks"
+                  :key="educationLink.key"
                 >
-                  <p
-                    v-if="educationLink.description"
-                    class="text-sm mt-2 text-gray-800 dark:text-gray-300"
+                  <SdsMegaMenuItem
+                    :class="[index === 1 ? '-mt-4' : '', 'mb-2']"
+                    :href="educationLink.href"
+                    :label="educationLink.label"
+                    :kind="educationLink.kind"
                   >
-                    {{ educationLink.description }}
-                  </p>
-                </SdsMegaMenuItem>
+                    <p
+                      v-if="educationLink.description"
+                      class="text-sm mt-2 text-gray-800 dark:text-gray-300"
+                    >
+                      {{ educationLink.description }}
+                    </p>
+                  </SdsMegaMenuItem>
+                </div>
               </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <div
-                v-for="training in megaMenu.education.trainings"
-                :key="training.key"
-              >
-                <SdsMegaMenuItem
-                  :href="training.href"
-                  :label="training.label"
-                  :kind="training.kind"
-                />
-              </div>
-            </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                :label="megaMenu.education.eventLink[0].label"
-                :kind="megaMenu.education.eventLink[0].kind"
-                :href="megaMenu.education.eventLink[0].href"
-              />
-              <div
-                v-for="event, index in megaMenu.education.events"
-                :key="event.key"
-              >
-                <SdsMegaMenuItem
-                  :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
-                  :href="event.href"
-                  :label="event.label"
-                  :kind="event.kind"
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+                <div
+                  v-for="training in megaMenu.education.trainings"
+                  :key="training.key"
                 >
-                  <template #left>
-                    <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
-                      <div class="font-bold uppercase">
-                        {{ event.month }}
+                  <SdsMegaMenuItem
+                    :href="training.href"
+                    :label="training.label"
+                    :kind="training.kind"
+                  />
+                </div>
+              </div>
+              <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+                <SdsMegaMenuItem
+                  :label="megaMenu.education.eventLink[0].label"
+                  :kind="megaMenu.education.eventLink[0].kind"
+                  :href="megaMenu.education.eventLink[0].href"
+                />
+                <div
+                  v-for="event, index in megaMenu.education.events"
+                  :key="event.key"
+                >
+                  <SdsMegaMenuItem
+                    :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
+                    :href="event.href"
+                    :label="event.label"
+                    :kind="event.kind"
+                  >
+                    <template #left>
+                      <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                        <div class="font-bold uppercase">
+                          {{ event.month }}
+                        </div>
+                        <div class="font-semibold text-sm">
+                          {{ event.startDay }}
+                        </div>
                       </div>
-                      <div class="font-semibold text-sm">
-                        {{ event.startDay }}
-                      </div>
-                    </div>
-                  </template>
-                  <template #default>
-                    <p class="uppercase font-semibold text-xs mb-2">
-                      {{ event.dateRange }}
-                    </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
-                      {{ event.description }}
-                    </p>
-                  </template>
-                </SdsMegaMenuItem>
+                    </template>
+                    <template #default>
+                      <p class="uppercase font-semibold text-xs mb-2">
+                        {{ event.dateRange }}
+                      </p>
+                      <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
+                        {{ event.description }}
+                      </p>
+                    </template>
+                  </SdsMegaMenuItem>
+                </div>
               </div>
             </div>
           </div>
         </template>
         <template #panel(careers)>
-          <div class="grid grid-cols-3 gap-x-2 py-8 px-8 -mx-4">
-            <div class="col-span-1 px-8">
-              <SdsMegaMenuItem
-                :href="megaMenu.careers.careersLink[0].href"
-                :label="megaMenu.careers.careersLink[0].label"
-                :kind="megaMenu.careers.careersLink[0].kind"
-              />
-              <div
-                v-for="careerLink, index in megaMenu.careers.careersLinks"
-                :key="careerLink.key"
-              >
+          <div class="mx-auto container">
+            <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+              <div class="col-span-1 px-8">
                 <SdsMegaMenuItem
-                  :class="[index === 0 ? '-mt-4' : '', 'mb-2']"
-                  :href="careerLink.href"
-                  :label="careerLink.label"
-                  :kind="careerLink.kind"
-                >
-                  <p
-                    v-if="careerLink.description"
-                    class="text-xs mt-2 text-gray-800 dark:text-gray-300"
-                  >
-                    {{ careerLink.description }}
-                  </p>
-                </SdsMegaMenuItem>
-              </div>
-            </div>
-            <div class="col-span-2 border-l dark:border-l-gray-800 px-8">
-              <SdsMegaMenuItem
-                :href="megaMenu.careers.jobsLink[0].href"
-                :label="megaMenu.careers.jobsLink[0].label"
-                :kind="megaMenu.careers.jobsLink[0].kind"
-              />
-              <div
-                v-for="row, index in megaMenu.careers.jobs"
-                :key="index"
-                :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
-              >
+                  :href="megaMenu.careers.careersLink[0].href"
+                  :label="megaMenu.careers.careersLink[0].label"
+                  :kind="megaMenu.careers.careersLink[0].kind"
+                />
                 <div
-                  v-for="job in row"
-                  :key="job.key"
-                  class="col-span-1"
+                  v-for="careerLink, index in megaMenu.careers.careersLinks"
+                  :key="careerLink.key"
                 >
                   <SdsMegaMenuItem
-                    :href="job.href"
-                    :label="job.label"
-                    :kind="job.kind"
+                    :class="[index === 0 ? '-mt-4' : '', 'mb-2']"
+                    :href="careerLink.href"
+                    :label="careerLink.label"
+                    :kind="careerLink.kind"
                   >
-                    <p class="text-xs text-gray-800 dark:text-gray-300">
-                      <span>Posted {{ job.posted }}</span>
-                      <span> • </span>
-                      <span>{{ job.locations }}</span>
+                    <p
+                      v-if="careerLink.description"
+                      class="text-xs mt-2 text-gray-800 dark:text-gray-300"
+                    >
+                      {{ careerLink.description }}
                     </p>
                   </SdsMegaMenuItem>
+                </div>
+              </div>
+              <div class="col-span-2 border-l dark:border-l-gray-800 px-8">
+                <SdsMegaMenuItem
+                  :href="megaMenu.careers.jobsLink[0].href"
+                  :label="megaMenu.careers.jobsLink[0].label"
+                  :kind="megaMenu.careers.jobsLink[0].kind"
+                />
+                <div
+                  v-for="row, index in megaMenu.careers.jobs"
+                  :key="index"
+                  :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
+                >
+                  <div
+                    v-for="job in row"
+                    :key="job.key"
+                    class="col-span-1"
+                  >
+                    <SdsMegaMenuItem
+                      :href="job.href"
+                      :label="job.label"
+                      :kind="job.kind"
+                    >
+                      <p class="text-xs text-gray-800 dark:text-gray-300">
+                        <span>Posted {{ job.posted }}</span>
+                        <span> • </span>
+                        <span>{{ job.locations }}</span>
+                      </p>
+                    </SdsMegaMenuItem>
+                  </div>
                 </div>
               </div>
             </div>
