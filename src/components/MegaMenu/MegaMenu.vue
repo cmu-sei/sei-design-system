@@ -20,25 +20,31 @@
             'border-red-500 dark:border-red-300': topLink.active,
             'border-transparent dark:border-transparent': (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
-          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300"
           @click="changeMenuPanel(topLink, $event)"
         >
-          {{ topLink.title }}
-          <svg
-            :class="[
-              topLink.selected
-                ? ''
-                : 'rotate-180',
-              'relative inline-block -mr-1 mb-0.5 self-center w-5 h-5 transition-transform'
-            ]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 600 500"
-            fill="currentColor"
+          <slot
+            :name="`top-link(${topLink.key})`"
+            :active="topLink.active"
+            :selected="topLink.selected"
+            :disabled="topLink.disabled"
           >
-            <path
-              d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
-            />
-          </svg>
+            <span>{{ topLink.title }}</span>
+            <svg
+              v-if="topLink.tag !== 'a'"
+              :class="{
+                'rotate-180': topLink.selected
+              }"
+              class="relative inline-block w-5 h-5 transition-transform"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 600 500"
+              fill="currentColor"
+            >
+              <path
+                d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
+              />
+            </svg>
+          </slot>
         </component>
       </div>
     </div>
