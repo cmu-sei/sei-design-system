@@ -49,30 +49,39 @@
       </div>
     </div>
     <div class="w-full relative">
-      <div
+      <template
         v-for="topLink in topLinks"
         :key="topLink.key"
-        :class="[
-          topLink.selected
-            ? 'z-30 shadow-lg border-b dark:border-gray-800'
-            : 'z-10',
-          'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
-        ]"
       >
-        <transition
-          enter-active-class="transition-[transform_400ms,colors_50ms] ease"
-          enter-from-class="max-h-0 opacity-25"
-          enter-to-class="max-h-screen opacity-100"
-          leave-active-class="transition-[transform_400ms,colors_50ms] ease"
-          leave-from-class="opacity-25 max-h-screen"
-          leave-to-class="opacity-0 max-h-0"
+        <div
+          v-if="topLink.tag !== 'a'"
+          :class="[
+            topLink.selected
+              ? 'z-30 shadow-lg border-b dark:border-gray-800'
+              : 'z-10',
+            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
+          ]"
         >
-          <slot
-            v-if="topLink.selected"
-            :name="`panel(${topLink.key})`"
-          />
-        </transition>
-      </div>
+          <transition
+            enter-active-class="transition-[transform_400ms,colors_50ms] ease"
+            enter-from-class="max-h-0 opacity-25"
+            enter-to-class="max-h-screen opacity-100"
+            leave-active-class="transition-[transform_400ms,colors_50ms] ease"
+            leave-from-class="opacity-25 max-h-screen"
+            leave-to-class="opacity-0 max-h-0"
+          >
+            <slot
+              v-if="topLink.selected"
+              :name="`panel(${topLink.key})`"
+            >
+              <slot
+                v-if="topLink.selected"
+                :top-link="topLink"
+              />
+            </slot>
+          </transition>
+        </div>
+      </template>
     </div>
   </nav>
 </template>
