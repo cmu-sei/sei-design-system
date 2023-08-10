@@ -18,7 +18,7 @@
           <p>{{ label }}</p>
           <svg
             v-if="cta || kind === 'landing-page'"
-            class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-200 group-hover:ml-4"
+            class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-300 group-hover:ml-4"
             xmlns="http://www.w3.org/2000/svg"
             width="28"
             height="32"
