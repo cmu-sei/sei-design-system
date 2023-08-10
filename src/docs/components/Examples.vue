@@ -29,8 +29,10 @@
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
         v-model="megaMenu.topLinks"
-        @change="changeTab"
       >
+        <template #top-link(home)>
+          <span>This is home</span>
+        </template>
         <template #panel(about)>
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
@@ -1733,6 +1735,7 @@ export default defineComponent({
     return {
       megaMenu: {
         topLinks: [
+          { key: "home", title: "Home", tag: 'a' },
           { key: "about", title: "About", active: true },
           { key: "research-and-development", title: "Research and Development", selected: true },
           { key: "publications-and-media", title: "Publications and Media" },
