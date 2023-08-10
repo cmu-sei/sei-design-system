@@ -121,7 +121,7 @@ const props = defineProps({
 })
 
 /* Used to emit model update */
-const emit = defineEmits(['update:model-value', 'change'])
+const emit = defineEmits(['update:model-value'])
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {
