@@ -29,7 +29,6 @@
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
         v-model="megaMenu.topLinks"
-        class="flex w-full"
         @change="changeTab"
       >
         <template #panel(about)>
@@ -1726,7 +1725,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import sprites from "../../assets/images/sprites-social.png";
 
 export default defineComponent({
   name: "ExamplesSection",
@@ -1735,7 +1733,7 @@ export default defineComponent({
     return {
       megaMenu: {
         topLinks: [
-          { key: "about", title: "About", selected: false },
+          { key: "about", title: "About", selected: false, active: true },
           { key: "research-and-development", title: "Research and Development", selected: false },
           { key: "publications-and-media", title: "Publications and Media", selected: false },
           { key: "education", title: "Education", selected: false },
