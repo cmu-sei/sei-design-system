@@ -64,8 +64,8 @@
         >
           <transition
             enter-active-class="transition-[transform_400ms,colors_50ms] ease"
-            enter-from-class="max-h-0 opacity-25"
-            enter-to-class="max-h-screen opacity-100"
+            :enter-from-class="isOpenDelay ? 'opacity-100' : 'max-h-0 opacity-25'"
+            :enter-to-class="isOpenDelay ? 'opacity-100' : 'max-h-screen opacity-100'"
             leave-active-class="transition-[transform_400ms,colors_50ms] ease"
             leave-from-class="opacity-25 max-h-screen"
             leave-to-class="opacity-0 max-h-0"
