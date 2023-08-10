@@ -4,7 +4,7 @@
     data-id="sds-megamenu"
     class="w-full flex flex-col"
   >
-    <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850">
+    <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
       <div class="flex flex-row gap-x-8 px-8 h-12 container mx-auto">
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
@@ -16,11 +16,11 @@
           :aria-expanded="isOpen"
           :data-id="`sds-megamenu_${topLink.key}`"
           :class="{
-            'text-red-500 dark:text-red-200': topLink.selected,
-            'border-red-500 dark:border-red-200': topLink.selected || (topLink.active && topLinks.filter(i => i.selected).length < 1),
-            'border-transparent': !topLink.selected && !topLink.active
+            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': topLink.selected,
+            'border-red-500 dark:border-red-300': topLink.active,
+            'border-transparent dark:border-transparent': (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
-          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200"
+          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300"
           @click="changeMenuPanel(topLink, $event)"
         >
           {{ topLink.title }}
@@ -42,16 +42,13 @@
         </component>
       </div>
     </div>
-    <div
-      id="panelContainer"
-      class="w-full relative"
-    >
+    <div class="w-full relative">
       <div
         v-for="topLink in topLinks"
         :key="topLink.key"
         :class="[
           topLink.selected
-            ? 'z-30'
+            ? 'z-30 shadow-lg border-b dark:border-gray-800'
             : 'z-10',
           'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
         ]"

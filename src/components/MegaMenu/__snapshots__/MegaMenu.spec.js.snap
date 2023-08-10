@@ -6,7 +6,7 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
   data-id="sds-megamenu"
 >
   <div
-    class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850"
+    class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
   >
     <div
       class="flex flex-row gap-x-8 px-8 h-12 container mx-auto"
@@ -17,7 +17,6 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
   </div>
   <div
     class="w-full relative"
-    id="panelContainer"
   >
     
     
@@ -27,9 +26,9 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
 
 exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
 "<nav data-id=\\"sds-megamenu\\" class=\\"w-full flex flex-col\\">
-  <div class=\\"w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-850\\">
+  <div class=\\"w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800\\">
     <div class=\\"flex flex-row gap-x-8 px-8 h-12 container mx-auto\\"></div>
   </div>
-  <div id=\\"panelContainer\\" class=\\"w-full relative\\"></div>
+  <div class=\\"w-full relative\\"></div>
 </nav>"
 `;
