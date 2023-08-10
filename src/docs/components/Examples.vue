@@ -33,6 +33,9 @@
         <template #top-link(home)>
           <span>This is home</span>
         </template>
+        <template #default="{ topLink }">
+          {{ topLink }}
+        </template>
         <template #panel(about)>
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
