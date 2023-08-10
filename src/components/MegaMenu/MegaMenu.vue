@@ -14,12 +14,13 @@
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           aria-haspopup="true"
           :aria-expanded="isOpen"
-          :class="[
-            topLink.selected
-              ? 'text-red-500 border-red-500 dark:text-red-200 dark:border-red-200'
-              : 'border-transparent hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200',
-            `py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none ${topLink.key}`
-          ]"
+          :data-id="`sds-megamenu_${topLink.key}`"
+          :class="{
+            'text-red-500 dark:text-red-200': topLink.selected,
+            'border-red-500 dark:border-red-200': topLink.selected || (topLink.active && topLinks.filter(i => i.selected).length < 1),
+            'border-transparent': !topLink.selected && !topLink.active
+          }"
+          class="py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 hover:dark:text-red-200 hover:dark:border-red-200"
           @click="changeMenuPanel(topLink, $event)"
         >
           {{ topLink.title }}
