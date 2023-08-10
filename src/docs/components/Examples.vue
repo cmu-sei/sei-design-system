@@ -1733,11 +1733,11 @@ export default defineComponent({
     return {
       megaMenu: {
         topLinks: [
-          { key: "about", title: "About", selected: false, active: true },
-          { key: "research-and-development", title: "Research and Development", selected: false },
-          { key: "publications-and-media", title: "Publications and Media", selected: false },
-          { key: "education", title: "Education", selected: false },
-          { key: "careers", title: "Careers", selected: false },
+          { key: "about", title: "About", active: true },
+          { key: "research-and-development", title: "Research and Development", selected: true },
+          { key: "publications-and-media", title: "Publications and Media" },
+          { key: "education", title: "Education" },
+          { key: "careers", title: "Careers" },
         ],
         about: {
           aboutLink: [
