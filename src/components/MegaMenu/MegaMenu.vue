@@ -92,7 +92,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, computed, ref } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, onKeyStroke } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -137,15 +137,27 @@ const isOpenDelay = ref(false)
 
 /* Needed for "onClickOutside" event */
 const target = ref(null)
-/* Close the mega menu when clicking somewhere on the document
- * outside the mega menu component */
-onClickOutside(target, (_event: Event) => {
+
+const onClose = () => {
   /* Deselect all mega menu panels */
   topLinks.value = topLinks.value.map(i => {
     i.selected = false
     return i
   })
   setOpenValues('close')
+}
+
+/* Close the mega menu when clicking somewhere on the document
+ * outside the mega menu component */
+onClickOutside(target, (_event: Event) => {
+  onClose()
+})
+
+/* Close the mega menu when pressing Escape */
+onKeyStroke('Escape', (e) => {
+  if (!isOpen.value) return
+  e.preventDefault()
+  onClose()
 })
 
 /* Callback run when a topLink of the mega menu is clicked */
