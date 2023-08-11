@@ -1738,12 +1738,12 @@ export default defineComponent({
     return {
       megaMenu: {
         topLinks: [
-          { key: "home", title: "Home", tag: 'a' },
+          { key: "home", title: "Home", tag: 'a', href: '/', onClick: (link: any, event: any) => { console.log(link); event.preventDefault() } },
           { key: "about", title: "About", active: true },
           { key: "research-and-development", title: "Research and Development", selected: true },
           { key: "publications-and-media", title: "Publications and Media" },
           { key: "education", title: "Education" },
-          { key: "careers", title: "Careers" },
+          { key: "careers", title: "Careers", align: 'right' },
         ],
         about: {
           aboutLink: [

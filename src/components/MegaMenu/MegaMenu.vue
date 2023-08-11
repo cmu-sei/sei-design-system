@@ -5,7 +5,12 @@
     class="w-full flex flex-col"
   >
     <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
-      <div class="flex flex-row gap-x-8 px-8 h-12 container mx-auto">
+      <div
+        class="flex flex-row px-8 container mx-auto"
+        :class="{
+          'gap-x-8': type === 'underline'
+        }"
+      >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
@@ -16,18 +21,25 @@
           :aria-expanded="isOpen"
           :data-id="`sds-megamenu_${topLink.key}`"
           :class="{
-            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': topLink.selected,
-            'border-red-500 dark:border-red-300': topLink.active,
-            'border-transparent dark:border-transparent': (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'ml-auto': topLink.align === 'right',
+            'mr-auto': topLink.align === 'left',
+            'mx-auto': topLink.align === 'center',
+            'px-4 dark:border-gray-800': type === 'block',
+            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
+            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': type === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
+            'text-white bg-red-500 dark:bg-red-700': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
+            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': type === 'underline' && topLink.selected,
+            'border-red-500 dark:border-red-300': type === 'underline' && topLink.active,
+            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
-          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300"
-          @click="changeMenuPanel(topLink, $event)"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
+          @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
+          <!-- @slot Dynamic link. Used to for custom HTML within a link. -->
           <slot
-            :name="`top-link(${topLink.key})`"
-            :active="topLink.active"
-            :selected="topLink.selected"
-            :disabled="topLink.disabled"
+            :name="`link(${topLink.key})`"
+            :item="topLink"
           >
             <span>{{ topLink.title }}</span>
             <svg
@@ -70,13 +82,15 @@
             leave-from-class="opacity-25 max-h-screen"
             leave-to-class="opacity-0 max-h-0"
           >
+            <!-- @slot Dynamic panel. Used to for custom HTML within a panel. -->
             <slot
               v-if="topLink.selected"
               :name="`panel(${topLink.key})`"
             >
+              <!-- @slot Default panel slot. Used to for custom HTML across all undefined panels. -->
               <slot
                 v-if="topLink.selected"
-                :top-link="topLink"
+                :item="topLink"
               />
             </slot>
           </transition>
@@ -98,6 +112,7 @@ interface ITopLink {
   active?: boolean
   selected?: boolean
   disabled?: boolean
+  onClick?: Function
 }
 
 export default {
@@ -126,10 +141,15 @@ const props = defineProps({
    *   active?: boolean
    *   selected?: boolean
    *   disabled?: boolean
+   *   onClick?: Function
    * }
    * ```
    */
   modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
+  /**
+   * The overall look and feel of the component.
+   */
+  type: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
 })
 
 /* Used to emit model update */
