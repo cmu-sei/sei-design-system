@@ -1386,6 +1386,11 @@
           </template>
 
           <div class="mb-4">
+            <p>Lorem ipsum...</p>
+            <p>Lorem ipsum...</p>
+            <p>Lorem ipsum...</p>
+            <p>Lorem ipsum...</p>
+            <p>Lorem ipsum...</p>
             <p>Let's make sure the modal destroys correctly:</p>
             <a
               href="/"
