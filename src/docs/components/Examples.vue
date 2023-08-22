@@ -28,44 +28,57 @@
     <p>MegaMenu</p>
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
-        v-model="megaMenu.topLinks"
+        v-model="megaMenu"
+        kind="block"
+        align="right"
       >
-        <template #top-link(home)>
-          <span>This is home</span>
-        </template>
-        <template #default="{ topLink }">
+        <template #default="{ topLink, content }">
           {{ topLink }}
+          {{ content }}
         </template>
-        <template #panel(about)>
+        <template #top-link(home)>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"
+            />
+          </svg>
+        </template>
+        <template #panel(about)="{ content }">
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
               <div class="col-span-2">
                 <div class="grid grid-cols-2 gap-2">
                   <div class="col-span-2 px-8">
                     <SdsMegaMenuItem
-                      :label="megaMenu.about.aboutLink[0].label"
-                      :kind="megaMenu.about.aboutLink[0].kind"
-                      :href="megaMenu.about.aboutLink[0].href"
+                      :label="content.aboutLink.label"
+                      :kind="content.aboutLink.kind"
+                      :href="content.aboutLink.href"
                     />
                   </div>
                   <div
-                    v-for="row, index in megaMenu.about.aboutRows"
+                    v-for="row, index in content.aboutRows"
                     :key="index"
                     class="-mt-6"
                   >
                     <div
-                      v-for="item in row"
-                      :key="item.key"
+                      v-for="link in row"
+                      :key="link.key"
                       class="mb-4"
                     >
                       <div class="col-span-1 px-8">
                         <SdsMegaMenuItem
-                          :label="item.label"
-                          :kind="item.kind"
-                          :href="item.href"
+                          :label="link.label"
+                          :kind="link.kind"
+                          :href="link.href"
                         >
                           <p class="text-sm mt-2 text-gray-800 dark:text-gray-300">
-                            {{ item.description }}
+                            {{ link.description }}
                           </p>
                         </SdsMegaMenuItem>
                       </div>
@@ -75,12 +88,12 @@
               </div>
               <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
                 <SdsMegaMenuItem
-                  :label="megaMenu.about.divisionLink[0].label"
-                  :kind="megaMenu.about.divisionLink[0].kind"
-                  :href="megaMenu.about.divisionLink[0].href"
+                  :label="content.divisionLink.label"
+                  :kind="content.divisionLink.kind"
+                  :href="content.divisionLink.href"
                 />
                 <div
-                  v-for="division in megaMenu.about.divisionRows"
+                  v-for="division in content.divisionRows"
                   :key="division.key"
                 >
                   <SdsMegaMenuItem
@@ -92,20 +105,20 @@
             </div>
           </div>
         </template>
-        <template #panel(research-and-development)>
+        <template #panel(research-and-development)="{ content }">
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
               <div class="col-span-2">
                 <div class="grid grid-cols-2 gap-x-2">
                   <div class="col-span-2 px-8">
                     <SdsMegaMenuItem
-                      :label="megaMenu.researchAndDevelopment.topicsLink[0].label"
-                      :kind="megaMenu.researchAndDevelopment.topicsLink[0].kind"
-                      :href="megaMenu.researchAndDevelopment.topicsLink[0].href"
+                      :label="content.topicsLink.label"
+                      :kind="content.topicsLink.kind"
+                      :href="content.topicsLink.href"
                     />
                   </div>
                   <template
-                    v-for="column, index in megaMenu.researchAndDevelopment.topicsColumns"
+                    v-for="column, index in content.topicsColumns"
                     :key="index"
                   >
                     <div
@@ -123,7 +136,7 @@
               </div>
               <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
                 <div
-                  v-for="item in megaMenu.researchAndDevelopment.extra"
+                  v-for="item in content.extra"
                   :key="item.key"
                   class="mb-4"
                 >
@@ -142,12 +155,12 @@
             </div>
           </div>
         </template>
-        <template #panel(publications-and-media)>
+        <template #panel(publications-and-media)="{ content }">
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
               <div class="col-span-1 px-8">
                 <div
-                  v-for="item in megaMenu.publicationsAndMedia.links"
+                  v-for="item in content.links"
                   :key="item.key"
                 >
                   <SdsMegaMenuItem
@@ -164,7 +177,7 @@
                   href="https://sei.cmu.edu/our-work/projects/index.cfm"
                 />
                 <div
-                  v-for="blogPost in megaMenu.publicationsAndMedia.blogPosts"
+                  v-for="blogPost in content.blogPosts"
                   :key="blogPost.key"
                   class="mb-2"
                 >
@@ -211,12 +224,12 @@
             </div>
           </div>
         </template>
-        <template #panel(education)>
+        <template #panel(education)="{ content }">
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
               <div class="col-span-1 px-8">
                 <div
-                  v-for="educationLink, index in megaMenu.education.educationLinks"
+                  v-for="educationLink, index in content.educationLinks"
                   :key="educationLink.key"
                 >
                   <SdsMegaMenuItem
@@ -236,7 +249,7 @@
               </div>
               <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
                 <div
-                  v-for="training in megaMenu.education.trainings"
+                  v-for="training in content.trainings"
                   :key="training.key"
                 >
                   <SdsMegaMenuItem
@@ -248,12 +261,12 @@
               </div>
               <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
                 <SdsMegaMenuItem
-                  :label="megaMenu.education.eventLink[0].label"
-                  :kind="megaMenu.education.eventLink[0].kind"
-                  :href="megaMenu.education.eventLink[0].href"
+                  :label="content.eventLink.label"
+                  :kind="content.eventLink.kind"
+                  :href="content.eventLink.href"
                 />
                 <div
-                  v-for="event, index in megaMenu.education.events"
+                  v-for="event, index in content.events"
                   :key="event.key"
                 >
                   <SdsMegaMenuItem
@@ -286,17 +299,17 @@
             </div>
           </div>
         </template>
-        <template #panel(careers)>
+        <template #panel(careers)="{ content, close }">
           <div class="mx-auto container">
             <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
               <div class="col-span-1 px-8">
                 <SdsMegaMenuItem
-                  :href="megaMenu.careers.careersLink[0].href"
-                  :label="megaMenu.careers.careersLink[0].label"
-                  :kind="megaMenu.careers.careersLink[0].kind"
+                  :href="content.careersLink.href"
+                  :label="content.careersLink.label"
+                  :kind="content.careersLink.kind"
                 />
                 <div
-                  v-for="careerLink, index in megaMenu.careers.careersLinks"
+                  v-for="careerLink, index in content.careersLinks"
                   :key="careerLink.key"
                 >
                   <SdsMegaMenuItem
@@ -316,12 +329,12 @@
               </div>
               <div class="col-span-2 border-l dark:border-l-gray-800 px-8">
                 <SdsMegaMenuItem
-                  :href="megaMenu.careers.jobsLink[0].href"
-                  :label="megaMenu.careers.jobsLink[0].label"
-                  :kind="megaMenu.careers.jobsLink[0].kind"
+                  :href="content.jobsLink.href"
+                  :label="content.jobsLink.label"
+                  :kind="content.jobsLink.kind"
                 />
                 <div
-                  v-for="row, index in megaMenu.careers.jobs"
+                  v-for="row, index in content.jobs"
                   :key="index"
                   :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
                 >
@@ -343,6 +356,25 @@
                     </SdsMegaMenuItem>
                   </div>
                 </div>
+                <SdsButton
+                  kind="danger"
+                  class="ml-auto float-right"
+                  @click="close"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 12 12"
+                  >
+                    <path
+                      fill="currentColor"
+                      fill-rule="evenodd"
+                      d="M4.28 3.22a.75.75 0 0 0-1.06 1.06L4.94 6L3.22 7.72a.75.75 0 0 0 1.06 1.06L6 7.06l1.72 1.72a.75.75 0 0 0 1.06-1.06L7.06 6l1.72-1.72a.75.75 0 0 0-1.06-1.06L6 4.94L4.28 3.22Z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </SdsButton>
               </div>
             </div>
           </div>
@@ -1741,456 +1773,465 @@ export default defineComponent({
   emits: ["radioGroupChange", "hello"],
   data() {
     return {
-      megaMenu: {
-        topLinks: [
-          { key: "home", title: "Home", tag: 'a', href: '/', onClick: (link: any, event: any) => { console.log(link); event.preventDefault() } },
-          { key: "about", title: "About", active: true },
-          { key: "research-and-development", title: "Research and Development", selected: true },
-          { key: "publications-and-media", title: "Publications and Media" },
-          { key: "education", title: "Education" },
-          { key: "careers", title: "Careers", align: 'right' },
-        ],
-        about: {
-          aboutLink: [
-            {
+      megaMenu: [
+        {
+          key: "home",
+          title: "Home",
+          tag: 'a',
+          href: '/',
+          align: 'left'
+        },
+        {
+          key: "about",
+          title: "About",
+          active: true,
+          content: {
+            aboutLink: {
               href: "https://sei.cmu.edu/about/index.cfm",
               key: "about",
               label: "About",
               kind: "landing-page",
-            }
-          ],
-          aboutRows: [
-            [
-              {
-                description: "This page describes the leadership structure of the SEI and provides biographical information on SEI Fellows, the SEI leadership team, and the Board of Visitors.",
-                href: "https://sei.cmu.edu/about/leadership/index.cfm",
-                key: "leadership",
-                label: "Leadership",
-                kind: "descriptive"
-              },
-              {
-                description: "The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.",
-                href: "https://sei.cmu.edu/publications/annual-reviews/index.cfm",
-                key: "annual-reviews",
-                label: "Annual Reviews",
-                kind: "descriptive"
-              },
+            },
+            aboutRows: [
+              [
+                {
+                  description: "This page describes the leadership structure of the SEI and provides biographical information on SEI Fellows, the SEI leadership team, and the Board of Visitors.",
+                  href: "https://sei.cmu.edu/about/leadership/index.cfm",
+                  key: "leadership",
+                  label: "Leadership",
+                  kind: "descriptive"
+                },
+                {
+                  description: "The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.",
+                  href: "https://sei.cmu.edu/publications/annual-reviews/index.cfm",
+                  key: "annual-reviews",
+                  label: "Annual Reviews",
+                  kind: "descriptive"
+                },
+              ],
+              [
+                {
+                  description: "As an FFRDC, the SEI works with government industry, and academia to address issues in software engineering, cybersecurity, process improvement, and more.",
+                  href: "https://sei.cmu.edu/about/work-with-us/index.cfm",
+                  key: "work-with-us",
+                  label: "Work with Us",
+                  kind: "descriptive"
+                },
+                {
+                  description: "The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.",
+                  href: "https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm",
+                  key: "collaboration-with-cmu",
+                  label: "Collaboration with CMU",
+                  kind: "descriptive"
+                },
+              ],
             ],
-            [
-              {
-                description: "As an FFRDC, the SEI works with government industry, and academia to address issues in software engineering, cybersecurity, process improvement, and more.",
-                href: "https://sei.cmu.edu/about/work-with-us/index.cfm",
-                key: "work-with-us",
-                label: "Work with Us",
-                kind: "descriptive"
-              },
-              {
-                description: "The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.",
-                href: "https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm",
-                key: "collaboration-with-cmu",
-                label: "Collaboration with CMU",
-                kind: "descriptive"
-              },
-            ],
-          ],
-          divisionLink: [
-            {
+            divisionLink: {
               href: "https://sei.cmu.edu/divisions/",
               key: "divisions",
               label: "Divisions",
               kind: "landing-page",
-            }
-          ],
-          divisionRows: [
-            {
-              href: "https://sei.cmu.edu/divisions/ai",
-              key: "artificial-intelligence-division",
-              label: "Artificial Intelligence (AI) Division",
-              kind: "simple",
             },
-            {
-              href: "https://sei.cmu.edu/divisions/cert",
-              key: "cert-division",
-              label: "CERT Division",
-              kind: "simple",
-            },
-            {
-              href: "https://sei.cmu.edu/divisions/software-solutions",
-              key: "software-solutions-division",
-              label: "Software Solutions Division",
-              kind: "simple",
-            },
-          ],
+            divisionRows: [
+              {
+                href: "https://sei.cmu.edu/divisions/ai",
+                key: "artificial-intelligence-division",
+                label: "Artificial Intelligence (AI) Division",
+                kind: "simple",
+              },
+              {
+                href: "https://sei.cmu.edu/divisions/cert",
+                key: "cert-division",
+                label: "CERT Division",
+                kind: "simple",
+              },
+              {
+                href: "https://sei.cmu.edu/divisions/software-solutions",
+                key: "software-solutions-division",
+                label: "Software Solutions Division",
+                kind: "simple",
+              },
+            ],
+          }
         },
-        researchAndDevelopment: {
-          topicsLink: [
-            {
+        {
+          key: "research-and-development",
+          title: "Research and Development",
+          selected: true,
+          content: {
+            topicsLink: {
               href: "https://sei.cmu.edu/our-work/all-topics/index.cfm",
               key: "topics",
               label: "Topics",
               kind: "landing-page",
-            }
-          ],
-          topicsColumns: [
-            [
-              {
-                key: "agile",
-                title: "Agile",
-                href: "https://sei.cmu.edu/our-work/agile/index.cfm"
-              },
-              {
-                key: "artificial-intelligence-engineering",
-                title: "Artificial Intelligence Engineering",
-                href: "https://sei.cmu.edu/our-work/artificial-intelligence-engineering/index.cfm"
-              },
-              {
-                key: "cloud-computing",
-                title: "Cloud Computing",
-                href: "https://sei.cmu.edu/our-work/cloud-computing/index.cfm"
-              },
-              {
-                key: "cyber-workforce-development",
-                title: "Cyber Workforce Development",
-                href: "https://sei.cmu.edu/our-work/cyber-workforce-development/index.cfm"
-              },
-              {
-                key: "cybersecurity-center-development",
-                title: "Cybersecurity Center Development",
-                href: "https://sei.cmu.edu/our-work/cybersecurity-center-development/index.cfm"
-              },
-              {
-                key: "cybersecurity-engineering",
-                title: "Cybersecurity Engineering",
-                href: "https://sei.cmu.edu/our-work/cybersecurity-engineering/index.cfm"
-              },
-              {
-                key: "devsecops",
-                title: "DevSecOps",
-                href: "https://sei.cmu.edu/our-work/devsecops/index.cfm"
-              },
-              {
-                key: "edge-computing",
-                title: "Edge Computing",
-                href: "https://sei.cmu.edu/our-work/edge-computing/index.cfm"
-              }
+            },
+            topicsColumns: [
+              [
+                {
+                  key: "agile",
+                  title: "Agile",
+                  href: "https://sei.cmu.edu/our-work/agile/index.cfm"
+                },
+                {
+                  key: "artificial-intelligence-engineering",
+                  title: "Artificial Intelligence Engineering",
+                  href: "https://sei.cmu.edu/our-work/artificial-intelligence-engineering/index.cfm"
+                },
+                {
+                  key: "cloud-computing",
+                  title: "Cloud Computing",
+                  href: "https://sei.cmu.edu/our-work/cloud-computing/index.cfm"
+                },
+                {
+                  key: "cyber-workforce-development",
+                  title: "Cyber Workforce Development",
+                  href: "https://sei.cmu.edu/our-work/cyber-workforce-development/index.cfm"
+                },
+                {
+                  key: "cybersecurity-center-development",
+                  title: "Cybersecurity Center Development",
+                  href: "https://sei.cmu.edu/our-work/cybersecurity-center-development/index.cfm"
+                },
+                {
+                  key: "cybersecurity-engineering",
+                  title: "Cybersecurity Engineering",
+                  href: "https://sei.cmu.edu/our-work/cybersecurity-engineering/index.cfm"
+                },
+                {
+                  key: "devsecops",
+                  title: "DevSecOps",
+                  href: "https://sei.cmu.edu/our-work/devsecops/index.cfm"
+                },
+                {
+                  key: "edge-computing",
+                  title: "Edge Computing",
+                  href: "https://sei.cmu.edu/our-work/edge-computing/index.cfm"
+                }
+              ],
+              [
+                {
+                  key: "enterprise-risk-and-resilience-management",
+                  title: "Engerprise Risk and Resilience Management",
+                  href: "https://sei.cmu.edu/our-work/enterprise-risk-resilience-management/index.cfm"
+                },
+                {
+                  key: "insider-threat",
+                  title: "Insider Threat",
+                  href: "https://sei.cmu.edu/our-work/insider-threat/index.cfm"
+                },
+                {
+                  key: "quantum-computing",
+                  title: "Quantum Computing",
+                  href: "https://sei.cmu.edu/our-work/quantum-computing/index.cfm"
+                },
+                {
+                  key: "reverse-engineering-for-malware-analysis",
+                  title: "Reverse Engineering for Malware Analysis",
+                  href: "https://sei.cmu.edu/our-work/reverse-engineering-for-malware-analysis/index.cfm"
+                },
+                {
+                  key: "secure-development",
+                  title: "Secure Development",
+                  href: "https://www.sei.cmu.edu/our-work/secure-development/index.cfm"
+                },
+                {
+                  key: "security-vulnerabilities",
+                  title: "Security Vulnerabilities",
+                  href: "https://sei.cmu.edu/our-work/security-vulnerabilities/index.cfm"
+                },
+                {
+                  key: "situational-awareness",
+                  title: "Situational Awareness",
+                  href: "https://sei.cmu.edu/our-work/situational-awareness/index.cfm"
+                },
+                {
+                  key: "software-architecture",
+                  title: "Software Architecture",
+                  href: "https://sei.cmu.edu/our-work/software-architecture/"
+                }
+              ]
             ],
-            [
+            extra: [
               {
-                key: "enterprise-risk-and-resilience-management",
-                title: "Engerprise Risk and Resilience Management",
-                href: "https://sei.cmu.edu/our-work/enterprise-risk-resilience-management/index.cfm"
+                cta: true,
+                description: "Explore all SEI research and development projects.",
+                href: "https://sei.cmu.edu/our-work/projects/index.cfm",
+                key: "projects",
+                label: "Projects",
+                kind: "descriptive"
               },
               {
-                key: "insider-threat",
-                title: "Insider Threat",
-                href: "https://sei.cmu.edu/our-work/insider-threat/index.cfm"
+                cta: true,
+                description: "Access and download the software and tools that the SEI creates, tests, refines, and disseminates to improve the quality and security of software systems.",
+                href: "https://sei.cmu.edu/publications/software-tools/index.cfm",
+                key: "software-and-tools",
+                label: "Software and Tools",
+                kind: "descriptive"
+              },
+            ]
+          }
+        },
+        {
+          key: "publications-and-media",
+          title: "Publications and Media",
+          content: {
+            links: [
+              {
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "publications-and-media",
+                label: "Publications and Media",
+                kind: "landing-page"
               },
               {
-                key: "quantum-computing",
-                title: "Quantum Computing",
-                href: "https://sei.cmu.edu/our-work/quantum-computing/index.cfm"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "digital-library",
+                label: "Digital Library"
               },
               {
-                key: "reverse-engineering-for-malware-analysis",
-                title: "Reverse Engineering for Malware Analysis",
-                href: "https://sei.cmu.edu/our-work/reverse-engineering-for-malware-analysis/index.cfm"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "podcasts",
+                label: "Podcasts"
               },
               {
-                key: "secure-development",
-                title: "Secure Development",
-                href: "https://www.sei.cmu.edu/our-work/secure-development/index.cfm"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "technical-papers",
+                label: "Technical Papers"
               },
               {
-                key: "security-vulnerabilities",
-                title: "Security Vulnerabilities",
-                href: "https://sei.cmu.edu/our-work/security-vulnerabilities/index.cfm"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "videos",
+                label: "Videos"
               },
               {
-                key: "situational-awareness",
-                title: "Situational Awareness",
-                href: "https://sei.cmu.edu/our-work/situational-awareness/index.cfm"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "vulnerability-notes",
+                label: "Vulnerability Notes"
               },
               {
-                key: "software-architecture",
-                title: "Software Architecture",
-                href: "https://sei.cmu.edu/our-work/software-architecture/"
+                href: "https://sei.cmu.edu/publications/index.cfm",
+                key: "history-of-innovation-at-the-sei",
+                label: "History of Innovation at the SEI"
+              },
+            ],
+            blogPosts: [
+              {
+                key: 0,
+                title: "Cybersecurity of Quantum Computing: A New Frontier",
+                published: "April 10, 2023",
+                author: "Douglas Schmidt"
+              },
+              {
+                key: 1,
+                title: "Security Analytics: Using SILK and Mothra to Identify Data Exfiltration via the Domain Name",
+                published: "April 3, 2023",
+                author: "Grace Lewis"
+              },
+              {
+                key: 2,
+                title: "How to Use Docker and NS-3 to Create Realistic Network Simulations",
+                published: "March 27, 2023",
+                author: "Cecilia Alberts"
               }
             ]
-          ],
-          extra: [
-            {
-              cta: true,
-              description: "Explore all SEI research and development projects.",
-              href: "https://sei.cmu.edu/our-work/projects/index.cfm",
-              key: "projects",
-              label: "Projects",
-              kind: "descriptive"
-            },
-            {
-              cta: true,
-              description: "Access and download the software and tools that the SEI creates, tests, refines, and disseminates to improve the quality and security of software systems.",
-              href: "https://sei.cmu.edu/publications/software-tools/index.cfm",
-              key: "software-and-tools",
-              label: "Software and Tools",
-              kind: "descriptive"
-            },
-          ]
+          }
         },
-        publicationsAndMedia: {
-          links: [
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "publications-and-media",
-              label: "Publications and Media",
-              kind: "landing-page"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "digital-library",
-              label: "Digital Library"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "podcasts",
-              label: "Podcasts"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "technical-papers",
-              label: "Technical Papers"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "videos",
-              label: "Videos"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "vulnerability-notes",
-              label: "Vulnerability Notes"
-            },
-            {
-              href: "https://sei.cmu.edu/publications/index.cfm",
-              key: "history-of-innovation-at-the-sei",
-              label: "History of Innovation at the SEI"
-            },
-          ],
-          blogPosts: [
-            {
-              key: 0,
-              title: "Cybersecurity of Quantum Computing: A New Frontier",
-              published: "April 10, 2023",
-              author: "Douglas Schmidt"
-            },
-            {
-              key: 1,
-              title: "Security Analytics: Using SILK and Mothra to Identify Data Exfiltration via the Domain Name",
-              published: "April 3, 2023",
-              author: "Grace Lewis"
-            },
-            {
-              key: 2,
-              title: "How to Use Docker and NS-3 to Create Realistic Network Simulations",
-              published: "March 27, 2023",
-              author: "Cecilia Alberts"
-            }
-          ],
-        },
-        education: {
-          educationLinks: [
-            {
-              href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
-              key: "education",
-              label: "Education",
-              kind: "landing-page"
-            },
-            {
-              href: "",
-              key: "credentials",
-              label: "Credentials",
-              kind: "descriptive",
-              description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
-            },
-            {
-              href: "",
-              key: "curricula",
-              label: "Curricula",
-              kind: "descriptive",
-              description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
-            },
-            {
-              href: "",
-              key: "license-sei-materials",
-              label: "License SEI Materials",
-              kind: "descriptive",
-              description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
-            },
-          ],
-          trainings: [
-            {
-              href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
-              key: "training",
-              label: "Training",
-              kind: "landing-page"
-            },
-            {
-              href: "",
-              key: "fundamentals-of-statistics-applied-to-cybersecurity",
-              label: "Fundamentals of Statistics Applied to Cybersecurity"
-            },
-            {
-              href: "",
-              key: "advanced-analytics-netflow",
-              label: "Advanced Analytics: Netflow"
-            },
-            {
-              href: "",
-              key: "advanced-analytics-malware",
-              label: "Advanced Analytics: Malware"
-            },
-            {
-              href: "",
-              key: "advanced-analytics-digital-forensics",
-              label: "Advanced Analytics: Digital Forensics"
-            },
-            {
-              href: "",
-              key: "cert-applied-data-science-for-cybersecurity-certificate-package",
-              label: "CERT Applied Data Science for Cybersecurity Certificate Package"
-            }
-          ],
-          eventLink: [
-            {
+        {
+          key: "education",
+          title: "Education",
+          content: {
+            educationLinks: [
+              {
+                href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
+                key: "education",
+                label: "Education",
+                kind: "landing-page"
+              },
+              {
+                href: "",
+                key: "credentials",
+                label: "Credentials",
+                kind: "descriptive",
+                description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
+              },
+              {
+                href: "",
+                key: "curricula",
+                label: "Curricula",
+                kind: "descriptive",
+                description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
+              },
+              {
+                href: "",
+                key: "license-sei-materials",
+                label: "License SEI Materials",
+                kind: "descriptive",
+                description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
+              },
+            ],
+            trainings: [
+              {
+                href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
+                key: "training",
+                label: "Training",
+                kind: "landing-page"
+              },
+              {
+                href: "",
+                key: "fundamentals-of-statistics-applied-to-cybersecurity",
+                label: "Fundamentals of Statistics Applied to Cybersecurity"
+              },
+              {
+                href: "",
+                key: "advanced-analytics-netflow",
+                label: "Advanced Analytics: Netflow"
+              },
+              {
+                href: "",
+                key: "advanced-analytics-malware",
+                label: "Advanced Analytics: Malware"
+              },
+              {
+                href: "",
+                key: "advanced-analytics-digital-forensics",
+                label: "Advanced Analytics: Digital Forensics"
+              },
+              {
+                href: "",
+                key: "cert-applied-data-science-for-cybersecurity-certificate-package",
+                label: "CERT Applied Data Science for Cybersecurity Certificate Package"
+              }
+            ],
+            eventLink: {
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "events",
               label: "Events",
               kind: "landing-page"
-            }
-          ],
-          events: [
-            {
-              dateRange: "Dec 5-7, 2023",
-              description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect...",
-              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P132",
-              key: "insider-threat-analyst",
-              label: "Insider Threat Analyst",
-              month: "Dec",
-              startDay: "5",
-              kind: "descriptive",
             },
-            {
-              dateRange: "Nov 14-16, 2023",
-              description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect, and respond to insider activity. It discusses various techniques and methods for designing, implementing, and measuring the effectiveness of various components...",
-              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P133",
-              key: "insider-threat-program-evaluator",
-              label: "Insider Threat Program Evaluator",
-              month: "Nov",
-              startDay: "14",
-              kind: "descriptive"
-            },
-            {
-              dateRange: "Nov 6-9, 2023",
-              description: "This four-day course, designed for computer security incident response team (CSIRT) and security operations center (SOC) technical personnel with several months of incident handling experience, addresses techniques for detecting and responding...",
-              href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P23B",
-              key: "advanced-topics-in-incident-handling",
-              label: "Advanced Topics in Incident Handling",
-              month: "Nov",
-              startDay: "6",
-              kind: "descriptive"
-            },
-          ]
+            events: [
+              {
+                dateRange: "Dec 5-7, 2023",
+                description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect...",
+                href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P132",
+                key: "insider-threat-analyst",
+                label: "Insider Threat Analyst",
+                month: "Dec",
+                startDay: "5",
+                kind: "descriptive",
+              },
+              {
+                dateRange: "Nov 14-16, 2023",
+                description: "This 3-day course presents strategies for collecting and analyzing data to prevent, detect, and respond to insider activity. It discusses various techniques and methods for designing, implementing, and measuring the effectiveness of various components...",
+                href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P133",
+                key: "insider-threat-program-evaluator",
+                label: "Insider Threat Program Evaluator",
+                month: "Nov",
+                startDay: "14",
+                kind: "descriptive"
+              },
+              {
+                dateRange: "Nov 6-9, 2023",
+                description: "This four-day course, designed for computer security incident response team (CSIRT) and security operations center (SOC) technical personnel with several months of incident handling experience, addresses techniques for detecting and responding...",
+                href: "https://www.sei.cmu.edu/education-outreach/courses/course.cfm?courseCode=P23B",
+                key: "advanced-topics-in-incident-handling",
+                label: "Advanced Topics in Incident Handling",
+                month: "Nov",
+                startDay: "6",
+                kind: "descriptive"
+              },
+            ]
+          }
         },
-        careers: {
-          careersLink: [
-            {
+        {
+          key: "careers",
+          title: "Careers",
+          content: {
+            careersLink: {
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "careers",
               label: "Careers",
               kind: "landing-page"
-            }
-          ],
-          careersLinks: [
-            {
-              href: "",
-              key: "internship-opportunities",
-              label: "Internship Opportunities",
-              description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
-              kind: "descriptive"
             },
-            {
-              href: "",
-              key: "diversity-equity-and-inclusion",
-              label: "Diversity, Equity and Inclusion",
-              description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
-              kind: "descriptive"
-            },
-          ],
-          jobsLink: [
-            {
+            careersLinks: [
+              {
+                href: "",
+                key: "internship-opportunities",
+                label: "Internship Opportunities",
+                description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
+                kind: "descriptive"
+              },
+              {
+                href: "",
+                key: "diversity-equity-and-inclusion",
+                label: "Diversity, Equity and Inclusion",
+                description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
+                kind: "descriptive"
+              },
+            ],
+            jobsLink: {
               href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
               key: "job-postings",
               label: "Job Postings",
               kind: "landing-page"
-            }
-          ],
-          jobs: [
-            [
-              {
-                href: "",
-                key: "assistant-software-engineer",
-                label: "Assistant Software Engineer",
-                posted: "Yesterday",
-                locations: "2 Locations",
-                kind: "descriptive"
-              },
-              {
-                href: "",
-                key: "senior-assurance-researcher",
-                label: "Senior Assurance Researcher",
-                posted: "2 Days Ago",
-                locations: "3 Locations",
-                kind: "descriptive"
-              }
-            ],
-            [
-              {
-                href: "",
-                key: "cybersecurity-operations-researcher",
-                label: "Cybersecurity Operations Researcher",
-                posted: "Yesterday",
-                locations: "Arlington",
-                kind: "descriptive"
-              },
-              {
-                href: "",
-                key: "assistant-machine-learning-researcher",
-                label: "Assistant Machine Learning Researcher",
-                posted: "3 Days Ago",
-                locations: "Pittsburgh",
-                kind: "descriptive"
-              }
-            ],
-            [
-              {
-                href: "",
-                key: "associate-cybersecurity-operations-researcher",
-                label: "Associate Cybersecurity Operations Researcher",
-                posted: "Yesterday",
-                locations: "Arlington",
-                kind: "descriptive"
-              },
-              {
-                href: "",
-                key: "lead-nuclear-surety-software-engineer",
-                label: "Lead Nuclear Surety Software Engineer",
-                posted: "6 Days Ago",
-                locations: "Pittsburgh",
-                kind: "descriptive"
-              }
+            },
+            jobs: [
+              [
+                {
+                  href: "",
+                  key: "assistant-software-engineer",
+                  label: "Assistant Software Engineer",
+                  posted: "Yesterday",
+                  locations: "2 Locations",
+                  kind: "descriptive"
+                },
+                {
+                  href: "",
+                  key: "senior-assurance-researcher",
+                  label: "Senior Assurance Researcher",
+                  posted: "2 Days Ago",
+                  locations: "3 Locations",
+                  kind: "descriptive"
+                }
+              ],
+              [
+                {
+                  href: "",
+                  key: "cybersecurity-operations-researcher",
+                  label: "Cybersecurity Operations Researcher",
+                  posted: "Yesterday",
+                  locations: "Arlington",
+                  kind: "descriptive"
+                },
+                {
+                  href: "",
+                  key: "assistant-machine-learning-researcher",
+                  label: "Assistant Machine Learning Researcher",
+                  posted: "3 Days Ago",
+                  locations: "Pittsburgh",
+                  kind: "descriptive"
+                }
+              ],
+              [
+                {
+                  href: "",
+                  key: "associate-cybersecurity-operations-researcher",
+                  label: "Associate Cybersecurity Operations Researcher",
+                  posted: "Yesterday",
+                  locations: "Arlington",
+                  kind: "descriptive"
+                },
+                {
+                  href: "",
+                  key: "lead-nuclear-surety-software-engineer",
+                  label: "Lead Nuclear Surety Software Engineer",
+                  posted: "6 Days Ago",
+                  locations: "Pittsburgh",
+                  kind: "descriptive"
+                }
+              ]
             ]
-          ]
-        },
-      },
+          }
+        }
+      ],
       toggleSwitchValue: false,
       fabTabs: [
         { key: "tab1", tabName: "Tab 1 is the title", title: "Active Tab 1", active: true },

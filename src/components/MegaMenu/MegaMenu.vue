@@ -8,15 +8,20 @@
       <div
         class="flex flex-row px-8 container mx-auto"
         :class="{
-          'gap-x-8': type === 'underline'
+          'gap-x-8': kind === 'underline',
+          'justify-start': align === 'left',
+          'justify-center': align === 'center',
+          'justify-end': align === 'right',
+          'justify-evenly': align === 'full'
         }"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
+          :ref="thisTopLink => setFocusableElem(topLink.key, thisTopLink, 'topLink')"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
-          :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
+          :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :data-id="`sds-megamenu_${topLink.key}`"
@@ -24,24 +29,26 @@
             'ml-auto': topLink.align === 'right',
             'mr-auto': topLink.align === 'left',
             'mx-auto': topLink.align === 'center',
-            'px-4 dark:border-gray-800': type === 'block',
-            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
-            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': type === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
-            'text-white bg-red-500 dark:bg-red-700': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
-            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
-            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': type === 'underline' && topLink.selected,
-            'border-red-500 dark:border-red-300': type === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'px-4 dark:border-gray-800': kind === 'block',
+            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
+            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
+            'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': kind === 'underline',
+            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': kind === 'underline' && topLink.selected,
+            'border-red-500 dark:border-red-300': kind === 'underline' && topLink.active,
+            'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
+          @keydown.down="topLink.selected ? setPanelFocus(topLink.key, $event) : changeMenuPanel(topLink, $event).then(() => { setPanelFocus(topLink.key, $event) }); topLink.onFocus && topLink?.onFocus(topLink, $event)"
         >
-          <!-- @slot Dynamic link. Used to for custom HTML within a link. -->
+          <!-- @slot Dynamic link. Used to inject custom HTML within a top-level menu link. -->
           <slot
-            :name="`link(${topLink.key})`"
+            :name="`top-link(${topLink.key})`"
             :item="topLink"
           >
             <span>{{ topLink.title }}</span>
+            <!-- If tag-type is "a" (anchor tag), then don't render an accordion caret -->
             <svg
               v-if="topLink.tag !== 'a'"
               :class="{
@@ -49,7 +56,7 @@
               }"
               class="relative inline-block w-5 h-5 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 600 500"
+              viewBox="0 0 500 500"
               fill="currentColor"
             >
               <path
@@ -67,12 +74,14 @@
       >
         <div
           v-if="topLink.tag !== 'a'"
+          :ref="thisPanel => setFocusableElem(topLink.key, thisPanel)"
           :class="[
             topLink.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
               : 'z-10',
             'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
           ]"
+          @keydown.up="setTopLinkFocus(topLink, $event); topLink.onFocus && topLink?.onFocus(topLink, $event)"
         >
           <transition
             enter-active-class="transition-[transform_400ms,colors_50ms] ease"
@@ -86,11 +95,16 @@
             <slot
               v-if="topLink.selected"
               :name="`panel(${topLink.key})`"
+              :close="onClose"
+              :item="topLink"
+              :content="topLink.content"
             >
               <!-- @slot Default panel slot. Used to for custom HTML across all undefined panels. -->
               <slot
                 v-if="topLink.selected"
+                :close="onClose"
                 :item="topLink"
+                :content="topLink.content"
               />
             </slot>
           </transition>
@@ -108,11 +122,17 @@ interface ITopLink {
   title?: string
   href?: string
   align?: 'left' | 'right' | 'center'
+  content?: Object
   external?: boolean
   active?: boolean
   selected?: boolean
   disabled?: boolean
   onClick?: Function
+  onFocus?: Function
+}
+
+interface mappedRefs {
+
 }
 
 export default {
@@ -137,19 +157,25 @@ const props = defineProps({
    *   title?: string
    *   href?: string
    *   align?: 'left' | 'right' | 'center'
+   *   content?: Object
    *   external?: boolean
    *   active?: boolean
    *   selected?: boolean
    *   disabled?: boolean
    *   onClick?: Function
+   *   onFocus?: Function
    * }
    * ```
    */
   modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
   /**
+   * Overall navigation alignment.
+   */
+  align: { type: String as PropType<'left' | 'center' | 'right' | 'full'>, default: 'left' },
+  /**
    * The overall look and feel of the component.
    */
-  type: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
+  kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' }
 })
 
 /* Used to emit model update */
@@ -169,6 +195,10 @@ const topLinks = computed({
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
 const isOpenDelay = ref(false)
+
+/* Dictionary of focusable panels (keys mapped to HTMLDivElement references) */
+const focusablePanels = ref({})
+const focusableTopLinks = ref({})
 
 /* Needed for "onClickOutside" event */
 const target = ref(null)
@@ -235,5 +265,33 @@ const setOpenValues = (toggle: string = '') => {
   setTimeout(() => {
     isOpenDelay.value = isOpen.value
   }, 300)
+}
+
+/* Event listener callback to focus a main navigation link from a panel */
+const setTopLinkFocus = (topLink: ITopLink, event: Event) => {
+  event?.preventDefault()
+  focusableTopLinks[topLink.key].focus()
+}
+
+/* Event listener callback to focus a panel element (form a topLink) */
+const setPanelFocus = async (key: string, event: Event) => {
+  event?.preventDefault()
+  focusablePanels[key].focus()
+  focusablePanels[key].querySelectorAll('a, button, input, select')[0].focus()
+}
+
+/* Manage focusable panels as a ref with key: value pairs of topLink.keys and HTML elements */
+const setFocusableElem = (key: string, elem: Element, type: string = 'panel') => {
+  let focusable = focusablePanels
+  if (type === 'topLink') {
+    focusable = focusableTopLinks
+  }
+  if (!Object.keys(focusable).includes(key)) {
+    focusable[key] = elem
+    /* TODO:
+     * - get last focusable input in each panel
+     * - set keypress event listener to round-robin (jump back to the first link)
+     */
+  }
 }
 </script>
