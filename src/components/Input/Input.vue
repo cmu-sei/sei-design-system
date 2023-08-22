@@ -19,6 +19,7 @@
       :disabled="disabled"
       :readonly="readonly"
       :required="required"
+      :pattern="pattern"
     >
     <character-counter
       v-if="countCharacters"
@@ -79,6 +80,10 @@ export default defineComponent({
      * Determines whether the input is required or not.
      */
     required: { type: Boolean, default: false },
+    /**
+     * Determines the regex pattern used for validation.
+     */
+    pattern: { type: String, default: undefined },
     /**
      * Determines whether the input is read-only or not.
      */
