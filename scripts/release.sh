@@ -15,7 +15,15 @@ read -p 'Enter a version type (major, minor, or patch): ' version
 
 if [ "$version" == "major" ] || [ "$version" == "minor" ] || [ "$version" == "patch" ] ;then
     echo Proceeding with $version release...
+
+    echo Building Storybook...
+    rm -rf storybook-static/
+    npm run build-storybook
+
+    echo Bundling components...
     npm run bundle:release
+
+    echo Publishing...
     npm version $version
     git push --follow-tags
     npm publish --@sds:registry=https://artifacts.sei.cmu.edu/artifactory/api/npm/sei-design-system/
