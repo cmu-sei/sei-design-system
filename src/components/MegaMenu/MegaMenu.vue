@@ -1,18 +1,19 @@
 <template>
   <nav
-    ref="target"
+    ref="megaMenuNav"
     data-id="sds-megamenu"
     class="w-full flex flex-col"
   >
     <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
       <div
-        class="flex flex-row px-8 container mx-auto"
+        class="flex flex-row px-8 mx-auto"
         :class="{
+          'container': !fullWidth,
           'gap-x-8': kind === 'underline',
-          'justify-start': align === 'left',
-          'justify-center': align === 'center',
-          'justify-end': align === 'right',
-          'justify-evenly': align === 'full'
+          'justify-start': alignment === 'left',
+          'justify-center': alignment === 'center',
+          'justify-end': alignment === 'right',
+          'justify-evenly': alignment === 'full'
         }"
       >
         <component
@@ -26,9 +27,9 @@
           :aria-expanded="isOpen"
           :data-id="`sds-megamenu_${topLink.key}`"
           :class="{
-            'ml-auto': topLink.align === 'right',
-            'mr-auto': topLink.align === 'left',
-            'mx-auto': topLink.align === 'center',
+            'ml-auto': topLink.alignment === 'right',
+            'mr-auto': topLink.alignment === 'left',
+            'mx-auto': topLink.alignment === 'center',
             'px-4 dark:border-gray-800': kind === 'block',
             'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
             'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
@@ -42,13 +43,15 @@
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
           @keydown.down="topLink.selected ? setPanelFocus(topLink.key, $event) : changeMenuPanel(topLink, $event).then(() => { setPanelFocus(topLink.key, $event) }); topLink.onFocus && topLink?.onFocus(topLink, $event)"
         >
-          <!-- @slot Dynamic link. Used to inject custom HTML within a top-level menu link. -->
+          <!-- @slot Dynamic link. -->
+          <!-- Used to supply custom HTML within a top-level menu link. -->
           <slot
-            :name="`top-link(${topLink.key})`"
+            :name="`link(${topLink.key})`"
             :item="topLink"
           >
             <span>{{ topLink.title }}</span>
-            <!-- If tag-type is "a" (anchor tag), then don't render an accordion caret -->
+            <!-- Below SVG is a caret to indicate Mega Menu opened/closed status -->
+            <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
             <svg
               v-if="topLink.tag !== 'a'"
               :class="{
@@ -56,7 +59,7 @@
               }"
               class="relative inline-block w-5 h-5 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 500 500"
+              viewBox="0 0 550 500"
               fill="currentColor"
             >
               <path
@@ -72,6 +75,7 @@
         v-for="topLink in topLinks"
         :key="topLink.key"
       >
+        <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
           v-if="topLink.tag !== 'a'"
           :ref="thisPanel => setFocusableElem(topLink.key, thisPanel)"
@@ -79,35 +83,34 @@
             topLink.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
               : 'z-10',
-            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
+            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950',
           ]"
           @keydown.up="setTopLinkFocus(topLink, $event); topLink.onFocus && topLink?.onFocus(topLink, $event)"
+          @keydown.tab="panelRoundRobinIfLast(topLink.key, $event)"
         >
-          <transition
-            enter-active-class="transition-[transform_400ms,colors_50ms] ease"
-            :enter-from-class="isOpenDelay ? 'opacity-100' : 'max-h-0 opacity-25'"
-            :enter-to-class="isOpenDelay ? 'opacity-100' : 'max-h-screen opacity-100'"
-            leave-active-class="transition-[transform_400ms,colors_50ms] ease"
-            leave-from-class="opacity-25 max-h-screen"
-            leave-to-class="opacity-0 max-h-0"
+          <div
+            :class="fullWidth ? '' : 'mx-auto container'"
           >
-            <!-- @slot Dynamic panel. Used to for custom HTML within a panel. -->
-            <slot
-              v-if="topLink.selected"
-              :name="`panel(${topLink.key})`"
-              :close="onClose"
-              :item="topLink"
-              :content="topLink.content"
+            <transition
+              enter-active-class="transition-[transform_400ms,colors_50ms] ease"
+              :enter-from-class="isOpenDelay ? 'opacity-100' : 'max-h-0 opacity-25'"
+              :enter-to-class="isOpenDelay ? 'opacity-100' : 'max-h-screen opacity-100'"
+              leave-active-class="transition-[transform_400ms,colors_50ms] ease"
+              leave-from-class="opacity-25 max-h-screen"
+              leave-to-class="opacity-0 max-h-0"
             >
-              <!-- @slot Default panel slot. Used to for custom HTML across all undefined panels. -->
+              <!-- @slot Dynamic "panel" slot. -->
+              <!-- Use this slot to supply custom HTML that will display -->
+              <!-- in a floating panel below the main navigation bar. -->
               <slot
                 v-if="topLink.selected"
+                :name="`panel(${topLink.key})`"
                 :close="onClose"
                 :item="topLink"
                 :content="topLink.content"
               />
-            </slot>
-          </transition>
+            </transition>
+          </div>
         </div>
       </template>
     </div>
@@ -121,7 +124,7 @@ interface ITopLink {
   tag?: 'button' | 'a'
   title?: string
   href?: string
-  align?: 'left' | 'right' | 'center'
+  alignment?: 'left' | 'right' | 'center'
   content?: Object
   external?: boolean
   active?: boolean
@@ -129,10 +132,6 @@ interface ITopLink {
   disabled?: boolean
   onClick?: Function
   onFocus?: Function
-}
-
-interface mappedRefs {
-
 }
 
 export default {
@@ -156,7 +155,7 @@ const props = defineProps({
    *   tag?: 'button' | 'a'
    *   title?: string
    *   href?: string
-   *   align?: 'left' | 'right' | 'center'
+   *   alignment?: 'left' | 'right' | 'center'
    *   content?: Object
    *   external?: boolean
    *   active?: boolean
@@ -171,11 +170,15 @@ const props = defineProps({
   /**
    * Overall navigation alignment.
    */
-  align: { type: String as PropType<'left' | 'center' | 'right' | 'full'>, default: 'left' },
+  alignment: { type: String as PropType<'left' | 'center' | 'right' | 'full'>, default: 'left' },
   /**
    * The overall look and feel of the component.
    */
-  kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' }
+  kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
+  /**
+   * Unset "container" class to allow a fullbleed width
+   */
+  fullWidth: { type: Boolean, default: false }
 })
 
 /* Used to emit model update */
@@ -201,7 +204,7 @@ const focusablePanels = ref({})
 const focusableTopLinks = ref({})
 
 /* Needed for "onClickOutside" event */
-const target = ref(null)
+const megaMenuNav = ref(null)
 
 const onClose = () => {
   /* Deselect all mega menu panels */
@@ -214,7 +217,7 @@ const onClose = () => {
 
 /* Close the mega menu when clicking somewhere on the document
  * outside the mega menu component */
-onClickOutside(target, (_event: Event) => {
+onClickOutside(megaMenuNav, (_event: Event) => {
   onClose()
 })
 
@@ -267,31 +270,58 @@ const setOpenValues = (toggle: string = '') => {
   }, 300)
 }
 
-/* Event listener callback to focus a main navigation link from a panel */
+/* Event listener callback to focus a main navigation link from a panel.
+ * Used to jump back to the top navigation on "up" arrow keypress. */
 const setTopLinkFocus = (topLink: ITopLink, event: Event) => {
   event?.preventDefault()
   focusableTopLinks[topLink.key].focus()
 }
 
-/* Event listener callback to focus a panel element (form a topLink) */
+/* Event listener callback to focus a panel element (from a topLink) */
 const setPanelFocus = async (key: string, event: Event) => {
   event?.preventDefault()
   focusablePanels[key].focus()
+  /* Focus the first element in the panel */
   focusablePanels[key].querySelectorAll('a, button, input, select')[0].focus()
 }
 
-/* Manage focusable panels as a ref with key: value pairs of topLink.keys and HTML elements */
+/* Manage focusable panels as a ref with key: value pairs of
+ * topLink.keys and HTML elements (of the panel areas) */
 const setFocusableElem = (key: string, elem: Element, type: string = 'panel') => {
-  let focusable = focusablePanels
-  if (type === 'topLink') {
-    focusable = focusableTopLinks
+  /* Switch ref object based on type == 'topLink' versus 'panel' */
+  let focusable = type === 'panel' ? focusablePanels : type === 'topLink' ? focusableTopLinks : {}
+  /* If panel or topLink hasn't been added to ref object,
+   * do so here. Use the topLink.key as the object key
+   * (use the HTMLElement as its mapped value). */
+   if (focusable) {
+    if (!Object.keys(focusable).includes(key)) {
+      focusable[key] = elem
+    }
   }
-  if (!Object.keys(focusable).includes(key)) {
-    focusable[key] = elem
-    /* TODO:
-     * - get last focusable input in each panel
-     * - set keypress event listener to round-robin (jump back to the first link)
-     */
+}
+
+/* Setup ref object to hold:
+ * 1. The panel/topLink key
+ * 2. The first focusable element in the panel
+ * 3. The last focusable element in the panel
+ */
+const panelFirstLast = ref({ key: '', first: null, last: null })
+/* Loop through "focus-able" objects in a Mega Menu panel using tab key */
+const panelRoundRobinIfLast = (key: string, e: Event) => {
+  /* Only continue execution if we're switching to a new menu panel to save some computation */
+  if (key && panelFirstLast.value.key !== key) {
+    const selectedPanel = focusablePanels[key]
+    if (selectedPanel) {
+      panelFirstLast.value.key = key
+      const panelFocusables = selectedPanel.querySelectorAll('a, button, input, select')
+      panelFirstLast.value.first = panelFocusables[0]
+      panelFirstLast.value.last = panelFocusables[panelFocusables.length - 1]
+    }
+  }
+  /* If "Tab" was pressed on the last element in the selected panel, round-robin back to the first */
+  if (document.activeElement === panelFirstLast.value.last) {
+    e.preventDefault()
+    panelFirstLast.value.first.focus()
   }
 }
 </script>
