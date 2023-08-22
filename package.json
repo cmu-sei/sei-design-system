@@ -16,6 +16,7 @@
     "gen-volar-dts": "./scripts/gen-component-declarations.sh"
   },
   "files": [
+    "storybook-static",
     "dist",
     "src",
     "volar.d.ts"
