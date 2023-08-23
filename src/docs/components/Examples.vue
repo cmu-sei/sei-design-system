@@ -30,7 +30,6 @@
       <SdsMegaMenu
         v-model="megaMenu"
         kind="block"
-        alignment="right"
       >
         <template #default="{ topLink, content }">
           {{ topLink }}
@@ -1796,7 +1795,7 @@ export default defineComponent({
           title: "Home",
           tag: 'a',
           href: '/',
-          alignment: 'left'
+          alignment: 'left',
         },
         {
           key: "about",
@@ -2145,7 +2144,6 @@ export default defineComponent({
         {
           key: "education",
           title: "Education",
-          alignment: "right",
           content: {
             educationLinks: [
               {
@@ -2252,6 +2250,7 @@ export default defineComponent({
         {
           key: "darkMode",
           title: "Dark Mode",
+          alignment: "right",
           onClick: () => {
             document.body.classList.toggle('dark')
           }

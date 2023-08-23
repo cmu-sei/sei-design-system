@@ -6,20 +6,15 @@
   >
     <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
       <div
-        class="flex flex-row px-8 mx-auto"
+        class="flex flex-row px-8 mx-auto container"
         :class="{
-          'container': !fullWidth,
           'gap-x-8': kind === 'underline',
-          'justify-start': alignment === 'left',
-          'justify-center': alignment === 'center',
-          'justify-end': alignment === 'right',
-          'justify-evenly': alignment === 'full'
         }"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
-          :ref="thisTopLink => setFocusableElem(topLink.key, thisTopLink, 'topLink')"
+          :ref="(thisTopLink: Element) => setFocusableElem(topLink.key, thisTopLink, 'topLink')"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
@@ -43,8 +38,7 @@
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
           @keydown.down="topLink.selected ? setPanelFocus(topLink.key, $event) : changeMenuPanel(topLink, $event).then(() => { setPanelFocus(topLink.key, $event) }); topLink.onFocus && topLink?.onFocus(topLink, $event)"
         >
-          <!-- @slot Dynamic link. -->
-          <!-- Used to supply custom HTML within a top-level menu link. -->
+          <!-- @slot Dynamic link. Used to supply custom HTML within a top-level menu link. -->
           <slot
             :name="`link(${topLink.key})`"
             :item="topLink"
@@ -78,7 +72,7 @@
         <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
           v-if="topLink.tag !== 'a'"
-          :ref="thisPanel => setFocusableElem(topLink.key, thisPanel)"
+          :ref="(thisPanel: Element) => setFocusableElem(topLink.key, thisPanel, 'panel')"
           :class="[
             topLink.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
@@ -88,9 +82,7 @@
           @keydown.up="setTopLinkFocus(topLink, $event); topLink.onFocus && topLink?.onFocus(topLink, $event)"
           @keydown.tab="panelRoundRobinIfLast(topLink.key, $event)"
         >
-          <div
-            :class="fullWidth ? '' : 'mx-auto container'"
-          >
+          <div class="mx-auto container">
             <transition
               enter-active-class="transition-[transform_400ms,colors_50ms] ease"
               :enter-from-class="isOpenDelay ? 'opacity-100' : 'max-h-0 opacity-25'"
@@ -99,16 +91,21 @@
               leave-from-class="opacity-25 max-h-screen"
               leave-to-class="opacity-0 max-h-0"
             >
-              <!-- @slot Dynamic "panel" slot. -->
-              <!-- Use this slot to supply custom HTML that will display -->
-              <!-- in a floating panel below the main navigation bar. -->
+              <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. -->
               <slot
                 v-if="topLink.selected"
                 :name="`panel(${topLink.key})`"
                 :close="onClose"
                 :item="topLink"
                 :content="topLink.content"
-              />
+              >
+                <slot
+                  v-if="topLink.selected"
+                  :close="onClose"
+                  :item="topLink"
+                  :content="topLink.content"
+                />
+              </slot>
             </transition>
           </div>
         </div>
@@ -168,17 +165,9 @@ const props = defineProps({
    */
   modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
   /**
-   * Overall navigation alignment.
-   */
-  alignment: { type: String as PropType<'left' | 'center' | 'right' | 'full'>, default: 'left' },
-  /**
    * The overall look and feel of the component.
    */
   kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
-  /**
-   * Unset "container" class to allow a fullbleed width
-   */
-  fullWidth: { type: Boolean, default: false }
 })
 
 /* Used to emit model update */
@@ -200,8 +189,8 @@ const isOpen = ref(false)
 const isOpenDelay = ref(false)
 
 /* Dictionary of focusable panels (keys mapped to HTMLDivElement references) */
-const focusablePanels = ref({})
-const focusableTopLinks = ref({})
+const focusablePanels = ref()
+const focusableTopLinks = ref()
 
 /* Needed for "onClickOutside" event */
 const megaMenuNav = ref(null)
