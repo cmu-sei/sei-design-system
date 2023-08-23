@@ -14,7 +14,7 @@
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
-          :ref="(thisTopLink: Element) => setFocusableElem(topLink.key, thisTopLink, 'topLink')"
+          :ref="(thisTopLink: HTMLElement) => setFocusableElem(topLink.key, thisTopLink, 'topLink')"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
@@ -72,7 +72,7 @@
         <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
           v-if="topLink.tag !== 'a'"
-          :ref="(thisPanel: Element) => setFocusableElem(topLink.key, thisPanel, 'panel')"
+          :ref="thisPanel => setFocusableElem(topLink.key, thisPanel as HTMLElement, 'panel')"
           :class="[
             topLink.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
@@ -189,8 +189,8 @@ const isOpen = ref(false)
 const isOpenDelay = ref(false)
 
 /* Dictionary of focusable panels (keys mapped to HTMLDivElement references) */
-const focusablePanels = ref()
-const focusableTopLinks = ref()
+const focusablePanels = ref<HTMLElement[]>([])
+const focusableTopLinks = ref<HTMLElement[]>([])
 
 /* Needed for "onClickOutside" event */
 const megaMenuNav = ref(null)
@@ -263,28 +263,28 @@ const setOpenValues = (toggle: string = '') => {
  * Used to jump back to the top navigation on "up" arrow keypress. */
 const setTopLinkFocus = (topLink: ITopLink, event: Event) => {
   event?.preventDefault()
-  focusableTopLinks[topLink.key].focus()
+  focusableTopLinks.value[topLink.key as any].focus()
 }
 
 /* Event listener callback to focus a panel element (from a topLink) */
 const setPanelFocus = async (key: string, event: Event) => {
   event?.preventDefault()
-  focusablePanels[key].focus()
+  focusablePanels.value[key as any].focus();
   /* Focus the first element in the panel */
-  focusablePanels[key].querySelectorAll('a, button, input, select')[0].focus()
+  (focusablePanels.value[key as any].querySelectorAll('a, button, input, select')[0] as HTMLElement).focus()
 }
 
 /* Manage focusable panels as a ref with key: value pairs of
  * topLink.keys and HTML elements (of the panel areas) */
-const setFocusableElem = (key: string, elem: Element, type: string = 'panel') => {
+const setFocusableElem = (key: string, elem: HTMLElement, type: string = 'panel') => {
   /* Switch ref object based on type == 'topLink' versus 'panel' */
-  let focusable = type === 'panel' ? focusablePanels : type === 'topLink' ? focusableTopLinks : {}
+  let focusable = type === 'panel' ? focusablePanels : type === 'topLink' ? focusableTopLinks : null
   /* If panel or topLink hasn't been added to ref object,
    * do so here. Use the topLink.key as the object key
    * (use the HTMLElement as its mapped value). */
    if (focusable) {
     if (!Object.keys(focusable).includes(key)) {
-      focusable[key] = elem
+      focusable.value[key as any] = elem
     }
   }
 }
@@ -294,23 +294,23 @@ const setFocusableElem = (key: string, elem: Element, type: string = 'panel') =>
  * 2. The first focusable element in the panel
  * 3. The last focusable element in the panel
  */
-const panelFirstLast = ref({ key: '', first: null, last: null })
+const panelFirstLast = ref<{ key: String, first: HTMLElement | null, last: HTMLElement | null }>({ key: '', first: null, last: null })
 /* Loop through "focus-able" objects in a Mega Menu panel using tab key */
 const panelRoundRobinIfLast = (key: string, e: Event) => {
   /* Only continue execution if we're switching to a new menu panel to save some computation */
   if (key && panelFirstLast.value.key !== key) {
-    const selectedPanel = focusablePanels[key]
+    const selectedPanel = focusablePanels.value[key as any]
     if (selectedPanel) {
       panelFirstLast.value.key = key
       const panelFocusables = selectedPanel.querySelectorAll('a, button, input, select')
-      panelFirstLast.value.first = panelFocusables[0]
-      panelFirstLast.value.last = panelFocusables[panelFocusables.length - 1]
+      panelFirstLast.value.first = panelFocusables[0] as HTMLElement
+      panelFirstLast.value.last = panelFocusables[panelFocusables.length - 1] as HTMLElement
     }
   }
   /* If "Tab" was pressed on the last element in the selected panel, round-robin back to the first */
   if (document.activeElement === panelFirstLast.value.last) {
     e.preventDefault()
-    panelFirstLast.value.first.focus()
+    panelFirstLast.value.first?.focus()
   }
 }
 </script>
