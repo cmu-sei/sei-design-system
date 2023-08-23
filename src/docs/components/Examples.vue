@@ -1873,7 +1873,6 @@ export default defineComponent({
         {
           key: "research-and-development",
           title: "Research and Development",
-          selected: true,
           content: {
             topicsLink: {
               href: "https://sei.cmu.edu/our-work/all-topics/index.cfm",
