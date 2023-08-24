@@ -23,7 +23,7 @@
     >
     <character-counter
       v-if="countCharacters"
-      class="text-right text-gray-500"
+      class="text-right text-gray-600 dark:text-gray-500"
       :current-value="text.length"
       :max-value="maxlength"
     />

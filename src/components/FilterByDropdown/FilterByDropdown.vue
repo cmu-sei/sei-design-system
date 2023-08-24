@@ -70,10 +70,10 @@
         </div>
         <div
           v-if="!enableFilter"
-          class="pb-2 mb-2 space-x-1 space-y-2 border-b dark:border-gray-500"
+          class="pb-2 mb-2 space-x-2 space-y-2 border-b dark:border-gray-700"
         >
           <label
-            class="text-gray-900 dark:text-gray-50 flex gap-1 w-max"
+            class="text-gray-900 dark:text-gray-50 flex gap-2 items-center w-max"
           >
             <input
               type="checkbox"
@@ -90,8 +90,9 @@
             <li
               v-for="o in filteredTmpOptions"
               :key="o.id"
+              class="space-y-2"
             >
-              <div class="space-x-1">
+              <div class="space-x-2 flex items-center">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
