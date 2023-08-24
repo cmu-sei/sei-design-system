@@ -4,6 +4,7 @@ exports[`MegaMenuItem.vue > matches snapshot 1`] = `
 <a
   class="link group w-full px-4 mb-8 text-sm"
   data-id="sds-megamenuitem"
+  role="menuitem"
 >
   <!---->
   <div
@@ -29,7 +30,7 @@ exports[`MegaMenuItem.vue > matches snapshot 1`] = `
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop assigned 1`] = `
-"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 px-4 py-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-900\\">
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 px-4 py-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-900\\" role=\\"menuitem\\">
   <!---->
   <div class=\\"flex flex-row gap-4\\">
     <!---->
@@ -45,7 +46,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop a
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop assigned 1`] = `
-"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 text-lg mb-8 hover:no-underline\\">
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 text-lg mb-8 hover:no-underline\\" role=\\"menuitem\\">
   <!---->
   <div class=\\"flex flex-row gap-4\\">
     <!---->
@@ -62,7 +63,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop 
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assigned 1`] = `
-"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\">
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\" role=\\"menuitem\\">
   <!---->
   <div class=\\"flex flex-row gap-4\\">
     <!---->
@@ -78,7 +79,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assign
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with no props assigned 1`] = `
-"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\">
+"<a data-id=\\"sds-megamenuitem\\" class=\\"link group w-full px-4 mb-8 text-sm\\" role=\\"menuitem\\">
   <!---->
   <div class=\\"flex flex-row gap-4\\">
     <!---->

@@ -37,7 +37,7 @@
     <div class="flex flex-grow flex-shrink-0">
       <!-- Main content -->
       <section class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-100 dark:bg-gray-950">
+        <main class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"

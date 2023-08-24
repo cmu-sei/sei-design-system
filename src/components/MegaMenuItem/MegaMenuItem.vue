@@ -5,6 +5,7 @@
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="[linkClass, kindClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
+    role="menuitem"
   >
     <div v-if="$slots.top">
       <slot name="top" />

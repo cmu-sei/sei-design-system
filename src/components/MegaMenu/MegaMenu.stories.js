@@ -12,7 +12,7 @@ export default {
         iframeHeight: 675
       },
       description: {
-        component: 'Alpha: A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.',
+        component: 'Beta: A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.',
       },
     },
   },
@@ -418,10 +418,30 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   modelValue: [
-    { key: "topLink1", title: "Top Link 1", selected: false },
-    { key: "topLink2", title: "Top Link 2", selected: false },
-    { key: "topLink3", title: "Top Link 3", selected: false },
-    { key: "topLink4", title: "Top Link 4", selected: false },
-    { key: "topLink5", title: "Top Link 5", selected: false },
+    {
+      key: "topLink1",
+      title: "Top Link 1",
+      selected: false
+    },
+    {
+      key: "topLink2",
+      title: "Top Link 2",
+      selected: false
+    },
+    {
+      key: "topLink3",
+      title: "Top Link 3",
+      selected: false
+    },
+    {
+      key: "topLink4",
+      title: "Top Link 4",
+      selected: false
+    },
+    {
+      key: "topLink5",
+      title: "Top Link 5",
+      selected: false
+    },
   ]
 };

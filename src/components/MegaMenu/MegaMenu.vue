@@ -1,47 +1,54 @@
 <template>
   <nav
-    ref="target"
+    ref="root"
     data-id="sds-megamenu"
     class="w-full flex flex-col"
+    @keydown="checkKeyEvent"
   >
     <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
       <div
-        class="flex flex-row px-8 container mx-auto"
+        class="flex flex-row px-8 mx-auto container"
         :class="{
-          'gap-x-8': type === 'underline'
+          'gap-x-8': kind === 'underline',
         }"
+        role="menubar"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
+          :id="`sds-megamenu__top-link_${topLink.key}`"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
-          :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          aria-haspopup="true"
-          :aria-expanded="isOpen"
+          :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
+          :role="topLink.tag === 'button' ? 'menuitem' : undefined"
+          :aria-haspopup="topLink.tag === 'button' ? true : undefined"
+          :aria-expanded="topLink.tag === 'button' ? topLink.selected : undefined"
           :data-id="`sds-megamenu_${topLink.key}`"
+          :data-selected="topLink.selected"
           :class="{
-            'ml-auto': topLink.align === 'right',
-            'mr-auto': topLink.align === 'left',
-            'mx-auto': topLink.align === 'center',
-            'px-4 dark:border-gray-800': type === 'block',
-            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
-            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': type === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
-            'text-white bg-red-500 dark:bg-red-700': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
-            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
-            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': type === 'underline' && topLink.selected,
-            'border-red-500 dark:border-red-300': type === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'ml-auto': topLink.alignment === 'right',
+            'mr-auto': topLink.alignment === 'left',
+            'mx-auto': topLink.alignment === 'center',
+            'px-4 dark:border-gray-800': kind === 'block',
+            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
+            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
+            'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': kind === 'underline',
+            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': kind === 'underline' && topLink.selected,
+            'border-red-500 dark:border-red-300': kind === 'underline' && topLink.active,
+            'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
-          <!-- @slot Dynamic link. Used to for custom HTML within a link. -->
+          <!-- @slot Dynamic link. Used to supply custom HTML within a top-level menu link. -->
           <slot
             :name="`link(${topLink.key})`"
             :item="topLink"
           >
             <span>{{ topLink.title }}</span>
+            <!-- Below SVG is a caret to indicate Mega Menu opened/closed status -->
+            <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
             <svg
               v-if="topLink.tag !== 'a'"
               :class="{
@@ -49,7 +56,7 @@
               }"
               class="relative inline-block w-5 h-5 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 600 500"
+              viewBox="0 0 550 500"
               fill="currentColor"
             >
               <path
@@ -60,43 +67,50 @@
         </component>
       </div>
     </div>
-    <div class="w-full relative">
-      <template
-        v-for="topLink in topLinks"
-        :key="topLink.key"
+    <transition
+      enter-active-class="transition-transform ease-in-out"
+      enter-from-class="scale-y-0"
+      enter-to-class="scale-y-100"
+      leave-active-class="transition-transform ease-in-out"
+      leave-from-class="scale-y-100"
+      leave-to-class="scale-y-0"
+    >
+      <div
+        v-if="selectedTopLink"
+        class="w-full relative"
+        role="menu"
       >
+        <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
-          v-if="topLink.tag !== 'a'"
+          v-if="selectedTopLink?.tag !== 'a'"
+          ref="panel"
           :class="[
-            topLink.selected
+            selectedTopLink?.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
               : 'z-10',
-            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950'
+            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950',
           ]"
         >
-          <transition
-            enter-active-class="transition-[transform_400ms,colors_50ms] ease"
-            :enter-from-class="isOpenDelay ? 'opacity-100' : 'max-h-0 opacity-25'"
-            :enter-to-class="isOpenDelay ? 'opacity-100' : 'max-h-screen opacity-100'"
-            leave-active-class="transition-[transform_400ms,colors_50ms] ease"
-            leave-from-class="opacity-25 max-h-screen"
-            leave-to-class="opacity-0 max-h-0"
-          >
-            <!-- @slot Dynamic panel. Used to for custom HTML within a panel. -->
+          <div class="mx-auto container">
+            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. -->
             <slot
-              v-if="topLink.selected"
-              :name="`panel(${topLink.key})`"
+              v-if="selectedTopLink?.selected"
+              :name="`panel(${selectedTopLink.key})`"
+              :close="onClose"
+              :item="selectedTopLink"
+              :content="selectedTopLink.content"
             >
-              <!-- @slot Default panel slot. Used to for custom HTML across all undefined panels. -->
               <slot
-                v-if="topLink.selected"
-                :item="topLink"
+                v-if="selectedTopLink?.selected"
+                :close="onClose"
+                :item="selectedTopLink"
+                :content="selectedTopLink.content"
               />
             </slot>
-          </transition>
+          </div>
         </div>
-      </template>
-    </div>
+      </div>
+    </transition>
   </nav>
 </template>
 
@@ -107,7 +121,8 @@ interface ITopLink {
   tag?: 'button' | 'a'
   title?: string
   href?: string
-  align?: 'left' | 'right' | 'center'
+  alignment?: 'left' | 'right' | 'center'
+  content?: Object
   external?: boolean
   active?: boolean
   selected?: boolean
@@ -121,7 +136,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType, computed, ref } from 'vue'
+import { PropType, computed, ref, watchEffect } from 'vue'
 import { onClickOutside, onKeyStroke } from '@vueuse/core'
 
 const props = defineProps({
@@ -136,7 +151,8 @@ const props = defineProps({
    *   tag?: 'button' | 'a'
    *   title?: string
    *   href?: string
-   *   align?: 'left' | 'right' | 'center'
+   *   alignment?: 'left' | 'right' | 'center'
+   *   content?: Object
    *   external?: boolean
    *   active?: boolean
    *   selected?: boolean
@@ -149,7 +165,7 @@ const props = defineProps({
   /**
    * The overall look and feel of the component.
    */
-  type: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
+  kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
 })
 
 /* Used to emit model update */
@@ -168,12 +184,22 @@ const topLinks = computed({
 
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
-const isOpenDelay = ref(false)
 
-/* Needed for "onClickOutside" event */
-const target = ref(null)
+const root = ref()
+const panel = ref()
+const selectedTopLink = computed(() => {
+  const selected = props.modelValue.find(i => i.selected)
+  return selected || null
+})
+const focusableList = ref<HTMLElement[]>([])
+
+const topLinkEl = computed(() => {
+  if (typeof document === "undefined") return null
+  return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
+})
 
 const onClose = () => {
+  topLinkEl.value?.focus()
   /* Deselect all mega menu panels */
   topLinks.value = topLinks.value.map(i => {
     i.selected = false
@@ -184,7 +210,7 @@ const onClose = () => {
 
 /* Close the mega menu when clicking somewhere on the document
  * outside the mega menu component */
-onClickOutside(target, (_event: Event) => {
+onClickOutside(root, () => {
   onClose()
 })
 
@@ -194,6 +220,59 @@ onKeyStroke('Escape', (e) => {
   e.preventDefault()
   onClose()
 })
+
+watchEffect(() => {
+  focusableList.value = []
+
+  if (panel.value) {
+    const focusable: Array<HTMLElement> = Array.prototype.slice.call(panel.value.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    ));
+    focusableList.value = focusable
+  }
+})
+
+const checkKeyEvent = (event: KeyboardEvent) => {
+  if (!panel.value) return;
+
+  // escape early if only 1 or no elements to focus
+  if (focusableList.value.length < 2 && event.key === "Tab") {
+    event.preventDefault();
+    return;
+  }
+
+  const last = focusableList.value.length - 1;
+
+  if (
+    event.key === "Tab" &&
+    event.shiftKey === false &&
+    event.target === focusableList.value[last]
+  ) {
+    event.preventDefault();
+    topLinkEl.value?.focus()
+  } else if (
+    event.key === "Tab" &&
+    event.shiftKey === true &&
+    event.target === focusableList.value[0]
+  ) {
+    event.preventDefault();
+    topLinkEl.value?.focus()
+  } else if (
+    event.key === "Tab" &&
+    event.shiftKey === false &&
+    event.target === topLinkEl.value
+  ) {
+    event.preventDefault();
+    focusableList.value[0].focus()
+  } else if (
+    event.key === "Tab" &&
+    event.shiftKey === true &&
+    event.target === topLinkEl.value
+  ) {
+    event.preventDefault();
+    focusableList.value[last].focus()
+  }
+}
 
 /* Callback run when a topLink of the mega menu is clicked */
 const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
@@ -213,7 +292,7 @@ const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
   }
 }
 
-const setOpenValues = (toggle: string = '') => {
+const setOpenValues = (toggle: 'close' | null = null) => {
   if (toggle === 'close') {
     isOpen.value = false
   } else {
@@ -230,10 +309,5 @@ const setOpenValues = (toggle: string = '') => {
       isOpen.value = false
     }
   }
-
-  /* Get the "isOpen" value, but get it a moment later */
-  setTimeout(() => {
-    isOpenDelay.value = isOpen.value
-  }, 300)
 }
 </script>
