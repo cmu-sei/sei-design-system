@@ -19,8 +19,7 @@
     "storybook-static",
     "dist",
     "src",
-    "volar.d.ts",
-    "sds-tech-documentation-license.rtf"
+    "volar.d.ts"
   ],
   "sideEffects": false,
   "main": "./dist/index.umd.js",
