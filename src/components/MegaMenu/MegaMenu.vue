@@ -11,6 +11,7 @@
         :class="{
           'gap-x-8': kind === 'underline',
         }"
+        role="menubar"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
@@ -19,8 +20,9 @@
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          aria-haspopup="true"
-          :aria-expanded="isOpen"
+          :role="topLink.tag === 'button' ? 'menuitem' : undefined"
+          :aria-haspopup="topLink.tag === 'button' ? true : undefined"
+          :aria-expanded="topLink.tag === 'button' ? topLink.selected : undefined"
           :data-id="`sds-megamenu_${topLink.key}`"
           :data-selected="topLink.selected"
           :class="{
@@ -76,6 +78,7 @@
       <div
         v-if="selectedTopLink"
         class="w-full relative"
+        role="menu"
       >
         <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
@@ -125,7 +128,6 @@ interface ITopLink {
   selected?: boolean
   disabled?: boolean
   onClick?: Function
-  onFocus?: Function
 }
 
 export default {
@@ -156,7 +158,6 @@ const props = defineProps({
    *   selected?: boolean
    *   disabled?: boolean
    *   onClick?: Function
-   *   onFocus?: Function
    * }
    * ```
    */
@@ -193,6 +194,7 @@ const selectedTopLink = computed(() => {
 const focusableList = ref<HTMLElement[]>([])
 
 const topLinkEl = computed(() => {
+  if (typeof document === "undefined") return null
   return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
 })
 
