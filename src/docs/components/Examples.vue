@@ -1404,21 +1404,55 @@
           </sds-dropdown>
         </div>
 
-        <h4 class="mb-4 text-lg">
-          Sds Textarea & Sds Input
-        </h4>
-        <sds-textarea
-          v-model="maxTextarea.input"
-          placeholder="Enter text here"
-          :maxlength="2000"
-          count-characters
-        />
-        <sds-input
-          v-model="maxTextarea.input"
-          placeholder="Enter text here"
-          :maxlength="20"
-          count-characters
-        />
+        <div class="space-y-8 mb-8">
+          <h4 class="text-lg">
+            Sds Textarea & Sds Input
+          </h4>
+          <div class="grid gap-8">
+            <sds-form-group
+              v-slot="{ id, valid, invalid, required, readonly }"
+              label="Field label"
+              description="This is a field helper text"
+              required
+              invalid-feedback="Please enter at least 5 characters"
+              valid-feedback="Woohoo!"
+              :state="maxTextarea.input.length < 3 ? null : maxTextarea.input !== '' && maxTextarea.input.length > 5"
+            >
+              <sds-textarea
+                :id="id"
+                v-model="maxTextarea.input"
+                placeholder="Enter text here"
+                :valid="valid"
+                :invalid="invalid"
+                :required="required"
+                :readonly="readonly"
+                :maxlength="2000"
+                count-characters
+              />
+            </sds-form-group>
+            <sds-form-group
+              v-slot="{ id, valid, invalid, required, readonly }"
+              label="Field label"
+              description="This is a field helper text"
+              required
+              invalid-feedback="Please enter at least 5 characters"
+              valid-feedback="Woohoo!"
+              :state="maxTextarea.input.length < 3 ? null : maxTextarea.input !== '' && maxTextarea.input.length > 5"
+            >
+              <sds-input
+                :id="id"
+                v-model="maxTextarea.input"
+                :valid="valid"
+                :invalid="invalid"
+                :required="required"
+                :readonly="readonly"
+                placeholder="Enter text here"
+                :maxlength="20"
+                count-characters
+              />
+            </sds-form-group>
+          </div>
+        </div>
 
         <sds-tooltip>
           <template #trigger>
@@ -1591,16 +1625,32 @@
         <h4 class="my-4 text-lg">
           Multiselect
         </h4>
-        <sds-multiselect
-          v-model="multiselect.input"
-          :selected="multiselect.selected"
-          :options="filteredMultiselectOptions"
-          show-clear
-          multiple
-          taggable
-          @update-selected="updateSelected"
-        />
-        <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
+        <form @submit.prevent>
+          <SdsFormGroup
+            v-slot="{ id, required }"
+            label="Multiselect Example"
+            description="This is just an example"
+            required
+          >
+            <sds-multiselect
+              :id="id"
+              v-model="multiselect.input"
+              :selected="multiselect.selected"
+              :options="filteredMultiselectOptions"
+              :required="required"
+              show-clear
+              multiple
+              taggable
+              @update-selected="updateSelected"
+            />
+          </SdsFormGroup>
+          <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
+          <input
+            type="submit"
+            value="Submit"
+            class="btn btn-primary"
+          >
+        </form>
 
         <h4 class="my-4 text-lg">
           Filter By Dropdown
@@ -1639,18 +1689,26 @@
           Autosuggest
         </h4>
         <div>
-          <sds-autosuggest
-            v-model="text"
-            :items="items"
-            :threshold="2"
-            :autosuggest="autosuggest"
-            :disable-search="text === ''"
-            placeholder="Search for a fruit"
-            variant="primary"
-            use-built-in-highlighting
-            @result="result"
-            @search="search"
-          />
+          <SdsFormGroup
+            v-slot="{ id }"
+            label="Autosuggest Example"
+            description="This is just an example"
+            required
+          >
+            <sds-autosuggest
+              :id="id"
+              v-model="text"
+              :items="items"
+              :threshold="2"
+              :autosuggest="autosuggest"
+              :disable-search="text === ''"
+              placeholder="Search for a fruit"
+              variant="primary"
+              use-built-in-highlighting
+              @result="result"
+              @search="search"
+            />
+          </SdsFormGroup>
           <p class="mt-3">
             You performed a search with: {{ searchText }}
           </p>
@@ -1707,10 +1765,11 @@
           Radio Group
         </h4>
         <div class="py-12">
-          <sds-radio-group
-            v-model="radioModel"
-            :options="radioOptions"
-            required
+          <sds-checkbox-group
+            v-model="checkboxModel"
+            :options="checkboxOptions"
+            label="Checkbox Group"
+            description="Please select one of the options"
             @change="$emit('radioGroupChange')"
           >
             <template #label="{ optionId, option }">
@@ -1718,7 +1777,7 @@
                 Radio Group: {{ option.text }}
               </label>
             </template>
-          </sds-radio-group>
+          </sds-checkbox-group>
         </div>
         <div class="py-12">
           <sds-radio-group
@@ -2398,6 +2457,12 @@ export default defineComponent({
         { term: "Mango", payload: "test" },
       ],
       searchText: "",
+      checkboxModel: [1, 3],
+      checkboxOptions: [
+        { text: 'One', value: 1 },
+        { text: 'Two', value: 2 },
+        { text: 'Three', value: 3 },
+      ],
       radioModel: true,
       radio2Model: true,
       radio3Model: true,

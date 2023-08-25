@@ -38,6 +38,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
           </span>
         </button>
         <input
+          aria-label="Start date"
           class="form-control"
           pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
           placeholder="mm/dd/yyyy"

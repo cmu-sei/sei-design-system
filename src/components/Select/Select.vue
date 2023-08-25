@@ -1,5 +1,6 @@
 <template>
   <select
+    :id="id"
     v-model="localValue"
     data-id="sds-select"
     :disabled="disabled"
@@ -38,6 +39,10 @@ export default {
 import { PropType, computed } from 'vue'
 
 const props = defineProps({
+  /**
+   * Determines the id of the select.
+   */
+  id: { type: String, default: undefined },
   /**
    * The v-model of the component.
    */

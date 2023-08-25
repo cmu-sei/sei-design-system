@@ -11,6 +11,7 @@
         }"
       >
         <input
+          :id="id"
           ref="input"
           v-model.trim="q"
           type="text"
@@ -124,6 +125,10 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    /**
+     * Determines the id of the input.
+     */
+    id: { type: String, default: undefined },
     /**
      * The placeholder for the input.
      */
