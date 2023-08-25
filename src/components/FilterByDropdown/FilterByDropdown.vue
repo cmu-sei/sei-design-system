@@ -40,7 +40,7 @@
     </template>
     <template #default="{ close }">
       <div
-        class="p-2"
+        class="p-4"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -102,7 +102,7 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 dark:text-gray-50 ml-1"
+                  class="text-gray-900 dark:text-gray-50 ml-1 block"
                 >{{ o.text }}</label>
               </div>
             </li>
@@ -115,12 +115,13 @@
           >
             Apply filter
           </button>
-          <button
-            class="btn btn-default btn-block btn-sm"
+          <sds-link
+            class="mt-3 btn-block text-center"
+            kind="primary"
             @click="cancelSelections(); close()"
           >
             Cancel
-          </button>
+          </sds-link>
         </div>
       </div>
     </template>
@@ -159,9 +160,9 @@ export default defineComponent({
     kind: { type: String as PropType<'primary' | 'secondary'>, default: null },
     /**
      * Determines the color of the component.
-     * 
+     *
      * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
+     *
      * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'primary' | 'secondary' | ''>, default: 'secondary' },
