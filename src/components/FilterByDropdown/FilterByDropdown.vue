@@ -86,7 +86,7 @@
           </label>
         </div>
         <div class="scroll-area max-h-48">
-          <ul class="space-y-2">
+          <ul>
             <li
               v-for="o in filteredTmpOptions"
               :key="o.id"
