@@ -1,5 +1,8 @@
 <template>
-  <div data-id="sds-textarea">
+  <div
+    data-id="sds-textarea"
+    class="w-full relative"
+  >
     <textarea
       :id="id"
       v-model="text"
@@ -15,7 +18,7 @@
     />
     <character-counter
       v-if="countCharacters"
-      class="text-right text-gray-500"
+      class="absolute right-0 text-gray-600 dark:text-gray-500"
       :current-value="text.length"
       :max-value="maxlength"
     />

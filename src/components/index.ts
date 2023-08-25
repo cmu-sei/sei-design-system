@@ -16,6 +16,7 @@ import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsFloatingActionButton from "./FloatingActionButton";
 import SdsFloatingUi from "./FloatingUi";
+import SdsFormGroup from "./FormGroup";
 import SdsIndicator from "./Indicator"
 import SdsInput from "./Input"
 import SdsLayoutApp from "./LayoutApp";
@@ -75,6 +76,7 @@ const Components: ComponentList = {
   SdsFilterByDropdown,
   SdsFloatingActionButton,
   SdsFloatingUi,
+  SdsFormGroup,
   SdsIndicator,
   SdsInput,
   SdsLayoutApp,
@@ -138,6 +140,7 @@ export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsFloatingActionButton } from "./FloatingActionButton"
 export { default as SdsFloatingUi } from "./FloatingUi"
+export { default as SdsFormGroup } from "./FormGroup"
 export { default as SdsIndicator } from "./Indicator"
 export { default as SdsInput } from "./Input"
 export { default as SdsLayoutApp } from "./LayoutApp";

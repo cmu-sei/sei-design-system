@@ -124,6 +124,24 @@
       aria-hidden="true"
       class="multiselect-caret"
     />
+    <select
+      v-if="id"
+      :id="id"
+      :required="required"
+      :multiple="multiple"
+      class="sr-only"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <option
+        v-for="i in selected"
+        :key="i.id"
+        :value="i.id"
+        selected
+      >
+        {{ i[labelKey] }}
+      </option>
+    </select>
     <ul
       v-if="showDropdown"
       ref="dropdownMenu"
@@ -235,6 +253,10 @@ interface MultiselectTag {
 export default defineComponent({
   name: 'SdsMultiselect',
   props: {
+    /**
+     * Determines the id of the component.
+     */
+    id: { type: String, default: undefined },
     /**
      * An array of the selected options.
      */

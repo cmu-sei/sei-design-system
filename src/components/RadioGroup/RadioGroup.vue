@@ -1,111 +1,140 @@
 <template>
-  <div
-    v-if="loaded"
-    :id="id"
+  <fieldset
+    ref="root"
+    v-uid
     data-id="sds-radio-group"
-    tabindex="-1"
-    class="flex"
-    :class="{
-      'flex-col gap-2': stacked,
-      'gap-4': !stacked
-    }"
+    class="space-y-2"
+    :disabled="disabled"
   >
-    <div
-      v-for="(option, index) in options"
-      :key="option.text"
-      class="flex gap-2 items-center"
+    <legend
+      v-if="label"
+      class="flex gap-1 items-center font-medium"
     >
-      <input
-        :id="`${id}__option_${index}`"
-        v-model="localChecked"
-        type="radio"
-        :value="option.value"
-        :name="name ? name : `${id}__option`"
-        :required="required"
-        @click="onChange(option.value)"
+      <span>{{ label }}</span>
+      <span
+        v-if="required"
+        class="text-red-500 dark:text-red-300 text-xs"
+      >* required</span>
+    </legend>
+    <p
+      v-if="description"
+      class="block text-xs italic text-gray-600 dark:text-gray-500"
+    >
+      {{ description }}
+    </p>
+    <div
+      class="flex"
+      :class="{
+        'flex-col gap-2': stacked,
+        'gap-4': !stacked
+      }"
+    >
+      <div
+        v-for="(option, index) in options"
+        :key="`${root?.id}_${option.text}`"
+        class="flex gap-2 items-center"
       >
-      <!-- @slot Label content (used to replace label element). @binding optionId, option -->
-      <slot
-        name="label"
-        :option-id="`${id}__option_${index}`"
-        :option="option"
-      >
-        <label
-          :for="`${id}__option_${index}`"
-        ><span>{{ option.text }}</span></label>
-      </slot>
+        <input
+          :id="`${root?.id}__option_${index}`"
+          v-model="localModelValue"
+          type="radio"
+          :value="option.value"
+          :name="name ? name : `${root?.id}__option`"
+          :required="required"
+          @click="onChange(option.value)"
+        >
+        <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+        <slot
+          name="label"
+          :option-id="`${root?.id}__option_${index}`"
+          :option="option"
+        >
+          <label
+            :for="`${root?.id}__option_${index}`"
+          ><span>{{ option.text }}</span></label>
+        </slot>
+      </div>
     </div>
-  </div>
+  </fieldset>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
+import { Uid } from "@shimyshack/uid";
 
-let id = 0;
+type RadioGroupOptionValue = boolean | string | number
 
-type RadioModel = boolean | string | number | null
-
-interface RadioOption {
-  value: string | number | boolean
+interface RadioGroupOption {
+  value: RadioGroupOptionValue
   text: string
 }
 
 export default defineComponent({
   name: "SdsRadioGroup",
-  props: {
-    /**
-     * The v-model of the radio group.
-     */
-    modelValue: { type: [Boolean, String, Number, null] as PropType<RadioModel>, default: null },
-    /**
-     * The name of the radio form field.
-     */
-    name: { type: String, default: null },
-    /**
-     * An array of options for the radio group.
-     */
-    options: { type: Array as PropType<RadioOption[]>, default: () => [] },
-    /**
-     * Determines whether the radio group is required or not.
-     */
-    required: { type: Boolean, default: false },
-    /**
-     * Determines whether the options are stacked vertically or horizontally.
-     */
-    stacked: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue', 'change'],
-  data() {
-    return {
-      id: "",
-      loaded: false,
-    };
-  },
-  computed: {
-    localChecked: {
-      get() {
-        return this.modelValue;
-      },
-      set(value: RadioModel) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        this.$emit("update:modelValue", value);
-      },
-    },
-  },
-  mounted() {
-    id++;
-    this.id = `sds-radio-group_${id}`;
-    this.loaded = true
-  },
-  methods: {
-    onChange(value: string) {
-      /**
-       * Emitted when an option's value has changed.
-       */
-      this.$emit('change', value)
-    }
+  directives: {
+    uid: Uid
   }
-});
+})
+</script>
+
+<script setup lang="ts">
+import { ref, computed, PropType } from "vue";
+
+const props = defineProps({
+  /**
+   * The v-model of the radio group.
+   */
+  modelValue: { type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>, default: null },
+  /**
+   * The label of the radio form field group.
+   */
+  label: { type: String, default: null },
+  /**
+   * The description of the radio form field group.
+   */
+  description: { type: String, default: null },
+  /**
+   * The name of the radio form field.
+   */
+  name: { type: String, default: null },
+  /**
+   * An array of options for the radio group.
+   */
+  options: { type: Array as PropType<RadioGroupOption[]>, default: () => [] },
+  /**
+   * Determines whether the radio group is required or not.
+   */
+  required: { type: Boolean, default: false },
+  /**
+   * Determines whether the radio group is disabled or not.
+   */
+  disabled: { type: Boolean, default: false },
+  /**
+   * Determines whether the options are stacked vertically or horizontally.
+   */
+  stacked: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['update:model-value', 'change'])
+
+const root = ref()
+
+const localModelValue = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: RadioGroupOptionValue) {
+    /**
+     * Emmitted when modelValue changes.
+     */
+    emit("update:model-value", value)
+  }
+})
+
+const onChange = (value: RadioGroupOptionValue) => {
+  /**
+   * Emitted when an option's value has changed.
+   */
+  emit('change', value)
+}
 </script>

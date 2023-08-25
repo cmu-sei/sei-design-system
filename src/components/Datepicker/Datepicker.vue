@@ -54,6 +54,7 @@
           <input
             ref="startDateInput"
             v-model="inputDate.start"
+            aria-label="Start date"
             type="text"
             class="form-control"
             :class="{ 'px-1': size === 'sm' }"
@@ -136,6 +137,7 @@
             <input
               ref="endDateInput"
               v-model="inputDate.end"
+              aria-label="End date"
               type="text"
               class="form-control"
               :class="{ 'px-1': size === 'sm' }"
