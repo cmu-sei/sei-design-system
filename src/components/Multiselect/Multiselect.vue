@@ -967,7 +967,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .sds-multiselect {
-  @apply block relative text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
+  @apply block relative py-0.5 text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
 }
 
 .sds-multiselect.active,
@@ -1032,7 +1032,7 @@ fieldset[disabled] .sds-multiselect * {
   position: absolute;
   top: 0;
   right: 0;
-  height: 36px;
+  height: 42px;
   width: 32px;
   background: 0;
   border: 0;
@@ -1092,31 +1092,25 @@ fieldset[disabled] .sds-multiselect * {
 
 .dropdown-list-item {
   padding: 4px 8px;
+  cursor: pointer;
 }
 
 .dropdown-list-item.active {
-  background: theme("colors.blue.500");
+  background: theme("colors.gray.100");
+  color: theme("colors.black");
+}
+
+.dark .dropdown-list-item.active {
+  background: theme("colors.gray.800");
   color: theme("colors.white");
 }
 
 .dropdown-list-item.selected {
-  background: theme("colors.gray.100");
-  color: theme("colors.gray.700");
-}
-
-.dark .dropdown-list-item.selected {
-  background: theme("colors.gray.800");
-  color: theme("colors.gray.300");
+  opacity: 0.5;
 }
 
 .dropdown-list-item.active.selected {
-  background: theme("colors.gray.200");
-  color: theme("colors.gray.800");
-}
-
-.dark .dropdown-list-item.active.selected {
-  background: theme("colors.gray.750");
-  color: theme("colors.gray.200");
+  background: theme("colors.transparent");
 }
 
 .dropdown-list-item.loading {

@@ -9,26 +9,22 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
     class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
   >
     <div
-      class="flex flex-row px-8 container mx-auto gap-x-8"
+      class="flex flex-row px-8 mx-auto container gap-x-8"
+      role="menu"
     >
       
       
     </div>
   </div>
-  <div
-    class="w-full relative"
-  >
-    
-    
-  </div>
+  <!---->
 </nav>
 `;
 
 exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
 "<nav data-id=\\"sds-megamenu\\" class=\\"w-full flex flex-col\\">
   <div class=\\"w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800\\">
-    <div class=\\"flex flex-row px-8 container mx-auto gap-x-8\\"></div>
+    <div class=\\"flex flex-row px-8 mx-auto container gap-x-8\\" role=\\"menu\\"></div>
   </div>
-  <div class=\\"w-full relative\\"></div>
+  <!---->
 </nav>"
 `;
