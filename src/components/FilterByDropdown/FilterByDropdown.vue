@@ -116,7 +116,7 @@
             Apply filter
           </button>
           <sds-link
-            class="mt-3 btn-block text-center"
+            class="mt-3 btn-block text-center text-sm"
             kind="primary"
             @click="cancelSelections(); close()"
           >
