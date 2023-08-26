@@ -17,7 +17,7 @@
       <slot name="label"><span>{{ label }}</span></slot>
       <span
         v-if="required"
-        class="text-red-500 dark:text-red-300 text-xs"
+        class="font-normal text-red-500 dark:text-red-300 text-xs"
       >* required</span>
     </label>
     <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, required, readonly -->

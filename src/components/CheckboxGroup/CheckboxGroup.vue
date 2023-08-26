@@ -8,12 +8,17 @@
   >
     <legend
       v-if="label"
-      class="flex gap-1 items-center font-medium"
+      :class="{
+        'font-medium': labelWeight === 'medium',
+        'font-semibold': labelWeight === 'semibold',
+        'font-bold': labelWeight === 'bold',
+      }"
+      class="flex gap-1 items-center"
     >
       <span>{{ label }}</span>
       <span
         v-if="required"
-        class="text-red-500 dark:text-red-300 text-xs"
+        class="font-normal text-red-500 dark:text-red-300 text-xs"
       >* required</span>
     </legend>
     <p
@@ -89,6 +94,10 @@ const props = defineProps({
    * The label of the checkbox form field group.
    */
   label: { type: String, default: null },
+  /**
+   * Determines the font weight of the label.
+   */
+  labelWeight: { type: String as PropType<'medium' | 'semibold' | 'bold'>, default: 'medium' },
   /**
    * The description of the checkbox form field group.
    */
