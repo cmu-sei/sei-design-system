@@ -1,18 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`CheckboxGroup > should match its default snapshot 1`] = `
-<fieldset
-  class="space-y-2"
+<div
+  class="flex gap-4"
   data-id="sds-checkbox-group"
   id="unique-id"
 >
-  <!---->
-  <!---->
-  <div
-    class="flex gap-4"
-  >
-    
-    
-  </div>
-</fieldset>
+  
+  
+</div>
 `;
