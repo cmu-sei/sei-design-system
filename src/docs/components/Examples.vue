@@ -1542,16 +1542,27 @@
           :size="calendar.size"
         />
 
-        <form @submit.prevent>
-          <sds-datepicker
-            v-model="calendar.date"
-            :min="calendar.min"
-            :max="calendar.max"
-            :mode="calendar.mode"
-            :size="calendar.size"
+        <form
+          class="space-y-4"
+          @submit.prevent
+        >
+          <SdsFormGroup
+            v-slot="{ required }"
+            el="fieldset"
+            label="Date range"
+            description="Select a start and an end date"
             required
-            use-current-time-for-today
-          />
+          >
+            <sds-datepicker
+              v-model="calendar.date"
+              :min="calendar.min"
+              :max="calendar.max"
+              :mode="calendar.mode"
+              :size="calendar.size"
+              :required="required"
+              use-current-time-for-today
+            />
+          </SdsFormGroup>
           <sds-button
             kind="danger"
             type="button"
@@ -1777,34 +1788,51 @@
           Radio Group
         </h4>
         <div class="py-12">
-          <sds-checkbox-group
-            v-model="checkboxModel"
-            :options="checkboxOptions"
+          <sds-form-group
+            v-slot="{ required }"
+            el="fieldset"
             label="Checkbox Group"
-            description="Please select one of the options"
-            @change="$emit('radioGroupChange')"
+            description="Please select one or more of the options"
+            description-position="top"
+            required
           >
-            <template #label="{ optionId, option }">
-              <label :for="optionId">
-                Radio Group: {{ option.text }}
-              </label>
-            </template>
-          </sds-checkbox-group>
+            <sds-checkbox-group
+              v-model="checkboxModel"
+              :options="checkboxOptions"
+              :required="required"
+              @change="$emit('radioGroupChange')"
+            >
+              <template #label="{ optionId, option }">
+                <label :for="optionId">
+                  Radio Group: {{ option.text }}
+                </label>
+              </template>
+            </sds-checkbox-group>
+          </sds-form-group>
         </div>
         <div class="py-12">
-          <sds-radio-group
-            v-model="radio2Model"
-            :options="radioOptions"
+          <sds-form-group
+            v-slot="{ required }"
+            el="fieldset"
+            label="Radio Group"
+            description="Please select one of the options"
+            description-position="top"
             required
-            stacked
-            @change="$emit('radioGroupChange')"
           >
-            <template #label="{ optionId, option }">
-              <label :for="optionId">
-                Radio Group 2: {{ option.text }}
-              </label>
-            </template>
-          </sds-radio-group>
+            <sds-radio-group
+              v-model="radio2Model"
+              :options="radioOptions"
+              :required="required"
+              stacked
+              @change="$emit('radioGroupChange')"
+            >
+              <template #label="{ optionId, option }">
+                <label :for="optionId">
+                  Radio Group 2: {{ option.text }}
+                </label>
+              </template>
+            </sds-radio-group>
+          </sds-form-group>
         </div>
         <sds-radio-group
           v-model="radio3Model"

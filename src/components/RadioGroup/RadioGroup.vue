@@ -1,66 +1,40 @@
 <template>
-  <fieldset
+  <div
     ref="root"
     v-uid
     data-id="sds-radio-group"
-    class="space-y-2"
-    :disabled="disabled"
+    class="flex"
+    :class="{
+      'flex-col gap-2': stacked,
+      'gap-4': !stacked
+    }"
   >
-    <legend
-      v-if="label"
-      :class="{
-        'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold',
-        'font-bold': labelWeight === 'bold',
-      }"
-      class="flex gap-1 items-center"
-    >
-      <span>{{ label }}</span>
-      <span
-        v-if="required"
-        class="font-normal text-red-500 dark:text-red-300 text-xs"
-      >* required</span>
-    </legend>
-    <p
-      v-if="description"
-      class="block text-xs italic text-gray-600 dark:text-gray-500"
-    >
-      {{ description }}
-    </p>
     <div
-      class="flex"
-      :class="{
-        'flex-col gap-2': stacked,
-        'gap-4': !stacked
-      }"
+      v-for="(option, index) in options"
+      :key="`${root?.id}_${option.text}`"
+      class="flex gap-2 items-center"
     >
-      <div
-        v-for="(option, index) in options"
-        :key="`${root?.id}_${option.text}`"
-        class="flex gap-2 items-center"
+      <input
+        :id="`${root?.id}__option_${index}`"
+        v-model="localModelValue"
+        type="radio"
+        :value="option.value"
+        :name="name ? name : `${root?.id}__option`"
+        :required="required"
+        @click="onChange(option.value)"
       >
-        <input
-          :id="`${root?.id}__option_${index}`"
-          v-model="localModelValue"
-          type="radio"
-          :value="option.value"
-          :name="name ? name : `${root?.id}__option`"
-          :required="required"
-          @click="onChange(option.value)"
-        >
-        <!-- @slot Label content (used to replace label element). @binding optionId, option -->
-        <slot
-          name="label"
-          :option-id="`${root?.id}__option_${index}`"
-          :option="option"
-        >
-          <label
-            :for="`${root?.id}__option_${index}`"
-          ><span>{{ option.text }}</span></label>
-        </slot>
-      </div>
+      <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+      <slot
+        name="label"
+        :option-id="`${root?.id}__option_${index}`"
+        :option="option"
+      >
+        <label
+          :for="`${root?.id}__option_${index}`"
+        ><span>{{ option.text }}</span></label>
+      </slot>
     </div>
-  </fieldset>
+  </div>
 </template>
 
 <script lang="ts">

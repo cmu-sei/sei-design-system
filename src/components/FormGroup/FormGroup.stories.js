@@ -11,7 +11,20 @@ export default {
     },
   },
   component: SdsFormGroup,
-  argTypes: {}
+  argTypes: {
+    el: {
+      options: ['div', 'fieldset'],
+      control: { type: 'select' }
+    },
+    labelWeight: {
+      options: ['medium', 'semibold', 'bold'],
+      control: { type: 'select' }
+    },
+    descriptionPosition: {
+      options: ['bottom', 'top'],
+      control: { type: 'select' }
+    },
+  }
 };
 
 const Template = (args) => ({
@@ -27,6 +40,7 @@ const Template = (args) => ({
       <sds-input
         :id="id"
         v-model="text"
+        v-bind="args"
       />
     </sds-form-group>
   `,
