@@ -1627,22 +1627,34 @@
         </h4>
         <form @submit.prevent>
           <SdsFormGroup
-            v-slot="{ id, required }"
             label="Multiselect Example"
             description="This is just an example"
+            valid-feedback="cool"
+            invalid-feedback="bummer"
             required
           >
-            <sds-multiselect
-              :id="id"
-              v-model="multiselect.input"
-              :selected="multiselect.selected"
-              :options="filteredMultiselectOptions"
-              :required="required"
-              show-clear
-              multiple
-              taggable
-              @update-selected="updateSelected"
-            />
+            <template #description>
+              Overriding the description
+            </template>
+            <template #validFeedback>
+              Overriding valid feedback
+            </template>
+            <template #invalidFeedback>
+              Overriding invalid feedback
+            </template>
+            <template #default="{ id, required }">
+              <sds-multiselect
+                :id="id"
+                v-model="multiselect.input"
+                :selected="multiselect.selected"
+                :options="filteredMultiselectOptions"
+                :required="required"
+                show-clear
+                multiple
+                taggable
+                @update-selected="updateSelected"
+              />
+            </template>
           </SdsFormGroup>
           <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
           <input
