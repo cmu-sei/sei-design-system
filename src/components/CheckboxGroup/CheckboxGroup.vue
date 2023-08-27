@@ -11,17 +11,17 @@
   >
     <div
       v-for="(option, index) in options"
-      :key="`${root?.id}_${option.text}`"
+      :key="`${root?.id}_${index}`"
       class="flex gap-2 items-center"
     >
       <input
         :id="`${root?.id}__option_${index}`"
         v-model="localModelValue"
         type="checkbox"
-        :value="option.value"
+        :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
         :required="required"
-        @click="onChange(option.value)"
+        @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
       <slot
@@ -31,7 +31,7 @@
       >
         <label
           :for="`${root?.id}__option_${index}`"
-        ><span>{{ option.text }}</span></label>
+        ><span>{{ option[labelKey] }}</span></label>
       </slot>
     </div>
   </div>
@@ -43,9 +43,8 @@ import { Uid } from "@shimyshack/uid";
 
 type CheckboxGroupOptionValue = string | number | boolean
 
-interface CheckboxGroupOption {
-  value: CheckboxGroupOptionValue
-  text: string
+interface CheckboxGroupOption<T> {
+  [key: string]: T
 }
 
 export default defineComponent({
@@ -71,7 +70,7 @@ const props = defineProps({
   /**
    * An array of options for the checkbox group.
    */
-  options: { type: Array as PropType<CheckboxGroupOption[]>, default: () => [] },
+  options: { type: Array as PropType<CheckboxGroupOption<CheckboxGroupOptionValue>[]>, default: () => [] },
   /**
    * Determines whether the checkbox group is required or not.
    */
@@ -80,6 +79,14 @@ const props = defineProps({
    * Determines whether the options are stacked vertically or horizontally.
    */
   stacked: { type: Boolean, default: false },
+  /**
+   * Determines the label key used for options
+   */
+  labelKey: { type: String, default: 'text' },
+  /**
+   * Determines the value key used for options
+   */
+  valueKey: { type: String, default: 'value' }
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
