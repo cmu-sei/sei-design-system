@@ -123,7 +123,7 @@ const props = defineProps({
   /**
    * Determines the font weight of the label.
    */
-  labelWeight: { type: String as PropType<'medium' | 'semibold' | 'bold'>, default: 'medium' },
+  labelWeight: { type: String as PropType<'medium' | 'semibold' | 'bold'>, default: 'bold' },
   /**
    * Determines the description/helper text of the form field.
    */

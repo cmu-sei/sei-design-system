@@ -11,17 +11,17 @@
   >
     <div
       v-for="(option, index) in options"
-      :key="`${root?.id}_${option.text}`"
+      :key="`${root?.id}_${index}`"
       class="flex gap-2 items-center"
     >
       <input
         :id="`${root?.id}__option_${index}`"
         v-model="localModelValue"
         type="radio"
-        :value="option.value"
+        :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
         :required="required"
-        @click="onChange(option.value)"
+        @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
       <slot
@@ -31,7 +31,7 @@
       >
         <label
           :for="`${root?.id}__option_${index}`"
-        ><span>{{ option.text }}</span></label>
+        ><span>{{ option[labelKey] }}</span></label>
       </slot>
     </div>
   </div>
@@ -43,9 +43,8 @@ import { Uid } from "@shimyshack/uid";
 
 type RadioGroupOptionValue = boolean | string | number
 
-interface RadioGroupOption {
-  value: RadioGroupOptionValue
-  text: string
+interface RadioGroupOption<T> {
+  [key: string]: T
 }
 
 export default defineComponent({
@@ -65,37 +64,29 @@ const props = defineProps({
    */
   modelValue: { type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>, default: null },
   /**
-   * The label of the radio form field group.
-   */
-  label: { type: String, default: null },
-  /**
-   * Determines the font weight of the label.
-   */
-  labelWeight: { type: String as PropType<'medium' | 'semibold' | 'bold'>, default: 'medium' },
-  /**
-   * The description of the radio form field group.
-   */
-  description: { type: String, default: null },
-  /**
    * The name of the radio form field.
    */
   name: { type: String, default: null },
   /**
    * An array of options for the radio group.
    */
-  options: { type: Array as PropType<RadioGroupOption[]>, default: () => [] },
+  options: { type: Array as PropType<RadioGroupOption<RadioGroupOptionValue>[]>, default: () => [] },
   /**
    * Determines whether the radio group is required or not.
    */
   required: { type: Boolean, default: false },
   /**
-   * Determines whether the radio group is disabled or not.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
    * Determines whether the options are stacked vertically or horizontally.
    */
   stacked: { type: Boolean, default: false },
+  /**
+   * Determines the label key used for options
+   */
+  labelKey: { type: String, default: 'text' },
+  /**
+   * Determines the value key used for options
+   */
+  valueKey: { type: String, default: 'value' }
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
