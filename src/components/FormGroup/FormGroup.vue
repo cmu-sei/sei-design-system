@@ -10,12 +10,7 @@
     <Component
       :is="el === 'div' ? 'label' : 'legend'"
       :for="el === 'div' ? id : undefined"
-      :class="{
-        'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold',
-        'font-bold': labelWeight === 'bold',
-      }"
-      class="flex gap-1 items-center mb-2"
+      class="flex gap-1 items-center mb-1 font-medium"
     >
       <!-- @slot Label slot content. This will override the `label` prop. @binding label. -->
       <slot
@@ -30,8 +25,8 @@
       >* required</span>
     </Component>
     <p
-      v-if="descriptionPosition === 'top' && (description || $slots.description)"
-      class="block text-xs italic text-gray-600 dark:text-gray-500 pb-2"
+      v-if="description || $slots.description"
+      class="block text-xs text-gray-600 dark:text-gray-500 pb-2"
     >
       <!-- @slot Description slot content. This will override the `description` prop. @binding description. -->
       <slot
@@ -63,7 +58,7 @@
       </slot>
     </p>
     <p
-      v-else-if="state === false && (invalidFeedback || $slots.invalidFeedback)"
+      v-if="state === false && (invalidFeedback || $slots.invalidFeedback)"
       class="block text-xs italic text-red-500 dark:text-red-300 py-1"
     >
       <!-- @slot Invalid Feedback slot content. This will override the `invalidFeedback` prop. @binding invalidFeedback. -->
@@ -75,15 +70,15 @@
       </slot>
     </p>
     <p
-      v-else-if="descriptionPosition === 'bottom' && (description || $slots.description)"
+      v-if="helperText || $slots.helperText"
       class="block text-xs italic text-gray-600 dark:text-gray-500 py-1"
     >
-      <!-- @slot Description slot content. This will override the `description` prop. @binding description. -->
+      <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
       <slot
-        name="description"
-        :description="description"
+        name="helperText"
+        :helper-text="helperText"
       >
-        <span>{{ description }}</span>
+        <span>{{ helperText }}</span>
       </slot>
     </p>
   </Component>
@@ -121,17 +116,13 @@ const props = defineProps({
    */
   labelFor: { type: String as PropType<string | null>, default: null },
   /**
-   * Determines the font weight of the label.
-   */
-  labelWeight: { type: String as PropType<'medium' | 'semibold' | 'bold'>, default: 'bold' },
-  /**
-   * Determines the description/helper text of the form field.
+   * Determines the description of the form field.
    */
   description: { type: String as PropType<string | null>, default: null },
   /**
-   * Determines the description/helper text of the form field.
+   * Determines the helper text of the form field.
    */
-  descriptionPosition: { type: String as PropType<'top' | 'bottom'>, default: 'bottom' },
+  helperText: { type: String as PropType<string | null>, default: null },
   /**
    * Determines the success message displayed when `state`
    * is `true`

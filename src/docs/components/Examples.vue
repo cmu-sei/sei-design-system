@@ -1412,7 +1412,8 @@
             <sds-form-group
               v-slot="{ id, valid, invalid, required, readonly }"
               label="Field label"
-              description="This is a field helper text"
+              description="This is a field description"
+              helper-text="This is a field helper text"
               required
               invalid-feedback="Please enter at least 5 characters"
               valid-feedback="Woohoo!"
@@ -1433,7 +1434,8 @@
             <sds-form-group
               v-slot="{ id, valid, invalid, required, readonly }"
               label="Field label"
-              description="This is a field helper text"
+              description="This is a field description"
+              helper-text="This is a field helper text"
               required
               invalid-feedback="Please enter at least 5 characters"
               valid-feedback="Woohoo!"
