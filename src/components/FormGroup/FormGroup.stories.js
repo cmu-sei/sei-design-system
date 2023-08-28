@@ -16,14 +16,6 @@ export default {
       options: ['div', 'fieldset'],
       control: { type: 'select' }
     },
-    labelWeight: {
-      options: ['medium', 'semibold', 'bold'],
-      control: { type: 'select' }
-    },
-    descriptionPosition: {
-      options: ['bottom', 'top'],
-      control: { type: 'select' }
-    },
   }
 };
 
@@ -52,6 +44,7 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   label: "Field label",
-  description: "Field description"
+  description: "Field description",
+  heplerText: "Field helper text"
 };
 
