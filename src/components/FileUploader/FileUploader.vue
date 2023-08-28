@@ -157,21 +157,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Uid } from '@shimyshack/uid'
-export default {
-  directives: {
-    uid: Uid
-  }
-}
-</script>
-
 <script setup lang="ts">
 import { ref, PropType, watch } from 'vue'
+import { Uid } from '@shimyshack/uid'
 
 type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
 
 const emit = defineEmits(['add', 'remove', 'remove-invalid', 'update:model-value'])
+
+defineOptions({
+  name: 'SdsFileUploader',
+  directives: {
+    uid: Uid
+  }
+})
 
 const props = defineProps({
   /**

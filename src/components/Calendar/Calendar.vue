@@ -395,7 +395,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
+import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
+
 export type CalendarDate = Date | null
 export interface CalendarRange {
   start: CalendarDate
@@ -403,14 +406,9 @@ export interface CalendarRange {
 }
 export type CalendarMode = 'date' | 'dateTime' | 'time'
 
-export default {
+defineOptions({
   name: 'SdsCalendar'
-}
-</script>
-
-<script lang="ts" setup>
-import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
-import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
+})
 
 const props = defineProps({
   /**

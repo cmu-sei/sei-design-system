@@ -20,14 +20,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsAvatar'
-}
-</script>
-
 <script setup lang="ts">
 import {computed, PropType} from 'vue'
+
+defineOptions({
+  name: 'SdsAvatar'
+})
 
 const props = defineProps({
   /**

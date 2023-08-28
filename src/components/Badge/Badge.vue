@@ -10,14 +10,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsBadge'
-}
-</script>
-
 <script setup lang="ts">
 import { computed, PropType } from 'vue'
+
+defineOptions({
+  name: 'SdsBadge'
+})
 
 const props = defineProps({
   /**

@@ -14,29 +14,26 @@
     />
     <option
       v-for="option in options"
-      :key="option.id"
-      :value="option.value"
+      :key="`${id}_${JSON.stringify(option)}`"
+      :value="option[valueKey]"
     >
-      {{ option.text }}
+      {{ option[labelKey] }}
     </option>
   </select>
 </template>
 
-<script lang="ts">
-type SelectModel = boolean | string | number | null
-interface SelectOption {
-  id: number | string
-  value: number | string
-  text: string
-}
-
-export default {
-  name: 'SdsSelect'
-}
-</script>
-
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
+
+type SelectOptionValue = boolean | string | number | null
+
+interface SelectOption<T> {
+  [key: string]: T
+}
+
+defineOptions({
+  name: 'SdsSelect'
+})
 
 const props = defineProps({
   /**
@@ -46,13 +43,13 @@ const props = defineProps({
   /**
    * The v-model of the component.
    */
-  modelValue: { type: [Boolean, String, Number, Array, Object] as PropType<SelectModel>, default: null },
+  modelValue: { type: [Boolean, String, Number, Array, Object] as PropType<SelectOptionValue>, default: null },
   /**
    * The options for the component.
    * 
    * Expects: `{ id, value, text }`
    */
-  options: { type: Array as PropType<SelectOption[]>, default: () => [] },
+  options: { type: Array as PropType<SelectOption<SelectOptionValue>[]>, default: () => [] },
   /**
    * Disables the component to prevent user interaction.
    */
@@ -65,6 +62,14 @@ const props = defineProps({
    * Determines the size of the component.
    */
   size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  /**
+   * Determines the label key used for options
+   */
+  labelKey: { type: String, default: 'text' },
+  /**
+   * Determines the value key used for options
+   */
+  valueKey: { type: String, default: 'value' }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -73,7 +78,7 @@ const localValue = computed({
   get() {
     return props.modelValue;
   },
-  set(value: SelectModel) {
+  set(value: SelectOptionValue) {
     /**
      * Emitted when modelValue changes.
      */

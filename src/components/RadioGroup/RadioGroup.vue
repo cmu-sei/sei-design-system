@@ -11,7 +11,7 @@
   >
     <div
       v-for="(option, index) in options"
-      :key="`${root?.id}_${index}`"
+      :key="`${root?.id}_${JSON.stringify(option)}`"
       class="flex gap-2 items-center"
     >
       <input
@@ -37,8 +37,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { ref, computed, PropType } from "vue";
 import { Uid } from "@shimyshack/uid";
 
 type RadioGroupOptionValue = boolean | string | number
@@ -47,16 +47,12 @@ interface RadioGroupOption<T> {
   [key: string]: T
 }
 
-export default defineComponent({
+defineOptions({
   name: "SdsRadioGroup",
   directives: {
     uid: Uid
   }
 })
-</script>
-
-<script setup lang="ts">
-import { ref, computed, PropType } from "vue";
 
 const props = defineProps({
   /**

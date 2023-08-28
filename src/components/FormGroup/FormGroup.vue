@@ -12,9 +12,11 @@
       :for="el === 'div' ? id : undefined"
       :class="{
         'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold'
+        'font-semibold': labelWeight === 'semibold',
+        'mb-1': description || $slots.description,
+        'mb-2': !description && !$slots.description
       }"
-      class="flex gap-1 items-center mb-1"
+      class="flex gap-1 items-center"
     >
       <!-- @slot Label slot content. This will override the `label` prop. @binding label. -->
       <slot
@@ -88,20 +90,16 @@
   </Component>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref, computed, PropType } from 'vue'
 import { Uid } from '@shimyshack/uid'
 
-export default defineComponent({
+defineOptions({
   name: 'SdsFormGroup',
   directives: {
     uid: Uid,
   },
 })
-</script>
-
-<script setup lang="ts">
-import { ref, computed, PropType } from 'vue'
 
 const props = defineProps({
   /**
