@@ -45,6 +45,6 @@ export const Default = Template.bind({});
 Default.args = {
   label: "Field label",
   description: "Field description",
-  heplerText: "Field helper text"
+  helperText: "Field helper text"
 };
 
