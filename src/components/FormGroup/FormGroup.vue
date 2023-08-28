@@ -52,8 +52,20 @@
       :readonly="readonly"
     />
     <p
+      v-if="helperText || $slots.helperText"
+      class="block text-xs italic text-gray-600 dark:text-gray-500 pt-1"
+    >
+      <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
+      <slot
+        name="helperText"
+        :helper-text="helperText"
+      >
+        <span>{{ helperText }}</span>
+      </slot>
+    </p>
+    <p
       v-if="state && (validFeedback || $slots.validFeedback)"
-      class="block text-xs italic text-green-700 dark:text-green-300 py-1"
+      class="block text-xs italic text-green-700 dark:text-green-300 pt-1"
     >
       <!-- @slot Valid Feedback slot content. This will override the `validFeedback` prop. @binding validFeedback. -->
       <slot
@@ -65,7 +77,7 @@
     </p>
     <p
       v-if="state === false && (invalidFeedback || $slots.invalidFeedback)"
-      class="block text-xs italic text-red-500 dark:text-red-300 py-1"
+      class="block text-xs italic text-red-500 dark:text-red-300 pt-1"
     >
       <!-- @slot Invalid Feedback slot content. This will override the `invalidFeedback` prop. @binding invalidFeedback. -->
       <slot
@@ -73,18 +85,6 @@
         :invalid-feedback="invalidFeedback"
       >
         <span>{{ invalidFeedback }}</span>
-      </slot>
-    </p>
-    <p
-      v-if="helperText || $slots.helperText"
-      class="block text-xs italic text-gray-600 dark:text-gray-500 py-1"
-    >
-      <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
-      <slot
-        name="helperText"
-        :helper-text="helperText"
-      >
-        <span>{{ helperText }}</span>
       </slot>
     </p>
   </Component>
