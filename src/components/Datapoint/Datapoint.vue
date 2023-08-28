@@ -30,14 +30,12 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsDatapoint'
-}
-</script>
-
 <script setup lang="ts">
 import { computed, PropType } from 'vue'
+
+defineOptions({
+  name: 'SdsDatapoint'
+})
 
 const props = defineProps({
   /**

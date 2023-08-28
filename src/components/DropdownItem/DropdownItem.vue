@@ -17,46 +17,43 @@
   </component>
 </template>
 
-<script lang="ts">
-import { defineComponent, inject } from "vue";
+<script setup lang="ts">
+import { inject } from "vue";
 
-export default defineComponent({
-  name: 'SdsDropdownItem',
-  props: {
-    /**
-     * Determines the tag use for the component.
-     */
-    tag: {
-      type: String,
-      default: "a",
-    },
-    /**
-     * Determines whether to close the parent dropdown when this component is clicked.
-     */
-    closeOnClick: {
-      type: Boolean,
-      default: true,
-    },
-    /**
-     * Determines if this component is currently active.
-     */
-    active: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Disables the component to prevent user interaction.
-     */
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+defineOptions({
+  name: 'SdsDropdownItem'
+})
+
+defineProps({
+  /**
+   * Determines the tag use for the component.
+   */
+  tag: {
+    type: String,
+    default: "a",
   },
-  setup() {
-    const emitter: any = inject('emitter')
-    return {
-      emitter
-    }
-  }
-});
+  /**
+   * Determines whether to close the parent dropdown when this component is clicked.
+   */
+  closeOnClick: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Determines if this component is currently active.
+   */
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emitter: any = inject('emitter')
 </script>

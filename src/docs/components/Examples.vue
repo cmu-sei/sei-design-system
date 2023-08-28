@@ -1028,10 +1028,16 @@
     </div>
     <p>Select</p>
     <div class="p-6">
-      <sds-select
-        v-model="selectModel"
-        :options="selectOptions"
-      />
+      <SdsFormGroup
+        v-slot="{ id }"
+        label="Select field"
+      >
+        <sds-select
+          :id="id"
+          v-model="selectModel"
+          :options="selectOptions"
+        />
+      </SdsFormGroup>
     </div>
     <p>Floating UI</p>
     <div class="p-6 bg-white dark:bg-gray-900">
