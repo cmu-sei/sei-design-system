@@ -7,7 +7,7 @@ exports[`Form Group > should match its default snapshot 1`] = `
   id="unique-id"
 >
   <label
-    class="flex gap-1 items-center mb-1 font-medium"
+    class="font-semibold flex gap-1 items-center mb-1"
     for="undefined_form-control"
   >
     
