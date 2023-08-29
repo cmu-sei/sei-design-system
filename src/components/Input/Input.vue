@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-input"
-    class="w-full"
+    class="w-full relative"
   >
     <input
       :id="id"
@@ -23,7 +23,7 @@
     >
     <character-counter
       v-if="countCharacters"
-      class="text-right text-gray-500"
+      class="absolute right-0 text-gray-600 dark:text-gray-500"
       :current-value="text.length"
       :max-value="maxlength"
     />

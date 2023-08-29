@@ -221,6 +221,7 @@
         </template>
         <template #link(education)>
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -231,6 +232,7 @@
               d="M256 89.61L22.486 177.18L256 293.937l111.22-55.61l-104.337-31.9A16 16 0 0 1 256 208a16 16 0 0 1-16-16a16 16 0 0 1 16-16l-2.646 8.602l18.537 5.703a16 16 0 0 1 .008.056l27.354 8.365L455 246.645v12.146a16 16 0 0 0-7 13.21a16 16 0 0 0 7.293 13.406C448.01 312.932 448 375.383 448 400c16 10.395 16 10.775 32 0c0-24.614-.008-87.053-7.29-114.584A16 16 0 0 0 480 272a16 16 0 0 0-7-13.227v-25.42L413.676 215.1l75.838-37.92L256 89.61zM119.623 249L106.5 327.74c26.175 3.423 57.486 18.637 86.27 36.627c16.37 10.232 31.703 21.463 44.156 32.36c7.612 6.66 13.977 13.05 19.074 19.337c5.097-6.288 11.462-12.677 19.074-19.337c12.453-10.897 27.785-22.128 44.156-32.36c28.784-17.99 60.095-33.204 86.27-36.627L392.375 249h-6.25L256 314.063L125.873 249h-6.25z"
             />
           </svg>
+          <span class="sr-only">Education</span>
         </template>
         <template #panel(education)="{ content, close }">
           <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
@@ -385,6 +387,7 @@
         </template>
         <template #link(darkMode)>
           <svg
+            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -396,6 +399,7 @@
               d="M279.135 512c78.756 0 150.982-35.804 198.844-94.775c28.27-34.831-2.558-85.722-46.249-77.401c-82.348 15.683-158.272-47.268-158.272-130.792c0-48.424 26.06-92.292 67.434-115.836c38.745-22.05 28.999-80.788-15.022-88.919A257.936 257.936 0 0 0 279.135 0c-141.36 0-256 114.575-256 256c0 141.36 114.576 256 256 256zm0-464c12.985 0 25.689 1.201 38.016 3.478c-54.76 31.163-91.693 90.042-91.693 157.554c0 113.848 103.641 199.2 215.252 177.944C402.574 433.964 344.366 464 279.135 464c-114.875 0-208-93.125-208-208s93.125-208 208-208z"
             />
           </svg>
+          <span class="sr-only">Toggle dark mode</span>
         </template>
       </SdsMegaMenu>
     </div>
@@ -1024,10 +1028,16 @@
     </div>
     <p>Select</p>
     <div class="p-6">
-      <sds-select
-        v-model="selectModel"
-        :options="selectOptions"
-      />
+      <SdsFormGroup
+        v-slot="{ id }"
+        label="Select field"
+      >
+        <sds-select
+          :id="id"
+          v-model="selectModel"
+          :options="selectOptions"
+        />
+      </SdsFormGroup>
     </div>
     <p>Floating UI</p>
     <div class="p-6 bg-white dark:bg-gray-900">
@@ -1400,21 +1410,57 @@
           </sds-dropdown>
         </div>
 
-        <h4 class="mb-4 text-lg">
-          Sds Textarea & Sds Input
-        </h4>
-        <sds-textarea
-          v-model="maxTextarea.input"
-          placeholder="Enter text here"
-          :maxlength="2000"
-          count-characters
-        />
-        <sds-input
-          v-model="maxTextarea.input"
-          placeholder="Enter text here"
-          :maxlength="20"
-          count-characters
-        />
+        <div class="space-y-8 mb-8">
+          <h4 class="text-lg">
+            Sds Textarea & Sds Input
+          </h4>
+          <div class="grid gap-8">
+            <sds-form-group
+              v-slot="{ id, valid, invalid, required, readonly }"
+              label="Field label"
+              description="This is a field description"
+              helper-text="This is a field helper text"
+              required
+              invalid-feedback="Please enter at least 5 characters"
+              valid-feedback="Woohoo!"
+              :state="maxTextarea.input.length < 3 ? null : maxTextarea.input !== '' && maxTextarea.input.length > 5"
+            >
+              <sds-textarea
+                :id="id"
+                v-model="maxTextarea.input"
+                placeholder="Enter text here"
+                :valid="valid"
+                :invalid="invalid"
+                :required="required"
+                :readonly="readonly"
+                :maxlength="2000"
+                count-characters
+              />
+            </sds-form-group>
+            <sds-form-group
+              v-slot="{ id, valid, invalid, required, readonly }"
+              label="Field label"
+              description="This is a field description"
+              helper-text="This is a field helper text"
+              required
+              invalid-feedback="Please enter at least 5 characters"
+              valid-feedback="Woohoo!"
+              :state="maxTextarea.input.length < 3 ? null : maxTextarea.input !== '' && maxTextarea.input.length > 5"
+            >
+              <sds-input
+                :id="id"
+                v-model="maxTextarea.input"
+                :valid="valid"
+                :invalid="invalid"
+                :required="required"
+                :readonly="readonly"
+                placeholder="Enter text here"
+                :maxlength="20"
+                count-characters
+              />
+            </sds-form-group>
+          </div>
+        </div>
 
         <sds-tooltip>
           <template #trigger>
@@ -1504,16 +1550,27 @@
           :size="calendar.size"
         />
 
-        <form @submit.prevent>
-          <sds-datepicker
-            v-model="calendar.date"
-            :min="calendar.min"
-            :max="calendar.max"
-            :mode="calendar.mode"
-            :size="calendar.size"
+        <form
+          class="space-y-4"
+          @submit.prevent
+        >
+          <SdsFormGroup
+            v-slot="{ required }"
+            el="fieldset"
+            label="Date range"
+            description="Select a start and an end date"
             required
-            use-current-time-for-today
-          />
+          >
+            <sds-datepicker
+              v-model="calendar.date"
+              :min="calendar.min"
+              :max="calendar.max"
+              :mode="calendar.mode"
+              :size="calendar.size"
+              :required="required"
+              use-current-time-for-today
+            />
+          </SdsFormGroup>
           <sds-button
             kind="danger"
             type="button"
@@ -1587,16 +1644,44 @@
         <h4 class="my-4 text-lg">
           Multiselect
         </h4>
-        <sds-multiselect
-          v-model="multiselect.input"
-          :selected="multiselect.selected"
-          :options="filteredMultiselectOptions"
-          show-clear
-          multiple
-          taggable
-          @update-selected="updateSelected"
-        />
-        <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
+        <form @submit.prevent>
+          <SdsFormGroup
+            label="Multiselect Example"
+            description="This is just an example"
+            valid-feedback="cool"
+            invalid-feedback="bummer"
+            required
+          >
+            <template #description>
+              Overriding the description
+            </template>
+            <template #validFeedback>
+              Overriding valid feedback
+            </template>
+            <template #invalidFeedback>
+              Overriding invalid feedback
+            </template>
+            <template #default="{ id, required }">
+              <sds-multiselect
+                :id="id"
+                v-model="multiselect.input"
+                :selected="multiselect.selected"
+                :options="filteredMultiselectOptions"
+                :required="required"
+                show-clear
+                multiple
+                taggable
+                @update-selected="updateSelected"
+              />
+            </template>
+          </SdsFormGroup>
+          <p>Selected: {{ JSON.stringify(multiselect.selected) }}</p>
+          <input
+            type="submit"
+            value="Submit"
+            class="btn btn-primary"
+          >
+        </form>
 
         <h4 class="my-4 text-lg">
           Filter By Dropdown
@@ -1635,18 +1720,26 @@
           Autosuggest
         </h4>
         <div>
-          <sds-autosuggest
-            v-model="text"
-            :items="items"
-            :threshold="2"
-            :autosuggest="autosuggest"
-            :disable-search="text === ''"
-            placeholder="Search for a fruit"
-            variant="primary"
-            use-built-in-highlighting
-            @result="result"
-            @search="search"
-          />
+          <SdsFormGroup
+            v-slot="{ id }"
+            label="Autosuggest Example"
+            description="This is just an example"
+            required
+          >
+            <sds-autosuggest
+              :id="id"
+              v-model="text"
+              :items="items"
+              :threshold="2"
+              :autosuggest="autosuggest"
+              :disable-search="text === ''"
+              placeholder="Search for a fruit"
+              variant="primary"
+              use-built-in-highlighting
+              @result="result"
+              @search="search"
+            />
+          </SdsFormGroup>
           <p class="mt-3">
             You performed a search with: {{ searchText }}
           </p>
@@ -1703,33 +1796,51 @@
           Radio Group
         </h4>
         <div class="py-12">
-          <sds-radio-group
-            v-model="radioModel"
-            :options="radioOptions"
+          <sds-form-group
+            v-slot="{ required }"
+            el="fieldset"
+            label="Checkbox Group"
+            description="Please select one or more of the options"
+            description-position="top"
             required
-            @change="$emit('radioGroupChange')"
           >
-            <template #label="{ optionId, option }">
-              <label :for="optionId">
-                Radio Group: {{ option.text }}
-              </label>
-            </template>
-          </sds-radio-group>
+            <sds-checkbox-group
+              v-model="checkboxModel"
+              :options="checkboxOptions"
+              :required="required"
+              @change="$emit('radioGroupChange')"
+            >
+              <template #label="{ optionId, option }">
+                <label :for="optionId">
+                  Radio Group: {{ option.text }}
+                </label>
+              </template>
+            </sds-checkbox-group>
+          </sds-form-group>
         </div>
         <div class="py-12">
-          <sds-radio-group
-            v-model="radio2Model"
-            :options="radioOptions"
+          <sds-form-group
+            v-slot="{ required }"
+            el="fieldset"
+            label="Radio Group"
+            description="Please select one of the options"
+            description-position="top"
             required
-            stacked
-            @change="$emit('radioGroupChange')"
           >
-            <template #label="{ optionId, option }">
-              <label :for="optionId">
-                Radio Group 2: {{ option.text }}
-              </label>
-            </template>
-          </sds-radio-group>
+            <sds-radio-group
+              v-model="radio2Model"
+              :options="radioOptions"
+              :required="required"
+              stacked
+              @change="$emit('radioGroupChange')"
+            >
+              <template #label="{ optionId, option }">
+                <label :for="optionId">
+                  Radio Group 2: {{ option.text }}
+                </label>
+              </template>
+            </sds-radio-group>
+          </sds-form-group>
         </div>
         <sds-radio-group
           v-model="radio3Model"
@@ -2394,6 +2505,12 @@ export default defineComponent({
         { term: "Mango", payload: "test" },
       ],
       searchText: "",
+      checkboxModel: [1, 3],
+      checkboxOptions: [
+        { text: 'One', value: 1 },
+        { text: 'Two', value: 2 },
+        { text: 'Three', value: 3 },
+      ],
       radioModel: true,
       radio2Model: true,
       radio3Model: true,

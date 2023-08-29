@@ -11,7 +11,7 @@
         :class="{
           'gap-x-8': kind === 'underline',
         }"
-        role="menubar"
+        role="menu"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
@@ -20,7 +20,6 @@
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
-          :role="topLink.tag === 'button' ? 'menuitem' : undefined"
           :aria-haspopup="topLink.tag === 'button' ? true : undefined"
           :aria-expanded="topLink.tag === 'button' ? topLink.selected : undefined"
           :data-id="`sds-megamenu_${topLink.key}`"
@@ -38,6 +37,7 @@
             'border-red-500 dark:border-red-300': kind === 'underline' && topLink.active,
             'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
+          role="menuitem"
           class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
@@ -198,8 +198,8 @@ const topLinkEl = computed(() => {
   return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
 })
 
-const onClose = () => {
-  topLinkEl.value?.focus()
+const onClose = (focusTopLink = true) => {
+  if (focusTopLink) topLinkEl.value?.focus()
   /* Deselect all mega menu panels */
   topLinks.value = topLinks.value.map(i => {
     i.selected = false
@@ -211,7 +211,7 @@ const onClose = () => {
 /* Close the mega menu when clicking somewhere on the document
  * outside the mega menu component */
 onClickOutside(root, () => {
-  onClose()
+  onClose(false)
 })
 
 /* Close the mega menu when pressing Escape */

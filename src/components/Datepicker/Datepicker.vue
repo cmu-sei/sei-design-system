@@ -54,6 +54,7 @@
           <input
             ref="startDateInput"
             v-model="inputDate.start"
+            aria-label="Start date"
             type="text"
             class="form-control"
             :class="{ 'px-1': size === 'sm' }"
@@ -136,6 +137,7 @@
             <input
               ref="endDateInput"
               v-model="inputDate.end"
+              aria-label="End date"
               type="text"
               class="form-control"
               :class="{ 'px-1': size === 'sm' }"
@@ -172,9 +174,9 @@
   </floating-ui>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { parse, format, isValid, min, max, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays, addYears } from 'date-fns'
+<script setup lang="ts">
+import { computed, ref, watch, nextTick, PropType } from 'vue'
+import { parse, format, isValid, min as dateFnsMin, max as dateFnsMax, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays, addYears } from 'date-fns'
 import Calendar from '../Calendar/Calendar.vue';
 import FloatingUi from '../FloatingUi/FloatingUi.vue';
 
@@ -185,414 +187,411 @@ export interface CalendarRange {
 }
 export type CalendarMode = 'date' | 'dateTime' | 'time'
 
-export default defineComponent({
-  name: 'SdsDatepicker',
-  components: {
-    Calendar,
-    FloatingUi
-  },
-  props: {
-    /**
-     * The z-index for the popover.
-     */
-    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-    /**
-     * Determines whether to display or hide the arrow for range selection.
-     */
-    hideArrow: { type: Boolean, default: false },
-    /**
-     * Determines the sizing of the component.
-     */
-    size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
-    /**
-     * Determines the mode of the component.
-     */
-    mode: { type: String as PropType<CalendarMode>, default: 'date' },
-    /**
-     * The v-model for the component.
-     * 
-     * For single selections, this value can be null or a date object.
-     * 
-     * For range selections, this is an object with start and end keys
-     * that can either be null or a date object.
-     * 
-     * Range example:
-     * 
-     * **{ start: new Date(), end: null }**
-     */
-    modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
-    /**
-     * The max date allowed for the datepicker.
-     */
-    max: { type: Date, default: null },
-    /**
-     * The min date allowed for the datepicker.
-     */
-    min: { type: Date, default: null },
-    /**
-     * Determines if the component is required.
-     */
-    required: { type: Boolean, default: false },
-    /**
-     * Determines if the component is readonly.
-     */
-    readonly: { type: Boolean, default: false },
-    /**
-     * Determines if the component is disabled.
-     */
-    disabled: { type: Boolean, default: false },
-    /**
-     * Determines whether to use the current time when selecting a date that is equal to today.
-     * 
-     * If false, this sets the time to the start of the date.
-     */
-    useCurrentTimeForToday: { type: Boolean, default: false }
-  },
-  emits: ['update:modelValue'],
-  data() {
-    return {
-      inputDate: { start: '', end: '' },
-    }
-  },
-  computed: {
-    zIndexClass() {
-      switch (this.zIndex) {
-        case '0':
-          return 'z-0'
-        case '10':
-          return 'z-10'
-        case '20':
-          return 'z-20'
-        case '30':
-          return 'z-30'
-        case '40':
-          return 'z-40'
-        case '50':
-          return 'z-50'
-        case 'auto':
-          return 'z-auto'
-        default:
-          return ''
-      }
-    },
-    isRange() {
-      return this.modelValue && !(this.modelValue instanceof Date)
-    },
-    placeholder() {
-      switch (this.mode) {
-        case 'date':
-          return 'mm/dd/yyyy'
-        case 'time':
-          return 'hh:mm a'
-        case 'dateTime':
-          return 'mm/dd/yyyy hh:mm a'
-        default:
-          return 'mm/dd/yyyy'
-      }
-    },
-    inputFormat() {
-      switch (this.mode) {
-        case 'date':
-          return 'MM/dd/yyyy'
-        case 'time':
-          return 'hh:mm aaa'
-        case 'dateTime':
-          return 'MM/dd/yyyy hh:mm aaa'
-        default:
-          return 'MM/dd/yyyy'
-      }
-    },
-    inputPattern() {
-      switch (this.mode) {
-        case 'date':
-          return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
-        case 'time':
-          return '[0-9]{2}:[0-9]{2} [a|p]m'
-        case 'dateTime':
-          return '[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}\:[0-9]{2} [a|p]m'
-        default:
-          return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
-      }
-    },
-    localDate: {
-      get(): any {
-        return this.modelValue
-      },
-      set(value: any) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        this.$emit('update:modelValue', value)
-      }
-    },
-  },
-  watch: {
-    localDate: {
-      handler(value) {
-        if (this.isRange) {
-          const formattedStartDate = value.start && this.formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-          const formattedEndDate = value.end && this.formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-          if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
-            this.inputDate = {
-              start: formattedEndDate.text,
-              end: formattedStartDate.text
-            }
-          } else {
-            this.inputDate = {
-              start: formattedStartDate.text,
-              end: formattedEndDate.text
-            }
-          }
-        } else {
-          const formattedStartDate = value && this.formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-          this.inputDate = {
-            start: formattedStartDate.text,
-            end: ''
-          }
-        }
-      },
-      deep: true,
-      immediate: true
-    }
-  },
-  methods: {
-    focusCorrectInput(value: CalendarDate | CalendarRange, close: Function) {
-      if (value && value instanceof Date) {
-        (this.$refs.startDateInput as HTMLElement).focus()
-      } else if (value && !(value instanceof Date) && !value.start) {
-        (this.$refs.startDateInput as HTMLElement).focus()
-      } else if (value && !(value instanceof Date) && !value.end) {
-        (this.$refs.endDateInput as HTMLElement).focus()
-      } else if (value && !(value instanceof Date) && value.end) {
-        (this.$refs.endDateInput as HTMLElement).focus()
-      } else {
-        (this.$refs.startDateInput as HTMLElement).focus()
-      }
+defineOptions({
+  name: 'SdsDatepicker'
+})
 
-      if (this.mode === 'date') {
-        this.$nextTick(() => {
-          if (this.isRange && this.inputDate.start && this.inputDate.end) {
-            close()
-          } else if (!this.isRange && this.inputDate.start) {
-            close()
-          }
-        })
-      }
-    },
-    updateDatesFromInput() {
-      if (this.isRange) {
-        const formattedStartDate = this.formatDate(this.inputDate.start)
-        const formattedEndDate = this.formatDate(this.inputDate.end)
-        this.localDate = {
-          start: formattedStartDate.date && formattedEndDate.date && min([formattedStartDate.date, formattedEndDate.date]) || formattedStartDate.date,
-          end: formattedStartDate.date && formattedEndDate.date && max([formattedStartDate.date, formattedEndDate.date]) || formattedEndDate.date
-        }
-        if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
-          this.inputDate = {
-            start: formattedEndDate.text,
-            end: formattedStartDate.text
-          }
-        } else {
-          this.inputDate = {
-            start: formattedStartDate.text,
-            end: formattedEndDate.text
-          }
-        }
-      } else {
-        const formattedStartDate = this.formatDate(this.inputDate.start)
-        this.localDate = formattedStartDate.date
-        this.inputDate = {
-          start: formattedStartDate.text,
-          end: ''
-        }
-      }
-    },
-    formatDate(dateString: string) {
-      if (dateString === 'now') {
-        const date = new Date()
-        return { date, text: format(date, this.inputFormat) }
-      } else if (dateString === 'today') {
-        const date = setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
-        return { date, text: format(date, this.inputFormat) }
-      } else if (dateString === 'tomorrow') {
-        const date = addDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
-        return { date, text: format(date, this.inputFormat) }
-      } else if (dateString === 'yesterday') {
-        const date = subDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
-        return { date, text: format(date, this.inputFormat) }
-      }
+const props = defineProps({
+  /**
+   * The z-index for the popover.
+   */
+  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  /**
+   * Determines whether to display or hide the arrow for range selection.
+   */
+  hideArrow: { type: Boolean, default: false },
+  /**
+   * Determines the sizing of the component.
+   */
+  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  /**
+   * Determines the mode of the component.
+   */
+  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  /**
+   * The v-model for the component.
+   * 
+   * For single selections, this value can be null or a date object.
+   * 
+   * For range selections, this is an object with start and end keys
+   * that can either be null or a date object.
+   * 
+   * Range example:
+   * 
+   * **{ start: new Date(), end: null }**
+   */
+  modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
+  /**
+   * The max date allowed for the datepicker.
+   */
+  max: { type: Date, default: null },
+  /**
+   * The min date allowed for the datepicker.
+   */
+  min: { type: Date, default: null },
+  /**
+   * Determines if the component is required.
+   */
+  required: { type: Boolean, default: false },
+  /**
+   * Determines if the component is readonly.
+   */
+  readonly: { type: Boolean, default: false },
+  /**
+   * Determines if the component is disabled.
+   */
+  disabled: { type: Boolean, default: false },
+  /**
+   * Determines whether to use the current time when selecting a date that is equal to today.
+   * 
+   * If false, this sets the time to the start of the date.
+   */
+  useCurrentTimeForToday: { type: Boolean, default: false }
+})
 
-      const formats = [
-        'MM/dd/yyyy hh:mm aaa',
-        'MM/dd/yyyy hh:mm a',
-        'MM/dd/yyyy h:mm aaa',
-        'MM/dd/yyyy h:mm a',
-        'MM/dd/yyyy hh:mmaaa',
-        'MM/dd/yyyy hh:mma',
-        'MM/dd/yyyy h:mmaaa',
-        'MM/dd/yyyy h:mma',
-        'MM/dd/yyyy H:mm',
-        'MM/dd/yyyy HH:mm',
-        'MM/dd/yyyy HH:mm:ss',
-        'MM-dd-yyyy hh:mm aaa',
-        'MM-dd-yyyy hh:mm a',
-        'MM-dd-yyyy h:mm aaa',
-        'MM-dd-yyyy h:mm a',
-        'MM-dd-yyyy ha',
-        'MM-dd-yyyy haaa',
-        'MM-dd-yyyy hh:mmaaa',
-        'MM-dd-yyyy hh:mma',
-        'MM-dd-yyyy h:mmaaa',
-        'MM-dd-yyyy h:mma',
-        'MM-dd-yyyy H:mm',
-        'MM-dd-yyyy HH:mm',
-        'MM-dd-yyyy HH:mm:ss',
-        'yyyy-MM-dd hh:mm aaa',
-        'yyyy-MM-dd hh:mm a',
-        'yyyy-MM-dd h:mm aaa',
-        'yyyy-MM-dd h:mm a',
-        'yyyy-MM-dd hh:mma',
-        'yyyy-MM-dd h:mmaaa',
-        'yyyy-MM-dd h:mma',
-        'yyyy-MM-dd H:mm',
-        'yyyy-MM-dd HH:mm',
-        'yyyy-MM-dd HH:mm:ss',
-        'MM/dd/yyyy',
-        'MM-dd-yyyy',
-        'yyyy-MM-dd',
-        'M/d',
-        'MM/dd',
-        'MM/yyyy',
-        'M-d',
-        'MM-dd',
-        'MM-yyyy',
-        'yyyy/MM',
-        'yyyy-MM',
-        'M/dd/yyyy hh:mm aaa',
-        'M/dd/yyyy hh:mm a',
-        'M/dd/yyyy h:mm aaa',
-        'M/dd/yyyy h:mm a',
-        'M/dd/yyyy ha',
-        'M/dd/yyyy haaa',
-        'M/dd/yyyy hh:mmaaa',
-        'M/dd/yyyy hh:mma',
-        'M/dd/yyyy h:mmaaa',
-        'M/dd/yyyy h:mma',
-        'M/dd/yyyy H:mm',
-        'M/dd/yyyy HH:mm',
-        'M/dd/yyyy HH:mm:ss',
-        'M-dd-yyyy hh:mm aaa',
-        'M-dd-yyyy hh:mm a',
-        'M-dd-yyyy h:mm aaa',
-        'M-dd-yyyy h:mm a',
-        'M-dd-yyyy hh:mmaaa',
-        'M-dd-yyyy hh:mma',
-        'M-dd-yyyy h:mmaaa',
-        'M-dd-yyyy h:mma',
-        'M-dd-yyyy H:mm',
-        'M-dd-yyyy HH:mm',
-        'M-dd-yyyy HH:mm:ss',
-        'yyyy-M-dd hh:mm aaa',
-        'yyyy-M-dd hh:mm a',
-        'yyyy-M-dd h:mm aaa',
-        'yyyy-M-dd h:mm a',
-        'yyyy-M-dd hh:mma',
-        'yyyy-M-dd h:mmaaa',
-        'yyyy-M-dd h:mma',
-        'yyyy-M-dd H:mm',
-        'yyyy-M-dd HH:mm',
-        'yyyy-M-dd HH:mm:ss',
-        'yyyy-M-dd',
-        'M/yyyy',
-        'M-yyyy',
-        'M/yyyy haaa',
-        'M-yyyy haaa',
-        'M/yyyy ha',
-        'M/yyyy HH:mm:ss',
-        'M-yyyy HH:mm:ss',
-        'M.yyyy HH:mm:ss',
-        'M-yyyy ha',
-        'M/yyyy h:mmaaa',
-        'M-yyyy h:mmaaa',
-        'M/yyyy h:mma',
-        'M-yyyy h:mma',
-        'M/yyyy h:mm aaa',
-        'M-yyyy h:mm aaa',
-        'M/yyyy h:mm a',
-        'M-yyyy h:mm a',
-        'yyyy/M',
-        'yyyy-M',
-        'yyyy',
-        'EEE',
-        'EEEE',
-        'LLL',
-        'LLLL',
-        'LLL yyyy',
-        'LLLL yyyy',
-        'LLL dd yyyy',
-        'LLLL dd yyyy',
-        'hh:mm aaa',
-        'hh:mm a',
-        'h:mm aaa',
-        'h:mm a',
-        'hh:mmaaa',
-        'hh:mma',
-        'h:mmaaa',
-        'h:mma',
-        'HH:mm:ss',
-        'H:mm',
-        'HH:mm',
-        'QQQ',
-        'QQQQ',
-        'QQQ yyyy',
-        'QQQQ yyyy',
-        'PP',
-        'PPP',
-        'PPPP',
-        'bbb',
-        'h BBB',
-        'h:mm BBB',
-        'hh BBB',
-        'hh:mm BBB',
-        'hBBB',
-        'h:mmBBB',
-        'hhBBB',
-        'hh:mmBBB'
-      ]
+const emit = defineEmits(['update:model-value'])
 
-      // validate the format and store the found format for later processing
-      let foundFormat
-      const validDates = formats.filter((format) => {
-        const valid = isValid(parse(dateString, format, new Date()))
-        if (valid) foundFormat = format
-        return valid
-      })
+const inputDate = ref({ start: '', end: '' })
+const startDateInput = ref()
+const endDateInput = ref()
 
-      if (validDates.length > 0) {
-        let date = parse(dateString, validDates[0], new Date())
-        if (this.mode === 'date') {
-          date = setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0)
-        } else if (this.mode === 'time') {
-          const time = format(date, 'HH:mm:ss')
-          const days = format(new Date(), 'yyyy-MM-dd')
-          date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
-        }
-
-        // Fix double-digit year issue using foundFormat and full year value
-        const fullYear = date.getFullYear()
-        if (foundFormat === 'LLLL dd yyyy' && fullYear < 1000) {
-          date = addYears(date, 2000)
-        }
-
-        const dateIsBeforeMin = isBefore(date, this.min)
-        const dateIsAfterMax = isAfter(subDays(date, 1), this.max)
-        const dateEqualsMax = isEqual(subDays(date, 1), this.max)
-        if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
-          return { date, text: format(date, this.inputFormat) }
-        }
-      }
-      return { date: null, text: '' }
-    }
+const zIndexClass = computed(() => {
+  switch (props.zIndex) {
+    case '0':
+      return 'z-0'
+    case '10':
+      return 'z-10'
+    case '20':
+      return 'z-20'
+    case '30':
+      return 'z-30'
+    case '40':
+      return 'z-40'
+    case '50':
+      return 'z-50'
+    case 'auto':
+      return 'z-auto'
+    default:
+      return ''
   }
 })
+
+const isRange = computed(() => {
+  return props.modelValue && !(props.modelValue instanceof Date)
+})
+
+const placeholder = computed(() => {
+  switch (props.mode) {
+    case 'date':
+      return 'mm/dd/yyyy'
+    case 'time':
+      return 'hh:mm a'
+    case 'dateTime':
+      return 'mm/dd/yyyy hh:mm a'
+    default:
+      return 'mm/dd/yyyy'
+  }
+})
+
+const inputFormat = computed(() => {
+  switch (props.mode) {
+    case 'date':
+      return 'MM/dd/yyyy'
+    case 'time':
+      return 'hh:mm aaa'
+    case 'dateTime':
+      return 'MM/dd/yyyy hh:mm aaa'
+    default:
+      return 'MM/dd/yyyy'
+  }
+})
+
+const inputPattern = computed(() => {
+  switch (props.mode) {
+    case 'date':
+      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
+    case 'time':
+      return '[0-9]{2}:[0-9]{2} [a|p]m'
+    case 'dateTime':
+      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}\:[0-9]{2} [a|p]m'
+    default:
+      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
+  }
+})
+
+const localDate = computed({
+  get(): any {
+    return props.modelValue
+  },
+  set(value: any) {
+    /**
+     * Emmitted when modelValue changes.
+     */
+    emit('update:model-value', value)
+  }
+})
+
+watch(localDate, (value) => {
+  if (isRange.value) {
+    const formattedStartDate = value.start && formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedEndDate = value.end && formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
+      inputDate.value = {
+        start: formattedEndDate.text,
+        end: formattedStartDate.text
+      }
+    } else {
+      inputDate.value = {
+        start: formattedStartDate.text,
+        end: formattedEndDate.text
+      }
+    }
+  } else {
+    const formattedStartDate = value && formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    inputDate.value = {
+      start: formattedStartDate.text,
+      end: ''
+    }
+  }
+}, { deep: true, immediate: true })
+
+const focusCorrectInput = (value: CalendarDate | CalendarRange, close: Function) => {
+  if (value && value instanceof Date) {
+    (startDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && !value.start) {
+    (startDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && !value.end) {
+    (endDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && value.end) {
+    (endDateInput.value as HTMLElement).focus()
+  } else {
+    (startDateInput.value as HTMLElement).focus()
+  }
+
+  if (props.mode === 'date') {
+    nextTick(() => {
+      if (isRange.value && inputDate.value.start && inputDate.value.end) {
+        close()
+      } else if (!isRange.value && inputDate.value.start) {
+        close()
+      }
+    })
+  }
+}
+
+const updateDatesFromInput = () => {
+  if (isRange.value) {
+    const formattedStartDate = formatDate(inputDate.value.start)
+    const formattedEndDate = formatDate(inputDate.value.end)
+    localDate.value = {
+      start: formattedStartDate.date && formattedEndDate.date && dateFnsMin([formattedStartDate.date, formattedEndDate.date]) || formattedStartDate.date,
+      end: formattedStartDate.date && formattedEndDate.date && dateFnsMax([formattedStartDate.date, formattedEndDate.date]) || formattedEndDate.date
+    }
+    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
+      inputDate.value = {
+        start: formattedEndDate.text,
+        end: formattedStartDate.text
+      }
+    } else {
+      inputDate.value = {
+        start: formattedStartDate.text,
+        end: formattedEndDate.text
+      }
+    }
+  } else {
+    const formattedStartDate = formatDate(inputDate.value.start)
+    localDate.value = formattedStartDate.date
+    inputDate.value = {
+      start: formattedStartDate.text,
+      end: ''
+    }
+  }
+}
+
+const formatDate = (dateString: string) => {
+  if (dateString === 'now') {
+    const date = new Date()
+    return { date, text: format(date, inputFormat.value) }
+  } else if (dateString === 'today') {
+    const date = setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0)
+    return { date, text: format(date, inputFormat.value) }
+  } else if (dateString === 'tomorrow') {
+    const date = addDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
+    return { date, text: format(date, inputFormat.value) }
+  } else if (dateString === 'yesterday') {
+    const date = subDays(setHours(setMinutes(setSeconds(setMilliseconds(new Date(), 0), 0), 0), 0), 1)
+    return { date, text: format(date, inputFormat.value) }
+  }
+
+  const formats = [
+    'MM/dd/yyyy hh:mm aaa',
+    'MM/dd/yyyy hh:mm a',
+    'MM/dd/yyyy h:mm aaa',
+    'MM/dd/yyyy h:mm a',
+    'MM/dd/yyyy hh:mmaaa',
+    'MM/dd/yyyy hh:mma',
+    'MM/dd/yyyy h:mmaaa',
+    'MM/dd/yyyy h:mma',
+    'MM/dd/yyyy H:mm',
+    'MM/dd/yyyy HH:mm',
+    'MM/dd/yyyy HH:mm:ss',
+    'MM-dd-yyyy hh:mm aaa',
+    'MM-dd-yyyy hh:mm a',
+    'MM-dd-yyyy h:mm aaa',
+    'MM-dd-yyyy h:mm a',
+    'MM-dd-yyyy ha',
+    'MM-dd-yyyy haaa',
+    'MM-dd-yyyy hh:mmaaa',
+    'MM-dd-yyyy hh:mma',
+    'MM-dd-yyyy h:mmaaa',
+    'MM-dd-yyyy h:mma',
+    'MM-dd-yyyy H:mm',
+    'MM-dd-yyyy HH:mm',
+    'MM-dd-yyyy HH:mm:ss',
+    'yyyy-MM-dd hh:mm aaa',
+    'yyyy-MM-dd hh:mm a',
+    'yyyy-MM-dd h:mm aaa',
+    'yyyy-MM-dd h:mm a',
+    'yyyy-MM-dd hh:mma',
+    'yyyy-MM-dd h:mmaaa',
+    'yyyy-MM-dd h:mma',
+    'yyyy-MM-dd H:mm',
+    'yyyy-MM-dd HH:mm',
+    'yyyy-MM-dd HH:mm:ss',
+    'MM/dd/yyyy',
+    'MM-dd-yyyy',
+    'yyyy-MM-dd',
+    'M/d',
+    'MM/dd',
+    'MM/yyyy',
+    'M-d',
+    'MM-dd',
+    'MM-yyyy',
+    'yyyy/MM',
+    'yyyy-MM',
+    'M/dd/yyyy hh:mm aaa',
+    'M/dd/yyyy hh:mm a',
+    'M/dd/yyyy h:mm aaa',
+    'M/dd/yyyy h:mm a',
+    'M/dd/yyyy ha',
+    'M/dd/yyyy haaa',
+    'M/dd/yyyy hh:mmaaa',
+    'M/dd/yyyy hh:mma',
+    'M/dd/yyyy h:mmaaa',
+    'M/dd/yyyy h:mma',
+    'M/dd/yyyy H:mm',
+    'M/dd/yyyy HH:mm',
+    'M/dd/yyyy HH:mm:ss',
+    'M-dd-yyyy hh:mm aaa',
+    'M-dd-yyyy hh:mm a',
+    'M-dd-yyyy h:mm aaa',
+    'M-dd-yyyy h:mm a',
+    'M-dd-yyyy hh:mmaaa',
+    'M-dd-yyyy hh:mma',
+    'M-dd-yyyy h:mmaaa',
+    'M-dd-yyyy h:mma',
+    'M-dd-yyyy H:mm',
+    'M-dd-yyyy HH:mm',
+    'M-dd-yyyy HH:mm:ss',
+    'yyyy-M-dd hh:mm aaa',
+    'yyyy-M-dd hh:mm a',
+    'yyyy-M-dd h:mm aaa',
+    'yyyy-M-dd h:mm a',
+    'yyyy-M-dd hh:mma',
+    'yyyy-M-dd h:mmaaa',
+    'yyyy-M-dd h:mma',
+    'yyyy-M-dd H:mm',
+    'yyyy-M-dd HH:mm',
+    'yyyy-M-dd HH:mm:ss',
+    'yyyy-M-dd',
+    'M/yyyy',
+    'M-yyyy',
+    'M/yyyy haaa',
+    'M-yyyy haaa',
+    'M/yyyy ha',
+    'M/yyyy HH:mm:ss',
+    'M-yyyy HH:mm:ss',
+    'M.yyyy HH:mm:ss',
+    'M-yyyy ha',
+    'M/yyyy h:mmaaa',
+    'M-yyyy h:mmaaa',
+    'M/yyyy h:mma',
+    'M-yyyy h:mma',
+    'M/yyyy h:mm aaa',
+    'M-yyyy h:mm aaa',
+    'M/yyyy h:mm a',
+    'M-yyyy h:mm a',
+    'yyyy/M',
+    'yyyy-M',
+    'yyyy',
+    'EEE',
+    'EEEE',
+    'LLL',
+    'LLLL',
+    'LLL yyyy',
+    'LLLL yyyy',
+    'LLL dd yyyy',
+    'LLLL dd yyyy',
+    'hh:mm aaa',
+    'hh:mm a',
+    'h:mm aaa',
+    'h:mm a',
+    'hh:mmaaa',
+    'hh:mma',
+    'h:mmaaa',
+    'h:mma',
+    'HH:mm:ss',
+    'H:mm',
+    'HH:mm',
+    'QQQ',
+    'QQQQ',
+    'QQQ yyyy',
+    'QQQQ yyyy',
+    'PP',
+    'PPP',
+    'PPPP',
+    'bbb',
+    'h BBB',
+    'h:mm BBB',
+    'hh BBB',
+    'hh:mm BBB',
+    'hBBB',
+    'h:mmBBB',
+    'hhBBB',
+    'hh:mmBBB'
+  ]
+
+  // validate the format and store the found format for later processing
+  let foundFormat
+  const validDates = formats.filter((format) => {
+    const valid = isValid(parse(dateString, format, new Date()))
+    if (valid) foundFormat = format
+    return valid
+  })
+
+  if (validDates.length > 0) {
+    let date = parse(dateString, validDates[0], new Date())
+    if (props.mode === 'date') {
+      date = setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0)
+    } else if (props.mode === 'time') {
+      const time = format(date, 'HH:mm:ss')
+      const days = format(new Date(), 'yyyy-MM-dd')
+      date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
+    }
+
+    // Fix double-digit year issue using foundFormat and full year value
+    const fullYear = date.getFullYear()
+    if (foundFormat === 'LLLL dd yyyy' && fullYear < 1000) {
+      date = addYears(date, 2000)
+    }
+
+    const dateIsBeforeMin = isBefore(date, props.min)
+    const dateIsAfterMax = isAfter(subDays(date, 1), props.max)
+    const dateEqualsMax = isEqual(subDays(date, 1), props.max)
+    if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
+      return { date, text: format(date, inputFormat.value) }
+    }
+  }
+  return { date: null, text: '' }
+}
 </script>

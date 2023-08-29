@@ -11,6 +11,7 @@
         }"
       >
         <input
+          :id="id"
           ref="input"
           v-model.trim="q"
           type="text"
@@ -81,7 +82,7 @@
       <li
         v-for="(result, i) in results"
         :key="i"
-        class="flex px-4 py-2 text-sm text-left text-gray-900 list-none cursor-pointer dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
+        class="flex px-4 py-2 text-sm text-left text-black list-none cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
         :class="{ 'active bg-gray-100 dark:bg-gray-800': i === arrowCounter }"
         @mousedown.prevent="handleDropdownClick(result)"
       >
@@ -124,6 +125,10 @@ export default defineComponent({
       type: String,
       default: "",
     },
+    /**
+     * Determines the id of the input.
+     */
+    id: { type: String, default: undefined },
     /**
      * The placeholder for the input.
      */

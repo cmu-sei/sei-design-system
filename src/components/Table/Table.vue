@@ -171,11 +171,11 @@
     </thead>
     <tbody>
       <template
-        v-for="item in sortedItems"
+        v-for="item, index in sortedItems"
         :key="item.id"
       >
         <tr
-          :id="`${id || 'sds-table'}_tr_${item.id}`"
+          :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
             'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850': item.id === openDrawerID
           }"
@@ -240,7 +240,7 @@
         </tr>
         <tr
           v-if="item.id === openDrawerID"
-          :id="`${id || 'sds-table'}_tr_${item.id}_drawer`"
+          :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
           class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850"
         >
           <td :colspan="displayedFieldKeys.length + 1">

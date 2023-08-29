@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Form Group > should match its default snapshot 1`] = `
+<div
+  class="w-full"
+  data-id="sds-form-group"
+  id="unique-id"
+>
+  <label
+    class="font-semibold mb-2 flex gap-1 items-center"
+    for="undefined_form-control"
+  >
+    
+    <span />
+    
+    <!---->
+  </label>
+  <!---->
+  
+  
+  <!---->
+  <!---->
+  <!---->
+</div>
+`;

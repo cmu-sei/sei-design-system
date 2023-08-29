@@ -124,6 +124,24 @@
       aria-hidden="true"
       class="multiselect-caret"
     />
+    <select
+      v-if="id"
+      :id="id"
+      :required="required"
+      :multiple="multiple"
+      class="sr-only"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <option
+        v-for="i in selected"
+        :key="i.id"
+        :value="i.id"
+        selected
+      >
+        {{ i[labelKey] }}
+      </option>
+    </select>
     <ul
       v-if="showDropdown"
       ref="dropdownMenu"
@@ -235,6 +253,10 @@ interface MultiselectTag {
 export default defineComponent({
   name: 'SdsMultiselect',
   props: {
+    /**
+     * Determines the id of the component.
+     */
+    id: { type: String, default: undefined },
     /**
      * An array of the selected options.
      */
@@ -967,7 +989,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .sds-multiselect {
-  @apply block relative text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
+  @apply block relative py-0.5 text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
 }
 
 .sds-multiselect.active,
@@ -1032,7 +1054,7 @@ fieldset[disabled] .sds-multiselect * {
   position: absolute;
   top: 0;
   right: 0;
-  height: 36px;
+  height: 42px;
   width: 32px;
   background: 0;
   border: 0;
@@ -1092,31 +1114,25 @@ fieldset[disabled] .sds-multiselect * {
 
 .dropdown-list-item {
   padding: 4px 8px;
+  cursor: pointer;
 }
 
 .dropdown-list-item.active {
-  background: theme("colors.blue.500");
+  background: theme("colors.gray.100");
+  color: theme("colors.black");
+}
+
+.dark .dropdown-list-item.active {
+  background: theme("colors.gray.800");
   color: theme("colors.white");
 }
 
 .dropdown-list-item.selected {
-  background: theme("colors.gray.100");
-  color: theme("colors.gray.700");
-}
-
-.dark .dropdown-list-item.selected {
-  background: theme("colors.gray.800");
-  color: theme("colors.gray.300");
+  opacity: 0.5;
 }
 
 .dropdown-list-item.active.selected {
-  background: theme("colors.gray.200");
-  color: theme("colors.gray.800");
-}
-
-.dark .dropdown-list-item.active.selected {
-  background: theme("colors.gray.750");
-  color: theme("colors.gray.200");
+  background: theme("colors.transparent");
 }
 
 .dropdown-list-item.loading {
