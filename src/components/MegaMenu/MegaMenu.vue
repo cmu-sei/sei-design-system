@@ -88,7 +88,7 @@
             selectedTopLink?.selected
               ? 'z-30 shadow-lg border-b dark:border-gray-800'
               : 'z-10',
-            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-950',
+            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-900',
           ]"
         >
           <div class="mx-auto container">
