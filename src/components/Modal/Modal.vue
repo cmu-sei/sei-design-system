@@ -156,7 +156,7 @@ export default defineComponent({
      * Determines the size of the modal.
      */
     size: {
-      type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | ''>,
+      type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
       default: "md",
     },
     /**
