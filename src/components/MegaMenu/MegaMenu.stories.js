@@ -12,11 +12,17 @@ export default {
         iframeHeight: 675
       },
       description: {
-        component: 'Beta: A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.',
-      },
-    },
+        component: 'Beta: A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.'
+      }
+    }
   },
   component: SdsMegaMenu,
+  argTypes: {
+    kind: {
+      options: ['block', 'underline'],
+      control: { type: 'select' }
+    }
+  }
 };
 
 const Template = (args) => ({
@@ -35,14 +41,14 @@ const Template = (args) => ({
       @change="onChange"
       @update:model-value="onUpdateModelValue"
     >
-      <template #panel(topLink1)>
+      <template #panel(topLink1)="{ content }">
         <div class="mx-auto container">
           <div class="grid grid-cols-3 gap-4 py-8">
             <div class="col-span-2 px-4">
               <sds-mega-menu-item
-                label="Landing Page Link"
-                kind="landing-page"
-                href="/"
+                :label="content.label"
+                :kind="content.kind"
+                :href="content.href"
               />
               <sds-mega-menu-item
                 class="mb-4"
@@ -96,7 +102,7 @@ const Template = (args) => ({
           </div>
         </div>
       </template>
-      <template #panel(topLink2)>
+      <template #panel(topLink2)="{ close }">
         <div class="mx-auto container">
           <div class="grid grid-cols-3 gap-4 py-8">
             <div class="col-span-1 px-4">
@@ -106,13 +112,13 @@ const Template = (args) => ({
                 href="/"
               />
               <sds-mega-menu-item
+                @click="close"
                 class="mb-4"
                 cta
-                href="/"
-                label="Descriptive Link CTA"
+                label="Click to close this menu."
                 kind="descriptive"
               >
-                <span class="text-sm text-gray-700">Descriptive link with longer link description text or subtitle. This one also uses the cta property.</span>
+                <span class="text-sm text-gray-700">Descriptive link (with added "cta" attribute) that uses the panel's exposed "close" method to close the panel.</span>
               </sds-mega-menu-item>
               <sds-mega-menu-item
                 class="mb-4"
@@ -421,7 +427,12 @@ Default.args = {
     {
       key: "topLink1",
       title: "Top Link 1",
-      selected: false
+      selected: false,
+      content: {
+        label: "Landing Page Link",
+        kind: "landing-page",
+        href: "/"
+      }
     },
     {
       key: "topLink2",
@@ -443,5 +454,6 @@ Default.args = {
       title: "Top Link 5",
       selected: false
     },
-  ]
+  ],
+  kind: 'underline'
 };

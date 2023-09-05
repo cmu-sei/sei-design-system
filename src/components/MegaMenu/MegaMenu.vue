@@ -41,7 +41,7 @@
           class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
-          <!-- @slot Dynamic link. Used to supply custom HTML within a top-level menu link. -->
+          <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
           <slot
             :name="`link(${topLink.key})`"
             :item="topLink"
@@ -92,7 +92,7 @@
           ]"
         >
           <div class="mx-auto container">
-            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. -->
+            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
             <slot
               v-if="selectedTopLink?.selected"
               :name="`panel(${selectedTopLink.key})`"
@@ -141,9 +141,15 @@ import { onClickOutside, onKeyStroke } from '@vueuse/core'
 
 const props = defineProps({
   /**
-   * Determines the array of "topLink" objects.
+   * An array of top-level navigation items ("top links").
+   * Each navigation item is defined by a "topLink" object.
+   * A navigation label is applied with the "title" key.
+   * It also supplies the "content" object to retrieve data
+   * from within a Mega Menu panel. I.e.:
+   * `<template #panel(key)={ content }>{{ content.item }}</template>`
    *
-   * Format of "topLink" object:
+   * Instead of an accordion-like function, the top link can
+   * also be setup as an anchor tag with the "tag" setting.
    *
    * ```
    * {
@@ -159,17 +165,27 @@ const props = defineProps({
    *   disabled?: boolean
    *   onClick?: Function
    * }
+   *
    * ```
    */
   modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
   /**
-   * The overall look and feel of the component.
+   * Overall look and feel of the component (two options)
    */
   kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
 })
 
-/* Used to emit model update */
-const emit = defineEmits(['update:model-value'])
+const emits = defineEmits(
+  [
+    /**
+     * When data supplied to the Mega Menu component
+     * changes, emit an event. This lets developers
+     * trigger other actions off the Mega Menu's modelValue
+     * when it changes.
+     */
+    'update:model-value'
+  ]
+)
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {
@@ -177,8 +193,11 @@ const topLinks = computed({
   },
   /* Set SdsMegaMenu modelValue property */
   set(value: ITopLink[]) {
-    /* Emmitted when the v-model has changed. */
-    emit('update:model-value', value)
+    /**
+     * Emmitted when the v-model (Mega Menu's data source)
+     * has changed.
+     */
+    emits('update:model-value', value)
   }
 })
 
