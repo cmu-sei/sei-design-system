@@ -46,7 +46,6 @@
           :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
           :class="{
             [zIndexClass]: true,
-            'max-w-fit': size === 'auto',
             'max-w-sm': size === 'sm',
             'max-w-md': size === 'md',
             'max-w-lg': size === 'lg',
@@ -146,7 +145,7 @@ export default defineComponent({
      * Determines the size of the panel.
      */
     size: {
-      type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto'>,
+      type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
       default: "md",
     },
     /**
