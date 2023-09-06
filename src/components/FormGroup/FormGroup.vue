@@ -12,11 +12,9 @@
       :for="el === 'div' ? id : undefined"
       :class="{
         'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold',
-        'mb-1': description || $slots.description,
-        'mb-2': !description && !$slots.description
+        'font-semibold': labelWeight === 'semibold'
       }"
-      class="flex gap-1 items-center"
+      class="flex gap-1 items-center mb-2"
     >
       <!-- @slot Label slot content. This will override the `label` prop. @binding label. -->
       <slot
@@ -30,18 +28,6 @@
         class="font-normal text-red-500 dark:text-red-300 text-xs"
       >* required</span>
     </Component>
-    <p
-      v-if="description || $slots.description"
-      class="block text-xs text-gray-600 dark:text-gray-500 pb-2"
-    >
-      <!-- @slot Description slot content. This will override the `description` prop. @binding description. -->
-      <slot
-        name="description"
-        :description="description"
-      >
-        <span>{{ description }}</span>
-      </slot>
-    </p>
     <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
     <slot
       :id="id"
@@ -121,10 +107,6 @@ const props = defineProps({
    * id and `el` equals `div`.
    */
   labelFor: { type: String as PropType<string | null>, default: null },
-  /**
-   * Determines the description of the form field.
-   */
-  description: { type: String as PropType<string | null>, default: null },
   /**
    * Determines the helper text of the form field.
    */
