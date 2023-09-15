@@ -17,6 +17,7 @@
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
           :id="`sds-megamenu__top-link_${topLink.key}`"
+          :ref="`${topLink.key}`"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
@@ -71,10 +72,10 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out z-40"
+      enter-active-class="transition-transform origin-top z-40"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out z-40"
+      leave-active-class="transition-transform origin-top z-40"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
@@ -87,11 +88,19 @@
         <div
           v-if="selectedTopLink?.tag !== 'a'"
           ref="panel"
+          :style="[
+            width === 'auto'
+              ? `left: ${getLeftPos}px`
+              : ''
+          ]"
           :class="[
             selectedTopLink?.selected
               ? 'z-40 shadow-lg border-b dark:border-gray-800'
               : 'z-20',
-            'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-900',
+            width === 'auto'
+              ? ''
+              : 'w-full top-0 left-0',
+            'absolute text-black dark:text-white bg-white dark:bg-gray-900',
           ]"
         >
           <div class="mx-auto container">
@@ -181,7 +190,11 @@ const props = defineProps({
   /**
    * Overall look and feel of the component (two options)
    */
-  kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
+  kind: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
+  /**
+   * Sets the panel width. Full width stretches to fill the width of the screen.
+   * Auto width will fit the width of the content inside the panel.
+   */
   width: { type: String as PropType<'auto' | 'full'>, default: 'full' },
 })
 
@@ -216,15 +229,27 @@ const isOpen = ref(false)
 
 const root = ref()
 const panel = ref()
+
 const selectedTopLink = computed(() => {
   const selected = props.modelValue.find(i => i.selected)
   return selected || null
 })
+
 const focusableList = ref<HTMLElement[]>([])
 
 const topLinkEl = computed(() => {
   if (typeof document === "undefined") return null
   return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
+})
+
+const getLeftPos = computed(() => {
+  if (typeof document === "undefined") return null
+  if (selectedTopLink.value) {
+    const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement
+    const leftPos: number = selected.getBoundingClientRect().left
+    return leftPos - 65
+  }
+  return 0
 })
 
 const onClose = (focusTopLink = true) => {
