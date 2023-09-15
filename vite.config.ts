@@ -1,18 +1,9 @@
-import eslint from '@rollup/plugin-eslint'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    {
-      ...eslint({
-        include: '**/*.+(vue|js|jsx|ts|tsx)',
-      }),
-      enforce: 'pre',
-    },
-    vue()
-  ],
+  plugins: [vue()],
   server: {
     fs: {
       allow: ['..']

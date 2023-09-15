@@ -2423,7 +2423,7 @@ export default defineComponent({
         input: "",
       },
       calendar: {
-        date: { start: null, end: null },
+        date: { start: new Date('03-23-2001'), end: new Date('04-20-2001') },
         // date: new Date('03/23/2001'),
         max: null,
         min: null,
@@ -2431,7 +2431,7 @@ export default defineComponent({
         size: "md"
       },
       calendarSingle: {
-        date: null,
+        date: new Date('03-04-2022'),
         // date: new Date('03/23/2001'),
         max: null,
         min: null,

@@ -18,6 +18,12 @@ rm -rf dist/
 #   fi
 # done
 
+printf "\nlint check all components...\n"
+npm run lint
+
+printf "\ncheck tests for all components...\n"
+npm test
+
 printf "\nbuilding all components...\n"
 LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
 npx vue-tsc --skipLibCheck --declaration --emitDeclarationOnly --outDir dist/types

@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-const eslint = require('@rollup/plugin-eslint');
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
@@ -7,14 +6,7 @@ console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [{
-    ...eslint({
-      include: '**/*.+(vue|js|jsx|ts|tsx)',
-      throwOnError: true,
-      throwOnWarning: true,
-    }),
-    enforce: 'pre',
-  }, vue()],
+  plugins: [vue()],
   publicDir: false,
   define: { 'process.env.NODE_ENV': '"production"' },
   build: {

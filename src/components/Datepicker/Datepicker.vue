@@ -331,83 +331,6 @@ const localDate = computed({
   }
 })
 
-watch(localDate, (value) => {
-  if (isRange.value) {
-    const formattedStartDate = value.start && formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-    const formattedEndDate = value.end && formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
-      inputDate.value = {
-        start: formattedEndDate.text,
-        end: formattedStartDate.text
-      }
-    } else {
-      inputDate.value = {
-        start: formattedStartDate.text,
-        end: formattedEndDate.text
-      }
-    }
-  } else {
-    const formattedStartDate = value && formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-    inputDate.value = {
-      start: formattedStartDate.text,
-      end: ''
-    }
-  }
-}, { deep: true, immediate: true })
-
-const focusCorrectInput = (value: CalendarDate | CalendarRange, close: Function) => {
-  if (value && value instanceof Date) {
-    (startDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && !value.start) {
-    (startDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && !value.end) {
-    (endDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && value.end) {
-    (endDateInput.value as HTMLElement).focus()
-  } else {
-    (startDateInput.value as HTMLElement).focus()
-  }
-
-  if (props.mode === 'date') {
-    nextTick(() => {
-      if (isRange.value && inputDate.value.start && inputDate.value.end) {
-        close()
-      } else if (!isRange.value && inputDate.value.start) {
-        close()
-      }
-    })
-  }
-}
-
-const updateDatesFromInput = () => {
-  if (isRange.value) {
-    const formattedStartDate = formatDate(inputDate.value.start)
-    const formattedEndDate = formatDate(inputDate.value.end)
-    localDate.value = {
-      start: formattedStartDate.date && formattedEndDate.date && dateFnsMin([formattedStartDate.date, formattedEndDate.date]) || formattedStartDate.date,
-      end: formattedStartDate.date && formattedEndDate.date && dateFnsMax([formattedStartDate.date, formattedEndDate.date]) || formattedEndDate.date
-    }
-    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
-      inputDate.value = {
-        start: formattedEndDate.text,
-        end: formattedStartDate.text
-      }
-    } else {
-      inputDate.value = {
-        start: formattedStartDate.text,
-        end: formattedEndDate.text
-      }
-    }
-  } else {
-    const formattedStartDate = formatDate(inputDate.value.start)
-    localDate.value = formattedStartDate.date
-    inputDate.value = {
-      start: formattedStartDate.text,
-      end: ''
-    }
-  }
-}
-
 const formatDate = (dateString: string) => {
   if (dateString === 'now') {
     const date = new Date()
@@ -593,5 +516,82 @@ const formatDate = (dateString: string) => {
     }
   }
   return { date: null, text: '' }
+}
+
+watch(localDate, (value) => {
+  if (isRange.value) {
+    const formattedStartDate = value.start && formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedEndDate = value.end && formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
+      inputDate.value = {
+        start: formattedEndDate.text,
+        end: formattedStartDate.text
+      }
+    } else {
+      inputDate.value = {
+        start: formattedStartDate.text,
+        end: formattedEndDate.text
+      }
+    }
+  } else {
+    const formattedStartDate = value && formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    inputDate.value = {
+      start: formattedStartDate.text,
+      end: ''
+    }
+  }
+}, { deep: true, immediate: true })
+
+const focusCorrectInput = (value: CalendarDate | CalendarRange, close: Function) => {
+  if (value && value instanceof Date) {
+    (startDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && !value.start) {
+    (startDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && !value.end) {
+    (endDateInput.value as HTMLElement).focus()
+  } else if (value && !(value instanceof Date) && value.end) {
+    (endDateInput.value as HTMLElement).focus()
+  } else {
+    (startDateInput.value as HTMLElement).focus()
+  }
+
+  if (props.mode === 'date') {
+    nextTick(() => {
+      if (isRange.value && inputDate.value.start && inputDate.value.end) {
+        close()
+      } else if (!isRange.value && inputDate.value.start) {
+        close()
+      }
+    })
+  }
+}
+
+const updateDatesFromInput = () => {
+  if (isRange.value) {
+    const formattedStartDate = formatDate(inputDate.value.start)
+    const formattedEndDate = formatDate(inputDate.value.end)
+    localDate.value = {
+      start: formattedStartDate.date && formattedEndDate.date && dateFnsMin([formattedStartDate.date, formattedEndDate.date]) || formattedStartDate.date,
+      end: formattedStartDate.date && formattedEndDate.date && dateFnsMax([formattedStartDate.date, formattedEndDate.date]) || formattedEndDate.date
+    }
+    if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
+      inputDate.value = {
+        start: formattedEndDate.text,
+        end: formattedStartDate.text
+      }
+    } else {
+      inputDate.value = {
+        start: formattedStartDate.text,
+        end: formattedEndDate.text
+      }
+    }
+  } else {
+    const formattedStartDate = formatDate(inputDate.value.start)
+    localDate.value = formattedStartDate.date
+    inputDate.value = {
+      start: formattedStartDate.text,
+      end: ''
+    }
+  }
 }
 </script>
