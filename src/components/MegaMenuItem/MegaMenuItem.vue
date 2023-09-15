@@ -16,7 +16,7 @@
       </div>
       <div class="flex flex-col gap-1">
         <div class="inline-flex group">
-          <p>{{ label }}</p>
+          <p class="group-hover:text-red-500">{{ label }}</p>
           <svg
             v-if="cta || kind === 'landing-page'"
             class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-300 group-hover:ml-4"
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from "vue";
+import { defineComponent, computed, PropType } from "vue"
 
 export default defineComponent({
   name: "SdsMegaMenuItem",
@@ -71,34 +71,34 @@ export default defineComponent({
     const linkClass = computed(() => {
       /* If the kind is set, or if `cta` prop is set, apply styles */
       let classes = props.kind || props.cta
-        ? 'link group w-full px-4'
+        ? 'link group w-full px-4 no-underline'
         : ''
       return classes
-    });
+    })
 
     const kindClass = computed(() => {
       /* Apply styles based on kind class */
       const kind = props.kind as
         | "landing-page"
         | "descriptive"
-        | "simple";
+        | "simple"
       switch (kind) {
         case "landing-page":
-          return "text-lg mb-8 hover:no-underline";
+          return "text-lg mb-8 hover:no-underline hover:text-red-500"
         case "descriptive":
-          return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-850";
+          return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-50 hover:dark:bg-gray-850"
         case "simple":
-          return "mb-2 p-4 text-sm transition-all rounded-lg hover:bg-gray-50 hover:dark:bg-gray-850";
+          return "mb-2 p-4 text-sm transition-all rounded-lg hover:bg-gray-50 hover:dark:bg-gray-850 hover:text-red-500"
         default:
-          return "";
+          return ""
       }
-    });
+    })
 
     const disabledClass = computed(() => {
-      return props.disabled ? "disabled" : "";
-    });
+      return props.disabled ? "disabled" : ""
+    })
 
-    return { linkClass, kindClass, disabledClass };
+    return { linkClass, kindClass, disabledClass }
   },
-});
+})
 </script>
