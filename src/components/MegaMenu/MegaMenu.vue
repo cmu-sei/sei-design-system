@@ -5,7 +5,7 @@
     class="w-full flex flex-col"
     @keydown="checkKeyEvent"
   >
-    <div class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
+    <div class="z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
       <div
         class="flex flex-row px-8 mx-auto container"
         :class="{
@@ -38,7 +38,7 @@
             'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           role="menuitem"
-          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-30 -mb-0.5 overflow-y-visible select-none"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-40 -mb-0.5 overflow-y-visible select-none"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -68,10 +68,10 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out"
+      enter-active-class="transition-transform ease-in-out z-40"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out"
+      leave-active-class="transition-transform ease-in-out z-40"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
@@ -86,8 +86,8 @@
           ref="panel"
           :class="[
             selectedTopLink?.selected
-              ? 'z-30 shadow-lg border-b dark:border-gray-800'
-              : 'z-10',
+              ? 'z-40 shadow-lg border-b dark:border-gray-800'
+              : 'z-20',
             'absolute top-0 left-0 w-full text-black dark:text-white bg-white dark:bg-gray-900',
           ]"
         >
@@ -112,6 +112,12 @@
       </div>
     </transition>
   </nav>
+  <div
+    :class="[
+      width === 'full' ? isOpen ? 'opacity-100 h-screen' : 'opacity-0 h-0' : 'hidden',
+      'transition-opacity duration-500 z-10 absolute top-0 left-0 w-full bg-black/50',
+    ]"
+  />
 </template>
 
 <script lang="ts">
@@ -173,6 +179,7 @@ const props = defineProps({
    * Overall look and feel of the component (two options)
    */
   kind: { type: String as PropType<'underline' | 'block'>, default: 'underline' },
+  width: { type: String as PropType<'auto' | 'full'>, default: 'full' },
 })
 
 const emits = defineEmits(
