@@ -51,9 +51,12 @@
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
             <svg
               v-if="topLink.tag !== 'a'"
-              :class="{
-                'rotate-180': topLink.selected
-              }"
+              :class="[
+                topLink.selected
+                  ? 'rotate-180'
+                  : 'rotate-0',
+                '-mr-1'
+              ]"
               class="relative inline-block w-5 h-5 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
