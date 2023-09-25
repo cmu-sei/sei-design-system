@@ -2,7 +2,7 @@
   <div
     data-id="sds-badge"
     role="status"
-    class="inline-block tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded"
+    class="inline-flex items-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded"
     :class="variantClass"
   >
     <!-- @slot Badge content.  -->

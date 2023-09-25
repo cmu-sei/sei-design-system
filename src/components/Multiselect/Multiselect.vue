@@ -1150,8 +1150,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .tag-list {
-  display: block;
-  padding: 2px 4px;
+  @apply block py-[2px] px-[8px];
 }
 
 .hideCaret .tag-list,
