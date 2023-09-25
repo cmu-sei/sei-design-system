@@ -1113,7 +1113,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dropdown-list-item {
-  padding: 4px 8px;
+  padding: 4px 12px;
   cursor: pointer;
 }
 
