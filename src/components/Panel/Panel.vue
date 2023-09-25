@@ -61,7 +61,7 @@
               v-if="hasTitleSlot"
               ref="titleWrapper"
               v-uid
-              class="text-xl flex leading-tight"
+              class="text-xl flex leading-7"
             >
               <!-- @slot Panel header content. -->
               <slot name="title" />
