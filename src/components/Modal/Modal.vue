@@ -70,7 +70,7 @@
                   v-if="hasTitleSlot"
                   ref="titleWrapper"
                   v-uid
-                  class="text-xl leading-tight"
+                  class="flex items-center gap-2 text-2xl leading-7 font-light"
                 >
                   <!-- @slot Modal title content. -->
                   <slot name="title" />

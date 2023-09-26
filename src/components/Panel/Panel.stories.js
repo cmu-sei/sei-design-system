@@ -9,7 +9,7 @@ export default {
         iframeHeight: 300
       },
       description: {
-        component: 'Alpha: A Drawer is a panel that slides in from the edge of the screen over the page content. It contains supplementary content or actions to support tasks as part of a flow.'
+        component: 'A Panel is a vertical section that slides in from the edge of the screen over the page content. It contains supplementary content or actions to support tasks as part of a flow.'
       },
     },
   },

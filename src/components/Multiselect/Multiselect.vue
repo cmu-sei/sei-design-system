@@ -1113,7 +1113,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dropdown-list-item {
-  padding: 4px 8px;
+  padding: 4px 12px;
   cursor: pointer;
 }
 
@@ -1150,8 +1150,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .tag-list {
-  display: block;
-  padding: 2px 4px;
+  @apply block py-[2px] px-[8px];
 }
 
 .hideCaret .tag-list,
