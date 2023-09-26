@@ -26,10 +26,7 @@
       v-model="showPanel"
     >
       <template #title>
-        <button
-          class="flex items-center gap-2"
-          @click="showPanel = false"
-        >
+        <button @click="showPanel = false">
           <svg
             class="w-6 h-6"
             height="32"
@@ -42,8 +39,8 @@
               fill="currentColor"
             />
           </svg>
-          <span>Panel title</span>
         </button>
+        <span>Panel title</span>
       </template>
       <div class="relative h-full overflow-hidden rounded-xl border border-dashed border-gray-400 opacity-75">
         <svg

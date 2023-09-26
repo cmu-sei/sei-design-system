@@ -46,9 +46,9 @@
               <!-- @slot Page title content. -->
               <slot
                 name="page-title"
-                class-list="text-2xl font-semibold text-gray-700 dark:text-gray-100"
+                class-list="text-2xl font-light text-gray-900 dark:text-gray-100"
               >
-                <p class="text-2xl font-semibold text-gray-700 dark:text-gray-100">
+                <p class="text-2xl font-light text-gray-900 dark:text-gray-100">
                   {{ pageTitle }}
                 </p>
               </slot>
