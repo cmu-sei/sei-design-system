@@ -5,8 +5,8 @@
   >
     <h3
       :class="{
-        'text-lg font-bold': smallHeading,
-        'text-2xl font-bold': !smallHeading,
+        'text-lg font-light': smallHeading,
+        'text-2xl font-light': !smallHeading,
       }"
     >
       {{ title }}
