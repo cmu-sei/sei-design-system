@@ -29,30 +29,10 @@
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50 mb-96">
       <SdsMegaMenu
         v-model="megaMenuAuto"
-        kind="block"
         width="auto"
       >
-        <template #default="{ topLink, content }">
-          {{ topLink }}
-          {{ content }}
-        </template>
-        <template #link(home-1)>
-          <svg
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"
-            />
-          </svg>
-          <span class="sr-only">Home</span>
-        </template>
         <template #panel(about-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4 max-w-sm">
+          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
             <div class="col-span-3 px-8">
               <SdsMegaMenuItem
                 :label="content.divisionLink.label"
@@ -72,12 +52,12 @@
           </div>
         </template>
         <template #panel(research-and-development-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4 max-w-sm">
+          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
             <div class="col-span-3 px-8">
               <div
                 v-for="item in content.extra"
                 :key="item.key"
-                class="mb-4"
+                class="mb-4 max-w-sm"
               >
                 <SdsMegaMenuItem
                   :cta="item.cta ?? false"
@@ -93,9 +73,9 @@
             </div>
           </div>
         </template>
-        <template #panel(publications-and-media-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4 max-w-sm">
-            <div class="col-span-3 px-8">
+        <template #panel(publications-and-media-1)>
+          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
+            <div class="col-span-3 px-8 max-w-sm">
               <SdsMegaMenuItem
                 label="News"
                 kind="landing-page"
@@ -139,8 +119,8 @@
           <span class="sr-only">Education</span>
         </template>
         <template #panel(education-1)="{ content, close }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4 max-w-sm">
-            <div class="col-span-3 px-8">
+          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
+            <div class="col-span-3 px-8 max-w-lg">
               <SdsMegaMenuItem
                 :label="content.eventLink.label"
                 :kind="content.eventLink.kind"
@@ -170,7 +150,7 @@
                     <p class="uppercase font-semibold text-xs mb-2">
                       {{ event.dateRange }}
                     </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
+                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden overflow-ellipsis">
                       {{ event.description }}
                     </p>
                   </template>
@@ -179,7 +159,7 @@
             </div>
             <SdsButton
               kind="danger"
-              class="absolute right-8 flex flex-row justify-center w-16"
+              class="absolute right-4 top-4 w-fit h-8 p-0 flex flex-col justify-center text-center mx-auto"
               @click="close"
             >
               <svg
@@ -199,8 +179,8 @@
           </div>
         </template>
         <template #panel(careers-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-3 px-8 max-w-sm">
+          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4">
+            <div class="col-span-3 px-8 max-w-fit">
               <SdsMegaMenuItem
                 :href="content.jobsLink.href"
                 :label="content.jobsLink.label"
@@ -250,6 +230,7 @@
         </template>
       </SdsMegaMenu>
     </div>
+    <!--
     <p>MegaMenu</p>
     <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
       <SdsMegaMenu
@@ -628,6 +609,7 @@
         </template>
       </SdsMegaMenu>
     </div>
+    -->
     <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
       <SdsLoadingBox />
@@ -2129,13 +2111,6 @@ export default defineComponent({
     return {
       megaMenuAuto: [
         {
-          key: "home-1",
-          title: "Home",
-          tag: 'a',
-          href: '/',
-          alignment: 'left',
-        },
-        {
           key: "about-1",
           title: "About",
           active: true,
@@ -2481,6 +2456,7 @@ export default defineComponent({
         {
           key: "education-1",
           title: "Education",
+          alignment: "right",
           content: {
             educationLinks: [
               {
@@ -2586,8 +2562,8 @@ export default defineComponent({
         },
         {
           key: "darkMode-1",
+          tag: "a",
           title: "Dark Mode",
-          alignment: "right",
           onClick: () => {
             document.body.classList.toggle('dark')
           }
@@ -3052,6 +3028,7 @@ export default defineComponent({
         },
         {
           key: "darkMode",
+          tag: "a",
           title: "Dark Mode",
           alignment: "right",
           onClick: () => {
