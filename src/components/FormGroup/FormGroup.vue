@@ -10,11 +10,7 @@
     <Component
       :is="el === 'div' ? 'label' : 'legend'"
       :for="el === 'div' ? id : undefined"
-      :class="{
-        'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold'
-      }"
-      class="flex gap-1 items-center mb-2"
+      class="flex gap-1 items-center mb-2 font-semibold"
     >
       <!-- @slot Label slot content. This will override the `label` prop. @binding label. -->
       <slot
@@ -25,8 +21,18 @@
       </slot>
       <span
         v-if="required"
+        :class="{
+          'sr-only': !showMarker
+        }"
         class="font-normal text-red-500 dark:text-red-300 text-xs"
       >* required</span>
+      <span
+        v-if="!required"
+        :class="{
+          'sr-only': !showMarker
+        }"
+        class="font-normal italic text-gray-600 dark:text-gray-500 text-xs"
+      >(optional)</span>
     </Component>
     <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
     <slot
@@ -94,13 +100,13 @@ const props = defineProps({
    */
   el: { type: String as PropType<'div' | 'fieldset'>, default: 'div' },
   /**
-   * Determines the text of the label.
+   * Determines whether to display the required/optional labeling.
    */
-  label: { type: String as PropType<string | null>, default: null },
+  showMarker: { type: Boolean, default: false },
   /**
    * Determines the text of the label.
    */
-  labelWeight: { type: String as PropType<'medium' | 'semibold'>, default: 'semibold' },
+  label: { type: String as PropType<string | null>, default: null },
   /**
    * Optionally determine the value of the label's for attribute. Only
    * necessary if you aren't using the automatically generated

@@ -1249,6 +1249,8 @@
       <SdsFormGroup
         v-slot="{ id }"
         label="Select field"
+        show-marker
+        required
       >
         <sds-select
           :id="id"
@@ -1778,6 +1780,7 @@
             el="fieldset"
             label="Date range"
             description="Select a start and an end date"
+            show-field-marker
             required
           >
             <sds-datepicker
