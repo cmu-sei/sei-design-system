@@ -25,8 +25,18 @@
       </slot>
       <span
         v-if="required"
+        :class="{
+          'sr-only': !showMarker
+        }"
         class="font-normal text-red-500 dark:text-red-300 text-xs"
       >* required</span>
+      <span
+        v-if="!required"
+        :class="{
+          'sr-only': !showMarker
+        }"
+        class="font-normal italic text-gray-600 dark:text-gray-500 text-xs"
+      >(optional)</span>
     </Component>
     <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
     <slot
@@ -93,6 +103,10 @@ const props = defineProps({
    * a div with a label.
    */
   el: { type: String as PropType<'div' | 'fieldset'>, default: 'div' },
+  /**
+   * Determines whether to display the required/optional labeling.
+   */
+  showMarker: { type: Boolean, default: false },
   /**
    * Determines the text of the label.
    */
