@@ -10,11 +10,7 @@
     <Component
       :is="el === 'div' ? 'label' : 'legend'"
       :for="el === 'div' ? id : undefined"
-      :class="{
-        'font-medium': labelWeight === 'medium',
-        'font-semibold': labelWeight === 'semibold'
-      }"
-      class="flex gap-1 items-center mb-2"
+      class="flex gap-1 items-center mb-2 font-semibold"
     >
       <!-- @slot Label slot content. This will override the `label` prop. @binding label. -->
       <slot
@@ -111,10 +107,6 @@ const props = defineProps({
    * Determines the text of the label.
    */
   label: { type: String as PropType<string | null>, default: null },
-  /**
-   * Determines the text of the label.
-   */
-  labelWeight: { type: String as PropType<'medium' | 'semibold'>, default: 'semibold' },
   /**
    * Optionally determine the value of the label's for attribute. Only
    * necessary if you aren't using the automatically generated
