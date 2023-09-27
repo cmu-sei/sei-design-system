@@ -38,6 +38,7 @@
                 :label="content.divisionLink.label"
                 :kind="content.divisionLink.kind"
                 :href="content.divisionLink.href"
+                class="select-none"
               />
               <div
                 v-for="division in content.divisionRows"

@@ -297,7 +297,7 @@ const onClose = (focusTopLink: boolean = true) => {
       i.selected = false
       return i
     })
-  }, 100)
+  }, 200)
 }
 
 const onOpen = (topLink: ITopLink, e: Event, focusTopLink: boolean = true) => {
@@ -405,5 +405,9 @@ watchEffect(() => {
     ));
     focusableList.value = focusable
   }
+
+  /* Prevent an orphan overlay getting left behind when the menu has been closed.
+   * This could previously occur when spam-clicking a nav button open/closed quickly. */
+  if (isOpen.value && !selectedTopLink.value) onClose()
 })
 </script>
