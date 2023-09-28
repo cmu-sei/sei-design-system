@@ -152,7 +152,7 @@
       v-if="width === 'full' && isOpen"
       class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
       :style="{
-        top: `${top}px`
+        top: `${bottom}px`
       }"
     />
   </transition>
@@ -256,7 +256,7 @@ const isOpen = ref(false)
 const root = ref()
 const panel = ref()
 
-const { top } = useElementBounding(root)
+const { bottom } = useElementBounding(root)
 
 const selectedTopLink = computed(() => {
   const selected = props.modelValue.find(i => i.selected)
