@@ -3,6 +3,9 @@
     ref="root"
     data-id="sds-megamenu"
     class="w-full flex flex-col"
+    :class="{
+      'relative': width === 'auto'
+    }"
     @keydown="checkKeyEvent"
   >
     <div class="z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
@@ -80,7 +83,7 @@
         v-if="selectedTopLink"
         :class="{
           'absolute top-10 -z-10': width === 'auto',
-          'relative z-50': width === 'full',
+          'z-50': width === 'full',
         }"
         class="w-full h-0"
         @click="onClose(false)"
