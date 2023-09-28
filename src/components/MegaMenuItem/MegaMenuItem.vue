@@ -51,10 +51,6 @@ export default defineComponent({
   name: "SdsMegaMenuItem",
   props: {
     /**
-     * Main MegaMenuItem text content
-     */
-    label: { type: String, default: "" },
-    /**
      * Determines the MegaMenuItem component kind to use.
      */
     kind: {
@@ -62,9 +58,9 @@ export default defineComponent({
       default: "simple",
     },
     /**
-     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+     * Main MegaMenuItem text content
      */
-    external: { type: Boolean, default: false },
+    label: { type: String, default: "" },
     /**
      * Gives the link a "Call to Action" styling.
      */
@@ -73,6 +69,10 @@ export default defineComponent({
      * Disables the component to prevent user interaction.
      */
     disabled: { type: Boolean, default: false },
+    /**
+     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+     */
+    external: { type: Boolean, default: false },
   },
   setup(props) {
     const linkClass = computed(() => {
