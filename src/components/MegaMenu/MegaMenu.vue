@@ -80,7 +80,7 @@
         v-if="selectedTopLink"
         :class="{
           'absolute top-10 -z-10': width === 'auto',
-          'z-50': width === 'full',
+          'relative z-50': width === 'full',
         }"
         class="w-full h-0"
         @click="onClose(false)"
