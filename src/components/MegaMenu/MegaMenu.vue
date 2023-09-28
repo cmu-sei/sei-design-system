@@ -8,7 +8,12 @@
     }"
     @keydown="checkKeyEvent"
   >
-    <div class="z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
+    <div
+      class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
+      :class="{
+        'z-20': isOpen
+      }"
+    >
       <div
         class="flex flex-row px-8 mx-auto container"
         :class="{
@@ -41,7 +46,7 @@
             'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           role="menuitem"
-          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-40 -mb-0.5 overflow-y-visible select-none shrink-0"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -82,19 +87,18 @@
       <div
         v-if="selectedTopLink"
         :class="{
-          'absolute top-10 -z-10': width === 'auto',
-          'z-50': width === 'full',
+          'absolute top-10': width === 'auto',
         }"
-        class="w-full h-0"
-        @click="onClose(false)"
+        class="w-full h-0 z-20"
       >
         <div
           role="menu"
           :class="{
             'container px-8 relative mx-auto flex flex-row': width === 'auto',
-            'h-fit z-50': width === 'full',
+            'h-fit': width === 'full',
             'justify-end': width === 'auto' && panelOverflow
           }"
+          @click.self="onClose(false)"
         >
           <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
           <div
@@ -106,11 +110,11 @@
             }"
             :class="{
               'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-              'w-fit border-x rounded-b-lg': width === 'auto',
+              'w-fit border-t-2 border-x rounded-b-lg': width === 'auto',
               'w-full top-0 left-0': width === 'full',
               'ml-0': panelOverflow
             }"
-            class="relative z-40 text-black dark:text-white bg-white dark:bg-gray-900"
+            class="relative text-black dark:text-white bg-white dark:bg-gray-900"
           >
             <div class="mx-auto container">
               <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
@@ -121,6 +125,7 @@
                 :item="selectedTopLink"
                 :content="selectedTopLink.content"
               >
+                <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar across all menus. I.e.: `<template #default>...</template>` -->
                 <slot
                   v-if="selectedTopLink?.selected"
                   :close="onClose"
@@ -139,13 +144,16 @@
     enter-active-class="transition-opacity ease-in-out"
     enter-from-class="opacity-0"
     enter-to-class="opacity-100"
-    leave-active-class="transition-transform ease-in-out"
+    leave-active-class="transition-opacity ease-in-out"
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
     <div
       v-if="width === 'full' && isOpen"
-      class="transition-opacity duration-500 z-10 mt-auto absolute top-auto left-0 w-full bg-black/50 h-screen"
+      class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
+      :style="{
+        top: `${top}px`
+      }"
     />
   </transition>
 </template>
@@ -173,7 +181,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, computed, ref, watchEffect } from 'vue'
-import { onClickOutside, onKeyStroke } from '@vueuse/core'
+import { onClickOutside, onKeyStroke, useElementBounding } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -247,6 +255,9 @@ const isOpen = ref(false)
 
 const root = ref()
 const panel = ref()
+
+const { top } = useElementBounding(root)
+
 const selectedTopLink = computed(() => {
   const selected = props.modelValue.find(i => i.selected)
   return selected || null
