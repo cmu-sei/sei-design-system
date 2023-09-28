@@ -41,10 +41,13 @@
       <p class="text-gray-500 text-sm">
         {{ helperText ? helperText : multiple ? `Use files under ${filesize} MB.` : `Use a file under ${filesize} MB.` }}
       </p>
-      <!-- @slot File list content. @binding files, invalidFiles -->
+      <!-- @slot File list content. @binding files, invalidFiles, removeFile, removeInvalidFile, byteToSize -->
       <slot
         :files="fileList"
         :invalid-files="invalidFileList"
+        :remove-file="removeFile"
+        :remove-invalid-file="removeInvalidFile"
+        :byte-to-size="byteToSize"
       >
         <ul v-if="fileList.length > 0 || invalidFileList.length > 0">
           <li

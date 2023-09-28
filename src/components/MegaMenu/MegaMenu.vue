@@ -1,12 +1,18 @@
 <template>
   <nav
+    ref="root"
     data-id="sds-megamenu"
     class="w-full flex flex-col"
+    :class="{
+      'relative': width === 'auto'
+    }"
     @keydown="checkKeyEvent"
   >
-    <div class="z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800">
+    <div
+      class="z-30 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
+    >
       <div
-        class="flex flex-row px-8 mx-auto container"
+        class="flex flex-row 2xl:px-12 px-8 mx-auto container"
         :class="{
           'gap-x-8': kind === 'underline',
         }"
@@ -16,7 +22,6 @@
           :is="topLink.tag ? topLink.tag : 'button'"
           v-for="topLink in topLinks"
           :id="`sds-megamenu__top-link_${topLink.key}`"
-          :ref="`${topLink.key}`"
           :key="topLink.key"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
@@ -38,7 +43,7 @@
             'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           role="menuitem"
-          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group z-40 -mb-0.5 overflow-y-visible select-none"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -51,12 +56,10 @@
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
             <svg
               v-if="topLink.tag !== 'a'"
-              :class="[
-                topLink.selected
-                  ? 'rotate-0'
-                  : 'rotate-180',
-                '-mr-1'
-              ]"
+              :class="{
+                'rotate-0': topLink.selected,
+                'rotate-180': !topLink.selected
+              }"
               class="relative inline-block w-5 h-5 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
@@ -70,83 +73,86 @@
         </component>
       </div>
     </div>
-    <div
-      :class="[
-        width === 'auto'
-          ? 'absolute top-10 -z-10'
-          : 'relative z-50',
-        'transition-all w-full h-0'
-      ]"
-      role="menu"
+    <transition
+      enter-active-class="transition-transform ease-in-out"
+      enter-from-class="scale-y-0"
+      enter-to-class="scale-y-100"
+      leave-active-class="transition-transform ease-in-out"
+      leave-from-class="scale-y-100"
+      leave-to-class="scale-y-0"
     >
       <div
-        :class="[
-          width === 'auto'
-            ? 'container px-8 relative mx-auto flex flex-row'
-            : 'h-fit z-50',
-          width === 'auto' && panelOverflow
-            ? 'justify-end'
-            : '',
-          isOpen
-            ? 'scale-y-100 opacity-100'
-            : 'scale-y-0 opacity-0',
-          'transition-all origin-top'
-        ]"
+        v-if="selectedTopLink"
+        :class="{
+          'absolute top-10': width === 'auto',
+        }"
+        class="w-full h-0 z-20"
       >
-        <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
-          v-if="selectedTopLink?.tag !== 'a'"
-          ref="panel"
-          :key="selectedTopLink?.key"
-          :style="[
-            width === 'auto' && !panelOverflow
-              ? `margin-left: ${getLeftPos}px`
-              : '',
-          ]"
-          :class="[
-            selectedTopLink?.selected
-              ? 'z-40 shadow-lg border-b dark:border-gray-800'
-              : 'z-40',
-            width === 'auto'
-              ? 'w-fit'
-              : 'w-full top-0 left-0',
-            panelOverflow
-              ? 'ml-0'
-              : '',
-            'relative text-black dark:text-white bg-white dark:bg-gray-900',
-          ]"
+          role="menu"
+          :class="{
+            'container 2xl:px-12 px-8 relative mx-auto flex flex-row': width === 'auto',
+            'h-fit': width === 'full',
+            'justify-end': width === 'auto' && panelOverflow
+          }"
+          @click.self="onClose(false)"
         >
-          <div class="mx-auto container">
-            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
-            <slot
-              :name="`panel(${selectedTopLink?.key})`"
-              :close="onClose"
-              :item="selectedTopLink ?? null"
-              :content="selectedTopLink?.content"
-            >
+          <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
+          <div
+            v-if="selectedTopLink?.tag !== 'a'"
+            ref="panel"
+            :key="selectedTopLink?.key"
+            :style="{
+              marginLeft: width === 'auto' && !panelOverflow ? `${getLeftPos}px` : 'unset'
+            }"
+            :class="{
+              'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
+              'w-fit border-x rounded-b-lg': width === 'auto',
+              'w-full top-0 left-0': width === 'full',
+              'ml-0': panelOverflow
+            }"
+            class="relative text-black dark:text-white bg-white dark:bg-gray-900"
+          >
+            <div class="mx-auto container">
+              <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
               <slot
+                v-if="selectedTopLink?.selected"
+                :name="`panel(${selectedTopLink.key})`"
                 :close="onClose"
-                :item="selectedTopLink ?? null"
-                :content="selectedTopLink?.content"
-              />
-            </slot>
+                :item="selectedTopLink"
+                :content="selectedTopLink.content"
+              >
+                <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar across all menus. I.e.: `<template #default>...</template>` -->
+                <slot
+                  v-if="selectedTopLink?.selected"
+                  :close="onClose"
+                  :item="selectedTopLink"
+                  :content="selectedTopLink.content"
+                />
+              </slot>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </nav>
   <!-- Overlay used to dim background when "width" property set to full. -->
-  <div
-    :class="[
-      width !== 'auto'
-        ?
-          isOpen
-            ? 'opacity-100 h-screen'
-            : 'opacity-0 h-0'
-        : 'hidden',
-      'transition-opacity duration-500 z-10 mt-auto absolute top-auto left-0 w-full bg-black/50',
-    ]"
-  />
+  <transition
+    enter-active-class="transition-opacity ease-in-out"
+    enter-from-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="transition-opacity ease-in-out"
+    leave-from-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <div
+      v-if="width === 'full' && isOpen"
+      class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
+      :style="{
+        top: `${bottom}px`
+      }"
+    />
+  </transition>
 </template>
 
 <script lang="ts">
@@ -172,7 +178,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, computed, ref, watchEffect } from 'vue'
-import { onClickOutside, onKeyStroke } from '@vueuse/core'
+import { onClickOutside, onKeyStroke, useElementBounding } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -226,7 +232,6 @@ const emits = defineEmits(
     'update:model-value'
   ]
 )
-
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {
@@ -234,84 +239,66 @@ const topLinks = computed({
   },
   /* Set SdsMegaMenu modelValue property */
   set(value: ITopLink[]) {
-    /* Emmitted when the v-model (Mega Menu's data source)
-     * has changed. */
+    /**
+     * Emmitted when the v-model (Mega Menu's data source)
+     * has changed.
+     */
     emits('update:model-value', value)
   }
 })
 
-const focusableList = ref<HTMLElement[]>([]) // Track active panel's focusable elements
-const isOpen = ref(false) // Track mega menu open/closed state
-const panel = ref() // Track active panel
+/* Used to track mega menu open/closed */
+const isOpen = ref(false)
+
+const root = ref()
+const panel = ref()
+
+const { bottom } = useElementBounding(root)
 
 const selectedTopLink = computed(() => {
   const selected = props.modelValue.find(i => i.selected)
   return selected || null
 })
+const focusableList = ref<HTMLElement[]>([])
 
-/* Get the left margin for mega menu panels when the width option is set to 'auto' */
-const getLeftPos = computed(() => {
-  /* If not client-side, return */
+const topLinkEl = computed(() => {
   if (typeof document === "undefined") return null
-
-  let left: number = 0
-  if (selectedTopLink.value) {
-    /* Measure panel left distance off of topLink nav button */
-    const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement
-    /* Using .getBoundingClientRect method gets absolute left,
-     * keeps correct panel positioning even when side panels might open to the left */
-    left = selected.getBoundingClientRect().left - 64
-    /* Use the parent element to define left-most boundary */
-    const parent: HTMLElement = selected?.parentElement!
-    const parentLeftPos = parent.getBoundingClientRect().left
-    left = left - parentLeftPos
-    /* Set the first nav item to "0" left position */
-    if (left < 0) {
-      left = 0
-    }
-  }
-
-  return left
+  return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
 })
 
-/* Detect when a panel is too large to display across the available screen width */
-const panelOverflow = computed(() => {
-  // Right edge of the menu is at or past the right edge of the top nav container ?
-  return (
-    Math.round(panel.value?.getBoundingClientRect().right) >=
-    Math.round((panel.value?.parentElement.getBoundingClientRect().right - 32))
-  ) ? true : false
-})
-
-const onClose = (focusTopLink: boolean = true) => {
-  /* Focus selected top link */
-  const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value?.key}`) as HTMLElement
-  if (focusTopLink)
-    selected?.focus()
-
-  isOpen.value = false
-  /* Set timeout for 1/2-second to wait for isOpen effects. */
-  setTimeout(() => {
-    /* Deselect all mega menu panels. */
-    topLinks.value = topLinks.value.map(i => {
-      i.selected = false
-      return i
-    })
-  }, 200)
-}
-
-const onOpen = (topLink: ITopLink, e: Event, focusTopLink: boolean = true) => {
-  /* Focus selected top link */
-  const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value?.key}`) as HTMLElement
-  if (focusTopLink) selected?.focus()
-
-  /* Set open value to true and set selected top nav item in the modelValue. */
-  isOpen.value = true
+const onClose = (focusTopLink = true) => {
+  if (focusTopLink) topLinkEl.value?.focus()
+  /* Deselect all mega menu panels */
   topLinks.value = topLinks.value.map(i => {
-    i.selected = i.selected ? false : topLink.key === i.key
+    i.selected = false
     return i
   })
+  setOpenValues('close')
 }
+
+/* Close the mega menu when clicking somewhere on the document
+ * outside the mega menu component */
+onClickOutside(root, () => {
+  onClose(false)
+})
+
+/* Close the mega menu when pressing Escape */
+onKeyStroke('Escape', (e) => {
+  if (!isOpen.value) return
+  e.preventDefault()
+  onClose()
+})
+
+watchEffect(() => {
+  focusableList.value = []
+
+  if (panel.value) {
+    const focusable: Array<HTMLElement> = Array.prototype.slice.call(panel.value.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    ));
+    focusableList.value = focusable
+  }
+})
 
 const checkKeyEvent = (event: KeyboardEvent) => {
   if (!panel.value) return;
@@ -356,58 +343,73 @@ const checkKeyEvent = (event: KeyboardEvent) => {
 }
 
 /* Callback run when a topLink of the mega menu is clicked */
-const changeMenuPanel = (topLink: ITopLink, e: Event) => {
-  if (topLink.tag === 'a' || topLink.href) {
+const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
+  if (topLink.tag === 'a' && topLink.href) {
     /* Treat anchor tags as normal links */
-    return
+    return true
   } else {
-    if (e.target.parentElement?.dataset.selected === 'true' && isOpen.value) {
-      /* If clicking the active top nav link, close it */
-      onClose()
+    /* Prevent default and change the active top-level navigation link */
+    event.preventDefault()
+    /* Set the selected menu item, or deselect if already selected */
+    topLinks.value = topLinks.value.map((i) => {
+      i.selected = i.selected ? false : topLink.key === i.key
+      return i
+    })
+
+    setOpenValues()
+  }
+}
+
+const setOpenValues = (toggle: 'close' | null = null) => {
+  if (toggle === 'close') {
+    isOpen.value = false
+  } else {
+    let selected: number = 0
+    topLinks.value.forEach((link) => {
+      if (link.selected) {
+        selected++
+      }
+    })
+
+    if (selected) {
+      isOpen.value = true
     } else {
-      /* Otherwise, handle normal panel opening */
-      onOpen(topLink, e)
+      isOpen.value = false
     }
   }
 }
 
-/* Close the mega menu when clicking somewhere on the document
- * outside the mega menu component */
-onClickOutside(panel, (e: Event) => {
-  /* Ignore click outside of panel element when menu isn't open or click occurs on the top nav bar */
-  if (!isOpen.value) return
-  let clickedNavButton: boolean = false
-  document.querySelectorAll('[data-id="sds-megamenu"] [role="menuitem"]').forEach(navButton => {
-    if (!clickedNavButton) {
-      if (navButton.contains(e.target)) {
-        clickedNavButton = true
-      }
+/* Get the left margin for mega menu panels when the width option is set to 'auto' */
+const getLeftPos = computed(() => {
+  /* If not client-side, return */
+  if (typeof document === "undefined") return null
+
+  let left: number = 0
+  if (selectedTopLink.value) {
+    /* Measure panel left distance off of topLink nav button */
+    const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement
+    /* Using .getBoundingClientRect method gets absolute left,
+     * keeps correct panel positioning even when side panels might open to the left */
+    left = selected.getBoundingClientRect().left - 64
+    /* Use the parent element to define left-most boundary */
+    const parent: HTMLElement = selected?.parentElement!
+    const parentLeftPos = parent.getBoundingClientRect().left
+    left = left - parentLeftPos
+    /* Set the first nav item to "0" left position */
+    if (left < 0) {
+      left = 0
     }
-  })
-  if (clickedNavButton) return
-  /* Otherwise, trigger close event */
-  onClose()
-})
-
-/* Close the mega menu when pressing Escape */
-onKeyStroke('Escape', (e) => {
-  if (!isOpen.value) return
-  onClose()
-})
-
-watchEffect(() => {
-  focusableList.value = []
-
-  if (panel.value) {
-    /* Collect focusable elements from the open panel for use in keyboard navigation. */
-    const focusable: Array<HTMLElement> = Array.prototype.slice.call(panel.value.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    ));
-    focusableList.value = focusable
   }
 
-  /* Prevent an orphan overlay getting left behind when the menu has been closed.
-   * This could previously occur when spam-clicking a nav button open/closed quickly. */
-  if (isOpen.value && !selectedTopLink.value) onClose()
+  return left
+})
+
+/* Detect when a panel is too large to display across the available screen width */
+const panelOverflow = computed(() => {
+  // Right edge of the menu is at or past the right edge of the top nav container ?
+  return (
+    Math.round(panel.value?.getBoundingClientRect().right) >=
+    Math.round((panel.value?.parentElement.getBoundingClientRect().right - 32))
+  ) ? true : false
 })
 </script>

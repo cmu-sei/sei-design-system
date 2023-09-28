@@ -38,7 +38,7 @@
             />
           </svg>
         </div>
-        <p><slot /></p>
+        <p class="text-gray-600 dark:text-gray-500"><slot /></p>
       </div>
     </div>
   </a>
@@ -51,6 +51,10 @@ export default defineComponent({
   name: "SdsMegaMenuItem",
   props: {
     /**
+     * Main MegaMenuItem text content
+     */
+    label: { type: String, default: "" },
+    /**
      * Determines the MegaMenuItem component kind to use.
      */
     kind: {
@@ -58,9 +62,9 @@ export default defineComponent({
       default: "simple",
     },
     /**
-     * Main MegaMenuItem text content
+     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
      */
-    label: { type: String, default: "" },
+    external: { type: Boolean, default: false },
     /**
      * Gives the link a "Call to Action" styling.
      */
@@ -69,10 +73,6 @@ export default defineComponent({
      * Disables the component to prevent user interaction.
      */
     disabled: { type: Boolean, default: false },
-    /**
-     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
-     */
-    external: { type: Boolean, default: false },
   },
   setup(props) {
     const linkClass = computed(() => {

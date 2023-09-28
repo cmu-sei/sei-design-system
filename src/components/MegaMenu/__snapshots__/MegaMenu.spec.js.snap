@@ -10,57 +10,29 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
     data-id="sds-megamenu"
   >
     <div
-      class="z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
+      class="z-30 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
     >
       <div
-        class="flex flex-row px-8 mx-auto container gap-x-8"
+        class="flex flex-row 2xl:px-12 px-8 mx-auto container gap-x-8"
         role="menu"
       >
         
         
       </div>
     </div>
-    <div
-      class="relative z-50 transition-all w-full h-0"
-      role="menu"
-    >
-      <div
-        class="h-fit z-50 scale-y-0 opacity-0 transition-all origin-top"
-      >
-        <div
-          class="z-40 w-full top-0 left-0 relative text-black dark:text-white bg-white dark:bg-gray-900"
-        >
-          <div
-            class="mx-auto container"
-          >
-            
-            
-            
-            
-          </div>
-        </div>
-      </div>
-    </div>
+    <!---->
   </nav>
-  <div
-    class="opacity-0 h-0 transition-opacity duration-500 z-10 mt-auto absolute top-auto left-0 w-full bg-black/50"
-  />
+  <!---->
   
 </div>
 `;
 
 exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
 "<nav data-id=\\"sds-megamenu\\" class=\\"w-full flex flex-col\\">
-  <div class=\\"z-20 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800\\">
-    <div class=\\"flex flex-row px-8 mx-auto container gap-x-8\\" role=\\"menu\\"></div>
+  <div class=\\"z-30 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800\\">
+    <div class=\\"flex flex-row 2xl:px-12 px-8 mx-auto container gap-x-8\\" role=\\"menu\\"></div>
   </div>
-  <div class=\\"relative z-50 transition-all w-full h-0\\" role=\\"menu\\">
-    <div class=\\"h-fit z-50 scale-y-0 opacity-0 transition-all origin-top\\">
-      <div class=\\"z-40 w-full top-0 left-0 relative text-black dark:text-white bg-white dark:bg-gray-900\\">
-        <div class=\\"mx-auto container\\"></div>
-      </div>
-    </div>
-  </div>
+  <!---->
 </nav>
-<div class=\\"opacity-0 h-0 transition-opacity duration-500 z-10 mt-auto absolute top-auto left-0 w-full bg-black/50\\"></div>"
+<!---->"
 `;
