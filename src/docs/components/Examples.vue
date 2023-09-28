@@ -26,7 +26,7 @@
       <SdsInput count-characters />
     </div>
     <p>MegaMenu</p>
-    <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
+    <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu"
         kind="block"
@@ -403,7 +403,7 @@
         </template>
       </SdsMegaMenu>
     </div>
-    <div class="my-10 -ml-4 -mr-4 sticky top-0 z-50">
+    <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
         width="auto"
