@@ -4,7 +4,7 @@
     data-id="sds-megamenu"
     class="w-full flex flex-col"
     :class="{
-      'relative': width === 'full'
+      'relative': width === 'auto'
     }"
     @keydown="checkKeyEvent"
   >
