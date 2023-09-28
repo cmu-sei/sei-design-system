@@ -9,13 +9,10 @@
     @keydown="checkKeyEvent"
   >
     <div
-      class="w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
-      :class="{
-        'z-20': isOpen
-      }"
+      class="z-30 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
     >
       <div
-        class="flex flex-row px-8 mx-auto container"
+        class="flex flex-row 2xl:px-12 px-8 mx-auto container"
         :class="{
           'gap-x-8': kind === 'underline',
         }"
@@ -94,7 +91,7 @@
         <div
           role="menu"
           :class="{
-            'container px-8 relative mx-auto flex flex-row': width === 'auto',
+            'container 2xl:px-12 px-8 relative mx-auto flex flex-row': width === 'auto',
             'h-fit': width === 'full',
             'justify-end': width === 'auto' && panelOverflow
           }"
@@ -110,7 +107,7 @@
             }"
             :class="{
               'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-              'w-fit border-t-2 border-x rounded-b-lg': width === 'auto',
+              'w-fit border-x rounded-b-lg': width === 'auto',
               'w-full top-0 left-0': width === 'full',
               'ml-0': panelOverflow
             }"
