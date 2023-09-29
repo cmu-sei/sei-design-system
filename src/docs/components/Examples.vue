@@ -42,6 +42,7 @@
             width="24"
             height="24"
             viewBox="0 0 24 24"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -226,6 +227,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -391,7 +393,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path
@@ -488,6 +490,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -596,7 +599,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path

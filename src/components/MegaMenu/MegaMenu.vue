@@ -2,19 +2,17 @@
   <nav
     ref="root"
     data-id="sds-megamenu"
-    class="w-full flex flex-col"
-    :class="{
-      'relative': width === 'auto'
-    }"
+    class="relative w-full flex flex-col border-b-2 dark:border-gray-800"
     @keydown="checkKeyEvent"
   >
     <div
-      class="z-30 w-full border-b-2 text-black dark:text-white bg-white dark:bg-gray-900 dark:border-gray-800"
+      class="w-full text-black dark:text-white container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
     >
       <div
-        class="flex flex-row px-8 mx-auto container"
+        ref="menu"
+        class="flex flex-row"
         :class="{
-          'gap-x-8': kind === 'underline',
+          'gap-x-4 xl:gap-x-8': kind === 'underline',
         }"
         role="menu"
       >
@@ -33,7 +31,7 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-4 dark:border-gray-800': kind === 'block',
+            'px-3 xl:px-4 dark:border-gray-800': kind === 'block',
             'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
             'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
             'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
@@ -43,7 +41,7 @@
             'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           role="menuitem"
-          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0"
+          class="flex items-center gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -60,7 +58,7 @@
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
-              class="relative inline-block w-5 h-5 transition-transform"
+              class="relative inline-block w-4 h-4 transition-transform"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
               fill="currentColor"
@@ -74,63 +72,52 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out"
+      enter-active-class="transition-transform ease-in-out origin-top"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out"
+      leave-active-class="transition-transform ease-in-out origin-top"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
       <div
         v-if="selectedTopLink"
-        :class="{
-          'absolute top-10': width === 'auto',
-        }"
-        class="w-full h-0 z-20"
+        role="menu"
+        class="z-20"
+        @click.self="onClose(false)"
       >
+        <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
         <div
-          role="menu"
-          :class="{
-            'container px-8 relative mx-auto flex flex-row': width === 'auto',
-            'h-fit': width === 'full',
-            'justify-end': width === 'auto' && panelOverflow
+          v-if="selectedTopLink?.tag !== 'a'"
+          ref="panel"
+          :key="selectedTopLink?.key"
+          :style="{
+            left: getLeftPos,
+            right: getRightPos
           }"
-          @click.self="onClose(false)"
+          :class="{
+            'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
+            'w-fit border-x rounded-b-lg': width === 'auto',
+            'w-full': width === 'full'
+          }"
+          class="absolute text-black dark:text-white bg-white dark:bg-gray-900 mt-0.5"
         >
-          <!-- Use anchor tag for links and "button" tag for top-level menu links that trigger panel toggling -->
-          <div
-            v-if="selectedTopLink?.tag !== 'a'"
-            ref="panel"
-            :key="selectedTopLink?.key"
-            :style="{
-              marginLeft: width === 'auto' && !panelOverflow ? `${getLeftPos}px` : 'unset'
-            }"
-            :class="{
-              'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-              'w-fit border-x rounded-b-lg': width === 'auto',
-              'w-full top-0 left-0': width === 'full',
-              'ml-0': panelOverflow
-            }"
-            class="relative text-black dark:text-white bg-white dark:bg-gray-900"
-          >
-            <div class="mx-auto container">
-              <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
+          <div>
+            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
+            <slot
+              v-if="selectedTopLink?.selected"
+              :name="`panel(${selectedTopLink.key})`"
+              :close="onClose"
+              :item="selectedTopLink"
+              :content="selectedTopLink.content"
+            >
+              <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar across all menus. I.e.: `<template #default>...</template>` -->
               <slot
                 v-if="selectedTopLink?.selected"
-                :name="`panel(${selectedTopLink.key})`"
                 :close="onClose"
                 :item="selectedTopLink"
                 :content="selectedTopLink.content"
-              >
-                <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar across all menus. I.e.: `<template #default>...</template>` -->
-                <slot
-                  v-if="selectedTopLink?.selected"
-                  :close="onClose"
-                  :item="selectedTopLink"
-                  :content="selectedTopLink.content"
-                />
-              </slot>
-            </div>
+              />
+            </slot>
           </div>
         </div>
       </div>
@@ -149,7 +136,7 @@
       v-if="width === 'full' && isOpen"
       class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
       :style="{
-        top: `${bottom}px`
+        top: `${rootBottom}px`
       }"
     />
   </transition>
@@ -177,8 +164,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { PropType, computed, ref, watchEffect } from 'vue'
-import { onClickOutside, onKeyStroke, useElementBounding } from '@vueuse/core'
+import { PropType, computed, ref, watch, watchEffect } from 'vue'
+import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -251,9 +238,8 @@ const topLinks = computed({
 const isOpen = ref(false)
 
 const root = ref()
+const menu = ref()
 const panel = ref()
-
-const { bottom } = useElementBounding(root)
 
 const selectedTopLink = computed(() => {
   const selected = props.modelValue.find(i => i.selected)
@@ -265,6 +251,10 @@ const topLinkEl = computed(() => {
   if (typeof document === "undefined") return null
   return selectedTopLink.value ? document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement : null
 })
+
+const { bottom: rootBottom } = useElementBounding(root)
+const { right: menuRight } = useElementBounding(menu)
+const { right: panelRight } = useElementBounding(panel)
 
 const onClose = (focusTopLink = true) => {
   if (focusTopLink) topLinkEl.value?.focus()
@@ -279,6 +269,10 @@ const onClose = (focusTopLink = true) => {
 /* Close the mega menu when clicking somewhere on the document
  * outside the mega menu component */
 onClickOutside(root, () => {
+  onClose(false)
+})
+
+useResizeObserver(root, () => {
   onClose(false)
 })
 
@@ -379,37 +373,41 @@ const setOpenValues = (toggle: 'close' | null = null) => {
   }
 }
 
-/* Get the left margin for mega menu panels when the width option is set to 'auto' */
-const getLeftPos = computed(() => {
-  /* If not client-side, return */
-  if (typeof document === "undefined") return null
-
-  let left: number = 0
-  if (selectedTopLink.value) {
-    /* Measure panel left distance off of topLink nav button */
-    const selected: HTMLElement = document.querySelector(`#sds-megamenu__top-link_${selectedTopLink.value.key}`) as HTMLElement
-    /* Using .getBoundingClientRect method gets absolute left,
-     * keeps correct panel positioning even when side panels might open to the left */
-    left = selected.getBoundingClientRect().left - 64
-    /* Use the parent element to define left-most boundary */
-    const parent: HTMLElement = selected?.parentElement!
-    const parentLeftPos = parent.getBoundingClientRect().left
-    left = left - parentLeftPos
-    /* Set the first nav item to "0" left position */
-    if (left < 0) {
-      left = 0
-    }
+/**
+ * Detect when a panel is too large to display across the available screen width
+ **/
+const panelOverflow = computed(() => {
+  if (panel.value && menu.value) {
+    // Right edge of the menu is at or past the right edge of the top nav container?
+    return (
+      panelRight.value >= menuRight.value
+    ) ? true : false
   }
-
-  return left
+  return false
 })
 
-/* Detect when a panel is too large to display across the available screen width */
-const panelOverflow = computed(() => {
-  // Right edge of the menu is at or past the right edge of the top nav container ?
-  return (
-    Math.round(panel.value?.getBoundingClientRect().right) >=
-    Math.round((panel.value?.parentElement.getBoundingClientRect().right - 32))
-  ) ? true : false
+/**
+ * Position the panel on the screen
+ */
+
+const getLeftPos = ref()
+const getRightPos = ref()
+
+watch(topLinkEl, (value) => {
+  if (props.width === 'full') {
+    getLeftPos.value = undefined
+    getRightPos.value = undefined
+  } else if (props.width === 'auto') {
+    getLeftPos.value = `${value?.offsetLeft || 0}px`
+    getRightPos.value = undefined
+  }
+}, { deep: true })
+
+watch(panelOverflow, (value) => {
+  if (props.width === 'full') return
+  if (value) {
+    getLeftPos.value = undefined
+    getRightPos.value = `${menu.value?.offsetLeft || 0}px`
+  }
 })
 </script>
