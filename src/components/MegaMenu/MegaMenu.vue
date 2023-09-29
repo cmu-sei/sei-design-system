@@ -96,12 +96,12 @@
           }"
           :class="{
             'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-            'w-fit border-x rounded-b-lg': width === 'auto',
+            'border-x rounded-b-lg': width === 'auto',
             'w-full': width === 'full'
           }"
           class="absolute text-black dark:text-white bg-white dark:bg-gray-900 mt-0.5"
         >
-          <div>
+          <div class="p-4">
             <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
             <slot
               v-if="selectedTopLink?.selected"
@@ -402,7 +402,7 @@ const getLeftPos = ref()
 const getRightPos = ref()
 const offset = computed(() => {
   if (breakpoints.smaller('xl').value) {
-    return 12
+    return 16
   }
   return 32
 })
