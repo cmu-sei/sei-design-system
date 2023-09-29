@@ -27,10 +27,7 @@
     </div>
     <p>MegaMenu</p>
     <div class="my-10">
-      <SdsMegaMenu
-        v-model="megaMenu"
-        kind="block"
-      >
+      <SdsMegaMenu v-model="megaMenu">
         <template #default="{ topLink, content }">
           {{ topLink }}
           {{ content }}
@@ -400,6 +397,7 @@
     <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
+        kind="block"
         width="auto"
       >
         <template #panel(about-1)="{ content }">
