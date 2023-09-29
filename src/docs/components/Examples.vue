@@ -2586,9 +2586,12 @@ export default defineComponent({
         },
         {
           key: "darkMode",
+          tag: "a",
+          href: "#",
           title: "Dark Mode",
           alignment: "right",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
@@ -3047,8 +3050,10 @@ export default defineComponent({
         {
           key: "darkMode-1",
           tag: "a",
+          href: "#",
           title: "Dark Mode",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }

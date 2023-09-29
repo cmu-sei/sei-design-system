@@ -2,7 +2,7 @@
   <nav
     ref="root"
     data-id="sds-megamenu"
-    class="relative w-full flex flex-col border-b-2 dark:border-gray-800"
+    class="relative w-full flex flex-col border-b-2 bg-white dark:bg-gray-900 dark:border-gray-800"
     @keydown="checkKeyEvent"
   >
     <div
@@ -165,7 +165,7 @@ export default {
 
 <script setup lang="ts">
 import { PropType, computed, ref, watch, watchEffect } from 'vue'
-import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver } from '@vueuse/core'
+import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 const props = defineProps({
   /**
@@ -266,17 +266,24 @@ const onClose = (focusTopLink = true) => {
   setOpenValues('close')
 }
 
-/* Close the mega menu when clicking somewhere on the document
- * outside the mega menu component */
+/**
+ * Close the mega menu when clicking somewhere on the document
+ * outside the mega menu component
+ **/
 onClickOutside(root, () => {
   onClose(false)
 })
 
+/**
+ * Close the mega menu when resizing on the document
+ **/
 useResizeObserver(root, () => {
   onClose(false)
 })
 
-/* Close the mega menu when pressing Escape */
+/**
+ * Close the mega menu when pressing Escape
+ **/
 onKeyStroke('Escape', (e) => {
   if (!isOpen.value) return
   e.preventDefault()
@@ -285,7 +292,6 @@ onKeyStroke('Escape', (e) => {
 
 watchEffect(() => {
   focusableList.value = []
-
   if (panel.value) {
     const focusable: Array<HTMLElement> = Array.prototype.slice.call(panel.value.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -336,7 +342,9 @@ const checkKeyEvent = (event: KeyboardEvent) => {
   }
 }
 
-/* Callback run when a topLink of the mega menu is clicked */
+/**
+ * Callback run when a topLink of the mega menu is clicked
+ **/
 const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
   if (topLink.tag === 'a' && topLink.href) {
     /* Treat anchor tags as normal links */
@@ -389,16 +397,24 @@ const panelOverflow = computed(() => {
 /**
  * Position the panel on the screen
  */
-
+const breakpoints = useBreakpoints(breakpointsTailwind)
 const getLeftPos = ref()
 const getRightPos = ref()
+const offset = computed(() => {
+  if (breakpoints.smaller('xl').value) {
+    return 12
+  }
+  return 32
+})
 
 watch(topLinkEl, (value) => {
   if (props.width === 'full') {
     getLeftPos.value = undefined
     getRightPos.value = undefined
   } else if (props.width === 'auto') {
-    getLeftPos.value = `${value?.offsetLeft || 0}px`
+    const left = value?.offsetLeft || 0
+    const useOffset = (value?.offsetLeft || 0) - menu.value?.offsetLeft - offset.value > 0
+    getLeftPos.value = `${useOffset ? left - offset.value : left}px`
     getRightPos.value = undefined
   }
 }, { deep: true })
