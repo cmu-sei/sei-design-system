@@ -42,6 +42,7 @@
             width="24"
             height="24"
             viewBox="0 0 24 24"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -226,6 +227,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -391,7 +393,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path
@@ -488,6 +490,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -596,7 +599,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path
@@ -2583,9 +2586,12 @@ export default defineComponent({
         },
         {
           key: "darkMode",
+          tag: "a",
+          href: "#",
           title: "Dark Mode",
           alignment: "right",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
@@ -3044,8 +3050,10 @@ export default defineComponent({
         {
           key: "darkMode-1",
           tag: "a",
+          href: "#",
           title: "Dark Mode",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
