@@ -2,19 +2,25 @@
   <nav
     ref="root"
     data-id="sds-megamenu"
-    class="relative w-full flex flex-col border-b-2 bg-white dark:bg-gray-900 dark:border-gray-800"
+    class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 dark:border-gray-800"
+    :class="{
+      'z-20': isOpen
+    }"
     @keydown="checkKeyEvent"
+    @click.self="onClose(false)"
   >
     <div
       class="w-full text-black dark:text-white container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
+      @click.self="onClose(false)"
     >
       <div
         ref="menu"
         class="flex flex-row"
         :class="{
-          'gap-x-4 xl:gap-x-8': kind === 'underline',
+          'gap-4 xl:gap-8': kind === 'underline',
         }"
         role="menu"
+        @click.self="onClose(false)"
       >
         <component
           :is="topLink.tag ? topLink.tag : 'button'"
@@ -28,6 +34,8 @@
           :data-id="`sds-megamenu_${topLink.key}`"
           :data-selected="topLink.selected"
           :class="{
+            'z-30': topLink.selected,
+            'hover:z-30': !topLink.selected,
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
@@ -72,10 +80,10 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out origin-top"
+      enter-active-class="transition-transform ease-in-out origin-top duration-75"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out origin-top"
+      leave-active-class="transition-transform ease-in-out origin-top duration-75"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
@@ -95,11 +103,11 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-            'border-x rounded-b-lg': width === 'auto',
+            'shadow-lg rounded-b-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
+            'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
-          class="absolute text-black dark:text-white bg-white dark:bg-gray-900 mt-0.5"
+          class="absolute text-black dark:text-white bg-white dark:bg-gray-900"
         >
           <div class="p-4">
             <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
@@ -125,10 +133,10 @@
   </nav>
   <!-- Overlay used to dim background when "width" property set to full. -->
   <transition
-    enter-active-class="transition-opacity ease-in-out"
+    enter-active-class="transition-opacity ease-in-out duration-150"
     enter-from-class="opacity-0"
     enter-to-class="opacity-100"
-    leave-active-class="transition-opacity ease-in-out"
+    leave-active-class="transition-opacity ease-in-out duration-150"
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
