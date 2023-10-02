@@ -27,10 +27,7 @@
     </div>
     <p>MegaMenu</p>
     <div class="my-10">
-      <SdsMegaMenu
-        v-model="megaMenu"
-        kind="block"
-      >
+      <SdsMegaMenu v-model="megaMenu">
         <template #default="{ topLink, content }">
           {{ topLink }}
           {{ content }}
@@ -42,6 +39,7 @@
             width="24"
             height="24"
             viewBox="0 0 24 24"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -51,10 +49,10 @@
           <span class="sr-only">Home</span>
         </template>
         <template #panel(about)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+          <div class="grid grid-cols-3 gap-2">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-2">
-                <div class="col-span-2 px-8">
+                <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.aboutLink.label"
                     :kind="content.aboutLink.kind"
@@ -64,20 +62,18 @@
                 <div
                   v-for="row, index in content.aboutRows"
                   :key="index"
-                  class="-mt-6"
                 >
                   <div
                     v-for="link in row"
                     :key="link.key"
-                    class="mb-4"
                   >
-                    <div class="col-span-1 px-8">
+                    <div class="col-span-1">
                       <SdsMegaMenuItem
                         :label="link.label"
                         :kind="link.kind"
                         :href="link.href"
                       >
-                        <p class="text-sm mt-2">
+                        <p class="text-sm">
                           {{ link.description }}
                         </p>
                       </SdsMegaMenuItem>
@@ -86,7 +82,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.divisionLink.label"
                 :kind="content.divisionLink.kind"
@@ -105,10 +101,10 @@
           </div>
         </template>
         <template #panel(research-and-development)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
+          <div class="grid grid-cols-3 gap-2">
             <div class="col-span-2">
-              <div class="grid grid-cols-2 gap-x-2">
-                <div class="col-span-2 px-8">
+              <div class="grid grid-cols-2 gap-2">
+                <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.topicsLink.label"
                     :kind="content.topicsLink.kind"
@@ -122,7 +118,7 @@
                   <div
                     v-for="topic in column"
                     :key="topic.key"
-                    class="col-span-1 px-8"
+                    class="col-span-1"
                   >
                     <SdsMegaMenuItem
                       :label="topic.title"
@@ -132,11 +128,10 @@
                 </template>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <div
                 v-for="item in content.extra"
                 :key="item.key"
-                class="mb-4"
               >
                 <SdsMegaMenuItem
                   :cta="item.cta ?? false"
@@ -144,7 +139,7 @@
                   :kind="item.kind"
                   :href="item.href"
                 >
-                  <p class="text-sm mt-2">
+                  <p class="text-sm">
                     {{ item.description }}
                   </p>
                 </SdsMegaMenuItem>
@@ -153,8 +148,8 @@
           </div>
         </template>
         <template #panel(publications-and-media)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-1 px-8">
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-1">
               <div
                 v-for="item in content.links"
                 :key="item.key"
@@ -166,7 +161,7 @@
                 />
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 label="Blog"
                 kind="landing-page"
@@ -180,10 +175,9 @@
                 <SdsMegaMenuItem
                   :label="blogPost.title"
                   kind="descriptive"
-                  :class="[blogPost.key === 0 ? '-mt-4' : '']"
                   href="https://sei.cmu.edu/publications/software-tools/index.cfm"
                 >
-                  <p class="uppercase text-xs mt-2">
+                  <p class="uppercase text-xs">
                     <span>{{ blogPost.published }}</span>
                     <span> • </span>
                     <span>{{ blogPost.author }}</span>
@@ -191,7 +185,7 @@
                 </SdsMegaMenuItem>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 label="News"
                 kind="landing-page"
@@ -200,12 +194,10 @@
               <SdsMegaMenuItem
                 label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
                 kind="descriptive"
-                class="-mt-4"
                 href="https://sei.cmu.edu/news/index.cfm"
               >
                 <template #top>
                   <img
-                    class="mb-4"
                     src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
                   >
                 </template>
@@ -226,6 +218,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -235,28 +228,27 @@
           <span class="sr-only">Education</span>
         </template>
         <template #panel(education)="{ content, close }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-1 px-8">
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-1">
               <div
-                v-for="educationLink, index in content.educationLinks"
+                v-for="educationLink in content.educationLinks"
                 :key="educationLink.key"
               >
                 <SdsMegaMenuItem
-                  :class="[index === 1 ? '-mt-4' : '', 'mb-2']"
                   :href="educationLink.href"
                   :label="educationLink.label"
                   :kind="educationLink.kind"
                 >
                   <p
                     v-if="educationLink.description"
-                    class="text-sm mt-2"
+                    class="text-sm"
                   >
                     {{ educationLink.description }}
                   </p>
                 </SdsMegaMenuItem>
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <div
                 v-for="training in content.trainings"
                 :key="training.key"
@@ -268,18 +260,18 @@
                 />
               </div>
             </div>
-            <div class="col-span-1 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.eventLink.label"
                 :kind="content.eventLink.kind"
                 :href="content.eventLink.href"
               />
               <div
-                v-for="event, index in content.events"
+                v-for="event in content.events"
                 :key="event.key"
               >
                 <SdsMegaMenuItem
-                  :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
+                  class="group"
                   :href="event.href"
                   :label="event.label"
                   :kind="event.kind"
@@ -295,7 +287,7 @@
                     </div>
                   </template>
                   <template #default>
-                    <p class="uppercase font-semibold text-xs mb-2">
+                    <p class="uppercase font-semibold text-xs">
                       {{ event.dateRange }}
                     </p>
                     <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
@@ -327,33 +319,32 @@
           </div>
         </template>
         <template #panel(careers)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 py-8 -mx-4">
-            <div class="col-span-1 px-8">
+          <div class="grid grid-cols-3 gap-2">
+            <div class="col-span-1">
               <SdsMegaMenuItem
                 :href="content.careersLink.href"
                 :label="content.careersLink.label"
                 :kind="content.careersLink.kind"
               />
               <div
-                v-for="careerLink, index in content.careersLinks"
+                v-for="careerLink in content.careersLinks"
                 :key="careerLink.key"
               >
                 <SdsMegaMenuItem
-                  :class="[index === 0 ? '-mt-4' : '', 'mb-2']"
                   :href="careerLink.href"
                   :label="careerLink.label"
                   :kind="careerLink.kind"
                 >
                   <p
                     v-if="careerLink.description"
-                    class="text-xs mt-2"
+                    class="text-xs"
                   >
                     {{ careerLink.description }}
                   </p>
                 </SdsMegaMenuItem>
               </div>
             </div>
-            <div class="col-span-2 border-l dark:border-l-gray-800 px-8">
+            <div class="col-span-2 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :href="content.jobsLink.href"
                 :label="content.jobsLink.label"
@@ -362,7 +353,7 @@
               <div
                 v-for="row, index in content.jobs"
                 :key="index"
-                :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
+                class="grid grid-cols-2 gap-4"
               >
                 <div
                   v-for="job in row"
@@ -391,7 +382,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path
@@ -406,79 +397,68 @@
     <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
+        kind="block"
         width="auto"
       >
         <template #panel(about-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
-            <div class="col-span-3 px-8">
-              <SdsMegaMenuItem
-                :label="content.divisionLink.label"
-                :kind="content.divisionLink.kind"
-                :href="content.divisionLink.href"
-                class="select-none"
-              />
-              <div
-                v-for="division in content.divisionRows"
-                :key="division.key"
-              >
-                <SdsMegaMenuItem
-                  :label="division.label"
-                  :href="division.href"
-                />
-              </div>
-            </div>
+          <SdsMegaMenuItem
+            :label="content.divisionLink.label"
+            :kind="content.divisionLink.kind"
+            :href="content.divisionLink.href"
+            class="select-none"
+          />
+          <div
+            v-for="division in content.divisionRows"
+            :key="division.key"
+          >
+            <SdsMegaMenuItem
+              :label="division.label"
+              :href="division.href"
+            />
           </div>
         </template>
         <template #panel(research-and-development-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
-            <div class="col-span-3 px-8">
-              <div
-                v-for="item in content.extra"
-                :key="item.key"
-                class="mb-4 max-w-sm"
-              >
-                <SdsMegaMenuItem
-                  :cta="item.cta ?? false"
-                  :label="item.label"
-                  :kind="item.kind"
-                  :href="item.href"
-                >
-                  <p class="text-sm mt-2">
-                    {{ item.description }}
-                  </p>
-                </SdsMegaMenuItem>
-              </div>
-            </div>
+          <div
+            v-for="item in content.extra"
+            :key="item.key"
+            class="max-w-sm"
+          >
+            <SdsMegaMenuItem
+              :cta="item.cta ?? false"
+              :label="item.label"
+              :kind="item.kind"
+              :href="item.href"
+            >
+              <p class="text-sm">
+                {{ item.description }}
+              </p>
+            </SdsMegaMenuItem>
           </div>
         </template>
         <template #panel(publications-and-media-1)>
-          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
-            <div class="col-span-3 px-8 max-w-sm">
-              <SdsMegaMenuItem
-                label="News"
-                kind="landing-page"
-                href="https://sei.cmu.edu/our-work/projects/index.cfm"
-              />
-              <SdsMegaMenuItem
-                label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                kind="descriptive"
-                class="-mt-4"
-                href="https://sei.cmu.edu/news/index.cfm"
-              >
-                <template #top>
-                  <img
-                    class="mb-4"
-                    src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                  >
-                </template>
-                <template #default>
-                  <p class="uppercase">
-                    <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
-                    <span class="text-xs">event</span>
-                  </p>
-                </template>
-              </SdsMegaMenuItem>
-            </div>
+          <div class="max-w-sm">
+            <SdsMegaMenuItem
+              label="News"
+              kind="landing-page"
+              href="https://sei.cmu.edu/our-work/projects/index.cfm"
+            />
+            <SdsMegaMenuItem
+              label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
+              kind="descriptive"
+              href="https://sei.cmu.edu/news/index.cfm"
+            >
+              <template #top>
+                <img
+                  src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
+                >
+              </template>
+              <template #default>
+                <p class="uppercase">
+                  <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
+                  <span class="text-xs">event</span>
+                </p>
+              </template>
+            </SdsMegaMenuItem>
           </div>
         </template>
         <template #link(education-1)>
@@ -488,6 +468,7 @@
             width="24"
             height="24"
             viewBox="0 0 512 512"
+            class="h-5 w-5"
           >
             <path
               fill="currentColor"
@@ -497,43 +478,40 @@
           <span class="sr-only">Education</span>
         </template>
         <template #panel(education-1)="{ content, close }">
-          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4 max-w-fit">
-            <div class="col-span-3 px-8 max-w-lg">
+          <div class="max-w-lg">
+            <SdsMegaMenuItem
+              :label="content.eventLink.label"
+              :kind="content.eventLink.kind"
+              :href="content.eventLink.href"
+            />
+            <div
+              v-for="event in content.events"
+              :key="event.key"
+            >
               <SdsMegaMenuItem
-                :label="content.eventLink.label"
-                :kind="content.eventLink.kind"
-                :href="content.eventLink.href"
-              />
-              <div
-                v-for="event, index in content.events"
-                :key="event.key"
+                :href="event.href"
+                :label="event.label"
+                :kind="event.kind"
               >
-                <SdsMegaMenuItem
-                  :class="[index === 0 ? '-mt-4' : '', 'group mb-2']"
-                  :href="event.href"
-                  :label="event.label"
-                  :kind="event.kind"
-                >
-                  <template #left>
-                    <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
-                      <div class="font-bold uppercase">
-                        {{ event.month }}
-                      </div>
-                      <div class="font-semibold text-sm">
-                        {{ event.startDay }}
-                      </div>
+                <template #left>
+                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                    <div class="font-bold uppercase">
+                      {{ event.month }}
                     </div>
-                  </template>
-                  <template #default>
-                    <p class="uppercase font-semibold text-xs mb-2">
-                      {{ event.dateRange }}
-                    </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden overflow-ellipsis">
-                      {{ event.description }}
-                    </p>
-                  </template>
-                </SdsMegaMenuItem>
-              </div>
+                    <div class="font-semibold text-sm">
+                      {{ event.startDay }}
+                    </div>
+                  </div>
+                </template>
+                <template #default>
+                  <p class="uppercase font-semibold text-xs">
+                    {{ event.dateRange }}
+                  </p>
+                  <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden overflow-ellipsis">
+                    {{ event.description }}
+                  </p>
+                </template>
+              </SdsMegaMenuItem>
             </div>
             <SdsButton
               kind="danger"
@@ -557,36 +535,32 @@
           </div>
         </template>
         <template #panel(careers-1)="{ content }">
-          <div class="grid grid-cols-3 gap-x-2 pt-8 pb-4 -mx-4">
-            <div class="col-span-3 px-8 max-w-fit">
+          <SdsMegaMenuItem
+            :href="content.jobsLink.href"
+            :label="content.jobsLink.label"
+            :kind="content.jobsLink.kind"
+          />
+          <div
+            v-for="row, index in content.jobs"
+            :key="index"
+            class="grid grid-cols-2 gap-4"
+          >
+            <div
+              v-for="job in row"
+              :key="job.key"
+              class="col-span-1"
+            >
               <SdsMegaMenuItem
-                :href="content.jobsLink.href"
-                :label="content.jobsLink.label"
-                :kind="content.jobsLink.kind"
-              />
-              <div
-                v-for="row, index in content.jobs"
-                :key="index"
-                :class="[index === 0 ? '-mt-4' : '', 'grid grid-cols-2 mb-2 gap-x-4']"
+                :href="job.href"
+                :label="job.label"
+                :kind="job.kind"
               >
-                <div
-                  v-for="job in row"
-                  :key="job.key"
-                  class="col-span-1"
-                >
-                  <SdsMegaMenuItem
-                    :href="job.href"
-                    :label="job.label"
-                    :kind="job.kind"
-                  >
-                    <p class="text-xs">
-                      <span>Posted {{ job.posted }}</span>
-                      <span> • </span>
-                      <span>{{ job.locations }}</span>
-                    </p>
-                  </SdsMegaMenuItem>
-                </div>
-              </div>
+                <p class="text-xs">
+                  <span>Posted {{ job.posted }}</span>
+                  <span> • </span>
+                  <span>{{ job.locations }}</span>
+                </p>
+              </SdsMegaMenuItem>
             </div>
           </div>
         </template>
@@ -596,7 +570,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            class="p-1"
+            class="h-5 w-4"
             viewBox="0 0 512 512"
           >
             <path
@@ -2583,9 +2557,12 @@ export default defineComponent({
         },
         {
           key: "darkMode",
+          tag: "a",
+          href: "#",
           title: "Dark Mode",
           alignment: "right",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
@@ -3044,8 +3021,10 @@ export default defineComponent({
         {
           key: "darkMode-1",
           tag: "a",
+          href: "#",
           title: "Dark Mode",
-          onClick: () => {
+          onClick: (link: any, event: any) => {
+            event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
