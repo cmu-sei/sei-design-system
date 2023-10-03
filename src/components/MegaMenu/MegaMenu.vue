@@ -111,7 +111,7 @@
         >
           <div
             :class="{
-              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl px-8 2xl:px-12': width === 'full',
+              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
               'p-4 xl:px-8': width === 'auto'
             }"
           >
