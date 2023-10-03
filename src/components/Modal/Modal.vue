@@ -52,7 +52,7 @@
                 mx-auto
                 bg-white
                 border
-                rounded
+                rounded-lg
                 shadow-xl
                 dark:bg-gray-900 dark:border-gray-700
                 md:my-8

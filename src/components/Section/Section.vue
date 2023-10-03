@@ -4,7 +4,7 @@
     class="block bg-white dark:bg-gray-900"
     :class="{
       border: type === 'simple' || type === 'raised',
-      'shadow border rounded': type === 'raised',
+      'shadow border rounded-lg': type === 'raised',
     }"
   >
     <header

@@ -103,13 +103,18 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg rounded-b-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-            'border-x': width === 'auto',
+            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
+            'border-x rounded-b-lg': width === 'auto',
             'w-full': width === 'full'
           }"
           class="absolute text-black dark:text-white bg-white dark:bg-gray-900"
         >
-          <div class="p-4">
+          <div
+            :class="{
+              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl': width === 'full'
+            }"
+            class="p-4 xl:px-8"
+          >
             <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
             <slot
               v-if="selectedTopLink?.selected"

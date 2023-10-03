@@ -53,7 +53,7 @@
             'right-0 rounded-r-none': side === 'right',
             'left-0 rounded-l-none': side === 'left'
           }"
-          class="fixed flex flex-col inset-y-0 w-full bg-white overflow-y-scroll border rounded shadow-xl dark:bg-gray-900 dark:border-gray-700"
+          class="fixed flex flex-col inset-y-0 w-full bg-white overflow-y-scroll border rounded-lg shadow-xl dark:bg-gray-900 dark:border-gray-700"
           @keydown="checkKeyEvent"
         >
           <header class="flex items-center p-6 pb-0">
