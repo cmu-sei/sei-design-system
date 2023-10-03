@@ -66,7 +66,7 @@
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
-              class="mt-0.5 relative inline-block w-4 h-4 transition-transform"
+              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-150"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
               fill="currentColor"
@@ -80,10 +80,10 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out origin-top duration-75"
+      enter-active-class="transition-transform ease-in-out origin-top duration-150"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out origin-top duration-75"
+      leave-active-class="transition-transform ease-in-out origin-top duration-200"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
