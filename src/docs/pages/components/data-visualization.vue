@@ -4,13 +4,23 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div>
-        <SdsAvatar
-          shape="circle"
-          variant="gray"
-          size="lg"
-          name="John Smith"
-        />
+      <div class="grid gap-4">
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="gray"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="portrait"
+            variant="gray"
+            size="md"
+            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+          />
+        </div>
       </div>
     </div>
     <div class="grid gap-4">

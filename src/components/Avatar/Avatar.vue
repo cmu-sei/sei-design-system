@@ -73,6 +73,7 @@ const props = defineProps({
     default: ''
   }
 })
+
 const positionClass = computed(() => {
   switch(props.position) {
     case 'bottom':
@@ -88,6 +89,7 @@ const positionClass = computed(() => {
       return 'bg-center'
   }
 })
+
 const sizeClass = computed(() => {
   if (props.shape === 'circle') {
     switch (props.size) {
@@ -114,6 +116,7 @@ const sizeClass = computed(() => {
   }
   return 'w-full'
 })
+
 const textClass = computed(() => {
   if (props.size === 'lg') {
     return 'text-6xl font-light'
@@ -125,6 +128,7 @@ const textClass = computed(() => {
   return 'text-2xl'
 
 })
+
 const shapeClass = computed(() => {
   if (props.shape === 'circle') {
     return 'rounded-full aspect-square'
@@ -141,6 +145,7 @@ const variantClass = computed(() => {
     return colorOptions[randomNumber]
   }
 })
+
 const initials = computed(() => {
   if (!props.name) {
     return
