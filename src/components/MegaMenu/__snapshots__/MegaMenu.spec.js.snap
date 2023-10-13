@@ -20,9 +20,10 @@ exports[`MegaMenu.vue > matches snapshot 1`] = `
         
       </div>
     </div>
-    <!---->
+    <!--v-if-->
   </nav>
-  <!---->
+  <!-- Overlay used to dim background when "width" property set to full. -->
+  <!--v-if-->
   
 </div>
 `;
@@ -32,7 +33,8 @@ exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
   <div class=\\"w-full text-black dark:text-white container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl\\">
     <div class=\\"flex flex-row gap-4 xl:gap-8\\" role=\\"menu\\"></div>
   </div>
-  <!---->
+  <!--v-if-->
 </nav>
-<!---->"
+<!-- Overlay used to dim background when \\"width\\" property set to full. -->
+<!--v-if-->"
 `;

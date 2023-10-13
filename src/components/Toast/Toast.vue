@@ -76,14 +76,14 @@
             </p>
             <p
               v-if="text"
-              class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300"
+              class="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-400"
             >
               {{ text }}
             </p>
           </div>
           <div class="flex flex-shrink-0 ml-4">
             <button
-              class="inline-flex text-gray-400 transition duration-150 ease-in-out focus:outline-none focus:text-gray-600 hover:text-gray-600 dark:focus:text-gray-100 dark:hover:text-gray-100"
+              class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-none hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >
               <!-- Heroicon name: x -->

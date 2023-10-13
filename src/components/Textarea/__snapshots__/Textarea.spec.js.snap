@@ -2,7 +2,7 @@
 
 exports[`Textarea.vue > matches snapshot with disabled prop assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\" disabled=\\"\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
@@ -14,30 +14,30 @@ exports[`Textarea.vue > matches snapshot with maxlength and count-characters pro
 
 exports[`Textarea.vue > matches snapshot with no props assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with placeholder prop assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"This is a placeholder\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with readonly prop assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\" readonly=\\"\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with rows prop assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\"><textarea class=\\"form-control\\" rows=\\"2\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with value prop assigned 1`] = `
 "<div data-id=\\"sds-textarea\\" class=\\"w-full relative\\" value=\\"This is the text content\\"><textarea class=\\"form-control\\" rows=\\"5\\" maxlength=\\"524288\\" placeholder=\\"\\"></textarea>
-  <!---->
+  <!--v-if-->
 </div>"
 `;

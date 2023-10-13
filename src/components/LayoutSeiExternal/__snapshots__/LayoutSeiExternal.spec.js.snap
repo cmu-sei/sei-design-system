@@ -5,6 +5,7 @@ exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
   class="flex flex-col w-full min-h-screen text-gray-900 bg-white"
   data-id="sds-layout-sei-external"
 >
+  <!-- @slot Header content. -->
   
   <header
     data-id="sds-layout-sei-external-header"
@@ -157,13 +158,14 @@ exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
               Software Engineering Institute
             </a>
           </h1>
-          <!---->
+          <!--v-if-->
         </div>
       </div>
     </div>
   </header>
   
-  <!---->
+  <!-- @slot Masthead content. -->
+  <!--v-if-->
   <main
     class="flex-grow"
   >
@@ -173,6 +175,7 @@ exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
       <div
         class="container p-4 mx-auto md:p-8"
       >
+        <!-- @slot Page content. -->
         
         
       </div>

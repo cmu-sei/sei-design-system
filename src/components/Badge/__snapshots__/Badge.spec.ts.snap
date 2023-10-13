@@ -6,6 +6,7 @@ exports[`Badge > should match its default snapshot 1`] = `
   data-id="sds-badge"
   role="status"
 >
+  <!-- @slot Badge content.  -->
   
   Badge
   
@@ -18,6 +19,7 @@ exports[`Badge > should match its variant primary, type light-border snapshot 1`
   data-id="sds-badge"
   role="status"
 >
+  <!-- @slot Badge content.  -->
   
   Badge
   

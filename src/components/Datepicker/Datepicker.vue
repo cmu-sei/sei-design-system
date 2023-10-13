@@ -2,7 +2,7 @@
   <floating-ui
     data-id="sds-datepicker"
     class="w-full"
-    placement="bottom"
+    :placement="placement"
     :disabled="disabled"
     :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-md w-auto ${zIndexClass}`"
     arrow-class="absolute bg-white border dark:bg-gray-850 dark:border-gray-700 w-3 h-3 rotate-45"
@@ -180,6 +180,9 @@ import { parse, format, isValid, min as dateFnsMin, max as dateFnsMax, isBefore,
 import Calendar from '../Calendar/Calendar.vue';
 import FloatingUi from '../FloatingUi/FloatingUi.vue';
 
+import type { Placement as BasePlacement } from '@floating-ui/dom'
+type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+
 export type CalendarDate = Date | null
 export interface CalendarRange {
   start: CalendarDate
@@ -208,6 +211,10 @@ const props = defineProps({
    * Determines the mode of the component.
    */
   mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  /**
+   * The placement of the popover on the screen.
+   */
+  placement: { type: String as PropType<Placement>, default: 'bottom' },
   /**
    * The v-model for the component.
    * 

@@ -46,7 +46,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
           type="text"
         />
       </div>
-      <!---->
+      <!--v-if-->
     </div>
     
   </div>
