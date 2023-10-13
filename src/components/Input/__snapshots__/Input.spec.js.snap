@@ -11,6 +11,6 @@ exports[`Input > should match its default snapshot 1`] = `
     placeholder=""
     type="text"
   />
-  <!---->
+  <!--v-if-->
 </div>
 `;

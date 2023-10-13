@@ -8,6 +8,7 @@ exports[`Indicator > should match its default snapshot 1`] = `
   <div
     class="relative"
   >
+    <!-- @slot Indicator content.  -->
     
     Indicator
     
@@ -15,7 +16,7 @@ exports[`Indicator > should match its default snapshot 1`] = `
       class="absolute border-white rounded-full bg-blue-500 dark:bg-blue-400 h-4 w-4 border-2 -top-1.5 -right-1.5"
       role="status"
     >
-      <!---->
+      <!--v-if-->
     </div>
   </div>
 </div>
@@ -29,6 +30,7 @@ exports[`Indicator > should match its variant green, placement bottom-right snap
   <div
     class="relative"
   >
+    <!-- @slot Indicator content.  -->
     
     Indicator
     
@@ -36,7 +38,7 @@ exports[`Indicator > should match its variant green, placement bottom-right snap
       class="absolute border-white rounded-full bg-green-500 dark:bg-green-400 h-4 w-4 border-2 -bottom-1.5 -right-1.5"
       role="status"
     >
-      <!---->
+      <!--v-if-->
     </div>
   </div>
 </div>

@@ -5,6 +5,7 @@ exports[`Link > should match its default snapshot 1`] = `
   class=""
   data-id="sds-link"
 >
+  <!-- @slot Link content. -->
   
   
 </a>
