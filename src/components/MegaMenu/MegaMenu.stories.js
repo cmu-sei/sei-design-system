@@ -12,7 +12,7 @@ export default {
         iframeHeight: 675
       },
       description: {
-        component: 'Beta: A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.'
+        component: 'A Mega Menu is a large, expandable drop-down container for global navigation links on complex websites.'
       }
     }
   },

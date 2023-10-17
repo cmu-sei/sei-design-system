@@ -66,7 +66,7 @@
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
-              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-150"
+              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
               fill="currentColor"
@@ -103,8 +103,8 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-            'border-x rounded-b-lg': width === 'auto',
+            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
+            'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
           class="absolute text-black dark:text-white bg-white dark:bg-gray-900"
