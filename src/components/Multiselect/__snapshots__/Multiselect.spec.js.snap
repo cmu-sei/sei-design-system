@@ -4,12 +4,12 @@ exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
 "<div data-v-c4d9b72a=\\"\\" data-id=\\"sds-multiselect\\" class=\\"sds-multiselect canSearch\\">
   <ul data-v-c4d9b72a=\\"\\" class=\\"tag-list single\\">
     <li data-v-c4d9b72a=\\"\\" style=\\"width: 0px;\\" class=\\"tag-list-item input\\"><span data-v-c4d9b72a=\\"\\" class=\\"faux-input\\" aria-hidden=\\"true\\"></span>
-      <!----><label data-v-c4d9b72a=\\"\\"><input data-v-c4d9b72a=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\"><span data-v-c4d9b72a=\\"\\" class=\\"sr-only\\">Enter text</span></label>
+      <!--v-if--><label data-v-c4d9b72a=\\"\\"><input data-v-c4d9b72a=\\"\\" placeholder=\\"\\" style=\\"width: 0px;\\" autocomplete=\\"off\\" spellcheck=\\"false\\" autocorrect=\\"off\\" type=\\"text\\" class=\\"p-0 m-0 border-0 focus:shadow-none focus:ring-0\\"><span data-v-c4d9b72a=\\"\\" class=\\"sr-only\\">Enter text</span></label>
     </li>
   </ul>
-  <!---->
+  <!--v-if-->
   <div data-v-c4d9b72a=\\"\\" aria-hidden=\\"true\\" class=\\"multiselect-caret\\"></div>
-  <!---->
-  <!---->
+  <!--v-if-->
+  <!--v-if-->
 </div>"
 `;

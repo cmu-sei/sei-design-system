@@ -6,6 +6,7 @@ exports[`Button > should match its default snapshot 1`] = `
   class=""
   data-id="sds-button"
 >
+  <!-- @slot Button content. -->
   
   Button
   
@@ -18,6 +19,7 @@ exports[`Button > should match its variant primary snapshot 1`] = `
   class="btn btn-primary"
   data-id="sds-button"
 >
+  <!-- @slot Button content. -->
   
   Button
   

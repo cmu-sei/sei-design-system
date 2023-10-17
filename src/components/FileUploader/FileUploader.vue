@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="border-2 border-dashed dark:border-gray-700 rounded p-4 space-y-2 relative"
+    class="border-2 border-dashed dark:border-gray-700 rounded p-4 relative"
   >
     <input
       ref="fileInput"

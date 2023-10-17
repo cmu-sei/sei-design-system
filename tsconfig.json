@@ -12,7 +12,7 @@
     "allowJs": true,
     "types": ["vite/client", "web-bluetooth"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": ["*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
     "src/**/*.spec.ts",
     "src/**/*.stories.ts",

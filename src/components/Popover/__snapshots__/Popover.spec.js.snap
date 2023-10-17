@@ -10,6 +10,7 @@ exports[`Popover.vue > matches snapshot 1`] = `
   >
     
     <div>
+      <!-- @slot Trigger content. -->
       
       
     </div>
@@ -22,7 +23,9 @@ exports[`Popover.vue > matches snapshot 1`] = `
 exports[`Popover.vue > matches snapshot with no props assigned 1`] = `
 "<div class=\\"inline-block\\" data-id=\\"sds-popover\\">
   <div class=\\"inline-block w-full\\">
-    <div></div>
+    <div>
+      <!-- @slot Trigger content. -->
+    </div>
   </div>
   <!---->
 </div>"
@@ -31,7 +34,9 @@ exports[`Popover.vue > matches snapshot with no props assigned 1`] = `
 exports[`Popover.vue > matches snapshot with prop assigned 1`] = `
 "<div class=\\"inline-block\\" data-id=\\"sds-popover\\" popoverclass=\\"test\\" triggerclass=\\"test\\">
   <div class=\\"inline-block w-full\\">
-    <div></div>
+    <div>
+      <!-- @slot Trigger content. -->
+    </div>
   </div>
   <!---->
 </div>"

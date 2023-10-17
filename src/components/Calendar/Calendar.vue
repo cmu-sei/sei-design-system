@@ -247,13 +247,13 @@
         :class="{ 'border-t my-2 pt-2 dark:border-gray-700': showCalendars }"
       >
         <div
-          class="uppercase text-sm text-gray-500 mb-2"
+          class="text-sm text-gray-600 dark:text-gray-400 mb-2"
         >
           <template v-if="date && date instanceof Date">
-            {{ formatDate(date, 'eee MMM dd yyyy') }}
+            {{ formatDate(date, 'eeee, MMM dd, yyyy') }}
           </template>
           <template v-else-if="date && !(date instanceof Date) && date.start instanceof Date">
-            {{ formatDate(date.start, 'eee MMM dd yyyy') }}
+            {{ formatDate(date.start, 'eeee, MMM dd, yyyy') }}
           </template>
           <template v-else>
             --
@@ -323,10 +323,10 @@
         class="border-t my-2 pt-2 dark:border-gray-700 w-56"
       >
         <div
-          class="uppercase text-sm text-gray-500 mb-2"
+          class="text-sm text-gray-600 dark:text-gray-500 mb-2"
         >
           <template v-if="date && !(date instanceof Date) && date.end instanceof Date">
-            {{ formatDate(date.end, 'eee MMM dd yyyy') }}
+            {{ formatDate(date.end, 'eeee, MMM dd, yyyy') }}
           </template>
           <template v-else>
             --

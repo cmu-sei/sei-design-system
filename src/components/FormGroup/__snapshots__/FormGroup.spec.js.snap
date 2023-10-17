@@ -2,28 +2,37 @@
 
 exports[`Form Group > should match its default snapshot 1`] = `
 <div
-  class="w-full"
+  class="flex flex-col gap-2"
   data-id="sds-form-group"
   id="unique-id"
 >
+  <!--v-if-->
   <label
-    class="flex gap-1 items-center mb-2 font-semibold"
+    class="flex font-semibold gap-1 items-center place-content-start w-auto"
     for="undefined_form-control"
   >
+    <!-- @slot Label slot content. This will override the \`label\` prop. @binding label. -->
     
     <span />
     
-    <!---->
+    <!--v-if-->
     <span
       class="sr-only font-normal italic text-gray-600 dark:text-gray-500 text-xs"
     >
       (optional)
     </span>
   </label>
-  
-  
-  <!---->
-  <!---->
-  <!---->
+  <div
+    class="grow"
+  >
+    <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
+    <div>
+      
+      
+    </div>
+    <!--v-if-->
+    <!--v-if-->
+    <!--v-if-->
+  </div>
 </div>
 `;

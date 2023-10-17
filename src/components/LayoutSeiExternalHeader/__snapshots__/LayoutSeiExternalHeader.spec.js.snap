@@ -152,7 +152,7 @@ exports[`LayoutSeiExternalHeader > should match its default snapshot 1`] = `
             Software Engineering Institute
           </a>
         </h1>
-        <!---->
+        <!--v-if-->
       </div>
     </div>
   </div>

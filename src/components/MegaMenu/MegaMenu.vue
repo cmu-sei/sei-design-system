@@ -39,7 +39,7 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-4 dark:border-gray-800': kind === 'block',
+            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800': kind === 'block',
             'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
             'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
             'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
@@ -66,7 +66,7 @@
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
-              class="mt-0.5 relative inline-block w-4 h-4 transition-transform"
+              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-150"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
               fill="currentColor"
@@ -80,10 +80,10 @@
       </div>
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out origin-top duration-75"
+      enter-active-class="transition-transform ease-in-out origin-top duration-150"
       enter-from-class="scale-y-0"
       enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out origin-top duration-75"
+      leave-active-class="transition-transform ease-in-out origin-top duration-200"
       leave-from-class="scale-y-100"
       leave-to-class="scale-y-0"
     >
@@ -103,13 +103,18 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg rounded-b-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
-            'border-x': width === 'auto',
+            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800': selectedTopLink?.selected,
+            'border-x rounded-b-lg': width === 'auto',
             'w-full': width === 'full'
           }"
           class="absolute text-black dark:text-white bg-white dark:bg-gray-900"
         >
-          <div class="p-4">
+          <div
+            :class="{
+              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
+              'p-4 xl:px-8': width === 'auto'
+            }"
+          >
             <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in a floating panel below the main navigation bar. I.e.: `<template #panel(about)>...</template>` -->
             <slot
               v-if="selectedTopLink?.selected"

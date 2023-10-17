@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Alpha: A form group provides structure and labeling for form fields.',
+        component: 'Alpha: A Form Group provides structure and labeling for form fields.',
       },
     },
   },
@@ -14,6 +14,18 @@ export default {
   argTypes: {
     el: {
       options: ['div', 'fieldset'],
+      control: { type: 'select' }
+    },
+    labelAlignment: {
+      options: ['left', 'center', 'right'],
+      control: { type: 'select' }
+    },
+    labelWidth: {
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'auto'],
+      control: { type: 'select' }
+    },
+    labelPosition: {
+      options: ['top', 'left'],
       control: { type: 'select' }
     },
   }

@@ -5,6 +5,7 @@ exports[`Datapoint > should match its default snapshot 1`] = `
   <div
     class="text-base"
   >
+    <!-- @slot Label context.  -->
     
     label
     
@@ -15,6 +16,7 @@ exports[`Datapoint > should match its default snapshot 1`] = `
     <div
       class="font-bold text-3xl text-black dark:text-white"
     >
+      <!-- @slot Datapoint context.  -->
       
       4000
       
@@ -22,6 +24,7 @@ exports[`Datapoint > should match its default snapshot 1`] = `
     <div
       class="text-base mt-auto"
     >
+      <!-- @slot Context context.  -->
       
       context
       
@@ -35,6 +38,7 @@ exports[`Datapoint > should match its variant green, size sm, label, and context
   <div
     class="text-base"
   >
+    <!-- @slot Label context.  -->
     
     label
     
@@ -45,6 +49,7 @@ exports[`Datapoint > should match its variant green, size sm, label, and context
     <div
       class="font-bold text-lg text-green-500 dark:text-green-400"
     >
+      <!-- @slot Datapoint context.  -->
       
       2000
       
@@ -52,6 +57,7 @@ exports[`Datapoint > should match its variant green, size sm, label, and context
     <div
       class="text-base mt-auto"
     >
+      <!-- @slot Context context.  -->
       
       context
       
