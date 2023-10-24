@@ -10,7 +10,7 @@
     @click.self="onClose(false)"
   >
     <div
-      class="w-full text-black dark:text-white container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
+      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
       @click.self="onClose(false)"
     >
       <div
@@ -27,6 +27,7 @@
           v-for="topLink in topLinks"
           :id="`sds-megamenu__top-link_${topLink.key}`"
           :key="topLink.key"
+          :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :href="topLink.href ? topLink.href : undefined"
           :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :aria-haspopup="topLink.tag === 'button' ? true : undefined"
@@ -39,8 +40,8 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold text-gray-700 dark:text-gray-300': kind === 'block',
-            'hover:text-black hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
+            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': kind === 'block',
+            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
             'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
             'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': kind === 'underline',
@@ -107,7 +108,7 @@
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
-          class="absolute text-black dark:text-white bg-white dark:bg-gray-900"
+          class="absolute text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900"
         >
           <div
             :class="{
