@@ -1011,12 +1011,12 @@ export default defineComponent({
 
 .sds-multiselect.disabled,
 fieldset[disabled] .sds-multiselect {
-  @apply cursor-not-allowed bg-gray-100 opacity-75 dark:bg-gray-900;
+  @apply cursor-auto shadow-none bg-gray-100 border-gray-100 text-gray-400 dark:bg-gray-850 dark:border-gray-850 dark:text-gray-600;
 }
 
 .sds-multiselect.disabled *,
 fieldset[disabled] .sds-multiselect * {
-  @apply pointer-events-none;
+  @apply select-none pointer-events-none placeholder:text-gray-400 dark:placeholder:text-gray-600;
 }
 
 .multiselect-caret {

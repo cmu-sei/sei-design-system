@@ -509,9 +509,9 @@ const formatDate = (dateString: string) => {
       date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
     }
 
-    // Fix double-digit year issue using foundFormat and full year value
+    // Force at least year 2000 when it is less than year 1000
     const fullYear = date.getFullYear()
-    if (foundFormat === 'LLLL dd yyyy' && fullYear < 1000) {
+    if (fullYear < 1000) {
       date = addYears(date, 2000)
     }
 

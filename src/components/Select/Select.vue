@@ -4,9 +4,10 @@
     v-model="localValue"
     data-id="sds-select"
     :disabled="disabled"
-    :readonly="readonly"
+    :required="required"
+    :name="name ? name : undefined"
     class="form-control"
-    :class="{ 'form-control-sm': size === 'sm' }"
+    :class="{ 'form-control-sm': size === 'sm', valid, invalid }"
   >
     <option
       disabled
@@ -41,6 +42,10 @@ const props = defineProps({
    */
   id: { type: String, default: undefined },
   /**
+   * The name of the select form field.
+   */
+  name: { type: String, default: null },
+  /**
    * The v-model of the component.
    */
   modelValue: { type: [Boolean, String, Number, Array, Object] as PropType<SelectOptionValue>, default: null },
@@ -55,9 +60,9 @@ const props = defineProps({
    */
   disabled: { type: Boolean, default: false },
   /**
-   * Determines if the component is read-only.
+   * Determines whether the select is required or not.
    */
-  readonly: { type: Boolean, default: false },
+  required: { type: Boolean, default: false },
   /**
    * Determines the size of the component.
    */
@@ -69,7 +74,15 @@ const props = defineProps({
   /**
    * Determines the value key used for options
    */
-  valueKey: { type: String, default: 'value' }
+  valueKey: { type: String, default: 'value' },
+  /**
+   * Sets a valid styling if true.
+   */
+  valid: { type: Boolean, default: false },
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:modelValue'])

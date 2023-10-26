@@ -1,11 +1,10 @@
 <template>
   <div class="grid gap-8">
     <SdsFormGroup
-      v-slot="{ id, disabled, readonly, required, invalid }"
+      v-slot="{ id, disabled, readonly, required, valid, invalid }"
       :state="state"
       show-marker
       required
-      disabled
       label="Field label"
       helper-text="Field helper text"
       valid-feedback="Field valid feedback"
@@ -21,11 +20,12 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
         :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ id, disabled, readonly, required, invalid }"
+      v-slot="{ id, disabled, readonly, required, valid, invalid }"
       :state="state"
       show-marker
       label="Field label is so cool lkjasdflk jsdflkj sdflk jsdflkj sdflkj sdflk jsdflkj sdflkj sdf"
@@ -43,11 +43,12 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
         :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ id, disabled, readonly, required, invalid }"
+      v-slot="{ id, disabled, required, valid, invalid }"
       :state="state"
       label="Field label"
       helper-text="Field helper text"
@@ -64,8 +65,8 @@
         v-model="selectModelValue"
         :options="options"
         :disabled="disabled"
-        :readonly="readonly"
         :required="required"
+        :valid="valid"
         :invalid="invalid"
       />
     </SdsFormGroup>
@@ -96,7 +97,6 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
-      disabled
     >
       <SdsCheckboxGroup
         v-model="checkboxModelValue"
@@ -114,7 +114,6 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
-      disabled
     >
       <SdsRadioGroup
         v-model="radioModelValue"
@@ -132,7 +131,9 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
-      :label-margin="3"
+      disabled
+      required
+      show-marker
     >
       <SdsMultiselect
         v-model="multiselect.modelValue"
@@ -147,7 +148,9 @@
         @update-selected="updateSelected"
       />
     </SdsFormGroup>
+
     <hr class="dark:border-gray-700">
+
     <SdsFormGroup
       v-slot="{ id, disabled, readonly, required, invalid }"
       :state="state"
