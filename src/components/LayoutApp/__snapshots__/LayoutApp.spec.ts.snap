@@ -8,12 +8,12 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
   <div
     class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0"
   >
-    <div
+    <header
       class="my-auto"
     >
       <!--v-if-->
       <!--v-if-->
-    </div>
+    </header>
     <div
       class="ml-auto my-auto items-center flex gap-2 flex-shrink-0"
     >
@@ -46,7 +46,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
       </div>
     </aside>
     <!-- Main content -->
-    <section
+    <div
       class="flex flex-col items-stretch flex-grow min-w-0"
     >
       <main
@@ -121,7 +121,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
         </div>
       </footer>
       <!--v-if-->
-    </section>
+    </div>
   </div>
 </div>
 `;
