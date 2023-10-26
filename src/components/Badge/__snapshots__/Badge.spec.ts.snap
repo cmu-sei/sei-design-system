@@ -2,7 +2,7 @@
 
 exports[`Badge > should match its default snapshot 1`] = `
 <div
-  class="inline-flex items-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-white bg-gray-600"
+  class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-white bg-gray-600"
   data-id="sds-badge"
   role="status"
 >
@@ -15,7 +15,7 @@ exports[`Badge > should match its default snapshot 1`] = `
 
 exports[`Badge > should match its variant primary, type light-border snapshot 1`] = `
 <div
-  class="inline-flex items-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-gray-700 bg-gray-100 border border-current"
+  class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-gray-700 bg-gray-100 border border-current"
   data-id="sds-badge"
   role="status"
 >
