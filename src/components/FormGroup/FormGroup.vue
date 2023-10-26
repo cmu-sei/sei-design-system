@@ -33,16 +33,27 @@
       :is="el === 'div' ? 'label' : 'span'"
       :for="el === 'div' ? id : undefined"
       :aria-hidden="el === 'fieldset' ? true : undefined"
-      class="flex font-semibold"
+      class="flex font-semibold text-gray-900 dark:text-gray-50"
       :class="{
+        'opacity-50 pointer-events-none select-none': disabled,
         'gap-1 items-center': labelPosition === 'top',
         'place-content-start': labelAlignment === 'left' && labelPosition === 'top',
         'place-content-center': labelAlignment === 'center' && labelPosition === 'top',
         'place-content-end': labelAlignment === 'right' && labelPosition === 'top',
-        'flex-col place-content-start mt-3': labelPosition === 'left',
+        'flex-col place-content-start': labelPosition === 'left',
         'text-left': labelAlignment === 'left' && labelPosition === 'left',
         'text-center': labelAlignment === 'center' && labelPosition === 'left',
         'text-right': labelAlignment === 'right' && labelPosition === 'left',
+        'mt-0': labelMargin === 0,
+        'mt-0.5': labelMargin === 0.5,
+        'mt-1': labelMargin === 1,
+        'mt-1.5': labelMargin === 1.5,
+        'mt-2': labelMargin === 2,
+        'mt-2.5': labelMargin === 2.5,
+        'mt-3': labelMargin === 3,
+        'mt-3.5': labelMargin === 3.5,
+        'mt-4': labelMargin === 4,
+        'my-4': labelMargin === 'auto',
         'w-1/12': labelWidth === 1,
         'w-2/12': labelWidth === 2,
         'w-3/12': labelWidth === 3,
@@ -92,7 +103,8 @@
         />
       </div>
       <p
-        v-if="helperText || $slots.helperText"
+        v-if="(helperText || $slots.helperText) && !disabled"
+        :aria-hidden="disabled ? true : undefined"
         class="block text-xs italic text-gray-600 dark:text-gray-500 pt-1"
       >
         <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
@@ -100,11 +112,11 @@
           name="helperText"
           :helper-text="helperText"
         >
-          <span>{{ helperText }}</span>
+          <span aria-label="test">{{ helperText }}</span>
         </slot>
       </p>
       <p
-        v-if="state && (validFeedback || $slots.validFeedback)"
+        v-if="(state && (validFeedback || $slots.validFeedback)) && !disabled"
         class="block text-xs italic text-green-700 dark:text-green-300 pt-1"
       >
         <!-- @slot Valid Feedback slot content. This will override the `validFeedback` prop. @binding validFeedback. -->
@@ -116,7 +128,7 @@
         </slot>
       </p>
       <p
-        v-if="state === false && (invalidFeedback || $slots.invalidFeedback)"
+        v-if="(state === false && (invalidFeedback || $slots.invalidFeedback)) && !disabled"
         class="block text-xs italic text-red-500 dark:text-red-300 pt-1"
       >
         <!-- @slot Invalid Feedback slot content. This will override the `invalidFeedback` prop. @binding invalidFeedback. -->
@@ -170,6 +182,10 @@ const props = defineProps({
    * Determines the width of the label.
    */
   labelWidth: { type: [Number, String] as PropType<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 'auto'>, default: 'auto' },
+  /**
+   * Determines the top margin of the label.
+   */
+  labelMargin: { type: [Number, String] as PropType<0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 'auto'>, default: null },
   /**
    * Determines the display style of the form group.
    */

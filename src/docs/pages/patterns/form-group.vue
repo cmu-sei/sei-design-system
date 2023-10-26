@@ -5,6 +5,7 @@
       :state="state"
       show-marker
       required
+      disabled
       label="Field label"
       helper-text="Field helper text"
       valid-feedback="Field valid feedback"
@@ -12,6 +13,7 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
+      :label-margin="0.5"
     >
       <SdsInput
         :id="id"
@@ -77,6 +79,7 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
+      :label-margin="3"
     >
       <SdsDatepicker
         v-model="datepickerModelValue"
@@ -86,34 +89,38 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ required }"
+      v-slot="{ required, disabled }"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
       label-position="left"
       label-alignment="right"
       :label-width="4"
+      disabled
     >
       <SdsCheckboxGroup
         v-model="checkboxModelValue"
         :options="options"
         :required="required"
+        :disabled="disabled"
         stacked
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ required }"
+      v-slot="{ required, disabled }"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
       label-position="left"
       label-alignment="right"
       :label-width="4"
+      disabled
     >
       <SdsRadioGroup
         v-model="radioModelValue"
         :options="options"
         :required="required"
+        :disabled="disabled"
         stacked
       />
     </SdsFormGroup>
@@ -125,6 +132,7 @@
       label-position="left"
       label-alignment="right"
       :label-width="4"
+      :label-margin="3"
     >
       <SdsMultiselect
         v-model="multiselect.modelValue"

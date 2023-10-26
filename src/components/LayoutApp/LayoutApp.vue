@@ -4,8 +4,8 @@
     class="flex flex-col h-screen dark:text-gray-50"
   >
     <div class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0">
-      <div class="my-auto">
-        <div
+      <header class="my-auto">
+        <h1
           v-if="appSuite"
           class="hidden md:block"
         >
@@ -25,7 +25,7 @@
             <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </p>
-        </div>
+        </h1>
         <button
           v-if="appSuite || appName"
           ref="mobileMenuOpenBtn"
@@ -62,7 +62,7 @@
             >{{ appName }}</span>
           </span>
         </button>
-      </div>
+      </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
         <!-- @slot Suite header content. @binding collapsed -->
         <slot
@@ -658,7 +658,7 @@
       </aside>
 
       <!-- Main content -->
-      <section class="flex flex-col items-stretch flex-grow min-w-0">
+      <div class="flex flex-col items-stretch flex-grow min-w-0">
         <main class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
@@ -741,7 +741,7 @@
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
         </div>
-      </section>
+      </div>
     </div>
   </div>
 </template>

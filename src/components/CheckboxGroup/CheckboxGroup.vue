@@ -21,6 +21,7 @@
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
         :required="required"
+        :disabled="disabled"
         @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
@@ -31,6 +32,9 @@
       >
         <label
           :for="`${root?.id}__option_${index}`"
+          :class="{
+            'opacity-50 pointer-events-none select-none': disabled
+          }"
         ><span>{{ option[labelKey] }}</span></label>
       </slot>
     </div>
@@ -67,6 +71,10 @@ const props = defineProps({
    * An array of options for the checkbox group.
    */
   options: { type: Array as PropType<CheckboxGroupOption<CheckboxGroupOptionValue>[]>, default: () => [] },
+  /**
+   * Determines whether the checkbox group is disabled or not.
+   */
+  disabled: { type: Boolean, default: false },
   /**
    * Determines whether the checkbox group is required or not.
    */

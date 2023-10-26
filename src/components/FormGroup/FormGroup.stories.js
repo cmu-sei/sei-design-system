@@ -20,12 +20,16 @@ export default {
       options: ['left', 'center', 'right'],
       control: { type: 'select' }
     },
-    labelWidth: {
-      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'auto'],
+    labelMargin: {
+      options: [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 'auto'],
       control: { type: 'select' }
     },
     labelPosition: {
       options: ['top', 'left'],
+      control: { type: 'select' }
+    },
+    labelWidth: {
+      options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 'auto'],
       control: { type: 'select' }
     },
   }

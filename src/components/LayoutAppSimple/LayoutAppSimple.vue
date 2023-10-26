@@ -4,8 +4,8 @@
     class="flex flex-col h-screen dark:text-gray-50"
   >
     <div class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0">
-      <div class="my-auto">
-        <div
+      <header class="my-auto">
+        <h1
           v-if="appSuite"
           class="block"
         >
@@ -25,8 +25,8 @@
             <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </p>
-        </div>
-      </div>
+        </h1>
+      </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
         <!-- @slot Suite header content. -->
         <slot
@@ -36,7 +36,7 @@
     </div>
     <div class="flex flex-grow flex-shrink-0">
       <!-- Main content -->
-      <section class="flex flex-col items-stretch flex-grow min-w-0">
+      <div class="flex flex-col items-stretch flex-grow min-w-0">
         <main class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
@@ -117,7 +117,7 @@
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
         </div>
-      </section>
+      </div>
     </div>
   </div>
 </template>
