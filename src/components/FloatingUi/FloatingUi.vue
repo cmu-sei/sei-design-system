@@ -16,12 +16,12 @@
       <teleport to="body">
         <transition
           :css="!disableAnimation"
-          enter-active-class="transition duration-75 ease-out"
-          enter-from-class="transform scale-95 opacity-0"
-          enter-to-class="transform scale-100 opacity-100"
-          leave-active-class="transition duration-50 ease-in"
-          leave-from-class="transform scale-100 opacity-100"
-          leave-to-class="transform scale-95 opacity-0"
+          :enter-active-class="animationEnterActiveClass"
+          :enter-from-class="animationEnterFromClass"
+          :enter-to-class="animationEnterToClass"
+          :leave-active-class="animationLeaveActiveClass"
+          :leave-from-class="animationLeaveFromClass"
+          :leave-to-class="animationLeaveToClass"
         >
           <div
             v-if="open"
@@ -162,6 +162,12 @@ const props = defineProps({
   inline: { type: Boolean, default: false },
   shift: { type: Boolean, default: false },
   disableAnimation: { type: Boolean, default: false },
+  animationEnterActiveClass: { type: String, default: 'transition duration-75 ease-out' },
+  animationEnterFromClass: { type: String, default: 'transform scale-95 opacity-0' },
+  animationEnterToClass: { type: String, default: 'transform scale-100 opacity-100' },
+  animationLeaveActiveClass: { type: String, default: 'transition duration-50 ease-in' },
+  animationLeaveFromClass: { type: String, default: 'transform scale-100 opacity-100' },
+  animationLeaveToClass: { type: String, default: 'transform scale-95 opacity-0' },
   popperClass: { type: String, default: undefined },
   hideArrow: { type: Boolean, default: false },
   arrowClass: { type: String, default: undefined },
