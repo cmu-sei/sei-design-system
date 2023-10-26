@@ -45,7 +45,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       </span>
     </div>
     <p
-      class="text-gray-500 text-sm"
+      class="text-gray-600 dark:text-gray-500 text-sm"
     >
       Use a file under 10 MB.
     </p>

@@ -989,7 +989,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .sds-multiselect {
-  @apply block relative py-0.5 text-gray-900 bg-white bg-opacity-80 border border-gray-300 dark:border-gray-700 rounded shadow-inner cursor-pointer whitespace-normal dark:text-gray-100 dark:bg-opacity-5;
+  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 .sds-multiselect.active,
@@ -1232,11 +1232,11 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .tag-list-item.input input::placeholder {
-  @apply italic;
+  @apply italic text-gray-300;
 }
 
 .dark .tag-list-item.input input::placeholder {
-  @apply text-gray-600 bg-opacity-50;
+  @apply  text-gray-700;
 }
 
 .open.hasTags.canSearch .single .tag-list-item.input input {
