@@ -38,7 +38,7 @@
         </svg>
         <span class="my-auto">{{ multiple ? 'Drag and drop your files here' : 'Drag and drop a file here' }}</span>
       </div>
-      <p class="text-gray-500 text-sm">
+      <p class="text-gray-600 dark:text-gray-500 text-sm">
         {{ helperText ? helperText : multiple ? `Use files under ${filesize} MB.` : `Use a file under ${filesize} MB.` }}
       </p>
       <!-- @slot File list content. @binding files, invalidFiles, removeFile, removeInvalidFile, byteToSize -->

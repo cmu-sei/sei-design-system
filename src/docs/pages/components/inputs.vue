@@ -58,6 +58,7 @@
           :autofocus="false"
           :count-characters="false"
           size="md"
+          placeholder="testing"
         />
       </div>
     </div>
@@ -76,6 +77,7 @@
           :required="false"
           :taggable="false"
           default-msg="Search for a fruit such as an apple"
+          placeholder="testing"
           show-clear
           @update-selected="multiselectUpdateSelected"
         />
