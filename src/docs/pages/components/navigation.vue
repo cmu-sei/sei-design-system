@@ -582,6 +582,34 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Mobile Menu
+      </h2>
+      <div>
+        <div class="grid gap-4">
+          <SdsMobileMenu
+            v-model="showPanel"
+            side="left"
+          >
+            <template #title>
+              <p>TEST1</p>
+            </template>
+            <p>TEST2</p>
+            <template #footer>
+              <p>TEST3</p>
+            </template>
+          </SdsMobileMenu>
+
+          <SdsButton
+            variant="default"
+            @click="showPanel = !showPanel"
+          >
+            Show Panel
+          </SdsButton>
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Paginator
       </h2>
       <div>
@@ -670,6 +698,8 @@
 <script setup lang="ts">
 const currentPage = ref(3)
 const totalPages = ref(10)
+
+const showPanel = ref(false)
 
 const tabs = ref([
   { key: "home", title: "Home", disabled: true },
