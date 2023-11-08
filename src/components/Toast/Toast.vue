@@ -122,14 +122,6 @@ export default defineComponent({
      */
     kind: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
     /**
-     * Determines the color of the component.
-     * 
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
-     * @deprecated since version 2.12.
-     */
-    variant: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: 'success' },
-    /**
      * Determines the title content of the component.
      */
     title: { type: String, required: true },
@@ -154,8 +146,7 @@ export default defineComponent({
   },
   computed: {
     localKind() {
-      // @deprecated set default for type prop to 'success'
-      return this.kind || this.variant
+      return this.kind
     }
   },
   mounted() {

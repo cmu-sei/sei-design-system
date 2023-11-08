@@ -29,7 +29,7 @@
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="[btnClass, kindClass, variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
+          :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, isOpen ? 'active' : '']"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -130,10 +130,6 @@ export default defineComponent({
      * The placement of the popover on the screen.
      */
     placement: { type: String as PropType<Placement>, default: 'bottom-start' },
-    /**
-     * Determines whether to use the outline styling on the trigger button or not.
-     */
-    outline: { type: Boolean, default: false },
     /**
      * Determines whether to use the block styling on the trigger button or not.
      */
@@ -266,9 +262,6 @@ export default defineComponent({
         default:
           return ''
       }
-    },
-    outlineClass() {
-      return this.outline ? 'btn-outline' : ''
     },
     disabledClass() {
       return this.disabled ? 'disabled' : ''

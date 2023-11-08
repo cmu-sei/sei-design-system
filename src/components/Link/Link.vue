@@ -19,14 +19,6 @@ export default defineComponent({
      */
     kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark'>, default: null },
     /**
-     * Determines the color of the component.
-     * 
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
-     * @deprecated since version 2.12.
-     */
-    variant: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark' | ''>, default: '' },
-    /**
      * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
      */
     external: { type: Boolean, default: false },
@@ -41,13 +33,11 @@ export default defineComponent({
   },
   setup (props) {
     const linkClass = computed(() => {
-      // @deprecated remove variant prop
-      return props.kind || props.variant !== '' || props.cta ? 'link' : ''
+      return props.kind || props.cta ? 'link' : ''
     })
 
     const variantClass = computed(() => {
-      // @deprecated remove extraneous variant types
-      const kind = (props.kind as 'primary' | 'secondary' | 'tertiary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark') || props.variant
+      const kind = (props.kind as 'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark')
       switch (kind) {
         case 'primary':
           return 'link-primary'
@@ -55,12 +45,6 @@ export default defineComponent({
           return 'link-secondary'
         case 'tertiary':
           return 'link-tertiary'
-        case 'success':
-          return 'link-success'
-        case 'info':
-          return 'link-info'
-        case 'warning':
-          return 'link-warning'
         case 'danger':
           return 'link-danger'
         case 'light':

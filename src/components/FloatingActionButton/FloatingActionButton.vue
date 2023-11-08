@@ -196,13 +196,9 @@ const props = defineProps({
   },
   /**
    * Determines the color of the component.
-   * 
-   * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
-   * 
-   * @deprecated since version 2.12.
    */
   variant: {
-    type: String as PropType<'primary' | 'danger' | 'blue' | 'red'>,
+    type: String as PropType<'blue' | 'red'>,
     default: 'blue'
   },
   /**
@@ -223,7 +219,7 @@ const props = defineProps({
 const emit = defineEmits(['update:model-value', 'open', 'close'])
 
 const localVariant = computed<'blue' | 'red'>(() => {
-  return props.variant === 'primary' || props.variant === 'blue' ? 'blue' : 'red'
+  return props.variant
 })
 
 const tabs = computed({

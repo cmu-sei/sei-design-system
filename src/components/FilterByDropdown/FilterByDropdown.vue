@@ -157,15 +157,7 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the component.
      */
-    kind: { type: String as PropType<'primary' | 'secondary'>, default: null },
-    /**
-     * Determines the color of the component.
-     *
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     *
-     * @deprecated since version 2.12.
-     */
-    variant: { type: String as PropType<'primary' | 'secondary' | ''>, default: 'secondary' },
+    kind: { type: String as PropType<'primary' | 'secondary'>, default: 'secondary' },
     /**
      * The z-index for the popover.
      */
@@ -247,8 +239,7 @@ export default defineComponent({
       );
     },
     variantClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
+      switch (this.kind) {
          case 'primary':
           return 'link link-primary'
         case 'secondary':

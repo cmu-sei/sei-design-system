@@ -118,13 +118,9 @@ export default defineComponent({
     },
     /**
      * Determines the color of the component.
-     * 
-     * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
-     * 
-     * @deprecated since version 2.12.
      */
     variant: {
-      type: String as PropType<'default' | 'primary' | 'danger' | 'gray' | 'blue' | 'red'>,
+      type: String as PropType<'gray' | 'blue' | 'red'>,
       default: 'gray',
     },
     /**
@@ -157,10 +153,8 @@ export default defineComponent({
     },
     variantClass() {
       switch (this.variant) {
-        case "primary":
         case 'blue':
           return "btn btn-secondary text-blue-700 dark:text-blue-400";
-        case "danger":
         case 'red':
           return "btn btn-secondary text-red-700 dark:text-red-400";
         default:

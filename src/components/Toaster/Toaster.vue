@@ -27,13 +27,11 @@
           :toasts="toasts"
           :remove-toast="removeToast"
         >
-          <!-- @deprecated Remove variant prop -->
           <sds-toast
             v-for="toast in toasts"
             :id="toast.id"
             :key="toast.id"
-            :type="toast.type || toast.variant"
-            :variant="toast.variant"
+            :kind="toast.kind"
             :title="toast.title"
             :text="toast.text"
             :auto-hide-delay="toast.autoHideDelay || 5000"
@@ -51,12 +49,9 @@
 import { computed, PropType } from "vue";
 import SdsToast from "../Toast/Toast.vue";
 
-// @deprecated remove variant prop from ToasterToast
-
 interface ToasterToast {
   id: number
-  type: 'success' | 'info' | 'warning' | 'danger'
-  variant: 'success' | 'info' | 'warning' | 'danger'
+  kind: 'success' | 'info' | 'warning' | 'danger'
   title: string
   text: string
   autoHideDelay: number

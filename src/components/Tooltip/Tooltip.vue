@@ -64,14 +64,6 @@ export default defineComponent({
      */
     kind: { type: String as PropType<'dark' | 'light'>, default: null },
     /**
-     * Determines the color of the component.
-     * 
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
-     * @deprecated since version 2.12.
-     */
-    variant: { type: String as PropType<'dark' | 'light'>, default: 'dark' },
-    /**
      * Delays opening the toggle in ms.
      */
     openDelay: { type: Number, default: 0 },
@@ -168,8 +160,7 @@ export default defineComponent({
       }
     },
     variantClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
+      switch (this.kind) {
         case 'light':
           return 'bg-gray-25 text-gray-900 border-gray-200'
         case 'dark':
@@ -178,8 +169,7 @@ export default defineComponent({
       }
     },
     variantArrowClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
+      switch (this.kind) {
         case 'light':
           return 'bg-gray-25 border-gray-200'
         case 'dark':

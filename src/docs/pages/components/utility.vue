@@ -13,7 +13,6 @@
               :active="false"
               :block="false"
               :disabled="false"
-              :outline="false"
             >
               Hover for a popover
             </sds-button>

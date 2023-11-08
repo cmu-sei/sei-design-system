@@ -128,7 +128,7 @@
             <a
               href="https://sei.cmu.edu/contact-us/"
               target="_self"
-              class="py-8 text-xl text-center transition-colors duration-100 rounded-none btn btn-outline btn-light btn-lg btn-block"
+              class="py-8 text-xl text-center transition-colors duration-100 rounded-none btn btn-tertiary btn-red btn-lg btn-block"
             >
               Contact Us
             </a>
