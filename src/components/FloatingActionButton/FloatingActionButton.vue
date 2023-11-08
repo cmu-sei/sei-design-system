@@ -17,11 +17,11 @@
                 ref="button"
                 v-uid
                 type="button"
-                class="ml-auto mt-auto btn border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
+                class="ml-auto mt-auto btn btn-primary border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'btn-primary': localVariant === 'blue',
-                  'btn-danger': localVariant === 'red',
+                  'btn-blue': localVariant === 'blue',
+                  'btn-red': localVariant === 'red',
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
