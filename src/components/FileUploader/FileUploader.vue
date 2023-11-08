@@ -18,7 +18,7 @@
       <div class="flex gap-2">
         <label
           :for="fileInput?.id"
-          class="btn btn-default cursor-pointer z-10"
+          class="btn btn-secondary cursor-pointer z-10"
         >Browse</label>
         <svg
           xmlns="http://www.w3.org/2000/svg"

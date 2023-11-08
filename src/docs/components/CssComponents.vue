@@ -356,7 +356,7 @@
         Wrap in <code>.btn-group</code> for easy grouping.
       </p>
       <p class="mt-2">
-        Variants include: <code>.btn-default</code>, <code>.btn-white</code>,
+        Variants include: <code>.btn-secondary</code>, <code>.btn-white</code>,
         <code>.btn-black</code>, <code>.btn-blue</code>,
         <code>.btn-green</code>, <code>.btn-indigo</code>,
         <code>.btn-orange</code>, <code>.btn-pink</code>,
@@ -392,7 +392,7 @@
         Button Group: Single Button
       </h3>
       <div class="mb-4 btn-group">
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
       </div>
@@ -401,16 +401,16 @@
         Button Group: Default Buttons
       </h3>
       <div class="mb-4 btn-group">
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
       </div>
@@ -419,16 +419,16 @@
         Button Group: Outline Buttons
       </h3>
       <div class="mb-4 btn-group">
-        <button class="btn btn-default btn-outline">
+        <button class="btn btn-secondary btn-outline">
           Default
         </button>
-        <button class="btn btn-default btn-outline">
+        <button class="btn btn-secondary btn-outline">
           Default
         </button>
-        <button class="btn btn-default btn-outline">
+        <button class="btn btn-secondary btn-outline">
           Default
         </button>
-        <button class="btn btn-default btn-outline">
+        <button class="btn btn-secondary btn-outline">
           Default
         </button>
       </div>
@@ -437,7 +437,7 @@
         Button Group: Mix-and-match Buttons
       </h3>
       <div class="mb-4 btn-group">
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
         <button class="btn btn-outline btn-teal">
@@ -458,7 +458,7 @@
         Type: Default
       </h3>
       <div class="space-x-2 space-y-2">
-        <button class="btn btn-default">
+        <button class="btn btn-secondary">
           Default
         </button>
         <button class="btn btn-white">
@@ -500,7 +500,7 @@
         Type: Outline
       </h3>
       <div class="space-x-2 space-y-2">
-        <button class="btn btn-default btn-outline">
+        <button class="btn btn-secondary btn-outline">
           Default
         </button>
         <button class="btn btn-white btn-outline">
@@ -544,7 +544,7 @@
       <div class="space-x-2 space-y-2">
         <button
           disabled
-          class="btn btn-default"
+          class="btn btn-secondary"
         >
           Default
         </button>
@@ -623,7 +623,7 @@
         <a
           href="#"
           tabindex="-1"
-          class="btn btn-default disabled"
+          class="btn btn-secondary disabled"
         >Default</a>
         <a
           href="#"
@@ -686,7 +686,7 @@
         Type: Default, Block
       </h3>
       <div class="space-y-2">
-        <button class="btn btn-default btn-block">
+        <button class="btn btn-secondary btn-block">
           Default
         </button>
         <button class="btn btn-white btn-block">

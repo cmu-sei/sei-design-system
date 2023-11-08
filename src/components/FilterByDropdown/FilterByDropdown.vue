@@ -110,7 +110,7 @@
         </div>
         <div class="pt-4 space-y-2">
           <button
-            class="btn btn-blue btn-block btn-sm"
+            class="btn btn-primary btn-block btn-sm"
             @click="saveSelections(); close()"
           >
             Apply filter

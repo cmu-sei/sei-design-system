@@ -7,7 +7,7 @@
     <div
       class="overflow-x-auto"
       :class="{
-        'bg-gray-100 dark:bg-gray-850 rounded-t': type === 'folder'
+        'bg-gray-50 dark:bg-gray-850 rounded-t': type === 'folder'
       }"
     >
       <ul

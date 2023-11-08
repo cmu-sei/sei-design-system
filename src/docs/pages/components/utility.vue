@@ -9,7 +9,7 @@
           <template #trigger>
             <sds-button
               size="md"
-              variant="default"
+              kind="secondary"
               :active="false"
               :block="false"
               :disabled="false"
@@ -112,7 +112,7 @@
         >
           <template #trigger>
             <SdsButton
-              kind="default"
+              kind="secondary"
             >
               Hover for a tooltip
             </SdsButton>

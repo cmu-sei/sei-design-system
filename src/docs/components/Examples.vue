@@ -1,7 +1,7 @@
 <template>
   <div class="guide">
     <sds-button
-      variant="default"
+      kind="secondary"
       @click="showPanel = !showPanel"
     >
       Show Panel
@@ -64,7 +64,7 @@
             Save
           </SdsButton>
           <SdsButton
-            variant="default"
+            kind="secondary"
             @click="showPanel = false"
           >
             Cancel
@@ -1433,7 +1433,7 @@
         </div>
       </div>
       <sds-button
-        variant="default"
+        kind="secondary"
         @click="fileUploaderModel = []"
       >
         Clear files
@@ -1592,7 +1592,7 @@
           </h4>
           <sds-toaster v-model="toasts" />
           <button
-            class="btn btn-blue"
+            class="btn btn-secondary"
             @click="generateToast"
           >
             Generate Toast
@@ -1732,7 +1732,7 @@
         <sds-tooltip>
           <template #trigger>
             <button
-              class="btn btn-blue"
+              class="btn btn-secondary"
               @click="showModal = true"
             >
               Show Modal Component
@@ -1763,7 +1763,7 @@
           <sds-dropdown
             v-model="showModalSizeDropdown"
             :title="`Modal Size: ${modalSize}`"
-            btn-class="btn btn-default"
+            btn-class="btn btn-secondary"
           >
             <sds-dropdown-header>
               <p class="font-semibold text-gray-500">
@@ -1798,7 +1798,7 @@
           </sds-dropdown>
           <template #footer>
             <button
-              class="btn btn-red"
+              class="btn btn-primary btn-red"
               @click="showModal = false"
             >
               Close
@@ -2145,7 +2145,7 @@
         </template>
         <template #cell(actions)="{ item }">
           <sds-button
-            variant="default"
+            kind="secondary"
             size="sm"
           >
             Do something for: {{ item.id }}

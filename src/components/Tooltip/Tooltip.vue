@@ -171,7 +171,7 @@ export default defineComponent({
       const kind = this.kind || this.variant
       switch (kind) {
         case 'light':
-          return 'bg-gray-50 text-gray-900 border-gray-200'
+          return 'bg-gray-25 text-gray-900 border-gray-200'
         case 'dark':
         default:
           return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
@@ -181,7 +181,7 @@ export default defineComponent({
       const kind = this.kind || this.variant
       switch (kind) {
         case 'light':
-          return 'bg-gray-50 border-gray-200'
+          return 'bg-gray-25 border-gray-200'
         case 'dark':
         default:
           return 'bg-black border-gray-800'

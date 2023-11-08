@@ -18,7 +18,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       class="flex gap-2"
     >
       <label
-        class="btn btn-default cursor-pointer z-10"
+        class="btn btn-secondary cursor-pointer z-10"
       >
         Browse
       </label>

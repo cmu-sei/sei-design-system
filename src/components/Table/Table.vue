@@ -177,7 +177,7 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850': item.id === openDrawerID
+            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850': item.id === openDrawerID
           }"
         >
           <td
@@ -241,7 +241,7 @@
         <tr
           v-if="item.id === openDrawerID"
           :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
-          class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-50 bg-gray-50 dark:bg-gray-850"
+          class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850"
         >
           <td :colspan="displayedFieldKeys.length + 1">
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->

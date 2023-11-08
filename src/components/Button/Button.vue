@@ -1,7 +1,7 @@
 <template>
   <button
     data-id="sds-button"
-    :class="[btnClass, variantClass, sizeClass, outlineClass, disabledClass, activeClass, blockClass]"
+    :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass]"
     :disabled="disabled"
     :aria-disabled="disabled"
     @click="onClick"
@@ -22,23 +22,15 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-    kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: '' },
   /**
    * Determines the color of the component.
-   * 
-   * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-   * 
-   * @deprecated since version 2.12.
    */
-  variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: '' },
+  variant: { type: String as PropType<'blue' | 'red'>, default: '' },
   /**
    * Determines the size.
    */
   size: { type: String as PropType<'md' | 'sm' | ''>, default: '' },
-  /**
-   * Determines whether to use the outline styling or not.
-   */
-  outline: { type: Boolean, default: false },
   /**
    * Sets the active state of a button.
    */
@@ -52,27 +44,34 @@ const props = defineProps({
    */
   block: { type: Boolean, default: false }
 })
-  
+
 const emit = defineEmits(['click'])
 
 const btnClass = computed(() => {
-  // @deprecated remove variant from this list
-  return props.kind || props.variant !== '' || props.size !== '' || props.outline || props.block ? 'btn' : ''
+  return props.kind ? 'btn' : ''
+})
+
+const kindClass = computed(() => {
+  switch (props.kind) {
+    case 'primary':
+      return 'btn-primary'
+    case 'secondary':
+      return 'btn-secondary'
+    case 'tertiary':
+      return 'btn-tertiary'
+    case 'ghost':
+      return 'btn-ghost'
+    default:
+      return ''
+  }
 })
 
 const variantClass = computed(() => {
-  const kind = props.kind || props.variant
-  switch (kind) {
-    case 'default':
-      return 'btn-default'
-    case 'primary':
-      return 'btn-primary'
-    case 'success':
-      return 'btn-success'
-    case 'danger':
-      return 'btn-danger'
-    case 'light':
-      return 'btn-light'
+  switch (props.variant) {
+    case 'blue':
+      return 'btn-blue'
+    case 'red':
+      return 'btn-red'
     default:
       return ''
   }
@@ -85,10 +84,6 @@ const sizeClass = computed(() => {
     default:
       return ''
   }
-})
-
-const outlineClass = computed(() => {
-  return props.outline ? 'btn-outline' : ''
 })
 
 const disabledClass = computed(() => {

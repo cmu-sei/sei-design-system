@@ -17,7 +17,7 @@
     <main class="flex-grow">
       <div
         :class="{
-          'bg-gray-50': showMasthead,
+          'bg-gray-25': showMasthead,
         }"
       >
         <template v-if="removeContentPadding">

@@ -104,9 +104,9 @@
               :class="[
                 'w-8 h-8 mb-1',
                 day === 1 ? `col-start-${calendarStartOfMonth}` : '',
-                dateIsWithinInterval(day) ? 'bg-blue-100 dark:bg-blue-900' : '',
-                dateIsAtStartOfInterval(day) ? 'bg-blue-100 dark:bg-blue-900 rounded-l-full' : '',
-                dateIsAtEndOfInterval(day) ? 'bg-blue-100 dark:bg-blue-900 rounded-r-full' : '',
+                dateIsWithinInterval(day) ? 'bg-blue-25 dark:bg-blue-900' : '',
+                dateIsAtStartOfInterval(day) ? 'bg-blue-25 dark:bg-blue-900 rounded-l-full' : '',
+                dateIsAtEndOfInterval(day) ? 'bg-blue-25 dark:bg-blue-900 rounded-r-full' : '',
               ]"
             >
               <button
@@ -144,9 +144,9 @@
                 :class="[
                   'w-8 h-8 mb-1',
                   day === 1 ? `col-start-${calendarNextStartOfMonth}` : '',
-                  dateIsWithinInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900' : '',
-                  dateIsAtStartOfInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900 rounded-l-full' : '',
-                  dateIsAtEndOfInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900 rounded-r-full' : '',
+                  dateIsWithinInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900' : '',
+                  dateIsAtStartOfInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900 rounded-l-full' : '',
+                  dateIsAtEndOfInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900 rounded-r-full' : '',
                 ]"
               >
                 <button
@@ -156,7 +156,7 @@
                   :class="{
                     'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
                     'hover:bg-gray-200 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
-                    'font-bold bg-blue-700 text-white': dateIsSameDay(day, true),
+                    'font-bold bg-blue-500 text-white': dateIsSameDay(day, true),
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
                     'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)
                   }"
@@ -217,7 +217,7 @@
             Go to Date
           </button>
           <button
-            class="mt-2 btn btn-default btn-sm"
+            class="mt-2 btn btn-secondary btn-sm"
             type="button"
             tabindex="-1"
             @click="goToThisMonth()"
@@ -226,7 +226,7 @@
           </button>
           <hr class="my-2">
           <button
-            class="btn btn-default btn-sm"
+            class="btn btn-secondary btn-sm"
             type="button"
             tabindex="-1"
             @click="view = 'days'"

@@ -146,7 +146,6 @@
       <div>
         <SdsToggleSwitch
           v-model="toggleSwitch.modelValue"
-          variant="blue"
           :disabled="false"
         />
       </div>

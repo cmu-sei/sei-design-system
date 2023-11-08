@@ -255,7 +255,7 @@ export default defineComponent({
           } else if (index === 1) {
             return "bg-gray-700"
           } else if (index === 2) {
-            return "bg-gray-500"
+            return "bg-gray-250"
           } else if (index === 3) {
             return "bg-gray-300"
           } else if (index === 4) {

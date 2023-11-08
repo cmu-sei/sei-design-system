@@ -5,7 +5,7 @@
         Button
       </h2>
       <div>
-        <SdsButton kind="default">
+        <SdsButton kind="secondary">
           Button
         </SdsButton>
       </div>

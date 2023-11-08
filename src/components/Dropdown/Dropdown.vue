@@ -25,11 +25,11 @@
           ref="button"
           v-uid
           type="button"
-          class="btn space-x"
+          class="space-x"
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
+          :class="[btnClass, kindClass, variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -93,15 +93,11 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the button trigger.
      */
-     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+     kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
     /**
      * Styling for the button trigger.
-     * 
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
-     * @deprecated since version 2.12.
      */
-    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
+    variant: { type: String as PropType<'blue' | 'red'>, default: '' },
     /**
      * The z-index for the popover.
      */
@@ -244,19 +240,29 @@ export default defineComponent({
           return ''
       }
     },
-    variantClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
-        case 'default':
-          return 'btn-default'
+    btnClass() {
+      return this.kind ? 'btn' : ''
+    },
+    kindClass() {
+      switch (this.kind) {
         case 'primary':
           return 'btn-primary'
-        case 'success':
-          return 'btn-success'
-        case 'danger':
-          return 'btn-danger'
-        case 'light':
-          return 'btn-light'
+        case 'secondary':
+          return 'btn-secondary'
+        case 'tertiary':
+          return 'btn-tertiary'
+        case 'ghost':
+          return 'btn-ghost'
+        default:
+          return ''
+      }
+    },
+    variantClass() {
+      switch (this.variant) {
+        case 'blue':
+          return 'btn-blue'
+        case 'red':
+          return 'btn-red'
         default:
           return ''
       }

@@ -25,7 +25,7 @@
       </h2>
       <div>
         <SdsButton
-          kind="default"
+          kind="secondary"
           @click="addToast()"
         >
           Generate a toast

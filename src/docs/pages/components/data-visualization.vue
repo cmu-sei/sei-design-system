@@ -99,7 +99,7 @@
             </button>
           </template>
           <template #drawer="{item}">
-            <ul class="py-2 px-8 bg-gray-50 dark:bg-gray-850 rounded-md">
+            <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>

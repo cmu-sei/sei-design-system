@@ -6,7 +6,7 @@
       </h2>
       <div>
         <SdsButton
-          variant="default"
+          kind="secondary"
           @click="showModal = !showModal"
         >
           Launch a modal
@@ -31,7 +31,7 @@
       </h2>
       <div>
         <SdsButton
-          variant="default"
+          kind="secondary"
           @click="showPanel = !showPanel"
         >
           Launch a panel
