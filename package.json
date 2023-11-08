@@ -1,6 +1,6 @@
 {
   "name": "@sds/components-vue3",
-  "version": "2.18.1-beta.7",
+  "version": "3.0.0-next.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -11,6 +11,7 @@
     "bundle:release": "./scripts/bundle-release.sh",
     "release": "./scripts/release.sh",
     "release-beta": "echo 'prerelease' | ./scripts/release-beta.sh",
+    "release-next": "echo 'prerelease' | ./scripts/release-next.sh",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "gen-volar-dts": "./scripts/gen-component-declarations.sh"
