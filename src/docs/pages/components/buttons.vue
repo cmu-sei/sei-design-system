@@ -5,7 +5,21 @@
         Button
       </h2>
       <div>
-        <SdsButton kind="secondary">
+        <SdsButton
+          kind="secondary"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          active
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          disabled
+        >
           Button
         </SdsButton>
       </div>
