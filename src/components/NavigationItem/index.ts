@@ -1,5 +1,5 @@
 import { App } from "vue";
-import Component from "./MobileMenuItem.vue";
+import Component from "./NavigationItem.vue";
 
 Component.install = (Vue: App) => {
   Vue.component(Component.name, Component);

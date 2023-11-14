@@ -3,7 +3,13 @@
     v-model="showPanel"
     :side="side"
   >
+    <template #title>
+      <slot name="title" />
+    </template>
     <slot />
+    <template #footer>
+      <slot name="footer" />
+    </template>
   </SdsPanel>
 </template>
 
