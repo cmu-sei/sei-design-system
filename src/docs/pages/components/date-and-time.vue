@@ -17,7 +17,7 @@
       <h2 class="text-xl">
         Datepicker
       </h2>
-      <div>
+      <div class="space-y-4">
         <SdsDatepicker
           v-model="modelValue"
           :min="min"
@@ -25,6 +25,24 @@
           placement="right"
           mode="dateTime"
           size="md"
+        />
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="dateTime"
+          size="md"
+          disabled
+        />
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="dateTime"
+          size="md"
+          readonly
         />
       </div>
     </div>

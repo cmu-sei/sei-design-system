@@ -26,7 +26,8 @@
             class="input-group-text fill-current"
             :class="{
               'p-1': size === 'sm',
-              'pointer-events-none opacity-50': disabled || readonly
+              'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
+              'border-none': disabled,
             }"
             :disabled="disabled || readonly"
             @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
@@ -64,12 +65,12 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="open()"
+            @focusin="!readonly ? open() : undefined"
             @keydown.tab="updateDatesFromInput(); close()"
-            @mousedown.stop="toggle()"
+            @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
-            @keyup.down="open()"
-            @keydown.enter.prevent="updateDatesFromInput(); toggle()"
+            @keyup.down="!readonly ? open() : undefined"
+            @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
             @change="updateDatesFromInput"
           >
         </div>
@@ -147,12 +148,12 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="open()"
+              @focusin="!readonly ? open() : undefined"
               @keydown.tab="updateDatesFromInput(); close()"
-              @mousedown.stop="toggle()"
+              @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
-              @keyup.down="open()"
-              @keydown.enter.prevent="updateDatesFromInput(); toggle()"
+              @keyup.down="!readonly ? open() : undefined"
+              @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
               @change="updateDatesFromInput"
             >
           </div>
@@ -511,8 +512,10 @@ const formatDate = (dateString: string) => {
 
     // Force at least year 2000 when it is less than year 1000
     const fullYear = date.getFullYear()
-    if (fullYear < 1000) {
+    if (fullYear < 41) {
       date = addYears(date, 2000)
+    } else if (fullYear >= 41 && fullYear < 99) {
+      date = addYears(date, 1900)
     }
 
     const dateIsBeforeMin = isBefore(date, props.min)
