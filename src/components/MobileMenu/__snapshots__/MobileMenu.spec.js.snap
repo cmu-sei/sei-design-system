@@ -1,13 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`MobileMenu.vue > matches snapshot 1`] = `
-<sdspanel
-  modelvalue="false"
-  side="right"
+<div
+  data-v-app=""
 >
   
   
-</sdspanel>
+</div>
 `;
 
-exports[`MobileMenu.vue > matches snapshot with no props assigned 1`] = `"<sdspanel modelvalue=\\"false\\" side=\\"right\\"></sdspanel>"`;
+exports[`MobileMenu.vue > matches snapshot with no props assigned 1`] = `""`;
