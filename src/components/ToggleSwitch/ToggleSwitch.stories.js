@@ -10,12 +10,7 @@ export default {
     },
   },
   component: SdsToggleSwitch,
-  argTypes: {
-    variant: {
-      options: ['blue', 'red'],
-      control: {type: 'select'}
-    }
-  }
+  argTypes: {}
 };
 
 const Template = (args) => ({

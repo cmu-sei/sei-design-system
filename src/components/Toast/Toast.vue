@@ -13,16 +13,16 @@
           <div class="flex-shrink-0">
             <!-- Heroicon name: check-circle -->
             <svg
-              v-if="localKind"
+              v-if="localType"
               :class="{
                 ' text-green-400 dark:text-green-300':
-                  localKind && localKind === 'success',
+                  localType && localType === 'success',
                 ' text-blue-400 dark:text-blue-300':
-                  localKind && localKind === 'info',
+                  localType && localType === 'info',
                 ' text-orange-500 dark:text-orange-400':
-                  localKind && localKind === 'warning',
+                  localType && localType === 'warning',
                 ' text-red-400 dark:text-red-300':
-                  localKind && localKind === 'danger',
+                  localType && localType === 'danger',
               }"
               class="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
             >
               <!-- Success -->
               <path
-                v-if="localKind === 'success'"
+                v-if="localType === 'success'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -41,7 +41,7 @@
 
               <!-- Info -->
               <path
-                v-if="localKind === 'info'"
+                v-if="localType === 'info'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -50,7 +50,7 @@
 
               <!-- Warning -->
               <path
-                v-if="localKind === 'warning'"
+                v-if="localType === 'warning'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -59,7 +59,7 @@
 
               <!-- Danger -->
               <path
-                v-if="localKind === 'danger'"
+                v-if="localType === 'danger'"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
@@ -120,7 +120,7 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the component.
      */
-    kind: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+    type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
     /**
      * Determines the title content of the component.
      */
@@ -145,8 +145,8 @@ export default defineComponent({
     };
   },
   computed: {
-    localKind() {
-      return this.kind
+    localType() {
+      return this.type
     }
   },
   mounted() {

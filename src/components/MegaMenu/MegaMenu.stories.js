@@ -18,7 +18,7 @@ export default {
   },
   component: SdsMegaMenu,
   argTypes: {
-    kind: {
+    type: {
       options: ['block', 'underline'],
       control: { type: 'select' }
     }

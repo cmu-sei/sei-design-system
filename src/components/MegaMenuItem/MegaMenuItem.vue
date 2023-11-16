@@ -3,7 +3,7 @@
     data-id="sds-megamenuitem"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
-    :class="[linkClass, kindClass, disabledClass]"
+    :class="[linkClass, typeClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
     role="menuitem"
   >
@@ -16,7 +16,7 @@
       </div>
       <div
         :class="[
-          kind === 'descriptive'
+          type === 'descriptive'
             ? 'gap-1'
             : '',
           'flex flex-col'
@@ -25,7 +25,7 @@
         <div class="inline-flex group">
           <p class="group-hover:text-red-500 dark:group-hover:text-red-300">{{ label }}</p>
           <svg
-            v-if="cta || kind === 'landing-page'"
+            v-if="cta || type === 'landing-page'"
             class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-300 group-hover:ml-4"
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -55,9 +55,9 @@ export default defineComponent({
      */
     label: { type: String, default: "" },
     /**
-     * Determines the MegaMenuItem component kind to use.
+     * Determines the MegaMenuItem component type to use.
      */
-    kind: {
+    type: {
       type: String as PropType<"landing-page" | "descriptive" | "simple">,
       default: "simple",
     },
@@ -76,20 +76,20 @@ export default defineComponent({
   },
   setup(props) {
     const linkClass = computed(() => {
-      /* If the kind is set, or if `cta` prop is set, apply styles */
-      let classes = props.kind || props.cta
+      /* If the type is set, or if `cta` prop is set, apply styles */
+      let classes = props.type || props.cta
         ? 'link group w-full no-underline'
         : ''
       return classes
     })
 
-    const kindClass = computed(() => {
-      /* Apply styles based on kind class */
-      const kind = props.kind as
+    const typeClass = computed(() => {
+      /* Apply styles based on type class */
+      const type = props.type as
         | "landing-page"
         | "descriptive"
         | "simple"
-      switch (kind) {
+      switch (type) {
         case "landing-page":
           return "p-4 text-lg hover:no-underline hover:text-red-500 dark:hover:text-red-300"
         case "descriptive":
@@ -105,7 +105,7 @@ export default defineComponent({
       return props.disabled ? "disabled" : ""
     })
 
-    return { linkClass, kindClass, disabledClass }
+    return { linkClass, typeClass, disabledClass }
   },
 })
 </script>

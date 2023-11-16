@@ -62,7 +62,7 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the component.
      */
-    kind: { type: String as PropType<'dark' | 'light'>, default: null },
+    type: { type: String as PropType<'dark' | 'light'>, default: null },
     /**
      * Delays opening the toggle in ms.
      */
@@ -160,7 +160,7 @@ export default defineComponent({
       }
     },
     variantClass() {
-      switch (this.kind) {
+      switch (this.type) {
         case 'light':
           return 'bg-gray-25 text-gray-900 border-gray-200'
         case 'dark':
@@ -169,7 +169,7 @@ export default defineComponent({
       }
     },
     variantArrowClass() {
-      switch (this.kind) {
+      switch (this.type) {
         case 'light':
           return 'bg-gray-25 border-gray-200'
         case 'dark':

@@ -24,7 +24,7 @@ export default {
       options: ['sm', 'md', 'lg', 'xl', 'auto'],
       control: { type: 'select' }
     },
-    kind: {
+    type: {
       options: ['dark', 'light'],
       control: {type: 'select'}
     },

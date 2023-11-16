@@ -17,7 +17,7 @@
         ref="menu"
         class="flex flex-row"
         :class="{
-          'gap-4 xl:gap-8': kind === 'underline',
+          'gap-4 xl:gap-8': type === 'underline',
         }"
         role="menu"
         @click.self="onClose(false)"
@@ -29,7 +29,6 @@
           :key="topLink.key"
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :href="topLink.href ? topLink.href : undefined"
-          :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :aria-haspopup="topLink.tag === 'button' ? true : undefined"
           :aria-expanded="topLink.tag === 'button' ? topLink.selected : undefined"
           :data-id="`sds-megamenu_${topLink.key}`"
@@ -40,14 +39,14 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': kind === 'block',
-            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
-            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
-            'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
-            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': kind === 'underline',
-            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': kind === 'underline' && topLink.selected,
-            'border-red-500 dark:border-red-300': kind === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': type === 'block',
+            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
+            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': type === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
+            'text-white bg-red-500 dark:bg-red-700': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
+            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': type === 'underline' && topLink.selected,
+            'border-red-500 dark:border-red-300': type === 'underline' && topLink.active,
+            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
           }"
           role="menuitem"
           class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base"
@@ -214,7 +213,7 @@ const props = defineProps({
   /**
    * Overall look and feel of the component (two options)
    */
-  kind: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
+  type: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
   /**
    * Sets the panel width. Full width stretches to fill the width of the screen.
    * Auto width will fit the width of the content inside the panel.
