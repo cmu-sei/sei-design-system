@@ -1,20 +1,44 @@
 <template>
   <SdsPanel
+    v-for="menu in content"
+    :key="menu.key"
     v-model="showPanel"
     :side="side"
   >
     <template #title>
-      <slot name="title" />
+      <slot
+        name="title"
+      />
     </template>
-    <slot />
+    <template #default>
+      <slot
+        name="default"
+      />
+    </template>
     <template #footer>
-      <slot name="footer" />
+      <slot
+        name="footer"
+      />
     </template>
   </SdsPanel>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, watch, onUnmounted, PropType } from "vue";
+import { defineComponent, ref, computed, watch, onUnmounted, PropType } from "vue";
+
+interface INavLink {
+  key: string
+  tag?: 'button' | 'a'
+  title?: string
+  href?: string
+  alignment?: 'left' | 'right' | 'center'
+  children?: INavLink[]
+  external?: boolean
+  active?: boolean
+  selected?: boolean
+  disabled?: boolean
+  onClick?: Function
+}
 
 export default defineComponent({
   name: "SdsMobileMenu",
@@ -36,18 +60,30 @@ export default defineComponent({
     /**
      * Determines the location of the panel.
      */
-     side: {
+    side: {
       type: String as PropType<'left' | 'right' | ''>,
       default: "right",
+    },
+    /**
+     * Provides an alias for handling data within the Mobile Menu.
+     */
+    mobileMenus:  {
+      type: Array as PropType<INavLink[]>,
+      default: () => []
     },
     /**
      * The z-index for the popover.
      */
     zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'update:mobileMenus'],
   setup(props, { emit }) {
-
+    /**
+     * Step is used to reference the depth of the Mobile Menu.
+     * This lets a developer manage a multi-view workflow within the Panel.
+     */
+    const step = ref(1);
+    /* Update showPanel to toggle panel visibility */
     const showPanel = computed({
       get() {
         return props.modelValue;
@@ -58,6 +94,21 @@ export default defineComponent({
          */
         emit("update:modelValue", value);
       },
+    })
+
+    const content = computed({
+      /* Get SdsMegaMenu modelValue property */
+      get(): INavLink[] {
+        return props.mobileMenus
+      },
+      /* Set SdsMegaMenu modelValue property */
+      set(value: INavLink[]) {
+        /**
+         * Emmitted when the v-model (Mega Menu's data source)
+         * has changed.
+         */
+        emit('update:mobileMenus', value)
+      }
     })
 
     onUnmounted(() => {
@@ -93,6 +144,7 @@ export default defineComponent({
       if (typeof document === "undefined") return;
       if (value) {
         makeDomChanges();
+        step.value = 1; // Reset menu depth to 0 on next open
       } else {
         removeDomChanges();
       }
@@ -100,9 +152,11 @@ export default defineComponent({
 
     return {
       showPanel,
+      content,
       makeDomChanges,
       removeDomChanges,
       close,
+      step
     }
   }
 });

@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NavigationItem.vue > matches snapshot 1`] = `
+<a
+  class="py-4 cursor-pointer text-sm transition-all hover:bg-gray-50 hover:dark:bg-gray-850 hover:text-red-500 dark:hover:text-red-300 border-l-8 border-l-transparent active:border-l-red-400 -mx-6 pl-4 pr-6"
+  data-id="sds-navigationitem"
+  role="menuitem"
+>
+  <div
+    class="flex flex-row gap-4 text-gray-600 dark:text-gray-400 hover:text-red-500"
+  >
+    <!--v-if-->
+    <div
+      class="inline-flex group"
+    >
+      <p
+        class="select-none text-lg"
+      />
+    </div>
+    <p
+      class=""
+    >
+      
+      
+    </p>
+    <svg
+      class="ml-auto"
+      height="24"
+      viewBox="0 0 320 512"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256L73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+        fill="currentColor"
+      />
+    </svg>
+  </div>
+</a>
+`;
+
+exports[`NavigationItem.vue > matches snapshot with no props assigned 1`] = `
+"<a data-id=\\"sds-navigationitem\\" class=\\"py-4 cursor-pointer text-sm transition-all hover:bg-gray-50 hover:dark:bg-gray-850 hover:text-red-500 dark:hover:text-red-300 border-l-8 border-l-transparent active:border-l-red-400 -mx-6 pl-4 pr-6\\" role=\\"menuitem\\">
+  <div class=\\"flex flex-row gap-4 text-gray-600 dark:text-gray-400 hover:text-red-500\\">
+    <!--v-if-->
+    <div class=\\"inline-flex group\\">
+      <p class=\\"select-none text-lg\\"></p>
+    </div>
+    <p class=\\"\\"></p><svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"20\\" height=\\"24\\" viewBox=\\"0 0 320 512\\" class=\\"ml-auto\\">
+      <path fill=\\"currentColor\\" d=\\"M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256L73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z\\"></path>
+    </svg>
+  </div>
+</a>"
+`;

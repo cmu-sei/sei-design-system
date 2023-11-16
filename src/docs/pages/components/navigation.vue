@@ -590,6 +590,7 @@
             v-model="showMobileMenu"
             side="left"
             size="sm"
+            :mobile-menus="mobileMenus"
           >
             <template #title>
               <p>
@@ -1791,6 +1792,20 @@ const megaMenu2 = ref([
       document.body.classList.toggle('dark')
     }
   }
+])
+
+const mobileMenus = ref([
+  {
+    key: "test",
+    title: "Test",
+    children: [
+      {
+        key: "test-child",
+        title: "Test Child",
+        children: []
+      }
+    ]
+  },
 ])
 
 defineOptions({
