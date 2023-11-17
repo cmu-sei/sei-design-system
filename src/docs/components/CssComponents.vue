@@ -115,38 +115,33 @@
     </ul>
   </sds-section>
 
-  <!-- Navs -->
+  <!-- Tabs -->
   <sds-section
-    id="nav"
+    id="tab"
     type="accented"
     class="my-6"
   >
     <template #title>
       <h2 class="font-semibold uppercase">
-        Nav
+        Tab
       </h2>
     </template>
     <template #subtitle>
-      <p>Pre-defined nav items via a <code>.nav</code> class.</p>
+      <p>Pre-defined tab items via a <code>.tab</code> class.</p>
       <p class="my-2">
-        Wrap in <code>.nav-group</code> for easy grouping.
+        Wrap in <code>.tab-group</code> for easy grouping.
       </p>
       <p class="my-2">
-        Add <code>.gap-*</code> to <code>.nav-group</code> to add a gap
+        Add <code>.gap-*</code> to <code>.tab-group</code> to add a gap
         between items.
       </p>
       <p class="my-2">
-        Variants include: <code>.nav-white</code>, <code>.nav-black</code>,
-        <code>.nav-blue</code>, <code>.nav-green</code>,
-        <code>.nav-indigo</code>, <code>.nav-orange</code>,
-        <code>.nav-pink</code>, <code>.nav-purple</code>,
-        <code>.nav-red</code>, <code>.nav-teal</code>,
-        <code>.nav-yellow</code>
+        Variants include: <code>.tab-blue</code> and <code>.tab-red</code>
       </p>
       <p class="mt-2">
-        Types include: <code>.nav-underline</code>,
-        <code>.nav-overline</code>, <code>.nav-pill</code>,
-        <code>.nav-block</code>.
+        Types include: <code>.tab-underline</code>,
+        <code>.tab-overline</code>, <code>.tab-pill</code>,
+        <code>.tab-block</code>.
       </p>
       <p class="mt-2">
         Add <code>.active</code> class to create an active look.
@@ -157,183 +152,129 @@
       </p>
     </template>
     <section>
-      <div class="mb-8 nav-group">
-        <button class="nav active">
-          Nav Item 1
+      <div class="mb-8 tab-group">
+        <button class="tab active">
+          Tab Item 1
         </button>
-        <button class="nav">
-          Nav Item 2
+        <button class="tab">
+          Tab Item 2
         </button>
         <button
-          class="nav"
+          class="tab"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav">
-          Nav Item 4
+        <button class="tab">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="mb-8 nav-group">
-        <button class="nav nav-pink active">
-          Nav Item 1
+      <div class="gap-2 mb-8 tab-group">
+        <button class="tab tab-underline tab-red active">
+          Tab Item 1
         </button>
-        <button class="nav nav-pink">
-          Nav Item 2
+        <button class="tab tab-underline tab-red">
+          Tab Item 2
         </button>
         <button
-          class="nav pav-pink"
+          class="tab tab-underline tab-red"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-pink">
-          Nav Item 4
+        <button class="tab tab-underline tab-red">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="gap-2 mb-8 nav-group">
-        <button class="nav nav-underline nav-red active">
-          Nav Item 1
+      <div class="gap-2 mb-8 tab-group">
+        <button class="tab tab-underline active">
+          Tab Item 1
         </button>
-        <button class="nav nav-underline nav-red">
-          Nav Item 2
+        <button class="tab tab-underline">
+          Tab Item 2
         </button>
         <button
-          class="nav nav-underline nav-red"
+          class="tab tab-underline"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-underline nav-red">
-          Nav Item 4
+        <button class="tab tab-underline">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="gap-2 mb-8 nav-group">
-        <button class="nav nav-underline active">
-          Nav Item 1
+      <div class="gap-2 mb-8 tab-group">
+        <button class="tab tab-overline active">
+          Tab Item 1
         </button>
-        <button class="nav nav-underline">
-          Nav Item 2
+        <button class="tab tab-overline">
+          Tab Item 2
         </button>
         <button
-          class="nav nav-underline"
+          class="tab tab-overline"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-underline">
-          Nav Item 4
+        <button class="tab tab-overline">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="gap-2 mb-8 nav-group">
-        <button class="nav nav-overline nav-yellow active">
-          Nav Item 1
+      <div class="gap-2 py-1 mb-8 tab-group">
+        <button class="tab tab-pill tab-blue active">
+          Tab Item 1
         </button>
-        <button class="nav nav-overline nav-yellow">
-          Nav Item 2
+        <button class="tab tab-pill tab-blue">
+          Tab Item 2
         </button>
         <button
-          class="nav nav-overline nav-yellow"
+          class="tab tab-pill tab-blue"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-overline nav-yellow">
-          Nav Item 4
+        <button class="tab tab-pill tab-blue">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="gap-2 mb-8 nav-group">
-        <button class="nav nav-overline active">
-          Nav Item 1
+      <div class="gap-2 py-1 mb-8 tab-group">
+        <button class="tab tab-pill active">
+          Tab Item 1
         </button>
-        <button class="nav nav-overline">
-          Nav Item 2
+        <button class="tab tab-pill">
+          Tab Item 2
         </button>
         <button
-          class="nav nav-overline"
+          class="tab tab-pill"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-overline">
-          Nav Item 4
+        <button class="tab tab-pill">
+          Tab Item 4
         </button>
       </div>
 
-      <div class="gap-2 py-1 mb-8 nav-group">
-        <button class="nav nav-pill nav-blue active">
-          Nav Item 1
+      <div class="mb-8 tab-group">
+        <button class="tab tab-block active">
+          Tab Item 1
         </button>
-        <button class="nav nav-pill nav-blue">
-          Nav Item 2
-        </button>
-        <button
-          class="nav nav-pill nav-blue"
-          disabled
-        >
-          Nav Item 3
-        </button>
-        <button class="nav nav-pill nav-blue">
-          Nav Item 4
-        </button>
-      </div>
-
-      <div class="gap-2 py-1 mb-8 nav-group">
-        <button class="nav nav-pill active">
-          Nav Item 1
-        </button>
-        <button class="nav nav-pill">
-          Nav Item 2
+        <button class="tab tab-block">
+          Tab Item 2
         </button>
         <button
-          class="nav nav-pill"
+          class="tab tab-block"
           disabled
         >
-          Nav Item 3
+          Tab Item 3
         </button>
-        <button class="nav nav-pill">
-          Nav Item 4
-        </button>
-      </div>
-
-      <div class="mb-8 nav-group">
-        <button class="nav nav-block nav-orange active">
-          Nav Item 1
-        </button>
-        <button class="nav nav-block nav-orange">
-          Nav Item 2
-        </button>
-        <button
-          class="nav nav-block nav-orange"
-          disabled
-        >
-          Nav Item 3
-        </button>
-        <button class="nav nav-block nav-orange">
-          Nav Item 4
-        </button>
-      </div>
-
-      <div class="mb-8 nav-group">
-        <button class="nav nav-block active">
-          Nav Item 1
-        </button>
-        <button class="nav nav-block">
-          Nav Item 2
-        </button>
-        <button
-          class="nav nav-block"
-          disabled
-        >
-          Nav Item 3
-        </button>
-        <button class="nav nav-block">
-          Nav Item 4
+        <button class="tab tab-block">
+          Tab Item 4
         </button>
       </div>
     </section>
