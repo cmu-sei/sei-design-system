@@ -1,165 +1,152 @@
 <template>
-  <SdsPanel
-    v-for="menu in content"
-    :key="menu.key"
-    v-model="showPanel"
-    :side="side"
+  <nav
+    data-id="sds-mobilemenu"
+    role="menu"
   >
-    <template #title>
-      <slot
-        name="title"
-      />
-    </template>
-    <template #default>
-      <slot
-        name="default"
-      />
-    </template>
-    <template #footer>
-      <slot
-        name="footer"
-      />
-    </template>
-  </SdsPanel>
+    <SdsPanel
+      v-model="showPanel"
+      :side="side"
+    >
+      <template #title>
+        <slot
+          name="title"
+        />
+      </template>
+      <template #default>
+        <slot
+          name="default"
+          :step-update="updateStep"
+        />
+      </template>
+      <template #footer>
+        <slot
+          name="footer"
+        />
+      </template>
+    </SdsPanel>
+  </nav>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch, onUnmounted, PropType } from "vue";
-
-interface INavLink {
-  key: string
-  tag?: 'button' | 'a'
-  title?: string
-  href?: string
-  alignment?: 'left' | 'right' | 'center'
-  children?: INavLink[]
-  external?: boolean
-  active?: boolean
-  selected?: boolean
-  disabled?: boolean
-  onClick?: Function
+import { ITopLink } from '../MegaMenu/MegaMenu.vue';
+/**
+ * Right now, this is the same interface as Mega Menu's ITopLink
+ */
+interface IMobileMenu extends ITopLink {
+  type?: 'expand' | 'slide'
 }
 
-export default defineComponent({
+export default {
   name: "SdsMobileMenu",
-  props: {
-    /**
-     * The v-model that determines the show/hide state of the panel.
-     */
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the size of the panel.
-     */
-    size: {
-      type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-      default: "md",
-    },
-    /**
-     * Determines the location of the panel.
-     */
-    side: {
-      type: String as PropType<'left' | 'right' | ''>,
-      default: "right",
-    },
-    /**
-     * Provides an alias for handling data within the Mobile Menu.
-     */
-    mobileMenus:  {
-      type: Array as PropType<INavLink[]>,
-      default: () => []
-    },
-    /**
-     * The z-index for the popover.
-     */
-    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, watch, onUnmounted, PropType } from "vue";
+
+const props = defineProps({
+  /**
+   * The v-model that determines the show/hide state of the panel.
+   */
+  modelValue: {
+    type: Array as PropType<IMobileMenu[]>,
+    default: () => []
   },
-  emits: ['update:modelValue', 'update:mobileMenus'],
-  setup(props, { emit }) {
+  /**
+   * Panel visibility
+   */
+  visible: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * Determines the size of the panel.
+   */
+  size: {
+    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
+    default: "md",
+  },
+  /**
+   * Determines the location of the panel.
+   */
+  side: {
+    type: String as PropType<'left' | 'right' | ''>,
+    default: "right",
+  },
+  /**
+   * The z-index for the popover.
+   */
+  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+});
+
+const emits = defineEmits([
+  'update:visible',
+  'update:mobileMenus'
+]);
+
+/**
+ * The "step" ref keeps track of the Mobile Menu depth
+ */
+const step = ref(1);
+/* Go one */
+const updateStep = (value: number) => {
+  if (step.value + value > 1) {
+    step.value += value;
+  }
+  step.value += value;
+  console.log(step.value);
+}
+
+/* Update showPanel to toggle panel visibility */
+const showPanel = computed({
+  get() {
+    return props.visible;
+  },
+  set(value: Boolean) {
     /**
-     * Step is used to reference the depth of the Mobile Menu.
-     * This lets a developer manage a multi-view workflow within the Panel.
+     * Emmitted when modelValue changes.
      */
-    const step = ref(1);
-    /* Update showPanel to toggle panel visibility */
-    const showPanel = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        emit("update:modelValue", value);
-      },
-    })
-
-    const content = computed({
-      /* Get SdsMegaMenu modelValue property */
-      get(): INavLink[] {
-        return props.mobileMenus
-      },
-      /* Set SdsMegaMenu modelValue property */
-      set(value: INavLink[]) {
-        /**
-         * Emmitted when the v-model (Mega Menu's data source)
-         * has changed.
-         */
-        emit('update:mobileMenus', value)
-      }
-    })
-
-    onUnmounted(() => {
-      removeDomChanges();
-    })
-
-    const makeDomChanges = () => {
-      if (typeof document === "undefined") return;
-      document.documentElement.classList.add("panel-prevent-scroll");
-      setTimeout(() => {
-        document.addEventListener("keyup", handleEscKey);
-      }, 0);
-    }
-
-    const removeDomChanges = () => {
-      if (typeof document === "undefined") return;
-      document.documentElement.classList.remove("panel-prevent-scroll");
-      document.removeEventListener("keyup", handleEscKey);
-    }
-
-    const close = () => {
-      showPanel.value = false;
-    }
-
-    const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        close();
-      }
-    }
-
-    watch(showPanel, (value) => {
-      showPanel.value = (value as boolean);
-      if (typeof document === "undefined") return;
-      if (value) {
-        makeDomChanges();
-        step.value = 1; // Reset menu depth to 0 on next open
-      } else {
-        removeDomChanges();
-      }
-    }, { immediate: true })
-
-    return {
-      showPanel,
-      content,
-      makeDomChanges,
-      removeDomChanges,
-      close,
-      step
-    }
+    emits("update:visible", value);
   }
 });
+
+onUnmounted(() => {
+  removeDomChanges();
+})
+
+const makeDomChanges = () => {
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.add("panel-prevent-scroll");
+  setTimeout(() => {
+    document.addEventListener("keyup", handleEscKey);
+  }, 0);
+}
+
+const removeDomChanges = () => {
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.remove("panel-prevent-scroll");
+  document.removeEventListener("keyup", handleEscKey);
+}
+
+const close = () => {
+  showPanel.value = false;
+}
+
+const handleEscKey = (e: KeyboardEvent) => {
+  if (e.key === "Escape") {
+    close();
+  }
+}
+
+watch(showPanel, (value) => {
+  showPanel.value = (value as boolean);
+  if (typeof document === "undefined") return;
+  if (value) {
+    makeDomChanges();
+  } else {
+    removeDomChanges();
+  }
+}, { immediate: true })
 </script>
 
 <style>

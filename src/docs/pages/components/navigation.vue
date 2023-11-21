@@ -587,93 +587,110 @@
       <div>
         <div class="grid gap-4">
           <SdsMobileMenu
-            v-model="showMobileMenu"
+            v-model:mobileMenu="mobileMenus"
+            v-model:visible="showPanel"
             side="left"
             size="sm"
-            :mobile-menus="mobileMenus"
+            class="transition-all ease-in-out duration-200 origin-top"
           >
             <template #title>
               <p>
                 <span class="font-bold text-red-600 dark:text-red-500">Suite</span><span class="font-semibold text-gray-600 dark:text-gray-400">Name</span>
               </p>
             </template>
-            <SdsSearchBox
-              v-model="searchBox.modelValue"
-              variant="gray"
-              class="mb-4"
-              :disabled="false"
-              :autofocus="false"
-              :disable-search="false"
-              @search="searchBox.onSearch"
-            />
-            <SdsNavigationItem
-              label="Plants"
-            >
-              <template #left>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 256 256"
-                  class="mt-0.5"
+            <template #default="{ stepUpdate }">
+              <h3
+                @click="stepUpdate(-1)"
+              >
+                Go Back
+              </h3>
+              <SdsSearchBox
+                v-model="searchBox.modelValue"
+                variant="gray"
+                class="mb-4"
+                :disabled="false"
+                :autofocus="false"
+                :disable-search="false"
+                @search="searchBox.onSearch"
+              />
+              <SdsNavigationItem
+                v-for="menuItem in mobileMenus"
+                :key="menuItem.key"
+                :label="menuItem.title"
+                :type="menuItem.type"
+              >
+                <template
+                  v-if="menuItem.icon"
+                  #left
                 >
-                  <path
-                    fill="currentColor"
-                    d="M205.41 151.07a60.9 60.9 0 0 1-31.83 8.86a71.71 71.71 0 0 1-27.36-5.66A55.55 55.55 0 0 0 136 186.51V216a8 8 0 0 1-8.53 8a8.18 8.18 0 0 1-7.47-8.25v-12.44l-38.62-38.62A52.5 52.5 0 0 1 63.44 168a45.82 45.82 0 0 1-23.92-6.67C17.73 148.09 6 117.62 8.27 79.79a8 8 0 0 1 7.52-7.52c37.83-2.23 68.3 9.46 81.5 31.25a46 46 0 0 1 6.45 28.48a4 4 0 0 1-6.89 2.43l-19.2-20.1a8 8 0 0 0-11.31 11.31l53.88 55.25c.06-.78.13-1.56.21-2.33a68.56 68.56 0 0 1 18.64-39.46l50.59-53.46a8 8 0 0 0-11.31-11.32l-49 51.82a4 4 0 0 1-6.78-1.74c-4.74-17.48-2.65-34.88 6.4-49.82c17.86-29.48 59.42-45.26 111.18-42.22a8 8 0 0 1 7.52 7.52c3 51.77-12.78 93.33-42.26 111.19Z"
-                  />
-                </svg>
-              </template>
-            </SdsNavigationItem>
-            <SdsNavigationItem
-              label="Trees"
-            >
-              <template #left>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  class="mt-0.5"
+                  <svg
+                    v-if="menuItem.icon === 'plant'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 256 256"
+                    class="mt-0.5"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M205.41 151.07a60.9 60.9 0 0 1-31.83 8.86a71.71 71.71 0 0 1-27.36-5.66A55.55 55.55 0 0 0 136 186.51V216a8 8 0 0 1-8.53 8a8.18 8.18 0 0 1-7.47-8.25v-12.44l-38.62-38.62A52.5 52.5 0 0 1 63.44 168a45.82 45.82 0 0 1-23.92-6.67C17.73 148.09 6 117.62 8.27 79.79a8 8 0 0 1 7.52-7.52c37.83-2.23 68.3 9.46 81.5 31.25a46 46 0 0 1 6.45 28.48a4 4 0 0 1-6.89 2.43l-19.2-20.1a8 8 0 0 0-11.31 11.31l53.88 55.25c.06-.78.13-1.56.21-2.33a68.56 68.56 0 0 1 18.64-39.46l50.59-53.46a8 8 0 0 0-11.31-11.32l-49 51.82a4 4 0 0 1-6.78-1.74c-4.74-17.48-2.65-34.88 6.4-49.82c17.86-29.48 59.42-45.26 111.18-42.22a8 8 0 0 1 7.52 7.52c3 51.77-12.78 93.33-42.26 111.19Z"
+                    />
+                  </svg>
+                  <svg
+                    v-if="menuItem.icon === 'tree'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    class="mt-0.5"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M10 21v-3H3l5-5H5l5-5H7l5-5l5 5h-3l5 5h-3l5 5h-7v3h-4Z"
+                    />
+                  </svg>
+                  <svg
+                    v-if="menuItem.icon === 'bug'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    class="mt-0.5"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M19 8h-1.81a5.985 5.985 0 0 0-1.82-1.96l.93-.93a.996.996 0 1 0-1.41-1.41l-1.47 1.47C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L9.11 3.7A.996.996 0 1 0 7.7 5.11l.92.93C7.88 6.55 7.26 7.22 6.81 8H5c-.55 0-1 .45-1 1s.45 1 1 1h1.09c-.05.33-.09.66-.09 1v1H5c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .34.04.67.09 1H5c-.55 0-1 .45-1 1s.45 1 1 1h1.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H19c.55 0 1-.45 1-1s-.45-1-1-1h-1.09c.05-.33.09-.66.09-1v-1h1c.55 0 1-.45 1-1s-.45-1-1-1h-1v-1c0-.34-.04-.67-.09-1H19c.55 0 1-.45 1-1s-.45-1-1-1zm-6 8h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1zm0-4h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1z"
+                    />
+                  </svg>
+                </template>
+                <template
+                  v-if="menuItem.content.children"
+                  #children
                 >
-                  <path
-                    fill="currentColor"
-                    d="M10 21v-3H3l5-5H5l5-5H7l5-5l5 5h-3l5 5h-3l5 5h-7v3h-4Z"
+                  <SdsNavigationItem
+                    v-for="child in menuItem.content.children"
+                    :key="child.key"
+                    :label="child.title"
+                    :href="child.href"
                   />
-                </svg>
-              </template>
-            </SdsNavigationItem>
-            <SdsNavigationItem
-              label="Bugs"
-            >
-              <template #left>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  class="mt-0.5"
+                </template>
+              </SdsNavigationItem>
+              <hr class="mt-2 mb-1">
+              <SdsNavigationItem>
+                <p
+                  class="text-lg"
+                  @click="stepUpdate(2)"
                 >
-                  <path
-                    fill="currentColor"
-                    d="M19 8h-1.81a5.985 5.985 0 0 0-1.82-1.96l.93-.93a.996.996 0 1 0-1.41-1.41l-1.47 1.47C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L9.11 3.7A.996.996 0 1 0 7.7 5.11l.92.93C7.88 6.55 7.26 7.22 6.81 8H5c-.55 0-1 .45-1 1s.45 1 1 1h1.09c-.05.33-.09.66-.09 1v1H5c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .34.04.67.09 1H5c-.55 0-1 .45-1 1s.45 1 1 1h1.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H19c.55 0 1-.45 1-1s-.45-1-1-1h-1.09c.05-.33.09-.66.09-1v-1h1c.55 0 1-.45 1-1s-.45-1-1-1h-1v-1c0-.34-.04-.67-.09-1H19c.55 0 1-.45 1-1s-.45-1-1-1zm-6 8h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1zm0-4h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1z"
-                  />
-                </svg>
-              </template>
-            </SdsNavigationItem>
-            <hr class="mt-2 mb-1">
-            <a
-              href="/"
-              class="text-lg text-gray-600 dark:text-gray-400 hover:text-red-400 py-4"
-            >News & Media</a>
-            <a
-              href="/"
-              class="text-lg text-gray-600 dark:text-gray-400 hover:text-red-400 py-4"
-            >Resources</a>
-            <hr class="mt-2 mb-1">
-            <a
-              href="/"
-              class="text-lg text-gray-600 dark:text-gray-400 hover:text-red-400 py-4"
-            >Careers</a>
+                  News & Media
+                </p>
+              </SdsNavigationItem>
+
+              <SdsNavigationItem
+                href="/"
+                label="Resources"
+              />
+              <hr class="mt-2 mb-1">
+            </template>
             <template #footer>
               <div class="flex flex-row text-gray-600">
                 <svg
@@ -742,7 +759,7 @@
           <SdsButton
             variant="default"
             class="max-w-xs"
-            @click="showMobileMenu = !showMobileMenu"
+            @click="showPanel = !showPanel"
           >
             Show Mobile Menu
           </SdsButton>
@@ -840,7 +857,8 @@
 const currentPage = ref(3)
 const totalPages = ref(10)
 
-const showMobileMenu = ref(false)
+const showPanel = ref(false)
+
 const searchBox = reactive({
   modelValue: '',
   onSearch(value: string) {
@@ -1794,17 +1812,62 @@ const megaMenu2 = ref([
   }
 ])
 
+const step = ref(0);
 const mobileMenus = ref([
   {
-    key: "test",
-    title: "Test",
-    children: [
-      {
-        key: "test-child",
-        title: "Test Child",
-        children: []
-      }
-    ]
+    key: "plants",
+    title: "Plants",
+    type: "slide",
+    icon: "plant",
+    content: {
+      children: [
+        {
+          key: "ferns",
+          title: "Ferns",
+          href: "https://google.com/?ferns"
+        }
+      ]
+    }
+  },
+  {
+    key: "trees",
+    title: "Trees",
+    type: "expand",
+    icon: "tree",
+    content: {
+      children: [
+        {
+          key: "deciduous",
+          title: "Deciduous",
+          href: "https://google.com/?deciduous"
+        },
+        {
+          key: "leafy",
+          title: "Leafy",
+          href: "https://google.com/?leafy"
+        }
+      ]
+    }
+  },
+  {
+    key: "bugs",
+    title: "Bugs",
+    type: "expand",
+    icon: "bug",
+    content: {
+      children: [
+        {
+          key: "deciduous",
+          title: "Deciduous",
+          href: "https://google.com/?deciduous"
+        },
+        {
+          key: "leafy",
+          title: "Leafy",
+          href: "https://google.com/?leafy"
+        }
+      ]
+    }
   },
 ])
 

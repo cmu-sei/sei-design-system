@@ -158,7 +158,7 @@
 
 <script lang="ts">
 /* Top Link navigation label type interface */
-interface ITopLink {
+export interface ITopLink {
   key: string
   tag?: 'button' | 'a'
   title?: string
