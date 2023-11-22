@@ -12,8 +12,9 @@ exports[`NavigationItem.vue > matches snapshot 1`] = `
     tabindex="0"
   >
     <!--v-if-->
+    
     <!--v-if-->
-    <!--v-if-->
+    
     <!--v-if-->
   </a>
   <!--v-if-->
@@ -23,7 +24,6 @@ exports[`NavigationItem.vue > matches snapshot 1`] = `
 
 exports[`NavigationItem.vue > matches snapshot with no props assigned 1`] = `
 "<a data-id=\\"sds-navigationitem\\" class=\\"group flex flex-row gap-4 cursor-pointer text-sm transition-all border-l-8 -mx-6 py-4 pl-4 pr-6 text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent\\" tabindex=\\"0\\" role=\\"menuitem\\">
-  <!--v-if-->
   <!--v-if-->
   <!--v-if-->
   <!--v-if-->
