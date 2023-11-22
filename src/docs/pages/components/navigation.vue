@@ -683,21 +683,17 @@
                     >
                       <p
                         class="w-full h-full text-lg"
-                        @click="stepUpdate(1)"
+                        @click="stepUpdate(menuItem.key === 'plants' ? 1 : 3)"
                       >
                         {{ menuItem.title }}
                       </p>
                     </template>
                   </SdsNavigationItem>
                   <hr class="mt-2 mb-1">
-                  <SdsNavigationItem>
-                    <p
-                      class="w-full h-full text-lg"
-                      @click="stepUpdate(2)"
-                    >
-                      News & Media
-                    </p>
-                  </SdsNavigationItem>
+                  <SdsNavigationItem
+                    label="News & Media"
+                    href="https://google.com/news"
+                  />
                   <SdsNavigationItem
                     href="/"
                     label="Resources"
@@ -749,10 +745,10 @@
                 leave-from-class="opacity-1 right-0 ml-0"
                 leave-to-class="opacity-0 -right-full ml-40"
               >
-                <div v-if="activeStep === 3">
+                <div v-if="activeStep === 4">
                   <div
                     class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4"
-                    @click="stepUpdate(-2)"
+                    @click="stepUpdate(-3)"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -768,8 +764,11 @@
                     </svg>
                     <h3>Go Back</h3>
                   </div>
+                  <p class="text-lg pt-4 mb-2">
+                    <b>Tree Categories</b>
+                  </p>
                   <SdsNavigationItem
-                    v-for="menuItem in mobileMenus[2].content.children"
+                    v-for="menuItem in mobileMenus[1].content.children"
                     :key="menuItem.key"
                     :label="menuItem.title"
                     :href="menuItem.href"
@@ -1918,7 +1917,7 @@ const mobileMenus = ref([
   {
     key: "trees",
     title: "Trees",
-    type: "expand",
+    type: "slide",
     icon: "tree",
     content: {
       children: [
@@ -1931,6 +1930,16 @@ const mobileMenus = ref([
           key: "leafy",
           title: "Leafy",
           href: "https://google.com/?leafy"
+        },
+        {
+          key: "tree_anatomy",
+          title: "Tree Anatomy",
+          href: "https://google.com/?tree-anatomy"
+        },
+        {
+          key: "available_saplings",
+          title: "Available Saplings",
+          href: "https://google.com/?available-saplings"
         }
       ]
     }
