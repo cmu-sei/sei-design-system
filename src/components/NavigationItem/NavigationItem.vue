@@ -20,16 +20,16 @@
       v-if="$slots.left"
       name="left"
     />
-    <span
-      v-if="label"
-      class="select-none text-lg"
-    >
-      {{ label }}
-    </span>
     <slot
-      v-if="$slots.default"
       name="default"
-    />
+    >
+      <span
+        v-if="label"
+        class="select-none text-lg"
+      >
+        {{ label }}
+      </span>
+    </slot>
     <svg
       v-if="$slots.children"
       xmlns="http://www.w3.org/2000/svg"

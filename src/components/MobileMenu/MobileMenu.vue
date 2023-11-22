@@ -16,6 +16,7 @@
         <slot
           name="default"
           :step-update="updateStep"
+          :active-step="step"
         />
       </template>
       <template #footer>
@@ -90,10 +91,9 @@ const emits = defineEmits([
 const step = ref(1);
 /* Go one */
 const updateStep = (value: number) => {
-  if (step.value + value > 1) {
+  if (step.value + value > 0) {
     step.value += value;
   }
-  step.value += value;
   console.log(step.value);
 }
 
