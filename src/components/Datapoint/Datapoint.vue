@@ -101,37 +101,37 @@ const variantClass = computed(() => {
 
   switch(props.variant) {
     case 'blue':
-      textClass = 'text-blue-500 dark:text-blue-400'
+      textClass = 'text-blue-600 dark:text-blue-400'
       break
     case 'green':
-      textClass = 'text-green-500 dark:text-green-400'
+      textClass = 'text-green-600 dark:text-green-400'
       break
     case 'teal':
-      textClass = 'text-teal-500 dark:text-teal-400'
+      textClass = 'text-teal-600 dark:text-teal-400'
       break
     case 'orange':
-      textClass = 'text-orange-700 dark:text-orange-400'
+      textClass = 'text-orange-600 dark:text-orange-300'
       break
     case 'red':
-      textClass = 'text-red-500 dark:text-red-400'
+      textClass = 'text-red-600 dark:text-red-400'
       break
     case 'tan':
-      textClass = 'text-tan-800 dark:text-tan-500'
+      textClass = 'text-tan-600 dark:text-tan-400'
       break
     case 'yellow':
-      textClass = 'text-yellow-800 dark:text-yellow-400'
+      textClass = 'text-yellow-600 dark:text-yellow-300'
       break
     case 'pink':
       textClass = 'text-pink-600 dark:text-pink-400'
       break
     case 'purple':
-      textClass = 'text-purple-500 dark:text-purple-400'
+      textClass = 'text-purple-600 dark:text-purple-400'
       break
     case 'indigo':
-      textClass = 'text-indigo-500 dark:text-indigo-400'
+      textClass = 'text-indigo-600 dark:text-indigo-400'
       break
     case 'gray':
-      textClass = 'text-gray-500 dark:text-gray-300'
+      textClass = 'text-gray-600 dark:text-gray-300'
       break
     default:
       textClass = 'text-black dark:text-white'

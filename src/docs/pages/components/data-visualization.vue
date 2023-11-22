@@ -109,8 +109,68 @@
       <div>
         <SdsDatapoint
           v-model="datapointModelValue"
-          size="lg"
+          size="sm"
           variant="black"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="gray"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="tan"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="red"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="purple"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="indigo"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="blue"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="teal"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="green"
           label="Report Downloads"
         />
       </div>
