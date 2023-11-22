@@ -127,7 +127,7 @@
                 <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.aboutLink.label"
-                    :kind="content.aboutLink.kind"
+                    :type="content.aboutLink.kind"
                     :href="content.aboutLink.href"
                   />
                 </div>
@@ -157,7 +157,7 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.divisionLink.label"
-                :kind="content.divisionLink.kind"
+                :type="content.divisionLink.kind"
                 :href="content.divisionLink.href"
               />
               <div
@@ -179,7 +179,7 @@
                 <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.topicsLink.label"
-                    :kind="content.topicsLink.kind"
+                    :type="content.topicsLink.kind"
                     :href="content.topicsLink.href"
                   />
                 </div>
@@ -335,7 +335,7 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.eventLink.label"
-                :kind="content.eventLink.kind"
+                :type="content.eventLink.kind"
                 :href="content.eventLink.href"
               />
               <div
@@ -396,7 +396,7 @@
               <SdsMegaMenuItem
                 :href="content.careersLink.href"
                 :label="content.careersLink.label"
-                :kind="content.careersLink.kind"
+                :type="content.careersLink.kind"
               />
               <div
                 v-for="careerLink in content.careersLinks"
@@ -420,7 +420,7 @@
               <SdsMegaMenuItem
                 :href="content.jobsLink.href"
                 :label="content.jobsLink.label"
-                :kind="content.jobsLink.kind"
+                :type="content.jobsLink.kind"
               />
               <div
                 v-for="row, index in content.jobs"
@@ -469,13 +469,13 @@
     <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
-        kind="block"
+        type="block"
         width="auto"
       >
         <template #panel(about-1)="{ content }">
           <SdsMegaMenuItem
             :label="content.divisionLink.label"
-            :kind="content.divisionLink.kind"
+            :type="content.divisionLink.kind"
             :href="content.divisionLink.href"
             class="select-none"
           />
@@ -553,7 +553,7 @@
           <div class="max-w-lg">
             <SdsMegaMenuItem
               :label="content.eventLink.label"
-              :kind="content.eventLink.kind"
+              :type="content.eventLink.kind"
               :href="content.eventLink.href"
             />
             <div
@@ -610,7 +610,7 @@
           <SdsMegaMenuItem
             :href="content.jobsLink.href"
             :label="content.jobsLink.label"
-            :kind="content.jobsLink.kind"
+            :type="content.jobsLink.kind"
           />
           <div
             v-for="row, index in content.jobs"
@@ -3328,25 +3328,25 @@ export default defineComponent({
           id: Math.random(),
           title: "Success Toast",
           text: "This is the content of this toast.",
-          kind: "success",
+          type: "success",
         },
         {
           id: Math.random(),
           title: "Info Toast",
           text: "This is the content of this toast.",
-          kind: "info",
+          type: "info",
         },
         {
           id: Math.random(),
           title: "Warning Toast",
           text: "This is the content of this toast.",
-          kind: "warning",
+          type: "warning",
         },
         {
           id: Math.random(),
           title: "Danger Toast",
           text: "This is the content of this toast.",
-          kind: "danger",
+          type: "danger",
           noAutoHide: true,
         },
       ];

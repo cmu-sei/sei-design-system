@@ -4,11 +4,51 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div class="grid gap-4">
+      <div class="grid grid-cols-4 gap-4">
         <div>
           <SdsAvatar
             shape="circle"
             variant="gray"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="yellow"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="red"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="purple"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="blue"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="green"
             size="lg"
             name="John Smith"
           />

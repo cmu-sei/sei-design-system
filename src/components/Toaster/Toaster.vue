@@ -31,7 +31,7 @@
             v-for="toast in toasts"
             :id="toast.id"
             :key="toast.id"
-            :kind="toast.kind"
+            :type="toast.type"
             :title="toast.title"
             :text="toast.text"
             :auto-hide-delay="toast.autoHideDelay || 5000"
@@ -51,7 +51,7 @@ import SdsToast from "../Toast/Toast.vue";
 
 interface ToasterToast {
   id: number
-  kind: 'success' | 'info' | 'warning' | 'danger'
+  type: 'success' | 'info' | 'warning' | 'danger'
   title: string
   text: string
   autoHideDelay: number

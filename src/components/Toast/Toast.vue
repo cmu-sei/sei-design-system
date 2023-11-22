@@ -19,9 +19,9 @@
                   localType && localType === 'success',
                 ' text-blue-400 dark:text-blue-300':
                   localType && localType === 'info',
-                ' text-orange-500 dark:text-orange-400':
+                ' text-orange-300 dark:text-orange-300':
                   localType && localType === 'warning',
-                ' text-red-400 dark:text-red-300':
+                ' text-red-600 dark:text-red-300':
                   localType && localType === 'danger',
               }"
               class="w-6 h-6"
