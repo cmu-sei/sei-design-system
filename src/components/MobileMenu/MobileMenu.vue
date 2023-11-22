@@ -42,7 +42,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, watch, onUnmounted, PropType } from "vue";
+import { computed, ref, watch, onUnmounted, PropType } from "vue";
 
 const props = defineProps({
   /**
