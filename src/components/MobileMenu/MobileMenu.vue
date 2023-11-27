@@ -10,18 +10,22 @@
       <template #title>
         <slot
           name="title"
+          :panel-update="panelUpdate"
+          :active-panel="panel"
         />
       </template>
       <template #default>
         <slot
           name="default"
-          :step-update="updateStep"
-          :active-step="step"
+          :panel-update="panelUpdate"
+          :active-panel="panel"
         />
       </template>
       <template #footer>
         <slot
           name="footer"
+          :panel-update="panelUpdate"
+          :active-panel="panel"
         />
       </template>
     </SdsPanel>
@@ -31,10 +35,10 @@
 <script lang="ts">
 import { ITopLink } from '../MegaMenu/MegaMenu.vue';
 /**
- * Right now, this is the same interface as Mega Menu's ITopLink
+ * Right now, this is the same interface as Mega Menu's ITopLink, with the addition of "type"
  */
 interface IMobileMenu extends ITopLink {
-  type?: 'expand' | 'slide'
+  type?: 'back' | 'expand' | 'slide' | 'title'
 }
 
 export default {
@@ -47,16 +51,16 @@ import { computed, ref, watch, onUnmounted, PropType } from "vue";
 
 const props = defineProps({
   /**
-   * The v-model that determines the show/hide state of the panel.
+   * Provides the navigation item values used to populate the mobile menu.
    */
-  modelValue: {
+  mobileMenus: {
     type: Array as PropType<IMobileMenu[]>,
     default: () => []
   },
   /**
-   * Panel visibility
+   * The v-model that determines the show/hide state of the panel.
    */
-  visible: {
+  modelValue: {
     type: Boolean,
     default: false
   },
@@ -81,32 +85,49 @@ const props = defineProps({
 });
 
 const emits = defineEmits([
-  'update:visible',
-  'update:mobileMenus'
+  'update:model-value',
 ]);
 
 /**
- * The "step" ref keeps track of the Mobile Menu depth
+ * The "panel" ref keeps track of the current Mobile Menu panel
  */
-const step = ref(1);
-/* Go one */
-const updateStep = (value: number) => {
-  if (step.value + value > 0) {
-    step.value += value;
+const panel = ref('root');
+
+/**
+ * This is a ref to mirror the "mobileMenus" prop. This provides an interactive data model for selecting panels.
+ */
+const mobileMenus = ref(props.mobileMenus);
+
+/**
+ * Callback to interactive with active menu panel state
+ */
+const panelUpdate = (e: Event, value: string) => {
+  if (typeof document === "undefined") return null  // Only accept client-side calls
+  // console.log(panel.value); // Which panel is selected?
+  if (e.target !== null) {
+    e.preventDefault();
+    if ((e.currentTarget as HTMLElement).dataset.type === 'expand') {
+      // Toggle selected, it's a "drawer" interaction
+      mobileMenus.value.map(i => {
+        i.selected = i.selected ? false : value === i.key;
+      });
+    } else {
+      // Select a specific panel
+      panel.value = value;
+    }
   }
-  console.log(step.value);
 }
 
 /* Update showPanel to toggle panel visibility */
 const showPanel = computed({
   get() {
-    return props.visible;
+    return props.modelValue;
   },
   set(value: Boolean) {
     /**
-     * Emmitted when modelValue changes.
+     * Emmitted when mobileMenus changes.
      */
-    emits("update:visible", value);
+    emits("update:model-value", value);
   }
 });
 

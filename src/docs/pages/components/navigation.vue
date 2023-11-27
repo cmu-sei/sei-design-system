@@ -587,8 +587,8 @@
       <div>
         <div class="grid gap-4">
           <SdsMobileMenu
-            v-model:mobileMenu="mobileMenus"
-            v-model:visible="showPanel"
+            v-model="showPanel"
+            :mobile-menus="mobileMenus"
             side="left"
             size="sm"
           >
@@ -597,7 +597,7 @@
                 <span class="font-bold text-red-600 dark:text-red-500">Suite</span><span class="font-semibold text-gray-600 dark:text-gray-400">Name</span>
               </p>
             </template>
-            <template #default="{ activeStep, stepUpdate }">
+            <template #default="{ activePanel, panelUpdate }">
               <transition
                 enter-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
                 enter-from-class="opacity-0 -left-full mr-40"
@@ -606,7 +606,7 @@
                 leave-from-class="opacity-1 left-0 mr-0"
                 leave-to-class="opacity-0 -left-full mr-40"
               >
-                <div v-if="activeStep === 1">
+                <div v-if="activePanel === 'root'">
                   <SdsSearchBox
                     v-model="searchBox.modelValue"
                     variant="gray"
@@ -619,8 +619,10 @@
                   <SdsNavigationItem
                     v-for="menuItem in mobileMenus"
                     :key="menuItem.key"
-                    :label="menuItem.type === 'expand' ? menuItem.title : ''"
+                    :label="menuItem.title"
                     :type="menuItem.type"
+                    :selected="menuItem.selected ?? false"
+                    :on-click="(e: Event) => { panelUpdate(e, menuItem.key) }"
                   >
                     <template
                       v-if="menuItem.icon"
@@ -667,7 +669,7 @@
                       </svg>
                     </template>
                     <template
-                      v-if="menuItem.content?.children"
+                      v-if="menuItem.content?.children && menuItem.type !== 'slide'"
                       #children
                     >
                       <SdsNavigationItem
@@ -675,28 +677,19 @@
                         :key="child.key"
                         :label="child.title"
                         :href="child.href"
+                        :type="child.type"
+                        :disabled="menuItem.selected ? false : true"
                       />
                     </template>
-                    <template
-                      v-if="menuItem.type === 'slide'"
-                      #default
-                    >
-                      <p
-                        class="w-full h-full text-lg"
-                        @click="stepUpdate(menuItem.key === 'plants' ? 1 : 3)"
-                      >
-                        {{ menuItem.title }}
-                      </p>
-                    </template>
                   </SdsNavigationItem>
-                  <hr class="mt-2 mb-1">
+                  <hr class="mt-2 mb-2">
                   <SdsNavigationItem
                     label="News & Media"
                     href="https://google.com/news"
                   />
                   <SdsNavigationItem
-                    href="/"
                     label="Resources"
+                    href="/"
                   />
                   <hr class="mt-2 mb-1">
                 </div>
@@ -709,30 +702,17 @@
                 leave-from-class="opacity-1 right-0 ml-0"
                 leave-to-class="opacity-0 -right-full ml-40"
               >
-                <div v-if="activeStep === 2">
-                  <div
-                    class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4"
-                    @click="stepUpdate(-1)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1.5em"
-                      height="1.5em"
-                      class="mr-2"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        d="M216.4 163.7c5.1 5 5.1 13.3.1 18.4L155.8 243h231.3c7.1 0 12.9 5.8 12.9 13s-5.8 13-12.9 13H155.8l60.8 60.9c5 5.1 4.9 13.3-.1 18.4-5.1 5-13.2 5-18.3-.1l-82.4-83c-1.1-1.2-2-2.5-2.7-4.1-.7-1.6-1-3.3-1-5 0-3.4 1.3-6.6 3.7-9.1l82.4-83c4.9-5.2 13.1-5.3 18.2-.3z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                    <h3>Go Back</h3>
-                  </div>
+                <div v-if="activePanel === 'plants'">
+                  <SdsNavigationItem
+                    type="back"
+                    @click="(e: Event) => { panelUpdate(e, 'root') }"
+                  />
                   <SdsNavigationItem
                     v-for="menuItem in mobileMenus[0].content.children"
                     :key="menuItem.key"
                     :label="menuItem.title"
                     :href="menuItem.href"
+                    :type="menuItem.type"
                   />
                   <hr class="mt-2 mb-1">
                 </div>
@@ -745,25 +725,15 @@
                 leave-from-class="opacity-1 right-0 ml-0"
                 leave-to-class="opacity-0 -right-full ml-40"
               >
-                <div v-if="activeStep === 4">
-                  <div
-                    class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4"
-                    @click="stepUpdate(-3)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1.5em"
-                      height="1.5em"
-                      class="mr-2"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        d="M216.4 163.7c5.1 5 5.1 13.3.1 18.4L155.8 243h231.3c7.1 0 12.9 5.8 12.9 13s-5.8 13-12.9 13H155.8l60.8 60.9c5 5.1 4.9 13.3-.1 18.4-5.1 5-13.2 5-18.3-.1l-82.4-83c-1.1-1.2-2-2.5-2.7-4.1-.7-1.6-1-3.3-1-5 0-3.4 1.3-6.6 3.7-9.1l82.4-83c4.9-5.2 13.1-5.3 18.2-.3z"
-                        fill="currentColor"
-                      />
-                    </svg>
-                    <h3>Go Back</h3>
-                  </div>
+                <div v-if="activePanel === 'trees'">
+                  <SdsNavigationItem
+                    type="back"
+                    @click="(e: Event) => { panelUpdate(e, 'root') }"
+                  />
+                  <SdsNavigationItem
+                    type="title"
+                    label="Trees"
+                  />
                   <p class="text-lg pt-4 mb-2">
                     <b>Tree Categories</b>
                   </p>
@@ -772,6 +742,7 @@
                     :key="menuItem.key"
                     :label="menuItem.title"
                     :href="menuItem.href"
+                    :type="menuItem.type"
                   />
                   <hr class="mt-2 mb-1">
                 </div>
@@ -1904,8 +1875,14 @@ const mobileMenus = ref([
     title: "Plants",
     type: "slide",
     icon: "plant",
+    selected: false,
     content: {
       children: [
+        {
+          key: "plants_title",
+          title: "Plants",
+          type: "title",
+        },
         {
           key: "ferns",
           title: "Ferns",
@@ -1919,6 +1896,7 @@ const mobileMenus = ref([
     title: "Trees",
     type: "slide",
     icon: "tree",
+    selected: false,
     content: {
       children: [
         {
@@ -1949,6 +1927,7 @@ const mobileMenus = ref([
     title: "Bugs",
     type: "expand",
     icon: "bug",
+    selected: false,
     content: {
       children: [
         {

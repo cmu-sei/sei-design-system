@@ -1,20 +1,43 @@
 <template>
+  <button
+    v-if="type === 'back'"
+    class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4 w-full"
+    @click="(e: Event) => { onClick(e) }"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col"
+      viewBox="0 0 256 256"
+    >
+      <path
+        fill="currentColor"
+        d="M222 128a6 6 0 0 1-6 6H54.49l61.75 61.76a6 6 0 1 1-8.48 8.48l-72-72a6 6 0 0 1 0-8.48l72-72a6 6 0 0 1 8.48 8.48L54.49 122H216a6 6 0 0 1 6 6"
+      />
+    </svg>
+    <h3 class="text-2xl font-thin">
+      Go Back
+    </h3>
+  </button>
   <component
-    :is="tag ? tag : 'button'"
+    :is="href ? 'a' : 'button'"
+    v-if="type !== 'back'"
+    :id="key ? `sds-navigationitem__${key.toString()}` : 'sds-navigationitem'"
     data-id="sds-navigationitem"
+    :data-type="type"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :href="href ? href : undefined"
+    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-4 pl-4 pr-6"
     :class="{
       disabledClass: disabled,
-      'group flex flex-row gap-4 cursor-pointer text-sm transition-all border-l-8 -mx-6 py-4 pl-4 pr-6': true,
-      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent': !selected,
-      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 hover:dark:text-red-100 hover:bg-gray-50 hover:dark:bg-gray-850': selected && (type === 'expand' && $slots.children),
+      'cursor-pointer': props.type !== 'title',
+      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent': !props.selected && props.type !== 'title',
+      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 hover:dark:text-red-100 hover:bg-gray-50 hover:dark:bg-gray-850': props.selected,
+      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 cursor-default': props.type === 'title',
     }"
-    :tabindex="disabled ? -1 : href ? undefined : 0"
+    :tabindex="disabled || type === 'title' ? -1 : href ? undefined : 0"
     role="menuitem"
-    @click="handleEvent"
-    @keydown="checkKeyEvent"
+    @click="onClick"
   >
     <slot
       v-if="$slots.left"
@@ -31,16 +54,15 @@
       </span>
     </slot>
     <svg
-      v-if="$slots.children"
+      v-if="!props.href && props.type !== 'title'"
       xmlns="http://www.w3.org/2000/svg"
       width="20"
       height="24"
       viewBox="0 0 320 512"
-      class="ml-auto group-hover:text-red-700 dark:text-gray-400 group-hover:dark:text-gray-100"
+      class="ml-auto group-hover:text-red-700 dark:text-gray-400 group-hover:dark:text-gray-100 text-gray-700 shrink-0"
       :class="{
-        'text-gray-700': true,
         'transition-transform': type === 'expand' && $slots.children,
-        'rotate-90': selected && (type === 'expand' && $slots.children)
+        'rotate-90': props.selected && (type === 'expand' && $slots.children)
       }"
     >
       <path
@@ -50,16 +72,20 @@
     </svg>
   </component>
   <div
-    v-if="$slots.children"
+    v-if="$slots.children && type !== 'back'"
     class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top"
     :class="{
-      'z-10 opacity-1 max-h-screen': selected && (type === 'expand' && $slots.children),
-      '-z-10 opacity-0 max-h-0 select-none': !selected || type !== 'expand' || !$slots.children
+      'z-10 opacity-1 max-h-screen': props.selected && (type === 'expand' && $slots.children),
+      '-z-10 opacity-0 max-h-0 select-none': !props.selected || type !== 'expand' || !$slots.children
     }"
   >
     <hr>
     <slot name="children" />
   </div>
+  <hr
+    v-if="props.type === 'title'"
+    class="mt-4 mb-2"
+  >
 </template>
 
 <script lang="ts">
@@ -69,11 +95,16 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { computed, getCurrentInstance } from "vue"
+
+/**
+ * Get the navigation item's key
+ */
+const key = getCurrentInstance()?.vnode.key ?? null;
 
 const props = defineProps({
   /**
-   * Determines show/hide state of the panel
+   * Determines show/hide state of the panel or the open/closed state of the 'expand'-able navigation item.
    */
   selected: {
     type: Boolean,
@@ -118,48 +149,19 @@ const props = defineProps({
    * The "type" prop determines the interaction for navigating to menu item's children.
    */
   type: {
-    type: String as PropType<'expand' | 'slide'>,
+    type: String as PropType<'back' | 'expand' | 'slide' | 'title'>,
     default: 'slide'
+  },
+  /**
+   * Override the default event handler.
+   */
+  onClick: {
+    type: Function,
+    default: null
   }
 });
-
-/**
- * True/False value to keep track of selected menu
- */
-const selected = ref(props.selected);
-/**
- * Expand if it's a drawer (expand) type,
- * toggle into the next menu panel if it's
- * a sliding panel type.
- */
-const handleEvent = (e: Event) => {
-  if (!props.href) { // Not a link, prevent default action
-    e.preventDefault();
-    if (props.type === 'expand') { // Toggle, it's a drawer
-      selected.value = !selected.value;
-    } else { // Emit a step update to move to another menu panel
-      console.log('Click event tried to emit "step-changed"');
-      /* Set the selected menu item, or deselect if already selected */
-    }
-  } else {
-    return true
-  }
-}
 
 const disabledClass = computed(() => {
   return props.disabled ? "disabled" : ""
 })
-
-/**
- * Use spacebar and carriage return to toggle drawer-type menu,
- * or to navigate forward in a sliding-type menu.
- */
-const checkKeyEvent = (event: KeyboardEvent) => {
-  if (
-    event.key === "Enter" ||
-    event.key === " " // Spacebar
-  ) {
-    handleEvent(event);
-  }
-}
 </script>
