@@ -5,26 +5,25 @@
   />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsLoadingBox'
+})
 
-export default defineComponent({
-  name: 'SdsLoadingBox',
-  props: {
-    /**
-     * Sets the height of the box. Accepts tailwind height classes.
-     */
-    height: {
-      default: 'h-full',
-      type: String
-    },
-    /**
-     * Sets the width of the box. Accepts tailwind width classes.
-     */
-    width: {
-      default: 'w-full',
-      type: String
-    }
+defineProps({
+  /**
+   * Sets the height of the box. Accepts tailwind height classes.
+   */
+  height: {
+    default: 'h-full',
+    type: String
+  },
+  /**
+   * Sets the width of the box. Accepts tailwind width classes.
+   */
+  width: {
+    default: 'w-full',
+    type: String
   }
 })
 </script>

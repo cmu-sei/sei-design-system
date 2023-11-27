@@ -48,14 +48,7 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsFloatingUi'
-}
-</script>
-
 <script setup lang="ts">
-import { ref, PropType, provide, watch, nextTick, computed } from 'vue'
 import { onClickOutside, onKeyStroke } from '@vueuse/core'
 import {
   autoUpdate,
@@ -72,6 +65,10 @@ import mitt from 'mitt';
 
 import type { Placement as BasePlacement, ComputePositionConfig, Alignment, Strategy } from '@floating-ui/dom'
 type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+
+defineOptions({
+  name: 'SdsFloatingUi'
+})
 
 const triggerRef = ref(null)
 const popperRef = ref(null)

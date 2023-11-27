@@ -157,22 +157,18 @@
   </client-only>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
-import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
+import ClientOnly from '../ClientOnly/ClientOnly.vue'
+import SdsIndicator from '../Indicator/Indicator.vue'
 
-export default {
+defineOptions({
   name: 'SdsFloatingActionButton',
   directives: {
     uid: Uid
   }
-}
-</script>
-
-<script setup lang="ts">
-import { PropType, ref, computed, watch } from 'vue'
-import SdsIndicator from '../Indicator/Indicator.vue'
+})
 
 const props = defineProps({
   /**

@@ -1452,9 +1452,9 @@
         { id: 'scrollspy-test-5', text: 'Test 5' }
       ]"
       parent="#scrollspy-parent"
-      item-class="nav nav-primary nav-underline"
+      item-class="tab tab-red tab-underline"
       active-class="active"
-      class="nav-group"
+      class="tab-group"
     />
     <sds-scroll-area
       id="scrollspy-parent"
@@ -2163,8 +2163,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
 export default defineComponent({
   name: "ExamplesSection",
   emits: ["radioGroupChange", "hello"],

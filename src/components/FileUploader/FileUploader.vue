@@ -161,7 +161,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType, watch } from 'vue'
 import { Uid } from '@shimyshack/uid'
 
 type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }

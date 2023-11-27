@@ -42,157 +42,156 @@
   </floating-ui>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
-export default defineComponent({
-  name: 'SdsPopover',
-  components: {
-    FloatingUi
-  },
-  props: {
-    /**
-     * The z-index for the popover.
-     */
-    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-    /**
-     * Determines the purpose and particular function of the component.
-     */
-    type: { type: String as PropType<'dark' | 'light'>, default: null },
-    /**
-     * Delays opening the toggle in ms.
-     */
-    openDelay: { type: Number, default: 0 },
-    /**
-     * Delays closing the toggle in ms.
-     */
-    closeDelay: { type: Number, default: 0 },
-    /**
-     * The width of the popover.
-     */
-    size: { type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'sm' },
-    /**
-     * The strategy of the popover on the screen.
-     */
-    strategy: { type: String as PropType<Strategy>, default: 'absolute' },
-    /**
-     * The placement of the popover on the screen.
-     */
-    placement: { type: String as PropType<Placement>, default: 'top' },
-    /**
-     * Determines if the popover should display or not.
-     */
-    disabled: { type: Boolean, default: false },
-    /**
-     * Allows for code execution prior to opening the tooltip.
-     * 
-     * A `cancel()` callback can be called as well to cancel
-     * the opening process.
-     * 
-     * For example, this can prevent the tooltip from opening
-     * until a call to a backend API completes.
-     * 
-     * Example definition in parent component:
-     * 
-     * ```
-     * async willOpen(open, cancel) {
-     *  try {
-     *    await SOME_API_CALL_RESPONSE()
-     *    // let the open process continue
-     *    open()
-     *  } catch (e) {
-     *    // cancel the open process
-     *    cancel()
-     *  }
-     * }
-     * ```
-     */
-    willOpen: { type: Function, default: null },
-    /**
-     * Allows for code execution prior to closing the tooltip.
-     * 
-     * A `cancel()` callback can be called as well to cancel
-     * the opening process.
-     * 
-     * For example, this can prevent the tooltip from closing
-     * until a call to a backend API completes.
-     * 
-     * Example definition in parent component:
-     * 
-     * ```
-     * async willClose(close, cancel) {
-     *  try {
-     *    await SOME_API_CALL_RESPONSE()
-     *    // let the close process continue
-     *    close()
-     *  } catch (e) {
-     *    // cancel the close process
-     *    cancel()
-     *  }
-     * }
-     * ```
-     */
-    willClose: { type: Function, default: null }
-  },
-  computed: {
-    zIndexClass() {
-      switch (this.zIndex) {
-        case '0':
-          return 'z-0'
-        case '10':
-          return 'z-10'
-        case '20':
-          return 'z-20'
-        case '30':
-          return 'z-30'
-        case '40':
-          return 'z-40'
-        case '50':
-          return 'z-50'
-        case 'auto':
-          return 'z-auto'
-        default:
-          return ''
-      }
-    },
-    variantClass() {
-      switch (this.type) {
-        case 'light':
-          return 'bg-gray-25 text-gray-900 border-gray-200'
-        case 'dark':
-        default:
-          return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
-      }
-    },
-    variantArrowClass() {
-      switch (this.type) {
-        case 'light':
-          return 'bg-gray-25 border-gray-200'
-        case 'dark':
-        default:
-          return 'bg-black border-gray-800'
-      }
-    },
-    sizeClass() {
-      switch (this.size) {
-        case 'sm':
-          return 'w-32'
-        case 'md':
-          return 'w-48'
-        case 'lg':
-          return 'w-56'
-        case 'xl':
-          return 'w-72'
-        case 'auto':
-          return 'w-auto'
-        default:
-          return 'w-32'
-      }
-    }
-  },
+defineOptions({
+  name: 'SdsPopover'
+})
+
+const props = defineProps({
+  /**
+   * The z-index for the popover.
+   */
+  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  type: { type: String as PropType<'dark' | 'light'>, default: null },
+  /**
+   * Delays opening the toggle in ms.
+   */
+  openDelay: { type: Number, default: 0 },
+  /**
+   * Delays closing the toggle in ms.
+   */
+  closeDelay: { type: Number, default: 0 },
+  /**
+   * The width of the popover.
+   */
+  size: { type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'sm' },
+  /**
+   * The strategy of the popover on the screen.
+   */
+  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  /**
+   * The placement of the popover on the screen.
+   */
+  placement: { type: String as PropType<Placement>, default: 'top' },
+  /**
+   * Determines if the popover should display or not.
+   */
+  disabled: { type: Boolean, default: false },
+  /**
+   * Allows for code execution prior to opening the tooltip.
+   * 
+   * A `cancel()` callback can be called as well to cancel
+   * the opening process.
+   * 
+   * For example, this can prevent the tooltip from opening
+   * until a call to a backend API completes.
+   * 
+   * Example definition in parent component:
+   * 
+   * ```
+   * async willOpen(open, cancel) {
+   *  try {
+   *    await SOME_API_CALL_RESPONSE()
+   *    // let the open process continue
+   *    open()
+   *  } catch (e) {
+   *    // cancel the open process
+   *    cancel()
+   *  }
+   * }
+   * ```
+   */
+  willOpen: { type: Function, default: null },
+  /**
+   * Allows for code execution prior to closing the tooltip.
+   * 
+   * A `cancel()` callback can be called as well to cancel
+   * the opening process.
+   * 
+   * For example, this can prevent the tooltip from closing
+   * until a call to a backend API completes.
+   * 
+   * Example definition in parent component:
+   * 
+   * ```
+   * async willClose(close, cancel) {
+   *  try {
+   *    await SOME_API_CALL_RESPONSE()
+   *    // let the close process continue
+   *    close()
+   *  } catch (e) {
+   *    // cancel the close process
+   *    cancel()
+   *  }
+   * }
+   * ```
+   */
+  willClose: { type: Function, default: null }
+})
+
+const zIndexClass = computed(() => {
+  switch (props.zIndex) {
+    case '0':
+      return 'z-0'
+    case '10':
+      return 'z-10'
+    case '20':
+      return 'z-20'
+    case '30':
+      return 'z-30'
+    case '40':
+      return 'z-40'
+    case '50':
+      return 'z-50'
+    case 'auto':
+      return 'z-auto'
+    default:
+      return ''
+  }
+})
+
+const variantClass = computed(() => {
+  switch (props.type) {
+    case 'light':
+      return 'bg-gray-25 text-gray-900 border-gray-200'
+    case 'dark':
+    default:
+      return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
+  }
+})
+
+const variantArrowClass = computed(() => {
+  switch (props.type) {
+    case 'light':
+      return 'bg-gray-25 border-gray-200'
+    case 'dark':
+    default:
+      return 'bg-black border-gray-800'
+  }
+})
+
+const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'w-32'
+    case 'md':
+      return 'w-48'
+    case 'lg':
+      return 'w-56'
+    case 'xl':
+      return 'w-72'
+    case 'auto':
+      return 'w-auto'
+    default:
+      return 'w-32'
+  }
 })
 </script>

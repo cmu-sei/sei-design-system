@@ -256,9 +256,7 @@
   </table>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
-
+<script setup lang="ts">
 interface TableField {
   key: string
   label: string
@@ -275,201 +273,205 @@ interface TableItem {
   [key: string]: unknown
 }
 
-export default defineComponent({
-  name: 'SdsTable',
-  props: {
-    /**
-     * A unique id used as a prefix for unique table row ids.
-     */
-    id: {
-      type: String,
-      default: null
-    },
-    /**
-     * An array of objects. Each object must have a unique "id" but everything else is optional.
-     *
-     * Please note that the **items** keys map 1:1 to the **fields** keys, meaning that, any key found in the items
-     * array that is not in the fields array will be ignored and not displayed.
-     *
-     * Example object:
-     *
-     * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
-     */
-    items: {
-      type: Array as PropType<TableItem[]>,
-      default: () => [],
-    },
-    /**
-     * An array of objects. These objects determine the column headers.
-     *
-     * Each object must contain a unique "key" and a "label" for use in the table column header.
-     *
-     * Optional object properties include a "sortable" boolean, a "format" function, and an "align"
-     * string. The "sortable" key indicates whether a table column is sortable. The "format" key allows for
-     * customization of the item's data. The "align" key enables you to align the content of that field's
-     * header and content to the "left", "center", or "right".
-     *
-     * Basic example object (not sortable):
-     *
-     * **{ key: "id", label: "ID" }**
-     *
-     * Advanced example object (sortable, custom formatter, and alignment):
-     *
-     * **{
-     *   key: "lastModifiedDate",
-     *   label: "Last Modified",
-     *   align: "right"
-     *   sortable: true,
-     *   format: (date) => date.toLocaleDateString()
-     * }**
-     */
-    fields: {
-      type: Array as PropType<TableField[]>,
-      default: () => [],
-    },
-    /**
-     * Determines the field key to sort by.
-     */
-    sortBy: { type: String, default: '' },
-    /**
-     * Determines if sorting should be descending or ascending.
-     */
-    sortDesc: { type: Boolean, default: false },
-    /**
-     * Determines the caption for the table if desired.
-     */
-    caption: { type: String, default: null },
-    /**
-     * Determines the CSS classes used on the sorted column.
-     */
-    sortedColumnClass: { type: String, default: null },
-    /**
-     * Toggles on/off a drawer below each table row
-     */
-    enableDrawer: { type: Boolean, default: false },
-    /**
-     * Overrides the built-in sorting behavior of the table.
-     * 
-     * This is useful when an external source should control
-     * the table's sorting.
-     *
-     * If the `onSort` prop is set, the table will not sort unless
-     * you provide the logic to update the table's `items` prop.
-     * 
-     * Furthermore, your logic must also set the `sortBy` and 
-     * `sortDesc` props on the table in order for the table's
-     * header to reflect your changes.
-     * 
-     * Method's definition:
-     * 
-     * `onSort({ field, sortBy, sortDesc })`
-     * 
-     * This method provides the following parameters for use:
-     * 
-     * * `field`: The field you are sorting on.
-     * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
-     * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
-     */
-    onSort: { type: Function, default: undefined }
-  },
-  emits: ['open-drawer'],
-  data() {
-    return {
-      sortField: this.sortBy,
-      sortOrder: this.sortDesc ? -1 : 1,
-      openDrawerID: -1
-    }
-  },
-  computed: {
-    flatFields() {
-      return this.fields.flatMap(i => {
-        if (i.fields) {
-          return i.fields
-        } else {
-          return i
-        }
-      })
-    },
-    sortedItems() {
-      if (this.onSort) return this.items
-      const items = this.items
-      return items.sort((a, b) => this.sortCompare(a, b, this.sortField))
-    },
-    displayedFields() {
-      return this.fields.filter((i) => !i.hidden)
-    },
-    displayedFieldKeys() {
-      return Object.entries(this.displayedFields).map(([_key, value]) => value.key)
-    }
-  },
-  watch: {
-    sortBy(value) {
-      this.sortField = value
-    },
-    sortDesc(value) {
-      this.sortOrder = value ? -1 : 1
-    }
-  },
-  methods: {
-    toggleDrawer(item: TableItem) {
-      if (this.openDrawerID === item.id) {
-        this.openDrawerID = -1
-      } else {
-        this.openDrawerID = item.id
-        /**
-         * Emitted when a drawer is opened. @binding item
-         */
-        this.$emit('open-drawer', item)
-      }
-    },
-    cellElement(key: string) {
-      const field = this.fields.find((f) => f.key === key)
-      return field && field.header ? 'th' : 'td'
-    },
-    format(item: TableItem, key: string = '') {
-      const field = this.flatFields.find(i => i.key === key)
-      return field && field.format ? field.format(item[key]) : item[key]
-    },
-    handleSortBy(field: TableField) {
-      if (this.onSort) {
-        this.onSort({
-          field,
-          sortBy: field.key,
-          sortDesc: this.sortOrder === 0 ? false : this.sortOrder === 1 ? true : false
-        })
-      } else {
-        this.sortField = field.key
-        this.sortOrder = this.sortOrder === 0 ? 1 : this.sortOrder === 1 ? -1 : 1
-      }
-    },
-    sortCompare(aRow: TableItem, bRow: TableItem, key: string) {
-      const a = aRow[key]
-      const b = bRow[key]
-      if (
-        (typeof a === 'number' && typeof b === 'number') ||
-        (a instanceof Date && b instanceof Date)
-      ) {
-        // If both compared fields are native numbers or both are native dates
-        return (a < b ? -1 : a > b ? 1 : 0) * this.sortOrder
-      } else {
-        // Otherwise stringify the field data and use String.prototype.localeCompare
-        return this.toString(a as TableItem).localeCompare(this.toString(b as TableItem)) * this.sortOrder
-      }
-    },
-    // Helper function to stringify the values of an Object
-    toString(value: TableItem): string {
-      if (value === null || typeof value === 'undefined') {
-        return ''
-      } else if (value instanceof Object) {
-        return Object.keys(value)
-          .sort()
-          .map(key => this.toString(value[key] as TableItem))
-          .join(' ')
-      } else {
-        return String(value)
-      }
-    }
-
-  }
+defineOptions({
+  name: 'SdsTable'
 })
+
+const props = defineProps({
+  /**
+   * A unique id used as a prefix for unique table row ids.
+   */
+  id: {
+    type: String,
+    default: null
+  },
+  /**
+   * An array of objects. Each object must have a unique "id" but everything else is optional.
+   *
+   * Please note that the **items** keys map 1:1 to the **fields** keys, meaning that, any key found in the items
+   * array that is not in the fields array will be ignored and not displayed.
+   *
+   * Example object:
+   *
+   * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
+   */
+  items: {
+    type: Array as PropType<TableItem[]>,
+    default: () => [],
+  },
+  /**
+   * An array of objects. These objects determine the column headers.
+   *
+   * Each object must contain a unique "key" and a "label" for use in the table column header.
+   *
+   * Optional object properties include a "sortable" boolean, a "format" function, and an "align"
+   * string. The "sortable" key indicates whether a table column is sortable. The "format" key allows for
+   * customization of the item's data. The "align" key enables you to align the content of that field's
+   * header and content to the "left", "center", or "right".
+   *
+   * Basic example object (not sortable):
+   *
+   * **{ key: "id", label: "ID" }**
+   *
+   * Advanced example object (sortable, custom formatter, and alignment):
+   *
+   * **{
+   *   key: "lastModifiedDate",
+   *   label: "Last Modified",
+   *   align: "right"
+   *   sortable: true,
+   *   format: (date) => date.toLocaleDateString()
+   * }**
+   */
+  fields: {
+    type: Array as PropType<TableField[]>,
+    default: () => [],
+  },
+  /**
+   * Determines the field key to sort by.
+   */
+  sortBy: { type: String, default: '' },
+  /**
+   * Determines if sorting should be descending or ascending.
+   */
+  sortDesc: { type: Boolean, default: false },
+  /**
+   * Determines the caption for the table if desired.
+   */
+  caption: { type: String, default: null },
+  /**
+   * Determines the CSS classes used on the sorted column.
+   */
+  sortedColumnClass: { type: String, default: null },
+  /**
+   * Toggles on/off a drawer below each table row
+   */
+  enableDrawer: { type: Boolean, default: false },
+  /**
+   * Overrides the built-in sorting behavior of the table.
+   * 
+   * This is useful when an external source should control
+   * the table's sorting.
+   *
+   * If the `onSort` prop is set, the table will not sort unless
+   * you provide the logic to update the table's `items` prop.
+   * 
+   * Furthermore, your logic must also set the `sortBy` and 
+   * `sortDesc` props on the table in order for the table's
+   * header to reflect your changes.
+   * 
+   * Method's definition:
+   * 
+   * `onSort({ field, sortBy, sortDesc })`
+   * 
+   * This method provides the following parameters for use:
+   * 
+   * * `field`: The field you are sorting on.
+   * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
+   * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
+   */
+  onSort: { type: Function, default: undefined }
+})
+
+const emit = defineEmits(['open-drawer'])
+
+const sortField = ref(props.sortBy)
+const sortOrder = ref(props.sortDesc ? -1 : 1)
+const openDrawerID = ref(-1)
+
+const flatFields = computed(() => {
+  return props.fields.flatMap(i => {
+    if (i.fields) {
+      return i.fields
+    } else {
+      return i
+    }
+  })
+})
+
+const sortedItems = computed(() => {
+  if (props.onSort) return props.items
+  const items = props.items
+  return items.sort((a, b) => sortCompare(a, b, sortField.value))
+})
+
+const displayedFields = computed(() => {
+  return props.fields.filter((i) => !i.hidden)
+})
+
+const displayedFieldKeys = computed(() => {
+  return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
+})
+
+watch(() => props.sortBy, (value) => {
+  sortField.value = value
+})
+
+watch(() => props.sortDesc, (value) => {
+  sortOrder.value = value ? -1 : 1
+})
+
+const toggleDrawer = (item: TableItem) => {
+  if (openDrawerID.value === item.id) {
+    openDrawerID.value = -1
+  } else {
+    openDrawerID.value = item.id
+    /**
+     * Emitted when a drawer is opened. @binding item
+     */
+    emit('open-drawer', item)
+  }
+}
+
+const cellElement = (key: string) => {
+  const field = props.fields.find((f) => f.key === key)
+  return field && field.header ? 'th' : 'td'
+}
+
+const format = (item: TableItem, key: string = '') => {
+  const field = flatFields.value.find(i => i.key === key)
+  return field && field.format ? field.format(item[key]) : item[key]
+}
+
+const handleSortBy = (field: TableField) => {
+  if (props.onSort) {
+    props.onSort({
+      field,
+      sortBy: field.key,
+      sortDesc: sortOrder.value === 0 ? false : sortOrder.value === 1 ? true : false
+    })
+  } else {
+    sortField.value = field.key
+    sortOrder.value = sortOrder.value === 0 ? 1 : sortOrder.value === 1 ? -1 : 1
+  }
+}
+
+const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
+  const a = aRow[key]
+  const b = bRow[key]
+  if (
+    (typeof a === 'number' && typeof b === 'number') ||
+    (a instanceof Date && b instanceof Date)
+  ) {
+    // If both compared fields are native numbers or both are native dates
+    return (a < b ? -1 : a > b ? 1 : 0) * sortOrder.value
+  } else {
+    // Otherwise stringify the field data and use String.prototype.localeCompare
+    return toString(a as TableItem).localeCompare(toString(b as TableItem)) * sortOrder.value
+  }
+}
+
+// Helper function to stringify the values of an Object
+const toString = (value: TableItem): string => {
+  if (value === null || typeof value === 'undefined') {
+    return ''
+  } else if (value instanceof Object) {
+    return Object.keys(value)
+      .sort()
+      .map(key => toString(value[key] as TableItem))
+      .join(' ')
+  } else {
+    return String(value)
+  }
+}
 </script>

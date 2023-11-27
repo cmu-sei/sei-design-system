@@ -1,7 +1,7 @@
 <script lang="ts">
-import { ref, onMounted, defineComponent } from 'vue'
-export default defineComponent({  setup(_, { slots }) {
-  const show = ref(false)
+export default defineComponent({
+  setup(_, { slots }) {
+    const show = ref(false)
     onMounted(() => {
       show.value = true
     })

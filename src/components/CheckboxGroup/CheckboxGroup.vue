@@ -42,7 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, PropType } from "vue";
 import { Uid } from "@shimyshack/uid";
 
 type CheckboxGroupOptionValue = string | number | boolean

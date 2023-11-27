@@ -44,19 +44,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsLayoutSeiExternalNav'
+})
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternalNav',
-  props: {
-    /**
-     * An object containing various properties that determine the navigation.
-     */
-    page: {
-      type: Object,
-      default: () => ({}),
-    },
+defineProps({
+  /**
+   * An object containing various properties that determine the navigation.
+   */
+  page: {
+    type: Object,
+    default: () => ({}),
   },
-});
+})
 </script>

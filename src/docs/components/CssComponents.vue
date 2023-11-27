@@ -821,20 +821,10 @@
   </sds-section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
 import SdsLink from '../../components/Link/Link.vue'
 
-export default defineComponent({
-  name: "ComponentsSection",
-  components: {
-    SdsLink,
-  },
-  data() {
-    return {
-      openModal: false,
-      openDropdown: false
-    };
-  },
-});
+defineOptions({
+  name: "CssComponentsSection"
+})
 </script>

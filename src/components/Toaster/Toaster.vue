@@ -46,7 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from "vue";
 import SdsToast from "../Toast/Toast.vue";
 
 interface ToasterToast {

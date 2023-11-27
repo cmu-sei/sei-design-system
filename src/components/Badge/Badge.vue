@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
-
 defineOptions({
   name: 'SdsBadge'
 })
