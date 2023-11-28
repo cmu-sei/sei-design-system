@@ -109,8 +109,8 @@ const variantClass = computed(() => {
         bgClass = 'bg-tan-100 dark:bg-tan-900'
         textClass = 'text-tan-900 dark:text-tan-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-tan-400'
-        textClass = 'text-white'
+        bgClass = 'bg-tan-300'
+        textClass = 'text-gray-800'
       } else if (props.type === 'dark') {
         bgClass = 'bg-tan-600'
         textClass = 'text-white'
@@ -145,7 +145,7 @@ const variantClass = computed(() => {
         bgClass = 'bg-purple-25 dark:bg-purple-900'
         textClass = 'text-purple-600 dark:text-purple-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-purple-400'
+        bgClass = 'bg-purple-500'
         textClass = 'text-white'
       } else if (props.type === 'dark') {
         bgClass = 'bg-purple-700'
