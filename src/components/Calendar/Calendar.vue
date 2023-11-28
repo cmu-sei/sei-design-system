@@ -395,9 +395,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
-import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -446,7 +445,7 @@ const props = defineProps({
    useCurrentTimeForToday: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:model-value'])
 
 const date = computed<CalendarDate | CalendarRange>({
   get() {
@@ -456,7 +455,7 @@ const date = computed<CalendarDate | CalendarRange>({
     /**
      * Emitted when modelValue changes.
      */
-    emit('update:modelValue', value)
+    emit('update:model-value', value)
   }
 })
 

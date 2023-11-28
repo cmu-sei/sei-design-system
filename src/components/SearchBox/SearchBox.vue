@@ -71,112 +71,115 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsSearchBox'
+})
 
-export default defineComponent({
-  name: "SdsSearchBox",
-  props: {
-    /**
-     * Determines the id of the input.
-     */
-    id: { type: String, default: undefined },
-    /**
-     * The v-model passed from the parent that is used to init the local state "this.q".
-     */
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    /**
-     * The placeholder for the input.
-     */
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    /**
-     * Disables the component to prevent user interaction.
-     */
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * The max amount of characters that can be entered into the input.
-     */
-    maxlength: {
-      type: Number,
-      default: 524288,
-    },
-    /**
-     * Disables the ability for the component to run a search.
-     */
-    disableSearch: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the color of the component.
-     */
-    variant: {
-      type: String as PropType<'gray' | 'blue' | 'red'>,
-      default: 'gray',
-    },
-    /**
-     * Determines if a search should be performed on key up.
-     */
-    searchOnKeyUp: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determine whether to autofocus the input.
-     */
-    autofocus: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  /**
+   * Determines the id of the input.
+   */
+  id: { type: String, default: undefined },
+  /**
+   * The v-model passed from the parent that is used to init the local state "q.value".
+   */
+  modelValue: {
+    type: String,
+    default: "",
   },
-  emits: ['update:modelValue', 'search'],
-  computed: {
-    q: {
-      get() {
-        return this.modelValue;
-      },
-      set(val: string) {
-        /**
-         * Emitted when modelValue changes.
-         */
-        this.$emit("update:modelValue", val);
-      },
-    },
-    variantClass() {
-      switch (this.variant) {
-        case 'blue':
-          return "btn btn-secondary text-blue-700 dark:text-blue-400";
-        case 'red':
-          return "btn btn-secondary text-red-700 dark:text-red-400";
-        default:
-          return "btn btn-secondary text-gray-900 dark:text-gray-300";
-      }
-    },
+  /**
+   * The placeholder for the input.
+   */
+  placeholder: {
+    type: String,
+    default: "",
   },
-  mounted() {
-    if (this.autofocus) (this.$refs.input as HTMLInputElement).focus();
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
   },
-  methods: {
-    clearSearch() {
-      this.q = "";
-      (this.$refs.input as HTMLInputElement).focus();
-    },
-    search() {
-      if (this.disabled || this.disableSearch) return;
-      /**
-       * Emitted when a search is triggered with a payload of the query.
-       */
-      this.$emit("search", this.q);
-    },
+  /**
+   * The max amount of characters that can be entered into the input.
+   */
+  maxlength: {
+    type: Number,
+    default: 524288,
   },
-});
+  /**
+   * Disables the ability for the component to run a search.
+   */
+  disableSearch: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines the color of the component.
+   */
+  variant: {
+    type: String as PropType<'gray' | 'blue' | 'red'>,
+    default: 'gray',
+  },
+  /**
+   * Determines if a search should be performed on key up.
+   */
+  searchOnKeyUp: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determine whether to autofocus the input.
+   */
+  autofocus: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(['update:model-value', 'search'])
+
+const input = ref()
+
+const q = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(val: string) {
+    /**
+     * Emitted when modelValue changes.
+     */
+    emit("update:model-value", val);
+  },
+})
+
+const variantClass = computed(() => {
+  switch (props.variant) {
+    case 'blue':
+      return "btn btn-secondary text-blue-700 dark:text-blue-400";
+    case 'red':
+      return "btn btn-secondary text-red-700 dark:text-red-400";
+    default:
+      return "btn btn-secondary text-gray-900 dark:text-gray-300";
+  }
+})
+
+onMounted(() => {
+  if (props.autofocus) (input.value as HTMLInputElement).focus();
+})
+
+const clearSearch = () => {
+  q.value = "";
+  (input.value as HTMLInputElement).focus();
+}
+
+const search = () => {
+  if (props.disabled || props.disableSearch) return;
+  /**
+   * Emitted when a search is triggered with a payload of the query.
+   */
+  emit("search", q.value);
+}
 </script>

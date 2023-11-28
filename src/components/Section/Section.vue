@@ -56,60 +56,64 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: 'SdsSection',
-  props: {
-    /**
-     * Determines the overall look and feel of the section.
-     */
-    type: {
-      type: String,
-      default: "",
-    },
-    /**
-     * Determines if the header is hidden or shown.
-     */
-    hideHeader: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines if the content is hidden or shown.
-     */
-    hideContent: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * The class list for the nav slot.
-     */
-    navClass: {
-      type: String,
-      default: "",
-    },
-    /**
-     * The class list of the default slot.
-     */
-    contentClass: {
-      type: String,
-      default: "p-4",
-    },
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsSection'
+})
+
+defineProps({
+  /**
+   * Determines the overall look and feel of the section.
+   */
+  type: {
+    type: String,
+    default: "",
   },
-  computed: {
-    hasTitleSlot() {
-      return !!this.$slots.title;
-    },
-    hasSubtitleSlot() {
-      return !!this.$slots.subtitle;
-    },
-    hasNavSlot() {
-      return !!this.$slots.nav;
-    },
-    hasDefaultSlot() {
-      return !!this.$slots.default;
-    },
+  /**
+   * Determines if the header is hidden or shown.
+   */
+  hideHeader: {
+    type: Boolean,
+    default: false,
   },
-});
+  /**
+   * Determines if the content is hidden or shown.
+   */
+  hideContent: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * The class list for the nav slot.
+   */
+  navClass: {
+    type: String,
+    default: "",
+  },
+  /**
+   * The class list of the default slot.
+   */
+  contentClass: {
+    type: String,
+    default: "p-4",
+  },
+})
+
+const slots = useSlots()
+
+const hasTitleSlot = computed(() => {
+  return !!slots.title;
+})
+
+const hasSubtitleSlot = computed(() => {
+  return !!slots.subtitle;
+})
+
+const hasNavSlot = computed(() => {
+  return !!slots.nav;
+})
+
+const hasDefaultSlot = computed(() => {
+  return !!slots.default;
+})
 </script>

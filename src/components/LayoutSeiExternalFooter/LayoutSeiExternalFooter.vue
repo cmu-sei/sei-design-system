@@ -201,20 +201,19 @@
   </footer>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import sprites from "../../assets/images/sprites-social.png";
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternalFooter',
-  computed: {
-    year() {
-      const d = new Date();
-      return d.getFullYear();
-    },
-    socialSprites() {
-      return sprites;
-    },
-  },
-});
+defineOptions({
+  name: 'SdsLayoutSeiExternalFooter'
+})
+
+const year = computed(() => {
+  const d = new Date();
+  return d.getFullYear();
+})
+
+const socialSprites = computed(() => {
+  return sprites;
+})
 </script>

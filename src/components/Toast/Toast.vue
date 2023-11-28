@@ -107,74 +107,74 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsToast'
+})
 
-export default defineComponent({
-  name: 'SdsToast',
-  props: {
-    /**
-     * Determines the id of the component.
-     */
-    id: { type: Number, required: true },
-    /**
-     * Determines the purpose and particular function of the component.
-     */
-    type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
-    /**
-     * Determines the title content of the component.
-     */
-    title: { type: String, required: true },
-    /**
-     * Determines the text content of the component.
-     */
-    text: { type: String, required: true },
-    /**
-     * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
-     */
-    autoHideDelay: { type: Number, default: 5000 },
-    /**
-     * Determines whether to ignore the autoHideDelay property.
-     */
-    noAutoHide: { type: Boolean, default: false },
-  },
-  emits: ['remove'],
-  data() {
-    return {
-      timer: null as null | ReturnType<typeof setTimeout>,
-    };
-  },
-  computed: {
-    localType() {
-      return this.type
-    }
-  },
-  mounted() {
-    this.setTimer();
-  },
-  unmounted() {
-    this.clearTimer();
-  },
-  methods: {
-    removeToast() {
-      /**
-       * Emits an event with the "id" property as its payload.
-       *
-       * The parent component (typically the Toaster component) can then remove the toast from its toast array.
-       */
-      this.$emit("remove", this.id);
-    },
-    clearTimer() {
-      if (!this.timer) return;
-      clearTimeout(this.timer);
-    },
-    setTimer() {
-      this.clearTimer();
-      if (this.noAutoHide) return;
-      this.timer = setTimeout(() => {
-        this.removeToast();
-      }, this.autoHideDelay);
-    },
-  },
-});
+const props = defineProps({
+  /**
+   * Determines the id of the component.
+   */
+  id: { type: Number, required: true },
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+  /**
+   * Determines the title content of the component.
+   */
+  title: { type: String, required: true },
+  /**
+   * Determines the text content of the component.
+   */
+  text: { type: String, required: true },
+  /**
+   * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
+   */
+  autoHideDelay: { type: Number, default: 5000 },
+  /**
+   * Determines whether to ignore the autoHideDelay property.
+   */
+  noAutoHide: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['remove'])
+
+const timer = ref<null | ReturnType<typeof setTimeout>>()
+
+const localType = computed(() => {
+  return props.type
+})
+
+onMounted(() => {
+  setTimer();
+})
+
+onUnmounted(() => {
+  clearTimer();
+})
+
+
+const removeToast = () => {
+  /**
+   * Emits an event with the "id" property as its payload.
+   *
+   * The parent component (typically the Toaster component) can then remove the toast from its toast array.
+   */
+  emit("remove", props.id);
+}
+
+const clearTimer = () => {
+  if (!timer.value) return;
+  clearTimeout(timer.value);
+}
+
+const setTimer = () => {
+  clearTimer();
+  if (props.noAutoHide) return;
+  timer.value = setTimeout(() => {
+    removeToast();
+  }, props.autoHideDelay);
+}
 </script>

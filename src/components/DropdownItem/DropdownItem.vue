@@ -18,8 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from "vue";
-
 defineOptions({
   name: 'SdsDropdownItem'
 })

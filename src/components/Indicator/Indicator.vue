@@ -21,14 +21,10 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsIndicator'
-}
-</script>
-
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+defineOptions({
+  name: 'SdsIndicator'
+})
 
 const props = defineProps({
   /**

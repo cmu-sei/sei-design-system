@@ -23,19 +23,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsLayoutSeiExternalHeaderContent'
+})
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternalHeaderContent',
-  props: {
-    /**
-     * An object containing various properties that display in the content.
-     */
-    page: {
-      type: Object,
-      default: () => ({}),
-    },
+defineProps({
+  /**
+   * An object containing various properties that display in the content.
+   */
+  page: {
+    type: Object,
+    default: () => ({}),
   },
-});
+})
 </script>

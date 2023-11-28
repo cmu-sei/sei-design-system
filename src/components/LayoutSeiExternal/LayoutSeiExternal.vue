@@ -36,42 +36,37 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import LayoutSeiExternalHeader from "../LayoutSeiExternalHeader/LayoutSeiExternalHeader.vue";
 import LayoutSeiExternalFooter from "../LayoutSeiExternalFooter/LayoutSeiExternalFooter.vue";
 import LayoutSeiExternalMasthead from "../LayoutSeiExternalMasthead/LayoutSeiExternalMasthead.vue";
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternal',
-  components: {
-    LayoutSeiExternalHeader,
-    LayoutSeiExternalFooter,
-    LayoutSeiExternalMasthead,
+defineOptions({
+  name: 'SdsLayoutSeiExternal'
+})
+
+defineProps({
+  /**
+   * An object containing various properties that display in the header and masthead.
+   */
+  page: {
+    type: Object,
+    default: () => ({}),
   },
-  props: {
-    /**
-     * An object containing various properties that display in the header and masthead.
-     */
-    page: {
-      type: Object,
-      default: () => ({}),
-    },
-    /**
-     * Removes the content padding from the default slot section.
-     * Useful when you want to custom style the main content section.
-     */
-    removeContentPadding: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to show the masthead section or not.
-     */
-    showMasthead: {
-      type: Boolean,
-      default: false,
-    },
+  /**
+   * Removes the content padding from the default slot section.
+   * Useful when you want to custom style the main content section.
+   */
+  removeContentPadding: {
+    type: Boolean,
+    default: false,
   },
-});
+  /**
+   * Determines whether to show the masthead section or not.
+   */
+  showMasthead: {
+    type: Boolean,
+    default: false,
+  },
+})
 </script>

@@ -44,68 +44,64 @@
   </a>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, PropType } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsMegaMenuItem'
+})
 
-export default defineComponent({
-  name: "SdsMegaMenuItem",
-  props: {
-    /**
-     * Main MegaMenuItem text content
-     */
-    label: { type: String, default: "" },
-    /**
-     * Determines the MegaMenuItem component type to use.
-     */
-    type: {
-      type: String as PropType<"landing-page" | "descriptive" | "simple">,
-      default: "simple",
-    },
-    /**
-     * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
-     */
-    external: { type: Boolean, default: false },
-    /**
-     * Gives the link a "Call to Action" styling.
-     */
-    cta: { type: Boolean, default: false },
-    /**
-     * Disables the component to prevent user interaction.
-     */
-    disabled: { type: Boolean, default: false },
+const props = defineProps({
+  /**
+   * Main MegaMenuItem text content
+   */
+  label: { type: String, default: "" },
+  /**
+   * Determines the MegaMenuItem component type to use.
+   */
+  type: {
+    type: String as PropType<"landing-page" | "descriptive" | "simple">,
+    default: "simple",
   },
-  setup(props) {
-    const linkClass = computed(() => {
-      /* If the type is set, or if `cta` prop is set, apply styles */
-      let classes = props.type || props.cta
-        ? 'link group w-full no-underline'
-        : ''
-      return classes
-    })
+  /**
+   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+   */
+  external: { type: Boolean, default: false },
+  /**
+   * Gives the link a "Call to Action" styling.
+   */
+  cta: { type: Boolean, default: false },
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled: { type: Boolean, default: false },
+})
 
-    const typeClass = computed(() => {
-      /* Apply styles based on type class */
-      const type = props.type as
-        | "landing-page"
-        | "descriptive"
-        | "simple"
-      switch (type) {
-        case "landing-page":
-          return "p-4 text-lg hover:no-underline hover:text-red-500 dark:hover:text-red-300"
-        case "descriptive":
-          return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-25 hover:dark:bg-gray-850"
-        case "simple":
-          return "p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-500 dark:hover:text-red-300"
-        default:
-          return ""
-      }
-    })
+const linkClass = computed(() => {
+  /* If the type is set, or if `cta` prop is set, apply styles */
+  let classes = props.type || props.cta
+    ? 'link group w-full no-underline'
+    : ''
+  return classes
+})
 
-    const disabledClass = computed(() => {
-      return props.disabled ? "disabled" : ""
-    })
+const typeClass = computed(() => {
+  /* Apply styles based on type class */
+  const type = props.type as
+    | "landing-page"
+    | "descriptive"
+    | "simple"
+  switch (type) {
+    case "landing-page":
+      return "p-4 text-lg hover:no-underline hover:text-red-500 dark:hover:text-red-300"
+    case "descriptive":
+      return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-25 hover:dark:bg-gray-850"
+    case "simple":
+      return "p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-500 dark:hover:text-red-300"
+    default:
+      return ""
+  }
+})
 
-    return { linkClass, typeClass, disabledClass }
-  },
+const disabledClass = computed(() => {
+  return props.disabled ? "disabled" : ""
 })
 </script>
