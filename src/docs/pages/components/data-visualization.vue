@@ -257,7 +257,7 @@
           :entries="entries"
           :show-percent="false"
           :small-heading="false"
-          variant="blue"
+          variant="yellow"
           :view-all-url="viewAllUrl"
         />
       </div>

@@ -133,7 +133,7 @@ const props = defineProps({
    * Determines the color of the progress bars.
    */
   variant: {
-    type: String as PropType<'gray' | 'red' | 'green' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo' | 'pink'>,
+    type: String as PropType<'gray' | 'red' | 'green' | 'yellow' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo' | 'pink'>,
     default: null,
   },
   /**
@@ -267,6 +267,19 @@ const getProgressColor = (index: number) => {
         return "bg-green-600 dark:bg-green-200"
       } else if (index === 4) {
         return "bg-green-500 dark:bg-green-100"
+      }
+      break;
+    case "yellow":
+      if (index === 0) {
+        return "bg-yellow-900 dark:bg-yellow-500"
+      } else if (index === 1) {
+        return "bg-yellow-800 dark:bg-yellow-400"
+      } else if (index === 2) {
+        return "bg-yellow-700 dark:bg-yellow-300"
+      } else if (index === 3) {
+        return "bg-yellow-600 dark:bg-yellow-200"
+      } else if (index === 4) {
+        return "bg-yellow-500 dark:bg-yellow-100"
       }
       break;
     case "orange":
