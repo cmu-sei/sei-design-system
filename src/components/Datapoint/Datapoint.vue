@@ -108,7 +108,13 @@ const variantClass = computed(() => {
       textClass = 'text-teal-600 dark:text-teal-400'
       break
     case 'orange':
-      textClass = 'text-orange-600 dark:text-orange-300'
+      if (props.size === 'lg') {
+        textClass = 'text-orange-400 dark:text-orange-300'
+      } else if (props.size === 'md') {
+        textClass = 'text-orange-500 dark:text-orange-300'
+      } else {
+        textClass = 'text-orange-600 dark:text-orange-300'
+      }
       break
     case 'red':
       textClass = 'text-red-600 dark:text-red-400'
@@ -117,7 +123,11 @@ const variantClass = computed(() => {
       textClass = 'text-tan-600 dark:text-tan-400'
       break
     case 'yellow':
-      textClass = 'text-yellow-600 dark:text-yellow-300'
+      if (props.size === 'sm') {
+        textClass = 'text-yellow-600 dark:text-yellow-300'
+      } else {
+        textClass = 'text-yellow-500 dark:text-yellow-300'
+      }
       break
     case 'pink':
       textClass = 'text-pink-600 dark:text-pink-400'

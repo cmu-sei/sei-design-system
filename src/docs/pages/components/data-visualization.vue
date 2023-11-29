@@ -133,7 +133,31 @@
         />
         <SdsDatapoint
           v-model="datapointModelValue"
+          size="md"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="lg"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
           size="sm"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="md"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="lg"
           variant="orange"
           label="Report Downloads"
         />
