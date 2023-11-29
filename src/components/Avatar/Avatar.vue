@@ -137,9 +137,9 @@ const shapeClass = computed(() => {
 
 const variantClass = computed(() => {
   const colorOptions = [
-    'bg-gray-100 dark:text-gray-500 dark:bg-gray-900', 
+    'bg-gray-100 dark:text-gray-400 dark:bg-gray-900', 
     'bg-red-100 dark:text-red-500 dark:bg-red-900', 
-    'bg-yellow-25 dark:text-yellow-500 dark:bg-yellow-900', 
+    'bg-yellow-25 dark:text-yellow-400 dark:bg-yellow-900', 
     'bg-green-50 dark:text-green-500 dark:bg-green-900', 
     'bg-blue-50 dark:text-blue-500 dark:bg-blue-900', 
     'bg-purple-100 dark:text-purple-500 dark:bg-purple-900'
