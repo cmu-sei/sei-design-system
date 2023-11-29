@@ -257,7 +257,87 @@
           :entries="entries"
           :show-percent="false"
           :small-heading="false"
+          variant="gray"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="tan"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
           variant="yellow"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="orange"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="green"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="blue"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="purple"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="indigo"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="red"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="teal"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="pink"
           :view-all-url="viewAllUrl"
         />
       </div>
