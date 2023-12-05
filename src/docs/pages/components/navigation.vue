@@ -191,11 +191,6 @@
                       type="descriptive"
                       href="https://sei.cmu.edu/news/index.cfm"
                     >
-                      <template #top>
-                        <img
-                          src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                        >
-                      </template>
                       <template #default>
                         <p class="uppercase">
                           <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
@@ -443,11 +438,6 @@
                     type="descriptive"
                     href="https://sei.cmu.edu/news/index.cfm"
                   >
-                    <template #top>
-                      <img
-                        src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                      >
-                    </template>
                     <template #default>
                       <p class="uppercase">
                         <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>

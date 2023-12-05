@@ -5,41 +5,41 @@ exports[`SearchBox > should match its default snapshot 1`] = `
   class="input-group"
   data-id="sds-search-box"
 >
-  <div
-    class="relative w-full input-group"
-  >
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="pr-8 rounded-r-none form-control"
-      maxlength="524288"
-      placeholder=""
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-  </div>
   <button
-    class="btn btn-secondary text-gray-900 dark:text-gray-300 px-3"
-    type="button"
+    class="input-group-text"
+    tabindex="-1"
   >
     <span
       class="sr-only"
     >
-      Search
+      Search box
     </span>
     <svg
-      class="w-5 h-5 search"
+      aria-hidden="true"
       fill="currentColor"
-      viewBox="0 0 20 20"
+      height="16"
+      viewBox="0 0 512 512"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        clip-rule="evenodd"
-        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-        fill-rule="evenodd"
+        d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
       />
     </svg>
   </button>
+  <input
+    autocapitalize="off"
+    autocomplete="off"
+    autocorrect="off"
+    class="form-control"
+    maxlength="524288"
+    placeholder=""
+    spellcheck="false"
+    type="text"
+  />
+  <!--v-if-->
+  <!-- @slot Default content. -->
+  
+  
 </div>
 `;

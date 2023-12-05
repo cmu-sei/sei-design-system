@@ -323,7 +323,7 @@
         class="border-t my-2 pt-2 dark:border-gray-700 w-56"
       >
         <div
-          class="text-sm text-gray-600 dark:text-gray-500 mb-2"
+          class="text-sm text-gray-600 dark:text-gray-400 mb-2"
         >
           <template v-if="date && !(date instanceof Date) && date.end instanceof Date">
             {{ formatDate(date.end, 'eeee, MMM dd, yyyy') }}

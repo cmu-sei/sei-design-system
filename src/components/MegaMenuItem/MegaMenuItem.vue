@@ -38,7 +38,7 @@
             />
           </svg>
         </div>
-        <p class="text-gray-600 dark:text-gray-500"><slot /></p>
+        <p class="text-gray-600 dark:text-gray-400"><slot /></p>
       </div>
     </div>
   </a>

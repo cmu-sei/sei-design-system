@@ -1,5 +1,5 @@
 <template>
-  <floating-ui
+  <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
@@ -46,27 +46,32 @@
       >
         <div
           v-if="enableFilter"
-          class="input-group input-group-sm mb-2 pb-2 border-b"
+          class="input-group input-group-sm mb-2 border-b"
         >
+          <button
+            class="input-group-text mt-0.5"
+            @click="filterTextInput?.focus()"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              height="16"
+              width="16"
+              viewBox="0 0 512 512"
+              aria-hidden="true"
+            >
+              <path
+                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+              />
+            </svg>
+          </button>
           <input
+            ref="filterTextInput"
             v-model="filterText"
             type="text"
             class="form-control"
             placeholder="Type to filter"
           >
-          <span class="input-group-text">
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </span>
         </div>
         <div
           v-if="!enableFilter"
@@ -109,27 +114,31 @@
           </ul>
         </div>
         <div class="pt-4 space-y-2">
-          <button
-            class="btn btn-primary btn-block btn-sm"
+          <SdsButton
+            kind="primary"
+            size="sm"
+            block
             @click="saveSelections(); close()"
           >
             Apply filter
-          </button>
-          <sds-link
-            class="mt-3 btn-block text-center text-sm"
-            kind="primary"
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            size="sm"
+            block
             @click="cancelSelections(); close()"
           >
             Cancel
-          </sds-link>
+          </SdsButton>
         </div>
       </div>
     </template>
-  </floating-ui>
+  </SdsFloatingUi>
 </template>
 
 <script setup lang="ts">
-import FloatingUi from '../FloatingUi/FloatingUi.vue';
+import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
+import SdsButton from '../Button/Button.vue'
 import { Uid } from '@shimyshack/uid'
 
 interface FilterByDropdownOption {
@@ -181,6 +190,7 @@ const props = defineProps({
 const emit = defineEmits(['update:model-value'])
 
 const button = ref()
+const filterTextInput = ref()
 const filterText = ref("")
 const tmpOptions = ref([])
 

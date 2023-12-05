@@ -213,7 +213,7 @@
             <p class="font-bold">
               {{ item.fruit }}
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-500">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               Stocked by <span class="font-bold">{{ item.employee }}</span>
             </p>
           </template>

@@ -188,7 +188,7 @@
               <svg
                 v-if="item.id === openDrawerID"
                 height="16"
-                class="mt-1 text-gray-600 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400"
+                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 viewBox="0 0 512 512"
                 width="16"
                 xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +201,7 @@
               <svg
                 v-else
                 height="16"
-                class="mt-1 text-gray-600 dark:text-gray-500 hover:text-blue-500 dark:hover:text-blue-400"
+                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 viewBox="0 0 384 512"
                 width="16"
                 xmlns="http://www.w3.org/2000/svg"

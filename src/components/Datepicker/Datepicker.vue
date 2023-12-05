@@ -1,5 +1,5 @@
 <template>
-  <floating-ui
+  <SdsFloatingUi
     data-id="sds-datepicker"
     class="w-full"
     :placement="placement"
@@ -18,14 +18,13 @@
       >
         <div
           class="w-full input-group"
-          :class="{ 'input-group-sm': size === 'sm' }"
+          :class="{ 'input-group-sm': size === 'sm', disabled }"
         >
           <button
             type="button"
             tabindex="-1"
             class="input-group-text fill-current"
             :class="{
-              'p-1': size === 'sm',
               'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
               'border-none': disabled,
             }"
@@ -37,8 +36,7 @@
               viewBox="0 0 512 512"
               aria-hidden="true"
               role="img"
-              class="fill-current"
-              :class="{ 'w-3 h-3': size === 'sm', 'w-4 h-4': size !== 'sm' }"
+              class="fill-current w-4 h-4"
             >
               <path
                 v-if="mode === 'time'"
@@ -58,7 +56,6 @@
             aria-label="Start date"
             type="text"
             class="form-control"
-            :class="{ 'px-1': size === 'sm' }"
             :title="`${placeholder}`"
             :placeholder="placeholder"
             :readonly="readonly"
@@ -102,14 +99,13 @@
           </div>
           <div
             class="w-full input-group"
-            :class="{ 'input-group-sm': size === 'sm' }"
+            :class="{ 'input-group-sm': size === 'sm', disabled }"
           >
             <button
               type="button"
               tabindex="-1"
               class="input-group-text fill-current"
               :class="{
-                'p-1': size === 'sm',
                 'pointer-events-none opacity-50': disabled || readonly
               }"
               :disabled="disabled || readonly"
@@ -120,8 +116,7 @@
                 viewBox="0 0 512 512"
                 aria-hidden="true"
                 role="img"
-                class="fill-current"
-                :class="{ 'w-3 h-3': size === 'sm', 'w-4 h-4': size !== 'sm' }"
+                class="fill-current w-4 h-4"
               >
                 <path
                   v-if="mode === 'time'"
@@ -141,7 +136,6 @@
               aria-label="End date"
               type="text"
               class="form-control"
-              :class="{ 'px-1': size === 'sm' }"
               :title="`${placeholder}`"
               :placeholder="placeholder"
               :readonly="readonly"
@@ -162,7 +156,7 @@
     </template>
     <template #default="{ close }">
       <div class="p-4">
-        <calendar
+        <SdsCalendar
           v-model="localDate"
           :min="min"
           :max="max"
@@ -172,13 +166,12 @@
         />
       </div>
     </template>
-  </floating-ui>
+  </SdsFloatingUi>
 </template>
 
 <script setup lang="ts">
+import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import { parse, format, isValid, min as dateFnsMin, max as dateFnsMax, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays, addYears } from 'date-fns'
-import Calendar from '../Calendar/Calendar.vue';
-import FloatingUi from '../FloatingUi/FloatingUi.vue';
 
 import type { Placement as BasePlacement } from '@floating-ui/dom'
 type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'

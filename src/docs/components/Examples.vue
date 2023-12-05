@@ -1990,7 +1990,6 @@
               :items="items"
               :threshold="2"
               :autosuggest="autosuggest"
-              :disable-search="text === ''"
               placeholder="Search for a fruit"
               variant="primary"
               use-built-in-highlighting
@@ -2010,41 +2009,35 @@
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             @search="search"
           />
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="primary"
             @search="search"
           />
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="success"
             @search="search"
           />
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="info"
             @search="search"
           />
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="warning"
             @search="search"
           />
           <sds-search-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="danger"
             @search="search"
           />

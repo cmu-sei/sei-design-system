@@ -99,13 +99,33 @@
       <h2 class="text-xl">
         Search Box
       </h2>
-      <div>
+      <div class="space-y-4">
+        <SdsSearchBox
+          v-model="searchBox.modelValue"
+          variant="red"
+          placeholder="Search"
+          :disabled="false"
+          :autofocus="false"
+          @search="searchBox.onSearch"
+        >
+          <div class="input-group-text">
+            <SdsTooltip>
+              <template #trigger>
+                <div class="border dark:border-gray-700 rounded shadow px-2 py-1 leading-3">
+                  <span>/</span>
+                </div>
+              </template>
+              <p>Press "/" to focus</p>
+            </SdsTooltip>
+          </div>
+        </SdsSearchBox>
         <SdsSearchBox
           v-model="searchBox.modelValue"
           variant="gray"
-          :disabled="false"
+          placeholder="Search"
+          size="sm"
+          :disabled="true"
           :autofocus="false"
-          :disable-search="false"
           @search="searchBox.onSearch"
         />
       </div>
