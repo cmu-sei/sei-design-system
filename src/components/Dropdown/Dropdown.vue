@@ -91,7 +91,7 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-    kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
   /**
    * Styling for the button trigger.
    */
