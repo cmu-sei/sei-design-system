@@ -114,15 +114,15 @@
           placeholder="Search"
           :disabled="false"
           :autofocus="false"
-          size="sm"
           :suggestions="searchBox.suggestions"
           filter-suggestions
+          focus-on-key-press
           option-label="term"
           option-group-label="label"
           option-group-children="items"
           @complete="searchBox.onComplete"
-          @search="searchBox.onSearch"
           @result="searchBox.onResult"
+          @search="searchBox.onSearch"
         >
           <template #optionGroup="{ label }">
             <span class="font-semibold">Group: {{ label }}</span>
@@ -130,24 +130,6 @@
           <template #option="{ label }">
             Option: {{ label }}
           </template>
-        </SdsSearchBox>
-        <SdsSearchBox
-          v-model="searchBox.modelValue"
-          placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          @search="searchBox.onSearch"
-        >
-          <div class="input-group-text">
-            <SdsTooltip>
-              <template #trigger>
-                <div class="border dark:border-gray-700 rounded shadow px-2 py-1 leading-3">
-                  <span>/</span>
-                </div>
-              </template>
-              <p>Press "/" to focus</p>
-            </SdsTooltip>
-          </div>
         </SdsSearchBox>
         <SdsSearchBox
           v-model="searchBox.modelValue"

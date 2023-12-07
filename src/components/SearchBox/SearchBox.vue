@@ -79,6 +79,21 @@
           aria-hidden="true"
         ><path d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
+      <div
+        v-if="focusOnKeyPress"
+        class="input-group-text"
+      >
+        <SdsTooltip>
+          <template #trigger>
+            <div class="border dark:border-gray-700 rounded shadow px-2 py-1 leading-3 cursor-default">
+              <span>/</span>
+            </div>
+          </template>
+          <p>
+            Press "/" to focus
+          </p>
+        </SdsTooltip>
+      </div>
       <!-- @slot Default content. Good for adding content to the end of the input group -->
       <slot />
     </div>
@@ -187,6 +202,10 @@ const props = defineProps({
    */
   autofocus: { type: Boolean, default: undefined },
   /**
+   * Determines whether to focus the input on "/" key press.
+   */
+  focusOnKeyPress: { type: Boolean, default: false },
+  /**
    * The suggestions used by autosuggest.
    */
   suggestions: { type: Array as PropType<any[]>, default: undefined },
@@ -287,6 +306,18 @@ onMounted(() => {
 
 onKeyStroke('Escape', () => {
   showDropdown.value = false
+})
+
+onKeyStroke('/', (e) => {
+  if (!props.focusOnKeyPress) return
+  if (!e.target) return
+  const tagName = (e.target as HTMLElement).tagName.toLowerCase()
+  if (tagName === "textarea") return
+  if (tagName === "input") return
+  if (tagName === "select") return
+
+  e.preventDefault()
+  inputField.value.focus()
 })
 
 onClickOutside(root, () => {
