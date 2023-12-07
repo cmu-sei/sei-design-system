@@ -207,9 +207,9 @@ const props = defineProps({
    */
   filterSuggestions: { type: Boolean, default: undefined },
   /**
-   * The debounce period before the complete event is called.
+   * The debounce period before the suggestions are updated.
    */
-  suggestionsDebounce: { type: Number, default: 250 }
+  debounceSuggestions: { type: Number, default: 250 }
 })
 
 const emit = defineEmits(['update:model-value', 'complete', 'search', 'result'])
@@ -233,7 +233,7 @@ watchDebounced(() => props.suggestions, (value) => {
   if (query.value !== props.modelValue) {
     showDropdown.value = typeof value !== 'undefined' && value.length > 0
   }
-}, { debounce: props.suggestionsDebounce })
+}, { debounce: props.debounceSuggestions })
 
 const reduceList = (arr: any) => {
   const cleanArray = arr.reduce((acc:any, item:any) => {
