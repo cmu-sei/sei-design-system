@@ -60,7 +60,7 @@
         class="tag-list-item input"
       >
         <span
-          ref="faux-input"
+          ref="fauxInput"
           class="faux-input"
           aria-hidden="true"
         >
@@ -108,17 +108,15 @@
       @click.prevent.stop="handleClearBtn"
     >
       <svg
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="w-5 h-5 x"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
         aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      ><path d="M6 18L18 6M6 6l12 12" /></svg>
     </button>
     <div
       v-if="!hideCaret && !(showClear && selected.length > 0)"

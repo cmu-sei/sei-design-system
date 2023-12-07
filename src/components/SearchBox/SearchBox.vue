@@ -1,74 +1,153 @@
 <template>
   <div
     data-id="sds-search-box"
-    class="input-group"
-    :class="{
-      disabled,
-      'input-group-sm': size === 'sm'
-    }"
+    class="relative"
   >
-    <button
-      class="input-group-text"
-      :disabled="disabled"
-      tabindex="-1"
-      @click="input?.focus()"
-    >
-      <span class="sr-only">Search box</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        height="16"
-        width="16"
-        viewBox="0 0 512 512"
-        aria-hidden="true"
-      >
-        <path
-          d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-        />
-      </svg>
-    </button>
-    <input
-      :id="id"
-      ref="input"
-      v-model.trim="q"
-      type="text"
-      autocapitalize="off"
-      autocomplete="off"
-      spellcheck="false"
-      autocorrect="off"
-      class="form-control"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :maxlength="maxlength"
-      @keyup="searchOnKeyUp ? search() : null"
-      @keyup.enter.self="search"
-    >
-    <button
-      v-if="q.length > 0 && !disabled"
-      tabindex="-1"
-      type="button"
-      class="btn px-1 text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+    <div
+      class="input-group"
       :class="{
-        'btn-sm': size === 'sm'
+        disabled,
+        'input-group-sm': size === 'sm'
       }"
-      @click="clearSearch"
     >
-      <span class="sr-only">Clear search</span>
-      <svg
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="w-5 h-5"
-        aria-hidden="true"
+      <button
+        class="input-group-text"
+        :disabled="disabled"
+        tabindex="-1"
+        @click="inputField?.focus()"
       >
-        <path
-          fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
-    </button>
-    <!-- @slot Default content. -->
-    <slot />
+        <span class="sr-only">Search box</span>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          :class="{
+            'w-3.5 h-3.5': size === 'sm',
+            'w-4 h-4': size !== 'sm',
+          }"
+        ><path
+          fill="currentColor"
+          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+        /></svg>
+      </button>
+      <input
+        :id="id"
+        ref="inputField"
+        v-model.trim="query"
+        type="text"
+        autocapitalize="off"
+        autocomplete="off"
+        spellcheck="false"
+        autocorrect="off"
+        class="form-control"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :maxlength="maxlength"
+        @keydown.tab="showDropdown = false"
+        @keydown.down.prevent="handleArrows('down')"
+        @keydown.up.prevent="handleArrows('up')"
+        @keydown.enter.prevent.self
+        @keyup.enter.prevent.self="handleEnterKeyUp"
+      >
+      <button
+        v-if="query.length > 0 && !disabled"
+        tabindex="-1"
+        type="button"
+        class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+        :class="{
+          'btn-sm px-2': size === 'sm',
+          'btn-sm px-3': size !== 'sm'
+        }"
+        @click="clearSearch"
+      >
+        <span class="sr-only">Clear search</span>
+        <svg
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          class="mt-0.5"
+          :class="{
+            'w-4 h-4': size === 'sm',
+            'w-5 h-5': size !== 'sm',
+          }"
+          aria-hidden="true"
+        ><path d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+      <!-- @slot Default content. -->
+      <slot />
+    </div>
+    <transition
+      enter-active-class="transition-transform ease-in-out origin-top duration-150"
+      enter-from-class="scale-y-0"
+      enter-to-class="scale-y-100"
+      leave-active-class="transition-transform ease-in-out origin-top duration-200"
+      leave-from-class="scale-y-100"
+      leave-to-class="scale-y-0"
+    >
+      <div
+        v-if="dropdownIsOpen"
+        class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow dark:border-gray-700 dark:bg-gray-850"
+      >
+        <template
+          v-for="s, sindex in suggestionOptions"
+          :key="`${s}_${sindex}`"
+        >
+          <template v-if="optionGroupChildren && s[optionGroupChildren]">
+            <div
+              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white"
+            >
+              <slot
+                name="optionGroup"
+                :option="s"
+                :label="optionGroupLabel ? s[optionGroupLabel] : s"
+              >
+                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+              </slot>
+            </div>
+            <button
+              v-for="c, cindex in s[optionGroupChildren]"
+              :key="`${s}_${c}_${cindex}`"
+              ref="dropdownOption"
+              class="flex w-full px-4 py-2 text-sm text-left text-black list-none cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              :class="{ 'active bg-gray-100 dark:bg-gray-800': c.index === arrowCounter }"
+              type="button"
+              tabindex="-1"
+              @click="handleSuggestionClick(c)"
+            >
+              <slot
+                name="option"
+                :option="c"
+                :label="optionLabel ? c[optionLabel] : c"
+              >
+                {{ optionLabel ? c[optionLabel] : c }}
+              </slot>
+            </button>
+          </template>
+          <button
+            v-else
+            ref="dropdownOption"
+            class="flex w-full px-4 py-2 text-sm text-left text-black list-none cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+            :class="{ 'active bg-gray-100 dark:bg-gray-800': s.index === arrowCounter }"
+            type="button"
+            tabindex="-1"
+            @click="handleSuggestionClick(s)"
+          >
+            <slot
+              name="option"
+              :option="s"
+              :label="optionLabel ? s[optionLabel] : s"
+            >
+              {{ optionLabel ? s[optionLabel] : s }}
+            </slot>
+          </button>
+        </template>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -83,83 +162,242 @@ const props = defineProps({
    */
   id: { type: String, default: undefined },
   /**
-   * The v-model passed from the parent that is used to init the local state "q.value".
+   * The value of the text input.
    */
-  modelValue: {
-    type: String,
-    default: "",
-  },
+  modelValue: { type: String, default: '' },
   /**
    * The placeholder for the input.
    */
-  placeholder: {
-    type: String,
-    default: "",
-  },
+  placeholder: { type: String, default: undefined },
   /**
    * Disables the component to prevent user interaction.
    */
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+  disabled: { type: Boolean, default: undefined },
   /**
    * The max amount of characters that can be entered into the input.
    */
-  maxlength: {
-    type: Number,
-    default: 524288,
-  },
+  maxlength: { type: Number, default: undefined },
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
-  size: { type: String as PropType<"sm" | "md">, default: "" },
-  /**
-   * Determines if a search should be performed on key up.
-   */
-  searchOnKeyUp: {
-    type: Boolean,
-    default: false,
-  },
+  size: { type: String as PropType<'sm' | 'md'>, default: undefined },
   /**
    * Determine whether to autofocus the input.
    */
-  autofocus: {
-    type: Boolean,
-    default: false,
-  },
+  autofocus: { type: Boolean, default: undefined },
+  /**
+   * The suggestions used by autosuggest.
+   */
+  suggestions: { type: Array as PropType<any[]>, default: undefined },
+  /**
+   * The label key used for each non-group suggestion.
+   */
+  optionLabel: { type: String, default: undefined },
+  /**
+   * The label key used for each group suggestion.
+   */
+  optionGroupLabel: { type: String, default: undefined },
+  /**
+   * The key used to determine the children array for each group suggestion.
+   */
+  optionGroupChildren: { type: String, default: undefined },
+  /**
+   * Determine whether to use built-in suggestion filter based on modelValue.
+   */
+  filterSuggestions: { type: Boolean, default: undefined },
+  /**
+   * The debounce period before the complete event is called.
+   */
+  suggestionsDebounce: { type: Number, default: 250 }
 })
 
-const emit = defineEmits(['update:model-value', 'search'])
+const emit = defineEmits(['update:model-value', 'complete', 'search', 'result'])
 
-const input = ref()
+const inputField = ref()
+const dropdownOption = ref()
 
-const q = computed({
+const query = computed({
   get() {
-    return props.modelValue;
+    return props.modelValue
   },
-  set(val: string) {
+  set(value: string) {
+    if (value !== originalQuery.value) {
+      preventDropdownOpen.value = false
+      originalQuery.value = value
+    }
+    if (!value) {
+      showDropdown.value = false
+    }
     /**
      * Emitted when modelValue changes.
      */
-    emit("update:model-value", val);
-  },
+    emit('update:model-value', value)
+    /**
+     * Emitted after modelValue changes. Alias of update:model-value for easier development.
+     */
+    emit('complete', value);
+  }
+})
+
+const originalQuery = ref(query.value)
+
+const reduceList = (arr: any) => {
+  const cleanArray = arr.reduce((acc:any, item:any) => {
+    const newItem = item
+    if (props.optionGroupChildren && item[props.optionGroupChildren]) {
+      newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren])
+      if (newItem[props.optionGroupChildren].length > 0) {
+        acc.push(newItem)
+      }
+    } else {
+      if (newItem.term.toLowerCase().includes(query.value.toLowerCase())) {
+        acc.push(newItem)
+      }
+    }
+    return acc
+  }, [])
+
+  return addIndexToList(cleanArray)
+}
+
+const addIndexToList = (arr: any) => {
+  let index = 0
+  return arr.map((i: any) => {
+    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+      i[props.optionGroupChildren] = i[props.optionGroupChildren].map((x: any) => {
+        x.index = index
+        index++
+        return x
+      })
+    } else {
+      i.index = index
+      index++
+    }
+    return i
+  })
+}
+
+const suggestionOptions = computed(() => {
+  return props.filterSuggestions ?
+    reduceList(props.suggestions) :
+    addIndexToList(props.suggestions && props.suggestions || [])
 })
 
 onMounted(() => {
-  if (props.autofocus) input.value.focus();
+  if (props.autofocus) inputField.value.focus();
 })
 
 const clearSearch = () => {
-  q.value = "";
-  input.value.focus();
+  query.value = "";
+  inputField.value.focus();
 }
 
-const search = () => {
+const showDropdown = ref(false)
+const preventDropdownOpen = ref(false)
+
+const dropdownIsOpen = computed(() => {
+  return suggestionOptions.value && suggestionOptions.value.length > 0 && showDropdown.value && !preventDropdownOpen.value
+})
+
+watch(showDropdown, (value) => {
+  if (value) {
+    arrowCounter.value = -1
+  }
+})
+
+watchDebounced(() => props.suggestions, (value) => {
+  showDropdown.value = typeof value !== 'undefined' && value.length > 0
+}, { debounce: props.suggestionsDebounce })
+
+onKeyStroke('Escape', () => {
+  showDropdown.value = false
+})
+
+const closeDropdown = () => {
+  showDropdown.value = false
+  preventDropdownOpen.value = true
+  inputField.value.focus();
+}
+
+const handleSuggestionClick = (option: any) => {
+  query.value = props.optionLabel ? option[props.optionLabel] : option
+  emitResult(option)
+  closeDropdown()
+}
+
+const handleEnterKeyUp = () => {
   if (props.disabled) return;
+
+  if (dropdownIsOpen.value) {
+    let option
+    suggestionOptions.value.forEach((i: any) => {
+      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+        const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
+        if (tmp) {
+          option = props.optionLabel ? tmp[props.optionLabel] : tmp
+        }
+      } else {
+        if (i.index === arrowCounter.value) {
+          option = props.optionLabel ? i[props.optionLabel] : i
+        }
+      }
+    })
+    query.value =
+      option
+        ? option
+        : originalQuery.value || query.value;
+    if (option) {
+      emitResult(option)
+    }
+    closeDropdown()
+  }
+  emitSearch()
+}
+
+const emitResult = (result: any) => {
   /**
-   * Emitted when a search is triggered with a payload of the query.
+   * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
    */
-  emit("search", q.value);
+  emit('result', result);
+}
+
+const emitSearch = () => {
+  nextTick(() => {
+    /**
+     * Emitted whenever a search is triggered.
+     */
+    emit('search', query.value)
+  })
+}
+
+const arrowCounter = ref(-1)
+
+const handleArrows = (direction: 'up' | 'down') => {
+  // Allow an open state
+  if (!showDropdown.value) {
+    showDropdown.value = true
+  } else {
+    switch (direction) {
+      // When going down, select next result until end
+      // then loop back around starting with original query.
+      case "down":
+        // if (!this.isOpen && this.metThreshold) this.filterResults();
+        if (arrowCounter.value < dropdownOption.value.length - 1) {
+          arrowCounter.value = arrowCounter.value + 1;
+        } else {
+          arrowCounter.value = -1;
+        }
+        break;
+      // When going up, select prev result until at original query
+      // then loop back around starting at the end of the results.
+      case "up":
+        if (arrowCounter.value > -1) {
+          arrowCounter.value = arrowCounter.value - 1;
+        } else {
+          arrowCounter.value = dropdownOption.value.length - 1;
+        }
+        break;
+    }
+  }
 }
 </script>

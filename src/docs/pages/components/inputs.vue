@@ -100,9 +100,39 @@
         Search Box
       </h2>
       <div class="space-y-4">
+        <!-- <SdsSearchBox
+          v-model="searchBox.modelValue"
+          placeholder="Search"
+          :disabled="false"
+          :autofocus="false"
+          :suggestions="searchBox.suggestions"
+          @complete="searchBox.onComplete"
+          @search="searchBox.onSearch"
+        /> -->
         <SdsSearchBox
           v-model="searchBox.modelValue"
-          variant="red"
+          placeholder="Search"
+          :disabled="false"
+          :autofocus="false"
+          size="sm"
+          :suggestions="searchBox.suggestions"
+          filter-suggestions
+          option-label="term"
+          option-group-label="label"
+          option-group-children="items"
+          @complete="searchBox.onComplete"
+          @search="searchBox.onSearch"
+          @result="searchBox.onResult"
+        >
+          <template #optionGroup="{ label }">
+            <span class="font-semibold">Group: {{ label }}</span>
+          </template>
+          <template #option="{ label }">
+            Option: {{ label }}
+          </template>
+        </SdsSearchBox>
+        <SdsSearchBox
+          v-model="searchBox.modelValue"
           placeholder="Search"
           :disabled="false"
           :autofocus="false"
@@ -121,7 +151,6 @@
         </SdsSearchBox>
         <SdsSearchBox
           v-model="searchBox.modelValue"
-          variant="gray"
           placeholder="Search"
           size="sm"
           :disabled="true"
@@ -306,7 +335,40 @@ const radioGroup = reactive({
 const searchBox = reactive({
   modelValue: '',
   onSearch(value: string) {
-    alert(`Searching: ${value}`)
+    console.log(`onSearch`, value)
+  },
+  suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
+  onResult(option: any) {
+    console.log('onResult', option)
+  },
+  async onComplete(query: string) {
+    searchBox.suggestions = query ? [
+      { term: "Apple", payload: "test" },
+      {
+        term:
+          "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
+        payload: "test",
+      },
+      { term: "Banana", payload: "test" },
+      {
+        label: "Group Label",
+        items: [
+          { term: "Apple Group", payload: "test" },
+          { term: "Banana Group", payload: "test" },
+          { term: "Orange Group", payload: "test" },
+          { term: "Pineapple Group", payload: "test" },
+          { term: "Grape Group", payload: "test" },
+        ]
+      },
+      { term: "Orange", payload: "test" },
+      { term: "Pineapple", payload: "test" },
+      { term: "Kiwi", payload: "test" },
+      { term: "Pomegranate", payload: "test" },
+      { term: "Strawberry", payload: "test" },
+      { term: "Raspberry", payload: "test" },
+      { term: "Watermelon", payload: "test" },
+      { term: "Mango", payload: "test" },
+    ] : []
   }
 })
 
