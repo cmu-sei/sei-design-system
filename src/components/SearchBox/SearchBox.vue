@@ -168,6 +168,8 @@
 </template>
 
 <script setup lang="ts">
+import SdsTooltip from '../Tooltip/Tooltip.vue'
+
 defineOptions({
   name: 'SdsSearchBox'
 })
