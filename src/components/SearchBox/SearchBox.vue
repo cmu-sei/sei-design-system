@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="root"
     data-id="sds-search-box"
     class="relative"
   >
@@ -91,7 +92,7 @@
     >
       <div
         v-if="dropdownIsOpen"
-        class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow dark:border-gray-700 dark:bg-gray-850"
+        class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <template
           v-for="s, sindex in suggestionOptions"
@@ -213,6 +214,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value', 'complete', 'search', 'result'])
 
+const root = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const query = ref(props.modelValue)
@@ -284,6 +286,10 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
+  showDropdown.value = false
+})
+
+onClickOutside(root, () => {
   showDropdown.value = false
 })
 
