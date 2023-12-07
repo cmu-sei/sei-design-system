@@ -78,7 +78,7 @@
           aria-hidden="true"
         ><path d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
-      <!-- @slot Default content. -->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
       <slot />
     </div>
     <transition
@@ -215,31 +215,23 @@ const emit = defineEmits(['update:model-value', 'complete', 'search', 'result'])
 
 const inputField = ref()
 const dropdownOption = ref()
+const query = ref(props.modelValue)
+const showDropdown = ref(false)
+const arrowCounter = ref(-1)
 
-const query = computed({
-  get() {
-    return props.modelValue
-  },
-  set(value: string) {
-    if (value !== originalQuery.value) {
-      preventDropdownOpen.value = false
-      originalQuery.value = value
-    }
-    if (!value) {
-      showDropdown.value = false
-    }
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit('update:model-value', value)
-    /**
-     * Emitted after modelValue changes. Alias of update:model-value for easier development.
-     */
-    emit('complete', value);
-  }
+watch(query, () => {
+  emitComplete()
 })
 
-const originalQuery = ref(query.value)
+watch(showDropdown, () => {
+  arrowCounter.value = -1
+})
+
+watchDebounced(() => props.suggestions, (value) => {
+  if (query.value !== props.modelValue) {
+    showDropdown.value = typeof value !== 'undefined' && value.length > 0
+  }
+}, { debounce: props.suggestionsDebounce })
 
 const reduceList = (arr: any) => {
   const cleanArray = arr.reduce((acc:any, item:any) => {
@@ -283,46 +275,35 @@ const suggestionOptions = computed(() => {
     addIndexToList(props.suggestions && props.suggestions || [])
 })
 
+const dropdownIsOpen = computed(() => {
+  return showDropdown.value && suggestionOptions.value && suggestionOptions.value.length > 0
+})
+
 onMounted(() => {
   if (props.autofocus) inputField.value.focus();
 })
-
-const clearSearch = () => {
-  query.value = "";
-  inputField.value.focus();
-}
-
-const showDropdown = ref(false)
-const preventDropdownOpen = ref(false)
-
-const dropdownIsOpen = computed(() => {
-  return suggestionOptions.value && suggestionOptions.value.length > 0 && showDropdown.value && !preventDropdownOpen.value
-})
-
-watch(showDropdown, (value) => {
-  if (value) {
-    arrowCounter.value = -1
-  }
-})
-
-watchDebounced(() => props.suggestions, (value) => {
-  showDropdown.value = typeof value !== 'undefined' && value.length > 0
-}, { debounce: props.suggestionsDebounce })
 
 onKeyStroke('Escape', () => {
   showDropdown.value = false
 })
 
-const closeDropdown = () => {
+const closeDropdownAndFocusInput = () => {
   showDropdown.value = false
-  preventDropdownOpen.value = true
+  inputField.value.focus();
+}
+
+const clearSearch = () => {
+  query.value = '';
+  emitUpdateModelValue()
   inputField.value.focus();
 }
 
 const handleSuggestionClick = (option: any) => {
   query.value = props.optionLabel ? option[props.optionLabel] : option
+  emitUpdateModelValue()
   emitResult(option)
-  closeDropdown()
+  emitSearch()
+  closeDropdownAndFocusInput()
 }
 
 const handleEnterKeyUp = () => {
@@ -342,35 +323,15 @@ const handleEnterKeyUp = () => {
         }
       }
     })
-    query.value =
-      option
-        ? option
-        : originalQuery.value || query.value;
     if (option) {
+      query.value = option
       emitResult(option)
+      emitUpdateModelValue()
     }
-    closeDropdown()
+    closeDropdownAndFocusInput()
   }
   emitSearch()
 }
-
-const emitResult = (result: any) => {
-  /**
-   * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
-   */
-  emit('result', result);
-}
-
-const emitSearch = () => {
-  nextTick(() => {
-    /**
-     * Emitted whenever a search is triggered.
-     */
-    emit('search', query.value)
-  })
-}
-
-const arrowCounter = ref(-1)
 
 const handleArrows = (direction: 'up' | 'down') => {
   // Allow an open state
@@ -399,5 +360,33 @@ const handleArrows = (direction: 'up' | 'down') => {
         break;
     }
   }
+}
+
+const emitUpdateModelValue = () => {
+  /**
+   * Emmited when the modelValue changes.
+   */
+  emit('update:model-value', query.value)
+}
+
+const emitResult = (result: any) => {
+  /**
+   * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
+   */
+  emit('result', result);
+}
+
+const emitComplete = () => {
+  /**
+   * Emitted when internal query changes.
+   */
+  emit('complete', query.value);
+}
+
+const emitSearch = () => {
+  /**
+   * Emitted whenever a search is triggered.
+   */
+  emit('search', query.value)
 }
 </script>

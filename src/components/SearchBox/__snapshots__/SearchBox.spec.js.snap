@@ -40,7 +40,7 @@ exports[`SearchBox > should match its default snapshot 1`] = `
       type="text"
     />
     <!--v-if-->
-    <!-- @slot Default content. -->
+    <!-- @slot Default content. Good for adding content to the end of the input group -->
     
     
   </div>
