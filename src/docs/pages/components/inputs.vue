@@ -100,15 +100,6 @@
         Search Box
       </h2>
       <div class="space-y-4">
-        <!-- <SdsSearchBox
-          v-model="searchBox.modelValue"
-          placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          :suggestions="searchBox.suggestions"
-          @complete="searchBox.onComplete"
-          @search="searchBox.onSearch"
-        /> -->
         <SdsSearchBox
           v-model="searchBox.modelValue"
           placeholder="Search"
@@ -123,14 +114,7 @@
           @complete="searchBox.onComplete"
           @result="searchBox.onResult"
           @search="searchBox.onSearch"
-        >
-          <template #optionGroup="{ label }">
-            <span class="font-semibold">Group: {{ label }}</span>
-          </template>
-          <template #option="{ label }">
-            Option: {{ label }}
-          </template>
-        </SdsSearchBox>
+        />
         <SdsSearchBox
           v-model="searchBox.modelValue"
           placeholder="Search"
@@ -320,6 +304,7 @@ const searchBox = reactive({
     console.log(`onSearch`, value)
   },
   suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
+  // suggestions: [] as any,
   onResult(option: any) {
     console.log('onResult', option)
   },
@@ -351,6 +336,11 @@ const searchBox = reactive({
       { term: "Watermelon", payload: "test" },
       { term: "Mango", payload: "test" },
     ] : []
+    // searchBox.suggestions = query ? [
+    //   "Apple",
+    //   "Banana",
+    //   "Cranberry"
+    // ] : []
   }
 })
 

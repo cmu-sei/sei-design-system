@@ -115,7 +115,7 @@
         >
           <template v-if="optionGroupChildren && s[optionGroupChildren]">
             <div
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white"
+              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
             >
               <slot
                 name="optionGroup"
@@ -138,9 +138,9 @@
               <slot
                 name="option"
                 :option="c"
-                :label="optionLabel ? c[optionLabel] : c"
+                :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
               >
-                {{ optionLabel ? c[optionLabel] : c }}
+                {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
               </slot>
             </button>
           </template>
@@ -156,9 +156,9 @@
             <slot
               name="option"
               :option="s"
-              :label="optionLabel ? s[optionLabel] : s"
+              :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
             >
-              {{ optionLabel ? s[optionLabel] : s }}
+              {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
             </slot>
           </button>
         </template>
@@ -241,6 +241,7 @@ const dropdownOption = ref()
 const query = ref(props.modelValue)
 const showDropdown = ref(false)
 const arrowCounter = ref(-1)
+const defaultOptionLabel = ref('label')
 
 watch(query, () => {
   emitComplete()
@@ -265,7 +266,7 @@ const reduceList = (arr: any) => {
         acc.push(newItem)
       }
     } else {
-      if (newItem.term.toLowerCase().includes(query.value.toLowerCase())) {
+      if (newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value].toLowerCase().includes(query.value.toLowerCase())) {
         acc.push(newItem)
       }
     }
@@ -293,9 +294,17 @@ const addIndexToList = (arr: any) => {
 }
 
 const suggestionOptions = computed(() => {
+  const suggestions = props.suggestions?.map(i => {
+    if (typeof i !== 'object') {
+      i = {
+        [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
+      }
+    }
+    return i
+  })
   return props.filterSuggestions ?
-    reduceList(props.suggestions) :
-    addIndexToList(props.suggestions && props.suggestions || [])
+    reduceList(suggestions) :
+    addIndexToList(suggestions)
 })
 
 const dropdownIsOpen = computed(() => {
@@ -338,7 +347,7 @@ const clearSearch = () => {
 }
 
 const handleSuggestionClick = (option: any) => {
-  query.value = props.optionLabel ? option[props.optionLabel] : option
+  query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
   emitUpdateModelValue()
   emitResult(option)
   emitSearch()
@@ -354,11 +363,11 @@ const handleEnterKeyUp = () => {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
         const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
         if (tmp) {
-          option = props.optionLabel ? tmp[props.optionLabel] : tmp
+          option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
         }
       } else {
         if (i.index === arrowCounter.value) {
-          option = props.optionLabel ? i[props.optionLabel] : i
+          option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
         }
       }
     })
