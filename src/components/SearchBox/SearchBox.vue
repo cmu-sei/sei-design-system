@@ -36,7 +36,7 @@
       <input
         :id="id"
         ref="inputField"
-        v-model.trim="query"
+        v-model.trim="filterQuery"
         type="text"
         autocapitalize="off"
         autocomplete="off"
@@ -46,6 +46,7 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :maxlength="maxlength"
+        @input="query = filterQuery"
         @keydown.tab="showDropdown = false"
         @keydown.down.prevent="handleArrows('down')"
         @keydown.up.prevent="handleArrows('up')"
@@ -239,6 +240,7 @@ const root = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const query = ref(props.modelValue)
+const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
@@ -354,23 +356,28 @@ const handleSuggestionClick = (option: any) => {
   closeDropdownAndFocusInput()
 }
 
+const getCurrentSuggestion = () => {
+  let option
+  suggestionOptions.value.forEach((i: any) => {
+    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+      const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
+      if (tmp) {
+        option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
+      }
+    } else {
+      if (i.index === arrowCounter.value) {
+        option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
+      }
+    }
+  })
+  return option
+}
+
 const handleEnterKeyUp = () => {
   if (props.disabled) return;
 
   if (dropdownIsOpen.value) {
-    let option
-    suggestionOptions.value.forEach((i: any) => {
-      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
-        if (tmp) {
-          option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
-        }
-      } else {
-        if (i.index === arrowCounter.value) {
-          option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
-        }
-      }
-    })
+    const option = getCurrentSuggestion()
     if (option) {
       query.value = option
       emitResult(option)
@@ -406,6 +413,13 @@ const handleArrows = (direction: 'up' | 'down') => {
           arrowCounter.value = dropdownOption.value.length - 1;
         }
         break;
+    }
+    // Set the input boxes text to the value of the result
+    const option = getCurrentSuggestion()
+    if (option) {
+      filterQuery.value = option
+    } else {
+      filterQuery.value = query.value
     }
   }
 }
