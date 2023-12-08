@@ -2,22 +2,6 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Autosuggest
-      </h2>
-      <div>
-        <SdsAutosuggest
-          v-model="modelValue"
-          :items="itemList"
-          variant="gray"
-          :disabled="false"
-          :autosuggest="onAutosuggest"
-          use-built-in-highlighting
-          @search="onSearch"
-        />
-      </div>
-    </div>
-    <div class="grid gap-4">
-      <h2 class="text-xl">
         Checkbox Group
       </h2>
       <div>
@@ -169,38 +153,6 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref('')
-const itemList = ref<{ term: string, payload: string }[]>([])
-const fakeAjaxItems = ref([
-  { term: "Apple", payload: "test" },
-  {
-    term:
-      "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
-    payload: "test",
-  },
-  { term: "Banana", payload: "test" },
-  { term: "Orange", payload: "test" },
-  { term: "Pineapple", payload: "test" },
-  { term: "Kiwi", payload: "test" },
-  { term: "Pomegranate", payload: "test" },
-  { term: "Strawberry", payload: "test" },
-  { term: "Raspberry", payload: "test" },
-  { term: "Watermelon", payload: "test" },
-  { term: "Mango", payload: "test" },
-])
-
-const onAutosuggest = () => {
-  setTimeout(() => {
-    itemList.value = fakeAjaxItems.value.filter((i) => {
-      return i.term.toLowerCase().includes(modelValue.value.toLowerCase());
-    });
-  }, 250);
-}
-
-const onSearch = (value: string) => {
-  alert(`Searching: ${value}`)
-}
-
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
   options: [

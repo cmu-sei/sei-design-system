@@ -209,7 +209,7 @@ const props = defineProps({
    */
   focusOnKeyPress: { type: Boolean, default: false },
   /**
-   * The suggestions used by autosuggest.
+   * The suggestions used for autosuggest.
    */
   suggestions: { type: Array as PropType<any[]>, default: undefined },
   /**
@@ -319,6 +319,7 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
+  filterQuery.value = query.value
   showDropdown.value = false
 })
 

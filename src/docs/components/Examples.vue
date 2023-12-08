@@ -1975,34 +1975,6 @@
         </div>
 
         <h4 class="my-4 text-lg">
-          Autosuggest
-        </h4>
-        <div>
-          <SdsFormGroup
-            v-slot="{ id }"
-            label="Autosuggest Example"
-            description="This is just an example"
-            required
-          >
-            <sds-autosuggest
-              :id="id"
-              v-model="text"
-              :items="items"
-              :threshold="2"
-              :autosuggest="autosuggest"
-              placeholder="Search for a fruit"
-              variant="primary"
-              use-built-in-highlighting
-              @result="result"
-              @search="search"
-            />
-          </SdsFormGroup>
-          <p class="mt-3">
-            You performed a search with: {{ searchText }}
-          </p>
-        </div>
-
-        <h4 class="my-4 text-lg">
           Search Box
         </h4>
         <div class="space-y-4">
@@ -3352,14 +3324,6 @@ export default defineComponent({
     search(q: any) {
       this.$emit("hello", q);
       this.searchText = this.text;
-    },
-    // Retrieve autosuggest items
-    autosuggest() {
-      setTimeout(() => {
-        this.items = this.fakeAjaxItems.filter((i) => {
-          return i.term.toLowerCase().includes(this.text.toLowerCase());
-        });
-      }, 250);
     },
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });
