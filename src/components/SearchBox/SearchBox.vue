@@ -245,7 +245,8 @@ const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
-watch(query, () => {
+watch(query, (value) => {
+  filterQuery.value = value
   emitComplete()
 })
 
