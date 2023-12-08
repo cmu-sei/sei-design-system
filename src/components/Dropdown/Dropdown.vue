@@ -8,7 +8,7 @@
     :will-open="willOpen"
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass} ${popperClass}`"
     hide-arrow
     shift
   >
@@ -195,7 +195,13 @@ export default defineComponent({
      * }
      * ```
      */
-    willClose: { type: Function, default: null }
+    willClose: { type: Function, default: null },
+    /**
+     * A prop that allows you to specify additional CSS classes for the popper element
+     * when the dropdown is opened. These classes can be used for customizing the
+     * appearance and positioning of the dropdown.
+     */
+    popperClass: { type: String, default: '' },
   },
   setup(props) {
     const button = ref(null)
