@@ -99,12 +99,12 @@
       <slot />
     </div>
     <transition
-      enter-active-class="transition-transform ease-in-out origin-top duration-150"
-      enter-from-class="scale-y-0"
-      enter-to-class="scale-y-100"
-      leave-active-class="transition-transform ease-in-out origin-top duration-200"
-      leave-from-class="scale-y-100"
-      leave-to-class="scale-y-0"
+      enter-active-class="transition-opacity ease-linear duration-75"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity ease-linear duration-75"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
     >
       <div
         v-if="dropdownIsOpen"
@@ -114,10 +114,14 @@
           v-for="s, sindex in suggestionOptions"
           :key="`${s}_${sindex}`"
         >
-          <template v-if="optionGroupChildren && s[optionGroupChildren]">
+          <div
+            v-if="optionGroupChildren && s[optionGroupChildren]"
+            class="border-b last:border-b-0 border-gray-200 dark:border-gray-700"
+          >
             <div
               class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
             >
+              <!-- @slot Option Group content. Good for customizing the content for each group option -->
               <slot
                 name="optionGroup"
                 :option="s"
@@ -130,12 +134,17 @@
               v-for="c, cindex in s[optionGroupChildren]"
               :key="`${s}_${c}_${cindex}`"
               ref="dropdownOption"
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-              :class="{ 'active bg-gray-100 dark:bg-gray-800': c.index === arrowCounter }"
+              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              :class="{
+                'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+              }"
+              :data-active="c.index === arrowCounter"
               type="button"
               tabindex="-1"
               @click="handleSuggestionClick(c)"
             >
+              <!-- @slot Option content. Good for customizing the content for each option -->
               <slot
                 name="option"
                 :option="c"
@@ -144,16 +153,21 @@
                 {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
               </slot>
             </button>
-          </template>
+          </div>
           <button
             v-else
             ref="dropdownOption"
-            class="flex w-full px-4 py-2 text-sm text-left text-black list-none cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-            :class="{ 'active bg-gray-100 dark:bg-gray-800': s.index === arrowCounter }"
+            class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+            :class="{
+              'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+              'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
+            }"
+            :data-active="s.index === arrowCounter"
             type="button"
             tabindex="-1"
             @click="handleSuggestionClick(s)"
           >
+            <!-- @slot Option content. Good for customizing the content for each option -->
             <slot
               name="option"
               :option="s"
@@ -336,6 +350,7 @@ onKeyStroke('/', (e) => {
 })
 
 onClickOutside(root, () => {
+  filterQuery.value = query.value
   showDropdown.value = false
 })
 

@@ -279,6 +279,16 @@ const searchBox = reactive({
           { term: "Grape Group", payload: "test" },
         ]
       },
+      {
+        label: "Group 2 Label",
+        items: [
+          { term: "Apple Group", payload: "test" },
+          { term: "Banana Group", payload: "test" },
+          { term: "Orange Group", payload: "test" },
+          { term: "Pineapple Group", payload: "test" },
+          { term: "Grape Group", payload: "test" },
+        ]
+      },
       { term: "Orange", payload: "test" },
       { term: "Pineapple", payload: "test" },
       { term: "Kiwi", payload: "test" },
