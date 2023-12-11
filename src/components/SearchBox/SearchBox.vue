@@ -86,7 +86,7 @@
       >
         <SdsTooltip>
           <template #trigger>
-            <div class="border dark:border-gray-700 rounded shadow px-2 py-1 leading-3 cursor-default">
+            <div class="border dark:border-gray-700 rounded shadow px-1.5 p-1 leading-3 cursor-default">
               <span>/</span>
             </div>
           </template>

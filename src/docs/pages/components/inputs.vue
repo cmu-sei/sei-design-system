@@ -87,6 +87,7 @@
         <SdsSearchBox
           v-model="searchBox.modelValue"
           placeholder="Search"
+          size="sm"
           :disabled="false"
           :autofocus="false"
           :suggestions="searchBox.suggestions"
