@@ -631,10 +631,9 @@
                       <svg
                         v-if="menuItem.icon === 'plant'"
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="18"
+                        height="18"
                         viewBox="0 0 256 256"
-                        class="mt-0.5"
                       >
                         <path
                           fill="currentColor"
@@ -644,10 +643,9 @@
                       <svg
                         v-if="menuItem.icon === 'tree'"
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="18"
+                        height="18"
                         viewBox="0 0 24 24"
-                        class="mt-0.5"
                       >
                         <path
                           fill="currentColor"
@@ -657,10 +655,9 @@
                       <svg
                         v-if="menuItem.icon === 'bug'"
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
+                        width="18"
+                        height="18"
                         viewBox="0 0 24 24"
-                        class="mt-0.5"
                       >
                         <path
                           fill="currentColor"
@@ -682,16 +679,16 @@
                       />
                     </template>
                   </SdsNavigationItem>
-                  <hr class="mt-2 mb-2">
+                  <hr class="mt-2 mb-2 border-gray-200 dark:border-gray-700">
                   <SdsNavigationItem
                     label="News & Media"
-                    href="https://google.com/news"
+                    href="/components/navigation"
                   />
                   <SdsNavigationItem
                     label="Resources"
-                    href="/"
+                    href="/components/navigation"
                   />
-                  <hr class="mt-2 mb-1">
+                  <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
                 </div>
               </transition>
               <transition
@@ -714,7 +711,7 @@
                     :href="menuItem.href"
                     :type="menuItem.type"
                   />
-                  <hr class="mt-2 mb-1">
+                  <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
                 </div>
               </transition>
               <transition
@@ -734,17 +731,25 @@
                     type="title"
                     label="Trees"
                   />
-                  <p class="text-lg pt-4 mb-2">
+                  <p class="text-lg pt-4 mb-2 dark:text-gray-200">
                     <b>Tree Categories</b>
                   </p>
                   <SdsNavigationItem
-                    v-for="menuItem in mobileMenus[1].content.children"
+                    v-for="menuItem in mobileMenus[1].content.children_1"
                     :key="menuItem.key"
                     :label="menuItem.title"
                     :href="menuItem.href"
                     :type="menuItem.type"
                   />
-                  <hr class="mt-2 mb-1">
+                  <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
+                  <SdsNavigationItem
+                    v-for="menuItem in mobileMenus[1].content.children_2"
+                    :key="menuItem.key"
+                    :label="menuItem.title"
+                    :href="menuItem.href"
+                    :type="menuItem.type"
+                  />
+                  <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
                 </div>
               </transition>
             </template>
@@ -1886,7 +1891,12 @@ const mobileMenus = ref([
         {
           key: "ferns",
           title: "Ferns",
-          href: "https://google.com/?ferns"
+          href: "/components/navigation"
+        },
+        {
+          key: "cacti",
+          title: "Cacti",
+          href: "/components/navigation"
         }
       ]
     }
@@ -1898,26 +1908,28 @@ const mobileMenus = ref([
     icon: "tree",
     selected: false,
     content: {
-      children: [
+      children_1: [
         {
           key: "deciduous",
           title: "Deciduous",
-          href: "https://google.com/?deciduous"
+          href: "/components/navigation"
         },
         {
           key: "leafy",
           title: "Leafy",
-          href: "https://google.com/?leafy"
-        },
+          href: "/components/navigation"
+        }
+      ],
+      children_2: [
         {
           key: "tree_anatomy",
           title: "Tree Anatomy",
-          href: "https://google.com/?tree-anatomy"
+          href: "/components/navigation"
         },
         {
           key: "available_saplings",
           title: "Available Saplings",
-          href: "https://google.com/?available-saplings"
+          href: "/components/navigation"
         }
       ]
     }
@@ -1931,14 +1943,14 @@ const mobileMenus = ref([
     content: {
       children: [
         {
-          key: "deciduous",
-          title: "Deciduous",
-          href: "https://google.com/?deciduous"
+          key: "anthropods",
+          title: "Anthropods",
+          href: "/components/navigation"
         },
         {
-          key: "leafy",
-          title: "Leafy",
-          href: "https://google.com/?leafy"
+          key: "arachnids",
+          title: "Arachnids",
+          href: "/components/navigation"
         }
       ]
     }

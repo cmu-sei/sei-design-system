@@ -6,6 +6,7 @@
     <SdsPanel
       v-model="showPanel"
       :side="side"
+      :size="size"
     >
       <template #title>
         <slot
@@ -16,7 +17,6 @@
       </template>
       <template #default>
         <slot
-          name="default"
           :panel-update="panelUpdate"
           :active-panel="panel"
         />
@@ -112,6 +112,10 @@ const panelUpdate = (e: Event, value: string) => {
         i.selected = i.selected ? false : value === i.key;
       });
     } else {
+      // enterFromClass.value = '-right-full ml-40';
+      // enterToClass.value = 'right-0 ml-0';
+      // leaveFromClass.value = 'right-0 ml-0';
+      // leaveToClass.value = '-right-full ml-40';
       // Select a specific panel
       panel.value = value;
     }
