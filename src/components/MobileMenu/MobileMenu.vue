@@ -9,6 +9,7 @@
       :size="size"
     >
       <template #title>
+        <!-- @slot The "title" slot used to supply custom logo or panel title that will display in at the top of every panel. I.e.: `<template #title>...</template>` -->
         <slot
           name="title"
           :navigate="navigate"
@@ -25,6 +26,7 @@
           leave-to-class="opacity-0 -right-full ml-40"
         >
           <div v-if="typeof activePanel !== 'undefined' && panel === activePanel.key">
+            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in the named panel. I.e.: `<template #panel(name)>...</template>` -->
             <slot
               :name="`panel(${panel})`"
               :navigate="navigate"
@@ -41,6 +43,7 @@
           leave-to-class="opacity-0 -left-full mr-40"
         >
           <div v-if="typeof activePanel === 'undefined'">
+            <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in "root" panel. I.e.: `<template #default>...</template>` -->
             <slot
               :navigate="navigate"
               :active-panel="panel"
@@ -49,6 +52,7 @@
         </transition>
       </template>
       <template #footer>
+        <!-- @slot The "footer" slot used to supply custom links or text that will display in at the top of every panel. I.e.: `<template #footer>...</template>` -->
         <slot
           name="footer"
           :navigate="navigate"
@@ -74,6 +78,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import SdsPanel from '../Panel/Panel.vue';
 import { computed, ref, watch, onUnmounted, PropType } from "vue";
 
 /**
@@ -117,6 +122,12 @@ const props = defineProps({
 });
 
 const emits = defineEmits([
+  /**
+   * When data supplied to the Mobile Menu component
+   * changes, emit an event. This lets developers
+   * trigger other actions off the Mobile Menu's modelValue
+   * when it changes.
+   */
   'update:model-value',
 ]);
 
@@ -155,7 +166,7 @@ const activePanel = computed(() => {
 /* Update showPanel to toggle panel visibility */
 const showPanel = computed({
   get() {
-    return props.modelValue;
+    return props.modelValue ?? false;
   },
   set(value: Boolean) {
     /**

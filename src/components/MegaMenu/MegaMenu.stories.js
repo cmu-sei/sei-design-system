@@ -41,7 +41,6 @@ const Template = (args) => ({
       @change="onChange"
       @update:model-value="onUpdateModelValue"
     >
-      <script>console.log(${JSON.stringify(args)})</script>
       <template #panel(topLink1)="{ content }">
         <div class="mx-auto container">
           <div class="grid grid-cols-3 gap-4 py-8">
