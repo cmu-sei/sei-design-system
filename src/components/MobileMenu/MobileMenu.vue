@@ -166,9 +166,9 @@ const activePanel = computed(() => {
 /* Update showPanel to toggle panel visibility */
 const showPanel = computed({
   get() {
-    return props.modelValue ?? false;
+    return props.modelValue;
   },
-  set(value: Boolean) {
+  set(value: boolean) {
     /**
      * Emmitted when mobileMenus changes.
      */
