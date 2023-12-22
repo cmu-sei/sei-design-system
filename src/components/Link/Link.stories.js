@@ -12,21 +12,17 @@ export default {
   component: SdsLink,
   argTypes: {
     kind: {
-      options: ['primary', 'secondary', 'tertiary', 'danger', 'light', 'dark'],
+      options: ['primary', 'secondary', 'tertiary'],
+      control: { type: 'select' }
+    },
+    type: {
+      options: ['standalone', 'inline', 'cta'],
       control: { type: 'select' }
     },
     variant: {
-      options: ['', 'primary', 'secondary', 'tertiary', 'success', 'info', 'warning', 'danger', 'light', 'dark'],
+      options: ['blue', 'red'],
       control: { type: 'select' }
     },
-    cta: {
-      options: ['', 'right', 'left', 'up', 'down', true, false],
-      control: { type: 'select' }
-    },
-    disabled: {
-      options: [true, false],
-      control: { type: 'radio' }
-    }
   }
 };
 
@@ -47,5 +43,5 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'primary'
+  kind: 'primary'
 };
