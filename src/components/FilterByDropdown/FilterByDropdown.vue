@@ -248,9 +248,9 @@ const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
 const variantClass = computed(() => {
   switch (props.kind) {
       case 'primary':
-      return 'link link-primary'
+      return 'link link-primary link-blue'
     case 'secondary':
-      return 'link link-secondary'
+      return 'link link-secondary link-blue'
     default:
       return ''
   }

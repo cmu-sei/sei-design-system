@@ -4,12 +4,137 @@
       <h2 class="text-xl">
         Link
       </h2>
-      <div>
+      <div class="flex gap-2">
         <SdsLink
           href="https://sei.cmu.edu"
           kind="primary"
-          :disabled="false"
-          :external="false"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+      </div>
+      <div class="flex gap-2">
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+      </div>
+      <div class="flex gap-2">
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+          type="cta"
         >
           SEI Homepage
         </SdsLink>

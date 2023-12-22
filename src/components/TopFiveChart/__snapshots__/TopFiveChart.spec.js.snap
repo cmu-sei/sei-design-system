@@ -113,7 +113,7 @@ exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
           </div>
         </div>
       </li>
-      <li class="mt-4"><a href="https://seinet.sei.cmu.edu" class="link link-primary link-cta"> View All </a></li>
+      <li class="mt-4"><a href="https://seinet.sei.cmu.edu" class="link link-primary link-blue link-cta"> View All </a></li>
     </ul>
   </div>
 </div>"

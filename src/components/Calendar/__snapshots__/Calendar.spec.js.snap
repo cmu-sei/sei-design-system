@@ -11,7 +11,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
       class="flex relative gap-1 mb-2 w-56"
     >
       <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -56,7 +56,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
       </div>
       <!--v-if-->
       <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -135,7 +135,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1 col-start-4"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -147,7 +147,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -159,7 +159,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -171,7 +171,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -183,7 +183,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -195,7 +195,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -207,7 +207,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -219,7 +219,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -231,7 +231,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -243,7 +243,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -255,7 +255,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -267,7 +267,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -279,7 +279,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -291,7 +291,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -303,7 +303,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -315,7 +315,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -327,7 +327,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -339,7 +339,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -351,7 +351,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
             tabindex="-1"
             title="Today"
             type="button"
@@ -363,7 +363,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -375,7 +375,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -387,7 +387,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -399,7 +399,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -411,7 +411,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -423,7 +423,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -435,7 +435,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -447,7 +447,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -459,7 +459,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -471,7 +471,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -483,7 +483,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"
@@ -495,7 +495,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-300 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
             tabindex="-1"
             title=""
             type="button"

@@ -10,7 +10,7 @@
           :class="{ 'sm:w-120': isRange }"
         >
           <button
-            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToPrevMonth"
@@ -60,7 +60,7 @@
             </button>
           </div>
           <button
-            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToNextMonth"
@@ -115,7 +115,7 @@
                 tabindex="-1"
                 :class="{
                   'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
-                  'hover:bg-gray-300 dark:hover:bg-gray-750': !dateIsSameDay(day),
+                  'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day),
                   'font-bold bg-blue-500 text-white': dateIsSameDay(day),
                   'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
                   'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
@@ -155,7 +155,7 @@
                   tabindex="-1"
                   :class="{
                     'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
-                    'hover:bg-gray-200 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
+                    'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
                     'font-bold bg-blue-500 text-white': dateIsSameDay(day, true),
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
                     'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)

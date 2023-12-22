@@ -65,7 +65,7 @@
         >
           <a
             :href="viewAllUrl"
-            class="link link-primary link-cta"
+            class="link link-primary link-blue link-cta"
           >
             View All
           </a>

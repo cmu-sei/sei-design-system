@@ -3,9 +3,12 @@
     data-id="sds-link"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
-    :class="[linkClass, variantClass, ctaClass, disabledClass]"
+    :class="['link', kindClass, typeClass, variantClass, disabledClass]"
     :tabindex="disabled ? -1 : undefined"
-  ><!-- @slot Link content. --><slot /></a>
+  >
+    <!-- @slot Link content. -->
+    <slot />
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -17,27 +20,27 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark'>, default: null },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary'>, default: 'primary' },
+  /**
+   * Determines the type of the component.
+   */
+  type: { type: String as PropType<'standalone' | 'inline' | 'cta'>, default: 'standalone' },
+  /**
+   * Determines the color variant of the component.
+   */
+  variant: { type: String as PropType<'blue' | 'red'>, default: 'blue' },
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
    */
   external: { type: Boolean, default: false },
-  /**
-   * Gives the link a "Call to Action" styling.
-   */
-  cta: { type: [Boolean, String] as PropType<'up' | 'right' | 'down' | 'left' | boolean> , default: false },
   /**
    * Disables the component to prevent user interaction.
    */
   disabled: { type: Boolean, default: false }
 })
 
-const linkClass = computed(() => {
-  return props.kind || props.cta ? 'link' : ''
-})
-
-const variantClass = computed(() => {
-  const kind = (props.kind as 'primary' | 'secondary' | 'tertiary' | 'danger' | 'light' | 'dark')
+const kindClass = computed(() => {
+  const kind = (props.kind as 'primary' | 'secondary' | 'tertiary')
   switch (kind) {
     case 'primary':
       return 'link-primary'
@@ -45,31 +48,32 @@ const variantClass = computed(() => {
       return 'link-secondary'
     case 'tertiary':
       return 'link-tertiary'
-    case 'danger':
-      return 'link-danger'
-    case 'light':
-      return 'link-light'
-    case 'dark':
-      return 'link-dark'
     default:
       return ''
   }
 })
 
-const ctaClass = computed(() => {
-  switch (props.cta) {
-    case 'right':
-      return 'link-cta link-cta-right'
-    case 'left':
-      return 'link-cta link-cta-left'
-    case 'up':
-      return 'link-cta link-cta-up'
-    case 'down':
-      return 'link-cta link-cta-down'
-    case true:
+const typeClass = computed(() => {
+  const type = (props.type as 'standalone' | 'inline' | 'cta')
+  switch (type) {
+    case 'inline':
+      return 'link-inline'
+    case 'cta':
       return 'link-cta'
+    case 'standalone':
     default:
       return ''
+  }
+})
+
+const variantClass = computed(() => {
+  const variant = (props.variant as 'blue' | 'red')
+  switch (variant) {
+    case 'red':
+      return 'link-red'
+    case 'blue':
+    default:
+      return 'link-blue'
   }
 })
 
