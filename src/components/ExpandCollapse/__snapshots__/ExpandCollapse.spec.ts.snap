@@ -6,6 +6,6 @@ exports[`ExpandCollapse > should match its default snapshot 1`] = `
   class="link link-primary link-blue link-cta link-cta-down"
   data-id="sds-expand-collapse"
 >
-  show less
+  show more
 </button>
 `;
