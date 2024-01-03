@@ -114,7 +114,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
             <!-- @slot Footer right (bottom in mobile) content. @binding year -->
             
             <p>
-              © 2023 Carnegie Mellon University
+              © 2024 Carnegie Mellon University
             </p>
             
           </div>

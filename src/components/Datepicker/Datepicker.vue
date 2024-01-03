@@ -171,7 +171,21 @@
 
 <script setup lang="ts">
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
-import { parse, format, isValid, min as dateFnsMin, max as dateFnsMax, isBefore, isAfter, isEqual, setHours, setMinutes, setMilliseconds, setSeconds, addDays, subDays, addYears } from 'date-fns'
+import { parse } from 'date-fns/parse'
+import { format } from 'date-fns/format'
+import { isValid } from 'date-fns/isValid'
+import { min as dateFnsMin } from 'date-fns/min'
+import { max as dateFnsMax } from 'date-fns/max'
+import { isBefore } from 'date-fns/isBefore'
+import { isAfter } from 'date-fns/isAfter'
+import { isEqual } from 'date-fns/isEqual'
+import { setHours } from 'date-fns/setHours'
+import { setMinutes } from 'date-fns/setMinutes'
+import { setMilliseconds } from 'date-fns/setMilliseconds'
+import { setSeconds } from 'date-fns/setSeconds'
+import { addDays } from 'date-fns/addDays'
+import { subDays } from 'date-fns/subDays'
+import { addYears } from 'date-fns/addYears'
 
 import type { Placement as BasePlacement } from '@floating-ui/dom'
 type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'

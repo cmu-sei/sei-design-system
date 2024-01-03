@@ -396,7 +396,28 @@
 </template>
 
 <script setup lang="ts">
-import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
+import { isToday } from 'date-fns/isToday'
+import { isWithinInterval } from 'date-fns/isWithinInterval'
+import { isBefore } from 'date-fns/isBefore'
+import { isAfter } from 'date-fns/isAfter'
+import { isEqual } from 'date-fns/isEqual'
+import { isDate } from 'date-fns/isDate'
+import { min as dateFnsMin } from 'date-fns/min'
+import { max as dateFnsMax } from 'date-fns/max'
+import { isSameDay } from 'date-fns/isSameDay'
+import { getDaysInMonth } from 'date-fns/getDaysInMonth'
+import { startOfMonth } from 'date-fns/startOfMonth'
+import { getDay } from 'date-fns/getDay'
+import { getHours } from 'date-fns/getHours'
+import { setDate } from 'date-fns/setDate'
+import { setHours } from 'date-fns/setHours'
+import { setMinutes } from 'date-fns/setMinutes'
+import { setSeconds } from 'date-fns/setSeconds'
+import { setMilliseconds } from 'date-fns/setMilliseconds'
+import { subMonths } from 'date-fns/subMonths'
+import { addMonths } from 'date-fns/addMonths'
+import { format } from 'date-fns/format'
+import { endOfDay } from 'date-fns/endOfDay'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
