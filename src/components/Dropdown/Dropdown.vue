@@ -37,6 +37,7 @@
             {{ title }}
           </slot>
           <svg
+            v-if="!hideArrow"
             class="inline-block self-center w-5 h-5 -mr-1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -93,15 +94,15 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the button trigger.
      */
-     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | 'transparent'>, default: null },
     /**
      * Styling for the button trigger.
-     * 
+     *
      * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
+     *
      * @deprecated since version 2.12.
      */
-    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
+    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | 'transparent' | ''>, default: 'default' },
     /**
      * The z-index for the popover.
      */
@@ -147,16 +148,20 @@ export default defineComponent({
      */
     disabled: { type: Boolean, default: false },
     /**
+     * Determines if the arrow should display or not.
+     */
+    hideArrow: { type: Boolean, default: false },
+    /**
      * Allows for code execution prior to opening the popover.
-     * 
+     *
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
-     * 
+     *
      * For example, this can prevent the popover from opening
      * until a call to a backend API completes.
-     * 
+     *
      * Example definition in parent component:
-     * 
+     *
      * ```
      * async willOpen(open, cancel) {
      *  try {
@@ -173,15 +178,15 @@ export default defineComponent({
     willOpen: { type: Function, default: null },
     /**
      * Allows for code execution prior to closing the popover.
-     * 
+     *
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
-     * 
+     *
      * For example, this can prevent the popover from closing
      * until a call to a backend API completes.
-     * 
+     *
      * Example definition in parent component:
-     * 
+     *
      * ```
      * async willClose(close, cancel) {
      *  try {
@@ -263,6 +268,8 @@ export default defineComponent({
           return 'btn-danger'
         case 'light':
           return 'btn-light'
+        case 'transparent':
+          return 'bg-transparent hover:bg-gray-800 border-0'
         default:
           return ''
       }

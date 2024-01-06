@@ -8,6 +8,79 @@
     :sidebar-navigation-items="sidebarNavigationItems"
     @navigate="navigate"
   >
+    <template #suite-header>
+      <SdsDropdown
+        kind="transparent"
+        placement="bottom-start"
+        size="md"
+        :block="false"
+        :disabled="false"
+        popperClass="mt-[5px] rounded-t-none"
+        hideArrow
+        :outline="false">
+        <template #title>
+          <svg
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            class="h-5 w-4"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M279.135 512c78.756 0 150.982-35.804 198.844-94.775c28.27-34.831-2.558-85.722-46.249-77.401c-82.348 15.683-158.272-47.268-158.272-130.792c0-48.424 26.06-92.292 67.434-115.836c38.745-22.05 28.999-80.788-15.022-88.919A257.936 257.936 0 0 0 279.135 0c-141.36 0-256 114.575-256 256c0 141.36 114.576 256 256 256zm0-464c12.985 0 25.689 1.201 38.016 3.478c-54.76 31.163-91.693 90.042-91.693 157.554c0 113.848 103.641 199.2 215.252 177.944C402.574 433.964 344.366 464 279.135 464c-114.875 0-208-93.125-208-208s93.125-208 208-208z"
+            />
+          </svg>
+        </template>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 1</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 2</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 3</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 4</SdsDropdownItem>
+      </SdsDropdown>
+      <SdsDropdown
+        kind="transparent"
+        placement="bottom-start"
+        size="md"
+        :block="false"
+        :disabled="false"
+        popperClass="mt-[3px] rounded-t-none"
+        :outline="false">
+        <template #title>
+          <div class="gap-2 inline-flex items-center">
+          <span class="text-bold">John Doe</span>
+          </div>
+        </template>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 1</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 2</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 3</SdsDropdownItem>
+        <SdsDropdownItem
+          tag="button"
+          @click="onClick"
+        >Item 4</SdsDropdownItem>
+      </SdsDropdown>
+    </template>
     <template #page-header>
       <sds-button
         variant="default"
