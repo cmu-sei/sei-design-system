@@ -27,7 +27,7 @@
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :href="href ? href : undefined"
-    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-4 pl-4 pr-6"
+    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6"
     :class="{
       disabledClass: disabled,
       'cursor-pointer': props.type !== 'title',
@@ -39,10 +39,12 @@
     role="menuitem"
     @click="onClick"
   >
-    <slot
+    <div
       v-if="$slots.left"
-      name="left"
-    />
+      class="my-auto"
+    >
+      <slot name="left" />
+    </div>
     <slot
       name="default"
     >
@@ -53,23 +55,32 @@
         {{ label }}
       </span>
     </slot>
-    <svg
-      v-if="!props.href && props.type !== 'title'"
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="24"
-      viewBox="0 0 320 512"
-      class="ml-auto group-hover:text-red-700 dark:text-gray-400 group-hover:dark:text-gray-100 text-gray-700 shrink-0"
-      :class="{
-        'transition-transform': type === 'expand' && $slots.children,
-        'rotate-90': props.selected && (type === 'expand' && $slots.children)
-      }"
+    <div
+      class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100"
     >
-      <path
-        fill="currentColor"
-        d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256L73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
-      />
-    </svg>
+      <svg
+        v-if="!props.href && props.type !== 'title'"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 512 512"
+        class="ml-auto -mr-1 shrink-0"
+        :class="{
+          'transition-transform mr-0': type === 'expand' && $slots.children,
+          'rotate-90': !props.selected && (type === 'expand' && $slots.children),
+          '-rotate-90': props.selected && (type === 'expand' && $slots.children)
+        }"
+      >
+        <path
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="48"
+          d="m184 112l144 144l-144 144"
+        />
+      </svg>
+    </div>
   </component>
   <div
     v-if="$slots.children && type !== 'back'"
@@ -79,12 +90,12 @@
       '-z-10 opacity-0 max-h-0 select-none': !props.selected || type !== 'expand' || !$slots.children
     }"
   >
-    <hr>
+    <hr class="border-gray-200 dark:border-gray-700">
     <slot name="children" />
   </div>
   <hr
     v-if="props.type === 'title'"
-    class="mt-4 mb-2"
+    class="mt-4 mb-2 border-gray-200 dark:border-gray-700"
   >
 </template>
 
