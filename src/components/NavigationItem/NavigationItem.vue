@@ -56,10 +56,10 @@
       </span>
     </slot>
     <div
+      v-if="['slide', 'expand'].includes(props.type)"
       class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100"
     >
       <svg
-        v-if="!props.href && props.type !== 'title'"
         xmlns="http://www.w3.org/2000/svg"
         width="22"
         height="22"
@@ -83,11 +83,11 @@
     </div>
   </component>
   <div
-    v-if="$slots.children && type !== 'back'"
+    v-if="$slots.children && type === 'expand'"
     class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top"
     :class="{
-      'z-10 opacity-1 max-h-screen': props.selected && (type === 'expand' && $slots.children),
-      '-z-10 opacity-0 max-h-0 select-none': !props.selected || type !== 'expand' || !$slots.children
+      'z-10 opacity-1 max-h-screen': props.selected,
+      '-z-10 opacity-0 max-h-0 select-none': !props.selected
     }"
   >
     <hr class="border-gray-200 dark:border-gray-700">
@@ -160,8 +160,8 @@ const props = defineProps({
    * The "type" prop determines the interaction for navigating to menu item's children.
    */
   type: {
-    type: String as PropType<'back' | 'expand' | 'slide' | 'title'>,
-    default: 'slide'
+    type: String as PropType<'back' | 'expand' | 'simple' | 'slide' | 'title' >,
+    default: 'simple'
   },
   /**
    * Override the default event handler.
