@@ -28,11 +28,11 @@ defineProps({
   /**
    * Determines the label for the expanded state.
    */
-  expandLabel: { type: String, default: 'show more' },
+  expandLabel: { type: String, default: 'Show more' },
   /**
    * Determines the label for the collapse state.
    */
-  collapseLabel: { type: String, default: 'show less' },
+  collapseLabel: { type: String, default: 'Show less' },
   /**
    * Determines the disabled state of the component.
    */
