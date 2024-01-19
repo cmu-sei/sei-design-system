@@ -5,6 +5,7 @@ import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
+import SdsComboBox from "./ComboBox";
 import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
@@ -42,7 +43,6 @@ import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
-import SdsSearchBox from "./SearchBox";
 import SdsSection from "./Section";
 import SdsSelect from "./Select";
 import SdsTabs from "./Tabs";
@@ -65,6 +65,7 @@ const Components: ComponentList = {
   SdsCalendar,
   SdsCheckboxGroup,
   SdsClientOnly,
+  SdsComboBox,
   SdsDatapoint,
   SdsDatepicker,
   SdsDropdown,
@@ -102,7 +103,6 @@ const Components: ComponentList = {
   SdsRadioGroup,
   SdsScrollArea,
   SdsScrollspy,
-  SdsSearchBox,
   SdsSection,
   SdsSelect,
   SdsTabs,
@@ -129,6 +129,7 @@ export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
+export { default as SdsComboBox } from "./ComboBox";
 export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
@@ -166,7 +167,6 @@ export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
-export { default as SdsSearchBox } from "./SearchBox";
 export { default as SdsSection } from "./Section";
 export { default as SdsSelect } from "./Select";
 export { default as SdsTabs } from "./Tabs";

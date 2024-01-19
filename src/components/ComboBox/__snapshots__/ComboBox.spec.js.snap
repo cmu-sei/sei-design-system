@@ -1,9 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchBox > should match its default snapshot 1`] = `
+exports[`ComboBox > should match its default snapshot 1`] = `
 <div
   class="relative"
-  data-id="sds-search-box"
+  data-id="sds-combo-box"
 >
   <div
     class="input-group"
@@ -15,7 +15,7 @@ exports[`SearchBox > should match its default snapshot 1`] = `
       <span
         class="sr-only"
       >
-        Search box
+        Combo box
       </span>
       <svg
         aria-hidden="true"

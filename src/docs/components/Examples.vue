@@ -1978,40 +1978,40 @@
           Search Box
         </h4>
         <div class="space-y-4">
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
             variant="primary"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
             variant="success"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
             variant="info"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
             variant="warning"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
             variant="danger"
-            @search="search"
+            @enter="search"
           />
         </div>
 

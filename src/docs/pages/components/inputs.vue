@@ -81,32 +81,31 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Search Box
+        Combo Box
       </h2>
       <div class="space-y-4">
-        <SdsSearchBox
-          v-model="searchBox.modelValue"
+        <SdsComboBox
+          v-model="comboBox.modelValue"
           placeholder="Search"
-          size="sm"
           :disabled="false"
           :autofocus="false"
-          :suggestions="searchBox.suggestions"
+          :suggestions="comboBox.suggestions"
           filter-suggestions
           focus-on-key-press
           option-label="term"
           option-group-label="label"
           option-group-children="items"
-          @complete="searchBox.onComplete"
-          @result="searchBox.onResult"
-          @search="searchBox.onSearch"
+          @complete="comboBox.onComplete"
+          @result="comboBox.onResult"
+          @enter="comboBox.onEnter"
         />
-        <SdsSearchBox
-          v-model="searchBox.modelValue"
+        <SdsComboBox
+          v-model="comboBox.modelValue"
           placeholder="Search"
           size="sm"
           :disabled="true"
           :autofocus="false"
-          @search="searchBox.onSearch"
+          @enter="comboBox.onEnter"
         />
       </div>
     </div>
@@ -251,10 +250,10 @@ const radioGroup = reactive({
   ]
 })
 
-const searchBox = reactive({
+const comboBox = reactive({
   modelValue: '',
-  onSearch(value: string) {
-    console.log(`onSearch`, value)
+  onEnter(value: string) {
+    console.log(`onEnter`, value)
   },
   suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
   // suggestions: [] as any,
@@ -262,7 +261,8 @@ const searchBox = reactive({
     console.log('onResult', option)
   },
   async onComplete(query: string) {
-    searchBox.suggestions = query ? [
+    comboBox.suggestions = query ? [
+      "Testing 123",
       { term: "Apple", payload: "test" },
       {
         term:
@@ -280,26 +280,27 @@ const searchBox = reactive({
           { term: "Grape Group", payload: "test" },
         ]
       },
+      { term: "Kiwi", payload: "test" },
+      { term: "Pomegranate", payload: "test" },
+      { term: "Strawberry", payload: "test" },
       {
         label: "Group 2 Label",
         items: [
-          { term: "Apple Group", payload: "test" },
-          { term: "Banana Group", payload: "test" },
-          { term: "Orange Group", payload: "test" },
-          { term: "Pineapple Group", payload: "test" },
-          { term: "Grape Group", payload: "test" },
+          { term: "Apple Group 2", payload: "test" },
+          { term: "Banana Group 2", payload: "test" },
+          { term: "Date Group 2", payload: "test" },
+          { term: "Orange Group 2", payload: "test" },
+          { term: "Pineapple Group 2", payload: "test" },
+          { term: "Grape Group 2", payload: "test" },
         ]
       },
       { term: "Orange", payload: "test" },
       { term: "Pineapple", payload: "test" },
-      { term: "Kiwi", payload: "test" },
-      { term: "Pomegranate", payload: "test" },
-      { term: "Strawberry", payload: "test" },
       { term: "Raspberry", payload: "test" },
       { term: "Watermelon", payload: "test" },
       { term: "Mango", payload: "test" },
-    ] : []
-    // searchBox.suggestions = query ? [
+    ] : [] as any
+    // comboBox.suggestions = query ? [
     //   "Apple",
     //   "Banana",
     //   "Cranberry"
