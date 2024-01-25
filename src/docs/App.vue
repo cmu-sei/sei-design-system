@@ -63,25 +63,34 @@
         <template #title>
           <span class="text-bold">John Doe</span>
         </template>
+        <template v-for="item in dropdownItems">
         <SdsDropdownItem
           tag="button"
-          @click="onClick"
+          @click="item.clickHandler"
+          :active="route.fullPath.toLowerCase().includes(item.label.toLowerCase())"
           class="relative"
         >
-          Item 1</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          active="route.path.alsdf == 'this'"
-          @click="onClick"
-        >Item 2</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 3</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 4</SdsDropdownItem>
+          <div class="flex gap-2 py-1">
+            <svg
+              class="w-3 h-3 rotate-0 my-auto"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+              />
+            </svg>
+            {{item.label}}
+
+          </div>
+        </SdsDropdownItem>
+
+        </template>
       </SdsDropdown>
     </template>
     <template #page-header>
@@ -129,6 +138,29 @@ const appSuite = ref('SDS')
 const appName = ref('Playground')
 const pageTitle = computed(() => route.meta.title)
 const enableCollapsibleSidebar = ref(true)
+const dropdownItems= ref([
+   {
+     clickHandler: () => router.push('/components/feedback'),
+     active: route.fullPath === '/components/feedback',
+     label: "Feedback",
+   },
+   {
+     clickHandler: () => router.push('/components/buttons'),
+     active: route.fullPath === '/components/buttons',
+     label: "Buttons",
+   },
+   {
+     clickHandler: () => router.push('/components/containers'),
+     active: route.fullPath === '/components/containers',
+     label: "Containers",
+   },
+  {
+    clickHandler: () => router.push('/components/utility'),
+    active: route.fullPath === '/components/utility',
+    label: "Utility",
+  },
+  // Add more items as needed
+])
 const sidebarNavigationItems = computed(() => [
   {id: 1, title: 'Home', active: route.fullPath === '/', href: '/'},
   {

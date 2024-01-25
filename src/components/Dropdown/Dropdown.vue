@@ -10,7 +10,6 @@
     :class="[block ? 'w-full' : '']"
     :popper-class="{
       'bg-gray-850': type === 'dark',
-      'bg-transparent': shade === 'transparent',
       'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true,
@@ -37,10 +36,9 @@
           :aria-expanded="isOpen"
           :disabled="disabled"
           :class="{
-            variantClass, sizeClass, outlineClass, disabledClass, blockClass, shadeClass,
+            variantClass, sizeClass, outlineClass, disabledClass, blockClass,
             'active': isOpen,
-            'hover:bg-gray-800 text-white': type === 'dark',
-            'border-0': shade === 'transparent',
+            'hover:bg-gray-800 text-white border-0': type === 'dark',
             'bg-transparent' : !isOpen && type === 'dark',
             'bg-gray-800': isOpen
 }"
@@ -173,10 +171,6 @@ export default defineComponent({
      * Allows you to force dark or light mode on all child components
      */
     type: { type: String as PropType<'default' | 'dark'>, default: null },
-    /**
-     * Allows you to force the dropdown button to be transparent
-     */
-    shade: { type: String as PropType<'' | 'transparent'>, default: null },
 
     /**
      * Allows for code execution prior to opening the popover.
@@ -278,15 +272,6 @@ export default defineComponent({
           return ''
         case 'sm':
           return 'btn-sm'
-        default:
-          return ''
-      }
-    },
-    shadeClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
-        case 'transparent':
-          return 'bg-transparent'
         default:
           return ''
       }
