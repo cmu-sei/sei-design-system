@@ -2,7 +2,7 @@
   <component
     :is="tag as unknown"
     data-id="sds-dropdown-item"
-    class="block w-full select-none px-4 py-2 text-sm leading-5 text-left hover:no-underline hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 hover:text-black"
+    class="[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white block w-full select-none px-4 py-2 text-sm leading-5 text-left hover:no-underline hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 hover:text-black"
     :class="{
       'bg-gray-100 dark:bg-gray-800 text-black dark:text-white': active,
       'text-gray-700 dark:text-gray-100': !active,
@@ -32,6 +32,7 @@ defineProps({
     type: String,
     default: "a",
   },
+//  type prop
   /**
    * Determines whether to close the parent dropdown when this component is clicked.
    */

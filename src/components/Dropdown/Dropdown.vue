@@ -8,7 +8,14 @@
     :will-open="willOpen"
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass} ${popperClass}`"
+    :popper-class="{
+      'bg-gray-850': type === 'dark',
+      'bg-transparent': shade === 'transparent',
+      'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
+      [auto ? 'w-auto' : 'w-56']: true,
+      [zIndexClass]: true,
+      [popperClass]: true
+    }"
     hide-arrow
     shift
   >
@@ -29,7 +36,14 @@
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
+          :class="{
+            variantClass, sizeClass, outlineClass, disabledClass, blockClass, shadeClass,
+            'active': isOpen,
+            'hover:bg-gray-800 text-white': type === 'dark',
+            'border-0': shade === 'transparent',
+            'bg-transparent' : !isOpen && type === 'dark',
+            'bg-gray-800': isOpen
+}"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -54,7 +68,10 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2"
+        :class="[
+        'py-2',
+        type === 'dark' ? 'dropdown-dark bg-gray-850 ':  ''
+      ]"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -91,10 +108,11 @@ export default defineComponent({
      * The content of the dropdown trigger.
      */
     title: { type: String, default: '' },
+    //type: light | dark
     /**
      * Determines the purpose and particular function of the button trigger.
      */
-     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | 'transparent'>, default: null },
+     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
     /**
      * Styling for the button trigger.
      *
@@ -102,7 +120,7 @@ export default defineComponent({
      *
      * @deprecated since version 2.12.
      */
-    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | 'transparent' | ''>, default: 'default' },
+    variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
     /**
      * The z-index for the popover.
      */
@@ -151,6 +169,15 @@ export default defineComponent({
      * Determines if the arrow should display or not.
      */
     hideArrow: { type: Boolean, default: false },
+    /**
+     * Allows you to force dark or light mode on all child components
+     */
+    type: { type: String as PropType<'default' | 'dark'>, default: null },
+    /**
+     * Allows you to force the dropdown button to be transparent
+     */
+    shade: { type: String as PropType<'' | 'transparent'>, default: null },
+
     /**
      * Allows for code execution prior to opening the popover.
      *
@@ -255,6 +282,15 @@ export default defineComponent({
           return ''
       }
     },
+    shadeClass() {
+      const kind = this.kind || this.variant
+      switch (kind) {
+        case 'transparent':
+          return 'bg-transparent'
+        default:
+          return ''
+      }
+    },
     variantClass() {
       const kind = this.kind || this.variant
       switch (kind) {
@@ -268,8 +304,6 @@ export default defineComponent({
           return 'btn-danger'
         case 'light':
           return 'btn-light'
-        case 'transparent':
-          return 'bg-transparent hover:bg-gray-800 border-0'
         default:
           return ''
       }

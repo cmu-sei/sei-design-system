@@ -51,24 +51,27 @@
         >Item 4</SdsDropdownItem>
       </SdsDropdown>
       <SdsDropdown
-        kind="transparent"
+        kind="primary"
         placement="bottom-start"
         size="md"
         :block="false"
         :disabled="false"
+        type="dark"
+        shade="transparent"
         popperClass="mt-[3px] rounded-t-none"
         :outline="false">
         <template #title>
-          <div class="gap-2 inline-flex items-center">
           <span class="text-bold">John Doe</span>
-          </div>
         </template>
         <SdsDropdownItem
           tag="button"
           @click="onClick"
-        >Item 1</SdsDropdownItem>
+          class="relative"
+        >
+          Item 1</SdsDropdownItem>
         <SdsDropdownItem
           tag="button"
+          active="route.path.alsdf == 'this'"
           @click="onClick"
         >Item 2</SdsDropdownItem>
         <SdsDropdownItem
