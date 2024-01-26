@@ -12,7 +12,7 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost"
           title="First"
           @click.prevent="goToPage(1, $event)"
         >
@@ -34,7 +34,7 @@
         </button>
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost"
           title="Prev"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -68,7 +68,7 @@
               'shadow-none border-transparent': page === '...'
             }"
             :disabled="page === '...' || loading || currentPage === page"
-            class="btn btn-ghost btn-sm"
+            class="btn btn-ghost"
             @click.prevent="goToPage(page, $event)"
           >
             {{ page.toLocaleString() }}
@@ -83,7 +83,7 @@
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost"
           title="Next"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
@@ -105,7 +105,7 @@
         </button>
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost"
           title="Last"
           @click.prevent="goToPage(totalPages, $event)"
         >

@@ -14,9 +14,11 @@
         <SdsModal
           v-model="showModal"
           size="md"
+          title="Prop title"
+          hide-header
         >
           <template #title>
-            Modal title
+            Slotted title
           </template>
           <p>Main content</p>
           <template #footer>

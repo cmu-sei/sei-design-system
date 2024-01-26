@@ -28,7 +28,7 @@ const props = defineProps({
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: '' },
+  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'xs'>, default: '' },
   /**
    * Sets the active state of a button.
    */
@@ -77,8 +77,12 @@ const variantClass = computed(() => {
 
 const sizeClass = computed(() => {
   switch (props.size) {
+    case 'lg':
+      return 'btn-lg'
     case 'sm':
       return 'btn-sm'
+    case 'xs':
+      return 'btn-xs'
     default:
       return ''
   }
