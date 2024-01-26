@@ -10,12 +10,13 @@
   >
     <template #suite-header>
       <SdsDropdown
-        kind="transparent"
+        type="dark"
+        shade="transparent"
+        popperClass="mt-[7px] rounded-t-none"
         placement="bottom-start"
         size="md"
         :block="false"
         :disabled="false"
-        popperClass="mt-[5px] rounded-t-none"
         hideArrow
         :outline="false">
         <template #title>
@@ -33,35 +34,54 @@
             />
           </svg>
         </template>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 1</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 2</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 3</SdsDropdownItem>
-        <SdsDropdownItem
-          tag="button"
-          @click="onClick"
-        >Item 4</SdsDropdownItem>
+        <template v-for="item in dropdownItems">
+          <SdsDropdownItem
+            tag="button"
+            @click="item.clickHandler"
+            :active="route.fullPath.toLowerCase().includes(item.label.toLowerCase())"
+            class="relative"
+          >
+            <div class="flex gap-2 py-1">
+              <svg
+                class="w-3 h-3 rotate-0 my-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                />
+              </svg>
+              {{item.label}}
+
+            </div>
+          </SdsDropdownItem>
+
+        </template>
+
+
       </SdsDropdown>
       <SdsDropdown
-        kind="primary"
         placement="bottom-start"
         size="md"
-        :block="false"
-        :disabled="false"
         type="dark"
         shade="transparent"
         popperClass="mt-[3px] rounded-t-none"
         :outline="false">
         <template #title>
-          <span class="text-bold">John Doe</span>
+          <div class="align-top inline-flex w-7 h-7 mr-3">
+          <sds-avatar
+            shape="circle"
+            variant="red"
+            size="auto"
+            position="center"
+            />
+          </div>
+          <span class="h-7 inline-flex align-middle text-bold">John Doe</span>
         </template>
         <template v-for="item in dropdownItems">
         <SdsDropdownItem

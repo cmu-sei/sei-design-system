@@ -35,13 +35,12 @@
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="{
+          :class="[
             variantClass, sizeClass, outlineClass, disabledClass, blockClass,
-            'active': isOpen,
-            'hover:bg-gray-800 text-white border-0': type === 'dark',
-            'bg-transparent' : !isOpen && type === 'dark',
-            'bg-gray-800': isOpen
-}"
+            type ? 'hover:bg-gray-800 text-white border-0' : '',
+            !isOpen && type ? 'bg-transparent' :'',
+            isOpen ? 'active bg-gray-800' : ''
+]"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
