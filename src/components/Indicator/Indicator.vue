@@ -10,7 +10,7 @@
         v-if="!hideIndicator"
         role="status"
         class="absolute rounded-full"
-        :class="[placementClass, sizeClass, surfaceClass, variantClass]"
+        :class="[darkSurfaceClass, placementClass, sizeClass, surfaceClass, variantClass]"
       >
         <span
           v-if="status"
@@ -136,52 +136,45 @@ const sizeClass = computed(() => {
 })
 
 const surfaceClass = computed(() => {
-  let joinedClass = []
-  switch (props.surface) {
+  switch(props.surface) {
+    case "darkest":
+      return "border-black"
+    case "darker":
+      return "border-gray-950"
+    case "dark":
+      return "border-gray-900"
+    case "light":
+      return "border-gray-50"
+    case "lighter":
+      return "border-gray-25"
+    case "lightest":
     default:
-      joinedClass[0] = 'border-white'
-      joinedClass[1] = 'dark:border-gray-900'
-      break
-    case 'lightest':
-      joinedClass[0] = 'border-white'
-      joinedClass[1] = 'dark:border-gray-900'
-      break
-    case 'lighter':
-      joinedClass[0] = 'border-gray-50'
-      joinedClass[1] = 'dark:border-gray-950'
-      break
-    case 'light':
-      joinedClass[0] = 'border-gray-25'
-      joinedClass[1] = 'dark:border-black'
-      break
-    case 'dark':
-      joinedClass[0] = 'border-gray-900'
-      joinedClass[1] = 'dark:border-white'
-      break
-    case 'darker':
-      joinedClass[0] = 'border-gray-950'
-      joinedClass[1] = 'dark:border-gray-25'
-      break
-    case 'darkest':
-      joinedClass[0] = 'border-black'
-      joinedClass[1] = 'dark:border-gray-50'
-      break
+      return "border-white"
   }
-  switch (props.darkSurface) {
-    default:
-      joinedClass[1] = 'dark:border-gray-900'
-      break
-    case 'dark':
-      joinedClass[1] = 'dark:border-gray-900'
-      break
-    case 'darker':
-      joinedClass[1] = 'dark:border-gray-25'
-      break
-    case 'darkest':
-      joinedClass[1] = 'dark:border-gray-50'
-      break
+})
+
+const darkSurfaceClass = computed(() => {
+  if (!props.darkSurface) {
+    switch(props.surface) {
+      case "lightest":
+        return "dark:border-black"
+      case "lighter":
+        return "dark:border-gray-950"
+      case "light":
+      default:
+        return "dark:border-gray-900"
+    }
+  } else {
+    switch(props.darkSurface) {
+      case "darkest":
+        return "dark:border-black"
+      case "darker":
+        return "dark:border-gray-950"
+      case "dark":
+      default:
+        return "dark:border-gray-900"
+    }
   }
-  return joinedClass.join(' ')
 })
 
 const variantClass = computed(() => {
