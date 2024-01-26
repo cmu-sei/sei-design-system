@@ -7,8 +7,8 @@ exports[`LoadingBox.vue > matches snapshot 1`] = `
 />
 `;
 
-exports[`LoadingBox.vue > matches snapshot with no props assigned 1`] = `"<span data-id=\\"sds-loading-box\\" class=\\"rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-full h-full\\"></span>"`;
+exports[`LoadingBox.vue > matches snapshot with no props assigned 1`] = `"<span data-id="sds-loading-box" class="rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-full h-full"></span>"`;
 
-exports[`LoadingBox.vue > matches snapshot with width and height prop assigned 1`] = `"<span data-id=\\"sds-loading-box\\" class=\\"rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-1/2 h-32\\"></span>"`;
+exports[`LoadingBox.vue > matches snapshot with width and height prop assigned 1`] = `"<span data-id="sds-loading-box" class="rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-1/2 h-32"></span>"`;
 
-exports[`LoadingBox.vue > matches snapshot with width prop assigned 1`] = `"<span data-id=\\"sds-loading-box\\" class=\\"rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-1/2 h-full\\"></span>"`;
+exports[`LoadingBox.vue > matches snapshot with width prop assigned 1`] = `"<span data-id="sds-loading-box" class="rounded flex flex-row relative overflow-hidden bg-gray-200 dark:bg-gray-800 animate-pulse w-1/2 h-full"></span>"`;

@@ -7,7 +7,7 @@
     <div
       class="overflow-x-auto"
       :class="{
-        'bg-gray-100 dark:bg-gray-850 rounded-t': type === 'folder'
+        'bg-gray-50 dark:bg-gray-850 rounded-t': type === 'folder'
       }"
     >
       <ul
@@ -28,11 +28,9 @@
             :is="tab.tag || 'button' as unknown"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
-              'opacity-50': tab.disabled,
-              'pointer-events-none': tab.disabled || tab.active,
-              'text-sm inline-block rounded-t py-2 px-4 font-bold': type === 'folder',
-              'bg-white dark:bg-gray-900 border-l border-t border-r text-gray-700 dark:border-gray-700 dark:text-gray-100': type === 'folder' && tab.active,
-              'text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100':
+              'text-sm inline-block rounded-t py-2 px-4 font-semibold': type === 'folder',
+              'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
+              'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white':
                 type === 'folder' && !tab.active,
               'tab tab-underline tab-red': type === 'underline',
               'tab tab-block tab-red': type === 'block',
@@ -79,7 +77,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
 
 interface ITab {
@@ -93,16 +91,12 @@ interface ITab {
   disabled?: boolean
 }
 
-export default {
+defineOptions({
   name: 'SdsTabs',
   directives: {
     uid: Uid
   }
-}
-</script>
-
-<script setup lang="ts">
-import { PropType, ref, computed } from 'vue'
+})
 
 const props = defineProps({
   /**

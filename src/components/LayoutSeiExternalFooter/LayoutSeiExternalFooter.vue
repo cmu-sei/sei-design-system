@@ -1,6 +1,6 @@
 <template>
   <footer data-id="sds-layout-sei-external-footer">
-    <div class="py-8 text-white bg-gray-500">
+    <div class="py-8 text-white bg-gray-250">
       <div class="container px-4 mx-auto space-y-6 md:px-8">
         <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
           <li>
@@ -128,7 +128,7 @@
             <a
               href="https://sei.cmu.edu/contact-us/"
               target="_self"
-              class="py-8 text-xl text-center transition-colors duration-100 rounded-none btn btn-outline btn-light btn-lg btn-block"
+              class="py-8 text-xl text-center transition-colors duration-100 rounded-none btn btn-tertiary btn-red btn-lg btn-block"
             >
               Contact Us
             </a>
@@ -201,20 +201,19 @@
   </footer>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import sprites from "../../assets/images/sprites-social.png";
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternalFooter',
-  computed: {
-    year() {
-      const d = new Date();
-      return d.getFullYear();
-    },
-    socialSprites() {
-      return sprites;
-    },
-  },
-});
+defineOptions({
+  name: 'SdsLayoutSeiExternalFooter'
+})
+
+const year = computed(() => {
+  const d = new Date();
+  return d.getFullYear();
+})
+
+const socialSprites = computed(() => {
+  return sprites;
+})
 </script>

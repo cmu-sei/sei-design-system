@@ -50,7 +50,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
       class="flex flex-col items-stretch flex-grow min-w-0"
     >
       <main
-        class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950"
+        class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950"
       >
         <div
           class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
@@ -87,7 +87,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
           class="flex-shrink-0 flex order-2 lg:order-1"
         >
           <a
-            class="my-auto"
+            class="link link-primary link-blue my-auto"
             data-id="sds-link"
             href="https://sei.cmu.edu"
             rel="noopener noreferrer"

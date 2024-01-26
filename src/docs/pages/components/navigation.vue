@@ -4,12 +4,137 @@
       <h2 class="text-xl">
         Link
       </h2>
-      <div>
+      <div class="flex gap-2">
         <SdsLink
           href="https://sei.cmu.edu"
           kind="primary"
-          :disabled="false"
-          :external="false"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+        >
+          SEI Homepage
+        </SdsLink>
+      </div>
+      <div class="flex gap-2">
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+          type="inline"
+        >
+          SEI Homepage
+        </SdsLink>
+      </div>
+      <div class="flex gap-2">
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="primary"
+          variant="red"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="secondary"
+          variant="red"
+          type="cta"
+        >
+          SEI Homepage
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
+          kind="tertiary"
+          variant="red"
+          type="cta"
         >
           SEI Homepage
         </SdsLink>
@@ -50,7 +175,7 @@
                       <div class="col-span-2">
                         <SdsMegaMenuItem
                           :label="content.aboutLink.label"
-                          :kind="content.aboutLink.kind"
+                          :type="content.aboutLink.type"
                           :href="content.aboutLink.href"
                         />
                       </div>
@@ -65,7 +190,7 @@
                           <div class="col-span-1">
                             <SdsMegaMenuItem
                               :label="link.label"
-                              :kind="link.kind"
+                              :type="link.type"
                               :href="link.href"
                             >
                               <p class="text-sm">
@@ -80,7 +205,7 @@
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
                       :label="content.divisionLink.label"
-                      :kind="content.divisionLink.kind"
+                      :type="content.divisionLink.type"
                       :href="content.divisionLink.href"
                     />
                     <div
@@ -102,7 +227,7 @@
                       <div class="col-span-2">
                         <SdsMegaMenuItem
                           :label="content.topicsLink.label"
-                          :kind="content.topicsLink.kind"
+                          :type="content.topicsLink.type"
                           :href="content.topicsLink.href"
                         />
                       </div>
@@ -131,7 +256,7 @@
                       <SdsMegaMenuItem
                         :cta="item.cta ?? false"
                         :label="item.label"
-                        :kind="item.kind"
+                        :type="item.type"
                         :href="item.href"
                       >
                         <p class="text-sm">
@@ -152,14 +277,14 @@
                       <SdsMegaMenuItem
                         :label="item.label"
                         :href="item.href"
-                        :kind="item.kind ? item.kind : 'simple'"
+                        :type="item.type ? item.type : 'simple'"
                       />
                     </div>
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
                       label="Blog"
-                      kind="landing-page"
+                      type="landing-page"
                       href="https://sei.cmu.edu/our-work/projects/index.cfm"
                     />
                     <div
@@ -169,7 +294,7 @@
                     >
                       <SdsMegaMenuItem
                         :label="blogPost.title"
-                        kind="descriptive"
+                        type="descriptive"
                         href="https://sei.cmu.edu/publications/software-tools/index.cfm"
                       >
                         <p class="uppercase text-xs">
@@ -183,19 +308,14 @@
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
                       label="News"
-                      kind="landing-page"
+                      type="landing-page"
                       href="https://sei.cmu.edu/our-work/projects/index.cfm"
                     />
                     <SdsMegaMenuItem
                       label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                      kind="descriptive"
+                      type="descriptive"
                       href="https://sei.cmu.edu/news/index.cfm"
                     >
-                      <template #top>
-                        <img
-                          src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                        >
-                      </template>
                       <template #default>
                         <p class="uppercase">
                           <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
@@ -232,7 +352,7 @@
                       <SdsMegaMenuItem
                         :href="educationLink.href"
                         :label="educationLink.label"
-                        :kind="educationLink.kind"
+                        :type="educationLink.type"
                       >
                         <p
                           v-if="educationLink.description"
@@ -251,14 +371,14 @@
                       <SdsMegaMenuItem
                         :href="training.href"
                         :label="training.label"
-                        :kind="training.kind"
+                        :type="training.type"
                       />
                     </div>
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
                       :label="content.eventLink.label"
-                      :kind="content.eventLink.kind"
+                      :type="content.eventLink.type"
                       :href="content.eventLink.href"
                     />
                     <div
@@ -269,7 +389,7 @@
                         class="group"
                         :href="event.href"
                         :label="event.label"
-                        :kind="event.kind"
+                        :type="event.type"
                       >
                         <template #left>
                           <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
@@ -293,7 +413,8 @@
                     </div>
                   </div>
                   <SdsButton
-                    kind="danger"
+                    kind="primary"
+                    variant="red"
                     class="absolute right-8 flex flex-row justify-center w-16"
                     @click="close"
                   >
@@ -319,7 +440,7 @@
                     <SdsMegaMenuItem
                       :href="content.careersLink.href"
                       :label="content.careersLink.label"
-                      :kind="content.careersLink.kind"
+                      :type="content.careersLink.type"
                     />
                     <div
                       v-for="careerLink in content.careersLinks"
@@ -328,7 +449,7 @@
                       <SdsMegaMenuItem
                         :href="careerLink.href"
                         :label="careerLink.label"
-                        :kind="careerLink.kind"
+                        :type="careerLink.type"
                       >
                         <p
                           v-if="careerLink.description"
@@ -343,7 +464,7 @@
                     <SdsMegaMenuItem
                       :href="content.jobsLink.href"
                       :label="content.jobsLink.label"
-                      :kind="content.jobsLink.kind"
+                      :type="content.jobsLink.type"
                     />
                     <div
                       v-for="row, index in content.jobs"
@@ -358,7 +479,7 @@
                         <SdsMegaMenuItem
                           :href="job.href"
                           :label="job.label"
-                          :kind="job.kind"
+                          :type="job.type"
                         >
                           <p class="text-xs">
                             <span>Posted {{ job.posted }}</span>
@@ -392,13 +513,13 @@
           <div>
             <SdsMegaMenu
               v-model="megaMenu2"
-              kind="block"
+              type="block"
               width="auto"
             >
               <template #panel(about-1)="{ content }">
                 <SdsMegaMenuItem
                   :label="content.divisionLink.label"
-                  :kind="content.divisionLink.kind"
+                  :type="content.divisionLink.type"
                   :href="content.divisionLink.href"
                   class="select-none"
                 />
@@ -421,7 +542,7 @@
                   <SdsMegaMenuItem
                     :cta="item.cta ?? false"
                     :label="item.label"
-                    :kind="item.kind"
+                    :type="item.type"
                     :href="item.href"
                   >
                     <p class="text-sm">
@@ -434,19 +555,14 @@
                 <div class="max-w-sm">
                   <SdsMegaMenuItem
                     label="News"
-                    kind="landing-page"
+                    type="landing-page"
                     href="https://sei.cmu.edu/our-work/projects/index.cfm"
                   />
                   <SdsMegaMenuItem
                     label="Software Engineering Workshop for Educators Returns for 20th Anniversary"
-                    kind="descriptive"
+                    type="descriptive"
                     href="https://sei.cmu.edu/news/index.cfm"
                   >
-                    <template #top>
-                      <img
-                        src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                      >
-                    </template>
                     <template #default>
                       <p class="uppercase">
                         <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
@@ -476,7 +592,7 @@
                 <div class="max-w-lg">
                   <SdsMegaMenuItem
                     :label="content.eventLink.label"
-                    :kind="content.eventLink.kind"
+                    :type="content.eventLink.type"
                     :href="content.eventLink.href"
                   />
                   <div
@@ -486,7 +602,7 @@
                     <SdsMegaMenuItem
                       :href="event.href"
                       :label="event.label"
-                      :kind="event.kind"
+                      :type="event.type"
                     >
                       <template #left>
                         <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
@@ -509,7 +625,8 @@
                     </SdsMegaMenuItem>
                   </div>
                   <SdsButton
-                    kind="danger"
+                    kind="primary"
+                    variant="red"
                     class="absolute right-4 top-4 w-fit h-8 p-0 flex flex-col justify-center text-center mx-auto"
                     @click="close"
                   >
@@ -533,7 +650,7 @@
                 <SdsMegaMenuItem
                   :href="content.jobsLink.href"
                   :label="content.jobsLink.label"
-                  :kind="content.jobsLink.kind"
+                  :type="content.jobsLink.type"
                 />
                 <div
                   v-for="row, index in content.jobs"
@@ -548,7 +665,7 @@
                     <SdsMegaMenuItem
                       :href="job.href"
                       :label="job.label"
-                      :kind="job.kind"
+                      :type="job.type"
                     >
                       <p class="text-xs">
                         <span>Posted {{ job.posted }}</span>
@@ -925,7 +1042,7 @@ const megaMenu = ref([
         href: "https://sei.cmu.edu/about/index.cfm",
         key: "about",
         label: "About",
-        kind: "landing-page",
+        type: "landing-page",
       },
       aboutRows: [
         [
@@ -934,14 +1051,14 @@ const megaMenu = ref([
             href: "https://sei.cmu.edu/about/leadership/index.cfm",
             key: "leadership",
             label: "Leadership",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             description: "The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.",
             href: "https://sei.cmu.edu/publications/annual-reviews/index.cfm",
             key: "annual-reviews",
             label: "Annual Reviews",
-            kind: "descriptive"
+            type: "descriptive"
           },
         ],
         [
@@ -950,14 +1067,14 @@ const megaMenu = ref([
             href: "https://sei.cmu.edu/about/work-with-us/index.cfm",
             key: "work-with-us",
             label: "Work with Us",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             description: "The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.",
             href: "https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm",
             key: "collaboration-with-cmu",
             label: "Collaboration with CMU",
-            kind: "descriptive"
+            type: "descriptive"
           },
         ],
       ],
@@ -965,26 +1082,26 @@ const megaMenu = ref([
         href: "https://sei.cmu.edu/divisions/",
         key: "divisions",
         label: "Divisions",
-        kind: "landing-page",
+        type: "landing-page",
       },
       divisionRows: [
         {
           href: "https://sei.cmu.edu/divisions/ai",
           key: "artificial-intelligence-division",
           label: "Artificial Intelligence (AI) Division",
-          kind: "simple",
+          type: "simple",
         },
         {
           href: "https://sei.cmu.edu/divisions/cert",
           key: "cert-division",
           label: "CERT Division",
-          kind: "simple",
+          type: "simple",
         },
         {
           href: "https://sei.cmu.edu/divisions/software-solutions",
           key: "software-solutions-division",
           label: "Software Solutions Division",
-          kind: "simple",
+          type: "simple",
         },
       ],
     }
@@ -997,7 +1114,7 @@ const megaMenu = ref([
         href: "https://sei.cmu.edu/our-work/all-topics/index.cfm",
         key: "topics",
         label: "Topics",
-        kind: "landing-page",
+        type: "landing-page",
       },
       topicsColumns: [
         [
@@ -1092,7 +1209,7 @@ const megaMenu = ref([
           href: "https://sei.cmu.edu/our-work/projects/index.cfm",
           key: "projects",
           label: "Projects",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           cta: true,
@@ -1100,7 +1217,7 @@ const megaMenu = ref([
           href: "https://sei.cmu.edu/publications/software-tools/index.cfm",
           key: "software-and-tools",
           label: "Software and Tools",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ]
     }
@@ -1114,7 +1231,7 @@ const megaMenu = ref([
           href: "https://sei.cmu.edu/publications/index.cfm",
           key: "publications-and-media",
           label: "Publications and Media",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "https://sei.cmu.edu/publications/index.cfm",
@@ -1177,7 +1294,7 @@ const megaMenu = ref([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "careers",
         label: "Careers",
-        kind: "landing-page"
+        type: "landing-page"
       },
       careersLinks: [
         {
@@ -1185,21 +1302,21 @@ const megaMenu = ref([
           key: "internship-opportunities",
           label: "Internship Opportunities",
           description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           href: "",
           key: "diversity-equity-and-inclusion",
           label: "Diversity, Equity and Inclusion",
           description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ],
       jobsLink: {
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
-        kind: "landing-page"
+        type: "landing-page"
       },
       jobs: [
         [
@@ -1209,7 +1326,7 @@ const megaMenu = ref([
             label: "Assistant Software Engineer",
             posted: "Yesterday",
             locations: "2 Locations",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1217,7 +1334,7 @@ const megaMenu = ref([
             label: "Senior Assurance Researcher",
             posted: "2 Days Ago",
             locations: "3 Locations",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ],
         [
@@ -1227,7 +1344,7 @@ const megaMenu = ref([
             label: "Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1235,7 +1352,7 @@ const megaMenu = ref([
             label: "Assistant Machine Learning Researcher",
             posted: "3 Days Ago",
             locations: "Pittsburgh",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ],
         [
@@ -1245,7 +1362,7 @@ const megaMenu = ref([
             label: "Associate Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1253,7 +1370,7 @@ const megaMenu = ref([
             label: "Lead Nuclear Surety Software Engineer",
             posted: "6 Days Ago",
             locations: "Pittsburgh",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ]
       ]
@@ -1268,27 +1385,27 @@ const megaMenu = ref([
           href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
           key: "education",
           label: "Education",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "",
           key: "credentials",
           label: "Credentials",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
         },
         {
           href: "",
           key: "curricula",
           label: "Curricula",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
         },
         {
           href: "",
           key: "license-sei-materials",
           label: "License SEI Materials",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
         },
       ],
@@ -1297,7 +1414,7 @@ const megaMenu = ref([
           href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
           key: "training",
           label: "Training",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "",
@@ -1329,7 +1446,7 @@ const megaMenu = ref([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "events",
         label: "Events",
-        kind: "landing-page"
+        type: "landing-page"
       },
       events: [
         {
@@ -1340,7 +1457,7 @@ const megaMenu = ref([
           label: "Insider Threat Analyst",
           month: "Dec",
           startDay: "5",
-          kind: "descriptive",
+          type: "descriptive",
         },
         {
           dateRange: "Nov 14-16, 2023",
@@ -1350,7 +1467,7 @@ const megaMenu = ref([
           label: "Insider Threat Program Evaluator",
           month: "Nov",
           startDay: "14",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           dateRange: "Nov 6-9, 2023",
@@ -1360,7 +1477,7 @@ const megaMenu = ref([
           label: "Advanced Topics in Incident Handling",
           month: "Nov",
           startDay: "6",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ]
     }
@@ -1388,7 +1505,7 @@ const megaMenu2 = ref([
         href: "https://sei.cmu.edu/about/index.cfm",
         key: "about",
         label: "About",
-        kind: "landing-page",
+        type: "landing-page",
       },
       aboutRows: [
         [
@@ -1397,14 +1514,14 @@ const megaMenu2 = ref([
             href: "https://sei.cmu.edu/about/leadership/index.cfm",
             key: "leadership",
             label: "Leadership",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             description: "The SEI showcases its research in two annual reviews that demonstrate the ways in which we advance the field of software engineering to meet emerging challenges.",
             href: "https://sei.cmu.edu/publications/annual-reviews/index.cfm",
             key: "annual-reviews",
             label: "Annual Reviews",
-            kind: "descriptive"
+            type: "descriptive"
           },
         ],
         [
@@ -1413,14 +1530,14 @@ const megaMenu2 = ref([
             href: "https://sei.cmu.edu/about/work-with-us/index.cfm",
             key: "work-with-us",
             label: "Work with Us",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             description: "The Software Engineering Institute is part of Carnegie Mellon University and partners with Carnegie Mellon on a number of major research projects.",
             href: "https://sei.cmu.edu/about/collaboration-with-cmu/index.cfm",
             key: "collaboration-with-cmu",
             label: "Collaboration with CMU",
-            kind: "descriptive"
+            type: "descriptive"
           },
         ],
       ],
@@ -1428,26 +1545,26 @@ const megaMenu2 = ref([
         href: "https://sei.cmu.edu/divisions/",
         key: "divisions",
         label: "Divisions",
-        kind: "landing-page",
+        type: "landing-page",
       },
       divisionRows: [
         {
           href: "https://sei.cmu.edu/divisions/ai",
           key: "artificial-intelligence-division",
           label: "Artificial Intelligence (AI) Division",
-          kind: "simple",
+          type: "simple",
         },
         {
           href: "https://sei.cmu.edu/divisions/cert",
           key: "cert-division",
           label: "CERT Division",
-          kind: "simple",
+          type: "simple",
         },
         {
           href: "https://sei.cmu.edu/divisions/software-solutions",
           key: "software-solutions-division",
           label: "Software Solutions Division",
-          kind: "simple",
+          type: "simple",
         },
       ],
     }
@@ -1460,7 +1577,7 @@ const megaMenu2 = ref([
         href: "https://sei.cmu.edu/our-work/all-topics/index.cfm",
         key: "topics",
         label: "Topics",
-        kind: "landing-page",
+        type: "landing-page",
       },
       topicsColumns: [
         [
@@ -1555,7 +1672,7 @@ const megaMenu2 = ref([
           href: "https://sei.cmu.edu/our-work/projects/index.cfm",
           key: "projects",
           label: "Projects",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           cta: true,
@@ -1563,7 +1680,7 @@ const megaMenu2 = ref([
           href: "https://sei.cmu.edu/publications/software-tools/index.cfm",
           key: "software-and-tools",
           label: "Software and Tools",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ]
     }
@@ -1577,7 +1694,7 @@ const megaMenu2 = ref([
           href: "https://sei.cmu.edu/publications/index.cfm",
           key: "publications-and-media",
           label: "Publications and Media",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "https://sei.cmu.edu/publications/index.cfm",
@@ -1640,7 +1757,7 @@ const megaMenu2 = ref([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "careers",
         label: "Careers",
-        kind: "landing-page"
+        type: "landing-page"
       },
       careersLinks: [
         {
@@ -1648,21 +1765,21 @@ const megaMenu2 = ref([
           key: "internship-opportunities",
           label: "Internship Opportunities",
           description: "Learn about internship opportunities for students and recent graduates at the Carnegie Mellon University Software Engineering Institute.",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           href: "",
           key: "diversity-equity-and-inclusion",
           label: "Diversity, Equity and Inclusion",
           description: "We identify best practices, develop detailed plans, and innovate pathways to our shared vision of a welcoming, empowering workplace for all.",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ],
       jobsLink: {
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
-        kind: "landing-page"
+        type: "landing-page"
       },
       jobs: [
         [
@@ -1672,7 +1789,7 @@ const megaMenu2 = ref([
             label: "Assistant Software Engineer",
             posted: "Yesterday",
             locations: "2 Locations",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1680,7 +1797,7 @@ const megaMenu2 = ref([
             label: "Senior Assurance Researcher",
             posted: "2 Days Ago",
             locations: "3 Locations",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ],
         [
@@ -1690,7 +1807,7 @@ const megaMenu2 = ref([
             label: "Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1698,7 +1815,7 @@ const megaMenu2 = ref([
             label: "Assistant Machine Learning Researcher",
             posted: "3 Days Ago",
             locations: "Pittsburgh",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ],
         [
@@ -1708,7 +1825,7 @@ const megaMenu2 = ref([
             label: "Associate Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            kind: "descriptive"
+            type: "descriptive"
           },
           {
             href: "",
@@ -1716,7 +1833,7 @@ const megaMenu2 = ref([
             label: "Lead Nuclear Surety Software Engineer",
             posted: "6 Days Ago",
             locations: "Pittsburgh",
-            kind: "descriptive"
+            type: "descriptive"
           }
         ]
       ]
@@ -1732,27 +1849,27 @@ const megaMenu2 = ref([
           href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
           key: "education",
           label: "Education",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "",
           key: "credentials",
           label: "Credentials",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn about the credentials, including certificates, certifications, and authorizations offered by the SEI that individuals can earn."
         },
         {
           href: "",
           key: "curricula",
           label: "Curricula",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn about SEI-developed curricula and educational materials, including how you can use them."
         },
         {
           href: "",
           key: "license-sei-materials",
           label: "License SEI Materials",
-          kind: "descriptive",
+          type: "descriptive",
           description: "Learn how the SEI authorizes Partner organizations to deliver SEI training and services."
         },
       ],
@@ -1761,7 +1878,7 @@ const megaMenu2 = ref([
           href: "https://www.sei.cmu.edu/education-outreach/index.cfm",
           key: "training",
           label: "Training",
-          kind: "landing-page"
+          type: "landing-page"
         },
         {
           href: "",
@@ -1793,7 +1910,7 @@ const megaMenu2 = ref([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "events",
         label: "Events",
-        kind: "landing-page"
+        type: "landing-page"
       },
       events: [
         {
@@ -1804,7 +1921,7 @@ const megaMenu2 = ref([
           label: "Insider Threat Analyst",
           month: "Dec",
           startDay: "5",
-          kind: "descriptive",
+          type: "descriptive",
         },
         {
           dateRange: "Nov 14-16, 2023",
@@ -1814,7 +1931,7 @@ const megaMenu2 = ref([
           label: "Insider Threat Program Evaluator",
           month: "Nov",
           startDay: "14",
-          kind: "descriptive"
+          type: "descriptive"
         },
         {
           dateRange: "Nov 6-9, 2023",
@@ -1824,7 +1941,7 @@ const megaMenu2 = ref([
           label: "Advanced Topics in Incident Handling",
           month: "Nov",
           startDay: "6",
-          kind: "descriptive"
+          type: "descriptive"
         },
       ]
     }

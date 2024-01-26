@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="root"
     data-id="sds-multiselect"
     class="sds-multiselect"
     :class="{
@@ -59,7 +60,7 @@
         class="tag-list-item input"
       >
         <span
-          ref="faux-input"
+          ref="fauxInput"
           class="faux-input"
           aria-hidden="true"
         >
@@ -107,17 +108,15 @@
       @click.prevent.stop="handleClearBtn"
     >
       <svg
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="w-5 h-5 x"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        class="h-5 w-5"
         aria-hidden="true"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      ><path d="M6 18L18 6M6 6l12 12" /></svg>
     </button>
     <div
       v-if="!hideCaret && !(showClear && selected.length > 0)"
@@ -237,8 +236,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
 import debounce from "../../helpers/debounce";
 
 interface MultiselectOption {
@@ -250,741 +248,781 @@ interface MultiselectTag {
   isNewTag?: boolean
 }
 
-export default defineComponent({
-  name: 'SdsMultiselect',
-  props: {
-    /**
-     * Determines the id of the component.
-     */
-    id: { type: String, default: undefined },
-    /**
-     * An array of the selected options.
-     */
-    selected: {
-      type: Array as PropType<MultiselectOption[]>,
-      default: () => [],
-    },
-    /**
-     * An array of options that can be selected.
-     */
-    options: {
-      type: Array as PropType<MultiselectOption[]>,
-      default: () => [],
-    },
-    /**
-     * The key used for an option's value.
-     * 
-     * Be careful when setting this as it can trigger `undefined`
-     * errors if it doesn't exist in the options object.
-     */
-    valueKey: {
-      type: String,
-      default: "key",
-    },
-    /**
-     * The key used for an option's label.
-     *
-     * Be careful when setting this as it can trigger `undefined`
-     * and `trim()` errors if it doesn't exist in the options object.
-     */
-    labelKey: {
-      type: String,
-      default: "value",
-    },
-    /**
-     * The v-model that determines the text value of the input field.
-     */
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    /**
-     * Determines whether to enable autofocus or not.
-     */
-    autofocus: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether more than one option can be selected.
-     */
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Disables the component to prevent user interaction.
-     */
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the required state of the component.
-     */
-    required: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the loading state of the component.
-     */
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * The message displayed while loading is true.
-     */
-    loadingMsg: {
-      type: String,
-      default: "Loading...",
-    },
-    /**
-     * The message that displays when the menu is initially opened.
-     */
-    defaultMsg: {
-      type: String,
-      default: "",
-    },
-    /**
-     * The message that displays when there are no results returned from a lookup.
-     */
-    noResultsMsg: {
-      type: String,
-      default: "",
-    },
-    /**
-     * The message that displays when you cannot select more items.
-     */
-    cannotAddResultsMsg: {
-      type: String,
-      default: "You have added the maximum amount of items allowed.",
-    },
-    /**
-     * The message that displays when the user enters invalid text.
-     */
-    invalidInputMsg: {
-      type: String,
-      default: "HTML input is not allowed.",
-    },
-    /**
-     * Determines whether to show or hide your selections as tags inside the input field.
-     */
-    hideTags: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether you can loop through the menu's options with the arrow keys
-     * (e.g., pressing down on that last result sends you to the first result).
-     */
-    canLoopOptions: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines if options can be toggled when selected from the options list.
-     */
-    toggleSelectedOptions: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines if selected options should appear in the options list.
-     */
-    hideSelectedOptions: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to close the menu on selection.
-     */
-    closeOnSelection: {
-      type: Boolean,
-      default: true,
-    },
-    /**
-     * Determines whether the component allows for searching.
-     */
-    canSearch: {
-      type: Boolean,
-      default: true,
-    },
-    /**
-     * Determines whether to remove the last selection.
-     */
-    disableRemoveLastSelection: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines if the input should be cleared after making a selection.
-     */
-    clearInputOnSelection: {
-      type: Boolean,
-      default: true,
-    },
-    /**
-     * Determines if the options list should be purged on selection.
-     */
-    clearOptionsOnSelection: {
-      type: Boolean,
-      default: true,
-    },
-    /**
-     * Determines the placeholder of the input.
-     */
-    placeholder: {
-      type: String,
-      default: "",
-    },
-    /**
-     * Determines the position of the menu.
-     */
-    openDirection: {
-      type: String,
-      default: "auto",
-    },
-    /**
-     * Determines the max height of the open menu.
-     */
-    maxHeight: {
-      type: Number,
-      default: 200,
-    },
-    /**
-     * Determines whether to hide the caret or not.
-     */
-    hideCaret: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to show the clear field button or not.
-     */
-    showClear: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether the multiselect will accept new values from the input.
-     */
-    taggable: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the maxlength of the input field.
-     */
-    maxlength: {
-      type: Number as PropType<number | undefined>,
-      default: undefined,
-    },
-    /**
-     * Determines the max number of items that can be selected.
-     */
-    maxItems: {
-      type: Number,
-      default: -1,
-    },
-    /**
-     * Determines if new tags are forced to be lowercase.
-     */
-    enforceLowercaseNewTag: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['update:modelValue', 'update-selected', 'update-options', 'open', 'close', 'focus'],
-  data() {
-    return {
-      debouncePositionDropdown: null as null | EventListener,
-      isOpen: false,
-      active: false,
-      inputWidth: 0 as number | string,
-      arrowCounter: 0,
-      bottom: "auto",
-      dropUp: false,
-    };
-  },
-  computed: {
-    showDropdown() {
-      return (
-        this.showLoading ||
-        this.showDefault ||
-        this.showNoResults ||
-        this.showResults ||
-        this.showCannotAddResults ||
-        this.showInvalidInput
-      );
-    },
-    showLoading() {
-      return this.loading && this.isOpen && this.canAddItem;
-    },
-    showResults() {
-      return (
-        this.filteredOptions.length > 0 &&
-        this.isOpen &&
-        !this.loading &&
-        this.canAddItem
-      );
-    },
-    showDefault() {
-      return (
-        this.defaultMsg !== "" &&
-        this.trimmedValue === "" &&
-        this.filteredOptions.length < 1 &&
-        !this.loading &&
-        this.isOpen &&
-        this.canAddItem
-      );
-    },
-    showNoResults() {
-      return (
-        this.noResultsMsg !== "" &&
-        this.trimmedValue !== "" &&
-        this.filteredOptions.length < 1 &&
-        !this.loading &&
-        this.isOpen &&
-        this.canAddItem
-      );
-    },
-    showPlaceholder() {
-      return (
-        this.placeholder !== "" &&
-        this.selected.length < 1 &&
-        this.trimmedValue === ""
-      );
-    },
-    showCannotAddResults() {
-      return this.isOpen && !this.canAddItem && this.isCleanInput;
-    },
-    showInvalidInput() {
-      return !this.isCleanInput;
-    },
-    canAddItem() {
-      return (
-        this.isCleanInput &&
-        (this.maxItems < 0 || this.selected.length < this.maxItems)
-      );
-    },
-    isReadonlyInput() {
-      return !this.canSearch;
-    },
-    isCleanInput() {
-      return !this.detectHtml(this.trimmedValue);
-    },
-    trimmedValue() {
-      return this.modelValue.trim();
-    },
-    filteredOptions() {
-      const options = this.options;
-      if (this.taggable && this.trimmedValue !== "") {
-        if (
-          !options.some((i: MultiselectOption) => {
-            return this.enforceLowercaseNewTag
-              ? i[this.labelKey].trim().toLowerCase() ===
-                  this.trimmedValue.toLowerCase()
-              : i[this.labelKey].trim() === this.trimmedValue;
-          })
-        ) {
-          options.push(this.newTag);
-        }
-      }
-      if (this.hideSelectedOptions) {
-        return options.filter((o) => {
-          return (
-            this.selected.filter((s) => {
-              return o[this.valueKey] === s[this.valueKey];
-            }).length === 0
-          );
-        });
-      }
-      return options;
-    },
-    newTag() {
-      const tag: MultiselectTag = {};
-      // random number between 100,000 and 1,000,000
-      const uniqueId = Math.floor(Math.random() * (1000000 - 100000) + 100000);
-      tag[this.valueKey] = uniqueId;
-      tag[this.labelKey] = this.enforceLowercaseNewTag
-        ? this.trimmedValue.toLowerCase()
-        : this.trimmedValue;
-      tag.isNewTag = true;
-      return tag;
-    },
-  },
-  watch: {
-    showDropdown(show) {
-      if (show) this.positionDropdown();
-    },
-    filteredOptions() {
-      this.arrowCounter = 0;
-    },
-  },
-  mounted() {
-    this.resizeInput();
-    setTimeout(() => {
-      if (this.autofocus) {
-        (this.$refs.input as HTMLInputElement).focus();
-        this.active = true;
-      }
-    }, 0);
-    document.addEventListener("click", this.handleOutsideClick);
-    document.addEventListener("keyup", this.handleOutsideKeyUp);
+defineOptions({
+  name: 'SdsMultiselect'
+})
 
-    this.debouncePositionDropdown = debounce(this.positionDropdown, 150);
-    document.addEventListener("scroll", this.debouncePositionDropdown);
-    window.addEventListener("resize", this.debouncePositionDropdown);
+const props = defineProps({
+  /**
+   * Determines the id of the component.
+   */
+  id: { type: String, default: undefined },
+  /**
+   * An array of the selected options.
+   */
+  selected: {
+    type: Array as PropType<MultiselectOption[]>,
+    default: () => [],
   },
-  unmounted() {
-    document.removeEventListener("click", this.handleOutsideClick);
-    document.removeEventListener("keyup", this.handleOutsideKeyUp);
-    document.removeEventListener("scroll", (this.debouncePositionDropdown as EventListener));
-    window.removeEventListener("resize", (this.debouncePositionDropdown as EventListener));
+  /**
+   * An array of options that can be selected.
+   */
+  options: {
+    type: Array as PropType<MultiselectOption[]>,
+    default: () => [],
   },
-  methods: {
-    detectHtml(str: string) {
-      return str.match(/<[^\s]|&[^\s;]*;/gi) !== null;
-    },
-    selectText() {
-      (this.$refs.input as HTMLInputElement).setSelectionRange(0, this.modelValue.length);
-    },
-    search($event: Event) {
-      if (!this.canSearch || !$event.target) return;
-      this.input(($event.target as HTMLInputElement).value);
-    },
-    resizeInput() {
-      setTimeout(() => {
-        if (this.showPlaceholder) {
-          this.inputWidth = "100%";
-        } else {
-          const minWidth = 20;
-          const fauxInputWidth =
-            this.$refs["faux-input"] && typeof this.$refs["faux-input"] !== "undefined"
-              ? (this.$refs["faux-input"] as HTMLElement).clientWidth + 20
-              : 0;
-          let elWidth = this.$el.clientWidth - 20;
-          if (!this.hideCaret || (this.showClear && this.selected.length > 0))
-            elWidth = elWidth - 10;
-          const width = Math.min(Math.max(fauxInputWidth, minWidth), elWidth);
-          this.inputWidth = width + "px";
-        }
-      }, 0);
-    },
-    removeLastSelection() {
-      if (
-        this.modelValue !== "" ||
-        !this.canSearch ||
-        this.hideTags ||
-        this.disableRemoveLastSelection
-      )
-        return;
-      const s = this.selected;
-      s.splice(-1, 1);
-      this.updateSelected(s);
-      this.positionDropdown();
-    },
-    add(selection: MultiselectOption) {
-      if (!this.canAddItem) return;
-      if (this.isSelectedOption(selection)) {
-        if (this.toggleSelectedOptions) this.remove(selection);
-        return;
-      }
-      let s: MultiselectOption[] = [];
-      if (this.multiple) s = this.selected;
-      s.push(selection);
-      this.updateSelected(s);
-      if (this.clearInputOnSelection) this.clearInput();
-      if (this.clearOptionsOnSelection) this.clearOptions();
-      this.handleCloseOnSelection();
-      this.positionDropdown();
-    },
-    remove(selection: MultiselectOption) {
-      this.updateSelected(
-        this.selected.filter(
-          (i) => i[this.valueKey] !== selection[this.valueKey]
-        )
-      );
-      this.handleCloseOnSelection();
-      this.positionDropdown();
-    },
-    isSelectedOption(option: MultiselectOption) {
-      return this.selected.some(
-        (s) => s[this.labelKey] === option[this.labelKey]
-      );
-    },
-    focusInput() {
-      /**
-       * Emmitted when input is focused.
-       */
-      this.$emit("focus");
-      (this.$refs.input as HTMLInputElement).focus();
-    },
-    clearInput() {
-      this.input("");
-    },
-    clearSelected() {
-      this.updateSelected([]);
-    },
-    clearOptions() {
-      this.updateOptions([]);
-    },
-    input(value: string) {
-      /**
-       * Emmitted when modelValue changes.
-       */
-      this.$emit("update:modelValue", value);
-      this.resizeInput();
-      this.positionDropdown();
-    },
-    updateSelected(s: MultiselectOption[]) {
-      /**
-       * Emmitted when selections have changed with payload of selections.
-       */
-      this.$emit("update-selected", s);
-      this.resizeInput();
-      if (this.arrowCounter > this.filteredOptions.length - 1) {
-        this.arrowCounter = this.filteredOptions.length - 1;
-      }
-    },
-    updateOptions(s: MultiselectOption[]) {
-      /**
-       * Emmitted when options have changed with payload of options.
-       */
-      this.$emit("update-options", s);
-    },
-    open() {
-      if (this.disabled) return;
-      if (!this.showDropdown) {
-        /**
-         * Emmitted when dropdown is opened.
-         */
-        this.$emit("open");
-        this.focusInput();
-        this.isOpen = true;
-        this.$nextTick(() => {
-          this.arrowCounter = 0;
-        });
-      }
-    },
-    close() {
-      if (this.showDropdown) {
-        /**
-         * Emmitted when dropdown is closed.
-         */
-        this.$emit("close");
-        if (!this.multiple) this.clearInput();
-        this.isOpen = false;
-        this.arrowCounter = 0;
-      }
-    },
-    handleClearBtn() {
-      this.clearSelected();
-      this.clearInput();
-      this.focusInput();
-      this.positionDropdown();
-    },
-    handleArrows(direction: string) {
-      if (!this.showDropdown) return;
-      const min = 0;
-      switch (direction) {
-        // When going down, select next result until end
-        // then loop back around starting with original query.
-        case "down":
-          if (this.arrowCounter < this.filteredOptions.length - 1) {
-            this.arrowCounter = this.arrowCounter + 1;
-            this.handleDropdownScroll();
-          } else {
-            if (this.canLoopOptions) this.arrowCounter = min;
-            if (this.canLoopOptions) this.handleDropdownScroll();
-          }
-          break;
-        // When going up, select prev result until at original query
-        // then loop back around starting at the end of the results.
-        case "up":
-          if (this.arrowCounter > min) {
-            this.arrowCounter = this.arrowCounter - 1;
-            this.handleDropdownScroll();
-          } else {
-            if (this.canLoopOptions)
-              this.arrowCounter = this.filteredOptions.length - 1;
-            if (this.canLoopOptions) this.handleDropdownScroll(true);
-          }
-          break;
-      }
-    },
-    handleDropdownScroll(jumpToLast = false) {
-      if (!this.showDropdown || typeof this.$refs.dropdownMenu === "undefined")
-        return;
-      const element: Element =
-        (this.$refs.dropdownMenu as HTMLElement).children[this.arrowCounter] || false;
-      const itemHeight = element ? (element as HTMLElement).offsetHeight : 0;
-      let pixelsToItemTop = 0;
-      for (let i = 0; i < this.arrowCounter; i++) {
-        pixelsToItemTop += ((this.$refs.dropdownMenu as HTMLElement).children[i] as HTMLElement).offsetHeight;
-      }
-      const pixelsToItemBottom = pixelsToItemTop + itemHeight;
-      const viewport = {
-        top: (this.$refs.dropdownMenu as HTMLElement).scrollTop || 0,
-        bottom:
-          (this.$refs.dropdownMenu as HTMLElement).offsetHeight +
-            (this.$refs.dropdownMenu as HTMLElement).scrollTop || 0,
-      };
+  /**
+   * The key used for an option's value.
+   * 
+   * Be careful when setting this as it can trigger `undefined`
+   * errors if it doesn't exist in the options object.
+   */
+  valueKey: {
+    type: String,
+    default: "key",
+  },
+  /**
+   * The key used for an option's label.
+   *
+   * Be careful when setting this as it can trigger `undefined`
+   * and `trim()` errors if it doesn't exist in the options object.
+   */
+  labelKey: {
+    type: String,
+    default: "value",
+  },
+  /**
+   * The v-model that determines the text value of the input field.
+   */
+  modelValue: {
+    type: String,
+    default: "",
+  },
+  /**
+   * Determines whether to enable autofocus or not.
+   */
+  autofocus: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines whether more than one option can be selected.
+   */
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines the required state of the component.
+   */
+  required: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines the loading state of the component.
+   */
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * The message displayed while loading is true.
+   */
+  loadingMsg: {
+    type: String,
+    default: "Loading...",
+  },
+  /**
+   * The message that displays when the menu is initially opened.
+   */
+  defaultMsg: {
+    type: String,
+    default: "",
+  },
+  /**
+   * The message that displays when there are no results returned from a lookup.
+   */
+  noResultsMsg: {
+    type: String,
+    default: "",
+  },
+  /**
+   * The message that displays when you cannot select more items.
+   */
+  cannotAddResultsMsg: {
+    type: String,
+    default: "You have added the maximum amount of items allowed.",
+  },
+  /**
+   * The message that displays when the user enters invalid text.
+   */
+  invalidInputMsg: {
+    type: String,
+    default: "HTML input is not allowed.",
+  },
+  /**
+   * Determines whether to show or hide your selections as tags inside the input field.
+   */
+  hideTags: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines whether you can loop through the menu's options with the arrow keys
+   * (e.g., pressing down on that last result sends you to the first result).
+   */
+  canLoopOptions: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines if options can be toggled when selected from the options list.
+   */
+  toggleSelectedOptions: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines if selected options should appear in the options list.
+   */
+  hideSelectedOptions: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines whether to close the menu on selection.
+   */
+  closeOnSelection: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Determines whether the component allows for searching.
+   */
+  canSearch: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Determines whether to remove the last selection.
+   */
+  disableRemoveLastSelection: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines if the input should be cleared after making a selection.
+   */
+  clearInputOnSelection: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Determines if the options list should be purged on selection.
+   */
+  clearOptionsOnSelection: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Determines the placeholder of the input.
+   */
+  placeholder: {
+    type: String,
+    default: "",
+  },
+  /**
+   * Determines the position of the menu.
+   */
+  openDirection: {
+    type: String,
+    default: "auto",
+  },
+  /**
+   * Determines the max height of the open menu.
+   */
+  maxHeight: {
+    type: Number,
+    default: 200,
+  },
+  /**
+   * Determines whether to hide the caret or not.
+   */
+  hideCaret: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines whether to show the clear field button or not.
+   */
+  showClear: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines whether the multiselect will accept new values from the input.
+   */
+  taggable: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines the maxlength of the input field.
+   */
+  maxlength: {
+    type: Number as PropType<number | undefined>,
+    default: undefined,
+  },
+  /**
+   * Determines the max number of items that can be selected.
+   */
+  maxItems: {
+    type: Number,
+    default: -1,
+  },
+  /**
+   * Determines if new tags are forced to be lowercase.
+   */
+  enforceLowercaseNewTag: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-      // scroll to item
-      if (jumpToLast) {
-        (this.$refs.dropdownMenu as HTMLElement).scrollTop = pixelsToItemBottom;
-      } else if (pixelsToItemTop <= viewport.top) {
-        (this.$refs.dropdownMenu as HTMLElement).scrollTop = pixelsToItemTop;
-      } else if (pixelsToItemBottom >= viewport.bottom) {
-        (this.$refs.dropdownMenu as HTMLElement).scrollTop = viewport.top + itemHeight;
-      }
-    },
-    handleKeyUp($event: KeyboardEvent) {
-      if (this.disabled) return;
-      const keys = [
-        "Enter",
-        "Backspace",
-        "Delete",
-        "Tab",
-        "Alt",
-        "Shift",
-        "Control",
-        "Meta",
-        "CapsLock",
-        "Fn",
-        "FnLock",
-        "Hyper",
-        "NumLock",
-        "ScrollLock",
-        "Super",
-        "Symbol",
-        "SymbolLock",
-        "ArrowLeft",
-        "ArrowRight",
-        "Left",
-        "Right",
-      ];
-      // Enter
-      if ($event.key === "Enter" && this.showDropdown) {
-        if (
-          this.arrowCounter <= this.filteredOptions.length - 1 &&
-          this.arrowCounter > -1
-        ) {
-          this.add(this.filteredOptions[this.arrowCounter]);
-        }
-        // Esc
-      } else if ($event.keyCode === 27) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        this.handleEsc();
-        // Tab
-      } else if ($event.key === "Tab") {
-        if (!this.active) this.active = true;
-        // Non-special keys
-      } else if (!this.showDropdown && !keys.includes($event.key)) {
-        this.open();
-      }
-    },
-    handleKeyDown($event: KeyboardEvent) {
-      if (this.disabled) return;
-      // Space bar
-      if (!this.canSearch && $event.keyCode === 32) $event.preventDefault();
-      // Enter
-      if ($event.key === "Enter" && this.showDropdown) $event.preventDefault();
-      // Delete or Backspace
-      if ($event.key === "Delete" || $event.key === "Backspace") {
-        this.removeLastSelection();
-        // Tab
-      } else if ($event.key === "Tab") {
-        if (this.showDropdown) {
-          if (
-            this.arrowCounter <= this.filteredOptions.length - 1 &&
-            this.arrowCounter > -1 &&
-            this.canAddItem &&
-            this.modelValue && this.modelValue.trim() !== ''
-          ) {
-            this.add(this.filteredOptions[this.arrowCounter]);
-            $event.preventDefault();
-          } else {
-            this.close();
-          }
-        }
-        // Up Arrow
-      } else if ($event.key === "ArrowUp" || $event.key === "Up") {
-        $event.preventDefault();
-        $event.stopPropagation();
-        this.handleArrows("up");
-        // Down Arrow
-      } else if ($event.key === "ArrowDown" || $event.key === "Down") {
-        $event.preventDefault();
-        $event.stopPropagation();
-        this.handleArrows("down");
-      }
-    },
-    handleMouseUp() {
-      if (this.disabled) return;
-      this.open();
-      this.active = true;
-    },
-    handleCloseOnSelection() {
-      if (this.closeOnSelection) {
-        this.close();
+const emit = defineEmits(['update:model-value', 'update-selected', 'update-options', 'open', 'close', 'focus'])
+
+const debouncePositionDropdown = ref<null | EventListener>(null)
+const root = ref()
+const input = ref()
+const fauxInput = ref()
+const dropdownMenu = ref()
+const isOpen = ref(false)
+const active = ref(false)
+const inputWidth = ref<number | string>(0)
+const arrowCounter = ref(0)
+const bottom = ref('auto')
+const dropUp = ref(false)
+
+const showDropdown = computed(() => {
+  return (
+    showLoading.value ||
+    showDefault.value ||
+    showNoResults.value ||
+    showResults.value ||
+    showCannotAddResults.value ||
+    showInvalidInput.value
+  );
+})
+
+const showLoading = computed(() => {
+  return props.loading && isOpen.value && canAddItem.value;
+})
+
+const showResults = computed(() => {
+  return (
+    filteredOptions.value.length > 0 &&
+    isOpen.value &&
+    !props.loading &&
+    canAddItem.value
+  );
+})
+
+const showDefault = computed(() => {
+  return (
+    props.defaultMsg !== "" &&
+    trimmedValue.value === "" &&
+    filteredOptions.value.length < 1 &&
+    !props.loading &&
+    isOpen.value &&
+    canAddItem.value
+  );
+})
+
+const showNoResults = computed(() => {
+  return (
+    props.noResultsMsg !== "" &&
+    trimmedValue.value !== "" &&
+    filteredOptions.value.length < 1 &&
+    !props.loading &&
+    isOpen.value &&
+    canAddItem.value
+  );
+})
+
+const showPlaceholder = computed(() => {
+  return (
+    props.placeholder !== "" &&
+    props.selected.length < 1 &&
+    trimmedValue.value === ""
+  );
+})
+
+const showCannotAddResults = computed(() => {
+  return isOpen.value && !canAddItem.value && isCleanInput.value;
+})
+
+const showInvalidInput = computed(() => {
+  return !isCleanInput.value;
+})
+
+const canAddItem = computed(() => {
+  return (
+    isCleanInput.value &&
+    (props.maxItems < 0 || props.selected.length < props.maxItems)
+  );
+})
+
+const isReadonlyInput = computed(() => {
+  return !props.canSearch;
+})
+
+const isCleanInput = computed(() => {
+  return !trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) !== null;
+})
+
+const trimmedValue = computed(() => {
+  return props.modelValue.trim() || '';
+})
+
+const filteredOptions = computed(() => {
+  const options = props.options;
+  if (props.taggable && trimmedValue.value !== "") {
+    if (
+      !options.some((i: MultiselectOption) => {
+        return props.enforceLowercaseNewTag
+          ? i[props.labelKey].trim().toLowerCase() ===
+              trimmedValue.value.toLowerCase()
+          : i[props.labelKey].trim() === trimmedValue.value;
+      })
+    ) {
+      options.push(newTag.value);
+    }
+  }
+  if (props.hideSelectedOptions) {
+    return options.filter((o) => {
+      return (
+        props.selected.filter((s) => {
+          return o[props.valueKey] === s[props.valueKey];
+        }).length === 0
+      );
+    });
+  }
+  return options;
+})
+
+const newTag = computed(() => {
+  const tag: MultiselectTag = {};
+  // random number between 100,000 and 1,000,000
+  const uniqueId = Math.floor(Math.random() * (1000000 - 100000) + 100000);
+  tag[props.valueKey] = uniqueId;
+  tag[props.labelKey] = props.enforceLowercaseNewTag
+    ? trimmedValue.value.toLowerCase()
+    : trimmedValue.value;
+  tag.isNewTag = true;
+  return tag;
+})
+
+watch(showDropdown, (show) => {
+  if (show) positionDropdown();
+})
+
+watch(filteredOptions, () => {
+  arrowCounter.value = 0;
+})
+
+onMounted(() => {
+  resizeInput();
+  setTimeout(() => {
+    if (props.autofocus) {
+      (input.value as HTMLInputElement).focus();
+      active.value = true;
+    }
+  }, 0);
+  document.addEventListener("click", handleOutsideClick);
+  document.addEventListener("keyup", handleOutsideKeyUp);
+
+  debouncePositionDropdown.value = debounce(positionDropdown, 150);
+  document.addEventListener("scroll", debouncePositionDropdown.value);
+  window.addEventListener("resize", debouncePositionDropdown.value);
+})
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleOutsideClick);
+  document.removeEventListener("keyup", handleOutsideKeyUp);
+  document.removeEventListener("scroll", (debouncePositionDropdown.value as EventListener));
+  window.removeEventListener("resize", (debouncePositionDropdown.value as EventListener));
+})
+
+const selectText = () => {
+  (input.value as HTMLInputElement).setSelectionRange(0, props.modelValue.length);
+}
+
+const search = ($event: Event) => {
+  if (!props.canSearch || !$event.target) return;
+  setInput(($event.target as HTMLInputElement).value);
+}
+
+const resizeInput = () => {
+  setTimeout(() => {
+    if (showPlaceholder.value) {
+      inputWidth.value = "100%";
+    } else {
+      const minWidth = 20;
+      const fauxInputWidth =
+        fauxInput.value && typeof fauxInput.value !== "undefined"
+          ? (fauxInput.value as HTMLElement).clientWidth + 20
+          : 0;
+      let elWidth = root.value.clientWidth - 20;
+      if (!props.hideCaret || (props.showClear && props.selected.length > 0))
+        elWidth = elWidth - 10;
+      const width = Math.min(Math.max(fauxInputWidth, minWidth), elWidth);
+      inputWidth.value = width + "px";
+    }
+  }, 0);
+}
+
+const removeLastSelection = () => {
+  if (
+    props.modelValue !== "" ||
+    !props.canSearch ||
+    props.hideTags ||
+    props.disableRemoveLastSelection
+  )
+    return;
+  const s = props.selected;
+  s.splice(-1, 1);
+  updateSelected(s);
+  positionDropdown();
+}
+
+const add = (selection: MultiselectOption) => {
+  if (!canAddItem.value) return;
+  if (isSelectedOption(selection)) {
+    if (props.toggleSelectedOptions) remove(selection);
+    return;
+  }
+  let s: MultiselectOption[] = [];
+  if (props.multiple) s = props.selected;
+  s.push(selection);
+  updateSelected(s);
+  if (props.clearInputOnSelection) clearInput();
+  if (props.clearOptionsOnSelection) clearOptions();
+  handleCloseOnSelection();
+  positionDropdown();
+}
+
+const remove = (selection: MultiselectOption) => {
+  updateSelected(
+    props.selected.filter(
+      (i) => i[props.valueKey] !== selection[props.valueKey]
+    )
+  );
+  handleCloseOnSelection();
+  positionDropdown();
+}
+
+const isSelectedOption = (option: MultiselectOption) => {
+  return props.selected.some(
+    (s) => s[props.labelKey] === option[props.labelKey]
+  );
+}
+
+const focusInput = () => {
+  /**
+   * Emmitted when input is focused.
+   */
+  emit("focus");
+  (input.value as HTMLInputElement).focus();
+}
+
+const clearInput = () => {
+  setInput("");
+}
+
+const clearSelected = () => {
+  updateSelected([]);
+}
+
+const clearOptions = () => {
+  updateOptions([]);
+}
+
+const setInput = (value: string) => {
+  /**
+   * Emmitted when modelValue changes.
+   */
+  emit("update:model-value", value);
+  resizeInput();
+  positionDropdown();
+}
+
+const updateSelected = (s: MultiselectOption[]) => {
+  /**
+   * Emmitted when selections have changed with payload of selections.
+   */
+  emit("update-selected", s);
+  resizeInput();
+  if (arrowCounter.value > filteredOptions.value.length - 1) {
+    arrowCounter.value = filteredOptions.value.length - 1;
+  }
+}
+
+const updateOptions = (s: MultiselectOption[]) => {
+  /**
+   * Emmitted when options have changed with payload of options.
+   */
+  emit("update-options", s);
+}
+
+const open = () => {
+  if (props.disabled) return;
+  if (!showDropdown.value) {
+    /**
+     * Emmitted when dropdown is opened.
+     */
+    emit("open");
+    focusInput();
+    isOpen.value = true;
+    nextTick(() => {
+      arrowCounter.value = 0;
+    });
+  }
+}
+
+const close = () => {
+  if (showDropdown.value) {
+    /**
+     * Emmitted when dropdown is closed.
+     */
+    emit("close");
+    if (!props.multiple) clearInput();
+    isOpen.value = false;
+    arrowCounter.value = 0;
+  }
+}
+
+const handleClearBtn = () => {
+  clearSelected();
+  clearInput();
+  focusInput();
+  positionDropdown();
+}
+
+const handleArrows = (direction: string) => {
+  if (!showDropdown.value) return;
+  const min = 0;
+  switch (direction) {
+    // When going down, select next result until end
+    // then loop back around starting with original query.
+    case "down":
+      if (arrowCounter.value < filteredOptions.value.length - 1) {
+        arrowCounter.value = arrowCounter.value + 1;
+        handleDropdownScroll();
       } else {
-        this.focusInput();
+        if (props.canLoopOptions) arrowCounter.value = min;
+        if (props.canLoopOptions) handleDropdownScroll();
       }
-    },
-    handleOutsideClick($event: MouseEvent) {
-      if (this.$el.contains($event.target)) return;
-
-      if (this.showDropdown) {
-        if (
-          this.arrowCounter <= this.filteredOptions.length - 1 &&
-          this.arrowCounter > -1 &&
-          this.canAddItem &&
-          this.modelValue && this.modelValue.trim() !== ''
-        ) {
-          this.add(this.filteredOptions[this.arrowCounter]);
-          $event.preventDefault();
-        }
+      break;
+    // When going up, select prev result until at original query
+    // then loop back around starting at the end of the results.
+    case "up":
+      if (arrowCounter.value > min) {
+        arrowCounter.value = arrowCounter.value - 1;
+        handleDropdownScroll();
+      } else {
+        if (props.canLoopOptions)
+          arrowCounter.value = filteredOptions.value.length - 1;
+        if (props.canLoopOptions) handleDropdownScroll(true);
       }
+      break;
+  }
+}
 
-      if (this.active) this.active = false;
-      this.close();
-    },
-    handleOutsideKeyUp($event: KeyboardEvent) {
-      if (this.$el.contains($event.target)) return;
-      if (this.active) this.active = false;
-    },
-    positionDropdown() {
-      if (!this.showDropdown) return;
-      this.$nextTick(() => {
-        if (this.openDirection === "down") this.dropUp = false;
-        if (this.openDirection === "up") {
-          this.dropUp = true;
-          this.bottom = this.$el.clientHeight + "px";
-        }
-        if (this.openDirection === "auto") {
-          // const spaceAbove = this.$el.getBoundingClientRect().top
-          const spaceBelow =
-            window.innerHeight - this.$el.getBoundingClientRect().bottom;
-          const notEnoughSpaceBelow = spaceBelow < this.maxHeight;
-          this.dropUp = notEnoughSpaceBelow;
-          this.bottom = this.dropUp ? this.$el.clientHeight + "px" : "auto";
-        }
-      });
-    },
-    handleEsc() {
-      this.close();
-    },
-    handleRequired() {
-      (this.$refs.input as HTMLInputElement).focus();
-      if (!this.active) this.active = true;
-    },
-  },
-});
+const handleDropdownScroll = (jumpToLast = false) => {
+  if (!showDropdown.value || typeof dropdownMenu.value === "undefined")
+    return;
+  const element: Element =
+    (dropdownMenu.value as HTMLElement).children[arrowCounter.value] || false;
+  const itemHeight = element ? (element as HTMLElement).offsetHeight : 0;
+  let pixelsToItemTop = 0;
+  for (let i = 0; i < arrowCounter.value; i++) {
+    pixelsToItemTop += ((dropdownMenu.value as HTMLElement).children[i] as HTMLElement).offsetHeight;
+  }
+  const pixelsToItemBottom = pixelsToItemTop + itemHeight;
+  const viewport = {
+    top: (dropdownMenu.value as HTMLElement).scrollTop || 0,
+    bottom:
+      (dropdownMenu.value as HTMLElement).offsetHeight +
+        (dropdownMenu.value as HTMLElement).scrollTop || 0,
+  };
+
+  // scroll to item
+  if (jumpToLast) {
+    (dropdownMenu.value as HTMLElement).scrollTop = pixelsToItemBottom;
+  } else if (pixelsToItemTop <= viewport.top) {
+    (dropdownMenu.value as HTMLElement).scrollTop = pixelsToItemTop;
+  } else if (pixelsToItemBottom >= viewport.bottom) {
+    (dropdownMenu.value as HTMLElement).scrollTop = viewport.top + itemHeight;
+  }
+}
+
+const handleKeyUp = ($event: KeyboardEvent) => {
+  if (props.disabled) return;
+  const keys = [
+    "Enter",
+    "Backspace",
+    "Delete",
+    "Tab",
+    "Alt",
+    "Shift",
+    "Control",
+    "Meta",
+    "CapsLock",
+    "Fn",
+    "FnLock",
+    "Hyper",
+    "NumLock",
+    "ScrollLock",
+    "Super",
+    "Symbol",
+    "SymbolLock",
+    "ArrowLeft",
+    "ArrowRight",
+    "Left",
+    "Right",
+  ];
+  // Enter
+  if ($event.key === "Enter" && showDropdown.value) {
+    if (
+      arrowCounter.value <= filteredOptions.value.length - 1 &&
+      arrowCounter.value > -1
+    ) {
+      add(filteredOptions.value[arrowCounter.value]);
+    }
+    // Esc
+  } else if ($event.keyCode === 27) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    handleEsc();
+    // Tab
+  } else if ($event.key === "Tab") {
+    if (!active.value) active.value = true;
+    // Non-special keys
+  } else if (!showDropdown.value && !keys.includes($event.key)) {
+    open();
+  }
+}
+
+const handleKeyDown = ($event: KeyboardEvent) => {
+  if (props.disabled) return;
+  // Space bar
+  if (!props.canSearch && $event.keyCode === 32) $event.preventDefault();
+  // Enter
+  if ($event.key === "Enter" && showDropdown.value) $event.preventDefault();
+  // Delete or Backspace
+  if ($event.key === "Delete" || $event.key === "Backspace") {
+    removeLastSelection();
+    // Tab
+  } else if ($event.key === "Tab") {
+    if (showDropdown.value) {
+      if (
+        arrowCounter.value <= filteredOptions.value.length - 1 &&
+        arrowCounter.value > -1 &&
+        canAddItem.value &&
+        props.modelValue && props.modelValue.trim() !== ''
+      ) {
+        add(filteredOptions.value[arrowCounter.value]);
+        $event.preventDefault();
+      } else {
+        close();
+      }
+    }
+    // Up Arrow
+  } else if ($event.key === "ArrowUp" || $event.key === "Up") {
+    $event.preventDefault();
+    $event.stopPropagation();
+    handleArrows("up");
+    // Down Arrow
+  } else if ($event.key === "ArrowDown" || $event.key === "Down") {
+    $event.preventDefault();
+    $event.stopPropagation();
+    handleArrows("down");
+  }
+}
+
+const handleMouseUp = () => {
+  if (props.disabled) return;
+  open();
+  active.value = true;
+}
+
+const handleCloseOnSelection = () => {
+  if (props.closeOnSelection) {
+    close();
+  } else {
+    focusInput();
+  }
+}
+
+const handleOutsideClick = ($event: MouseEvent) => {
+  if (root.value.contains($event.target)) return;
+
+  if (showDropdown.value) {
+    if (
+      arrowCounter.value <= filteredOptions.value.length - 1 &&
+      arrowCounter.value > -1 &&
+      canAddItem.value &&
+      props.modelValue && props.modelValue.trim() !== ''
+    ) {
+      add(filteredOptions.value[arrowCounter.value]);
+      $event.preventDefault();
+    }
+  }
+
+  if (active.value) active.value = false;
+  close();
+}
+
+const handleOutsideKeyUp = ($event: KeyboardEvent) => {
+  if (root.value.contains($event.target)) return;
+  if (active.value) active.value = false;
+}
+
+const positionDropdown = () => {
+  if (!showDropdown.value) return;
+  nextTick(() => {
+    if (props.openDirection === "down") dropUp.value = false;
+    if (props.openDirection === "up") {
+      dropUp.value = true;
+      bottom.value = root.value.clientHeight + "px";
+    }
+    if (props.openDirection === "auto") {
+      // const spaceAbove = root.value.getBoundingClientRect().top
+      const spaceBelow =
+        window.innerHeight - root.value.getBoundingClientRect().bottom;
+      const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
+      dropUp.value = notEnoughSpaceBelow;
+      bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+    }
+  });
+}
+
+const handleEsc = () => {
+  close();
+}
+
+const handleRequired = () => {
+  (input.value as HTMLInputElement).focus();
+  if (!active.value) active.value = true;
+}
 </script>
 
 <style lang="postcss" scoped>

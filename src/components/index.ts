@@ -1,17 +1,18 @@
 import { App, Component } from "vue";
-import SdsAutosuggest from "./Autosuggest";
 import SdsAvatar from "./Avatar";
 import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
+import SdsComboBox from "./ComboBox";
 import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
 import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
+import SdsExpandCollapse from "./ExpandCollapse";
 import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsFloatingActionButton from "./FloatingActionButton";
@@ -44,7 +45,6 @@ import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
-import SdsSearchBox from "./SearchBox";
 import SdsSection from "./Section";
 import SdsSelect from "./Select";
 import SdsTabs from "./Tabs";
@@ -61,19 +61,20 @@ interface ComponentList {
 }
 
 const Components: ComponentList = {
-  SdsAutosuggest,
   SdsAvatar,
   SdsBadge,
   SdsButton,
   SdsCalendar,
   SdsCheckboxGroup,
   SdsClientOnly,
+  SdsComboBox,
   SdsDatapoint,
   SdsDatepicker,
   SdsDropdown,
   SdsDropdownDivider,
   SdsDropdownHeader,
   SdsDropdownItem,
+  SdsExpandCollapse,
   SdsFileUploader,
   SdsFilterByDropdown,
   SdsFloatingActionButton,
@@ -106,7 +107,6 @@ const Components: ComponentList = {
   SdsRadioGroup,
   SdsScrollArea,
   SdsScrollspy,
-  SdsSearchBox,
   SdsSection,
   SdsSelect,
   SdsTabs,
@@ -127,19 +127,20 @@ export default {
   },
 };
 
-export { default as SdsAutosuggest } from "./Autosuggest";
 export { default as SdsAvatar } from "./Avatar";
 export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
+export { default as SdsComboBox } from "./ComboBox";
 export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
 export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
+export { default as SdsExpandCollapse } from "./ExpandCollapse";
 export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsFloatingActionButton } from "./FloatingActionButton"
@@ -172,7 +173,6 @@ export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
-export { default as SdsSearchBox } from "./SearchBox";
 export { default as SdsSection } from "./Section";
 export { default as SdsSelect } from "./Select";
 export { default as SdsTabs } from "./Tabs";

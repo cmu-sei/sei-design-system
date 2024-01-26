@@ -12,7 +12,7 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-default"
+          class="flex space-x-1 btn btn-ghost btn-sm"
           title="First"
           @click.prevent="goToPage(1, $event)"
         >
@@ -34,7 +34,7 @@
         </button>
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-default"
+          class="flex space-x-1 btn btn-ghost btn-sm"
           title="Prev"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -68,7 +68,7 @@
               'shadow-none border-transparent': page === '...'
             }"
             :disabled="page === '...' || loading || currentPage === page"
-            class="btn btn-default"
+            class="btn btn-ghost btn-sm"
             @click.prevent="goToPage(page, $event)"
           >
             {{ page.toLocaleString() }}
@@ -83,7 +83,7 @@
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-default"
+          class="flex space-x-1 btn btn-ghost btn-sm"
           title="Next"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
@@ -105,7 +105,7 @@
         </button>
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-default"
+          class="flex space-x-1 btn btn-ghost btn-sm"
           title="Last"
           @click.prevent="goToPage(totalPages, $event)"
         >
@@ -130,90 +130,90 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsPaginator'
+})
 
-export default defineComponent({
-  name: 'SdsPaginator',
-  props: {
-    /**
-     * The active page number.
-     */
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
-    /**
-     * The total number of pages.
-     */
-    totalPages: {
-      type: Number,
-      default: 0,
-    },
-    /**
-     * Determines whether to show the loading state or not.
-     */
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the page threshold before the ellipsis truncation begins.
-     */
-    threshold: {
-      type: Number,
-      default: 5,
-    },
+const props = defineProps({
+  /**
+   * The active page number.
+   */
+  currentPage: {
+    type: Number,
+    default: 1,
   },
-  emits: ['go-to-page'],
-  computed: {
-    prevDisabled() {
-      return this.currentPage <= 1 || this.loading;
-    },
-    nextDisabled() {
-      return this.currentPage >= this.totalPages || this.loading;
-    },
-    pageList() {
-      if (this.totalPages <= this.threshold) {
-        return Array.apply(null, Array(this.totalPages)).map((x, i) => {
-          return i + 1;
-        });
-      } else if (this.currentPage < this.threshold) {
-        const list: Array<number | string> = Array.apply(null, Array(this.threshold)).map((x, i) => {
-          return i + 1;
-        });
-        return list.concat(["...", this.totalPages]);
-      } else if (this.currentPage > this.totalPages - this.threshold + 1) {
-        const list = [1, "..."];
-        return list.concat(
-          Array.apply(null, Array(this.threshold)).map((x, i) => {
-            return this.totalPages - this.threshold + i + 1;
-          })
-        );
-      } else {
-        let list = [1, "..."];
-        list = list.concat(
-          Array.apply(null, Array(this.threshold - 3)).map((x, i) => {
-            return this.currentPage + i - this.threshold + 3;
-          })
-        );
-        list.push(this.currentPage);
-        list = list.concat(
-          Array.apply(null, Array(this.threshold - 3)).map((x, i) => {
-            return this.currentPage + i + 1;
-          })
-        );
-        return list.concat(["...", this.totalPages]);
-      }
-    },
+  /**
+   * The total number of pages.
+   */
+  totalPages: {
+    type: Number,
+    default: 0,
   },
-  methods: {
-    goToPage(page: number | string, event: MouseEvent) {
-      /**
-       * Passes an object to be used by a parent component: { page, event }
-       */
-      this.$emit("go-to-page", { page, event });
-    },
+  /**
+   * Determines whether to show the loading state or not.
+   */
+  loading: {
+    type: Boolean,
+    default: false,
   },
-});
+  /**
+   * Determines the page threshold before the ellipsis truncation begins.
+   */
+  threshold: {
+    type: Number,
+    default: 5,
+  },
+})
+
+const emit = defineEmits(['go-to-page'])
+
+const prevDisabled = computed(() => {
+  return props.currentPage <= 1 || props.loading;
+})
+
+const nextDisabled = computed(() => {
+  return props.currentPage >= props.totalPages || props.loading;
+})
+
+const pageList = computed(() => {
+  if (props.totalPages <= props.threshold) {
+    return Array.apply(null, Array(props.totalPages)).map((x, i) => {
+      return i + 1;
+    });
+  } else if (props.currentPage < props.threshold) {
+    const list: Array<number | string> = Array.apply(null, Array(props.threshold)).map((x, i) => {
+      return i + 1;
+    });
+    return list.concat(["...", props.totalPages]);
+  } else if (props.currentPage > props.totalPages - props.threshold + 1) {
+    const list = [1, "..."];
+    return list.concat(
+      Array.apply(null, Array(props.threshold)).map((x, i) => {
+        return props.totalPages - props.threshold + i + 1;
+      })
+    );
+  } else {
+    let list = [1, "..."];
+    list = list.concat(
+      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+        return props.currentPage + i - props.threshold + 3;
+      })
+    );
+    list.push(props.currentPage);
+    list = list.concat(
+      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+        return props.currentPage + i + 1;
+      })
+    );
+    return list.concat(["...", props.totalPages]);
+  }
+})
+
+const goToPage = (page: number | string, event: MouseEvent) => {
+  /**
+   * Passes an object to be used by a parent component: { page, event }
+   */
+  emit("go-to-page", { page, event });
+}
 </script>

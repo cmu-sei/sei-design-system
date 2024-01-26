@@ -4,11 +4,51 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div class="grid gap-4">
+      <div class="grid grid-cols-4 gap-4">
         <div>
           <SdsAvatar
             shape="circle"
             variant="gray"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="yellow"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="red"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="purple"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="blue"
+            size="lg"
+            name="John Smith"
+          />
+        </div>
+        <div>
+          <SdsAvatar
+            shape="circle"
+            variant="green"
             size="lg"
             name="John Smith"
           />
@@ -69,8 +109,92 @@
       <div>
         <SdsDatapoint
           v-model="datapointModelValue"
-          size="lg"
+          size="sm"
           variant="black"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="gray"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="tan"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="md"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="lg"
+          variant="yellow"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="md"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="lg"
+          variant="orange"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="red"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="purple"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="indigo"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="blue"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="teal"
+          label="Report Downloads"
+        />
+        <SdsDatapoint
+          v-model="datapointModelValue"
+          size="sm"
+          variant="green"
           label="Report Downloads"
         />
       </div>
@@ -89,7 +213,7 @@
             <p class="font-bold">
               {{ item.fruit }}
             </p>
-            <p class="text-sm text-gray-600 dark:text-gray-500">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
               Stocked by <span class="font-bold">{{ item.employee }}</span>
             </p>
           </template>
@@ -99,7 +223,7 @@
             </button>
           </template>
           <template #drawer="{item}">
-            <ul class="py-2 px-8 bg-gray-50 dark:bg-gray-850 rounded-md">
+            <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>
@@ -133,7 +257,87 @@
           :entries="entries"
           :show-percent="false"
           :small-heading="false"
+          variant="gray"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="tan"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="yellow"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="orange"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="green"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
           variant="blue"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="purple"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="indigo"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="red"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="teal"
+          :view-all-url="viewAllUrl"
+        />
+        <SdsTopFiveChart
+          :title="title"
+          :entries="entries"
+          :show-percent="false"
+          :small-heading="false"
+          variant="pink"
           :view-all-url="viewAllUrl"
         />
       </div>

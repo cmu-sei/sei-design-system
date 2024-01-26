@@ -1,5 +1,5 @@
 <template>
-  <floating-ui
+  <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
@@ -46,27 +46,31 @@
       >
         <div
           v-if="enableFilter"
-          class="input-group input-group-sm mb-2 pb-2 border-b"
+          class="input-group input-group-sm mb-2 border-b"
         >
+          <button
+            class="input-group-text mt-0.5"
+            @click="filterTextInput?.focus()"
+          >
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              class="w-3.5 h-3.5"
+            ><path
+              fill="currentColor"
+              d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            /></svg>
+          </button>
           <input
+            ref="filterTextInput"
             v-model="filterText"
             type="text"
             class="form-control"
             placeholder="Type to filter"
           >
-          <span class="input-group-text">
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              class="w-5 h-5"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </span>
         </div>
         <div
           v-if="!enableFilter"
@@ -109,28 +113,31 @@
           </ul>
         </div>
         <div class="pt-4 space-y-2">
-          <button
-            class="btn btn-blue btn-block btn-sm"
+          <SdsButton
+            kind="primary"
+            size="sm"
+            block
             @click="saveSelections(); close()"
           >
             Apply filter
-          </button>
-          <sds-link
-            class="mt-3 btn-block text-center text-sm"
-            kind="primary"
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            size="sm"
+            block
             @click="cancelSelections(); close()"
           >
             Cancel
-          </sds-link>
+          </SdsButton>
         </div>
       </div>
     </template>
-  </floating-ui>
+  </SdsFloatingUi>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
-import FloatingUi from '../FloatingUi/FloatingUi.vue';
+<script setup lang="ts">
+import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
+import SdsButton from '../Button/Button.vue'
 import { Uid } from '@shimyshack/uid'
 
 interface FilterByDropdownOption {
@@ -141,174 +148,167 @@ interface FilterByDropdownOption {
 
 type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
-export default defineComponent({
+defineOptions({
   name: "SdsFilterByDropdown",
-  components: {
-    FloatingUi,
-  },
   directives: {
     uid: Uid
+  }
+})
+
+const props = defineProps({
+  /**
+   * The v-model for this component. Determines opened/closed state.
+   */
+  modelValue: { type: Array as PropType<FilterByDropdownOption[]>, default: () => [] },
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind: { type: String as PropType<'primary' | 'secondary'>, default: 'secondary' },
+  /**
+   * The z-index for the popover.
+   */
+  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  /**
+   * The title for the toggle button.
+   */
+  title: { type: String, default: "Filter" },
+  /**
+   * Determine whether to enable option filtering on the dropdown.
+   */
+  enableFilter: { type: Boolean, default: false },
+  /**
+   * Determines whether to alphabetically sort the options.
+   */
+  enableSortOptions: { type: Boolean, default: false },
+  /**
+   * Determines the placement of the dropdown on the screen.
+   */
+  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' }
+})
+
+const emit = defineEmits(['update:model-value'])
+
+const button = ref()
+const filterTextInput = ref()
+const filterText = ref("")
+const tmpOptions = ref([])
+
+const zIndexClass = computed(() => {
+  switch (props.zIndex) {
+    case '0':
+      return 'z-0'
+    case '10':
+      return 'z-10'
+    case '20':
+      return 'z-20'
+    case '30':
+      return 'z-30'
+    case '40':
+      return 'z-40'
+    case '50':
+      return 'z-50'
+    case 'auto':
+      return 'z-auto'
+    default:
+      return ''
+  }
+})
+
+const options = computed({
+  get() {
+    return props.modelValue;
   },
-  props: {
+  set(value: FilterByDropdownOption[]) {
     /**
-     * The v-model for this component. Determines opened/closed state.
+     * Emmitted when modelValue changes.
      */
-    modelValue: { type: Array as PropType<FilterByDropdownOption[]>, default: () => [] },
-    /**
-     * Determines the purpose and particular function of the component.
-     */
-    kind: { type: String as PropType<'primary' | 'secondary'>, default: null },
-    /**
-     * Determines the color of the component.
-     *
-     * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     *
-     * @deprecated since version 2.12.
-     */
-    variant: { type: String as PropType<'primary' | 'secondary' | ''>, default: 'secondary' },
-    /**
-     * The z-index for the popover.
-     */
-    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-    /**
-     * The title for the toggle button.
-     */
-    title: { type: String, default: "Filter" },
-    /**
-     * Determine whether to enable option filtering on the dropdown.
-     */
-    enableFilter: { type: Boolean, default: false },
-    /**
-     * Determines whether to alphabetically sort the options.
-     */
-    enableSortOptions: { type: Boolean, default: false },
-    /**
-     * Determines the placement of the dropdown on the screen.
-     */
-    placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' }
+    emit("update:model-value", value);
   },
-  emits: ['update:modelValue'],
-  setup() {
-    const button = ref(null)
-    return { button }
-  },
-  data() {
-    return {
-      filterText: "",
-      tmpOptions: [],
-      open: false,
-    };
-  },
-  computed: {
-    zIndexClass() {
-      switch (this.zIndex) {
-        case '0':
-          return 'z-0'
-        case '10':
-          return 'z-10'
-        case '20':
-          return 'z-20'
-        case '30':
-          return 'z-30'
-        case '40':
-          return 'z-40'
-        case '50':
-          return 'z-50'
-        case 'auto':
-          return 'z-auto'
-        default:
-          return ''
-      }
-    },
-    options: {
-      get() {
-        return this.modelValue;
-      },
-      set(value: FilterByDropdownOption[]) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        this.$emit("update:modelValue", value);
-      },
-    },
-    allSelected() {
-      return this.tmpOptions.every((i: FilterByDropdownOption) => i.selected);
-    },
-    someSelected() {
-      return this.tmpOptions.some((i: FilterByDropdownOption) => i.selected);
-    },
-    indeterminate() {
-      return this.someSelected && !this.allSelected;
-    },
-    filteredTmpOptions(): FilterByDropdownOption[] {
-      return this.tmpOptions.filter(
-        (i: FilterByDropdownOption) =>
-          i.text && i.text.toLowerCase().includes(this.filterText.toLowerCase())
-      );
-    },
-    variantClass() {
-      const kind = this.kind || this.variant
-      switch (kind) {
-         case 'primary':
-          return 'link link-primary'
-        case 'secondary':
-          return 'link link-secondary'
-        default:
-          return ''
-      }
-    }
-  },
-  methods: {
-    toggleSelect() {
-      if (this.allSelected) {
-        this.deselectAllOptions();
-      } else {
-        this.selectAllOptions();
-      }
-    },
-    saveSelections() {
-      /**
-       * Emmitted when modelValue changes.
-       */
-      this.$emit("update:modelValue", this.tmpOptions);
-    },
-    cancelSelections() {
-      // Make a unique copy of default list data
-      this.resetTmpOptions();
-    },
-    resetTmpOptions() {
-      const options = JSON.parse(JSON.stringify(this.options));
-      if (this.enableSortOptions) {
-        this.tmpOptions = options
-          .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
-            return a.text.toLowerCase() < b.text.toLowerCase()
-              ? -1
-              : a.text.toLowerCase() > b.text.toLowerCase()
-                ? 1
-                : 0;
-          })
-          .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
-            return a.selected > b.selected
-              ? -1
-              : a.selected < b.selected
-                ? 1
-                : 0;
-          });
-      } else {
-        this.tmpOptions = options;
-      }
-      this.filterText = ''
-    },
-    deselectAllOptions() {
-      this.tmpOptions.forEach((i: FilterByDropdownOption) => {
-        i.selected = false;
+})
+
+const allSelected = computed(() => {
+  return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
+})
+
+const someSelected = computed(() => {
+  return tmpOptions.value.some((i: FilterByDropdownOption) => i.selected);
+})
+
+const indeterminate = computed(() => {
+  return someSelected.value && !allSelected.value;
+})
+
+const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
+  return tmpOptions.value.filter(
+    (i: FilterByDropdownOption) =>
+      i.text && i.text.toLowerCase().includes(filterText.value.toLowerCase())
+  );
+})
+
+const variantClass = computed(() => {
+  switch (props.kind) {
+      case 'primary':
+      return 'link link-primary link-blue'
+    case 'secondary':
+      return 'link link-secondary link-blue'
+    default:
+      return ''
+  }
+})
+
+const toggleSelect = () => {
+  if (allSelected.value) {
+    deselectAllOptions();
+  } else {
+    selectAllOptions();
+  }
+}
+
+const saveSelections = () => {
+  /**
+   * Emmitted when modelValue changes.
+   */
+  emit("update:model-value", tmpOptions.value);
+}
+
+const cancelSelections = () => {
+  // Make a unique copy of default list data
+  resetTmpOptions();
+}
+
+const resetTmpOptions = () => {
+  const opts = JSON.parse(JSON.stringify(options.value));
+  if (props.enableSortOptions) {
+    tmpOptions.value = opts
+      .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
+        return a.text.toLowerCase() < b.text.toLowerCase()
+          ? -1
+          : a.text.toLowerCase() > b.text.toLowerCase()
+            ? 1
+            : 0;
+      })
+      .sort((a: FilterByDropdownOption, b: FilterByDropdownOption) => {
+        return a.selected > b.selected
+          ? -1
+          : a.selected < b.selected
+            ? 1
+            : 0;
       });
-    },
-    selectAllOptions() {
-      this.tmpOptions.forEach((i: FilterByDropdownOption) => {
-        i.selected = true;
-      });
-    },
-  },
-});
+  } else {
+    tmpOptions.value = opts;
+  }
+  filterText.value = ''
+}
+
+const deselectAllOptions = () => {
+  tmpOptions.value.forEach((i: FilterByDropdownOption) => {
+    i.selected = false;
+  });
+}
+
+const selectAllOptions = () => {
+  tmpOptions.value.forEach((i: FilterByDropdownOption) => {
+    i.selected = true;
+  });
+}
 </script>

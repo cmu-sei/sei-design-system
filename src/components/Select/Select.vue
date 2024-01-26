@@ -24,8 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
-
 type SelectOptionValue = boolean | string | number | null
 
 interface SelectOption<T> {
@@ -85,7 +83,7 @@ const props = defineProps({
   invalid: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:model-value'])
 
 const localValue = computed({
   get() {
@@ -95,7 +93,7 @@ const localValue = computed({
     /**
      * Emitted when modelValue changes.
      */
-    emit("update:modelValue", value);
+    emit("update:model-value", value);
   }
 })
 </script>

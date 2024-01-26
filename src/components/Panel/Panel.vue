@@ -115,16 +115,13 @@
   </client-only>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, computed, watch, onUnmounted, Directive, PropType } from "vue";
+<script setup lang="ts">
+import { type Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { Uid } from '@shimyshack/uid';
 
-export default defineComponent({
-  name: "SdsPanel",
-  components: {
-    ClientOnly
-  },
+defineOptions({
+  name: 'SdsPanel',
   directives: {
     uid: Uid,
     focus: {
@@ -132,172 +129,159 @@ export default defineComponent({
         el.focus();
       },
     } as Directive,
-  },
-  props: {
-    /**
-     * The v-model that determines the show/hide state of the panel.
-     */
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines the size of the panel.
-     */
-    size: {
-      type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-      default: "md",
-    },
-    /**
-     * Determines the location of the panel.
-     */
-     side: {
-      type: String as PropType<'left' | 'right' | ''>,
-      default: "right",
-    },
-    /**
-     * The z-index for the popover.
-     */
-    zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-  },
-  emits: ['update:modelValue'],
-  setup(props, { emit, slots }) {
-    const titleWrapper = ref(null)
-    const panelContainer = ref(null)
-
-    const hasTitleSlot = computed(() => {
-      return !!slots.title;
-    })
-
-    const hasFooterSlot = computed(() => {
-      return !!slots.footer;
-    })
-
-    const showPanel = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(value) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        emit("update:modelValue", value);
-      },
-    })
-
-    const zIndexClass = computed(() => {
-      switch (props.zIndex) {
-        case '0':
-          return 'z-0'
-        case '10':
-          return 'z-10'
-        case '20':
-          return 'z-20'
-        case '30':
-          return 'z-30'
-        case '40':
-          return 'z-40'
-        case '50':
-          return 'z-50'
-        case 'auto':
-          return 'z-auto'
-        default:
-          return ''
-      }
-    })
-
-    onUnmounted(() => {
-      removeDomChanges();
-    })
-
-    const makeDomChanges = () => {
-      if (typeof document === "undefined") return;
-      document.documentElement.classList.add("panel-prevent-scroll");
-      setTimeout(() => {
-        document.addEventListener("keyup", handleEscKey);
-      }, 0);
-    }
-
-    const removeDomChanges = () => {
-      if (typeof document === "undefined") return;
-      document.documentElement.classList.remove("panel-prevent-scroll");
-      document.removeEventListener("keyup", handleEscKey);
-    }
-
-    const close = () => {
-      showPanel.value = false;
-    }
-
-    const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        close();
-      }
-    }
-
-    const checkKeyEvent = (event: KeyboardEvent) => {
-      if (panelContainer.value === null) return;
-
-      // close panel and return early if escape
-      if (event.key === "Escape") {
-        close();
-        return;
-      }
-      const focusableList: NodeListOf<HTMLElement> = (panelContainer.value as unknown as HTMLElement).querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-
-      // escape early if only 1 or no elements to focus
-      if (focusableList.length < 2 && event.key === "Tab") {
-        event.preventDefault();
-        return;
-      }
-
-      const last = focusableList.length - 1;
-
-      if (
-        event.key === "Tab" &&
-        event.shiftKey === false &&
-        event.target === focusableList[last]
-      ) {
-        event.preventDefault();
-        focusableList[0].focus();
-      } else if (
-        event.key === "Tab" &&
-        event.shiftKey === true &&
-        event.target === focusableList[0]
-      ) {
-        event.preventDefault();
-        focusableList[last].focus();
-      }
-    }
-
-    watch(showPanel, (value) => {
-      showPanel.value = (value as boolean);
-      if (typeof document === "undefined") return;
-      if (value) {
-        makeDomChanges();
-      } else {
-        removeDomChanges();
-      }
-    }, { immediate: true })
-
-    return {
-      titleWrapper,
-      panelContainer,
-
-      hasTitleSlot,
-      hasFooterSlot,
-      showPanel,
-      zIndexClass,
-
-      makeDomChanges,
-      removeDomChanges,
-      close,
-      handleEscKey,
-      checkKeyEvent,
-    }
   }
-});
+})
+
+const props = defineProps({
+  /**
+   * The v-model that determines the show/hide state of the panel.
+   */
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+  /**
+   * Determines the size of the panel.
+   */
+  size: {
+    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
+    default: "md",
+  },
+  /**
+   * Determines the location of the panel.
+   */
+    side: {
+    type: String as PropType<'left' | 'right' | ''>,
+    default: "right",
+  },
+  /**
+   * The z-index for the popover.
+   */
+  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+})
+
+const emit = defineEmits(['update:model-value'])
+
+const slots = useSlots()
+
+const titleWrapper = ref(null)
+const panelContainer = ref(null)
+
+const hasTitleSlot = computed(() => {
+  return !!slots.title;
+})
+
+const hasFooterSlot = computed(() => {
+  return !!slots.footer;
+})
+
+const showPanel = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    /**
+     * Emmitted when modelValue changes.
+     */
+    emit("update:model-value", value);
+  },
+})
+
+const zIndexClass = computed(() => {
+  switch (props.zIndex) {
+    case '0':
+      return 'z-0'
+    case '10':
+      return 'z-10'
+    case '20':
+      return 'z-20'
+    case '30':
+      return 'z-30'
+    case '40':
+      return 'z-40'
+    case '50':
+      return 'z-50'
+    case 'auto':
+      return 'z-auto'
+    default:
+      return ''
+  }
+})
+
+onUnmounted(() => {
+  removeDomChanges();
+})
+
+const makeDomChanges = () => {
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.add("panel-prevent-scroll");
+  setTimeout(() => {
+    document.addEventListener("keyup", handleEscKey);
+  }, 0);
+}
+
+const removeDomChanges = () => {
+  if (typeof document === "undefined") return;
+  document.documentElement.classList.remove("panel-prevent-scroll");
+  document.removeEventListener("keyup", handleEscKey);
+}
+
+const close = () => {
+  showPanel.value = false;
+}
+
+const handleEscKey = (e: KeyboardEvent) => {
+  if (e.key === "Escape") {
+    close();
+  }
+}
+
+const checkKeyEvent = (event: KeyboardEvent) => {
+  if (panelContainer.value === null) return;
+
+  // close panel and return early if escape
+  if (event.key === "Escape") {
+    close();
+    return;
+  }
+  const focusableList: NodeListOf<HTMLElement> = (panelContainer.value as unknown as HTMLElement).querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+
+  // escape early if only 1 or no elements to focus
+  if (focusableList.length < 2 && event.key === "Tab") {
+    event.preventDefault();
+    return;
+  }
+
+  const last = focusableList.length - 1;
+
+  if (
+    event.key === "Tab" &&
+    event.shiftKey === false &&
+    event.target === focusableList[last]
+  ) {
+    event.preventDefault();
+    focusableList[0].focus();
+  } else if (
+    event.key === "Tab" &&
+    event.shiftKey === true &&
+    event.target === focusableList[0]
+  ) {
+    event.preventDefault();
+    focusableList[last].focus();
+  }
+}
+
+watch(showPanel, (value) => {
+  showPanel.value = (value as boolean);
+  if (typeof document === "undefined") return;
+  if (value) {
+    makeDomChanges();
+  } else {
+    removeDomChanges();
+  }
+}, { immediate: true })
 </script>
 
 <style>

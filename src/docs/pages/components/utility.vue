@@ -9,11 +9,10 @@
           <template #trigger>
             <sds-button
               size="md"
-              variant="default"
+              kind="secondary"
               :active="false"
               :block="false"
               :disabled="false"
-              :outline="false"
             >
               Hover for a popover
             </sds-button>
@@ -47,7 +46,7 @@
           :parent="parent"
           :item-class="itemClass"
           :active-class="activeClass"
-          class="nav-group"
+          class="tab-group"
         />
         <SdsScrollArea
           id="scrollspy-parent"
@@ -112,7 +111,7 @@
         >
           <template #trigger>
             <SdsButton
-              kind="default"
+              kind="secondary"
             >
               Hover for a tooltip
             </SdsButton>
@@ -133,7 +132,7 @@ const items = ref([
   { id: 'scrollspy-test-5', text: 'Heading 5' }
 ])
 const parent = ref("#scrollspy-parent")
-const itemClass = ref("nav nav-primary nav-underline")
+const itemClass = ref("tab tab-red tab-underline")
 const activeClass = ref("active")
 
 defineOptions({

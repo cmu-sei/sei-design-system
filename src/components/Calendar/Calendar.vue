@@ -10,7 +10,7 @@
           :class="{ 'sm:w-120': isRange }"
         >
           <button
-            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToPrevMonth"
@@ -60,7 +60,7 @@
             </button>
           </div>
           <button
-            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-300 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToNextMonth"
@@ -104,9 +104,9 @@
               :class="[
                 'w-8 h-8 mb-1',
                 day === 1 ? `col-start-${calendarStartOfMonth}` : '',
-                dateIsWithinInterval(day) ? 'bg-blue-100 dark:bg-blue-900' : '',
-                dateIsAtStartOfInterval(day) ? 'bg-blue-100 dark:bg-blue-900 rounded-l-full' : '',
-                dateIsAtEndOfInterval(day) ? 'bg-blue-100 dark:bg-blue-900 rounded-r-full' : '',
+                dateIsWithinInterval(day) ? 'bg-blue-25 dark:bg-blue-900' : '',
+                dateIsAtStartOfInterval(day) ? 'bg-blue-25 dark:bg-blue-900 rounded-l-full' : '',
+                dateIsAtEndOfInterval(day) ? 'bg-blue-25 dark:bg-blue-900 rounded-r-full' : '',
               ]"
             >
               <button
@@ -115,7 +115,7 @@
                 tabindex="-1"
                 :class="{
                   'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
-                  'hover:bg-gray-300 dark:hover:bg-gray-750': !dateIsSameDay(day),
+                  'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day),
                   'font-bold bg-blue-500 text-white': dateIsSameDay(day),
                   'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
                   'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
@@ -144,9 +144,9 @@
                 :class="[
                   'w-8 h-8 mb-1',
                   day === 1 ? `col-start-${calendarNextStartOfMonth}` : '',
-                  dateIsWithinInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900' : '',
-                  dateIsAtStartOfInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900 rounded-l-full' : '',
-                  dateIsAtEndOfInterval(day, true) ? 'bg-blue-100 dark:bg-blue-900 rounded-r-full' : '',
+                  dateIsWithinInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900' : '',
+                  dateIsAtStartOfInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900 rounded-l-full' : '',
+                  dateIsAtEndOfInterval(day, true) ? 'bg-blue-25 dark:bg-blue-900 rounded-r-full' : '',
                 ]"
               >
                 <button
@@ -155,8 +155,8 @@
                   tabindex="-1"
                   :class="{
                     'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
-                    'hover:bg-gray-200 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
-                    'font-bold bg-blue-700 text-white': dateIsSameDay(day, true),
+                    'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
+                    'font-bold bg-blue-500 text-white': dateIsSameDay(day, true),
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
                     'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)
                   }"
@@ -217,7 +217,7 @@
             Go to Date
           </button>
           <button
-            class="mt-2 btn btn-default btn-sm"
+            class="mt-2 btn btn-secondary btn-sm"
             type="button"
             tabindex="-1"
             @click="goToThisMonth()"
@@ -226,7 +226,7 @@
           </button>
           <hr class="my-2">
           <button
-            class="btn btn-default btn-sm"
+            class="btn btn-secondary btn-sm"
             type="button"
             tabindex="-1"
             @click="view = 'days'"
@@ -323,7 +323,7 @@
         class="border-t my-2 pt-2 dark:border-gray-700 w-56"
       >
         <div
-          class="text-sm text-gray-600 dark:text-gray-500 mb-2"
+          class="text-sm text-gray-600 dark:text-gray-400 mb-2"
         >
           <template v-if="date && !(date instanceof Date) && date.end instanceof Date">
             {{ formatDate(date.end, 'eeee, MMM dd, yyyy') }}
@@ -395,9 +395,29 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { isToday, isWithinInterval, isBefore, isAfter, isEqual, isDate, min as dateFnsMin, max as dateFnsMax, isSameDay, getDaysInMonth, startOfMonth, getDay, getHours, setDate, setHours, setMinutes, setSeconds, setMilliseconds, subMonths, addMonths, format, endOfDay } from 'date-fns'
-import { ref, computed, watch, PropType, onMounted, nextTick } from 'vue'
+<script setup lang="ts">
+import { isToday } from 'date-fns/isToday'
+import { isWithinInterval } from 'date-fns/isWithinInterval'
+import { isBefore } from 'date-fns/isBefore'
+import { isAfter } from 'date-fns/isAfter'
+import { isEqual } from 'date-fns/isEqual'
+import { isDate } from 'date-fns/isDate'
+import { min as dateFnsMin } from 'date-fns/min'
+import { max as dateFnsMax } from 'date-fns/max'
+import { isSameDay } from 'date-fns/isSameDay'
+import { getDaysInMonth } from 'date-fns/getDaysInMonth'
+import { startOfMonth } from 'date-fns/startOfMonth'
+import { getDay } from 'date-fns/getDay'
+import { getHours } from 'date-fns/getHours'
+import { setDate } from 'date-fns/setDate'
+import { setHours } from 'date-fns/setHours'
+import { setMinutes } from 'date-fns/setMinutes'
+import { setSeconds } from 'date-fns/setSeconds'
+import { setMilliseconds } from 'date-fns/setMilliseconds'
+import { subMonths } from 'date-fns/subMonths'
+import { addMonths } from 'date-fns/addMonths'
+import { format } from 'date-fns/format'
+import { endOfDay } from 'date-fns/endOfDay'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -446,7 +466,7 @@ const props = defineProps({
    useCurrentTimeForToday: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:model-value'])
 
 const date = computed<CalendarDate | CalendarRange>({
   get() {
@@ -456,7 +476,7 @@ const date = computed<CalendarDate | CalendarRange>({
     /**
      * Emitted when modelValue changes.
      */
-    emit('update:modelValue', value)
+    emit('update:model-value', value)
   }
 })
 
