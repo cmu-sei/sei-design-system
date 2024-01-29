@@ -29,9 +29,13 @@
         <div
           v-if="showModal"
           class="fixed inset-0 block h-full w-full overflow-auto z-50"
+          @click.self="close"
         >
           <button
             class="fixed inset-0 h-full w-full cursor-auto"
+            :class="{
+              'sr-only': hideHeader
+            }"
             @click="close"
           >
             <span class="sr-only">Close modal</span>
@@ -43,6 +47,7 @@
             :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
             class="z-50 p-2"
             @keydown="checkKeyEvent"
+            @click.self="close"
           >
             <div
               class="
@@ -65,15 +70,22 @@
                 'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
               }"
             >
-              <header class="flex items-center p-6 pb-0">
+              <header
+                class="flex items-center p-6 pb-0"
+                :class="{
+                  'sr-only': hideHeader
+                }"
+              >
                 <div
-                  v-if="hasTitleSlot"
+                  v-if="hasTitleSlot || title"
                   ref="titleWrapper"
                   v-uid
                   class="flex items-center gap-2 text-2xl leading-7 font-light"
                 >
                   <!-- @slot Modal title content. -->
-                  <slot name="title" />
+                  <slot name="title">
+                    {{ title }}
+                  </slot>
                 </div>
                 <button
                   v-focus
@@ -158,6 +170,14 @@ const props = defineProps({
     type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
     default: "md",
   },
+  /**
+   * Determines the title of the modal.
+   */
+  title: { type: String, default: null },
+  /**
+   * Determines if the modal header should be hidden.
+   */
+  hideHeader: { type: Boolean, default: false },
   /**
    * The z-index for the popover.
    */

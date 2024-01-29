@@ -110,7 +110,7 @@
     >
       <div
         v-if="dropdownIsOpen"
-        class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
+        class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
           v-if="groups.length > 1"
@@ -210,9 +210,9 @@
           </button>
         </template>
         <!-- Footer section -->
-        <div class="border-t border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
-          <div class="flex items-center gap-1.5">
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+        <div class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
+          <div class="ml-auto flex items-center gap-1.5">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -226,8 +226,6 @@
                   d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
                 />
               </svg>
-            </div>
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -248,7 +246,7 @@
             v-if="groups.length > 1"
             class="flex items-center gap-1.5"
           >
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -262,8 +260,6 @@
                   d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
                 />
               </svg>
-            </div>
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
