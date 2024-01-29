@@ -23,10 +23,10 @@
         ]"
       >
         <div class="inline-flex group">
-          <p class="group-hover:text-red-500 dark:group-hover:text-red-300">{{ label }}</p>
+          <p class="group-hover:text-red-600 dark:group-hover:text-red-300">{{ label }}</p>
           <svg
             v-if="cta || type === 'landing-page'"
-            class="w-4 h-4 ml-2 my-auto transition-all text-red-500 dark:text-red-300 group-hover:ml-4"
+            class="w-4 h-4 ml-2 my-auto transition-all text-red-600 dark:text-red-300 group-hover:ml-4"
             xmlns="http://www.w3.org/2000/svg"
             width="28"
             height="32"
@@ -91,11 +91,11 @@ const typeClass = computed(() => {
     | "simple"
   switch (type) {
     case "landing-page":
-      return "p-4 text-lg hover:no-underline hover:text-red-500 dark:hover:text-red-300"
+      return "p-4 text-lg hover:no-underline hover:text-red-600 dark:hover:text-red-300"
     case "descriptive":
       return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-25 hover:dark:bg-gray-850"
     case "simple":
-      return "p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-500 dark:hover:text-red-300"
+      return "p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300"
     default:
       return ""
   }
