@@ -12,12 +12,8 @@ export default {
   },
   component: SdsIndicator,
   argTypes: {
-    variant: {
-      options: ['gray', 'blue', 'green', 'orange', 'red'],
-      control: { type: 'select' }
-    },
-    size: {
-      options: ['sm', 'md', 'lg'],
+    darkSurface: {
+      options: ['darkest', 'darker', 'dark'],
       control: { type: 'select' }
     },
     placement: {
@@ -26,6 +22,18 @@ export default {
     },
     placementOver: {
       options: ['portrait', 'circle'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ['sm', 'md', 'lg'],
+      control: { type: 'select' }
+    },
+    surface: {
+      options: ['darkest', 'darker', 'dark', 'light', 'lighter', 'lightest'],
+      control: { type: 'select' }
+    },
+    variant: {
+      options: ['gray', 'blue', 'green', 'orange', 'red'],
       control: { type: 'select' }
     },
   }
@@ -51,7 +59,8 @@ export const Default = Template.bind({});
 Default.args = {
   placement: 'bottom-right',
   placementOver: 'circle',
-  variant: 'green',
-  size: 'lg'
+  size: 'lg',
+  surface: 'lightest',
+  variant: 'green'
 };
 
