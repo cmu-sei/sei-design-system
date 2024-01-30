@@ -7,6 +7,15 @@
       <div class="flex gap-2">
         <SdsLink
           href="https://sei.cmu.edu"
+          kind="secondary"
+          decoration="underline"
+          size="xl"
+          class="font-semibold"
+        >
+          SEI Homepage Decorated
+        </SdsLink>
+        <SdsLink
+          href="https://sei.cmu.edu"
           kind="primary"
         >
           SEI Homepage
