@@ -167,7 +167,7 @@ export default defineComponent({
      */
     hideArrow: { type: Boolean, default: false },
     /**
-     * Allows you to force dark or light mode on all child components
+     * Allows you to force dark mode on all child components
      */
     type: { type: String as PropType<'default' | 'dark'>, default: null },
 

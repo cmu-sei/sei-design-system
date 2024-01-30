@@ -11,7 +11,6 @@
     <template #suite-header>
       <SdsDropdown
         type="dark"
-        shade="transparent"
         popperClass="mt-[7px] rounded-t-none"
         placement="bottom-start"
         size="md"
