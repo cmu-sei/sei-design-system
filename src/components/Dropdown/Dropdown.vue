@@ -105,7 +105,6 @@ export default defineComponent({
      * The content of the dropdown trigger.
      */
     title: { type: String, default: '' },
-    //type: light | dark
     /**
      * Determines the purpose and particular function of the button trigger.
      */
