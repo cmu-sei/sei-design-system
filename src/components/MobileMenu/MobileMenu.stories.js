@@ -28,11 +28,11 @@ export default {
       control: { type: 'select' }
     },
     side: {
-      options: ['left', 'right', ''],
+      options: ['left', 'right'],
       control: { type: 'select' }
     },
     zIndex: {
-      options: ['0', '10', '20', '30', '40', '50', 'auto', ''],
+      options: ['0', '10', '20', '30', '40', '50', 'auto'],
       control: { type: 'select' }
     }
   }
@@ -116,10 +116,7 @@ const Template = (args) => ({
               />
             </svg>
           </template>
-          <template
-            v-if="menuItem.content?.children && menuItem.type !== 'slide'"
-            #children
-          >
+          <template #children>
             <sds-navigation-item
               v-for="child in menuItem.content?.children"
               :key="child.key"
@@ -350,6 +347,6 @@ Default.args = {
   ],
   modelValue: true,
   size: 'md',
-  side: 'left',
+  side: 'right',
   zIndex: '50'
 };

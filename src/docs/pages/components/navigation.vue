@@ -656,17 +656,14 @@
                     />
                   </svg>
                 </template>
-                <template
-                  v-if="menuItem.content?.children && menuItem.type !== 'slide'"
-                  #children
-                >
+                <template #children>
                   <SdsNavigationItem
                     v-for="child in menuItem.content?.children"
                     :key="child.key"
                     :label="child.title"
                     :href="child.href"
                     :type="child.type"
-                    :disabled="menuItem.selected ? false : true"
+                    :disabled="child.disabled"
                   />
                 </template>
               </SdsNavigationItem>
@@ -692,6 +689,7 @@
                 :label="menuItem.title"
                 :href="menuItem.href"
                 :type="menuItem.type"
+                :disabled="menuItem.disabled"
               />
               <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
             </template>
@@ -1847,8 +1845,8 @@ const mobileMenus = ref([
   {
     key: "plants",
     title: "Plants",
-    type: "slide",
     icon: "plant",
+    type: "slide",
     selected: false,
     content: {
       children: [
@@ -1860,12 +1858,13 @@ const mobileMenus = ref([
         {
           key: "ferns",
           title: "Ferns",
-          href: "/components/navigation"
+          href: "/components/navigation",
+          disabled: true
         },
         {
           key: "cacti",
           title: "Cacti",
-          href: "/components/navigation"
+          href: "/components/navigation",
         }
       ]
     }
@@ -1873,8 +1872,8 @@ const mobileMenus = ref([
   {
     key: "trees",
     title: "Trees",
-    type: "slide",
     icon: "tree",
+    type: "slide",
     selected: false,
     content: {
       children_1: [
@@ -1906,20 +1905,24 @@ const mobileMenus = ref([
   {
     key: "bugs",
     title: "Bugs",
-    type: "expand",
     icon: "bug",
+    type: "expand",
     selected: false,
     content: {
       children: [
         {
           key: "anthropods",
           title: "Anthropods",
-          href: "/components/navigation"
+          href: "/components/navigation",
+          type: "simple",
+          disabled: false
         },
         {
           key: "arachnids",
           title: "Arachnids",
-          href: "/components/navigation"
+          href: "/components/navigation",
+          type: "simple",
+          disabled: false
         }
       ]
     }

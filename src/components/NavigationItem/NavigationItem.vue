@@ -29,11 +29,11 @@
     :href="href ? href : undefined"
     class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6"
     :class="{
-      disabledClass: disabled,
-      'cursor-pointer': props.type !== 'title',
-      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent': !props.selected && props.type !== 'title',
-      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 hover:dark:text-red-100 hover:bg-gray-50 hover:dark:bg-gray-850': props.selected,
-      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 cursor-default': props.type === 'title',
+      'cursor-pointer': type !== 'title' && !disabled,
+      'text-gray-400 bg-white dark:text-gray-700 dark:bg-gray-900 hover:text-gray-400 hover:bg-white hover:dark:text-gray-600 hover:dark:bg-gray-900 select-none pointer-events-none cursor-default border-l-transparent': disabled,
+      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent': !disabled && !selected && type !== 'title',
+      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 hover:dark:text-red-100 hover:bg-gray-50 hover:dark:bg-gray-850': selected,
+      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 cursor-default': type === 'title',
     }"
     :tabindex="disabled || type === 'title' ? -1 : href ? undefined : 0"
     role="menuitem"
@@ -56,7 +56,7 @@
       </span>
     </slot>
     <div
-      v-if="['slide', 'expand'].includes(props.type)"
+      v-if="['slide', 'expand'].includes(type) && $slots.children"
       class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100"
     >
       <svg
@@ -66,9 +66,9 @@
         viewBox="0 0 512 512"
         class="ml-auto -mr-1 shrink-0"
         :class="{
-          'transition-transform mr-0': type === 'expand' && $slots.children,
-          'rotate-90': !props.selected && (type === 'expand' && $slots.children),
-          '-rotate-90': props.selected && (type === 'expand' && $slots.children)
+          'transition-transform mr-0': type === 'expand',
+          'rotate-90': !selected && type === 'expand',
+          '-rotate-90': selected && type === 'expand'
         }"
       >
         <path
@@ -86,15 +86,15 @@
     v-if="$slots.children && type === 'expand'"
     class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top"
     :class="{
-      'z-10 opacity-1 max-h-screen': props.selected,
-      '-z-10 opacity-0 max-h-0 select-none': !props.selected
+      'z-10 opacity-1 max-h-screen': selected,
+      '-z-10 opacity-0 max-h-0 select-none': !selected
     }"
   >
     <hr class="border-gray-200 dark:border-gray-700">
     <slot name="children" />
   </div>
   <hr
-    v-if="props.type === 'title'"
+    v-if="type === 'title'"
     class="mt-4 mb-2 border-gray-200 dark:border-gray-700"
   >
 </template>
@@ -106,14 +106,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, getCurrentInstance } from "vue"
+import { getCurrentInstance } from "vue"
 
 /**
  * Get the navigation item's key
  */
 const key = getCurrentInstance()?.vnode.key ?? null;
 
-const props = defineProps({
+defineProps({
   /**
    * Determines show/hide state of the panel or the open/closed state of the 'expand'-able navigation item.
    */
@@ -134,13 +134,6 @@ const props = defineProps({
   href: {
     type: String,
     default: null
-  },
-  /**
-   * Determines the HTML tag to use.
-   */
-  tag: {
-    type: String as PropType<'a' | 'button'>,
-    default: 'a'
   },
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
@@ -171,8 +164,4 @@ const props = defineProps({
     default: null
   }
 });
-
-const disabledClass = computed(() => {
-  return props.disabled ? "disabled" : ""
-})
 </script>

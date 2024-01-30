@@ -7,6 +7,7 @@
       v-model="showPanel"
       :side="side"
       :size="size"
+      :z-index="zIndex"
     >
       <template #title>
         <!-- @slot The "title" slot used to supply custom logo or panel title that will display in at the top of every panel. I.e.: `<template #title>...</template>` -->
@@ -151,6 +152,11 @@ const mobileMenus = ref(props.mobileMenus);
 const navigate = (value: string) => {
   if (typeof document === "undefined") return null  // Only accept client-side calls
   mobileMenus.value.map(i => {
+    /**
+     * If menu item is already selected (true), deselect it (false).
+     * Otherwise, check if the panel key argument matches any of the panel keys in the mobile menu's data.
+     * If it matches, set that item's "selected" value to "true".
+     */
     i.selected = i.selected ? false : value === i.key;
     if (i.selected) {
       panel.value = value;
