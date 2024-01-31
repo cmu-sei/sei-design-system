@@ -646,7 +646,7 @@
     </div>
     <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
-      <SdsLoadingBox />
+      <SdsLoadingSkeleton />
     </div>
     <div class="my-12">
       <p>Indicator</p>

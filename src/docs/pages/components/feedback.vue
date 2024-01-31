@@ -2,10 +2,10 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Loading Box
+        Loading Skeleton
       </h2>
       <div>
-        <SdsLoadingBox
+        <SdsLoadingSkeleton
           height="h-48"
           width="w-1/5"
         />
