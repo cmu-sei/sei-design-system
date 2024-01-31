@@ -168,7 +168,7 @@ export default defineComponent({
     /**
      * Allows you to force dark mode on all child components
      */
-    type: { type: String as PropType<'default' | 'dark'>, default: null },
+    type: { type: String as PropType<'default' | 'dark'>, default: 'default'},
 
     /**
      * Allows for code execution prior to opening the popover.
