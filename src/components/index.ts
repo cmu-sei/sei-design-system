@@ -31,7 +31,7 @@ import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav";
 import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark";
 import SdsLayoutStacked from "./LayoutStacked";
 import SdsLink from "./Link";
-import SdsLoadingBox from "./LoadingBox";
+import SdsLoadingSkeleton from "./LoadingSkeleton";
 import SdsLoadingSpinner from "./LoadingSpinner";
 import SdsMegaMenu from "./MegaMenu";
 import SdsMegaMenuItem from "./MegaMenuItem";
@@ -91,7 +91,7 @@ const Components: ComponentList = {
   SdsLayoutSeiExternalWordmark,
   SdsLayoutStacked,
   SdsLink,
-  SdsLoadingBox,
+  SdsLoadingSkeleton,
   SdsLoadingSpinner,
   SdsMegaMenu,
   SdsMegaMenuItem,
@@ -155,7 +155,7 @@ export { default as SdsLayoutSeiExternalNav } from "./LayoutSeiExternalNav";
 export { default as SdsLayoutSeiExternalWordmark } from "./LayoutSeiExternalWordmark";
 export { default as SdsLayoutStacked } from "./LayoutStacked";
 export { default as SdsLink } from "./Link";
-export { default as SdsLoadingBox } from "./LoadingBox";
+export { default as SdsLoadingSkeleton } from "./LoadingSkeleton";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";
 export { default as SdsMegaMenu } from "./MegaMenu";
 export { default as SdsMegaMenuItem } from "./MegaMenuItem";
