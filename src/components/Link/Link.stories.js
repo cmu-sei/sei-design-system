@@ -23,6 +23,10 @@ export default {
       options: ['blue', 'red'],
       control: { type: 'select' }
     },
+    decoration: {
+      options: ['underline'],
+      control: { type: 'select' }
+    },
   }
 };
 
