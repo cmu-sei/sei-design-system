@@ -6,25 +6,57 @@
     <SdsPanel
       v-model="showPanel"
       :side="side"
+      :size="size"
+      :z-index="zIndex"
     >
       <template #title>
+        <!-- @slot The "title" slot used to supply custom logo or panel title that will display in at the top of every panel. I.e.: `<template #title>...</template>` -->
         <slot
           name="title"
-          :panel-update="panelUpdate"
+          :navigate="navigate"
           :active-panel="panel"
         />
       </template>
       <template #default>
-        <slot
-          name="default"
-          :panel-update="panelUpdate"
-          :active-panel="panel"
-        />
+        <transition
+          :enter-active-class="activeClass"
+          enter-from-class="opacity-0 -right-full ml-40"
+          enter-to-class="opacity-1 right-0 ml-0"
+          :leave-active-class="activeClass"
+          leave-from-class="opacity-1 right-0 ml-0"
+          leave-to-class="opacity-0 -right-full ml-40"
+        >
+          <div v-if="typeof activePanel !== 'undefined' && panel === activePanel.key">
+            <!-- @slot Dynamic "panel" slot. Use this slot to supply custom HTML that will display in the named panel. I.e.: `<template #panel(name)>...</template>` -->
+            <slot
+              :name="`panel(${panel})`"
+              :navigate="navigate"
+              :active-panel="panel"
+            />
+          </div>
+        </transition>
+        <transition
+          :enter-active-class="activeClass"
+          enter-from-class="opacity-0 -left-full mr-40"
+          enter-to-class="opacity-1 left-0 mr-0"
+          :leave-active-class="activeClass"
+          leave-from-class="opacity-1 left-0 mr-0"
+          leave-to-class="opacity-0 -left-full mr-40"
+        >
+          <div v-if="typeof activePanel === 'undefined'">
+            <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in "root" panel. I.e.: `<template #default>...</template>` -->
+            <slot
+              :navigate="navigate"
+              :active-panel="panel"
+            />
+          </div>
+        </transition>
       </template>
       <template #footer>
+        <!-- @slot The "footer" slot used to supply custom links or text that will display in at the top of every panel. I.e.: `<template #footer>...</template>` -->
         <slot
           name="footer"
-          :panel-update="panelUpdate"
+          :navigate="navigate"
           :active-panel="panel"
         />
       </template>
@@ -47,7 +79,13 @@ export default {
 </script>
 
 <script setup lang="ts">
+import SdsPanel from '../Panel/Panel.vue';
 import { computed, ref, watch, onUnmounted, PropType } from "vue";
+
+/**
+ * Default Tailwind classes for transitioning panels
+ */
+const activeClass = ref('transition-all duration-200 ease-in-out relative overflow-visible top-0 h-0');
 
 const props = defineProps({
   /**
@@ -85,6 +123,12 @@ const props = defineProps({
 });
 
 const emits = defineEmits([
+  /**
+   * When data supplied to the Mobile Menu component
+   * changes, emit an event. This lets developers
+   * trigger other actions off the Mobile Menu's modelValue
+   * when it changes.
+   */
   'update:model-value',
 ]);
 
@@ -94,36 +138,43 @@ const emits = defineEmits([
 const panel = ref('root');
 
 /**
- * This is a ref to mirror the "mobileMenus" prop. This provides an interactive data model for selecting panels.
+ * This is a ref to mirror the "mobileMenus" prop.
+ * It provides an interactive data model for selecting panels.
  */
 const mobileMenus = ref(props.mobileMenus);
 
 /**
- * Callback to interactive with active menu panel state
+ * The navigate callback changes the active menu panel.
+ * Pass the menu key of the panel to switch to.
+ * If no argument is given (or if the key doesn't exist),
+ * the menu will switch to the root/default panel.
  */
-const panelUpdate = (e: Event, value: string) => {
+const navigate = (value: string) => {
   if (typeof document === "undefined") return null  // Only accept client-side calls
-  // console.log(panel.value); // Which panel is selected?
-  if (e.target !== null) {
-    e.preventDefault();
-    if ((e.currentTarget as HTMLElement).dataset.type === 'expand') {
-      // Toggle selected, it's a "drawer" interaction
-      mobileMenus.value.map(i => {
-        i.selected = i.selected ? false : value === i.key;
-      });
-    } else {
-      // Select a specific panel
+  mobileMenus.value.map(i => {
+    /**
+     * If menu item is already selected (true), deselect it (false).
+     * Otherwise, check if the panel key argument matches any of the panel keys in the mobile menu's data.
+     * If it matches, set that item's "selected" value to "true".
+     */
+    i.selected = i.selected ? false : value === i.key;
+    if (i.selected) {
       panel.value = value;
     }
-  }
+  });
 }
+
+const activePanel = computed(() => {
+  /* Don't change the activePanel for 'expand' type NavigationItem. */
+  return mobileMenus.value.find(i => i.selected && i.type !== 'expand')
+})
 
 /* Update showPanel to toggle panel visibility */
 const showPanel = computed({
   get() {
     return props.modelValue;
   },
-  set(value: Boolean) {
+  set(value: boolean) {
     /**
      * Emmitted when mobileMenus changes.
      */
@@ -135,6 +186,7 @@ onUnmounted(() => {
   removeDomChanges();
 })
 
+/* Helper function for exiting mobile menu on "Esc" */
 const makeDomChanges = () => {
   if (typeof document === "undefined") return;
   document.documentElement.classList.add("panel-prevent-scroll");
@@ -143,6 +195,7 @@ const makeDomChanges = () => {
   }, 0);
 }
 
+/* Helper function for exiting mobile menu on "Esc" */
 const removeDomChanges = () => {
   if (typeof document === "undefined") return;
   document.documentElement.classList.remove("panel-prevent-scroll");
@@ -153,6 +206,7 @@ const close = () => {
   showPanel.value = false;
 }
 
+/* Helper function for exiting mobile menu on "Esc" */
 const handleEscKey = (e: KeyboardEvent) => {
   if (e.key === "Escape") {
     close();

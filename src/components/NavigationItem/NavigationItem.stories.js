@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Alpha: A Navigation Item is a stylized link. It can be used to populate a Mobile Menu.',
+        component: 'Beta: A Navigation Item is a stylized link. It can be used to populate a Mobile Menu.',
       },
     },
   },
@@ -21,7 +21,7 @@ export default {
     },
     type: {
       control: { type: 'select' },
-      options: ['back', 'expand', 'slide', 'title'],
+      options: ['back', 'expand', 'simple', 'slide', 'title'],
       description: 'Set the type of navigation element.'
     },
     label: {
@@ -40,7 +40,6 @@ const Template = (args) => ({
     <sds-navigation-item
       v-bind="args"
     >
-      <script>console.log(${JSON.stringify(args)})</script>
       <template #left>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +62,6 @@ export const Default = Template.bind({});
 Default.args = {
   disabled: false,
   external: false,
-  type: 'slide',
+  type: 'simple',
   label: 'Navigation Item Label',
 };

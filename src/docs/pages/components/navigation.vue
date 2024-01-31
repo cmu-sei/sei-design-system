@@ -597,156 +597,128 @@
                 <span class="font-bold text-red-600 dark:text-red-500">Suite</span><span class="font-semibold text-gray-600 dark:text-gray-400">Name</span>
               </p>
             </template>
-            <template #default="{ activePanel, panelUpdate }">
-              <transition
-                enter-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                enter-from-class="opacity-0 -left-full mr-40"
-                enter-to-class="opacity-1 left-0 mr-0"
-                leave-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                leave-from-class="opacity-1 left-0 mr-0"
-                leave-to-class="opacity-0 -left-full mr-40"
+            <template #default="{ navigate }">
+              <SdsSearchBox
+                v-model="searchBox.modelValue"
+                variant="gray"
+                class="mb-4"
+                :disabled="false"
+                :autofocus="false"
+                :disable-search="false"
+                @search="searchBox.onSearch"
+              />
+              <SdsNavigationItem
+                v-for="menuItem in mobileMenus"
+                :key="menuItem.key"
+                :label="menuItem.title"
+                :type="menuItem.type"
+                :selected="menuItem.selected ?? false"
+                @click="navigate(menuItem.key)"
               >
-                <div v-if="activePanel === 'root'">
-                  <SdsSearchBox
-                    v-model="searchBox.modelValue"
-                    variant="gray"
-                    class="mb-4"
-                    :disabled="false"
-                    :autofocus="false"
-                    :disable-search="false"
-                    @search="searchBox.onSearch"
-                  />
-                  <SdsNavigationItem
-                    v-for="menuItem in mobileMenus"
-                    :key="menuItem.key"
-                    :label="menuItem.title"
-                    :type="menuItem.type"
-                    :selected="menuItem.selected ?? false"
-                    :on-click="(e: Event) => { panelUpdate(e, menuItem.key) }"
+                <template
+                  v-if="menuItem.icon"
+                  #left
+                >
+                  <svg
+                    v-if="menuItem.icon === 'plant'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 256 256"
                   >
-                    <template
-                      v-if="menuItem.icon"
-                      #left
-                    >
-                      <svg
-                        v-if="menuItem.icon === 'plant'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 256 256"
-                        class="mt-0.5"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M205.41 151.07a60.9 60.9 0 0 1-31.83 8.86a71.71 71.71 0 0 1-27.36-5.66A55.55 55.55 0 0 0 136 186.51V216a8 8 0 0 1-8.53 8a8.18 8.18 0 0 1-7.47-8.25v-12.44l-38.62-38.62A52.5 52.5 0 0 1 63.44 168a45.82 45.82 0 0 1-23.92-6.67C17.73 148.09 6 117.62 8.27 79.79a8 8 0 0 1 7.52-7.52c37.83-2.23 68.3 9.46 81.5 31.25a46 46 0 0 1 6.45 28.48a4 4 0 0 1-6.89 2.43l-19.2-20.1a8 8 0 0 0-11.31 11.31l53.88 55.25c.06-.78.13-1.56.21-2.33a68.56 68.56 0 0 1 18.64-39.46l50.59-53.46a8 8 0 0 0-11.31-11.32l-49 51.82a4 4 0 0 1-6.78-1.74c-4.74-17.48-2.65-34.88 6.4-49.82c17.86-29.48 59.42-45.26 111.18-42.22a8 8 0 0 1 7.52 7.52c3 51.77-12.78 93.33-42.26 111.19Z"
-                        />
-                      </svg>
-                      <svg
-                        v-if="menuItem.icon === 'tree'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        class="mt-0.5"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M10 21v-3H3l5-5H5l5-5H7l5-5l5 5h-3l5 5h-3l5 5h-7v3h-4Z"
-                        />
-                      </svg>
-                      <svg
-                        v-if="menuItem.icon === 'bug'"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        class="mt-0.5"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M19 8h-1.81a5.985 5.985 0 0 0-1.82-1.96l.93-.93a.996.996 0 1 0-1.41-1.41l-1.47 1.47C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L9.11 3.7A.996.996 0 1 0 7.7 5.11l.92.93C7.88 6.55 7.26 7.22 6.81 8H5c-.55 0-1 .45-1 1s.45 1 1 1h1.09c-.05.33-.09.66-.09 1v1H5c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .34.04.67.09 1H5c-.55 0-1 .45-1 1s.45 1 1 1h1.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H19c.55 0 1-.45 1-1s-.45-1-1-1h-1.09c.05-.33.09-.66.09-1v-1h1c.55 0 1-.45 1-1s-.45-1-1-1h-1v-1c0-.34-.04-.67-.09-1H19c.55 0 1-.45 1-1s-.45-1-1-1zm-6 8h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1zm0-4h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1z"
-                        />
-                      </svg>
-                    </template>
-                    <template
-                      v-if="menuItem.content?.children && menuItem.type !== 'slide'"
-                      #children
-                    >
-                      <SdsNavigationItem
-                        v-for="child in menuItem.content?.children"
-                        :key="child.key"
-                        :label="child.title"
-                        :href="child.href"
-                        :type="child.type"
-                        :disabled="menuItem.selected ? false : true"
-                      />
-                    </template>
-                  </SdsNavigationItem>
-                  <hr class="mt-2 mb-2">
+                    <path
+                      fill="currentColor"
+                      d="M205.41 151.07a60.9 60.9 0 0 1-31.83 8.86a71.71 71.71 0 0 1-27.36-5.66A55.55 55.55 0 0 0 136 186.51V216a8 8 0 0 1-8.53 8a8.18 8.18 0 0 1-7.47-8.25v-12.44l-38.62-38.62A52.5 52.5 0 0 1 63.44 168a45.82 45.82 0 0 1-23.92-6.67C17.73 148.09 6 117.62 8.27 79.79a8 8 0 0 1 7.52-7.52c37.83-2.23 68.3 9.46 81.5 31.25a46 46 0 0 1 6.45 28.48a4 4 0 0 1-6.89 2.43l-19.2-20.1a8 8 0 0 0-11.31 11.31l53.88 55.25c.06-.78.13-1.56.21-2.33a68.56 68.56 0 0 1 18.64-39.46l50.59-53.46a8 8 0 0 0-11.31-11.32l-49 51.82a4 4 0 0 1-6.78-1.74c-4.74-17.48-2.65-34.88 6.4-49.82c17.86-29.48 59.42-45.26 111.18-42.22a8 8 0 0 1 7.52 7.52c3 51.77-12.78 93.33-42.26 111.19Z"
+                    />
+                  </svg>
+                  <svg
+                    v-if="menuItem.icon === 'tree'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M10 21v-3H3l5-5H5l5-5H7l5-5l5 5h-3l5 5h-3l5 5h-7v3h-4Z"
+                    />
+                  </svg>
+                  <svg
+                    v-if="menuItem.icon === 'bug'"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M19 8h-1.81a5.985 5.985 0 0 0-1.82-1.96l.93-.93a.996.996 0 1 0-1.41-1.41l-1.47 1.47C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L9.11 3.7A.996.996 0 1 0 7.7 5.11l.92.93C7.88 6.55 7.26 7.22 6.81 8H5c-.55 0-1 .45-1 1s.45 1 1 1h1.09c-.05.33-.09.66-.09 1v1H5c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .34.04.67.09 1H5c-.55 0-1 .45-1 1s.45 1 1 1h1.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H19c.55 0 1-.45 1-1s-.45-1-1-1h-1.09c.05-.33.09-.66.09-1v-1h1c.55 0 1-.45 1-1s-.45-1-1-1h-1v-1c0-.34-.04-.67-.09-1H19c.55 0 1-.45 1-1s-.45-1-1-1zm-6 8h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1zm0-4h-2c-.55 0-1-.45-1-1s.45-1 1-1h2c.55 0 1 .45 1 1s-.45 1-1 1z"
+                    />
+                  </svg>
+                </template>
+                <template #children>
                   <SdsNavigationItem
-                    label="News & Media"
-                    href="https://google.com/news"
+                    v-for="child in menuItem.content?.children"
+                    :key="child.key"
+                    :label="child.title"
+                    :href="child.href"
+                    :type="child.type"
+                    :disabled="child.disabled"
                   />
-                  <SdsNavigationItem
-                    label="Resources"
-                    href="/"
-                  />
-                  <hr class="mt-2 mb-1">
-                </div>
-              </transition>
-              <transition
-                enter-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                enter-from-class="opacity-0 -right-full ml-40"
-                enter-to-class="opacity-1 right-0 ml-0"
-                leave-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                leave-from-class="opacity-1 right-0 ml-0"
-                leave-to-class="opacity-0 -right-full ml-40"
-              >
-                <div v-if="activePanel === 'plants'">
-                  <SdsNavigationItem
-                    type="back"
-                    @click="(e: Event) => { panelUpdate(e, 'root') }"
-                  />
-                  <SdsNavigationItem
-                    v-for="menuItem in mobileMenus[0].content.children"
-                    :key="menuItem.key"
-                    :label="menuItem.title"
-                    :href="menuItem.href"
-                    :type="menuItem.type"
-                  />
-                  <hr class="mt-2 mb-1">
-                </div>
-              </transition>
-              <transition
-                enter-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                enter-from-class="opacity-0 -right-full ml-40"
-                enter-to-class="opacity-1 right-0 ml-0"
-                leave-active-class="transition-all relative h-0 overflow-visible top-0 ease-in-out duration-200"
-                leave-from-class="opacity-1 right-0 ml-0"
-                leave-to-class="opacity-0 -right-full ml-40"
-              >
-                <div v-if="activePanel === 'trees'">
-                  <SdsNavigationItem
-                    type="back"
-                    @click="(e: Event) => { panelUpdate(e, 'root') }"
-                  />
-                  <SdsNavigationItem
-                    type="title"
-                    label="Trees"
-                  />
-                  <p class="text-lg pt-4 mb-2">
-                    <b>Tree Categories</b>
-                  </p>
-                  <SdsNavigationItem
-                    v-for="menuItem in mobileMenus[1].content.children"
-                    :key="menuItem.key"
-                    :label="menuItem.title"
-                    :href="menuItem.href"
-                    :type="menuItem.type"
-                  />
-                  <hr class="mt-2 mb-1">
-                </div>
-              </transition>
+                </template>
+              </SdsNavigationItem>
+              <hr class="mt-2 mb-2 border-gray-200 dark:border-gray-700">
+              <SdsNavigationItem
+                label="News & Media"
+                href="/components/navigation"
+              />
+              <SdsNavigationItem
+                label="Resources"
+                href="/components/navigation"
+              />
+              <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
+            </template>
+            <template #panel(plants)="{ navigate }">
+              <SdsNavigationItem
+                type="back"
+                @click="navigate()"
+              />
+              <SdsNavigationItem
+                v-for="menuItem in mobileMenus[0].content.children"
+                :key="menuItem.key"
+                :label="menuItem.title"
+                :href="menuItem.href"
+                :type="menuItem.type"
+                :disabled="menuItem.disabled"
+              />
+              <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
+            </template>
+            <template #panel(trees)="{ navigate }">
+              <SdsNavigationItem
+                type="back"
+                @click="navigate()"
+              />
+              <SdsNavigationItem
+                type="title"
+                label="Trees"
+              />
+              <p class="text-lg pt-4 mb-2 dark:text-gray-200">
+                <b>Tree Categories</b>
+              </p>
+              <SdsNavigationItem
+                v-for="menuItem in mobileMenus[1].content.children_1"
+                :key="menuItem.key"
+                :label="menuItem.title"
+                :href="menuItem.href"
+              />
+              <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
+              <SdsNavigationItem
+                v-for="menuItem in mobileMenus[1].content.children_2"
+                :key="menuItem.key"
+                :label="menuItem.title"
+                :href="menuItem.href"
+              />
+              <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
             </template>
             <template #footer>
               <div class="flex flex-row text-gray-600">
@@ -1873,8 +1845,8 @@ const mobileMenus = ref([
   {
     key: "plants",
     title: "Plants",
-    type: "slide",
     icon: "plant",
+    type: "slide",
     selected: false,
     content: {
       children: [
@@ -1886,7 +1858,13 @@ const mobileMenus = ref([
         {
           key: "ferns",
           title: "Ferns",
-          href: "https://google.com/?ferns"
+          href: "/components/navigation",
+          disabled: true
+        },
+        {
+          key: "cacti",
+          title: "Cacti",
+          href: "/components/navigation",
         }
       ]
     }
@@ -1894,30 +1872,32 @@ const mobileMenus = ref([
   {
     key: "trees",
     title: "Trees",
-    type: "slide",
     icon: "tree",
+    type: "slide",
     selected: false,
     content: {
-      children: [
+      children_1: [
         {
           key: "deciduous",
           title: "Deciduous",
-          href: "https://google.com/?deciduous"
+          href: "/components/navigation"
         },
         {
           key: "leafy",
           title: "Leafy",
-          href: "https://google.com/?leafy"
-        },
+          href: "/components/navigation"
+        }
+      ],
+      children_2: [
         {
           key: "tree_anatomy",
           title: "Tree Anatomy",
-          href: "https://google.com/?tree-anatomy"
+          href: "/components/navigation"
         },
         {
           key: "available_saplings",
           title: "Available Saplings",
-          href: "https://google.com/?available-saplings"
+          href: "/components/navigation"
         }
       ]
     }
@@ -1925,20 +1905,24 @@ const mobileMenus = ref([
   {
     key: "bugs",
     title: "Bugs",
-    type: "expand",
     icon: "bug",
+    type: "expand",
     selected: false,
     content: {
       children: [
         {
-          key: "deciduous",
-          title: "Deciduous",
-          href: "https://google.com/?deciduous"
+          key: "anthropods",
+          title: "Anthropods",
+          href: "/components/navigation",
+          type: "simple",
+          disabled: false
         },
         {
-          key: "leafy",
-          title: "Leafy",
-          href: "https://google.com/?leafy"
+          key: "arachnids",
+          title: "Arachnids",
+          href: "/components/navigation",
+          type: "simple",
+          disabled: false
         }
       ]
     }
