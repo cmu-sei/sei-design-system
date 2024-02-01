@@ -8,7 +8,12 @@
     :will-open="willOpen"
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
+    :popper-class="{
+      'bg-gray-850 border-gray-700': type === 'dark',
+      'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
+      [auto ? 'w-auto' : 'w-56']: true,
+      [zIndexClass]: true
+    }"
     hide-arrow
     shift
   >
@@ -29,7 +34,13 @@
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="[variantClass, sizeClass, outlineClass, disabledClass, blockClass, isOpen ? 'active' : '']"
+          :class="[
+            variantClass, sizeClass, outlineClass, disabledClass, blockClass,
+            type && 'hover:bg-gray-800 text-white border-0',
+            (!isOpen && type) && 'bg-gray-900',
+            (isOpen && type) && 'active bg-gray-800',
+            isOpen && 'active'
+          ]"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -37,6 +48,7 @@
             {{ title }}
           </slot>
           <svg
+            v-if="!hideArrow"
             class="inline-block self-center w-5 h-5 -mr-1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -53,7 +65,10 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2"
+        :class="[
+          'py-2 rounded',
+          type === 'dark' ? 'dropdown-dark bg-gray-850': ''
+        ]"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -93,12 +108,12 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the button trigger.
      */
-     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+    kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
     /**
      * Styling for the button trigger.
-     * 
+     *
      * **Deprecated**: Will be removed in 3.0. Use `kind` instead.
-     * 
+     *
      * @deprecated since version 2.12.
      */
     variant: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light' | ''>, default: 'default' },
@@ -147,16 +162,25 @@ export default defineComponent({
      */
     disabled: { type: Boolean, default: false },
     /**
+     * Determines if the arrow should display or not.
+     */
+    hideArrow: { type: Boolean, default: false },
+    /**
+     * Allows you to force dark mode on all child components
+     */
+    type: { type: String as PropType<'dark'>, default: undefined},
+
+    /**
      * Allows for code execution prior to opening the popover.
-     * 
+     *
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
-     * 
+     *
      * For example, this can prevent the popover from opening
      * until a call to a backend API completes.
-     * 
+     *
      * Example definition in parent component:
-     * 
+     *
      * ```
      * async willOpen(open, cancel) {
      *  try {
@@ -173,15 +197,15 @@ export default defineComponent({
     willOpen: { type: Function, default: null },
     /**
      * Allows for code execution prior to closing the popover.
-     * 
+     *
      * A `cancel()` callback can be called as well to cancel
      * the opening process.
-     * 
+     *
      * For example, this can prevent the popover from closing
      * until a call to a backend API completes.
-     * 
+     *
      * Example definition in parent component:
-     * 
+     *
      * ```
      * async willClose(close, cancel) {
      *  try {
