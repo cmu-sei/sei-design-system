@@ -37,9 +37,10 @@
           :disabled="disabled"
           :class="[
             variantClass, sizeClass, outlineClass, disabledClass, blockClass,
-            type ? 'hover:bg-gray-800 text-white border-0' : '',
-            !isOpen && type ? 'bg-gray-900' :'',
-            isOpen ? 'active bg-gray-800' : ''
+            type && 'hover:bg-gray-800 text-white border-0',
+            (!isOpen && type) && 'bg-gray-900',
+            (isOpen && type) && 'active bg-gray-800',
+            isOpen && 'active'
           ]"
           @click="handleClick(isOpen, open, close)"
         >
