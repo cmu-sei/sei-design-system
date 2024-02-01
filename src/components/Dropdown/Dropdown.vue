@@ -38,9 +38,9 @@
           :class="[
             variantClass, sizeClass, outlineClass, disabledClass, blockClass,
             type ? 'hover:bg-gray-800 text-white border-0' : '',
-            !isOpen && type ? 'bg-transparent' :'',
+            !isOpen && type ? 'bg-gray-900' :'',
             isOpen ? 'active bg-gray-800' : ''
-]"
+          ]"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -168,7 +168,7 @@ export default defineComponent({
     /**
      * Allows you to force dark mode on all child components
      */
-    type: { type: String as PropType<'default' | 'dark'>, default: 'default'},
+    type: { type: String as PropType<'dark'>, default: undefined},
 
     /**
      * Allows for code execution prior to opening the popover.

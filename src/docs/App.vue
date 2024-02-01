@@ -8,9 +8,6 @@
     :sidebar-navigation-items="sidebarNavigationItems"
     @navigate="navigate"
   >
-    <template #suite-header>
-
-    </template>
     <template #page-header>
       <sds-button
         variant="default"
@@ -33,6 +30,7 @@
       </sds-button>
     </template>
     <template #default>
+
       <RouterView />
     </template>
   </sds-layout-app>
@@ -56,29 +54,6 @@ const appSuite = ref('SDS')
 const appName = ref('Playground')
 const pageTitle = computed(() => route.meta.title)
 const enableCollapsibleSidebar = ref(true)
-const dropdownItems= ref([
-   {
-     clickHandler: () => router.push('/components/feedback'),
-     active: route.fullPath === '/components/feedback',
-     label: "Feedback",
-   },
-   {
-     clickHandler: () => router.push('/components/buttons'),
-     active: route.fullPath === '/components/buttons',
-     label: "Buttons",
-   },
-   {
-     clickHandler: () => router.push('/components/containers'),
-     active: route.fullPath === '/components/containers',
-     label: "Containers",
-   },
-  {
-    clickHandler: () => router.push('/components/utility'),
-    active: route.fullPath === '/components/utility',
-    label: "Utility",
-  },
-  // Add more items as needed
-])
 const sidebarNavigationItems = computed(() => [
   {id: 1, title: 'Home', active: route.fullPath === '/', href: '/'},
   {
