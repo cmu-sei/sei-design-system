@@ -1,6 +1,6 @@
 {
   "name": "@sds/components-vue3",
-  "version": "2.20.1-beta.3",
+  "version": "2.20.1-beta.4",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
