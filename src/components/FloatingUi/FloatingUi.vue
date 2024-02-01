@@ -168,7 +168,7 @@ const props = defineProps({
   animationLeaveActiveClass: { type: String, default: 'transition duration-50 ease-in' },
   animationLeaveFromClass: { type: String, default: 'transform scale-100 opacity-100' },
   animationLeaveToClass: { type: String, default: 'transform scale-95 opacity-0' },
-  popperClass: { type: String, default: undefined },
+  popperClass: { type: [String, Array, Object], default: undefined },
   hideArrow: { type: Boolean, default: false },
   arrowClass: { type: String, default: undefined },
   placementTopArrowClass: { type: String, default: undefined },

@@ -16,7 +16,7 @@
   >
     <!-- @slot Dropdown item content. -->
     <div :class="['flex py-2', active && '-ml-2']">
-    <slot />
+      <slot />
     </div>
   </component>
 </template>

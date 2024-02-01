@@ -9,11 +9,10 @@
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
     :popper-class="{
-      'bg-gray-850': type === 'dark',
+      'bg-gray-850 border-gray-700': type === 'dark',
       'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
       [auto ? 'w-auto' : 'w-56']: true,
-      [zIndexClass]: true,
-      [popperClass]: true
+      [zIndexClass]: true
     }"
     hide-arrow
     shift
@@ -67,9 +66,9 @@
     <template #default="{ open, close, toggle, isOpen }">
       <div
         :class="[
-        'py-2',
-        type === 'dark' ? 'dropdown-dark bg-gray-850 ':  ''
-      ]"
+          'py-2 rounded',
+          type === 'dark' ? 'dropdown-dark bg-gray-850': ''
+        ]"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -109,7 +108,7 @@ export default defineComponent({
     /**
      * Determines the purpose and particular function of the button trigger.
      */
-     kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
+    kind: { type: String as PropType<'default' | 'primary' | 'success' | 'danger' | 'light'>, default: null },
     /**
      * Styling for the button trigger.
      *
@@ -221,12 +220,6 @@ export default defineComponent({
      * ```
      */
     willClose: { type: Function, default: null },
-    /**
-     * A prop that allows you to specify additional CSS classes for the popper element
-     * when the dropdown is opened. These classes can be used for customizing the
-     * appearance and positioning of the dropdown.
-     */
-    popperClass: { type: String, default: '' },
   },
   setup(props) {
     const button = ref(null)
