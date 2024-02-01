@@ -219,7 +219,7 @@ export default defineComponent({
      * }
      * ```
      */
-    willClose: { type: Function, default: null },
+    willClose: { type: Function, default: null }
   },
   setup(props) {
     const button = ref(null)
