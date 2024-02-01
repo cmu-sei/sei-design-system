@@ -12,6 +12,7 @@
       <sds-dropdown
         title="Dropdown"
         type="dark"
+        :offset="8"
       >
         <sds-dropdown-header>
           <p>Signed in as</p>

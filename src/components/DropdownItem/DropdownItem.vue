@@ -6,7 +6,7 @@
     :class="[
       '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 hover:text-black',
       {
-        'border-l-8 border-solid border-red-800': active,
+        'border-l-8 border-solid border-red-700 dark:border-red-400': active,
         'pointer-events-none opacity-50': disabled
       }
     ]"
