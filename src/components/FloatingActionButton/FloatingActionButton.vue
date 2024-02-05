@@ -17,7 +17,7 @@
                 ref="button"
                 v-uid
                 type="button"
-                class="ml-auto mt-auto btn btn-primary border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
+                class="ml-auto mt-auto btn btn-primary border-2 border-gray-50 dark:border-gray-950 rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
                   'btn-blue': localVariant === 'blue',
