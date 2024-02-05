@@ -396,9 +396,6 @@
         <button class="btn btn-orange">
           Orange
         </button>
-        <button class="btn btn-pink">
-          Pink
-        </button>
         <button class="btn btn-purple">
           Purple
         </button>
@@ -437,9 +434,6 @@
         </button>
         <button class="btn btn-orange btn-outline">
           Orange
-        </button>
-        <button class="btn btn-pink btn-outline">
-          Pink
         </button>
         <button class="btn btn-purple btn-outline">
           Purple
@@ -575,11 +569,6 @@
         <a
           href="#"
           tabindex="-1"
-          class="btn btn-pink disabled"
-        >Pink</a>
-        <a
-          href="#"
-          tabindex="-1"
           class="btn btn-purple disabled"
         >Purple</a>
         <a
@@ -623,9 +612,6 @@
         </button>
         <button class="btn btn-orange btn-block">
           Orange
-        </button>
-        <button class="btn btn-pink btn-block">
-          Pink
         </button>
         <button class="btn btn-purple btn-block">
           Purple
