@@ -1024,32 +1024,6 @@
       <div class="space-x-4">
         <sds-badge
           type="light-border"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="light"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="medium"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="dark"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-      </div>
-      <div class="space-x-4">
-        <sds-badge
-          type="light-border"
           variant="red"
         >
           Badge Content

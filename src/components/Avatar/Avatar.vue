@@ -140,9 +140,9 @@ const variantClass = computed(() => {
     'bg-gray-100 dark:text-gray-400 dark:bg-gray-900', 
     'bg-red-100 dark:text-red-500 dark:bg-red-900', 
     'bg-yellow-25 dark:text-yellow-400 dark:bg-yellow-900', 
-    'bg-green-50 dark:text-green-500 dark:bg-green-900', 
-    'bg-blue-50 dark:text-blue-500 dark:bg-blue-900', 
-    'bg-purple-100 dark:text-purple-500 dark:bg-purple-900'
+    'bg-green-50 dark:text-green-400 dark:bg-green-900', 
+    'bg-blue-50 dark:text-blue-400 dark:bg-blue-900', 
+    'bg-purple-100 dark:text-purple-400 dark:bg-purple-900'
   ]
   if (props.variant && props.variant !== 'random') {
     return colorOptions.filter((color) => color.includes(props.variant))[0]

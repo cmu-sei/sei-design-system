@@ -65,7 +65,7 @@ const props = defineProps({
    * Determines the color of the component.
    */
   variant: {
-    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'pink' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
+    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
     default: null
   }
 })
@@ -128,9 +128,6 @@ const variantClass = computed(() => {
       } else {
         textClass = 'text-yellow-500 dark:text-yellow-300'
       }
-      break
-    case 'pink':
-      textClass = 'text-pink-600 dark:text-pink-400'
       break
     case 'purple':
       textClass = 'text-purple-600 dark:text-purple-400'

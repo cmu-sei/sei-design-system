@@ -3,12 +3,12 @@
 exports[`Avatar > should match its default snapshot 1`] = `
 <div
   aria-label="Avatar"
-  class="inline-flex items-center justify-center bg-blue-50 dark:text-blue-500 dark:bg-blue-900 w-16 aspect-[4/5]"
+  class="inline-flex items-center justify-center bg-blue-50 dark:text-blue-400 dark:bg-blue-900 w-16 aspect-[4/5]"
   data-id="sds-avatar"
   role="img"
 >
   <span
-    class="leading-none text-black cursor-default uppercase text-2xl bg-blue-50 dark:text-blue-500 dark:bg-blue-900"
+    class="leading-none text-black cursor-default uppercase text-2xl bg-blue-50 dark:text-blue-400 dark:bg-blue-900"
     title=""
   />
 </div>

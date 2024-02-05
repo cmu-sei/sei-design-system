@@ -332,14 +332,6 @@
           variant="teal"
           :view-all-url="viewAllUrl"
         />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="pink"
-          :view-all-url="viewAllUrl"
-        />
       </div>
     </div>
   </div>

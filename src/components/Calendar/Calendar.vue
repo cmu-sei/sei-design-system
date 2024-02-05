@@ -116,7 +116,7 @@
                 :class="{
                   'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
                   'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day),
-                  'font-bold bg-blue-500 text-white': dateIsSameDay(day),
+                  'font-bold bg-blue-500 dark:bg-blue-700 text-white': dateIsSameDay(day),
                   'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
                   'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day) && !dateIsSameDay(day)
                 }"
@@ -156,7 +156,7 @@
                   :class="{
                     'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
                     'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
-                    'font-bold bg-blue-500 text-white': dateIsSameDay(day, true),
+                    'font-bold bg-blue-500 dark:bg-blue-700 text-white': dateIsSameDay(day, true),
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
                     'font-semibold text-blue-900 dark:text-blue-100': dateIsWithinInterval(day, true) && !dateIsSameDay(day, true)
                   }"
