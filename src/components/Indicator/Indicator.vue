@@ -182,14 +182,14 @@ const variantClass = computed(() => {
     case 'gray':
       return 'bg-gray-300'
     case 'green':
-      return 'bg-green-500 dark:bg-green-400'
+      return 'bg-green-500 dark:bg-green-300'
     case 'orange':
-      return 'bg-orange-500 dark:bg-orange-400'
+      return 'bg-orange-500 dark:bg-orange-300'
     case 'red':
-      return 'bg-red-500 dark:bg-red-400'
+      return 'bg-red-500 dark:bg-red-300'
     case 'blue':
     default:
-      return 'bg-blue-500 dark:bg-blue-400'
+      return 'bg-blue-500 dark:bg-blue-300'
   }
 })
 </script>
