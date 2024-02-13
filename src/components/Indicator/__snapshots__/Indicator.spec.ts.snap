@@ -13,7 +13,7 @@ exports[`Indicator > should match its default snapshot 1`] = `
     Indicator
     
     <div
-      class="absolute rounded-full dark:border-gray-900 -top-1.5 -right-1.5 h-4 w-4 border-2 border-white bg-blue-500 dark:bg-blue-400"
+      class="absolute rounded-full dark:border-gray-900 -top-1.5 -right-1.5 h-4 w-4 border-2 border-white bg-blue-500 dark:bg-blue-300"
       role="status"
     >
       <!--v-if-->
@@ -35,7 +35,7 @@ exports[`Indicator > should match its variant green, placement bottom-right snap
     Indicator
     
     <div
-      class="absolute rounded-full dark:border-gray-900 -bottom-1.5 -right-1.5 h-4 w-4 border-2 border-white bg-green-500 dark:bg-green-400"
+      class="absolute rounded-full dark:border-gray-900 -bottom-1.5 -right-1.5 h-4 w-4 border-2 border-white bg-green-500 dark:bg-green-300"
       role="status"
     >
       <!--v-if-->
