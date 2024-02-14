@@ -1,5 +1,5 @@
 import SdsMobileMenu from './MobileMenu.vue';
-import SdsSearchBox from '../SearchBox/SearchBox.vue';
+import SdsComboBox from '../ComboBox/ComboBox.vue';
 import SdsNavigationItem from '../NavigationItem/NavigationItem.vue';
 
 import { action } from '@storybook/addon-actions';
@@ -41,7 +41,7 @@ export default {
 const Template = (args) => ({
   components: {
     SdsMobileMenu,
-    SdsSearchBox,
+    SdsComboBox,
     SdsNavigationItem
   },
   setup() {
@@ -60,13 +60,7 @@ const Template = (args) => ({
         </p>
       </template>
       <template #default="{ navigate }">
-        <sds-search-box
-          variant="gray"
-          class="mb-4"
-          :disabled="false"
-          :autofocus="false"
-          :disable-search="false"
-        />
+        <sds-combo-box class="mb-4" />
         <sds-navigation-item
           v-for="menuItem in args.mobileMenus"
           :key="menuItem.key"
