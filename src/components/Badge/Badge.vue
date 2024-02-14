@@ -104,10 +104,10 @@ const variantClass = computed(() => {
       break
     case 'tan':
       if (props.type === 'light-border' || props.type === 'light') {
-        bgClass = 'bg-tan-100 dark:bg-tan-900'
+        bgClass = 'bg-tan-50 dark:bg-tan-900'
         textClass = 'text-tan-900 dark:text-tan-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-tan-300'
+        bgClass = 'bg-tan-200'
         textClass = 'text-gray-800'
       } else if (props.type === 'dark') {
         bgClass = 'bg-tan-600'
