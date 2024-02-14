@@ -40,12 +40,12 @@
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
             'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': type === 'block',
-            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
+            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !(topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'text-white bg-red-600 dark:text-gray-900 dark:bg-red-300': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'hover:text-red-600 hover:border-red-600 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
             'text-red-600 dark:text-red-300 border-red-600 dark:border-red-300': type === 'underline' && topLink.selected,
             'border-red-600 dark:border-red-300': type === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'border-transparent dark:border-transparent': type === 'underline' && ((!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0))
           }"
           role="menuitem"
           class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base"
