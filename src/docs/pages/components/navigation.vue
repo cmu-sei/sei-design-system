@@ -912,7 +912,7 @@
             </template>
           </SdsMobileMenu>
           <SdsButton
-            variant="default"
+            kind="secondary"
             class="max-w-xs"
             @click="showPanel = !showPanel"
           >
