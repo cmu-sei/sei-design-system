@@ -44,7 +44,7 @@
       <h2 class="text-xl">
         Dropdown
       </h2> 
-      <div>
+      <div class="space-x-4">
         <sds-dropdown
           title="Dropdown"
         >
@@ -61,7 +61,49 @@
           >
             Guide
           </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
           <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+            >
+              Sign out
+            </sds-dropdown-item>
+          </form>
+        </sds-dropdown>
+        <sds-dropdown
+          title="Dropdown"
+          type="dark"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
             Support
           </sds-dropdown-item>
           <sds-dropdown-item href="#">
