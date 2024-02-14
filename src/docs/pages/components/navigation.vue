@@ -724,14 +724,14 @@
               </p>
             </template>
             <template #default="{ navigate }">
-              <SdsSearchBox
-                v-model="searchBox.modelValue"
+              <SdsComboBox
+                v-model="comboBox.modelValue"
                 variant="gray"
                 class="mb-4"
                 :disabled="false"
                 :autofocus="false"
                 :disable-search="false"
-                @search="searchBox.onSearch"
+                @enter="comboBox.onSearch"
               />
               <SdsNavigationItem
                 v-for="menuItem in mobileMenus"
@@ -1014,7 +1014,7 @@ const totalPages = ref(10)
 
 const showPanel = ref(false)
 
-const searchBox = reactive({
+const comboBox = reactive({
   modelValue: '',
   onSearch(value: string) {
     alert(`Searching: ${value}`)
