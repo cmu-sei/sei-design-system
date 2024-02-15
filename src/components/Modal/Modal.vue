@@ -66,8 +66,9 @@
                 [zIndexClass]: true,
                 'md:max-w-sm': size === 'sm',
                 'md:max-w-xl': size === 'md',
-                'md:max-w-xl lg:max-w-4xl': size === 'lg',
-                'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
+                'md:max-w-xl lg:max-w-2xl': size === 'lg',
+                'md:max-w-xl lg:max-w-2xl xl:max-w-4xl': size === 'xl',
+                'md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl': size === '2xl',
               }"
             >
               <header
@@ -167,7 +168,7 @@ const props = defineProps({
    * Determines the size of the modal.
    */
   size: {
-    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
+    type: String as PropType<'2xl' | 'xl' | 'lg' | 'md' | 'sm'>,
     default: "md",
   },
   /**
