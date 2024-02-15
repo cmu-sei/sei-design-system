@@ -141,74 +141,79 @@
             >{{ group.count }}</span>
           </button>
         </div>
-        <template
-          v-for="s, sindex in suggestionOptions"
-          :key="`${s}_${sindex}`"
+        <SdsScrollArea
+          ref="scrollArea"
+          class="max-h-72"
         >
-          <div
-            v-if="optionGroupChildren && s[optionGroupChildren]"
-            class="[&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700 border-t border-gray-100 dark:border-gray-700"
+          <template
+            v-for="s, sindex in suggestionOptions"
+            :key="`${s}_${sindex}`"
           >
             <div
-              v-if="activeGroupKey === -1"
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              v-if="optionGroupChildren && s[optionGroupChildren]"
+              class="[&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700 border-t border-gray-100 dark:border-gray-700"
             >
-              <!-- @slot Option Group content. Good for customizing the content for each group option -->
-              <slot
-                name="optionGroup"
-                :option="s"
-                :label="optionGroupLabel ? s[optionGroupLabel] : s"
+              <div
+                v-if="activeGroupKey === -1"
+                class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
               >
-                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
-              </slot>
+                <!-- @slot Option Group content. Good for customizing the content for each group option -->
+                <slot
+                  name="optionGroup"
+                  :option="s"
+                  :label="optionGroupLabel ? s[optionGroupLabel] : s"
+                >
+                  {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+                </slot>
+              </div>
+              <button
+                v-for="c, cindex in s[optionGroupChildren]"
+                :key="`${s}_${c}_${cindex}`"
+                ref="dropdownOption"
+                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                :class="{
+                  'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+                }"
+                :data-active="c.index === arrowCounter"
+                type="button"
+                tabindex="-1"
+                @click="handleSuggestionClick(c)"
+              >
+                <!-- @slot Option content. Good for customizing the content for each option -->
+                <slot
+                  name="option"
+                  :option="c"
+                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                >
+                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                </slot>
+              </button>
             </div>
             <button
-              v-for="c, cindex in s[optionGroupChildren]"
-              :key="`${s}_${c}_${cindex}`"
+              v-else
               ref="dropdownOption"
               class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               :class="{
-                'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+                'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
               }"
-              :data-active="c.index === arrowCounter"
+              :data-active="s.index === arrowCounter"
               type="button"
               tabindex="-1"
-              @click="handleSuggestionClick(c)"
+              @click="handleSuggestionClick(s)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
               <slot
                 name="option"
-                :option="c"
-                :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                :option="s"
+                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
               >
-                {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
             </button>
-          </div>
-          <button
-            v-else
-            ref="dropdownOption"
-            class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-            :class="{
-              'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-              'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
-            }"
-            :data-active="s.index === arrowCounter"
-            type="button"
-            tabindex="-1"
-            @click="handleSuggestionClick(s)"
-          >
-            <!-- @slot Option content. Good for customizing the content for each option -->
-            <slot
-              name="option"
-              :option="s"
-              :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-            >
-              {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
-            </slot>
-          </button>
-        </template>
+          </template>
+        </SdsScrollArea>
         <!-- Footer section -->
         <div class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
           <div class="ml-auto flex items-center gap-1.5">
@@ -363,12 +368,17 @@ const props = defineProps({
   /**
    * The debounce period before the suggestions are updated.
    */
-  debounceSuggestions: { type: Number, default: 250 }
+  debounceSuggestions: { type: Number, default: 250 },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  hideEmptyGroups: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
 const root = ref()
+const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const query = ref(props.modelValue)
@@ -463,7 +473,7 @@ const groups = computed(() => {
         label: i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
         count
       }
-    })
+    }).filter(i => props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 })
 
@@ -539,6 +549,33 @@ onClickOutside(root, () => {
   filterQuery.value = query.value
   showDropdown.value = false
 })
+
+const scrollToChild = async () => {
+  await nextTick()
+  if (!scrollArea.value) return
+  const parent = scrollArea.value.$el
+  if (!parent) return
+  const child = parent.querySelector('[data-active="true"]')
+  if (!child) return
+  const parentRect = parent.getBoundingClientRect()
+  const childRect = child.getBoundingClientRect()
+
+  const isViewable = (childRect.top >= parentRect.top) && (childRect.bottom <= parentRect.top + parent.clientHeight);
+
+  // If you can't see the child try to scroll parent
+  if (!isViewable) {
+    // Should we scroll using top or bottom? Find the smaller ABS adjustment
+    const scrollTop = childRect.top - parentRect.top;
+    const scrollBot = childRect.bottom - parentRect.bottom;
+    if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+      // We're near the top of the list
+      parent.scrollTop += scrollTop
+    } else {
+      // We're near the bottom of the list
+      parent.scrollTop += scrollBot
+    }
+  }
+}
 
 const closeDropdownAndFocusInput = () => {
   showDropdown.value = false
@@ -642,6 +679,9 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     } else {
       filterQuery.value = query.value
     }
+
+    // Scroll to selected result
+    scrollToChild()
   }
 }
 

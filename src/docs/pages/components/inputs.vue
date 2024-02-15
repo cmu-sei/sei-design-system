@@ -274,6 +274,7 @@ const comboBox = reactive({
         label: "Group Label",
         items: [
           { term: "Apple Group", payload: "test" },
+          { term: "Unique to Group", payload: "test" },
           { term: "Banana Group", payload: "test" },
           { term: "Orange Group", payload: "test" },
           { term: "Pineapple Group", payload: "test" },
