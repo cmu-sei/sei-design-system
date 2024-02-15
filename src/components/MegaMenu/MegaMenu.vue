@@ -228,6 +228,7 @@ const emits = defineEmits(
     'update:model-value'
   ]
 )
+
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {

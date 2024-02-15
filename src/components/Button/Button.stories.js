@@ -48,6 +48,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'default'
+  kind: 'secondary'
 };
 

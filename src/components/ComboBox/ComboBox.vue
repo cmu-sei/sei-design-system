@@ -307,6 +307,7 @@
 
 <script setup lang="ts">
 import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 
 defineOptions({
   name: 'SdsComboBox'
