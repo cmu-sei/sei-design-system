@@ -24,7 +24,7 @@ const props = defineProps({
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'blue' | 'red'>, default: '' },
+  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
   /**
    * Determines the size.
    */
@@ -70,6 +70,8 @@ const variantClass = computed(() => {
       return 'btn-blue'
     case 'red':
       return 'btn-red'
+    case 'white':
+      return 'btn-white'
     default:
       return ''
   }

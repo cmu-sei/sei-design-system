@@ -28,7 +28,7 @@ const props = defineProps({
   /**
    * Determines the color variant of the component.
    */
-  variant: { type: String as PropType<'blue' | 'red'>, default: 'blue' },
+  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: 'blue' },
   /**
    * Determines whether to display a decorated underline.
    */
@@ -75,10 +75,12 @@ const typeClass = computed(() => {
 })
 
 const variantClass = computed(() => {
-  const variant = (props.variant as 'blue' | 'red')
+  const variant = props.variant
   switch (variant) {
     case 'red':
       return 'link-red'
+    case 'white':
+      return 'link-white'
     case 'blue':
     default:
       return 'link-blue'
@@ -87,11 +89,13 @@ const variantClass = computed(() => {
 
 const decorationClass = computed(() => {
   const decoration = (props.decoration as 'underline' | undefined)
-  const variant = (props.variant as 'blue' | 'red')
+  const variant = props.variant
   if (decoration) {
     switch (variant) {
       case 'red':
         return 'underline underline-offset-2 decoration-red-500'
+      case 'white':
+        return 'underline underline-offset-2 decoration-white'
       case 'blue':
       default:
         return 'underline underline-offset-2 decoration-blue-500'
