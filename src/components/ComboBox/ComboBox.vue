@@ -143,7 +143,7 @@
         </div>
         <SdsScrollArea
           ref="scrollArea"
-          class="max-h-72 [&>button+div]:border-t"
+          class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
         >
           <template
             v-for="s, sindex in suggestionOptions"
