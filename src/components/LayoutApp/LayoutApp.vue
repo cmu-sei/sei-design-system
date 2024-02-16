@@ -618,14 +618,14 @@
           </div>
           <div
             v-if="enableCollapsibleSidebar"
-            class="flex-shrink-0 sticky bottom-0 bg-gray-900"
+            class="flex flex-shrink-0 sticky bottom-0 bg-gray-900"
           >
             <button
               id="btn-collapse-toggle"
               :title="
                 collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
               "
-              class="px-3 ml-auto border-transparent rounded-none tab tab-block tab-dark"
+              class="px-3 ml-auto border-transparent rounded-none btn btn-white btn-ghost"
               :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
               @click="toggleCollapse"
             >

@@ -1515,15 +1515,15 @@
       <template #nav>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 1</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 2</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue active"
+          class="tab tab-pill tab-blue active"
         >Option 3</a>
       </template>
       <div>
