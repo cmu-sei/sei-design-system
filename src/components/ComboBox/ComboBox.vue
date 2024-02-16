@@ -114,7 +114,7 @@
       >
         <div
           v-if="!disableGroupTabs && groups.length > 1"
-          class="overflow-x-auto flex gap-2 p-2 [&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700"
+          class="overflow-x-auto flex gap-2 p-2 border-b border-gray-100 dark:border-gray-700"
         >
           <button
             v-for="group in groups"
@@ -143,7 +143,7 @@
         </div>
         <SdsScrollArea
           ref="scrollArea"
-          class="max-h-72"
+          class="max-h-72 [&>button+div]:border-t"
         >
           <template
             v-for="s, sindex in suggestionOptions"
@@ -151,7 +151,7 @@
           >
             <div
               v-if="optionGroupChildren && s[optionGroupChildren]"
-              class="[&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700 border-t border-gray-100 dark:border-gray-700"
+              class="border-b border-gray-100 dark:border-gray-700"
             >
               <div
                 v-if="activeGroupKey === -1"
