@@ -113,7 +113,7 @@
         class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
-          v-if="groups.length > 1"
+          v-if="!disableGroupTabs && groups.length > 1"
           class="overflow-x-auto flex gap-2 p-2 [&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700"
         >
           <button
@@ -373,7 +373,11 @@ const props = defineProps({
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
-  hideEmptyGroups: { type: Boolean, default: false }
+  hideEmptyGroups: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  disableGroupTabs: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
@@ -655,7 +659,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "left":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
@@ -664,7 +668,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "right":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
