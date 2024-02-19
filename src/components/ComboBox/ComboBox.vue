@@ -702,7 +702,7 @@ const emitUpdateModelValue = () => {
   /**
    * Emmited when the modelValue changes.
    */
-  emit('update:model-value', query.value)
+  emit('update:model-value', removeHtmlFromString(query.value))
 }
 
 const emitResult = (result: any) => {
@@ -716,13 +716,13 @@ const emitComplete = () => {
   /**
    * Emitted when internal query changes.
    */
-  emit('complete', query.value);
+  emit('complete', removeHtmlFromString(query.value));
 }
 
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', query.value)
+  emit('enter', removeHtmlFromString(query.value))
 }
 </script>
