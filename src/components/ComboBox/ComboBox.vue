@@ -401,6 +401,7 @@ const defaultOptionLabel = ref('label')
 
 watch(query, (value) => {
   activeGroupKey.value = -1
+  arrowCounter.value = -1
   filterQuery.value = removeHtmlFromString(value)
   emitComplete()
 })
