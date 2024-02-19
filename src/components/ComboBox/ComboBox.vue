@@ -382,19 +382,25 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
+const removeHtmlFromString = (value: string) => {
+  let div = document.createElement('div')
+  div.innerHTML = value
+  return div.textContent || div.innerText || ''
+}
+
 const root = ref()
 const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const query = ref(props.modelValue)
-const filterQuery = ref(props.modelValue)
+const filterQuery = ref(removeHtmlFromString(props.modelValue))
 const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
 watch(query, (value) => {
   activeGroupKey.value = -1
-  filterQuery.value = value
+  filterQuery.value = removeHtmlFromString(value)
   emitComplete()
 })
 
@@ -534,7 +540,7 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
-  filterQuery.value = query.value
+  filterQuery.value = removeHtmlFromString(query.value)
   showDropdown.value = false
 })
 
@@ -551,7 +557,7 @@ onKeyStroke('/', (e) => {
 })
 
 onClickOutside(root, () => {
-  filterQuery.value = query.value
+  filterQuery.value = removeHtmlFromString(query.value)
   showDropdown.value = false
 })
 
@@ -680,9 +686,9 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     // Set the input boxes text to the value of the result
     const option = getCurrentSuggestion()
     if (option) {
-      filterQuery.value = option
+      filterQuery.value = removeHtmlFromString(option)
     } else {
-      filterQuery.value = query.value
+      filterQuery.value = removeHtmlFromString(query.value)
     }
 
     // Scroll to selected result

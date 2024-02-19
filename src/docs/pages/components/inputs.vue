@@ -98,7 +98,11 @@
           @complete="comboBox.onComplete"
           @result="comboBox.onResult"
           @enter="comboBox.onEnter"
-        />
+        >
+          <template #option="{ label }">
+            <span v-html="label" />
+          </template>
+        </SdsComboBox>
         <SdsComboBox
           v-model="comboBox.modelValue"
           placeholder="Search"
@@ -262,8 +266,8 @@ const comboBox = reactive({
   },
   async onComplete(query: string) {
     comboBox.suggestions = query ? [
-      "Testing 123",
-      { term: "Apple", payload: "test" },
+      "Testing <b>123</b>",
+      { term: "<b>App</b>le", payload: "test" },
       {
         term:
           "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
@@ -274,7 +278,7 @@ const comboBox = reactive({
         label: "Group Label",
         items: [
           { term: "Apple Group", payload: "test" },
-          { term: "Unique to Group", payload: "test" },
+          { term: "<b>Uniqu</b>e to Group", payload: "test" },
           { term: "Banana Group", payload: "test" },
           { term: "Orange Group", payload: "test" },
           { term: "Pineapple Group", payload: "test" },
@@ -289,7 +293,7 @@ const comboBox = reactive({
         items: [
           { term: "Apple Group 2", payload: "test" },
           { term: "Banana Group 2", payload: "test" },
-          { term: "Date Group 2", payload: "test" },
+          { term: "<b>Date</b> Group 2", payload: "test" },
           { term: "Orange Group 2", payload: "test" },
           { term: "Pineapple Group 2", payload: "test" },
           { term: "Grape Group 2", payload: "test" },
