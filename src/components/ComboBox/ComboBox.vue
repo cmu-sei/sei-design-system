@@ -383,6 +383,7 @@ const props = defineProps({
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
+  if (typeof document === 'undefined') return value
   let div = document.createElement('div')
   div.innerHTML = value
   return div.textContent || div.innerText || ''
@@ -393,7 +394,7 @@ const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const query = ref(props.modelValue)
-const filterQuery = ref(removeHtmlFromString(props.modelValue))
+const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
