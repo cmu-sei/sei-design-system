@@ -5,14 +5,16 @@ exports[`Paginator.vue > matches snapshot when currentPage > totalPages - thresh
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2">1</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2">11</button><button class="btn btn-ghost btn-sm py-2" disabled="">12</button><button class="btn btn-ghost btn-sm py-2">13</button><button class="btn btn-ghost btn-sm py-2">14</button><button class="btn btn-ghost btn-sm py-2">15</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 12</span></div>
     <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -24,14 +26,16 @@ exports[`Paginator.vue > matches snapshot when threshold is >= totalPages prop 1
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2" disabled="">1</button><button class="btn btn-ghost btn-sm py-2">2</button><button class="btn btn-ghost btn-sm py-2">3</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 1</span></div>
     <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -43,14 +47,16 @@ exports[`Paginator.vue > matches snapshot with currentPage and totalPages prop a
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2">1</button><button class="btn btn-ghost btn-sm py-2">2</button><button class="btn btn-ghost btn-sm py-2" disabled="">3</button><button class="btn btn-ghost btn-sm py-2">4</button><button class="btn btn-ghost btn-sm py-2">5</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2">10</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 3</span></div>
     <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -62,14 +68,16 @@ exports[`Paginator.vue > matches snapshot with currentPage, threshold, loading, 
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2" disabled="">1</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2" disabled="">13</button><button class="btn btn-ghost btn-sm py-2" disabled="">14</button><button class="btn btn-ghost btn-sm py-2" disabled="">15</button><button class="btn btn-ghost btn-sm py-2" disabled="">16</button><button class="btn btn-ghost btn-sm py-2" disabled="">17</button><button class="btn btn-ghost btn-sm py-2" disabled="">18</button><button class="btn btn-ghost btn-sm py-2" disabled="">19</button><button class="btn btn-ghost btn-sm py-2" disabled="">20</button><button class="btn btn-ghost btn-sm py-2" disabled="">21</button><button class="btn btn-ghost btn-sm py-2" disabled="">22</button><button class="btn btn-ghost btn-sm py-2" disabled="">23</button><button class="btn btn-ghost btn-sm py-2" disabled="">24</button><button class="btn btn-ghost btn-sm py-2" disabled="">25</button><button class="btn btn-ghost btn-sm py-2" disabled="">26</button><button class="btn btn-ghost btn-sm py-2" disabled="">27</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2" disabled="">100</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 20</span></div>
     <div class="ml-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -81,14 +89,16 @@ exports[`Paginator.vue > matches snapshot with loading and totalPages prop assig
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2" disabled="">1</button><button class="btn btn-ghost btn-sm py-2" disabled="">2</button><button class="btn btn-ghost btn-sm py-2" disabled="">3</button><button class="btn btn-ghost btn-sm py-2" disabled="">4</button><button class="btn btn-ghost btn-sm py-2" disabled="">5</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2" disabled="">10</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 1</span></div>
     <div class="ml-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -102,14 +112,16 @@ exports[`Paginator.vue > matches snapshot with threshold and totalPages prop ass
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2" disabled="">1</button><button class="btn btn-ghost btn-sm py-2">2</button><button class="btn btn-ghost btn-sm py-2">3</button><button class="btn btn-ghost btn-sm py-2">4</button><button class="btn btn-ghost btn-sm py-2">5</button><button class="btn btn-ghost btn-sm py-2">6</button><button class="btn btn-ghost btn-sm py-2">7</button><button class="btn btn-ghost btn-sm py-2">8</button><button class="btn btn-ghost btn-sm py-2">9</button><button class="btn btn-ghost btn-sm py-2">10</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2">100</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 1</span></div>
     <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>
@@ -121,14 +133,16 @@ exports[`Paginator.vue > matches snapshot with totalPages prop assigned 1`] = `
   <div class="btn-toolbar" role="toolbar">
     <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="First"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
-        </svg><span>First</span></button><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg><span>First</span></button></div>
+    <div class="mr-2 btn-group"><button disabled="" class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Prev"><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path>
         </svg><span>Prev</span></button></div>
     <div class="hidden btn-group md:block"><button class="btn btn-ghost btn-sm py-2" disabled="">1</button><button class="btn btn-ghost btn-sm py-2">2</button><button class="btn btn-ghost btn-sm py-2">3</button><button class="btn btn-ghost btn-sm py-2">4</button><button class="btn btn-ghost btn-sm py-2">5</button><button class="shadow-none border-transparent btn btn-ghost btn-sm py-2" disabled="">...</button><button class="btn btn-ghost btn-sm py-2">10</button></div>
     <div class="flex md:hidden mx-3"><span class="m-auto text-sm font-semibold">Page 1</span></div>
     <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Next"><span>Next</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path>
-        </svg></button><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        </svg></button></div>
+    <div class="ml-2 btn-group"><button class="flex space-x-1 btn btn-ghost btn-sm py-2" title="Last"><span>Last</span><svg class="w-3 h-3 my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
         </svg></button></div>
   </div>

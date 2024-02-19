@@ -32,6 +32,8 @@
           </svg>
           <span>First</span>
         </button>
+      </div>
+      <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
@@ -103,6 +105,8 @@
             />
           </svg>
         </button>
+      </div>
+      <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
