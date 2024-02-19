@@ -12,12 +12,12 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost btn-sm py-2"
           title="First"
           @click.prevent="goToPage(1, $event)"
         >
           <svg
-            class="w-4 h-4 my-auto"
+            class="w-3 h-3 my-auto"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -30,16 +30,16 @@
               d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
             />
           </svg>
-          <span class="sr-only sm:not-sr-only">First</span>
+          <span>First</span>
         </button>
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost btn-sm py-2"
           title="Prev"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <svg
-            class="w-4 h-4 my-auto"
+            class="w-3 h-3 my-auto"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -52,7 +52,7 @@
               d="M15 19l-7-7 7-7"
             />
           </svg>
-          <span class="sr-only sm:not-sr-only">Prev</span>
+          <span>Prev</span>
         </button>
       </div>
       <div
@@ -68,28 +68,28 @@
               'shadow-none border-transparent': page === '...'
             }"
             :disabled="page === '...' || loading || currentPage === page"
-            class="btn btn-ghost btn-sm"
+            class="btn btn-ghost btn-sm py-2"
             @click.prevent="goToPage(page, $event)"
           >
             {{ page.toLocaleString() }}
           </button>
         </template>
       </div>
-      <div class="block mx-0 currentPageLabelContainer btn-group md:hidden">
-        <span class="inline-block px-3 pt-2 currentPageLabel">
-          Page {{ currentPage.toLocaleString() }}
-        </span>
+      <div class="flex md:hidden mx-3">
+        <span
+          class="m-auto text-sm font-semibold"
+        >Page {{ currentPage.toLocaleString() }}</span>
       </div>
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost btn-sm py-2"
           title="Next"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
-          <span class="sr-only sm:not-sr-only">Next</span>
+          <span>Next</span>
           <svg
-            class="w-4 h-4 my-auto"
+            class="w-3 h-3 my-auto"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -105,13 +105,13 @@
         </button>
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm"
+          class="flex space-x-1 btn btn-ghost btn-sm py-2"
           title="Last"
           @click.prevent="goToPage(totalPages, $event)"
         >
-          <span class="sr-only sm:not-sr-only">Last</span>
+          <span>Last</span>
           <svg
-            class="w-4 h-4 my-auto"
+            class="w-3 h-3 my-auto"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
