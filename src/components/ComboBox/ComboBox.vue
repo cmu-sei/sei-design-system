@@ -396,6 +396,7 @@ const dropdownOption = ref()
 const query = ref(props.modelValue)
 const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
+const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
@@ -412,8 +413,12 @@ watch(showDropdown, () => {
 })
 
 watchDebounced(filterQuery, () => {
-  const suggestions = props.suggestions
-  showDropdown.value = typeof suggestions !== 'undefined' && suggestions.length > 0
+  if (preventShowDropdown.value) {
+    preventShowDropdown.value = false
+  } else {
+    const suggestions = props.suggestions
+    showDropdown.value = typeof suggestions !== 'undefined' && suggestions.length > 0
+  }
 }, { debounce: props.debounceSuggestions })
 
 const reduceList = (arr: any) => {
@@ -541,6 +546,13 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
+  preventShowDropdown.value = true
+  filterQuery.value = removeHtmlFromString(query.value)
+  showDropdown.value = false
+})
+
+onClickOutside(root, () => {
+  preventShowDropdown.value = true
   filterQuery.value = removeHtmlFromString(query.value)
   showDropdown.value = false
 })
@@ -555,11 +567,6 @@ onKeyStroke('/', (e) => {
 
   e.preventDefault()
   inputField.value.focus()
-})
-
-onClickOutside(root, () => {
-  filterQuery.value = removeHtmlFromString(query.value)
-  showDropdown.value = false
 })
 
 const scrollToChild = async () => {
@@ -601,6 +608,7 @@ const clearQuery = () => {
 }
 
 const handleSuggestionClick = (option: any) => {
+  preventShowDropdown.value = true
   query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
   emitUpdateModelValue()
   emitResult(option)
@@ -637,6 +645,7 @@ const handleEnterKeyUp = () => {
   if (dropdownIsOpen.value) {
     const option = getCurrentSuggestion()
     if (option) {
+      preventShowDropdown.value = true
       query.value = getCurrentSuggestionValue()
       emitResult(option)
       emitUpdateModelValue()
