@@ -5,7 +5,10 @@
   >
     <button
       type="button"
-      :class="[isToggled ? 'bg-green-500 disabled:bg-green-200' : 'bg-gray-600 disabled:bg-gray-200', styles.button]"
+      class="disabled:opacity-50 dark:disabled:opacity-100 hover:shadow-md relative inline-flex flex-shrink-0 h-6 w-12 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none disabled:cursor-default disabled:shadow-none"
+      :class="[
+        isToggled ? 'bg-green-600 hover:bg-green-500 disabled:bg-green-200 dark:disabled:bg-green-800' : 'bg-gray-600 hover:bg-gray-500 disabled:bg-gray-200 dark:disabled:bg-gray-800'
+      ]"
       :disabled="disabled"
       role="switch"
       :aria-checked="isToggled"
@@ -13,8 +16,11 @@
     >
       <span
         aria-hidden="true"
-        class="drop-shadow"
-        :class="[isToggled ? 'translate-x-5' : 'translate-x-0', disabled ? 'bg-gray-50' : 'bg-white', styles.switch]"
+        class="pointer-events-none inline-block h-4 w-4 my-0.5 rounded-full transform transition ease-in-out duration-200"
+        :class="[
+          isToggled ? 'translate-x-[1.6rem]' : 'translate-x-[0.125rem]',
+          disabled ? 'bg-gray-50 dark:bg-gray-500' : 'bg-white drop-shadow shadow-lg'
+        ]"
       />
       <span class="sr-only">Toggle switch</span>
     </button>
@@ -44,13 +50,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:model-value'])
-
-const styles = reactive({
-  button:  'hover:shadow-md relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none disabled:bg-gray-700 disabled:bg-opacity-50 disabled:cursor-default disabled:shadow-none',
-  switch:  'pointer-events-none inline-block h-5 w-5 rounded-full shadow-lg transform transition ease-in-out duration-200',
-  offIcon: 'pointer-events-none absolute h-4 w-4 mt-0.5 ml-0.5 transform ring-0 transition ease-in-out duration-400 fill-current text-gray-700',
-  onIcon: 'pointer-events-none absolute h-4 w-4 mt-0.5 ml-0.5 transform ring-0 transition ease-in-out duration-400'
-})
 
 const isToggled = computed({
   get() {

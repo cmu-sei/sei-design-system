@@ -151,6 +151,10 @@
           v-model="toggleSwitch.modelValue"
           :disabled="false"
         />
+        <SdsToggleSwitch
+          v-model="toggleSwitch.modelValue"
+          :disabled="true"
+        />
       </div>
     </div>
   </div>

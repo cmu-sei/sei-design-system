@@ -615,15 +615,21 @@ const getCurrentSuggestion = () => {
     if (props.optionGroupChildren && i[props.optionGroupChildren]) {
       const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
       if (tmp) {
-        option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
+        option = tmp
       }
     } else {
       if (i.index === arrowCounter.value) {
-        option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
+        option = i
       }
     }
   })
   return option
+}
+
+const getCurrentSuggestionValue = () => {
+  const option = getCurrentSuggestion()
+  if (!option) return ''
+  return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
 const handleEnterKeyUp = () => {
@@ -632,7 +638,7 @@ const handleEnterKeyUp = () => {
   if (dropdownIsOpen.value) {
     const option = getCurrentSuggestion()
     if (option) {
-      query.value = option
+      query.value = getCurrentSuggestionValue()
       emitResult(option)
       emitUpdateModelValue()
     }
@@ -688,7 +694,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     // Set the input boxes text to the value of the result
     const option = getCurrentSuggestion()
     if (option) {
-      filterQuery.value = removeHtmlFromString(option)
+      filterQuery.value = removeHtmlFromString(getCurrentSuggestionValue())
     } else {
       filterQuery.value = removeHtmlFromString(query.value)
     }
@@ -702,7 +708,7 @@ const emitUpdateModelValue = () => {
   /**
    * Emmited when the modelValue changes.
    */
-  emit('update:model-value', removeHtmlFromString(query.value))
+  emit('update:model-value', query.value)
 }
 
 const emitResult = (result: any) => {
