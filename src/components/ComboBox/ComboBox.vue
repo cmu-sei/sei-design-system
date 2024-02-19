@@ -56,7 +56,7 @@
         @keyup.enter.prevent.self="handleEnterKeyUp"
       >
       <button
-        v-if="query.length > 0 && !disabled"
+        v-if="filterQuery.length > 0 && !disabled"
         tabindex="-1"
         type="button"
         class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
@@ -411,10 +411,9 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
-watchDebounced(() => props.suggestions, (value) => {
-  if (query.value !== props.modelValue) {
-    showDropdown.value = typeof value !== 'undefined' && value.length > 0
-  }
+watchDebounced(filterQuery, () => {
+  const suggestions = props.suggestions
+  showDropdown.value = typeof suggestions !== 'undefined' && suggestions.length > 0
 }, { debounce: props.debounceSuggestions })
 
 const reduceList = (arr: any) => {
@@ -427,7 +426,7 @@ const reduceList = (arr: any) => {
         acc.push(newItem)
       }
     } else {
-      if (newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value].toLowerCase().includes(query.value.toLowerCase())) {
+      if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value]).toLowerCase().includes(filterQuery.value.toLowerCase())) {
         acc.push(newItem)
       }
     }
