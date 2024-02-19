@@ -170,10 +170,10 @@
                 v-for="c, cindex in s[optionGroupChildren]"
                 :key="`${s}_${c}_${cindex}`"
                 ref="dropdownOption"
-                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                 :class="{
                   'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                  'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
                 }"
                 :data-active="c.index === arrowCounter"
                 type="button"
@@ -193,10 +193,10 @@
             <button
               v-else
               ref="dropdownOption"
-              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
               :class="{
                 'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
+                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
               }"
               :data-active="s.index === arrowCounter"
               type="button"
