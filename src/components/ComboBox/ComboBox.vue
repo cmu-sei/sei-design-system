@@ -426,7 +426,7 @@ const reduceList = (arr: any) => {
         acc.push(newItem)
       }
     } else {
-      if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value]).toLowerCase().includes(filterQuery.value.toLowerCase())) {
+      if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value]).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
         acc.push(newItem)
       }
     }
