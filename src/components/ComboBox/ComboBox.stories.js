@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A combo box is a text field allows users to type in search terms and execute it by clicking the magnifying glass icon.',
+        component: 'A Combo Box is an input field that allows users to perform a simple search or select an item from a list of dynamically filtered options based on their query.',
       },
     },
   },
