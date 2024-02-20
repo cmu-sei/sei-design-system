@@ -393,7 +393,16 @@ const root = ref()
 const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
-const query = ref(props.modelValue)
+
+const query = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value: string) {
+    emit('update:model-value', value)
+  }
+})
+
 const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
 const preventShowDropdown = ref(false)
