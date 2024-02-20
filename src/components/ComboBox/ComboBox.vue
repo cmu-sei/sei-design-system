@@ -399,6 +399,9 @@ const query = computed({
     return props.modelValue
   },
   set(value: string) {
+    /**
+     * Emmited when the modelValue changes.
+     */
     emit('update:model-value', value)
   }
 })
@@ -607,19 +610,17 @@ const scrollToChild = async () => {
 
 const closeDropdownAndFocusInput = () => {
   showDropdown.value = false
-  inputField.value.focus();
+  inputField.value.focus()
 }
 
 const clearQuery = () => {
-  query.value = '';
-  emitUpdateModelValue()
-  inputField.value.focus();
+  query.value = ''
+  inputField.value.focus()
 }
 
 const handleSuggestionClick = (option: any) => {
   preventShowDropdown.value = true
   query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
-  emitUpdateModelValue()
   emitResult(option)
   emitEnter()
   closeDropdownAndFocusInput()
@@ -657,7 +658,6 @@ const handleEnterKeyUp = () => {
       preventShowDropdown.value = true
       query.value = getCurrentSuggestionValue()
       emitResult(option)
-      emitUpdateModelValue()
     }
     closeDropdownAndFocusInput()
   }
@@ -719,13 +719,6 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     // Scroll to selected result
     scrollToChild()
   }
-}
-
-const emitUpdateModelValue = () => {
-  /**
-   * Emmited when the modelValue changes.
-   */
-  emit('update:model-value', query.value)
 }
 
 const emitResult = (result: any) => {
