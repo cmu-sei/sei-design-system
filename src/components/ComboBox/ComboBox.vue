@@ -15,6 +15,7 @@
         class="input-group-text"
         :disabled="disabled"
         tabindex="-1"
+        type="button"
         @click="inputField?.focus()"
       >
         <span class="sr-only">Combo box</span>
