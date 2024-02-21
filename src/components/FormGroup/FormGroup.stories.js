@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Alpha: A Form Group provides structure and labeling for form fields.',
+        component: 'A Form Group provides structure and labeling for form fields.',
       },
     },
   },

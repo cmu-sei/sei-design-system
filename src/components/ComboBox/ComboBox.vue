@@ -15,6 +15,7 @@
         class="input-group-text"
         :disabled="disabled"
         tabindex="-1"
+        type="button"
         @click="inputField?.focus()"
       >
         <span class="sr-only">Combo box</span>
@@ -56,7 +57,7 @@
         @keyup.enter.prevent.self="handleEnterKeyUp"
       >
       <button
-        v-if="query.length > 0 && !disabled"
+        v-if="filterQuery.length > 0 && !disabled"
         tabindex="-1"
         type="button"
         class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
@@ -113,8 +114,8 @@
         class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
-          v-if="groups.length > 1"
-          class="overflow-x-auto flex gap-2 p-2 [&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700"
+          v-if="!disableGroupTabs && groups.length > 1"
+          class="overflow-x-auto flex gap-2 p-2 border-b border-gray-100 dark:border-gray-700"
         >
           <button
             v-for="group in groups"
@@ -141,74 +142,79 @@
             >{{ group.count }}</span>
           </button>
         </div>
-        <template
-          v-for="s, sindex in suggestionOptions"
-          :key="`${s}_${sindex}`"
+        <SdsScrollArea
+          ref="scrollArea"
+          class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
         >
-          <div
-            v-if="optionGroupChildren && s[optionGroupChildren]"
-            class="[&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700 border-t border-gray-100 dark:border-gray-700"
+          <template
+            v-for="s, sindex in suggestionOptions"
+            :key="`${s}_${sindex}`"
           >
             <div
-              v-if="activeGroupKey === -1"
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              v-if="optionGroupChildren && s[optionGroupChildren]"
+              class="border-b border-gray-100 dark:border-gray-700"
             >
-              <!-- @slot Option Group content. Good for customizing the content for each group option -->
-              <slot
-                name="optionGroup"
-                :option="s"
-                :label="optionGroupLabel ? s[optionGroupLabel] : s"
+              <div
+                v-if="activeGroupKey === -1"
+                class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
               >
-                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
-              </slot>
+                <!-- @slot Option Group content. Good for customizing the content for each group option -->
+                <slot
+                  name="optionGroup"
+                  :option="s"
+                  :label="optionGroupLabel ? s[optionGroupLabel] : s"
+                >
+                  {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+                </slot>
+              </div>
+              <button
+                v-for="c, cindex in s[optionGroupChildren]"
+                :key="`${s}_${c}_${cindex}`"
+                ref="dropdownOption"
+                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                :class="{
+                  'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
+                }"
+                :data-active="c.index === arrowCounter"
+                type="button"
+                tabindex="-1"
+                @click="handleSuggestionClick(c)"
+              >
+                <!-- @slot Option content. Good for customizing the content for each option -->
+                <slot
+                  name="option"
+                  :option="c"
+                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                >
+                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                </slot>
+              </button>
             </div>
             <button
-              v-for="c, cindex in s[optionGroupChildren]"
-              :key="`${s}_${c}_${cindex}`"
+              v-else
               ref="dropdownOption"
-              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
               :class="{
-                'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+                'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
               }"
-              :data-active="c.index === arrowCounter"
+              :data-active="s.index === arrowCounter"
               type="button"
               tabindex="-1"
-              @click="handleSuggestionClick(c)"
+              @click="handleSuggestionClick(s)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
               <slot
                 name="option"
-                :option="c"
-                :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                :option="s"
+                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
               >
-                {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
             </button>
-          </div>
-          <button
-            v-else
-            ref="dropdownOption"
-            class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-            :class="{
-              'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-              'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
-            }"
-            :data-active="s.index === arrowCounter"
-            type="button"
-            tabindex="-1"
-            @click="handleSuggestionClick(s)"
-          >
-            <!-- @slot Option content. Good for customizing the content for each option -->
-            <slot
-              name="option"
-              :option="s"
-              :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-            >
-              {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
-            </slot>
-          </button>
-        </template>
+          </template>
+        </SdsScrollArea>
         <!-- Footer section -->
         <div class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
           <div class="ml-auto flex items-center gap-1.5">
@@ -302,6 +308,7 @@
 
 <script setup lang="ts">
 import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 
 defineOptions({
   name: 'SdsComboBox'
@@ -363,23 +370,53 @@ const props = defineProps({
   /**
    * The debounce period before the suggestions are updated.
    */
-  debounceSuggestions: { type: Number, default: 250 }
+  debounceSuggestions: { type: Number, default: 250 },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  hideEmptyGroups: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  disableGroupTabs: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
+const removeHtmlFromString = (value: string) => {
+  if (typeof document === 'undefined') return value
+  let div = document.createElement('div')
+  div.innerHTML = value
+  return div.textContent || div.innerText || ''
+}
+
 const root = ref()
+const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
-const query = ref(props.modelValue)
+
+const query = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value: string) {
+    /**
+     * Emmited when the modelValue changes.
+     */
+    emit('update:model-value', value)
+  }
+})
+
 const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
+const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
 watch(query, (value) => {
   activeGroupKey.value = -1
-  filterQuery.value = value
+  arrowCounter.value = -1
+  filterQuery.value = removeHtmlFromString(value)
   emitComplete()
 })
 
@@ -388,9 +425,12 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
-watchDebounced(() => props.suggestions, (value) => {
-  if (query.value !== props.modelValue) {
-    showDropdown.value = typeof value !== 'undefined' && value.length > 0
+watchDebounced(filterQuery, () => {
+  if (preventShowDropdown.value) {
+    preventShowDropdown.value = false
+  } else {
+    const suggestions = props.suggestions
+    showDropdown.value = typeof suggestions !== 'undefined' && suggestions.length > 0
   }
 }, { debounce: props.debounceSuggestions })
 
@@ -404,7 +444,7 @@ const reduceList = (arr: any) => {
         acc.push(newItem)
       }
     } else {
-      if (newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value].toLowerCase().includes(query.value.toLowerCase())) {
+      if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value]).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
         acc.push(newItem)
       }
     }
@@ -463,7 +503,7 @@ const groups = computed(() => {
         label: i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
         count
       }
-    })
+    }).filter(i => props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 })
 
@@ -519,7 +559,14 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
-  filterQuery.value = query.value
+  preventShowDropdown.value = true
+  filterQuery.value = removeHtmlFromString(query.value)
+  showDropdown.value = false
+})
+
+onClickOutside(root, () => {
+  preventShowDropdown.value = true
+  filterQuery.value = removeHtmlFromString(query.value)
   showDropdown.value = false
 })
 
@@ -535,25 +582,46 @@ onKeyStroke('/', (e) => {
   inputField.value.focus()
 })
 
-onClickOutside(root, () => {
-  filterQuery.value = query.value
-  showDropdown.value = false
-})
+const scrollToChild = async () => {
+  await nextTick()
+  if (!scrollArea.value) return
+  const parent = scrollArea.value.$el
+  if (!parent) return
+  const child = parent.querySelector('[data-active="true"]')
+  if (!child) return
+  const parentRect = parent.getBoundingClientRect()
+  const childRect = child.getBoundingClientRect()
+
+  const isViewable = (childRect.top >= parentRect.top) && (childRect.bottom <= parentRect.top + parent.clientHeight);
+
+  // If you can't see the child try to scroll parent
+  if (!isViewable) {
+    // Should we scroll using top or bottom? Find the smaller ABS adjustment
+    const scrollTop = childRect.top - parentRect.top;
+    const scrollBot = childRect.bottom - parentRect.bottom;
+    if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+      // We're near the top of the list
+      parent.scrollTop += scrollTop
+    } else {
+      // We're near the bottom of the list
+      parent.scrollTop += scrollBot
+    }
+  }
+}
 
 const closeDropdownAndFocusInput = () => {
   showDropdown.value = false
-  inputField.value.focus();
+  inputField.value.focus()
 }
 
 const clearQuery = () => {
-  query.value = '';
-  emitUpdateModelValue()
-  inputField.value.focus();
+  query.value = ''
+  inputField.value.focus()
 }
 
 const handleSuggestionClick = (option: any) => {
+  preventShowDropdown.value = true
   query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
-  emitUpdateModelValue()
   emitResult(option)
   emitEnter()
   closeDropdownAndFocusInput()
@@ -565,15 +633,21 @@ const getCurrentSuggestion = () => {
     if (props.optionGroupChildren && i[props.optionGroupChildren]) {
       const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
       if (tmp) {
-        option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
+        option = tmp
       }
     } else {
       if (i.index === arrowCounter.value) {
-        option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
+        option = i
       }
     }
   })
   return option
+}
+
+const getCurrentSuggestionValue = () => {
+  const option = getCurrentSuggestion()
+  if (!option) return ''
+  return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
 const handleEnterKeyUp = () => {
@@ -582,9 +656,9 @@ const handleEnterKeyUp = () => {
   if (dropdownIsOpen.value) {
     const option = getCurrentSuggestion()
     if (option) {
-      query.value = option
+      preventShowDropdown.value = true
+      query.value = getCurrentSuggestionValue()
       emitResult(option)
-      emitUpdateModelValue()
     }
     closeDropdownAndFocusInput()
   }
@@ -617,7 +691,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "left":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
@@ -626,7 +700,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "right":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
@@ -638,18 +712,14 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     // Set the input boxes text to the value of the result
     const option = getCurrentSuggestion()
     if (option) {
-      filterQuery.value = option
+      filterQuery.value = removeHtmlFromString(getCurrentSuggestionValue())
     } else {
-      filterQuery.value = query.value
+      filterQuery.value = removeHtmlFromString(query.value)
     }
-  }
-}
 
-const emitUpdateModelValue = () => {
-  /**
-   * Emmited when the modelValue changes.
-   */
-  emit('update:model-value', query.value)
+    // Scroll to selected result
+    scrollToChild()
+  }
 }
 
 const emitResult = (result: any) => {
@@ -663,13 +733,13 @@ const emitComplete = () => {
   /**
    * Emitted when internal query changes.
    */
-  emit('complete', query.value);
+  emit('complete', removeHtmlFromString(query.value));
 }
 
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', query.value)
+  emit('enter', removeHtmlFromString(query.value))
 }
 </script>

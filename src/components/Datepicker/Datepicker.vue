@@ -171,6 +171,8 @@
 
 <script setup lang="ts">
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
+import SdsCalendar from '../Calendar/Calendar.vue'
+
 import { parse } from 'date-fns/parse'
 import { format } from 'date-fns/format'
 import { isValid } from 'date-fns/isValid'

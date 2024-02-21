@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NavigationItem.vue > matches snapshot 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <!--v-if-->
+  <button
+    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent"
+    data-id="sds-navigationitem"
+    data-type="simple"
+    id="sds-navigationitem"
+    role="menuitem"
+    tabindex="0"
+  >
+    <!--v-if-->
+    
+    <!--v-if-->
+    
+    <!--v-if-->
+  </button>
+  <!--v-if-->
+  <!--v-if-->
+  
+</div>
+`;
+
+exports[`NavigationItem.vue > matches snapshot with no props assigned 1`] = `
+"<!--v-if-->
+<button id="sds-navigationitem" data-id="sds-navigationitem" data-type="simple" class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent" tabindex="0" role="menuitem">
+  <!--v-if-->
+  <!--v-if-->
+  <!--v-if-->
+</button>
+<!--v-if-->
+<!--v-if-->"
+`;

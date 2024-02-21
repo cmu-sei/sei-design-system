@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A button allows users to expand or collapse a list of items.',
+        component: 'An Expand Collapse allows users to show or hide content with a single click to help manage the amount of content on the page.',
       },
     },
   },

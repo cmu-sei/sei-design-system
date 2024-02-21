@@ -20,7 +20,7 @@ const Template = (args) => ({
   },
   template: `
     <div>
-      <sds-scrollspy v-bind="args" class="nav-group" />
+      <sds-scrollspy v-bind="args" class="tab-group" />
       <div id="scrollspy-parent" class="scroll-area h-96 mb-4 border p-4">
         <p
           id="scrollspy-test"
@@ -92,7 +92,7 @@ Default.args = {
     { id: 'scrollspy-test-5', text: 'Heading 5' }
   ],
   parent: "#scrollspy-parent",
-  itemClass: "nav nav-primary nav-underline",
+  itemClass: "tab tab-red tab-underline",
   activeClass: "active"
 };
 

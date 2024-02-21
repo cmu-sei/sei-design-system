@@ -1156,7 +1156,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dropdown-list-item.active {
-  background: theme("colors.gray.100");
+  background: theme("colors.gray.50");
   color: theme("colors.black");
 }
 
@@ -1222,7 +1222,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .tag-list-item .remove {
-  color: theme("colors.gray.100");
+  color: theme("colors.gray.50");
 }
 
 .tag-list-item .remove:hover,

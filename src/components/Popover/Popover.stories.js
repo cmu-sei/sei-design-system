@@ -40,7 +40,7 @@ const Template = (args) => ({
     <div class="p-48 text-center">
       <sds-popover v-model="localValue" v-bind="args" @open="onOpen" @close="onClose" @before-open="onBeforeOpen" @before-close="onBeforeClose">
         <template #trigger>
-          <button class="btn btn-default" @click="onClick">I have a popover</button>
+          <button class="btn btn-secondary" @click="onClick">I have a popover</button>
         </template>
         <template #default="{ close }">
           <div class="sm:flex sm:items-start">
@@ -62,7 +62,7 @@ const Template = (args) => ({
             <button type="button" class="btn btn-primary ml-2 text-sm">
              View Details
             </button>
-            <button type="button" class="btn btn-default text-sm" @click="close">
+            <button type="button" class="btn btn-ghost text-sm" @click="close">
               Cancel
             </button>
           </div>

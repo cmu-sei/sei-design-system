@@ -276,7 +276,7 @@
         Variants include: <code>.btn-secondary</code>, <code>.btn-white</code>,
         <code>.btn-black</code>, <code>.btn-blue</code>,
         <code>.btn-green</code>, <code>.btn-indigo</code>,
-        <code>.btn-orange</code>, <code>.btn-pink</code>,
+        <code>.btn-orange</code>,
         <code>.btn-purple</code>, <code>.btn-red</code>,
         <code>.btn-teal</code>,
         <code>.btn-yellow</code>
@@ -494,12 +494,6 @@
           class="btn btn-orange"
         >
           Orange
-        </button>
-        <button
-          disabled
-          class="btn btn-pink"
-        >
-          Pink
         </button>
         <button
           disabled

@@ -35,8 +35,10 @@ import SdsLoadingSkeleton from "./LoadingSkeleton";
 import SdsLoadingSpinner from "./LoadingSpinner";
 import SdsMegaMenu from "./MegaMenu";
 import SdsMegaMenuItem from "./MegaMenuItem";
+import SdsMobileMenu from "./MobileMenu";
 import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
+import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
 import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
@@ -95,8 +97,10 @@ const Components: ComponentList = {
   SdsLoadingSpinner,
   SdsMegaMenu,
   SdsMegaMenuItem,
+  SdsMobileMenu,
   SdsModal,
   SdsMultiselect,
+  SdsNavigationItem,
   SdsPaginator,
   SdsPanel,
   SdsPopover,
@@ -159,8 +163,10 @@ export { default as SdsLoadingSkeleton } from "./LoadingSkeleton";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";
 export { default as SdsMegaMenu } from "./MegaMenu";
 export { default as SdsMegaMenuItem } from "./MegaMenuItem";
+export { default as SdsMobileMenu } from "./MobileMenu";
 export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
+export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
 export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
