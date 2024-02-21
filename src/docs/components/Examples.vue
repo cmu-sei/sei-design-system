@@ -741,7 +741,7 @@
           size="sm"
           placement="top-left"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
@@ -750,7 +750,7 @@
           size="sm"
           placement="top-right"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
@@ -759,16 +759,20 @@
           size="sm"
           placement="bottom-left"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
           variant="orange"
+          size="lg"
           placement="top-right"
           status="This is awesome"
         >
-          <SdsButton variant="primary">
+          <SdsButton
+            kind="primary"
+            size="lg"
+          >
             Cool
           </SdsButton>
         </SdsIndicator>

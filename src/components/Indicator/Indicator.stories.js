@@ -12,10 +12,6 @@ export default {
   },
   component: SdsIndicator,
   argTypes: {
-    darkSurface: {
-      options: ['darkest', 'darker', 'dark'],
-      control: { type: 'select' }
-    },
     placement: {
       options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
       control: { type: 'select' }
@@ -26,10 +22,6 @@ export default {
     },
     size: {
       options: ['sm', 'md', 'lg'],
-      control: { type: 'select' }
-    },
-    surface: {
-      options: ['darkest', 'darker', 'dark', 'light', 'lighter', 'lightest'],
       control: { type: 'select' }
     },
     variant: {
@@ -60,7 +52,6 @@ Default.args = {
   placement: 'bottom-right',
   placementOver: 'circle',
   size: 'lg',
-  surface: 'lightest',
   variant: 'green'
 };
 
