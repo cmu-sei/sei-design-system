@@ -56,7 +56,7 @@
       </span>
     </slot>
     <div
-      v-if="['slide', 'expand'].includes(type) && $slots.children"
+      v-if="(type === 'expand' && $slots.children) || type === 'slide'"
       class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100"
     >
       <svg
