@@ -10,7 +10,7 @@
         v-if="!hideIndicator"
         role="status"
         class="absolute rounded-full"
-        :class="[darkSurfaceClass, placementClass, sizeClass, surfaceClass, variantClass]"
+        :class="[placementClass, sizeClass, variantClass]"
       >
         <span
           v-if="status"
@@ -27,13 +27,6 @@ defineOptions({
 })
 
 const props = defineProps({
-  /**
-   * Background (border) color for the indicator in dark mode
-   */
-  darkSurface: {
-    type: String as PropType<'darkest' | 'darker' | 'dark'>,
-    default: 'dark'
-  },
   /**
    * Determines whether to display the indicator or not.
    */
@@ -66,13 +59,6 @@ const props = defineProps({
    */
   status: {
     type: String, default: null
-  },
-  /**
-   * Background (border) color for the indicator in light mode
-   */
-  surface: {
-    type: String as PropType<'darkest' | 'darker' | 'dark' | 'light' | 'lighter' | 'lightest'>,
-    default: 'lightest'
   },
   /**
    * Determines the color of the component.
@@ -126,54 +112,12 @@ const placementClass = computed(() => {
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'h-3 w-3 border'
+      return 'h-3 w-3'
     case 'lg':
-      return 'h-10 w-10 border-4'
+      return 'h-10 w-10'
     case 'md':
     default:
-      return 'h-4 w-4 border-2'
-  }
-})
-
-const surfaceClass = computed(() => {
-  switch(props.surface) {
-    case "darkest":
-      return "border-black"
-    case "darker":
-      return "border-gray-950"
-    case "dark":
-      return "border-gray-900"
-    case "light":
-      return "border-gray-50"
-    case "lighter":
-      return "border-gray-25"
-    case "lightest":
-    default:
-      return "border-white"
-  }
-})
-
-const darkSurfaceClass = computed(() => {
-  if (!props.darkSurface) {
-    switch(props.surface) {
-      case "lightest":
-        return "dark:border-black"
-      case "lighter":
-        return "dark:border-gray-950"
-      case "light":
-      default:
-        return "dark:border-gray-900"
-    }
-  } else {
-    switch(props.darkSurface) {
-      case "darkest":
-        return "dark:border-black"
-      case "darker":
-        return "dark:border-gray-950"
-      case "dark":
-      default:
-        return "dark:border-gray-900"
-    }
+      return 'h-4 w-4'
   }
 })
 
@@ -192,4 +136,96 @@ const variantClass = computed(() => {
       return 'bg-blue-500 dark:bg-blue-300'
   }
 })
+
+const maskSpec = computed(() => {
+  let vbWidth = 1000
+  let vbHeight = 1000
+
+  let maskX = 0
+  let maskY = 0
+
+  let maskRadius = 0
+  let offset = 0
+
+  switch (props.size) {
+    case 'sm':
+      offset = props.placementOver === 'circle' ? 0 : -2
+      maskRadius = 8
+      break
+    case 'md':
+      offset = props.placementOver === 'circle' ? -1 : -4
+      maskRadius = 11
+      break
+    case 'lg':
+      offset = props.placementOver === 'circle' ? 1 : -2
+      maskRadius = 25
+      break
+  }
+
+  if (props.placementOver === 'circle') {
+    switch (props.placement) {
+      case 'top-left':
+        maskX = maskRadius + offset
+        maskY = maskRadius + offset
+        break
+      case 'top-right':
+        maskX = vbWidth - maskRadius - offset
+        maskY = maskRadius + offset
+        break
+      case 'bottom-right':
+        maskX = vbWidth - maskRadius - offset
+        maskY = vbHeight - maskRadius - offset
+        break
+      case 'bottom-left':
+        maskX = maskRadius + offset
+        maskY = vbHeight - maskRadius - offset
+    }
+  } else {
+    switch (props.placement) {
+      case 'top-left':
+        maskX = maskRadius/2 + offset
+        maskY = maskRadius/2 + offset
+        break
+      case 'top-right':
+        maskX = vbWidth - maskRadius/2 - offset
+        maskY = maskRadius/2 + offset
+        break
+      case 'bottom-right':
+        maskX = vbWidth - maskRadius/2 - offset
+        maskY = vbHeight - maskRadius/2 - offset
+        break
+      case 'bottom-left':
+        maskX = maskRadius/2 + offset
+        maskY = vbHeight - maskRadius/2 - offset
+    }
+  }
+
+  return `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
+})
+
+const maskAlign = computed(() => {
+  switch (props.placement) {
+    case 'top-left':
+      return '0 0'
+    case 'top-right':
+      return '100% 0'
+    case 'bottom-right':
+      return '100% 100%'
+    case 'bottom-left':
+      return '0 100%'
+  }
+})
 </script>
+
+<style scoped>
+:slotted(div[data-id="sds-avatar"]),
+:slotted(.btn) {
+  mask: v-bind('maskSpec');
+  mask-clip: no-clip;
+  mask-repeat: no-repeat;
+  mask-composite: exclude;
+  mask-position: v-bind('maskAlign');
+  mask-origin: border-box;
+  mask-size: 1000px 1000px;
+}
+</style>
