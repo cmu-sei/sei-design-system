@@ -728,8 +728,8 @@
           <SdsAvatar name="Jason Shimkoski" />
         </SdsIndicator>
         <SdsIndicator
-          size="lg"
-          placement="bottom-right"
+          size="sm"
+          placement="bottom-left"
         >
           <SdsAvatar
             name="Jason Shimkoski"
@@ -738,11 +738,11 @@
         </SdsIndicator>
         <SdsIndicator
           variant="green"
-          size="sm"
-          placement="top-left"
+          size="md"
+          placement="top-right"
         >
-          <SdsButton kind="primary">
-            Cool
+          <SdsButton size="lg" kind="primary">
+            Cool Super long text
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
@@ -756,8 +756,8 @@
         </SdsIndicator>
         <SdsIndicator
           variant="teal"
-          size="sm"
-          placement="bottom-left"
+          size="md"
+          placement="top-right"
         >
           <SdsButton kind="primary">
             Cool
@@ -766,7 +766,7 @@
         <SdsIndicator
           variant="orange"
           size="lg"
-          placement="top-right"
+          placement="top-left"
           status="This is awesome"
         >
           <SdsButton

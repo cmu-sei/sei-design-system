@@ -203,52 +203,6 @@ const maskSpec = computed(() => {
   return `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
 })
 
-const buttonMaskSpec = computed(() => {
-  let vbWidth = 1000
-  let vbHeight = 1000
-
-  let maskX = 0
-  let maskY = 0
-
-  let maskRadius = 0
-  let offset = 0
-
-  switch (props.size) {
-    case 'sm':
-      offset = -6
-      maskRadius = 8
-      break
-    case 'md':
-      offset = -8
-      maskRadius = 10.5
-      break
-    case 'lg':
-      offset = -14
-      maskRadius = 24
-      break
-  }
-
-  switch (props.placement) {
-    case 'top-left':
-      maskX = maskRadius + offset
-      maskY = maskRadius + offset
-      break
-    case 'top-right':
-      maskX = vbWidth - maskRadius - offset
-      maskY = maskRadius + offset
-      break
-    case 'bottom-right':
-      maskX = vbWidth - maskRadius - offset
-      maskY = vbHeight - maskRadius - offset
-      break
-    case 'bottom-left':
-      maskX = maskRadius + offset
-      maskY = vbHeight - maskRadius - offset
-  }
-
-  return `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
-})
-
 const maskAlign = computed(() => {
   switch (props.placement) {
     case 'top-left':
@@ -264,14 +218,9 @@ const maskAlign = computed(() => {
 </script>
 
 <style scoped>
-:slotted(div[data-id="sds-avatar"]) {
-  mask: v-bind('maskSpec');
-}
-:slotted(.btn) {
-  mask: v-bind('buttonMaskSpec');
-}
 :slotted(div[data-id="sds-avatar"]),
 :slotted(.btn) {
+  mask: v-bind('maskSpec');
   mask-clip: no-clip;
   mask-repeat: no-repeat;
   mask-composite: exclude;
