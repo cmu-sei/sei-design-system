@@ -18,7 +18,7 @@
         aria-hidden="true"
         class="pointer-events-none inline-block h-4 w-4 my-0.5 rounded-full transform transition ease-in-out duration-200"
         :class="[
-          isToggled ? 'translate-x-[1.6rem]' : 'translate-x-[0.125rem]',
+          isToggled ? 'translate-x-[1.375rem]' : 'translate-x-[0.125rem]',
           disabled ? 'bg-gray-50 dark:bg-gray-500' : 'bg-white drop-shadow shadow-lg'
         ]"
       />
