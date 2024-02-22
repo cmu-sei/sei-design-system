@@ -741,7 +741,10 @@
           size="md"
           placement="top-right"
         >
-          <SdsButton size="lg" kind="primary">
+          <SdsButton
+            size="lg"
+            kind="primary"
+          >
             Cool Super long text
           </SdsButton>
         </SdsIndicator>
