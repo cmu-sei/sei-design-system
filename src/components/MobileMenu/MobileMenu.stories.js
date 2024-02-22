@@ -13,7 +13,7 @@ export default {
         iframeHeight: 675
       },
       description: {
-        component: 'Beta: A Mobile Menu is a compact container for global navigation links on mobile or tablet sized screens and devices.'
+        component: 'A Mobile Menu is a compact container for global navigation links on mobile or tablet sized screens and devices.'
       }
     }
   },
