@@ -5,9 +5,9 @@
   >
     <button
       type="button"
-      class="disabled:opacity-50 dark:disabled:opacity-100 hover:shadow-md relative inline-flex flex-shrink-0 h-6 w-12 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none disabled:cursor-default disabled:shadow-none"
+      class="disabled:opacity-50 dark:disabled:opacity-100 hover:shadow-md relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none disabled:cursor-default disabled:shadow-none"
       :class="[
-        isToggled ? 'bg-green-600 hover:bg-green-500 disabled:bg-green-200 dark:disabled:bg-green-800' : 'bg-gray-600 hover:bg-gray-500 disabled:bg-gray-200 dark:disabled:bg-gray-800'
+        isToggled ? 'bg-green-500 disabled:bg-green-200 dark:disabled:bg-green-800' : 'bg-gray-700 disabled:bg-gray-200 dark:disabled:bg-gray-800'
       ]"
       :disabled="disabled"
       role="switch"
