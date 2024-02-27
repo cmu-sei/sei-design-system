@@ -7,7 +7,6 @@ exports[`Select > should match its default snapshot 1`] = `
 >
   <option
     disabled=""
-    value=""
   />
   
   <option
