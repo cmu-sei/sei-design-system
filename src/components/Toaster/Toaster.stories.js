@@ -24,7 +24,7 @@ const Template = (args) => ({
   },
   template: `
     <div>
-      <button class="btn btn-default" @click="addToast">Add Toast</button>
+      <button class="btn btn-secondary" @click="addToast">Add Toast</button>
       <sds-toaster v-bind="args" v-model="localValue" />
     </div>
   `,
@@ -44,25 +44,25 @@ const Template = (args) => ({
           id: Math.random(),
           title: "Success Toast",
           text: "This is the content of this toast.",
-          variant: "success",
+          type: "success",
         },
         {
           id: Math.random(),
           title: "Info Toast",
           text: "This is the content of this toast.",
-          variant: "info",
+          type: "info",
         },
         {
           id: Math.random(),
           title: "Warning Toast",
           text: "This is the content of this toast.",
-          variant: "warning",
+          type: "warning",
         },
         {
           id: Math.random(),
           title: "Danger Toast",
           text: "This is the content of this toast.",
-          variant: "danger",
+          type: "danger",
           noAutoHide: true,
         },
       ];

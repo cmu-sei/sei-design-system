@@ -2,6 +2,8 @@
   <div
     data-id="sds-avatar"
     :class="['inline-flex items-center justify-center', variantClass, sizeClass, shapeClass]"
+    role="img"
+    :aria-label="name || 'Avatar'"
   >
     <div
       v-if="src"
@@ -11,9 +13,8 @@
     />
     <span
       v-else
-      role="img"
       :title="name"
-      :class="['leading-none text-black cursor-default uppercase', textClass]"
+      :class="['leading-none text-black cursor-default uppercase', textClass, variantClass]"
     >
       {{ initials }}
     </span>
@@ -21,8 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import {computed, PropType} from 'vue'
-
 defineOptions({
   name: 'SdsAvatar'
 })
@@ -137,7 +136,14 @@ const shapeClass = computed(() => {
 })
 
 const variantClass = computed(() => {
-  const colorOptions = ['bg-gray-200', 'bg-red-200', 'bg-yellow-200', 'bg-green-200', 'bg-blue-200', 'bg-purple-200']
+  const colorOptions = [
+    'bg-gray-100 dark:text-gray-400 dark:bg-gray-900', 
+    'bg-red-100 dark:text-red-500 dark:bg-red-900', 
+    'bg-yellow-25 dark:text-yellow-400 dark:bg-yellow-900', 
+    'bg-green-50 dark:text-green-400 dark:bg-green-900', 
+    'bg-blue-50 dark:text-blue-400 dark:bg-blue-900', 
+    'bg-purple-100 dark:text-purple-400 dark:bg-purple-900'
+  ]
   if (props.variant && props.variant !== 'random') {
     return colorOptions.filter((color) => color.includes(props.variant))[0]
   } else {

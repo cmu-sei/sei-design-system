@@ -18,7 +18,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       class="flex gap-2"
     >
       <label
-        class="btn btn-default cursor-pointer z-10"
+        class="btn btn-secondary cursor-pointer z-10"
       >
         Browse
       </label>
@@ -45,7 +45,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       </span>
     </div>
     <p
-      class="text-gray-600 dark:text-gray-500 text-sm"
+      class="text-gray-600 dark:text-gray-400 text-sm"
     >
       Use a file under 10 MB.
     </p>

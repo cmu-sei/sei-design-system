@@ -17,11 +17,11 @@
                 ref="button"
                 v-uid
                 type="button"
-                class="ml-auto mt-auto btn border-2 border-gray-50 rounded-lg p-4 pointer-events-auto"
+                class="ml-auto mt-auto btn btn-primary border-2 border-gray-50 dark:border-gray-950 rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'btn-primary': localVariant === 'blue',
-                  'btn-danger': localVariant === 'red',
+                  'btn-blue': localVariant === 'blue',
+                  'btn-red': localVariant === 'red',
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
@@ -157,22 +157,18 @@
   </client-only>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
-import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
+import ClientOnly from '../ClientOnly/ClientOnly.vue'
+import SdsIndicator from '../Indicator/Indicator.vue'
 
-export default {
+defineOptions({
   name: 'SdsFloatingActionButton',
   directives: {
     uid: Uid
   }
-}
-</script>
-
-<script setup lang="ts">
-import { PropType, ref, computed, watch } from 'vue'
-import SdsIndicator from '../Indicator/Indicator.vue'
+})
 
 const props = defineProps({
   /**
@@ -196,13 +192,9 @@ const props = defineProps({
   },
   /**
    * Determines the color of the component.
-   * 
-   * **Deprecated**: Use of theme colors (primary, danger, etc) will be removed in 3.0.
-   * 
-   * @deprecated since version 2.12.
    */
   variant: {
-    type: String as PropType<'primary' | 'danger' | 'blue' | 'red'>,
+    type: String as PropType<'blue' | 'red'>,
     default: 'blue'
   },
   /**
@@ -223,7 +215,7 @@ const props = defineProps({
 const emit = defineEmits(['update:model-value', 'open', 'close'])
 
 const localVariant = computed<'blue' | 'red'>(() => {
-  return props.variant === 'primary' || props.variant === 'blue' ? 'blue' : 'red'
+  return props.variant
 })
 
 const tabs = computed({

@@ -21,10 +21,6 @@ export default {
       options: ['primary', 'secondary'],
       control: { type: 'select' }
     },
-    variant: {
-      options: ['', 'primary', 'secondary'],
-      control: { type: 'select' }
-    },
     zIndex: {
       options: ['0', '10', '20', '30', '40', '50', 'auto'],
       control: {type: 'select'}

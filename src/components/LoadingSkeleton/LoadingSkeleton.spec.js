@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-import Component from "./LoadingBox.vue";
+import Component from "./LoadingSkeleton.vue";
 
 
-describe("LoadingBox.vue", () => {
+describe("LoadingSkeleton.vue", () => {
   it("is a Vue instance", () => {
     const wrapper = shallowMount(Component);
     expect(wrapper.vm).toBeTruthy();

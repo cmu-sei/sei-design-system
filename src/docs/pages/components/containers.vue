@@ -6,7 +6,7 @@
       </h2>
       <div>
         <SdsButton
-          variant="default"
+          kind="secondary"
           @click="showModal = !showModal"
         >
           Launch a modal
@@ -14,9 +14,11 @@
         <SdsModal
           v-model="showModal"
           size="md"
+          title="Prop title"
+          hide-header
         >
           <template #title>
-            Modal title
+            Slotted title
           </template>
           <p>Main content</p>
           <template #footer>
@@ -31,7 +33,7 @@
       </h2>
       <div>
         <SdsButton
-          variant="default"
+          kind="secondary"
           @click="showPanel = !showPanel"
         >
           Launch a panel

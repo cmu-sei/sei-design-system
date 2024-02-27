@@ -2,10 +2,10 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Loading Box
+        Loading Skeleton
       </h2>
       <div>
-        <SdsLoadingBox
+        <SdsLoadingSkeleton
           height="h-48"
           width="w-1/5"
         />
@@ -25,7 +25,7 @@
       </h2>
       <div>
         <SdsButton
-          kind="default"
+          kind="secondary"
           @click="addToast()"
         >
           Generate a toast
@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref<{ id: number; title: string; text: string; variant: string; }[]>([])
+const modelValue = ref<{ id: number; title: string; text: string; type: string; }[]>([])
 
 const addToast = () => {
   const index = Math.floor(Math.random() * Math.floor(4));
@@ -48,25 +48,25 @@ const addToast = () => {
       id: Math.random(),
       title: "Success Toast",
       text: "This is the content of this toast.",
-      variant: "success",
+      type: "success",
     },
     {
       id: Math.random(),
       title: "Info Toast",
       text: "This is the content of this toast.",
-      variant: "info",
+      type: "info",
     },
     {
       id: Math.random(),
       title: "Warning Toast",
       text: "This is the content of this toast.",
-      variant: "warning",
+      type: "warning",
     },
     {
       id: Math.random(),
       title: "Danger Toast",
       text: "This is the content of this toast.",
-      variant: "danger",
+      type: "danger",
       noAutoHide: true,
     },
   ];

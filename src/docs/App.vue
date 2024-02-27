@@ -52,7 +52,7 @@
     </template>
     <template #page-header>
       <sds-button
-        variant="default"
+        kind="secondary"
         @click="toggleDarkMode"
       >
         <svg

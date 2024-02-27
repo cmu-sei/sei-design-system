@@ -24,11 +24,7 @@ export default {
       options: ['sm', 'md', 'lg', 'xl', 'auto'],
       control: { type: 'select' }
     },
-    kind: {
-      options: ['dark', 'light'],
-      control: {type: 'select'}
-    },
-    variant: {
+    type: {
       options: ['dark', 'light'],
       control: {type: 'select'}
     },
@@ -48,7 +44,7 @@ const Template = (args) => ({
     <div class="p-48">
       <sds-tooltip v-model="localValue" v-bind="args" @open="onOpen" @close="onClose" @before-open="onBeforeOpen" @before-close="onBeforeClose">
         <template #trigger>
-          <button class="btn btn-default" @click="onClick">I have a tooltip</button>
+          <button class="btn btn-secondary" @click="onClick">I have a tooltip</button>
         </template>
         <p>Lorem ipsum dolor.</p>
       </sds-tooltip>

@@ -26,33 +26,35 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: 'SdsLayoutStacked',
-  props: {
-    /**
-     * Determines whether to make the header sticky or not.
-     */
-    stickyHeader: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Determines whether to make the footer sticky or not.
-     */
-    stickyFooter: {
-      type: Boolean,
-      default: false,
-    },
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsLayoutStacked'
+})
+
+defineProps({
+  /**
+   * Determines whether to make the header sticky or not.
+   */
+  stickyHeader: {
+    type: Boolean,
+    default: false,
   },
-  computed: {
-    hasHeaderSlot(): Boolean {
-      return !!this.$slots.header;
-    },
-    hasFooterSlot(): Boolean {
-      return !!this.$slots.footer;
-    },
+  /**
+   * Determines whether to make the footer sticky or not.
+   */
+  stickyFooter: {
+    type: Boolean,
+    default: false,
   },
-});
+})
+
+const slots = useSlots()
+
+const hasHeaderSlot = computed<Boolean>(() => {
+  return !!slots.header;
+})
+
+const hasFooterSlot = computed<Boolean>(() => {
+  return !!slots.footer;
+})
 </script>

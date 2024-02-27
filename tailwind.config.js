@@ -1,6 +1,8 @@
-module.exports = {
+import sdsBaseConfig from '@sds/tailwindcss-3'
+
+export default {
   presets: [
-    require('@sds/tailwindcss-3')
+    sdsBaseConfig
   ],
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   safelist: [

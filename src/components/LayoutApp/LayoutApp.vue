@@ -57,7 +57,7 @@
             >{{ appSuite }}</span>
             <span
               v-if="appName && !hideAppNameInMobileHeader"
-              class="text-sm text-left font-bold text-gray-200 overflow-ellipsis text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
+              class="text-sm text-left font-bold text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
               :class="[appSuite ? 'ml-1' : '']"
             >{{ appName }}</span>
           </span>
@@ -618,14 +618,14 @@
           </div>
           <div
             v-if="enableCollapsibleSidebar"
-            class="flex-shrink-0 sticky bottom-0 bg-gray-900"
+            class="flex flex-shrink-0 sticky bottom-0 bg-gray-900"
           >
             <button
               id="btn-collapse-toggle"
               :title="
                 collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
               "
-              class="px-3 ml-auto border-transparent rounded-none tab tab-block tab-dark"
+              class="px-3 ml-auto border-transparent rounded-none btn btn-white btn-ghost"
               :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
               @click="toggleCollapse"
             >
@@ -659,7 +659,7 @@
 
       <!-- Main content -->
       <div class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950">
+        <main class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
@@ -746,11 +746,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
-import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
+import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 interface LayoutAppSidebarNavItem {
   id: number | string
@@ -762,236 +761,247 @@ interface LayoutAppSidebarNavItem {
   items?: LayoutAppSidebarNavItem[]
 }
 
-export default defineComponent({
-  name: 'SdsLayoutApp',
-  components: {
-    SdsLink,
-    SdsTooltip,
-  },
-  props: {
-    /**
-     * The v-model that determines collapsed state.
-     */
-    modelValue: { type: Boolean, default: false },
-    /**
-     * The width class of the non-collapsed sidebar when not in a mobile responsive view.
-     */
-    sidebarWidth: { type: String, default: 'w-72' },
-    /**
-     * Determines whether to enable collapsing functionality.
-     *
-     * Ensure to have an icon for every item in the **sidebarNavigationItems** array for this to look nice.
-     *
-     * Including an **appIconUrl** will also improve the user experience.
-     */
-    enableCollapsibleSidebar: { type: Boolean, default: false },
-    /**
-     * The app suite name's prefix (styled in red) for the layout.
-     */
-    appSuitePrefix: { type: String, default: 'SEI' },
-    /**
-     * The app suite name for the layout.
-     */
-    appSuite: { type: String, default: null },
-    /**
-     * The app suite url for the layout.
-     */
-    appSuiteUrl: { type: String, default: null },
-    /**
-     * The app name for the layout.
-     */
-    appName: { type: String, default: null },
-    /**
-     * The app url for the layout.
-     */
-    appUrl: { type: String, default: null },
-    /**
-     * Determines whether to hide the **appName** in the mobile header.
-     *
-     * This is useful when an application's name is very long.
-     */
-    hideAppNameInMobileHeader: { type: Boolean, default: false },
-    /**
-     * The app icon url for the layout.
-     */
-    appIconUrl: { type: String, default: null },
-    /**
-     * The page title for the layout.
-     */
-    pageTitle: { type: String, default: null },
-    /**
-     * Determines whether to hide the page header.
-     */
-    hidePageHeader: { type: Boolean, default: false },
-    /**
-     * The sidebar navigation array for the layout.
-     *
-     * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
-     *
-     * Item object:
-     *
-     * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
-     */
-    sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
-    /**
-     * Determines whether to hide the app icon.
-     */
-    hideAppIcon: { type: Boolean, default: false },
-    /**
-     * Determines whether to hide the icons in the sidebar.
-     */
-    hideSidebarIcons: { type: Boolean, default: false },
-  },
-  emits: ['update:modelValue', 'navigate'],
-  data() {
-    return {
-      showMobileMenu: false,
-      openItemsGroups: [] as LayoutAppSidebarNavItem[]
-    }
-  },
-  computed: {
-    wordmark() {
-      return wordmark
-    },
-    year() {
-      const d = new Date();
-      return d.getFullYear();
-    },
-    computedSidebarWidth() {
-      if (!this.enableCollapsibleSidebar) return this.sidebarWidth
-      return this.collapsed ? 'w-auto' : this.sidebarWidth;
-    },
-    collapsed: {
-      get() {
-        return this.modelValue;
-      },
-      set(val: boolean) {
-        /**
-         * Emmitted when modelValue changes.
-         */
-        this.$emit("update:modelValue", val);
-      },
-    },
-  },
-  watch: {
-    showMobileMenu(value) {
-      if (value) {
-        // prevent scrolling
-        document.documentElement.classList.add("layout-app-internal-prevent-scroll");
-        this.$nextTick(() => {
-          (this.$refs.mobileMenuCloseBtn as HTMLButtonElement).focus()
-        })
-      } else {
-        // enable scrolling
-        document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
-        (this.$refs.mobileMenuOpenBtn as HTMLButtonElement).focus()
-      }
-    },
-    collapsed(value) {
-      if (value) {
-        this.openItemsGroups = []
-      }
-    }
-  },
-  mounted() {
-    // Setup collapse functionality
-    document.addEventListener("keyup", this.handleDocumentKeyUp);
-  },
-  unmounted() {
-    // enable scrolling
-    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+defineOptions({
+  name: 'SdsLayoutApp'
+})
 
-    // Destroy collapse functionality
-    document.removeEventListener("keyup", this.handleDocumentKeyUp);
+const props = defineProps({
+  /**
+   * The v-model that determines collapsed state.
+   */
+  modelValue: { type: Boolean, default: false },
+  /**
+   * The width class of the non-collapsed sidebar when not in a mobile responsive view.
+   */
+  sidebarWidth: { type: String, default: 'w-72' },
+  /**
+   * Determines whether to enable collapsing functionality.
+   *
+   * Ensure to have an icon for every item in the **sidebarNavigationItems** array for this to look nice.
+   *
+   * Including an **appIconUrl** will also improve the user experience.
+   */
+  enableCollapsibleSidebar: { type: Boolean, default: false },
+  /**
+   * The app suite name's prefix (styled in red) for the layout.
+   */
+  appSuitePrefix: { type: String, default: 'SEI' },
+  /**
+   * The app suite name for the layout.
+   */
+  appSuite: { type: String, default: null },
+  /**
+   * The app suite url for the layout.
+   */
+  appSuiteUrl: { type: String, default: null },
+  /**
+   * The app name for the layout.
+   */
+  appName: { type: String, default: null },
+  /**
+   * The app url for the layout.
+   */
+  appUrl: { type: String, default: null },
+  /**
+   * Determines whether to hide the **appName** in the mobile header.
+   *
+   * This is useful when an application's name is very long.
+   */
+  hideAppNameInMobileHeader: { type: Boolean, default: false },
+  /**
+   * The app icon url for the layout.
+   */
+  appIconUrl: { type: String, default: null },
+  /**
+   * The page title for the layout.
+   */
+  pageTitle: { type: String, default: null },
+  /**
+   * Determines whether to hide the page header.
+   */
+  hidePageHeader: { type: Boolean, default: false },
+  /**
+   * The sidebar navigation array for the layout.
+   *
+   * Each item should have a unique **id**, **title**, **active**, and **href** key value pair. **badgeCount** and **iconUrl** are optional.
+   *
+   * Item object:
+   *
+   * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
+   */
+  sidebarNavigationItems: { type: Array as PropType<LayoutAppSidebarNavItem[]>, default: () => [] },
+  /**
+   * Determines whether to hide the app icon.
+   */
+  hideAppIcon: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide the icons in the sidebar.
+   */
+  hideSidebarIcons: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['update:model-value', 'navigate'])
+
+const slots = useSlots()
+
+const showMobileMenu = ref(false)
+const mobileMenuCloseBtn = ref()
+const mobileMenuOpenBtn = ref()
+const mobileSidebarContainer = ref()
+const openItemsGroups = ref<LayoutAppSidebarNavItem[]>([])
+
+const wordmark = computed(() => {
+  return wordmarkSvg
+})
+
+const year = computed(() => {
+  const d = new Date();
+  return d.getFullYear();
+})
+
+const computedSidebarWidth = computed(() => {
+  if (!props.enableCollapsibleSidebar) return props.sidebarWidth
+  return collapsed.value ? 'w-auto' : props.sidebarWidth;
+})
+
+const collapsed = computed({
+  get() {
+    return props.modelValue;
   },
-  methods: {
-    itemsGroupBadgeCount(item: LayoutAppSidebarNavItem) {
-      if (!item.items) { return null }
-      let count = 0
-      item.items.forEach(i => {
-        if (i.badgeCount) {
-          count = count + i.badgeCount
-        }
-      })
-      return count
-    },
-    itemsGroupIsActive(item: LayoutAppSidebarNavItem) {
-      return item.items && item.items.filter(i => i.active).length
-    },
-    showItemsGroup(item: LayoutAppSidebarNavItem) {
-      return this.openItemsGroups.filter(i => i.id === item.id).length
-    },
-    toggleItemsGroup(item: LayoutAppSidebarNavItem) {
-      this.collapsed = false
-      if (this.showItemsGroup(item)) {
-        this.openItemsGroups = this.openItemsGroups.filter(
-          i => i.id !== item.id
-        )
-      } else {
-        this.openItemsGroups.push(item)
-      }
-    },
-    hasSlot(title: string) {
-      return !!this.$slots[title]
-    },
-    navigate(group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
-      // Close the mobile menu
-      this.showMobileMenu = false
-      /**
-       * Emmited when a navigation menu item has been clicked.
-       *
-       * Sends a payload of the clicked item and the click event: { group, item, event }
-       */
-      this.$emit('navigate', { group, item, event })
-    },
-    toggleCollapse() {
-      if (!this.enableCollapsibleSidebar) {
-        this.collapsed = false
-      } else {
-        this.collapsed = !this.collapsed;
-      }
-    },
-    handleDocumentKeyUp($event: KeyboardEvent) {
-      if (!$event.target) return
-      const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
-      if (tagName === "textarea") return;
-      if (tagName === "input") return;
-      // toggle collapse on "[" key
-      if ($event.key === "[") this.toggleCollapse();
-    },
-    checkKeyEvent(event: KeyboardEvent) {
-      // close modal and return early if escape
-      if (event.key === "Escape") {
-        this.showMobileMenu = false;
-        return;
-      }
-      const focusableList = (this.$refs.mobileSidebarContainer as HTMLElement).querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      // escape early if only 1 or no elements to focus
-      if (focusableList.length < 2 && event.key === "Tab") {
-        event.preventDefault();
-        return;
-      }
-      const last = focusableList.length - 1;
-      if (
-        event.key === "Tab" &&
-        event.shiftKey === false &&
-        event.target === focusableList[last]
-      ) {
-        event.preventDefault();
-        (focusableList[0] as HTMLElement).focus();
-      } else if (
-        event.key === "Tab" &&
-        event.shiftKey === true &&
-        event.target === focusableList[0]
-      ) {
-        event.preventDefault();
-        (focusableList[last] as HTMLElement).focus();
-      }
-    }
+  set(val: boolean) {
+    /**
+     * Emmitted when modelValue changes.
+     */
+    emit("update:model-value", val);
   }
 })
+
+watch(showMobileMenu, (value) => {
+  if (value) {
+    // prevent scrolling
+    document.documentElement.classList.add("layout-app-internal-prevent-scroll");
+    nextTick(() => {
+      (mobileMenuCloseBtn.value as HTMLButtonElement).focus()
+    })
+  } else {
+    // enable scrolling
+    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+    (mobileMenuOpenBtn.value as HTMLButtonElement).focus()
+  }
+})
+
+watch(collapsed, (value) => {
+  if (value) {
+    openItemsGroups.value = []
+  }
+})
+
+onMounted(() => {
+  // Setup collapse functionality
+  document.addEventListener("keyup", handleDocumentKeyUp);
+})
+
+onUnmounted(() => {
+  // enable scrolling
+  document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
+
+  // Destroy collapse functionality
+  document.removeEventListener("keyup", handleDocumentKeyUp);
+})
+
+const itemsGroupBadgeCount = (item: LayoutAppSidebarNavItem) => {
+  if (!item.items) { return null }
+  let count = 0
+  item.items.forEach(i => {
+    if (i.badgeCount) {
+      count = count + i.badgeCount
+    }
+  })
+  return count
+}
+
+const itemsGroupIsActive = (item: LayoutAppSidebarNavItem) => {
+  return item.items && item.items.filter(i => i.active).length
+}
+
+const showItemsGroup = (item: LayoutAppSidebarNavItem) => {
+  return openItemsGroups.value.filter(i => i.id === item.id).length
+}
+
+const toggleItemsGroup = (item: LayoutAppSidebarNavItem) => {
+  collapsed.value = false
+  if (showItemsGroup(item)) {
+    openItemsGroups.value = openItemsGroups.value.filter(
+      i => i.id !== item.id
+    )
+  } else {
+    openItemsGroups.value.push(item)
+  }
+}
+
+const hasSlot = (title: string) => {
+  return !!slots[title]
+}
+
+const navigate = (group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) => {
+  // Close the mobile menu
+  showMobileMenu.value = false
+  /**
+   * Emmited when a navigation menu item has been clicked.
+   *
+   * Sends a payload of the clicked item and the click event: { group, item, event }
+   */
+  emit('navigate', { group, item, event })
+}
+
+const toggleCollapse = () => {
+  if (!props.enableCollapsibleSidebar) {
+    collapsed.value = false
+  } else {
+    collapsed.value = !collapsed.value;
+  }
+}
+
+const handleDocumentKeyUp = ($event: KeyboardEvent) => {
+  if (!$event.target) return
+  const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
+  if (tagName === "textarea") return;
+  if (tagName === "input") return;
+  // toggle collapse on "[" key
+  if ($event.key === "[") toggleCollapse();
+}
+
+const checkKeyEvent = (event: KeyboardEvent) => {
+  // close modal and return early if escape
+  if (event.key === "Escape") {
+    showMobileMenu.value = false;
+    return;
+  }
+  const focusableList = (mobileSidebarContainer.value as HTMLElement).querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  // escape early if only 1 or no elements to focus
+  if (focusableList.length < 2 && event.key === "Tab") {
+    event.preventDefault();
+    return;
+  }
+  const last = focusableList.length - 1;
+  if (
+    event.key === "Tab" &&
+    event.shiftKey === false &&
+    event.target === focusableList[last]
+  ) {
+    event.preventDefault();
+    (focusableList[0] as HTMLElement).focus();
+  } else if (
+    event.key === "Tab" &&
+    event.shiftKey === true &&
+    event.target === focusableList[0]
+  ) {
+    event.preventDefault();
+    (focusableList[last] as HTMLElement).focus();
+  }
+}
 </script>
 
 <style lang="postcss">

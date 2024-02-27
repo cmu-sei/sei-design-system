@@ -1,15 +1,15 @@
-import SdsSearchBox from './SearchBox.vue';
+import SdsComboBox from './ComboBox.vue';
 
 export default {
-  title: 'Inputs/Search Box',
+  title: 'Inputs/Combo Box',
   parameters: {
     docs: {
       description: {
-        component: 'A search box is a text field allows users to type in search terms and execute it by clicking the magnifying glass icon.',
+        component: 'A Combo Box is an input field that allows users to perform a simple search or select an item from a list of dynamically filtered options based on their query.',
       },
     },
   },
-  component: SdsSearchBox,
+  component: SdsComboBox,
   argTypes: {
     variant: {
       options: ['gray', 'blue', 'red'],
@@ -19,12 +19,12 @@ export default {
 };
 
 const Template = (args) => ({
-  components: { SdsSearchBox },
+  components: { SdsComboBox },
   setup() {
     return { args }
   },
   template: `
-    <sds-search-box v-model="localValue" v-bind="args" />
+    <sds-combo-box v-model="localValue" v-bind="args" />
   `,
   data() {
     return { localValue: this.$props.modelValue }

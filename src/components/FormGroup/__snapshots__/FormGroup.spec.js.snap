@@ -17,7 +17,7 @@ exports[`Form Group > should match its default snapshot 1`] = `
     
     <!--v-if-->
     <span
-      class="sr-only font-normal italic text-gray-600 dark:text-gray-500 text-xs"
+      class="sr-only font-normal italic text-gray-600 dark:text-gray-400 text-xs"
     >
       (optional)
     </span>

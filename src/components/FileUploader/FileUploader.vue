@@ -18,7 +18,7 @@
       <div class="flex gap-2">
         <label
           :for="fileInput?.id"
-          class="btn btn-default cursor-pointer z-10"
+          class="btn btn-secondary cursor-pointer z-10"
         >Browse</label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
         </svg>
         <span class="my-auto">{{ multiple ? 'Drag and drop your files here' : 'Drag and drop a file here' }}</span>
       </div>
-      <p class="text-gray-600 dark:text-gray-500 text-sm">
+      <p class="text-gray-600 dark:text-gray-400 text-sm">
         {{ helperText ? helperText : multiple ? `Use files under ${filesize} MB.` : `Use a file under ${filesize} MB.` }}
       </p>
       <!-- @slot File list content. @binding files, invalidFiles, removeFile, removeInvalidFile, byteToSize -->
@@ -81,17 +81,15 @@
                 @click="removeFile(f)"
               >
                 <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  class="w-5 h-5 x"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  class="h-5 w-5"
                   aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                ><path d="M6 18L18 6M6 6l12 12" /></svg>
                 <span class="sr-only">Remove file</span>
               </button>
             </div>
@@ -127,17 +125,15 @@
                 @click="removeInvalidFile(f)"
               >
                 <svg
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  class="w-5 h-5 x"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  class="h-5 w-5"
                   aria-hidden="true"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
+                ><path d="M6 18L18 6M6 6l12 12" /></svg>
                 <span class="sr-only">Remove file</span>
               </button>
             </div>
@@ -161,7 +157,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType, watch } from 'vue'
 import { Uid } from '@shimyshack/uid'
 
 type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }

@@ -18,15 +18,12 @@
   </nav>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsScrollspy'
-}
-</script>
-
 <script setup lang="ts">
-import { PropType, computed, ref, onMounted, onUnmounted } from 'vue'
 import { throttleAndDebounce } from '../../helpers/throttleAndDebounce'
+
+defineOptions({
+  name: 'SdsScrollspy'
+})
 
 const props = defineProps({
   /**

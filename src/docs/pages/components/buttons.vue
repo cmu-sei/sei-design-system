@@ -2,10 +2,40 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Expand Collapse
+      </h2>
+      <div>
+        <p v-if="expandCollapseModel">
+          Expanded
+        </p>
+        <SdsExpandCollapse
+          v-model="expandCollapseModel"
+        />
+        <SdsExpandCollapse
+          v-model="expandCollapseModel"
+          expand-label="Custom Expand Label"
+          collapse-label="Custom Collapse Label"
+        />
+      </div>
+      <h2 class="text-xl">
         Button
       </h2>
       <div>
-        <SdsButton kind="default">
+        <SdsButton
+          kind="secondary"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          active
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          disabled
+        >
           Button
         </SdsButton>
       </div>
@@ -222,6 +252,8 @@
 </template>
 
 <script setup lang="ts">
+const expandCollapseModel = ref(false)
+
 const filterBy = reactive({
   options: [
     { id: 1, text: "Option 1", selected: false },

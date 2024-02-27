@@ -11,11 +11,7 @@ export default {
   },
   component: SdsToast,
   argTypes: {
-    kind: {
-      options: ['success', 'info', 'warning', 'danger'],
-      control: { type: 'select' }
-    },
-    variant: {
+    type: {
       options: ['success', 'info', 'warning', 'danger'],
       control: { type: 'select' }
     },

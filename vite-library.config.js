@@ -1,12 +1,25 @@
-const { resolve } = require('path')
+import { resolve } from 'path'
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
+import { unheadComposablesImports } from 'unhead'
 
 console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    AutoImport({
+      dts: true,
+      imports: [
+        'vue',
+        '@vueuse/core',
+        unheadComposablesImports[0]
+      ],
+      eslintrc: { enabled: true },
+    }),
+    vue()
+  ],
   publicDir: false,
   define: { 'process.env.NODE_ENV': '"production"' },
   build: {

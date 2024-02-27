@@ -12,20 +12,20 @@ export default {
   },
   component: SdsIndicator,
   argTypes: {
-    variant: {
-      options: ['gray', 'blue', 'green', 'orange', 'red'],
-      control: { type: 'select' }
-    },
-    size: {
-      options: ['sm', 'md', 'lg'],
-      control: { type: 'select' }
-    },
     placement: {
       options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
       control: { type: 'select' }
     },
     placementOver: {
       options: ['portrait', 'circle'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ['sm', 'md', 'lg'],
+      control: { type: 'select' }
+    },
+    variant: {
+      options: ['gray', 'blue', 'green', 'orange', 'red'],
       control: { type: 'select' }
     },
   }
@@ -51,7 +51,7 @@ export const Default = Template.bind({});
 Default.args = {
   placement: 'bottom-right',
   placementOver: 'circle',
-  variant: 'green',
-  size: 'lg'
+  size: 'lg',
+  variant: 'green'
 };
 

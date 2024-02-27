@@ -14,11 +14,11 @@ export default {
   component: SdsButton,
   argTypes: {
     kind: {
-      options: ['default', 'primary', 'success', 'danger', 'light'],
+      options: ['primary', 'secondary', 'tertiary', 'ghost'],
       control: { type: 'select' }
     },
     variant: {
-      options: ['', 'default', 'primary', 'success', 'danger', 'light'],
+      options: ['blue', 'red'],
       control: { type: 'select' }
     },
     size: {
@@ -48,6 +48,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'default'
+  kind: 'secondary'
 };
 

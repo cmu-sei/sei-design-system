@@ -37,7 +37,7 @@
     <div class="flex flex-grow flex-shrink-0">
       <!-- Main content -->
       <div class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-50 dark:bg-gray-950">
+        <main class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
@@ -122,10 +122,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script setup lang="ts">
 import SdsLink from '../Link/Link.vue'
-import wordmark from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
+import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
 interface LayoutAppSidebarNavItem {
   id: number | string
@@ -137,59 +136,60 @@ interface LayoutAppSidebarNavItem {
   items?: LayoutAppSidebarNavItem[]
 }
 
-export default defineComponent({
-  name: 'SdsLayoutAppSimple',
-  components: {
-    SdsLink,
-  },
-  props: {
-    /**
-     * The app suite name's prefix (styled in red) for the layout.
-     */
-    appSuitePrefix: { type: String, default: 'SEI' },
-    /**
-     * The app suite name for the layout.
-     */
-    appSuite: { type: String, default: null },
-    /**
-     * The app suite url for the layout.
-     */
-    appSuiteUrl: { type: String, default: null },
-    /**
-     * The app name for the layout.
-     */
-    appName: { type: String, default: null },
-    /**
-     * The page title for the layout.
-     */
-    pageTitle: { type: String, default: null },
-    /**
-     * Determines whether to hide the page header.
-     */
-    hidePageHeader: { type: Boolean, default: false },
-  },
-  emits: ['navigate'],
-  computed: {
-    wordmark() {
-      return wordmark
-    },
-    year() {
-      const d = new Date();
-      return d.getFullYear();
-    },
-  },
-  methods: {
-    hasSlot(title: string) {
-      return !!this.$slots[title]
-    },
-    navigate(group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) {
-      /**
-       * Emmited when the app suite has been clicked.
-       *
-       * Sends a payload of the clicked item and the click event: { group, item, event }
-       */
-      this.$emit('navigate', { group, item, event })
-    },
-  }
+defineOptions({
+  name: 'SdsLayoutAppSimple'
 })
+
+defineProps({
+  /**
+   * The app suite name's prefix (styled in red) for the layout.
+   */
+  appSuitePrefix: { type: String, default: 'SEI' },
+  /**
+   * The app suite name for the layout.
+   */
+  appSuite: { type: String, default: null },
+  /**
+   * The app suite url for the layout.
+   */
+  appSuiteUrl: { type: String, default: null },
+  /**
+   * The app name for the layout.
+   */
+  appName: { type: String, default: null },
+  /**
+   * The page title for the layout.
+   */
+  pageTitle: { type: String, default: null },
+  /**
+   * Determines whether to hide the page header.
+   */
+  hidePageHeader: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['navigate'])
+
+const slots = useSlots()
+
+const wordmark = computed(() => {
+  return wordmarkSvg
+})
+
+const year = computed(() => {
+  const d = new Date();
+  return d.getFullYear();
+})
+
+const hasSlot = (title: string) => {
+  return !!slots[title]
+}
+
+const navigate = (group: LayoutAppSidebarNavItem | null, item: Pick<LayoutAppSidebarNavItem, 'title' | 'href'>, event: Event) => {
+  /**
+   * Emmited when the app suite has been clicked.
+   *
+   * Sends a payload of the clicked item and the click event: { group, item, event }
+   */
+  emit('navigate', { group, item, event })
+}
 </script>
