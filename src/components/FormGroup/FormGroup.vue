@@ -87,7 +87,7 @@
         :class="{
           'sr-only': !showMarker
         }"
-        class="font-normal italic text-gray-600 dark:text-gray-500 text-xs"
+        class="font-normal italic text-gray-600 dark:text-gray-400 text-xs"
       >(optional)</span>
     </Component>
     <div class="grow">
@@ -105,7 +105,7 @@
       <p
         v-if="(helperText || $slots.helperText) && !disabled"
         :aria-hidden="disabled ? true : undefined"
-        class="block text-xs italic text-gray-600 dark:text-gray-500 pt-1"
+        class="block text-xs italic text-gray-600 dark:text-gray-400 pt-1"
       >
         <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
         <slot
@@ -144,7 +144,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, PropType } from 'vue'
 import { Uid } from '@shimyshack/uid'
 
 defineOptions({

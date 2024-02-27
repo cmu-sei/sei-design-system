@@ -1,7 +1,7 @@
 <template>
   <div class="guide">
     <sds-button
-      variant="default"
+      kind="secondary"
       @click="showPanel = !showPanel"
     >
       Show Panel
@@ -64,7 +64,7 @@
             Save
           </SdsButton>
           <SdsButton
-            variant="default"
+            kind="secondary"
             @click="showPanel = false"
           >
             Cancel
@@ -127,7 +127,7 @@
                 <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.aboutLink.label"
-                    :kind="content.aboutLink.kind"
+                    :type="content.aboutLink.kind"
                     :href="content.aboutLink.href"
                   />
                 </div>
@@ -157,7 +157,7 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.divisionLink.label"
-                :kind="content.divisionLink.kind"
+                :type="content.divisionLink.kind"
                 :href="content.divisionLink.href"
               />
               <div
@@ -179,7 +179,7 @@
                 <div class="col-span-2">
                   <SdsMegaMenuItem
                     :label="content.topicsLink.label"
-                    :kind="content.topicsLink.kind"
+                    :type="content.topicsLink.kind"
                     :href="content.topicsLink.href"
                   />
                 </div>
@@ -268,11 +268,6 @@
                 kind="descriptive"
                 href="https://sei.cmu.edu/news/index.cfm"
               >
-                <template #top>
-                  <img
-                    src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                  >
-                </template>
                 <template #default>
                   <p class="uppercase">
                     <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
@@ -335,7 +330,7 @@
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
                 :label="content.eventLink.label"
-                :kind="content.eventLink.kind"
+                :type="content.eventLink.kind"
                 :href="content.eventLink.href"
               />
               <div
@@ -396,7 +391,7 @@
               <SdsMegaMenuItem
                 :href="content.careersLink.href"
                 :label="content.careersLink.label"
-                :kind="content.careersLink.kind"
+                :type="content.careersLink.kind"
               />
               <div
                 v-for="careerLink in content.careersLinks"
@@ -420,7 +415,7 @@
               <SdsMegaMenuItem
                 :href="content.jobsLink.href"
                 :label="content.jobsLink.label"
-                :kind="content.jobsLink.kind"
+                :type="content.jobsLink.kind"
               />
               <div
                 v-for="row, index in content.jobs"
@@ -469,13 +464,13 @@
     <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
-        kind="block"
+        type="block"
         width="auto"
       >
         <template #panel(about-1)="{ content }">
           <SdsMegaMenuItem
             :label="content.divisionLink.label"
-            :kind="content.divisionLink.kind"
+            :type="content.divisionLink.kind"
             :href="content.divisionLink.href"
             class="select-none"
           />
@@ -519,11 +514,6 @@
               kind="descriptive"
               href="https://sei.cmu.edu/news/index.cfm"
             >
-              <template #top>
-                <img
-                  src="src/assets/images/Software-Engineering-Workshop-f.max-640x366.format-webp.webp"
-                >
-              </template>
               <template #default>
                 <p class="uppercase">
                   <span class="text-sm text-gray-900 dark:text-gray-200">May 2, 2023</span><br>
@@ -553,7 +543,7 @@
           <div class="max-w-lg">
             <SdsMegaMenuItem
               :label="content.eventLink.label"
-              :kind="content.eventLink.kind"
+              :type="content.eventLink.kind"
               :href="content.eventLink.href"
             />
             <div
@@ -610,7 +600,7 @@
           <SdsMegaMenuItem
             :href="content.jobsLink.href"
             :label="content.jobsLink.label"
-            :kind="content.jobsLink.kind"
+            :type="content.jobsLink.kind"
           />
           <div
             v-for="row, index in content.jobs"
@@ -656,7 +646,7 @@
     </div>
     <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
-      <SdsLoadingBox />
+      <SdsLoadingSkeleton />
     </div>
     <div class="my-12">
       <p>Indicator</p>
@@ -738,8 +728,8 @@
           <SdsAvatar name="Jason Shimkoski" />
         </SdsIndicator>
         <SdsIndicator
-          size="lg"
-          placement="bottom-right"
+          size="sm"
+          placement="bottom-left"
         >
           <SdsAvatar
             name="Jason Shimkoski"
@@ -748,11 +738,14 @@
         </SdsIndicator>
         <SdsIndicator
           variant="green"
-          size="sm"
-          placement="top-left"
+          size="md"
+          placement="top-right"
         >
-          <SdsButton variant="primary">
-            Cool
+          <SdsButton
+            size="lg"
+            kind="primary"
+          >
+            Cool Super long text
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
@@ -760,25 +753,29 @@
           size="sm"
           placement="top-right"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
           variant="teal"
-          size="sm"
-          placement="bottom-left"
+          size="md"
+          placement="top-right"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
           variant="orange"
-          placement="top-right"
+          size="lg"
+          placement="top-left"
           status="This is awesome"
         >
-          <SdsButton variant="primary">
+          <SdsButton
+            kind="primary"
+            size="lg"
+          >
             Cool
           </SdsButton>
         </SdsIndicator>
@@ -1027,32 +1024,6 @@
         <sds-badge
           type="dark"
           variant="orange"
-        >
-          Badge Content
-        </sds-badge>
-      </div>
-      <div class="space-x-4">
-        <sds-badge
-          type="light-border"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="light"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="medium"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="dark"
-          variant="pink"
         >
           Badge Content
         </sds-badge>
@@ -1433,7 +1404,7 @@
         </div>
       </div>
       <sds-button
-        variant="default"
+        kind="secondary"
         @click="fileUploaderModel = []"
       >
         Clear files
@@ -1452,9 +1423,9 @@
         { id: 'scrollspy-test-5', text: 'Test 5' }
       ]"
       parent="#scrollspy-parent"
-      item-class="nav nav-primary nav-underline"
+      item-class="tab tab-red tab-underline"
       active-class="active"
-      class="nav-group"
+      class="tab-group"
     />
     <sds-scroll-area
       id="scrollspy-parent"
@@ -1551,15 +1522,15 @@
       <template #nav>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 1</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 2</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue active"
+          class="tab tab-pill tab-blue active"
         >Option 3</a>
       </template>
       <div>
@@ -1592,7 +1563,7 @@
           </h4>
           <sds-toaster v-model="toasts" />
           <button
-            class="btn btn-blue"
+            class="btn btn-secondary"
             @click="generateToast"
           >
             Generate Toast
@@ -1732,7 +1703,7 @@
         <sds-tooltip>
           <template #trigger>
             <button
-              class="btn btn-blue"
+              class="btn btn-secondary"
               @click="showModal = true"
             >
               Show Modal Component
@@ -1763,7 +1734,7 @@
           <sds-dropdown
             v-model="showModalSizeDropdown"
             :title="`Modal Size: ${modalSize}`"
-            btn-class="btn btn-default"
+            btn-class="btn btn-secondary"
           >
             <sds-dropdown-header>
               <p class="font-semibold text-gray-500">
@@ -1798,7 +1769,7 @@
           </sds-dropdown>
           <template #footer>
             <button
-              class="btn btn-red"
+              class="btn btn-primary btn-red"
               @click="showModal = false"
             >
               Close
@@ -1985,78 +1956,43 @@
         </div>
 
         <h4 class="my-4 text-lg">
-          Autosuggest
-        </h4>
-        <div>
-          <SdsFormGroup
-            v-slot="{ id }"
-            label="Autosuggest Example"
-            description="This is just an example"
-            required
-          >
-            <sds-autosuggest
-              :id="id"
-              v-model="text"
-              :items="items"
-              :threshold="2"
-              :autosuggest="autosuggest"
-              :disable-search="text === ''"
-              placeholder="Search for a fruit"
-              variant="primary"
-              use-built-in-highlighting
-              @result="result"
-              @search="search"
-            />
-          </SdsFormGroup>
-          <p class="mt-3">
-            You performed a search with: {{ searchText }}
-          </p>
-        </div>
-
-        <h4 class="my-4 text-lg">
           Search Box
         </h4>
         <div class="space-y-4">
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="primary"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="success"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="info"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="warning"
-            @search="search"
+            @enter="search"
           />
-          <sds-search-box
+          <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            :disable-search="text === ''"
             variant="danger"
-            @search="search"
+            @enter="search"
           />
         </div>
 
@@ -2145,7 +2081,7 @@
         </template>
         <template #cell(actions)="{ item }">
           <sds-button
-            variant="default"
+            kind="secondary"
             size="sm"
           >
             Do something for: {{ item.id }}
@@ -2163,8 +2099,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
 export default defineComponent({
   name: "ExamplesSection",
   emits: ["radioGroupChange", "hello"],
@@ -3328,25 +3262,25 @@ export default defineComponent({
           id: Math.random(),
           title: "Success Toast",
           text: "This is the content of this toast.",
-          variant: "success",
+          type: "success",
         },
         {
           id: Math.random(),
           title: "Info Toast",
           text: "This is the content of this toast.",
-          variant: "info",
+          type: "info",
         },
         {
           id: Math.random(),
           title: "Warning Toast",
           text: "This is the content of this toast.",
-          variant: "warning",
+          type: "warning",
         },
         {
           id: Math.random(),
           title: "Danger Toast",
           text: "This is the content of this toast.",
-          variant: "danger",
+          type: "danger",
           noAutoHide: true,
         },
       ];
@@ -3371,14 +3305,6 @@ export default defineComponent({
     search(q: any) {
       this.$emit("hello", q);
       this.searchText = this.text;
-    },
-    // Retrieve autosuggest items
-    autosuggest() {
-      setTimeout(() => {
-        this.items = this.fakeAjaxItems.filter((i) => {
-          return i.term.toLowerCase().includes(this.text.toLowerCase());
-        });
-      }, 250);
     },
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });

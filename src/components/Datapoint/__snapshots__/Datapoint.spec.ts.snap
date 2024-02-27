@@ -47,7 +47,7 @@ exports[`Datapoint > should match its variant green, size sm, label, and context
     class="flex gap-2"
   >
     <div
-      class="font-bold text-lg text-green-500 dark:text-green-400"
+      class="font-bold text-lg text-green-600 dark:text-green-400"
     >
       <!-- @slot Datapoint context.  -->
       

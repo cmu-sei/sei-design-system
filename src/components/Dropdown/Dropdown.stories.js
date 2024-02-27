@@ -25,15 +25,19 @@ export default {
       control: {type: 'select'}
     },
     kind: {
-      options: ['default', 'primary', 'success', 'danger', 'light'],
+      options: ['primary', 'secondary', 'tertiary', 'ghost'],
       control: { type: 'select' }
     },
     variant: {
-      options: ['default', 'primary', 'success', 'danger', 'light'],
+      options: ['blue', 'red'],
       control: { type: 'select' }
     },
     size: {
       options: ['sm', 'md'],
+      control: {type: 'select'}
+    },
+    type: {
+      options: ['dark'],
       control: {type: 'select'}
     },
     zIndex: {

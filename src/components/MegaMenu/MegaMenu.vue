@@ -17,7 +17,7 @@
         ref="menu"
         class="flex flex-row"
         :class="{
-          'gap-4 xl:gap-8': kind === 'underline',
+          'gap-4 xl:gap-8': type === 'underline',
         }"
         role="menu"
         @click.self="onClose(false)"
@@ -29,7 +29,6 @@
           :key="topLink.key"
           :type="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :href="topLink.href ? topLink.href : undefined"
-          :kind="!topLink.tag || topLink.tag === 'button' ? 'button' : undefined"
           :aria-haspopup="topLink.tag === 'button' ? true : undefined"
           :aria-expanded="topLink.tag === 'button' ? topLink.selected : undefined"
           :data-id="`sds-megamenu_${topLink.key}`"
@@ -40,17 +39,16 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': kind === 'block',
-            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': kind === 'block' && !topLink.selected,
-            'hover:text-white hover:bg-red-500 dark:hover:text-white dark:hover:bg-red-700': kind === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
-            'text-white bg-red-500 dark:bg-red-700': kind === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
-            'hover:text-red-500 hover:border-red-500 dark:hover:text-red-300 dark:hover:border-red-300': kind === 'underline',
-            'text-red-500 dark:text-red-300 border-red-500 dark:border-red-300': kind === 'underline' && topLink.selected,
-            'border-red-500 dark:border-red-300': kind === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': kind === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': type === 'block',
+            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !(topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'text-white bg-red-600 dark:text-gray-900 dark:bg-red-300': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'hover:text-red-600 hover:border-red-600 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
+            'text-red-600 dark:text-red-300 border-red-600 dark:border-red-300': type === 'underline' && topLink.selected,
+            'border-red-600 dark:border-red-300': type === 'underline' && topLink.active,
+            'border-transparent dark:border-transparent': type === 'underline' && ((!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0))
           }"
           role="menuitem"
-          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base"
+          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline focus-visible:outline-2"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -156,7 +154,9 @@
   </transition>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+
 /* Top Link navigation label type interface */
 export interface ITopLink {
   key: string
@@ -172,14 +172,9 @@ export interface ITopLink {
   onClick?: Function
 }
 
-export default {
+defineOptions({
   name: 'SdsMegaMenu',
-}
-</script>
-
-<script setup lang="ts">
-import { PropType, computed, ref, watch, watchEffect } from 'vue'
-import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+})
 
 const props = defineProps({
   /**
@@ -214,7 +209,7 @@ const props = defineProps({
   /**
    * Overall look and feel of the component (two options)
    */
-  kind: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
+  type: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
   /**
    * Sets the panel width. Full width stretches to fill the width of the screen.
    * Auto width will fit the width of the content inside the panel.
@@ -233,6 +228,7 @@ const emits = defineEmits(
     'update:model-value'
   ]
 )
+
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): ITopLink[] {

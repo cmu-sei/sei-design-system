@@ -18,8 +18,12 @@ export default {
   },
   component: SdsMegaMenu,
   argTypes: {
-    kind: {
+    type: {
       options: ['block', 'underline'],
+      control: { type: 'select' }
+    },
+    width: {
+      options: ['auto', 'full'],
       control: { type: 'select' }
     }
   }
@@ -35,13 +39,10 @@ const Template = (args) => ({
   },
   template: `
     <sds-mega-menu
-      class="flex sticky z-50 gap-x-8 h-fit"
       v-model="localValue"
       v-bind="args"
-      @change="onChange"
       @update:model-value="onUpdateModelValue"
     >
-      <script>console.log(${JSON.stringify(args)})</script>
       <template #panel(topLink1)="{ content }">
         <div class="mx-auto container">
           <div class="grid grid-cols-3 gap-4 py-8">
@@ -456,5 +457,5 @@ Default.args = {
       selected: false
     },
   ],
-  kind: 'underline'
+  type: 'underline'
 };

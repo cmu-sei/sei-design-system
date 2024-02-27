@@ -31,34 +31,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from "vue"
+<script setup lang="ts">
+defineOptions({
+  name: 'SdsLoadingSpinner'
+})
 
-export default defineComponent({
-  name: 'SdsLoadingSpinner',
-  props: {
-    /**
-     * Sets the size of the spinner.
-     */
-    size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'md' },
-    /**
-     * Sets the accessiblity label for the spinner.
-     */
-    label: { type: String, default: null }
-  },
-  computed: {
-    sizeClass() {
-      switch (this.size) {
-        case 'lg':
-          return 'h-20 w-20'
-        case 'sm': 
-          return 'h-4 w-4'
-        case 'auto':
-          return ''
-        default:
-          return 'h-12 w-12'
-      }
-    }
+const props = defineProps({
+  /**
+   * Sets the size of the spinner.
+   */
+  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'md' },
+  /**
+   * Sets the accessiblity label for the spinner.
+   */
+  label: { type: String, default: null }
+})
+
+const sizeClass =  computed(() => {
+  switch (props.size) {
+    case 'lg':
+      return 'h-20 w-20'
+    case 'sm': 
+      return 'h-4 w-4'
+    case 'auto':
+      return ''
+    default:
+      return 'h-12 w-12'
   }
 })
 </script>

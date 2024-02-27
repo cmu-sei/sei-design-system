@@ -1,5 +1,5 @@
 import { App } from "vue";
-import Component from "./Autosuggest.vue";
+import Component from "./ExpandCollapse.vue";
 
 Component.install = (Vue: App) => {
   Vue.component(Component.name, Component);

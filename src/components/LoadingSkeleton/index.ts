@@ -1,5 +1,5 @@
 import { App } from "vue";
-import Component from "./SearchBox.vue";
+import Component from "./LoadingSkeleton.vue";
 
 Component.install = (Vue: App) => {
   Vue.component(Component.name, Component);

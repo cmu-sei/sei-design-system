@@ -6,7 +6,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
   id="unique-id"
 >
   <div
-    class="overflow-x-auto bg-gray-100 dark:bg-gray-850 rounded-t"
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
   >
     <ul
       class="flex whitespace-nowrap z-10"

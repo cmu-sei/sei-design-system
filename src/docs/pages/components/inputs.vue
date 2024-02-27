@@ -2,22 +2,6 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Autosuggest
-      </h2>
-      <div>
-        <SdsAutosuggest
-          v-model="modelValue"
-          :items="itemList"
-          variant="gray"
-          :disabled="false"
-          :autosuggest="onAutosuggest"
-          use-built-in-highlighting
-          @search="onSearch"
-        />
-      </div>
-    </div>
-    <div class="grid gap-4">
-      <h2 class="text-xl">
         Checkbox Group
       </h2>
       <div>
@@ -97,16 +81,35 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Search Box
+        Combo Box
       </h2>
-      <div>
-        <SdsSearchBox
-          v-model="searchBox.modelValue"
-          variant="gray"
+      <div class="space-y-4">
+        <SdsComboBox
+          v-model="comboBox.modelValue"
+          placeholder="Search"
           :disabled="false"
           :autofocus="false"
-          :disable-search="false"
-          @search="searchBox.onSearch"
+          :suggestions="comboBox.suggestions"
+          filter-suggestions
+          focus-on-key-press
+          option-label="term"
+          option-group-label="label"
+          option-group-children="items"
+          @complete="comboBox.onComplete"
+          @result="comboBox.onResult"
+          @enter="comboBox.onEnter"
+        >
+          <template #option="{ label }">
+            <span v-html="label" />
+          </template>
+        </SdsComboBox>
+        <SdsComboBox
+          v-model="comboBox.modelValue"
+          placeholder="Search"
+          size="sm"
+          :disabled="true"
+          :autofocus="false"
+          @enter="comboBox.onEnter"
         />
       </div>
     </div>
@@ -146,8 +149,11 @@
       <div>
         <SdsToggleSwitch
           v-model="toggleSwitch.modelValue"
-          variant="blue"
           :disabled="false"
+        />
+        <SdsToggleSwitch
+          v-model="toggleSwitch.modelValue"
+          :disabled="true"
         />
       </div>
     </div>
@@ -155,38 +161,6 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref('')
-const itemList = ref<{ term: string, payload: string }[]>([])
-const fakeAjaxItems = ref([
-  { term: "Apple", payload: "test" },
-  {
-    term:
-      "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
-    payload: "test",
-  },
-  { term: "Banana", payload: "test" },
-  { term: "Orange", payload: "test" },
-  { term: "Pineapple", payload: "test" },
-  { term: "Kiwi", payload: "test" },
-  { term: "Pomegranate", payload: "test" },
-  { term: "Strawberry", payload: "test" },
-  { term: "Raspberry", payload: "test" },
-  { term: "Watermelon", payload: "test" },
-  { term: "Mango", payload: "test" },
-])
-
-const onAutosuggest = () => {
-  setTimeout(() => {
-    itemList.value = fakeAjaxItems.value.filter((i) => {
-      return i.term.toLowerCase().includes(modelValue.value.toLowerCase());
-    });
-  }, 250);
-}
-
-const onSearch = (value: string) => {
-  alert(`Searching: ${value}`)
-}
-
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
   options: [
@@ -284,10 +258,62 @@ const radioGroup = reactive({
   ]
 })
 
-const searchBox = reactive({
+const comboBox = reactive({
   modelValue: '',
-  onSearch(value: string) {
-    alert(`Searching: ${value}`)
+  onEnter(value: string) {
+    console.log(`onEnter`, value)
+  },
+  suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
+  // suggestions: [] as any,
+  onResult(option: any) {
+    console.log('onResult', option)
+  },
+  async onComplete(query: string) {
+    comboBox.suggestions = query ? [
+      "Testing <b>123</b>",
+      { term: "<b>App</b>le", payload: "test" },
+      {
+        term:
+          "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
+        payload: "test",
+      },
+      { term: "Banana", payload: "test" },
+      {
+        label: "Group Label",
+        items: [
+          { term: "Apple Group", payload: "test" },
+          { term: "<b>Uniqu</b>e to Group", payload: "test" },
+          { term: "Banana Group", payload: "test" },
+          { term: "Orange Group", payload: "test" },
+          { term: "Pineapple Group", payload: "test" },
+          { term: "Grape Group", payload: "test" },
+        ]
+      },
+      { term: "Kiwi", payload: "test" },
+      { term: "Pomegranate", payload: "test" },
+      { term: "Strawberry", payload: "test" },
+      {
+        label: "Group 2 Label",
+        items: [
+          { term: "Apple Group 2", payload: "test" },
+          { term: "Banana Group 2", payload: "test" },
+          { term: "<b>Date</b> Group 2", payload: "test" },
+          { term: "Orange Group 2", payload: "test" },
+          { term: "Pineapple Group 2", payload: "test" },
+          { term: "Grape Group 2", payload: "test" },
+        ]
+      },
+      { term: "Orange", payload: "test" },
+      { term: "Pineapple", payload: "test" },
+      { term: "Raspberry", payload: "test" },
+      { term: "Watermelon", payload: "test" },
+      { term: "Mango", payload: "test" },
+    ] : [] as any
+    // comboBox.suggestions = query ? [
+    //   "Apple",
+    //   "Banana",
+    //   "Cranberry"
+    // ] : []
   }
 })
 

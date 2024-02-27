@@ -48,14 +48,7 @@
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'SdsFloatingUi'
-}
-</script>
-
 <script setup lang="ts">
-import { ref, PropType, provide, watch, nextTick, computed } from 'vue'
 import { onClickOutside, onKeyStroke } from '@vueuse/core'
 import {
   autoUpdate,
@@ -72,6 +65,10 @@ import mitt from 'mitt';
 
 import type { Placement as BasePlacement, ComputePositionConfig, Alignment, Strategy } from '@floating-ui/dom'
 type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+
+defineOptions({
+  name: 'SdsFloatingUi'
+})
 
 const triggerRef = ref(null)
 const popperRef = ref(null)
@@ -168,7 +165,7 @@ const props = defineProps({
   animationLeaveActiveClass: { type: String, default: 'transition duration-50 ease-in' },
   animationLeaveFromClass: { type: String, default: 'transform scale-100 opacity-100' },
   animationLeaveToClass: { type: String, default: 'transform scale-95 opacity-0' },
-  popperClass: { type: String, default: undefined },
+  popperClass: { type: [String, Array, Object], default: undefined },
   hideArrow: { type: Boolean, default: false },
   arrowClass: { type: String, default: undefined },
   placementTopArrowClass: { type: String, default: undefined },

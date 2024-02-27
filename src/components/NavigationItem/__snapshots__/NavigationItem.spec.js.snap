@@ -7,9 +7,9 @@ exports[`NavigationItem.vue > matches snapshot 1`] = `
   
   <!--v-if-->
   <button
-    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-4 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent"
+    class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent"
     data-id="sds-navigationitem"
-    data-type="slide"
+    data-type="simple"
     id="sds-navigationitem"
     role="menuitem"
     tabindex="0"
@@ -18,18 +18,7 @@ exports[`NavigationItem.vue > matches snapshot 1`] = `
     
     <!--v-if-->
     
-    <svg
-      class="ml-auto group-hover:text-red-700 dark:text-gray-400 group-hover:dark:text-gray-100 text-gray-700 shrink-0"
-      height="24"
-      viewBox="0 0 320 512"
-      width="20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256L73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
-        fill="currentColor"
-      />
-    </svg>
+    <!--v-if-->
   </button>
   <!--v-if-->
   <!--v-if-->
@@ -39,11 +28,10 @@ exports[`NavigationItem.vue > matches snapshot 1`] = `
 
 exports[`NavigationItem.vue > matches snapshot with no props assigned 1`] = `
 "<!--v-if-->
-<button id=\\"sds-navigationitem\\" data-id=\\"sds-navigationitem\\" data-type=\\"slide\\" class=\\"group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-4 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent\\" tabindex=\\"0\\" role=\\"menuitem\\">
+<button id="sds-navigationitem" data-id="sds-navigationitem" data-type="simple" class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6 cursor-pointer text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent" tabindex="0" role="menuitem">
   <!--v-if-->
-  <!--v-if--><svg xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"20\\" height=\\"24\\" viewBox=\\"0 0 320 512\\" class=\\"ml-auto group-hover:text-red-700 dark:text-gray-400 group-hover:dark:text-gray-100 text-gray-700 shrink-0\\">
-    <path fill=\\"currentColor\\" d=\\"M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256L73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z\\"></path>
-  </svg>
+  <!--v-if-->
+  <!--v-if-->
 </button>
 <!--v-if-->
 <!--v-if-->"

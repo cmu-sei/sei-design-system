@@ -32,7 +32,15 @@
           :max="max"
           placement="right"
           mode="dateTime"
-          size="md"
+          size="sm"
+        />
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="dateTime"
+          size="sm"
           disabled
         />
         <SdsDatepicker
@@ -50,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref()
+const modelValue = ref({ start: null, end: null })
 const min = ref()
 const max = ref()
 

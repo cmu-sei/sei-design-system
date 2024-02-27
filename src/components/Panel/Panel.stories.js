@@ -38,7 +38,7 @@ const Template = (args) => ({
   template: `
     <div>
       <p class="mb-4">Use the button below to toggle the panel.</p>
-      <button class="btn btn-primary" @click="localValue = !localValue">Toggle Panel</button>
+      <button class="btn btn-secondary" @click="localValue = !localValue">Toggle Panel</button>
       <sds-panel v-model="localValue" v-bind="args">
         <template #title>
           Panel title

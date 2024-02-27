@@ -28,25 +28,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 import LayoutSeiExternalNav from "../LayoutSeiExternalNav/LayoutSeiExternalNav.vue";
 import LayoutSeiExternalHeaderContent from "../LayoutSeiExternalHeaderContent/LayoutSeiExternalHeaderContent.vue";
 
-export default defineComponent({
-  name: 'SdsLayoutSeiExternalMasthead',
-  components: {
-    LayoutSeiExternalNav,
-    LayoutSeiExternalHeaderContent,
-  },
-  props: {
-    /**
-     * An object containing various properties that display in the masthead.
-     */
-    page: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-});
+defineOptions({
+  name: 'SdsLayoutSeiExternalMasthead'
+})
+
+defineProps({
+  /**
+   * An object containing various properties that display in the masthead.
+   */
+  page: {
+    type: Object,
+    default: () => ({}),
+  }
+})
 </script>
