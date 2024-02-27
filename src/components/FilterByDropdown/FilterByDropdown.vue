@@ -49,7 +49,7 @@
           class="input-group input-group-sm mb-2 border-b"
         >
           <button
-            class="input-group-text mt-0.5"
+            class="input-group-addon mt-0.5"
             @click="filterTextInput?.focus()"
           >
             <svg
