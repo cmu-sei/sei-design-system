@@ -64,9 +64,9 @@
         </button>
       </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
-        <!-- @slot Suite header content. @binding collapsed -->
+        <!-- @slot User section content. @binding collapsed -->
         <slot
-          name="suite-header"
+          name="user-section"
           :collapsed="collapsed"
         />
       </div>

@@ -23,8 +23,8 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-app-simple v-model="localValue" v-bind="args">
-      <template #suite-header>
-        Suite header content area
+      <template #user-section>
+        User section content area
         <sds-tooltip data-id="avatarContainer" size="auto" variant="light" placement="left">
           <template data-id="avatarTooltipTrigger" #trigger>
             <sds-avatar size="xs" shape="circle" name="John Smith" />

@@ -8,7 +8,7 @@
     :sidebar-navigation-items="sidebarNavigationItems"
     @navigate="navigate"
   >
-    <template #suite-header>
+    <template #user-section>
       <sds-dropdown
         title="Dropdown"
         type="dark"

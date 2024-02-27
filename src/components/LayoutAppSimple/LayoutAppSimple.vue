@@ -28,9 +28,9 @@
         </h1>
       </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
-        <!-- @slot Suite header content. -->
+        <!-- @slot User section content. -->
         <slot
-          name="suite-header"
+          name="user-section"
         />
       </div>
     </div>

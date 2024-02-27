@@ -23,7 +23,7 @@
           <button
             type="button"
             tabindex="-1"
-            class="input-group-text fill-current"
+            class="input-group-addon fill-current"
             :class="{
               'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
               'border-none': disabled,
@@ -104,7 +104,7 @@
             <button
               type="button"
               tabindex="-1"
-              class="input-group-text fill-current"
+              class="input-group-addon fill-current"
               :class="{
                 'pointer-events-none opacity-50': disabled || readonly
               }"

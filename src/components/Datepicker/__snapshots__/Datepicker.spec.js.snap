@@ -16,7 +16,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
         class="w-full input-group"
       >
         <button
-          class="input-group-text fill-current"
+          class="input-group-addon fill-current"
           tabindex="-1"
           type="button"
         >

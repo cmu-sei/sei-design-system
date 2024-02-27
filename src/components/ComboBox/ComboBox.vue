@@ -12,7 +12,7 @@
       }"
     >
       <button
-        class="input-group-text"
+        class="input-group-addon"
         :disabled="disabled"
         tabindex="-1"
         type="button"
@@ -85,7 +85,7 @@
       </button>
       <div
         v-if="focusOnKeyPress"
-        class="input-group-text"
+        class="input-group-addon"
       >
         <SdsTooltip>
           <template #trigger>
