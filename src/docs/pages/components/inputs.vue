@@ -258,6 +258,8 @@ const radioGroup = reactive({
   ]
 })
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+
 const comboBox = reactive({
   modelValue: '',
   onEnter(value: string) {
@@ -269,6 +271,8 @@ const comboBox = reactive({
     console.log('onResult', option)
   },
   async onComplete(query: string) {
+    comboBox.suggestions = []
+    await delay(5000)
     comboBox.suggestions = query ? [
       "Testing <b>123</b>",
       { term: "<b>App</b>le", payload: "test" },
