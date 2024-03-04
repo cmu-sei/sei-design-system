@@ -71,7 +71,6 @@
         <span class="sr-only">Toggle dark mode</span>
       </sds-button>
     </template>
-    <template #actions-bar>hello</template>
     <template #default>
       <RouterView />
     </template>
