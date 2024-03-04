@@ -425,6 +425,12 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
+watch(() => props.suggestions, (value) => {
+  if (!preventShowDropdown.value) {
+    showDropdown.value = typeof value !== 'undefined' && value.length > 0
+  }
+})
+
 watchDebounced(filterQuery, () => {
   if (preventShowDropdown.value) {
     preventShowDropdown.value = false
