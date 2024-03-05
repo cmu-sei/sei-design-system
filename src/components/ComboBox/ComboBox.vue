@@ -368,10 +368,6 @@ const props = defineProps({
    */
   filterSuggestions: { type: Boolean, default: undefined },
   /**
-   * The debounce period before the suggestions are updated.
-   */
-  debounceSuggestions: { type: Number, default: 250 },
-  /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
   hideEmptyGroups: { type: Boolean, default: false },
@@ -431,14 +427,9 @@ watch(() => props.suggestions, (value) => {
   }
 })
 
-watchDebounced(filterQuery, () => {
-  if (preventShowDropdown.value) {
-    preventShowDropdown.value = false
-  } else {
-    const suggestions = props.suggestions
-    showDropdown.value = typeof suggestions !== 'undefined' && suggestions.length > 0
-  }
-}, { debounce: props.debounceSuggestions })
+watch(filterQuery, (value) => {
+  preventShowDropdown.value = value === removeHtmlFromString(query.value)
+})
 
 const reduceList = (arr: any) => {
   if (!Array.isArray(arr)) return []
@@ -565,14 +556,14 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
-  preventShowDropdown.value = true
   filterQuery.value = removeHtmlFromString(query.value)
+  preventShowDropdown.value = true
   showDropdown.value = false
 })
 
 onClickOutside(root, () => {
-  preventShowDropdown.value = true
   filterQuery.value = removeHtmlFromString(query.value)
+  preventShowDropdown.value = true
   showDropdown.value = false
 })
 
@@ -739,13 +730,13 @@ const emitComplete = () => {
   /**
    * Emitted when internal query changes.
    */
-  emit('complete', removeHtmlFromString(query.value));
+  emit('complete', filterQuery.value);
 }
 
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', removeHtmlFromString(query.value))
+  emit('enter', filterQuery.value)
 }
 </script>
