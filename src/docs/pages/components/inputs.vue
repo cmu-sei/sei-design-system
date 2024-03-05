@@ -272,7 +272,7 @@ const comboBox = reactive({
   },
   async onComplete(query: string) {
     comboBox.suggestions = []
-    await delay(2000)
+    await delay(500)
     comboBox.suggestions = query ? [
       "Testing <b>123</b>",
       { term: "<b>App</b>le", payload: "test" },

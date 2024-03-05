@@ -368,6 +368,10 @@ const props = defineProps({
    */
   filterSuggestions: { type: Boolean, default: undefined },
   /**
+   * The debounce period before complete event is emitted.
+   */
+  debounceComplete: { type: Number, default: 350 },
+  /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
   hideEmptyGroups: { type: Boolean, default: false },
@@ -413,8 +417,11 @@ watch(query, (value) => {
   activeGroupKey.value = -1
   arrowCounter.value = -1
   filterQuery.value = removeHtmlFromString(value)
-  emitComplete()
 })
+
+watchDebounced(query, () => {
+  emitComplete()
+}, { debounce: props.debounceComplete })
 
 watch(showDropdown, () => {
   arrowCounter.value = -1
