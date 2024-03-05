@@ -660,12 +660,12 @@ const handleEnterKeyUp = () => {
   if (dropdownIsOpen.value) {
     const option = getCurrentSuggestion()
     if (option) {
-      preventShowDropdown.value = true
       query.value = getCurrentSuggestionValue()
       emitResult(option)
     }
     closeDropdownAndFocusInput()
   }
+  preventShowDropdown.value = true
   emitEnter()
 }
 
