@@ -59,7 +59,8 @@
                 border
                 rounded-lg
                 shadow-xl
-                dark:bg-gray-900 dark:border-gray-700
+                dark:text-gray-25
+                dark:bg-gray-900 dark:border-gray-800
                 md:my-8
               "
               :class="{
