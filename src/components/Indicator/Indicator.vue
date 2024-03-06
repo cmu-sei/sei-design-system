@@ -1,22 +1,20 @@
 <template>
   <div
     data-id="sds-indicator"
-    class="inline-block"
+    class="flex relative"
   >
-    <div class="relative">
-      <!-- @slot Indicator content.  -->
-      <slot />
-      <div
-        v-if="!hideIndicator"
-        role="status"
-        class="absolute rounded-full"
-        :class="[placementClass, sizeClass, variantClass]"
-      >
-        <span
-          v-if="status"
-          class="sr-only"
-        >{{ status }}</span>
-      </div>
+    <!-- @slot Indicator content.  -->
+    <slot />
+    <div
+      v-if="!hideIndicator"
+      role="status"
+      class="absolute rounded-full"
+      :class="[placementClass, sizeClass, variantClass]"
+    >
+      <span
+        v-if="status"
+        class="sr-only"
+      >{{ status }}</span>
     </div>
   </div>
 </template>

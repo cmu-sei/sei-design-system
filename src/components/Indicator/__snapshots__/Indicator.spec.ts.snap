@@ -2,50 +2,40 @@
 
 exports[`Indicator > should match its default snapshot 1`] = `
 <div
-  class="inline-block"
+  class="flex relative"
   data-id="sds-indicator"
-  data-v-3f586eb6=""
+  data-v-06e847d1=""
 >
+  <!-- @slot Indicator content.  -->
+  
+  Indicator
+  
   <div
-    class="relative"
-    data-v-3f586eb6=""
+    class="absolute rounded-full -top-1.5 -right-1.5 h-4 w-4 bg-blue-500 dark:bg-blue-300"
+    data-v-06e847d1=""
+    role="status"
   >
-    <!-- @slot Indicator content.  -->
-    
-    Indicator
-    
-    <div
-      class="absolute rounded-full -top-1.5 -right-1.5 h-4 w-4 bg-blue-500 dark:bg-blue-300"
-      data-v-3f586eb6=""
-      role="status"
-    >
-      <!--v-if-->
-    </div>
+    <!--v-if-->
   </div>
 </div>
 `;
 
 exports[`Indicator > should match its variant green, placement bottom-right snapshot 1`] = `
 <div
-  class="inline-block"
+  class="flex relative"
   data-id="sds-indicator"
-  data-v-3f586eb6=""
+  data-v-06e847d1=""
 >
+  <!-- @slot Indicator content.  -->
+  
+  Indicator
+  
   <div
-    class="relative"
-    data-v-3f586eb6=""
+    class="absolute rounded-full -bottom-1.5 -right-1.5 h-4 w-4 bg-green-500 dark:bg-green-300"
+    data-v-06e847d1=""
+    role="status"
   >
-    <!-- @slot Indicator content.  -->
-    
-    Indicator
-    
-    <div
-      class="absolute rounded-full -bottom-1.5 -right-1.5 h-4 w-4 bg-green-500 dark:bg-green-300"
-      data-v-3f586eb6=""
-      role="status"
-    >
-      <!--v-if-->
-    </div>
+    <!--v-if-->
   </div>
 </div>
 `;

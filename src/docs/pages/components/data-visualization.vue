@@ -54,12 +54,77 @@
           />
         </div>
         <div>
-          <SdsAvatar
-            shape="portrait"
-            variant="gray"
-            size="md"
-            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
-          />
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="portrait"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="portrait"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="portrait"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="portrait"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="circle"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="circle"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
         </div>
       </div>
     </div>
