@@ -2,7 +2,7 @@
   <nav
     ref="root"
     data-id="sds-megamenu"
-    class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 dark:border-gray-800"
+    class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800"
     :class="{
       'z-20': isOpen
     }"
@@ -39,8 +39,8 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': type === 'block',
-            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !(topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'px-2 xl:px-3 2xl:px-4 border-gray-100 dark:border-gray-800 font-semibold': type === 'block',
+            'text-gray-700 dark:text-gray-100 hover:text-gray-900 hover:bg-gray-50 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !(topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'text-white bg-red-600 dark:text-gray-900 dark:bg-red-300': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'hover:text-red-600 hover:border-red-600 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
             'text-red-600 dark:text-red-300 border-red-600 dark:border-red-300': type === 'underline' && topLink.selected,
@@ -102,7 +102,7 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
+            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
