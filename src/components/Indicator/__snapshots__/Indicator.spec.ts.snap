@@ -4,7 +4,7 @@ exports[`Indicator > should match its default snapshot 1`] = `
 <div
   class="flex relative"
   data-id="sds-indicator"
-  data-v-4b43f55b=""
+  data-v-06e847d1=""
 >
   <!-- @slot Indicator content.  -->
   
@@ -12,7 +12,7 @@ exports[`Indicator > should match its default snapshot 1`] = `
   
   <div
     class="absolute rounded-full -top-1.5 -right-1.5 h-4 w-4 bg-blue-500 dark:bg-blue-300"
-    data-v-4b43f55b=""
+    data-v-06e847d1=""
     role="status"
   >
     <!--v-if-->
@@ -24,7 +24,7 @@ exports[`Indicator > should match its variant green, placement bottom-right snap
 <div
   class="flex relative"
   data-id="sds-indicator"
-  data-v-4b43f55b=""
+  data-v-06e847d1=""
 >
   <!-- @slot Indicator content.  -->
   
@@ -32,7 +32,7 @@ exports[`Indicator > should match its variant green, placement bottom-right snap
   
   <div
     class="absolute rounded-full -bottom-1.5 -right-1.5 h-4 w-4 bg-green-500 dark:bg-green-300"
-    data-v-4b43f55b=""
+    data-v-06e847d1=""
     role="status"
   >
     <!--v-if-->
