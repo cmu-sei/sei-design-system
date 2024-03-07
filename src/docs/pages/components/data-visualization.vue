@@ -6,12 +6,18 @@
       </h2>
       <div class="grid grid-cols-4 gap-4">
         <div>
-          <SdsAvatar
-            shape="circle"
-            variant="gray"
+          <SdsIndicator
+            placement-over="circle"
+            placement="bottom-right"
             size="lg"
-            name="John Smith"
-          />
+          >
+            <SdsAvatar
+              shape="circle"
+              variant="gray"
+              size="lg"
+              name="John Smith"
+            />
+          </SdsIndicator>
         </div>
         <div>
           <SdsAvatar
