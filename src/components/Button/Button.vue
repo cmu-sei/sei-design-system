@@ -1,6 +1,7 @@
 <template>
   <button
     data-id="sds-button"
+    :type="type"
     :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass]"
     :disabled="disabled"
     :aria-disabled="disabled"
@@ -25,6 +26,10 @@ const props = defineProps({
    * Determines the color of the component.
    */
   variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
+  /**
+   * Determines the HTML type attribute for the button.
+   */
+  type: { type: String as PropType<'button' | 'submit'>, default: 'button' },
   /**
    * Determines the size.
    */

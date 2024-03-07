@@ -21,10 +21,14 @@ export default {
       options: ['blue', 'red'],
       control: { type: 'select' }
     },
+    type: {
+      options: ['button', 'submit'],
+      control: { type: 'select' }
+    },
     size: {
       options: ['sm', 'md'],
       control: { type: 'select' }
-    }
+    },
   }
 };
 
