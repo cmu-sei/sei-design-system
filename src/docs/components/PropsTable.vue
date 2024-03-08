@@ -24,7 +24,7 @@
           />
           <div>
             <code
-              v-if="item.type"
+              v-if="item.type && Array.isArray(item.type)"
               class="bg-gray-100 dark:bg-gray-800 p-1 text-xs rounded-sm lowercase"
             >{{ item.type.join(', ') }}</code>
           </div>
@@ -53,7 +53,7 @@ const propFields = ref([
 const propDefinitions = computed(() => props.component.props)
 const docsDefinitions = computed(() => props.component.docs)
 
-const propItems = ref<{ name: string, description?: string, type?: string[], required?: boolean, default?: unknown }[]>([])
+const propItems = ref<any[]>([])
 
 for (const prop in propDefinitions.value) {
   const value = propDefinitions.value[prop]

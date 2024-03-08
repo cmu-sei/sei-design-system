@@ -89,7 +89,7 @@ import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { Uid } from '@shimyshack/uid'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsPopover',
@@ -150,7 +150,7 @@ const props = defineProps({
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<Placement>, default: 'bottom-start' },
+  placement: { type: String as PropType<DropdownPlacement>, default: 'bottom-start' },
   /**
    * Determines whether to use the block styling on the trigger button or not.
    */

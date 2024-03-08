@@ -44,9 +44,9 @@
 <script setup lang="ts">
 import { Uid } from "@shimyshack/uid";
 
-type CheckboxGroupOptionValue = string | number | boolean
+export type CheckboxGroupOptionValue = string | number | boolean
 
-interface CheckboxGroupOption<T> {
+export interface CheckboxGroupOption<T> {
   [key: string]: T
 }
 

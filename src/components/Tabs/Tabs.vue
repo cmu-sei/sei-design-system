@@ -80,7 +80,7 @@
 <script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
 
-interface ITab {
+export interface TabItem {
   key: string
   tag?: 'button' | 'a'
   title?: string
@@ -117,7 +117,7 @@ const props = defineProps({
    * }
    * ```
    */
-  modelValue: { type: Array as PropType<ITab[]>, default: () => [] },
+  modelValue: { type: Array as PropType<TabItem[]>, default: () => [] },
   /**
    * The overall look and feel of the component.
    */
@@ -156,10 +156,10 @@ const emit = defineEmits(['update:model-value', 'change'])
 const root = ref<HTMLElement>()
 
 const tabs = computed({
-  get(): ITab[] {
+  get(): TabItem[] {
     return props.modelValue
   },
-  set(value: ITab[]) {
+  set(value: TabItem[]) {
     /**
      * Emmitted when the v-model has changed.
      */
@@ -167,11 +167,11 @@ const tabs = computed({
   }
 })
 
-const willChangeTabStateDelay = (tab: ITab, fn: Function) => new Promise<void>(async (res, rej) => {
+const willChangeTabStateDelay = (tab: TabItem, fn: Function) => new Promise<void>(async (res, rej) => {
   return fn ? await fn(tab, res, rej) : res()
 })
 
-const changeTab = async (tab: ITab) => {
+const changeTab = async (tab: TabItem) => {
   if (tab.tag === 'a' && tab.href) {
     return true
   } else {

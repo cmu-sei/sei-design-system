@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-interface TopFiveChartResult {
+export interface TopFiveChartResult {
   id: string | number
   count: number
   title: string

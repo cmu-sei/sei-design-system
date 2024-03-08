@@ -46,7 +46,7 @@ import { Uid } from "@shimyshack/uid";
 
 type RadioGroupOptionValue = boolean | string | number
 
-interface RadioGroupOption<T> {
+export interface RadioGroupOption<T> {
   [key: string]: T
 }
 

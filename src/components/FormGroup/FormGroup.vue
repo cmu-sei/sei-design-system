@@ -95,7 +95,7 @@
       <div>
         <slot
           :id="id"
-          :valid="state"
+          :valid="state === true"
           :invalid="state === false"
           :disabled="disabled"
           :required="required"

@@ -65,12 +65,13 @@
 </template>
 
 <script lang="ts">
-import { ITopLink } from '../MegaMenu/MegaMenu.vue';
+import { MegaMenuLink } from '../MegaMenu/MegaMenu.vue';
 /**
  * Right now, this is the same interface as Mega Menu's ITopLink, with the addition of "type"
  */
-interface IMobileMenu extends ITopLink {
+export interface MobileMenuLink extends MegaMenuLink {
   type?: 'back' | 'expand' | 'slide' | 'title'
+  icon?: string
 }
 
 export default {
@@ -92,7 +93,7 @@ const props = defineProps({
    * Provides the navigation item values used to populate the mobile menu.
    */
   mobileMenus: {
-    type: Array as PropType<IMobileMenu[]>,
+    type: Array as PropType<MobileMenuLink[]>,
     default: () => []
   },
   /**
@@ -149,7 +150,7 @@ const mobileMenus = ref(props.mobileMenus);
  * If no argument is given (or if the key doesn't exist),
  * the menu will switch to the root/default panel.
  */
-const navigate = (value: string) => {
+const navigate = (value: string | null = null) => {
   if (typeof document === "undefined") return null  // Only accept client-side calls
   mobileMenus.value.map(i => {
     /**
@@ -158,7 +159,7 @@ const navigate = (value: string) => {
      * If it matches, set that item's "selected" value to "true".
      */
     i.selected = i.selected ? false : value === i.key;
-    if (i.selected) {
+    if (i.selected && value) {
       panel.value = value;
     }
   });

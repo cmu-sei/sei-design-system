@@ -278,7 +278,7 @@ const datepickerModelValue = ref()
 const checkboxModelValue = ref()
 const radioModelValue = ref()
 
-const state = ref<boolean | null>()
+const state = ref<boolean>()
 
 const options = ref([
   { value: 'option 1', text: 'Option 1' },

@@ -257,7 +257,7 @@
 </template>
 
 <script setup lang="ts">
-interface TableField {
+export interface TableField {
   key: string
   label: string
   format?: Function | undefined
@@ -268,7 +268,7 @@ interface TableField {
   fields?: TableField[] | undefined
 }
 
-interface TableItem {
+export interface TableItem {
   id: number
   [key: string]: unknown
 }

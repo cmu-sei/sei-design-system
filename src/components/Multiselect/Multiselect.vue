@@ -239,11 +239,11 @@
 <script setup lang="ts">
 import debounce from "../../helpers/debounce";
 
-interface MultiselectOption {
+export interface MultiselectOption {
   [id: string | number]: any
 }
 
-interface MultiselectTag {
+export interface MultiselectTag {
   [id: string | number]: any
   isNewTag?: boolean
 }

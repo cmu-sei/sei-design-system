@@ -5,7 +5,7 @@
         Popover
       </h2>
       <div>
-        <SdsPopover size="md">
+        <SdsPopover size="sm">
           <template #trigger>
             <sds-button
               size="md"
