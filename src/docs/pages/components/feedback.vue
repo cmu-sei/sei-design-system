@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref<{ id: number; title: string; text: string; type: string; }[]>([])
+const modelValue = ref<any[]>([])
 
 const addToast = () => {
   const index = Math.floor(Math.random() * Math.floor(4));

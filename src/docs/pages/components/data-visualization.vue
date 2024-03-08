@@ -181,7 +181,7 @@
         <SdsDatapoint
           v-model="datapointModelValue"
           size="sm"
-          variant="black"
+          variant="gray"
           label="Report Downloads"
         />
         <SdsDatapoint
@@ -298,19 +298,19 @@
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>
-                  <span>{{ item.additionalData.store }}</span>
+                  <span>{{ (item.additionalData as any).store }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Aisle:</span>
-                  <span>{{ item.additionalData.aisle }}</span>
+                  <span>{{ (item.additionalData as any).aisle }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Price:</span>
-                  <span>{{ item.additionalData.price }}</span>
+                  <span>{{ (item.additionalData as any).price }}</span>
                 </p>
               </li>
             </ul>
@@ -411,7 +411,7 @@
 <script setup lang="ts">
 const datapointModelValue = ref(1451)
 
-const fields = ref([
+const fields = ref<any[]>([
   {
     key: "id",
     label: "ID",

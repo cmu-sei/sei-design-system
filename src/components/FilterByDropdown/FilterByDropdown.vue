@@ -140,13 +140,13 @@ import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
 import { Uid } from '@shimyshack/uid'
 
-interface FilterByDropdownOption {
+export interface FilterByDropdownOption {
   id: string | number
   selected: boolean
   text: string
 }
 
-type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
+export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
 defineOptions({
   name: "SdsFilterByDropdown",

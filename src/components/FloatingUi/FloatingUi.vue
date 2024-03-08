@@ -64,7 +64,7 @@ import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import mitt from 'mitt';
 
 import type { Placement as BasePlacement, ComputePositionConfig, Alignment, Strategy } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type FloatingUiPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsFloatingUi'
@@ -151,7 +151,7 @@ onKeyStroke('Escape', (e) => {
 
 const props = defineProps({
   disabled: { type: Boolean, default: false },
-  placement: { type: String as PropType<Placement>, default: 'auto' },
+  placement: { type: String as PropType<FloatingUiPlacement>, default: 'auto' },
   strategy: { type: String as PropType<Strategy>, default: 'absolute' },
   overflowPadding: { type: Number, default: 5 },
   arrowPadding: { type: Number, default: 5 },

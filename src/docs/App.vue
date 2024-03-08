@@ -93,9 +93,9 @@ const route = useRoute()
 const collapsed = ref(true)
 const appSuite = ref('SDS')
 const appName = ref('Playground')
-const pageTitle = computed(() => route.meta.title)
+const pageTitle = computed(() => route.meta.title as string)
 const enableCollapsibleSidebar = ref(true)
-const sidebarNavigationItems = computed(() => [
+const sidebarNavigationItems = computed<any[]>(() => [
   {id: 1, title: 'Home', active: route.fullPath === '/', href: '/'},
   {
     id: 2,

@@ -751,7 +751,7 @@ import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
-interface LayoutAppSidebarNavItem {
+export interface LayoutAppSidebarNavItem {
   id: number | string
   href: string
   active: boolean

@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import SdsToast from "../Toast/Toast.vue";
 
-interface ToasterToast {
+export interface ToasterToast {
   id: number
   type: 'success' | 'info' | 'warning' | 'danger'
   title: string

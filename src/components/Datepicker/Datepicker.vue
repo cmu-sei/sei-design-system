@@ -190,7 +190,7 @@ import { subDays } from 'date-fns/subDays'
 import { addYears } from 'date-fns/addYears'
 
 import type { Placement as BasePlacement } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -223,7 +223,7 @@ const props = defineProps({
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<Placement>, default: 'bottom' },
+  placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
   /**
    * The v-model for the component.
    * 

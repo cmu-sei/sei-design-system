@@ -158,13 +158,13 @@
 import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 /* Top Link navigation label type interface */
-export interface ITopLink {
+export interface MegaMenuLink {
   key: string
   tag?: 'button' | 'a'
   title?: string
   href?: string
   alignment?: 'left' | 'right' | 'center'
-  content?: Object
+  content?: Record<string, any>
   external?: boolean
   active?: boolean
   selected?: boolean
@@ -205,7 +205,7 @@ const props = defineProps({
    *
    * ```
    */
-  modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
+  modelValue: { type: Array as PropType<MegaMenuLink[]>, default: () => [] },
   /**
    * Overall look and feel of the component (two options)
    */
@@ -231,11 +231,11 @@ const emits = defineEmits(
 
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
-  get(): ITopLink[] {
+  get(): MegaMenuLink[] {
     return props.modelValue
   },
   /* Set SdsMegaMenu modelValue property */
-  set(value: ITopLink[]) {
+  set(value: MegaMenuLink[]) {
     /**
      * Emmitted when the v-model (Mega Menu's data source)
      * has changed.
@@ -355,7 +355,7 @@ const checkKeyEvent = (event: KeyboardEvent) => {
 /**
  * Callback run when a topLink of the mega menu is clicked
  **/
-const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
+const changeMenuPanel = async (topLink: MegaMenuLink, event: Event) => {
   if (topLink.tag === 'a' && topLink.href) {
     /* Treat anchor tags as normal links */
     return true

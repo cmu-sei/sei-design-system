@@ -157,8 +157,7 @@
         <div class="grid gap-4">
           <div>
             <SdsMegaMenu v-model="megaMenu">
-              <template #default="{ topLink, content }">
-                {{ topLink }}
+              <template #default="{ content }">
                 {{ content }}
               </template>
               <template #link(home)>
@@ -183,13 +182,13 @@
                     <div class="grid grid-cols-2 gap-2">
                       <div class="col-span-2">
                         <SdsMegaMenuItem
-                          :label="content.aboutLink.label"
-                          :type="content.aboutLink.type"
-                          :href="content.aboutLink.href"
+                          :label="content?.aboutLink.label"
+                          :type="content?.aboutLink.type"
+                          :href="content?.aboutLink.href"
                         />
                       </div>
                       <div
-                        v-for="row, index in content.aboutRows"
+                        v-for="row, index in content?.aboutRows"
                         :key="index"
                       >
                         <div
@@ -213,12 +212,12 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :label="content.divisionLink.label"
-                      :type="content.divisionLink.type"
-                      :href="content.divisionLink.href"
+                      :label="content?.divisionLink.label"
+                      :type="content?.divisionLink.type"
+                      :href="content?.divisionLink.href"
                     />
                     <div
-                      v-for="division in content.divisionRows"
+                      v-for="division in content?.divisionRows"
                       :key="division.key"
                     >
                       <SdsMegaMenuItem
@@ -235,13 +234,13 @@
                     <div class="grid grid-cols-2 gap-2">
                       <div class="col-span-2">
                         <SdsMegaMenuItem
-                          :label="content.topicsLink.label"
-                          :type="content.topicsLink.type"
-                          :href="content.topicsLink.href"
+                          :label="content?.topicsLink.label"
+                          :type="content?.topicsLink.type"
+                          :href="content?.topicsLink.href"
                         />
                       </div>
                       <template
-                        v-for="column, index in content.topicsColumns"
+                        v-for="column, index in content?.topicsColumns"
                         :key="index"
                       >
                         <div
@@ -259,7 +258,7 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <div
-                      v-for="item in content.extra"
+                      v-for="item in content?.extra"
                       :key="item.key"
                     >
                       <SdsMegaMenuItem
@@ -280,7 +279,7 @@
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <div
-                      v-for="item in content.links"
+                      v-for="item in content?.links"
                       :key="item.key"
                     >
                       <SdsMegaMenuItem
@@ -297,7 +296,7 @@
                       href="https://sei.cmu.edu/our-work/projects/index.cfm"
                     />
                     <div
-                      v-for="blogPost in content.blogPosts"
+                      v-for="blogPost in content?.blogPosts"
                       :key="blogPost.key"
                       class="mb-2"
                     >
@@ -355,7 +354,7 @@
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <div
-                      v-for="educationLink in content.educationLinks"
+                      v-for="educationLink in content?.educationLinks"
                       :key="educationLink.key"
                     >
                       <SdsMegaMenuItem
@@ -374,7 +373,7 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <div
-                      v-for="training in content.trainings"
+                      v-for="training in content?.trainings"
                       :key="training.key"
                     >
                       <SdsMegaMenuItem
@@ -386,12 +385,12 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :label="content.eventLink.label"
-                      :type="content.eventLink.type"
-                      :href="content.eventLink.href"
+                      :label="content?.eventLink.label"
+                      :type="content?.eventLink.type"
+                      :href="content?.eventLink.href"
                     />
                     <div
-                      v-for="event in content.events"
+                      v-for="event in content?.events"
                       :key="event.key"
                     >
                       <SdsMegaMenuItem
@@ -447,12 +446,12 @@
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <SdsMegaMenuItem
-                      :href="content.careersLink.href"
-                      :label="content.careersLink.label"
-                      :type="content.careersLink.type"
+                      :href="content?.careersLink.href"
+                      :label="content?.careersLink.label"
+                      :type="content?.careersLink.type"
                     />
                     <div
-                      v-for="careerLink in content.careersLinks"
+                      v-for="careerLink in content?.careersLinks"
                       :key="careerLink.key"
                     >
                       <SdsMegaMenuItem
@@ -471,12 +470,12 @@
                   </div>
                   <div class="col-span-2 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :href="content.jobsLink.href"
-                      :label="content.jobsLink.label"
-                      :type="content.jobsLink.type"
+                      :href="content?.jobsLink.href"
+                      :label="content?.jobsLink.label"
+                      :type="content?.jobsLink.type"
                     />
                     <div
-                      v-for="row, index in content.jobs"
+                      v-for="row, index in content?.jobs"
                       :key="index"
                       class="grid grid-cols-2 gap-4"
                     >
@@ -527,13 +526,13 @@
             >
               <template #panel(about-1)="{ content }">
                 <SdsMegaMenuItem
-                  :label="content.divisionLink.label"
-                  :type="content.divisionLink.type"
-                  :href="content.divisionLink.href"
+                  :label="content?.divisionLink.label"
+                  :type="content?.divisionLink.type"
+                  :href="content?.divisionLink.href"
                   class="select-none"
                 />
                 <div
-                  v-for="division in content.divisionRows"
+                  v-for="division in content?.divisionRows"
                   :key="division.key"
                 >
                   <SdsMegaMenuItem
@@ -544,7 +543,7 @@
               </template>
               <template #panel(research-and-development-1)="{ content }">
                 <div
-                  v-for="item in content.extra"
+                  v-for="item in content?.extra"
                   :key="item.key"
                   class="max-w-sm"
                 >
@@ -600,12 +599,12 @@
               <template #panel(education-1)="{ content, close }">
                 <div class="max-w-lg">
                   <SdsMegaMenuItem
-                    :label="content.eventLink.label"
-                    :type="content.eventLink.type"
-                    :href="content.eventLink.href"
+                    :label="content?.eventLink.label"
+                    :type="content?.eventLink.type"
+                    :href="content?.eventLink.href"
                   />
                   <div
-                    v-for="event in content.events"
+                    v-for="event in content?.events"
                     :key="event.key"
                   >
                     <SdsMegaMenuItem
@@ -657,12 +656,12 @@
               </template>
               <template #panel(careers-1)="{ content }">
                 <SdsMegaMenuItem
-                  :href="content.jobsLink.href"
-                  :label="content.jobsLink.label"
-                  :type="content.jobsLink.type"
+                  :href="content?.jobsLink.href"
+                  :label="content?.jobsLink.label"
+                  :type="content?.jobsLink.type"
                 />
                 <div
-                  v-for="row, index in content.jobs"
+                  v-for="row, index in content?.jobs"
                   :key="index"
                   class="grid grid-cols-2 gap-4"
                 >
@@ -810,7 +809,7 @@
                 @click="navigate()"
               />
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[0].content.children"
+                v-for="menuItem in mobileMenus[0].content?.children"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
@@ -832,14 +831,14 @@
                 <b>Tree Categories</b>
               </p>
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[1].content.children_1"
+                v-for="menuItem in mobileMenus[1].content?.children_1"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
               />
               <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[1].content.children_2"
+                v-for="menuItem in mobileMenus[1].content?.children_2"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
@@ -1009,6 +1008,10 @@
 </template>
 
 <script setup lang="ts">
+import { MegaMenuLink } from '../../../components/MegaMenu/MegaMenu.vue';
+import { MobileMenuLink } from '../../../components/MobileMenu/MobileMenu.vue';
+import { TabItem } from '../../../components/Tabs/Tabs.vue';
+
 const currentPage = ref(3)
 const totalPages = ref(10)
 
@@ -1021,7 +1024,7 @@ const comboBox = reactive({
   }
 })
 
-const tabs = ref([
+const tabs = ref<TabItem[]>([
   { key: "home", title: "Home", disabled: true },
   { key: "about", title: "About Us", active: true },
   { key: "workplace-services", title: "Workplace Services" },
@@ -1034,7 +1037,7 @@ const changeTab = (tab: any) => {
   console.log(tab);
 }
 
-const megaMenu = ref([
+const megaMenu = ref<MegaMenuLink[]>([
   {
     key: "home",
     title: "Home",
@@ -1504,7 +1507,7 @@ const megaMenu = ref([
   }
 ])
 
-const megaMenu2 = ref([
+const megaMenu2 = ref<MegaMenuLink[]>([
   {
     key: "about-1",
     title: "About",
@@ -1967,7 +1970,7 @@ const megaMenu2 = ref([
   }
 ])
 
-const mobileMenus = ref([
+const mobileMenus = ref<MobileMenuLink[]>([
   {
     key: "plants",
     title: "Plants",

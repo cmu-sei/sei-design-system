@@ -38,7 +38,7 @@ const fields = ref([
   { key: 'description', label: 'Description' }
 ])
 
-const items = ref<{ name: string, description?: string }[]>([])
+const items = ref<any[]>([])
 
 if (docsDefinitions.value && docsDefinitions.value.events) {
   for (const event in docsDefinitions.value.events) {
