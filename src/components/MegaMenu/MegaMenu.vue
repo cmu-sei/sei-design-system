@@ -170,6 +170,7 @@ export interface MegaMenuLink {
   selected?: boolean
   disabled?: boolean
   onClick?: Function
+  [key: string]: any
 }
 
 defineOptions({
