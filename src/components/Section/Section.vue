@@ -20,7 +20,7 @@
         class="flex px-4 py-3"
         :class="{ 'border-b border-gray-300 dark:border-gray-800': type === 'accented' }"
       >
-        <div class="self-center flex-grow">
+        <div class="self-center grow">
           <div
             v-if="hasTitleSlot"
             class="slot-title"
