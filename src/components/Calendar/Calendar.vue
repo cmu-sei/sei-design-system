@@ -36,7 +36,7 @@
               d="M328 112L184 256l144 144"
             /></svg>
           </button>
-          <div class="flex-grow">
+          <div class="grow">
             <button
               class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
               type="button"
@@ -48,7 +48,7 @@
           </div>
           <div
             v-if="isRange"
-            class="hidden flex-grow sm:block"
+            class="hidden grow sm:block"
           >
             <button
               class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"

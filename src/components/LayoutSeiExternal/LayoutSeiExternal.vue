@@ -14,7 +14,7 @@
     >
       <layout-sei-external-masthead :page="page" />
     </slot>
-    <main class="flex-grow">
+    <main class="grow">
       <div
         :class="{
           'bg-gray-25': showMasthead,

@@ -98,7 +98,7 @@
               </svg>
             </button>
           </header>
-          <main class="p-6 flex flex-grow flex-col">
+          <main class="p-6 flex grow flex-col">
             <!-- @slot Panel content. -->
             <slot />
           </main>

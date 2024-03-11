@@ -56,7 +56,7 @@
             class="py-2 border-b only:border-0 last:pb-0 last:border-0"
           >
             <div class="flex">
-              <div class="my-auto flex gap-1 flex-grow">
+              <div class="my-auto flex gap-1 grow">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -100,7 +100,7 @@
             class="py-2 border-b only:border-0 last:pb-0 last:border-0"
           >
             <div class="flex">
-              <div class="my-auto flex gap-1 flex-grow">
+              <div class="my-auto flex gap-1 grow">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"

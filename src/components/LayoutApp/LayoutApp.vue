@@ -71,7 +71,7 @@
         />
       </div>
     </div>
-    <div class="flex flex-grow flex-shrink-0">
+    <div class="flex grow flex-shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
         enter-active-class="transition-opacity ease-linear duration-150"
@@ -113,7 +113,7 @@
             <span class="sr-only">Toggle mobile menu</span>
           </button>
           <div class="h-screen flex flex-col sticky top-0">
-            <div class="overflow-y-auto flex-grow overscroll-contain">
+            <div class="overflow-y-auto grow overscroll-contain">
               <div
                 v-if="appName"
                 class="sticky top-0 bg-gray-900 z-10 flex gap-2 p-4"
@@ -352,7 +352,7 @@
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
-          <div class="overflow-y-auto flex-grow overscroll-contain">
+          <div class="overflow-y-auto grow overscroll-contain">
             <div
               v-if="appName"
               class="sticky top-0 bg-gray-900 z-10"
@@ -658,13 +658,13 @@
       </aside>
 
       <!-- Main content -->
-      <div class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950">
+      <div class="flex flex-col items-stretch grow min-w-0">
+        <main class="grow pb-4 bg-gray-25 dark:bg-gray-950">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
-            <div class="flex-grow my-auto flex flex-row gap-2">
+            <div class="grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. @binding collapsed -->
               <slot
                 name="page-title"

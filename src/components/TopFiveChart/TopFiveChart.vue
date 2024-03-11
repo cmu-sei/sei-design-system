@@ -18,7 +18,7 @@
           :key="result.id"
         >
           <div class="flex">
-            <div class="flex-grow">
+            <div class="grow">
               <div class="mb-2">
                 <div
                   class="h-6 mr-2 rounded"

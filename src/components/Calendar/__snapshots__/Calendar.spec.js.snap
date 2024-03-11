@@ -42,7 +42,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         </svg>
       </button>
       <div
-        class="flex-grow"
+        class="grow"
       >
         <button
           class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
