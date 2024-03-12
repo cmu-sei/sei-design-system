@@ -42,7 +42,7 @@ const Template = (args) => ({
       </template>
       Page content area
       <template #actions-bar>
-      <div class="bg-white dark:bg-gray-900 dark:text-white backdrop-blur p-4 shadow">
+      <div>
           <div class="flex gap-2">
             <p class="ml-auto my-auto mr-2 font-semibold">
               Action bar content area
