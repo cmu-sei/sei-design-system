@@ -51,7 +51,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-blue-700 dark:bg-blue-800'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-blue-50'
       }
       break
     case 'green':
@@ -63,7 +63,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-green-700 dark:bg-green-800'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-green-50'
       }
       break
     case 'teal':
@@ -75,7 +75,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-teal-700 dark:bg-teal-800'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-teal-50'
       }
       break
     case 'orange':
@@ -87,7 +87,7 @@ const variantClass = computed(() => {
         textClass = 'text-orange-800 dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-orange-500 dark:bg-orange-600'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-orange-50'
       }
       break
     case 'red':
@@ -99,7 +99,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-red-700 dark:bg-red-800'
-        textClass = 'text-white dark:text-gray-100'
+        textClass = 'text-white dark:text-red-100'
       }
       break
     case 'tan':
@@ -111,7 +111,7 @@ const variantClass = computed(() => {
         textClass = 'text-tan-900 dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-tan-600 dark:bg-tan-700'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-tan-50'
       }
       break
     case 'yellow':
@@ -123,7 +123,7 @@ const variantClass = computed(() => {
         textClass = 'text-yellow-800 dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-yellow-500 dark:bg-yellow-600'
-        textClass = 'text-white dark:text-gray-25'
+        textClass = 'text-white dark:text-yellow-25'
       }
       break
 
@@ -136,7 +136,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-purple-700 dark:bg-purple-800'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-purple-50'
       }
       break
     case 'indigo':
@@ -148,7 +148,7 @@ const variantClass = computed(() => {
         textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-indigo-700 dark:bg-indigo-800'
-        textClass = 'text-white dark:text-gray-50'
+        textClass = 'text-white dark:text-indigo-50'
       }
       break
     case 'gray':
