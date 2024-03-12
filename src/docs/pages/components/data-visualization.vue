@@ -298,19 +298,19 @@
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>
-                  <span>{{ (item.additionalData as any).store }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).store }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Aisle:</span>
-                  <span>{{ (item.additionalData as any).aisle }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Price:</span>
-                  <span>{{ (item.additionalData as any).price }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).price }}</span>
                 </p>
               </li>
             </ul>
@@ -409,9 +409,11 @@
 </template>
 
 <script setup lang="ts">
+import type { TableField, TableItem } from '../../../components/Table/Table.vue';
+
 const datapointModelValue = ref(1451)
 
-const fields = ref<any[]>([
+const fields = ref<TableField[]>([
   {
     key: "id",
     label: "ID",
@@ -450,7 +452,13 @@ const fields = ref<any[]>([
   }
 ])
 
-const items = ref([
+interface AdditionalData {
+  store: string;
+  aisle: string;
+  price: string;
+}
+
+const items = ref<TableItem[]>([
   {
     id: 1,
     fruit: "Apple",

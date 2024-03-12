@@ -144,7 +144,7 @@ export interface FilterByDropdownOption {
   id: string | number
   selected: boolean
   text: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
