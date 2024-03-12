@@ -28,6 +28,9 @@ const config: StorybookConfig = {
     name: '@storybook/vue3-vite',
     options: {},
   },
+  core: {
+    disableTelemetry: true,
+  },
 };
 
 export default config;
