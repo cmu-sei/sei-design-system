@@ -110,7 +110,7 @@ const props = defineProps({
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'blue' | 'red'>, default: '' },
+  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
   /**
    * Allows you to force dark mode on all child components
    */
@@ -278,6 +278,8 @@ const variantClass = computed(() => {
       return 'btn-blue'
     case 'red':
       return 'btn-red'
+    case 'white':
+      return 'btn-white'
     default:
       return ''
   }
