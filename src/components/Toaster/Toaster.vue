@@ -53,8 +53,8 @@ export interface ToasterToast {
   type: 'success' | 'info' | 'warning' | 'danger'
   title: string
   text: string
-  autoHideDelay: number
-  noAutoHide: boolean
+  autoHideDelay?: number | undefined
+  noAutoHide?: boolean | undefined
 }
 
 defineOptions({
