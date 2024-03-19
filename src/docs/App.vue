@@ -5,7 +5,7 @@
     :app-suite="appSuite"
     :enable-collapsible-sidebar="enableCollapsibleSidebar"
     :page-title="pageTitle"
-    :sidebar-navigation-items="sidebarNavigationItems"
+    :sidebar-navigation-items="(sidebarNavigationItems as LayoutAppSidebarNavItem[])"
     @navigate="navigate"
   >
     <template #user-section>
@@ -78,6 +78,8 @@
 </template>
 
 <script setup lang="ts">
+import { LayoutAppSidebarNavItem } from '../components/LayoutApp/LayoutApp.vue';
+
 defineOptions({
   name: 'AppPage'
 })
@@ -95,7 +97,7 @@ const appSuite = ref('SDS')
 const appName = ref('Playground')
 const pageTitle = computed(() => route.meta.title as string)
 const enableCollapsibleSidebar = ref(true)
-const sidebarNavigationItems = computed<any[]>(() => [
+const sidebarNavigationItems = computed(() => [
   {id: 1, title: 'Home', active: route.fullPath === '/', href: '/'},
   {
     id: 2,
@@ -131,7 +133,7 @@ const toggleDarkMode = () => {
   document.body.classList.toggle('dark')
 }
 
-const navigate = ({group, item, event}: any) => {
+const navigate = ({group, item, event}: { group: LayoutAppSidebarNavItem, item: LayoutAppSidebarNavItem, event: Event }) => {
   event.preventDefault()
   router.push({ path: item.href })
 }

@@ -272,6 +272,8 @@
 </template>
 
 <script setup lang="ts">
+import { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
 const modelValue = ref('')
 const selectModelValue = ref('')
 const datepickerModelValue = ref()
@@ -288,12 +290,12 @@ const options = ref([
 
 const multiselect = reactive({
   modelValue: '',
-  selected: [],
-  options: [] as { key: number; value: string; }[],
+  selected: [] as MultiselectOption[],
+  options: [] as MultiselectOption[],
   loading: false
 })
 
-const updateSelected = (selections: any) => {
+const updateSelected = (selections: MultiselectOption[]) => {
   multiselect.selected = selections
 }
 

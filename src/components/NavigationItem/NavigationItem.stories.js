@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Beta: A Navigation Item is a stylized link. It can be used to populate a Mobile Menu.',
+        component: 'A Navigation Item is a stylized link. It can be used to populate a Mobile Menu.',
       },
     },
   },

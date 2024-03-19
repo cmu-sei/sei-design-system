@@ -176,15 +176,15 @@
                 </svg>
                 <span class="sr-only">Home</span>
               </template>
-              <template #panel(about)="{ content }">
+              <template #panel(about)="{ content }: { content?: MegaMenuContent }">
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-2">
                     <div class="grid grid-cols-2 gap-2">
                       <div class="col-span-2">
                         <SdsMegaMenuItem
-                          :label="content?.aboutLink.label"
-                          :type="content?.aboutLink.type"
-                          :href="content?.aboutLink.href"
+                          :label="content?.aboutLink?.label"
+                          :type="content?.aboutLink?.type"
+                          :href="content?.aboutLink?.href"
                         />
                       </div>
                       <div
@@ -212,9 +212,9 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :label="content?.divisionLink.label"
-                      :type="content?.divisionLink.type"
-                      :href="content?.divisionLink.href"
+                      :label="content?.divisionLink?.label"
+                      :type="content?.divisionLink?.type"
+                      :href="content?.divisionLink?.href"
                     />
                     <div
                       v-for="division in content?.divisionRows"
@@ -228,15 +228,15 @@
                   </div>
                 </div>
               </template>
-              <template #panel(research-and-development)="{ content }">
+              <template #panel(research-and-development)="{ content }: { content?: MegaMenuContent }">
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-2">
                     <div class="grid grid-cols-2 gap-2">
                       <div class="col-span-2">
                         <SdsMegaMenuItem
-                          :label="content?.topicsLink.label"
-                          :type="content?.topicsLink.type"
-                          :href="content?.topicsLink.href"
+                          :label="content?.topicsLink?.label"
+                          :type="content?.topicsLink?.type"
+                          :href="content?.topicsLink?.href"
                         />
                       </div>
                       <template
@@ -275,7 +275,7 @@
                   </div>
                 </div>
               </template>
-              <template #panel(publications-and-media)="{ content }">
+              <template #panel(publications-and-media)="{ content }: { content?: MegaMenuContent }">
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <div
@@ -350,7 +350,7 @@
                 </svg>
                 <span class="sr-only">Education</span>
               </template>
-              <template #panel(education)="{ content, close }">
+              <template #panel(education)="{ content, close }: { content?: MegaMenuContent, close: Function }">
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <div
@@ -385,9 +385,9 @@
                   </div>
                   <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :label="content?.eventLink.label"
-                      :type="content?.eventLink.type"
-                      :href="content?.eventLink.href"
+                      :label="content?.eventLink?.label"
+                      :type="content?.eventLink?.type"
+                      :href="content?.eventLink?.href"
                     />
                     <div
                       v-for="event in content?.events"
@@ -424,7 +424,7 @@
                     kind="primary"
                     variant="red"
                     class="absolute right-8 flex flex-row justify-center w-16"
-                    @click="close"
+                    @click="close()"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -442,13 +442,13 @@
                   </SdsButton>
                 </div>
               </template>
-              <template #panel(careers)="{ content }">
+              <template #panel(careers)="{ content }: { content?: MegaMenuContent }">
                 <div class="grid grid-cols-3 gap-2">
                   <div class="col-span-1">
                     <SdsMegaMenuItem
-                      :href="content?.careersLink.href"
-                      :label="content?.careersLink.label"
-                      :type="content?.careersLink.type"
+                      :href="content?.careersLink?.href"
+                      :label="content?.careersLink?.label"
+                      :type="content?.careersLink?.type"
                     />
                     <div
                       v-for="careerLink in content?.careersLinks"
@@ -470,9 +470,9 @@
                   </div>
                   <div class="col-span-2 border-l dark:border-l-gray-800 pl-2">
                     <SdsMegaMenuItem
-                      :href="content?.jobsLink.href"
-                      :label="content?.jobsLink.label"
-                      :type="content?.jobsLink.type"
+                      :href="content?.jobsLink?.href"
+                      :label="content?.jobsLink?.label"
+                      :type="content?.jobsLink?.type"
                     />
                     <div
                       v-for="row, index in content?.jobs"
@@ -524,11 +524,11 @@
               type="block"
               width="auto"
             >
-              <template #panel(about-1)="{ content }">
+              <template #panel(about-1)="{ content }: { content?: MegaMenuContent }">
                 <SdsMegaMenuItem
-                  :label="content?.divisionLink.label"
-                  :type="content?.divisionLink.type"
-                  :href="content?.divisionLink.href"
+                  :label="content?.divisionLink?.label"
+                  :type="content?.divisionLink?.type"
+                  :href="content?.divisionLink?.href"
                   class="select-none"
                 />
                 <div
@@ -541,7 +541,7 @@
                   />
                 </div>
               </template>
-              <template #panel(research-and-development-1)="{ content }">
+              <template #panel(research-and-development-1)="{ content }: { content?: MegaMenuContent }">
                 <div
                   v-for="item in content?.extra"
                   :key="item.key"
@@ -596,12 +596,12 @@
                 </svg>
                 <span class="sr-only">Education</span>
               </template>
-              <template #panel(education-1)="{ content, close }">
+              <template #panel(education-1)="{ content, close }: { content?: MegaMenuContent, close: Function }">
                 <div class="max-w-lg">
                   <SdsMegaMenuItem
-                    :label="content?.eventLink.label"
-                    :type="content?.eventLink.type"
-                    :href="content?.eventLink.href"
+                    :label="content?.eventLink?.label"
+                    :type="content?.eventLink?.type"
+                    :href="content?.eventLink?.href"
                   />
                   <div
                     v-for="event in content?.events"
@@ -636,7 +636,7 @@
                     kind="primary"
                     variant="red"
                     class="absolute right-4 top-4 w-fit h-8 p-0 flex flex-col justify-center text-center mx-auto"
-                    @click="close"
+                    @click="close()"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -654,11 +654,11 @@
                   </SdsButton>
                 </div>
               </template>
-              <template #panel(careers-1)="{ content }">
+              <template #panel(careers-1)="{ content }: { content?: MegaMenuContent }">
                 <SdsMegaMenuItem
-                  :href="content?.jobsLink.href"
-                  :label="content?.jobsLink.label"
-                  :type="content?.jobsLink.type"
+                  :href="content?.jobsLink?.href"
+                  :label="content?.jobsLink?.label"
+                  :type="content?.jobsLink?.type"
                 />
                 <div
                   v-for="row, index in content?.jobs"
@@ -783,7 +783,7 @@
                 </template>
                 <template #children>
                   <SdsNavigationItem
-                    v-for="child in menuItem.content?.children"
+                    v-for="child in (menuItem.content as MobileMenuContent).children"
                     :key="child.key"
                     :label="child.title"
                     :href="child.href"
@@ -809,7 +809,7 @@
                 @click="navigate()"
               />
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[0].content?.children"
+                v-for="menuItem in (mobileMenus[0].content as MobileMenuContent).children"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
@@ -831,14 +831,14 @@
                 <b>Tree Categories</b>
               </p>
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[1].content?.children_1"
+                v-for="menuItem in (mobileMenus[1].content as MobileMenuContent).children_1"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
               />
               <hr class="mt-2 mb-1 border-gray-200 dark:border-gray-700">
               <SdsNavigationItem
-                v-for="menuItem in mobileMenus[1].content?.children_2"
+                v-for="menuItem in (mobileMenus[1].content as MobileMenuContent).children_2"
                 :key="menuItem.key"
                 :label="menuItem.title"
                 :href="menuItem.href"
@@ -1008,9 +1008,147 @@
 </template>
 
 <script setup lang="ts">
-import { MegaMenuLink } from '../../../components/MegaMenu/MegaMenu.vue';
-import { MobileMenuLink } from '../../../components/MobileMenu/MobileMenu.vue';
+import { MegaMenuItem } from '../../../components/MegaMenu/MegaMenu.vue';
+import { MobileMenuItem } from '../../../components/MobileMenu/MobileMenu.vue';
 import { TabItem } from '../../../components/Tabs/Tabs.vue';
+
+interface MegaMenuContent {
+  aboutLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  aboutRows?: {
+    description: string
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[][],
+  divisionLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  divisionRows?: {
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  topicsLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  topicsColumns?: {
+    key: string
+    title: string
+    href: string
+  }[][],
+  extra?: {
+    cta: boolean
+    description: string
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  links?: {
+    href: string,
+    key: string,
+    label: string,
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  blogPosts?: {
+    key: number,
+    title: string
+    published: string
+    author: string
+  }[],
+  careersLink?: {
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  careersLinks?: {
+    href: string
+    description: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  jobsLink?: {
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  jobs?: {
+    href: string
+    key: string
+    label: string
+    posted: string
+    locations: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[][],
+  educationLinks?: {
+    href: string
+    description?: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  trainings?: {
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  eventLink?: {
+    href: string
+    key: string
+    label: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  events?: {
+    dateRange: string
+    description: string
+    href: string
+    key: string
+    label: string
+    month: string
+    startDay: string
+    type?: 'landing-page' | 'descriptive' | 'simple'
+  }[]
+}
+
+interface MobileMenuContent {
+  children?: {
+    key: string
+    title: string
+    href?: string
+    type?: 'title' | 'simple' | 'slide' | 'back' | 'expand'
+    disabled?: boolean
+  }[],
+  children_1?: {
+    key: string,
+    title: string,
+    href: string
+  }[],
+  children_2?: {
+    key: string,
+    title: string,
+    href: string
+  }[]
+}
 
 const currentPage = ref(3)
 const totalPages = ref(10)
@@ -1033,11 +1171,11 @@ const tabs = ref<TabItem[]>([
   { key: "groups", align: "right" }
 ])
 
-const changeTab = (tab: any) => {
+const changeTab = (tab: TabItem) => {
   console.log(tab);
 }
 
-const megaMenu = ref<MegaMenuLink[]>([
+const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
   {
     key: "home",
     title: "Home",
@@ -1500,14 +1638,14 @@ const megaMenu = ref<MegaMenuLink[]>([
     href: "#",
     title: "Dark Mode",
     alignment: "right",
-    onClick: (link: any, event: any) => {
+    onClick: (link: MegaMenuItem, event: Event) => {
       event.preventDefault()
       document.body.classList.toggle('dark')
     }
   }
 ])
 
-const megaMenu2 = ref<MegaMenuLink[]>([
+const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
   {
     key: "about-1",
     title: "About",
@@ -1963,14 +2101,14 @@ const megaMenu2 = ref<MegaMenuLink[]>([
     tag: "a",
     href: "#",
     title: "Dark Mode",
-    onClick: (link: any, event: any) => {
+    onClick: (link: MegaMenuItem, event: Event) => {
       event.preventDefault()
       document.body.classList.toggle('dark')
     }
   }
 ])
 
-const mobileMenus = ref<MobileMenuLink[]>([
+const mobileMenus = ref<MobileMenuItem<MobileMenuContent>[]>([
   {
     key: "plants",
     title: "Plants",

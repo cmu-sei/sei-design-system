@@ -289,7 +289,7 @@
             </p>
           </template>
           <template #cell(actions)="{ item }">
-            <button @click="edit(item.id)">
+            <button @click="edit(item)">
               Edit
             </button>
           </template>
@@ -521,8 +521,8 @@ const items = ref<TableItem[]>([
   }
 ])
 
-const edit = (id: any) => {
-  console.log(id)
+const edit = (item: TableItem) => {
+  console.log(item)
 }
 
 const title = ref('Chart title')

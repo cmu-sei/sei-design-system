@@ -252,6 +252,8 @@
 </template>
 
 <script setup lang="ts">
+import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
+
 const expandCollapseModel = ref(false)
 
 const filterBy = reactive({
@@ -277,7 +279,7 @@ const filterBy = reactive({
     { id: 19, text: "Option 19", selected: false },
     { id: 20, text: "Option 20", selected: false },
   ],
-  idsText: null
+  idsText: null as string | null
 })
 
 const filterBySelectedOptions = computed(() => {
@@ -290,10 +292,10 @@ const filterByBtnText = computed(() => {
     : "No options are selected";
 })
 
-const filtered = (options: any) => {
+const filtered = (options: FilterByDropdownOption[]) => {
   filterBy.idsText = options
-    .filter((i: any) => i.selected)
-    .map((i: any) => i.id)
+    .filter((i: FilterByDropdownOption) => i.selected)
+    .map((i: FilterByDropdownOption) => i.id)
     .join(", ");
 }
 
