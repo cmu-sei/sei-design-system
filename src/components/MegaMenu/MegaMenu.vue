@@ -170,6 +170,7 @@ export type MegaMenuItem<T = Record<string, unknown>> = {
   selected?: boolean
   disabled?: boolean
   onClick?: Function
+  [key: string]: unknown
 }
 
 defineOptions({
