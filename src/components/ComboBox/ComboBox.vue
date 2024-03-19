@@ -310,6 +310,10 @@
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 
+export type ComboBoxSuggestion = {
+  [id: string | number]: unknown
+} | string
+
 defineOptions({
   name: 'SdsComboBox'
 })
@@ -350,7 +354,7 @@ const props = defineProps({
   /**
    * The suggestions used for autosuggest.
    */
-  suggestions: { type: Array as PropType<any[]>, default: undefined },
+  suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
   /**
    * The label key used for each non-group suggestion.
    */
@@ -438,18 +442,20 @@ watch(filterQuery, (value) => {
   preventShowDropdown.value = value === removeHtmlFromString(query.value)
 })
 
-const reduceList = (arr: any) => {
+const reduceList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
-  const cleanArray = arr.reduce((acc:any, item:any) => {
-    const newItem = item
-    if (props.optionGroupChildren && item[props.optionGroupChildren]) {
-      newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren])
-      if (newItem[props.optionGroupChildren].length > 0) {
-        acc.push(newItem)
-      }
-    } else {
-      if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value]).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
-        acc.push(newItem)
+  const cleanArray = arr.reduce((acc:ComboBoxSuggestion[], item:ComboBoxSuggestion) => {
+    if (typeof item !== 'string') {
+      const newItem = item
+      if (props.optionGroupChildren && item[props.optionGroupChildren]) {
+        newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
+        if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length > 0) {
+          acc.push(newItem)
+        }
+      } else {
+        if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
+          acc.push(newItem)
+        }
       }
     }
     return acc
@@ -458,19 +464,23 @@ const reduceList = (arr: any) => {
   return addIndexToList(cleanArray)
 }
 
-const addIndexToList = (arr: any) => {
+const addIndexToList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
   let index = 0
-  return arr.map((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      i[props.optionGroupChildren] = i[props.optionGroupChildren].map((x: any) => {
-        x.index = index
+  return arr.map((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string') {
+      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+        i[props.optionGroupChildren] = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).map((x: ComboBoxSuggestion) => {
+          if (typeof x !== 'string') {
+            x.index = index
+            index++
+          }
+          return x
+        })
+      } else {
+        i.index = index
         index++
-        return x
-      })
-    } else {
-      i.index = index
-      index++
+      }
     }
     return i
   })
@@ -478,9 +488,9 @@ const addIndexToList = (arr: any) => {
 
 const allCount = computed(() => {
   let count = 0
-  allSuggestionOptions.value?.forEach((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      count = count + i[props.optionGroupChildren].length
+  allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
+      count = count + (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length
     } else {
       count = count + 1
     }
@@ -489,7 +499,7 @@ const allCount = computed(() => {
 })
 
 const groupsWithItems = computed(() => {
-  return props.suggestions?.filter(i => props.optionGroupChildren && i[props.optionGroupChildren])
+  return props.suggestions?.filter(i => typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren])
 })
 
 const groups = computed(() => {
@@ -497,27 +507,27 @@ const groups = computed(() => {
   return groupsWithItems.value ? [
     { index: -1, key, label: 'All', count: allCount.value },
     ...groupsWithItems.value.map((i, index) => {
-      const count = props.optionGroupChildren && i[props.optionGroupChildren].length || 0
-      if (count > 0) {
-        key = key + 1
-      }
-      return {
-        index,
-        key,
-        label: i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-        count
-      }
-    }).filter(i => props.hideEmptyGroups ? i.count > 0 : true)
+        const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
+        if (count > 0) {
+          key = key + 1
+        }
+        return {
+          index,
+          key,
+          label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
+          count
+        }
+    }).filter(i => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 })
 
 const activeGroupKey = ref(-1)
 
 const activeGroup = computed(() => {
-  return groups.value.find(i => i.key === activeGroupKey.value)
+  return groups.value.find(i => typeof i !== 'string' && i?.key === activeGroupKey.value)
 })
 
-const setActiveGroup = (group: { key: number, label: string, count: number }) => {
+const setActiveGroup = (group: { key: number }) => {
   inputField.value.focus()
   arrowCounter.value = -1
   activeGroupKey.value = group.key
@@ -537,18 +547,18 @@ watchEffect(() => {
     }
     return i
   })
-  allSuggestionOptions.value = props.filterSuggestions ?
+  allSuggestionOptions.value = props.filterSuggestions && allSuggestions ?
     reduceList(allSuggestions) :
-    addIndexToList(allSuggestions)
+    allSuggestions && addIndexToList(allSuggestions)
 
   // Group Suggestions
   const groupSuggestions = props.suggestions?.filter(i => {
-    return props.optionGroupChildren &&
+    return typeof i !== 'string' && props.optionGroupChildren &&
       i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label
   })
-  groupSuggestionOptions.value = props.filterSuggestions ?
+  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions ?
     reduceList(groupSuggestions) :
-    addIndexToList(groupSuggestions)
+    groupSuggestions && addIndexToList(groupSuggestions)
   
   // Combined Suggestion Options
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
@@ -623,9 +633,13 @@ const clearQuery = () => {
   inputField.value.focus()
 }
 
-const handleSuggestionClick = (option: any) => {
+const handleSuggestionClick = (option: ComboBoxSuggestion) => {
   preventShowDropdown.value = true
-  query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
+  if (typeof option === 'string') {
+    query.value = option
+  } else {
+    query.value = props.optionLabel ? option[props.optionLabel] as string : option[defaultOptionLabel.value] as string
+  }
   emitResult(option)
   emitEnter()
   closeDropdownAndFocusInput()
@@ -633,15 +647,17 @@ const handleSuggestionClick = (option: any) => {
 
 const getCurrentSuggestion = () => {
   let option
-  suggestionOptions.value.forEach((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
-      if (tmp) {
-        option = tmp
-      }
-    } else {
-      if (i.index === arrowCounter.value) {
-        option = i
+  suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string') {
+      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x.index === arrowCounter.value)
+        if (tmp) {
+          option = tmp
+        }
+      } else {
+        if (i.index === arrowCounter.value) {
+          option = i
+        }
       }
     }
   })
@@ -726,7 +742,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
   }
 }
 
-const emitResult = (result: any) => {
+const emitResult = (result: ComboBoxSuggestion) => {
   /**
    * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
    */

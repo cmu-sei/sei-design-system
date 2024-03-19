@@ -65,11 +65,11 @@
 </template>
 
 <script lang="ts">
-import { MegaMenuLink } from '../MegaMenu/MegaMenu.vue';
+import { MegaMenuItem } from '../MegaMenu/MegaMenu.vue';
 /**
  * Right now, this is the same interface as Mega Menu's ITopLink, with the addition of "type"
  */
-export interface MobileMenuLink extends MegaMenuLink {
+export interface MobileMenuItem<T = Record<string, unknown>> extends MegaMenuItem<T> {
   type?: 'back' | 'expand' | 'slide' | 'title'
   icon?: string
 }
@@ -93,7 +93,7 @@ const props = defineProps({
    * Provides the navigation item values used to populate the mobile menu.
    */
   mobileMenus: {
-    type: Array as PropType<MobileMenuLink[]>,
+    type: Array as PropType<MobileMenuItem[]>,
     default: () => []
   },
   /**

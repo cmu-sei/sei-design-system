@@ -39,7 +39,9 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref<any[]>([])
+import { ToasterToast } from '../../../components/Toaster/Toaster.vue';
+
+const modelValue = ref<ToasterToast[]>([])
 
 const addToast = () => {
   const index = Math.floor(Math.random() * Math.floor(4));
@@ -48,25 +50,25 @@ const addToast = () => {
       id: Math.random(),
       title: "Success Toast",
       text: "This is the content of this toast.",
-      type: "success",
+      type: "success" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Info Toast",
       text: "This is the content of this toast.",
-      type: "info",
+      type: "info" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Warning Toast",
       text: "This is the content of this toast.",
-      type: "warning",
+      type: "warning" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Danger Toast",
       text: "This is the content of this toast.",
-      type: "danger",
+      type: "danger" as 'success' | 'info' | 'warning' | 'danger',
       noAutoHide: true,
     },
   ];

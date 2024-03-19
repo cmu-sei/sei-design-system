@@ -12,7 +12,7 @@
     ]"
     :disabled="disabled"
     role="menuitem"
-    @click="closeOnClick ? emitter.emit('floating-ui-toggle', false) : null"
+    @click="closeOnClick ? emitter?.emit('floating-ui-toggle', false) : null"
   >
     <!-- @slot Dropdown item content. -->
     <div :class="['flex py-2', active && '-ml-2']">
@@ -22,6 +22,8 @@
 </template>
 
 <script setup lang="ts">
+import { Emitter } from 'mitt';
+
 defineOptions({
   name: 'SdsDropdownItem'
 })
@@ -58,5 +60,5 @@ defineProps({
   },
 })
 
-const emitter: any = inject('emitter')
+const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')
 </script>
