@@ -3,7 +3,7 @@
   "version": "3.0.0-next.114",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build && vue-tsc --noEmit",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore . --ignore-path .eslintignore .",
     "test": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest run -c vite-library.config.js",
