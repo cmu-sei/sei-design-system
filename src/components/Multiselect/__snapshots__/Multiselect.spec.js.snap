@@ -1,14 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-"<div data-v-e59768ee="" data-id="sds-multiselect" class="sds-multiselect canSearch">
-  <ul data-v-e59768ee="" class="tag-list single">
-    <li data-v-e59768ee="" style="width: 0px;" class="tag-list-item input"><span data-v-e59768ee="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-e59768ee=""><input data-v-e59768ee="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-e59768ee="" class="sr-only">Enter text</span></label>
+"<div data-v-d60ff70e="" data-id="sds-multiselect" class="sds-multiselect canSearch">
+  <ul data-v-d60ff70e="" class="tag-list single">
+    <li data-v-d60ff70e="" style="width: 0px;" class="tag-list-item input"><span data-v-d60ff70e="" class="faux-input" aria-hidden="true"></span>
+      <!--v-if--><label data-v-d60ff70e=""><input data-v-d60ff70e="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-d60ff70e="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
-  <div data-v-e59768ee="" aria-hidden="true" class="multiselect-caret"></div>
+  <div data-v-d60ff70e="" aria-hidden="true" class="multiselect-caret"></div>
   <!--v-if-->
   <!--v-if-->
 </div>"

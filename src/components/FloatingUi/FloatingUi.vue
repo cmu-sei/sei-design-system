@@ -137,7 +137,7 @@ emitter.on("floating-ui-toggle", (value) => {
   }
 })
 
-onClickOutside(popperRef, (event: any) => {
+onClickOutside(popperRef, (event: Event) => {
   if (triggerRef.value && event.target && (triggerRef.value as HTMLElement).contains(event.target as HTMLElement)) return
   if (!open.value) return
   onClose()

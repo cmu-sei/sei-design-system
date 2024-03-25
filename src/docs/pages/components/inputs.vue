@@ -161,6 +161,9 @@
 </template>
 
 <script setup lang="ts">
+import { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
+import { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
   options: [
@@ -192,12 +195,12 @@ const input = reactive({
 
 const multiselect = reactive({
   modelValue: '',
-  selected: [],
-  options: [] as { key: number, value: string }[],
+  selected: [] as MultiselectOption[],
+  options: [] as MultiselectOption[],
   loading: false
 })
 
-const multiselectUpdateSelected = (selections: any) => {
+const multiselectUpdateSelected = (selections: MultiselectOption[]) => {
   multiselect.selected = selections
 }
 
@@ -265,9 +268,8 @@ const comboBox = reactive({
   onEnter(value: string) {
     console.log(`onEnter`, value)
   },
-  suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
-  // suggestions: [] as any,
-  onResult(option: any) {
+  suggestions: [] as ComboBoxSuggestion[],
+  onResult(option: ComboBoxSuggestion) {
     console.log('onResult', option)
   },
   async onComplete(query: string) {
@@ -312,7 +314,7 @@ const comboBox = reactive({
       { term: "Raspberry", payload: "test" },
       { term: "Watermelon", payload: "test" },
       { term: "Mango", payload: "test" },
-    ] : [] as any
+    ] : [] as ComboBoxSuggestion[]
     // comboBox.suggestions = query ? [
     //   "Apple",
     //   "Banana",

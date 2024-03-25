@@ -336,10 +336,10 @@ const inputPattern = computed(() => {
 })
 
 const localDate = computed({
-  get(): any {
+  get(): CalendarRange | CalendarDate {
     return props.modelValue
   },
-  set(value: any) {
+  set(value: CalendarRange | CalendarDate) {
     /**
      * Emmitted when modelValue changes.
      */
@@ -536,10 +536,10 @@ const formatDate = (dateString: string) => {
   return { date: null, text: '' }
 }
 
-watch(localDate, (value) => {
+watch(localDate, (value: CalendarRange | CalendarDate) => {
   if (isRange.value) {
-    const formattedStartDate = value.start && formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-    const formattedEndDate = value.end && formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedStartDate = value && (value as CalendarRange).start && formatDate(format((value as CalendarRange).start as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedEndDate = (value as CalendarRange).end && formatDate(format((value as CalendarRange).end as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
     if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
       inputDate.value = {
         start: formattedEndDate.text,
@@ -552,7 +552,7 @@ watch(localDate, (value) => {
       }
     }
   } else {
-    const formattedStartDate = value && formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedStartDate = value && formatDate(format(value as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
     inputDate.value = {
       start: formattedStartDate.text,
       end: ''
