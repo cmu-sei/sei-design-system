@@ -18,7 +18,11 @@
       >
         <div
           class="w-full input-group"
-          :class="{ 'input-group-sm': size === 'sm', disabled }"
+          :class="{
+            'input-group-sm': size === 'sm', disabled,
+            valid,
+            invalid,
+          }"
         >
           <button
             type="button"
@@ -249,6 +253,14 @@ const props = defineProps({
    * Determines if the component is required.
    */
   required: { type: Boolean, default: false },
+  /**
+   * Sets a valid styling if true.
+   */
+  valid: { type: Boolean, default: false },
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid: { type: Boolean, default: false },
   /**
    * Determines if the component is readonly.
    */

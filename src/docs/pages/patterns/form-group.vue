@@ -71,7 +71,8 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ disabled, readonly, required }"
+      v-slot="{ disabled, readonly, required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -87,6 +88,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
@@ -209,7 +212,8 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ disabled, readonly, required }"
+      v-slot="{ disabled, readonly, required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -221,6 +225,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
