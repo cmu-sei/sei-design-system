@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.6.3",
-    "@sds/tailwindcss-3": "^3.0.0",
+    "@sds/tailwindcss-3": "^3.0.1-beta.0",
     "@shimyshack/uid": "^0.1.9",
     "@storybook/addon-actions": "^8.0.0",
     "@storybook/addon-docs": "^8.0.0",
