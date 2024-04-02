@@ -19,7 +19,8 @@
         <div
           class="w-full input-group"
           :class="{
-            'input-group-sm': size === 'sm', disabled,
+            'input-group-sm': size === 'sm',
+            disabled,
             valid,
             invalid,
           }"
@@ -103,7 +104,12 @@
           </div>
           <div
             class="w-full input-group"
-            :class="{ 'input-group-sm': size === 'sm', disabled }"
+            :class="{
+              'input-group-sm': size === 'sm',
+              disabled,
+              valid,
+              invalid
+            }"
           >
             <button
               type="button"
