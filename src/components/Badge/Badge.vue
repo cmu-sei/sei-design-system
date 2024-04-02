@@ -27,7 +27,7 @@ const props = defineProps({
    * Determines the color of the component.
    */
   variant: {
-    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'pink' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
+    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
     default: 'gray'
   }
 })
@@ -48,10 +48,10 @@ const variantClass = computed(() => {
         textClass = 'text-blue-700 dark:text-blue-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-blue-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-blue-700'
-        textClass = 'text-white'
+        bgClass = 'bg-blue-700 dark:bg-blue-800'
+        textClass = 'text-white dark:text-blue-50'
       }
       break
     case 'green':
@@ -60,10 +60,10 @@ const variantClass = computed(() => {
         textClass = 'text-green-700 dark:text-green-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-green-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-green-700'
-        textClass = 'text-white'
+        bgClass = 'bg-green-700 dark:bg-green-800'
+        textClass = 'text-white dark:text-green-50'
       }
       break
     case 'teal':
@@ -72,10 +72,10 @@ const variantClass = computed(() => {
         textClass = 'text-teal-700 dark:text-teal-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-teal-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-teal-700'
-        textClass = 'text-white'
+        bgClass = 'bg-teal-700 dark:bg-teal-800'
+        textClass = 'text-white dark:text-teal-50'
       }
       break
     case 'orange':
@@ -84,10 +84,10 @@ const variantClass = computed(() => {
         textClass = 'text-orange-900 dark:text-orange-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-orange-200'
-        textClass = 'text-gray-800'
+        textClass = 'text-orange-800 dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-orange-500'
-        textClass = 'text-white'
+        bgClass = 'bg-orange-500 dark:bg-orange-600'
+        textClass = 'text-white dark:text-orange-50'
       }
       break
     case 'red':
@@ -96,22 +96,22 @@ const variantClass = computed(() => {
         textClass = 'text-red-600 dark:text-red-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-red-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-red-700'
-        textClass = 'text-white'
+        bgClass = 'bg-red-700 dark:bg-red-800'
+        textClass = 'text-white dark:text-red-100'
       }
       break
     case 'tan':
       if (props.type === 'light-border' || props.type === 'light') {
-        bgClass = 'bg-tan-100 dark:bg-tan-900'
+        bgClass = 'bg-tan-50 dark:bg-tan-900'
         textClass = 'text-tan-900 dark:text-tan-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-tan-300'
-        textClass = 'text-gray-800'
+        bgClass = 'bg-tan-200'
+        textClass = 'text-tan-900 dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-tan-600'
-        textClass = 'text-white'
+        bgClass = 'bg-tan-600 dark:bg-tan-700'
+        textClass = 'text-white dark:text-tan-50'
       }
       break
     case 'yellow':
@@ -119,35 +119,24 @@ const variantClass = computed(() => {
         bgClass = 'bg-yellow-25 dark:bg-yellow-900'
         textClass = 'text-yellow-900 dark:text-yellow-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-yellow-100'
-        textClass = 'text-gray-800'
+        bgClass = 'bg-yellow-100 dark:bg-yellow-200'
+        textClass = 'text-yellow-800 dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-yellow-500'
-        textClass = 'text-white'
+        bgClass = 'bg-yellow-500 dark:bg-yellow-600'
+        textClass = 'text-white dark:text-yellow-25'
       }
       break
-    case 'pink':
-      if (props.type === 'light-border' || props.type === 'light') {
-        bgClass = 'bg-pink-25 dark:bg-pink-900'
-        textClass = 'text-pink-700 dark:text-pink-300'
-      } else if (props.type === 'medium') {
-        bgClass = 'bg-pink-500'
-        textClass = 'text-white'
-      } else if (props.type === 'dark') {
-        bgClass = 'bg-pink-700'
-        textClass = 'text-white'
-      }
-      break
+
     case 'purple':
       if (props.type === 'light-border' || props.type === 'light') {
         bgClass = 'bg-purple-25 dark:bg-purple-900'
         textClass = 'text-purple-600 dark:text-purple-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-purple-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-purple-700'
-        textClass = 'text-white'
+        bgClass = 'bg-purple-700 dark:bg-purple-800'
+        textClass = 'text-white dark:text-purple-50'
       }
       break
     case 'indigo':
@@ -156,10 +145,10 @@ const variantClass = computed(() => {
         textClass = 'text-indigo-600 dark:text-indigo-300'
       } else if (props.type === 'medium') {
         bgClass = 'bg-indigo-500'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
-        bgClass = 'bg-indigo-700'
-        textClass = 'text-white'
+        bgClass = 'bg-indigo-700 dark:bg-indigo-800'
+        textClass = 'text-white dark:text-indigo-50'
       }
       break
     case 'gray':
@@ -168,11 +157,11 @@ const variantClass = computed(() => {
         bgClass = 'bg-gray-100 dark:bg-gray-900'
         textClass = 'text-gray-700 dark:text-gray-300'
       } else if (props.type === 'medium') {
-        bgClass = 'bg-gray-500'
-        textClass = 'text-white'
+        bgClass = 'bg-gray-500 dark:bg-gray-400'
+        textClass = 'text-white dark:text-black'
       } else if (props.type === 'dark') {
         bgClass = 'bg-gray-700'
-        textClass = 'text-white'
+        textClass = 'text-white dark:text-gray-50'
       }
       break
   }

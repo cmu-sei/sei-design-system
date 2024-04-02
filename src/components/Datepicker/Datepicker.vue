@@ -18,12 +18,17 @@
       >
         <div
           class="w-full input-group"
-          :class="{ 'input-group-sm': size === 'sm', disabled }"
+          :class="{
+            'input-group-sm': size === 'sm',
+            disabled,
+            valid,
+            invalid,
+          }"
         >
           <button
             type="button"
             tabindex="-1"
-            class="input-group-text fill-current"
+            class="input-group-addon fill-current"
             :class="{
               'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
               'border-none': disabled,
@@ -99,12 +104,17 @@
           </div>
           <div
             class="w-full input-group"
-            :class="{ 'input-group-sm': size === 'sm', disabled }"
+            :class="{
+              'input-group-sm': size === 'sm',
+              disabled,
+              valid,
+              invalid
+            }"
           >
             <button
               type="button"
               tabindex="-1"
-              class="input-group-text fill-current"
+              class="input-group-addon fill-current"
               :class="{
                 'pointer-events-none opacity-50': disabled || readonly
               }"
@@ -171,6 +181,8 @@
 
 <script setup lang="ts">
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
+import SdsCalendar from '../Calendar/Calendar.vue'
+
 import { parse } from 'date-fns/parse'
 import { format } from 'date-fns/format'
 import { isValid } from 'date-fns/isValid'
@@ -188,7 +200,7 @@ import { subDays } from 'date-fns/subDays'
 import { addYears } from 'date-fns/addYears'
 
 import type { Placement as BasePlacement } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -221,7 +233,7 @@ const props = defineProps({
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<Placement>, default: 'bottom' },
+  placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
   /**
    * The v-model for the component.
    * 
@@ -247,6 +259,14 @@ const props = defineProps({
    * Determines if the component is required.
    */
   required: { type: Boolean, default: false },
+  /**
+   * Sets a valid styling if true.
+   */
+  valid: { type: Boolean, default: false },
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid: { type: Boolean, default: false },
   /**
    * Determines if the component is readonly.
    */
@@ -334,10 +354,10 @@ const inputPattern = computed(() => {
 })
 
 const localDate = computed({
-  get(): any {
+  get(): CalendarRange | CalendarDate {
     return props.modelValue
   },
-  set(value: any) {
+  set(value: CalendarRange | CalendarDate) {
     /**
      * Emmitted when modelValue changes.
      */
@@ -534,10 +554,10 @@ const formatDate = (dateString: string) => {
   return { date: null, text: '' }
 }
 
-watch(localDate, (value) => {
+watch(localDate, (value: CalendarRange | CalendarDate) => {
   if (isRange.value) {
-    const formattedStartDate = value.start && formatDate(format(value.start, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
-    const formattedEndDate = value.end && formatDate(format(value.end, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedStartDate = value && (value as CalendarRange).start && formatDate(format((value as CalendarRange).start as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedEndDate = (value as CalendarRange).end && formatDate(format((value as CalendarRange).end as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
     if (formattedStartDate.date && formattedEndDate.date && isAfter(formattedStartDate.date, formattedEndDate.date)) {
       inputDate.value = {
         start: formattedEndDate.text,
@@ -550,7 +570,7 @@ watch(localDate, (value) => {
       }
     }
   } else {
-    const formattedStartDate = value && formatDate(format(value, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
+    const formattedStartDate = value && formatDate(format(value as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
     inputDate.value = {
       start: formattedStartDate.text,
       end: ''

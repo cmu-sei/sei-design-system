@@ -53,7 +53,7 @@
             'right-0 rounded-r-none': side === 'right',
             'left-0 rounded-l-none': side === 'left'
           }"
-          class="fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:bg-gray-900 dark:border-gray-700"
+          class="fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
           <header class="flex items-center p-6 pb-0">
@@ -98,7 +98,7 @@
               </svg>
             </button>
           </header>
-          <main class="p-6 flex flex-grow flex-col">
+          <main class="p-6 flex grow flex-col">
             <!-- @slot Panel content. -->
             <slot />
           </main>

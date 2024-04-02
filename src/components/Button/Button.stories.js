@@ -21,10 +21,14 @@ export default {
       options: ['blue', 'red'],
       control: { type: 'select' }
     },
+    type: {
+      options: ['button', 'submit'],
+      control: { type: 'select' }
+    },
     size: {
       options: ['sm', 'md'],
       control: { type: 'select' }
-    }
+    },
   }
 };
 
@@ -48,6 +52,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  variant: 'default'
+  kind: 'secondary'
 };
 

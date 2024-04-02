@@ -2,7 +2,7 @@
   <nav
     ref="root"
     data-id="sds-megamenu"
-    class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 dark:border-gray-800"
+    class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800"
     :class="{
       'z-20': isOpen
     }"
@@ -39,14 +39,13 @@
             'ml-auto': topLink.alignment === 'right',
             'mr-auto': topLink.alignment === 'left',
             'mx-auto': topLink.alignment === 'center',
-            'px-2 xl:px-3 2xl:px-4 dark:border-gray-800 font-semibold': type === 'block',
-            'text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !topLink.selected,
-            'hover:text-white hover:bg-red-600 dark:hover:text-white dark:hover:bg-red-800': type === 'block' && topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1,
-            'text-white bg-red-600 dark:text-white dark:bg-red-800': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'px-2 xl:px-3 2xl:px-4 border-gray-100 dark:border-gray-800 font-semibold': type === 'block',
+            'text-gray-700 dark:text-gray-100 hover:text-gray-900 hover:bg-gray-50 dark:hover:text-gray-100 dark:hover:bg-gray-850': type === 'block' && !(topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
+            'text-white bg-red-600 dark:text-gray-900 dark:bg-red-300': type === 'block' && (topLink.selected || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length < 1)),
             'hover:text-red-600 hover:border-red-600 dark:hover:text-red-300 dark:hover:border-red-300': type === 'underline',
             'text-red-600 dark:text-red-300 border-red-600 dark:border-red-300': type === 'underline' && topLink.selected,
             'border-red-600 dark:border-red-300': type === 'underline' && topLink.active,
-            'border-transparent dark:border-transparent': type === 'underline' && (!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0)
+            'border-transparent dark:border-transparent': type === 'underline' && ((!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0))
           }"
           role="menuitem"
           class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline focus-visible:outline-2"
@@ -103,7 +102,7 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-200 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
+            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
@@ -159,18 +158,19 @@
 import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 /* Top Link navigation label type interface */
-export interface ITopLink {
+export type MegaMenuItem<T = Record<string, unknown>> = {
   key: string
   tag?: 'button' | 'a'
   title?: string
   href?: string
   alignment?: 'left' | 'right' | 'center'
-  content?: Object
+  content?: T
   external?: boolean
   active?: boolean
   selected?: boolean
   disabled?: boolean
   onClick?: Function
+  [key: string]: unknown
 }
 
 defineOptions({
@@ -206,7 +206,7 @@ const props = defineProps({
    *
    * ```
    */
-  modelValue: { type: Array as PropType<ITopLink[]>, default: () => [] },
+  modelValue: { type: Array as PropType<MegaMenuItem[]>, default: () => [] },
   /**
    * Overall look and feel of the component (two options)
    */
@@ -229,13 +229,14 @@ const emits = defineEmits(
     'update:model-value'
   ]
 )
+
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
-  get(): ITopLink[] {
+  get(): MegaMenuItem[] {
     return props.modelValue
   },
   /* Set SdsMegaMenu modelValue property */
-  set(value: ITopLink[]) {
+  set(value: MegaMenuItem[]) {
     /**
      * Emmitted when the v-model (Mega Menu's data source)
      * has changed.
@@ -355,7 +356,7 @@ const checkKeyEvent = (event: KeyboardEvent) => {
 /**
  * Callback run when a topLink of the mega menu is clicked
  **/
-const changeMenuPanel = async (topLink: ITopLink, event: Event) => {
+const changeMenuPanel = async (topLink: MegaMenuItem, event: Event) => {
   if (topLink.tag === 'a' && topLink.href) {
     /* Treat anchor tags as normal links */
     return true

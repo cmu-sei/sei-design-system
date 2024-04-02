@@ -28,21 +28,21 @@
         </h1>
       </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
-        <!-- @slot Suite header content. -->
+        <!-- @slot User section content. -->
         <slot
-          name="suite-header"
+          name="user-section"
         />
       </div>
     </div>
-    <div class="flex flex-grow flex-shrink-0">
+    <div class="flex grow flex-shrink-0">
       <!-- Main content -->
-      <div class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950">
+      <div class="flex flex-col items-stretch grow min-w-0">
+        <main class="grow pb-4 bg-gray-25 dark:bg-black">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
-            <div class="flex-grow my-auto flex flex-row gap-2">
+            <div class="grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. -->
               <slot
                 name="page-title"
@@ -73,7 +73,7 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-black text-xs text-white px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 dark:bg-gray-950 border-t border-gray-800 text-xs text-white px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
             <sds-link
               href="https://sei.cmu.edu"
@@ -112,7 +112,7 @@
 
         <div
           v-if="hasSlot('actions-bar')"
-          class="sticky bottom-0 z-40"
+          class="bg-white dark:bg-gray-850 p-4 border-t border-gray-100 dark:border-gray-700 sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
@@ -126,7 +126,7 @@
 import SdsLink from '../Link/Link.vue'
 import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
-interface LayoutAppSidebarNavItem {
+export interface LayoutAppSidebarNavItem {
   id: number | string
   href: string
   active: boolean

@@ -9,8 +9,9 @@ exports[`ComboBox > should match its default snapshot 1`] = `
     class="input-group"
   >
     <button
-      class="input-group-text"
+      class="input-group-addon"
       tabindex="-1"
+      type="button"
     >
       <span
         class="sr-only"

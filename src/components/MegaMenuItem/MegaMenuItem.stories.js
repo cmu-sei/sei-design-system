@@ -5,28 +5,12 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Alpha: A Mega Menu Item is a stylized link, either simple or descriptive. It can be used to populate a Mega Menu.',
+        component: 'A Mega Menu Item is a stylized link, either simple or descriptive. It can be used to populate a Mega Menu.',
       },
     },
   },
   component: SdsMegaMenuItem,
   argTypes: {
-    cta: {
-      control: { type: 'boolean' },
-      description: 'Display an arrow after the link label (similar to "landing-page" type).' ,
-    },
-    disabled: {
-      control: { type: 'boolean' },
-      description: 'Display with "disabled" styling— link will become grayed-out and unusable.' ,
-    },
-    external: {
-      control: { type: 'boolean' },
-      description: 'Set link attributes to open in a new window with noreferrer options set.' ,
-    },
-    label: {
-      control: { type: 'text' },
-      description: 'Set the main text to display in this Mega Menu Item.',
-    },
     type: {
       options: ['simple', 'landing-page', 'descriptive'],
       control: { type: 'select' },
@@ -42,7 +26,6 @@ const Template = (args) => ({
   },
   template: `
     <sds-mega-menu-item class="group" v-bind="args">
-      <script>console.log(${JSON.stringify(args)})</script>
       <template v-if="args.type === 'descriptive'" #default>
         <p class="text-sm text-gray-500">default</p>
       </template>

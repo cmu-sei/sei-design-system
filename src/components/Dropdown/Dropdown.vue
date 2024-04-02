@@ -8,7 +8,12 @@
     :will-open="willOpen"
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 ${auto ? 'w-auto' : 'w-56'} ${zIndexClass}`"
+    :popper-class="{
+      'bg-gray-850 border-gray-700': type === 'dark',
+      'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
+      [auto ? 'w-auto' : 'w-56']: true,
+      [zIndexClass]: true
+    }"
     hide-arrow
     shift
   >
@@ -29,7 +34,13 @@
           aria-haspopup="true"
           :aria-expanded="isOpen"
           :disabled="disabled"
-          :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, isOpen ? 'active' : '']"
+          :class="[
+            btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass,
+            type && 'hover:bg-gray-800 text-white border-0',
+            (!isOpen && type) && 'bg-gray-900',
+            (isOpen && type) && 'active bg-gray-800',
+            isOpen && 'active'
+          ]"
           @click="handleClick(isOpen, open, close)"
         >
           <!-- @slot Title content of trigger button. -->
@@ -37,6 +48,7 @@
             {{ title }}
           </slot>
           <svg
+            v-if="!hideArrow"
             class="inline-block self-center w-5 h-5 -mr-1"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -53,7 +65,10 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2"
+        :class="[
+          'py-2 rounded',
+          type === 'dark' ? 'dropdown-dark bg-gray-850': ''
+        ]"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -74,7 +89,7 @@ import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { Uid } from '@shimyshack/uid'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsPopover',
@@ -95,7 +110,11 @@ const props = defineProps({
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'blue' | 'red'>, default: '' },
+  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
+  /**
+   * Allows you to force dark mode on all child components
+   */
+  type: { type: String as PropType<'dark'>, default: undefined},
   /**
    * The z-index for the popover.
    */
@@ -117,6 +136,10 @@ const props = defineProps({
    */
   size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
   /**
+   * Determines if the arrow should display or not.
+   */
+  hideArrow: { type: Boolean, default: false },
+  /**
    * Determines whether the content of the popper will set the width of the popper.
    */
   auto: { type: Boolean, default: false },
@@ -127,7 +150,7 @@ const props = defineProps({
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<Placement>, default: 'bottom-start' },
+  placement: { type: String as PropType<DropdownPlacement>, default: 'bottom-start' },
   /**
    * Determines whether to use the block styling on the trigger button or not.
    */
@@ -255,6 +278,8 @@ const variantClass = computed(() => {
       return 'btn-blue'
     case 'red':
       return 'btn-red'
+    case 'white':
+      return 'btn-white'
     default:
       return ''
   }

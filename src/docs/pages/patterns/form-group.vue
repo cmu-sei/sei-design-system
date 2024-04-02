@@ -71,7 +71,8 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ disabled, readonly, required }"
+      v-slot="{ disabled, readonly, required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -87,6 +88,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
@@ -209,7 +212,8 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ disabled, readonly, required }"
+      v-slot="{ disabled, readonly, required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -221,6 +225,8 @@
         :disabled="disabled"
         :readonly="readonly"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
       />
     </SdsFormGroup>
     <SdsFormGroup
@@ -272,13 +278,15 @@
 </template>
 
 <script setup lang="ts">
+import { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
 const modelValue = ref('')
 const selectModelValue = ref('')
 const datepickerModelValue = ref()
 const checkboxModelValue = ref()
 const radioModelValue = ref()
 
-const state = ref<boolean | null>()
+const state = ref<boolean>()
 
 const options = ref([
   { value: 'option 1', text: 'Option 1' },
@@ -288,12 +296,12 @@ const options = ref([
 
 const multiselect = reactive({
   modelValue: '',
-  selected: [],
-  options: [] as { key: number; value: string; }[],
+  selected: [] as MultiselectOption[],
+  options: [] as MultiselectOption[],
   loading: false
 })
 
-const updateSelected = (selections: any) => {
+const updateSelected = (selections: MultiselectOption[]) => {
   multiselect.selected = selections
 }
 

@@ -167,7 +167,7 @@ exports[`LayoutSeiExternal > should match its default snapshot 1`] = `
   <!-- @slot Masthead content. -->
   <!--v-if-->
   <main
-    class="flex-grow"
+    class="grow"
   >
     <div
       class=""

@@ -64,7 +64,7 @@ import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import mitt from 'mitt';
 
 import type { Placement as BasePlacement, ComputePositionConfig, Alignment, Strategy } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type FloatingUiPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsFloatingUi'
@@ -137,7 +137,7 @@ emitter.on("floating-ui-toggle", (value) => {
   }
 })
 
-onClickOutside(popperRef, (event: any) => {
+onClickOutside(popperRef, (event: Event) => {
   if (triggerRef.value && event.target && (triggerRef.value as HTMLElement).contains(event.target as HTMLElement)) return
   if (!open.value) return
   onClose()
@@ -151,7 +151,7 @@ onKeyStroke('Escape', (e) => {
 
 const props = defineProps({
   disabled: { type: Boolean, default: false },
-  placement: { type: String as PropType<Placement>, default: 'auto' },
+  placement: { type: String as PropType<FloatingUiPlacement>, default: 'auto' },
   strategy: { type: String as PropType<Strategy>, default: 'absolute' },
   overflowPadding: { type: Number, default: 5 },
   arrowPadding: { type: Number, default: 5 },
@@ -165,7 +165,7 @@ const props = defineProps({
   animationLeaveActiveClass: { type: String, default: 'transition duration-50 ease-in' },
   animationLeaveFromClass: { type: String, default: 'transform scale-100 opacity-100' },
   animationLeaveToClass: { type: String, default: 'transform scale-95 opacity-0' },
-  popperClass: { type: String, default: undefined },
+  popperClass: { type: [String, Array, Object], default: undefined },
   hideArrow: { type: Boolean, default: false },
   arrowClass: { type: String, default: undefined },
   placementTopArrowClass: { type: String, default: undefined },

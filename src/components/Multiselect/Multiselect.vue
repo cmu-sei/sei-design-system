@@ -27,7 +27,7 @@
       <template v-if="!hideTags || !multiple">
         <li
           v-for="s in selected"
-          :key="s[valueKey]"
+          :key="s[valueKey] as string"
           class="tag-list-item"
         >
           <!-- @slot Tag template content. @binding tag, remove, disabled -->
@@ -134,7 +134,7 @@
     >
       <option
         v-for="i in selected"
-        :key="i.id"
+        :key="i.id as string"
         :value="i.id"
         selected
       >
@@ -162,7 +162,7 @@
       <template v-if="showResults">
         <li
           v-for="(o, i) in filteredOptions"
-          :key="o[valueKey]"
+          :key="o[valueKey] as string"
           :disabled="disabled"
           class="dropdown-list-item"
           :class="{ selected: isSelectedOption(o), active: i === arrowCounter }"
@@ -239,12 +239,12 @@
 <script setup lang="ts">
 import debounce from "../../helpers/debounce";
 
-interface MultiselectOption {
-  [id: string | number]: any
+export interface MultiselectOption {
+  [id: string | number]: unknown
 }
 
-interface MultiselectTag {
-  [id: string | number]: any
+export interface MultiselectTag {
+  [id: string | number]: unknown
   isNewTag?: boolean
 }
 
@@ -598,9 +598,9 @@ const filteredOptions = computed(() => {
     if (
       !options.some((i: MultiselectOption) => {
         return props.enforceLowercaseNewTag
-          ? i[props.labelKey].trim().toLowerCase() ===
+          ? (i[props.labelKey] as string).trim().toLowerCase() ===
               trimmedValue.value.toLowerCase()
-          : i[props.labelKey].trim() === trimmedValue.value;
+          : (i[props.labelKey] as string).trim() === trimmedValue.value;
       })
     ) {
       options.push(newTag.value);
@@ -1156,7 +1156,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dropdown-list-item.active {
-  background: theme("colors.gray.100");
+  background: theme("colors.gray.50");
   color: theme("colors.black");
 }
 
@@ -1222,7 +1222,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .dark .tag-list-item .remove {
-  color: theme("colors.gray.100");
+  color: theme("colors.gray.50");
 }
 
 .tag-list-item .remove:hover,

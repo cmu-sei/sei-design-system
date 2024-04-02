@@ -26,8 +26,8 @@ const Template = (args) => ({
   },
   template: `
     <sds-layout-app v-model="localValue" v-bind="args" @navigate="navigate">
-      <template #suite-header>
-        Suite header content area
+      <template #user-section>
+        User section content area
         <sds-tooltip data-id="avatarContainer" size="auto" variant="light" placement="left">
           <template data-id="avatarTooltipTrigger" #trigger>
             <sds-avatar size="xs" shape="circle" name="John Smith" />
@@ -42,23 +42,16 @@ const Template = (args) => ({
       </template>
       Page content area
       <template #actions-bar>
-      <div class="bg-blue-500/90 backdrop-blur dark:bg-blue-800 px-6 py-2 shadow">
+      <div>
           <div class="flex gap-2">
-            <p class="my-auto text-white font-semibold">
+            <p class="ml-auto my-auto mr-2 font-semibold">
               Action bar content area
             </p>
-            <sds-button
-              variant="light"
-              class="ml-auto"
-              outline
-            >
+            <sds-button kind="ghost">
               Cancel
             </sds-button>
-            <sds-button
-              variant="default"
-              class="text-primary hover:text-black hover:bg-white"
-            >
-              Save something
+            <sds-button kind="primary">
+              Save
             </sds-button>
           </div>
         </div>

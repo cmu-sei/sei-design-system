@@ -58,7 +58,7 @@
       <template #footer>
         <div class="space-x-2">
           <SdsButton
-            variant="primary"
+            kind="primary"
             @click="showPanel= false"
           >
             Save
@@ -100,8 +100,7 @@
     <p>MegaMenu</p>
     <div class="my-10">
       <SdsMegaMenu v-model="megaMenu">
-        <template #default="{ topLink, content }">
-          {{ topLink }}
+        <template #default="{ content }">
           {{ content }}
         </template>
         <template #link(home)>
@@ -120,19 +119,19 @@
           </svg>
           <span class="sr-only">Home</span>
         </template>
-        <template #panel(about)="{ content }">
+        <template #panel(about)="{ content }: { content?: MegaMenuContent }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-2">
                 <div class="col-span-2">
                   <SdsMegaMenuItem
-                    :label="content.aboutLink.label"
-                    :type="content.aboutLink.kind"
-                    :href="content.aboutLink.href"
+                    :label="content?.aboutLink?.label"
+                    :type="content?.aboutLink?.kind"
+                    :href="content?.aboutLink?.href"
                   />
                 </div>
                 <div
-                  v-for="row, index in content.aboutRows"
+                  v-for="row, index in content?.aboutRows"
                   :key="index"
                 >
                   <div
@@ -156,12 +155,12 @@
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
-                :label="content.divisionLink.label"
-                :type="content.divisionLink.kind"
-                :href="content.divisionLink.href"
+                :label="content?.divisionLink?.label"
+                :type="content?.divisionLink?.kind"
+                :href="content?.divisionLink?.href"
               />
               <div
-                v-for="division in content.divisionRows"
+                v-for="division in content?.divisionRows"
                 :key="division.key"
               >
                 <SdsMegaMenuItem
@@ -172,19 +171,19 @@
             </div>
           </div>
         </template>
-        <template #panel(research-and-development)="{ content }">
+        <template #panel(research-and-development)="{ content }: { content?: MegaMenuContent }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-2">
               <div class="grid grid-cols-2 gap-2">
                 <div class="col-span-2">
                   <SdsMegaMenuItem
-                    :label="content.topicsLink.label"
-                    :type="content.topicsLink.kind"
-                    :href="content.topicsLink.href"
+                    :label="content?.topicsLink?.label"
+                    :type="content?.topicsLink?.kind"
+                    :href="content?.topicsLink?.href"
                   />
                 </div>
                 <template
-                  v-for="column, index in content.topicsColumns"
+                  v-for="column, index in content?.topicsColumns"
                   :key="index"
                 >
                   <div
@@ -202,7 +201,7 @@
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <div
-                v-for="item in content.extra"
+                v-for="item in content?.extra"
                 :key="item.key"
               >
                 <SdsMegaMenuItem
@@ -219,11 +218,11 @@
             </div>
           </div>
         </template>
-        <template #panel(publications-and-media)="{ content }">
+        <template #panel(publications-and-media)="{ content }: { content?: MegaMenuContent }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-1">
               <div
-                v-for="item in content.links"
+                v-for="item in content?.links"
                 :key="item.key"
               >
                 <SdsMegaMenuItem
@@ -240,7 +239,7 @@
                 href="https://sei.cmu.edu/our-work/projects/index.cfm"
               />
               <div
-                v-for="blogPost in content.blogPosts"
+                v-for="blogPost in content?.blogPosts"
                 :key="blogPost.key"
                 class="mb-2"
               >
@@ -294,11 +293,11 @@
           </svg>
           <span class="sr-only">Education</span>
         </template>
-        <template #panel(education)="{ content, close }">
+        <template #panel(education)="{ content, close }: { content?: MegaMenuContent, close: Function }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-1">
               <div
-                v-for="educationLink in content.educationLinks"
+                v-for="educationLink in content?.educationLinks"
                 :key="educationLink.key"
               >
                 <SdsMegaMenuItem
@@ -317,7 +316,7 @@
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <div
-                v-for="training in content.trainings"
+                v-for="training in content?.trainings"
                 :key="training.key"
               >
                 <SdsMegaMenuItem
@@ -329,12 +328,12 @@
             </div>
             <div class="col-span-1 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
-                :label="content.eventLink.label"
-                :type="content.eventLink.kind"
-                :href="content.eventLink.href"
+                :label="content?.eventLink?.label"
+                :type="content?.eventLink?.kind"
+                :href="content?.eventLink?.href"
               />
               <div
-                v-for="event in content.events"
+                v-for="event in content?.events"
                 :key="event.key"
               >
                 <SdsMegaMenuItem
@@ -365,9 +364,10 @@
               </div>
             </div>
             <SdsButton
-              kind="danger"
+              kind="primary"
+              variant="red"
               class="absolute right-8 flex flex-row justify-center w-16"
-              @click="close"
+              @click="close()"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -385,16 +385,16 @@
             </SdsButton>
           </div>
         </template>
-        <template #panel(careers)="{ content }">
+        <template #panel(careers)="{ content }: { content?: MegaMenuContent }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-1">
               <SdsMegaMenuItem
-                :href="content.careersLink.href"
-                :label="content.careersLink.label"
-                :type="content.careersLink.kind"
+                :href="content?.careersLink?.href"
+                :label="content?.careersLink?.label"
+                :type="content?.careersLink?.kind"
               />
               <div
-                v-for="careerLink in content.careersLinks"
+                v-for="careerLink in content?.careersLinks"
                 :key="careerLink.key"
               >
                 <SdsMegaMenuItem
@@ -413,12 +413,12 @@
             </div>
             <div class="col-span-2 border-l dark:border-l-gray-800 pl-2">
               <SdsMegaMenuItem
-                :href="content.jobsLink.href"
-                :label="content.jobsLink.label"
-                :type="content.jobsLink.kind"
+                :href="content?.jobsLink?.href"
+                :label="content?.jobsLink?.label"
+                :type="content?.jobsLink?.kind"
               />
               <div
-                v-for="row, index in content.jobs"
+                v-for="row, index in content?.jobs"
                 :key="index"
                 class="grid grid-cols-2 gap-4"
               >
@@ -467,15 +467,15 @@
         type="block"
         width="auto"
       >
-        <template #panel(about-1)="{ content }">
+        <template #panel(about-1)="{ content }: { content?: MegaMenuContent }">
           <SdsMegaMenuItem
-            :label="content.divisionLink.label"
-            :type="content.divisionLink.kind"
-            :href="content.divisionLink.href"
+            :label="content?.divisionLink?.label"
+            :type="content?.divisionLink?.kind"
+            :href="content?.divisionLink?.href"
             class="select-none"
           />
           <div
-            v-for="division in content.divisionRows"
+            v-for="division in content?.divisionRows"
             :key="division.key"
           >
             <SdsMegaMenuItem
@@ -484,9 +484,9 @@
             />
           </div>
         </template>
-        <template #panel(research-and-development-1)="{ content }">
+        <template #panel(research-and-development-1)="{ content }: { content?: MegaMenuContent }">
           <div
-            v-for="item in content.extra"
+            v-for="item in content?.extra"
             :key="item.key"
             class="max-w-sm"
           >
@@ -539,15 +539,15 @@
           </svg>
           <span class="sr-only">Education</span>
         </template>
-        <template #panel(education-1)="{ content, close }">
+        <template #panel(education-1)="{ content, close }: { content?: MegaMenuContent, close: Function }">
           <div class="max-w-lg">
             <SdsMegaMenuItem
-              :label="content.eventLink.label"
-              :type="content.eventLink.kind"
-              :href="content.eventLink.href"
+              :label="content?.eventLink?.label"
+              :type="content?.eventLink?.kind"
+              :href="content?.eventLink?.href"
             />
             <div
-              v-for="event in content.events"
+              v-for="event in content?.events"
               :key="event.key"
             >
               <SdsMegaMenuItem
@@ -576,9 +576,10 @@
               </SdsMegaMenuItem>
             </div>
             <SdsButton
-              kind="danger"
+              kind="primary"
+              variant="red"
               class="absolute right-4 top-4 w-fit h-8 p-0 flex flex-col justify-center text-center mx-auto"
-              @click="close"
+              @click="close()"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -596,14 +597,14 @@
             </SdsButton>
           </div>
         </template>
-        <template #panel(careers-1)="{ content }">
+        <template #panel(careers-1)="{ content }: { content?: MegaMenuContent }">
           <SdsMegaMenuItem
-            :href="content.jobsLink.href"
-            :label="content.jobsLink.label"
-            :type="content.jobsLink.kind"
+            :href="content?.jobsLink?.href"
+            :label="content?.jobsLink?.label"
+            :type="content?.jobsLink?.kind"
           />
           <div
-            v-for="row, index in content.jobs"
+            v-for="row, index in content?.jobs"
             :key="index"
             class="grid grid-cols-2 gap-4"
           >
@@ -646,7 +647,7 @@
     </div>
     <SdsToggleSwitch v-model="toggleSwitchValue" />
     <div class="h-48 w-48">
-      <SdsLoadingBox />
+      <SdsLoadingSkeleton />
     </div>
     <div class="my-12">
       <p>Indicator</p>
@@ -728,8 +729,8 @@
           <SdsAvatar name="Jason Shimkoski" />
         </SdsIndicator>
         <SdsIndicator
-          size="lg"
-          placement="bottom-right"
+          size="sm"
+          placement="bottom-left"
         >
           <SdsAvatar
             name="Jason Shimkoski"
@@ -738,11 +739,14 @@
         </SdsIndicator>
         <SdsIndicator
           variant="green"
-          size="sm"
-          placement="top-left"
+          size="md"
+          placement="top-right"
         >
-          <SdsButton variant="primary">
-            Cool
+          <SdsButton
+            size="lg"
+            kind="primary"
+          >
+            Cool Super long text
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
@@ -750,25 +754,29 @@
           size="sm"
           placement="top-right"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
-          variant="teal"
-          size="sm"
-          placement="bottom-left"
+          variant="blue"
+          size="md"
+          placement="top-right"
         >
-          <SdsButton variant="primary">
+          <SdsButton kind="primary">
             Cool
           </SdsButton>
         </SdsIndicator>
         <SdsIndicator
           variant="orange"
-          placement="top-right"
+          size="lg"
+          placement="top-left"
           status="This is awesome"
         >
-          <SdsButton variant="primary">
+          <SdsButton
+            kind="primary"
+            size="lg"
+          >
             Cool
           </SdsButton>
         </SdsIndicator>
@@ -1024,32 +1032,6 @@
       <div class="space-x-4">
         <sds-badge
           type="light-border"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="light"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="medium"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-        <sds-badge
-          type="dark"
-          variant="pink"
-        >
-          Badge Content
-        </sds-badge>
-      </div>
-      <div class="space-x-4">
-        <sds-badge
-          type="light-border"
           variant="red"
         >
           Badge Content
@@ -1210,7 +1192,7 @@
       <sds-loading-spinner />
       <sds-loading-spinner size="lg" />
       <sds-button
-        variant="primary"
+        kind="primary"
         class="flex gap-2"
       >
         <sds-loading-spinner
@@ -1305,7 +1287,7 @@
       >
         <template #trigger="{ toggle }">
           <sds-button
-            variant="primary"
+            kind="primary"
             @click="toggle"
           >
             Hello
@@ -1313,9 +1295,9 @@
         </template>
         <template #default="{ close }">
           <div class="py-2">
-            <p @click="close">
+            <SdsButton @click="close">
               This is a dropdown
-            </p>
+            </SdsButton>
           </div>
         </template>
       </sds-floating-ui>
@@ -1334,7 +1316,7 @@
       >
         <template #trigger="{ open, close }">
           <sds-button
-            variant="primary"
+            kind="primary"
             @mouseover="open"
             @mouseout="close"
           >
@@ -1361,7 +1343,7 @@
       >
         <template #trigger="{ open, close }">
           <sds-button
-            variant="primary"
+            kind="primary"
             @mouseover="open(500)"
             @mouseout="close(500)"
           >
@@ -1371,12 +1353,12 @@
         <template #default="{ open, close }">
           <div
             class="p-4"
-            @mouseover="open"
+            @mouseover="open()"
             @mouseout="close(500)"
           >
-            <p @click="close">
+            <SdsButton @click="close">
               This is a popover
-            </p>
+            </SdsButton>
             <p>lkajsdflkjsdalf</p>
             <p>lkajsdflkjsdalf</p>
             <p>lkajsdflkjsdalf</p>
@@ -1541,15 +1523,15 @@
       <template #nav>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 1</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue"
+          class="tab tab-pill tab-blue"
         >Option 2</a>
         <a
           href="#"
-          class="nav nav-pill nav-blue active"
+          class="tab tab-pill tab-blue active"
         >Option 3</a>
       </template>
       <div>
@@ -1558,7 +1540,7 @@
             <template #trigger>
               <sds-link
                 href="#"
-                variant="primary"
+                kind="primary"
                 external
               >
                 External link (has a popover)
@@ -1820,6 +1802,7 @@
             required
           >
             <sds-datepicker
+              v-if="calendar.min && calendar.max"
               v-model="calendar.date"
               :min="calendar.min"
               :max="calendar.max"
@@ -1830,13 +1813,15 @@
             />
           </SdsFormGroup>
           <sds-button
-            kind="danger"
+            kind="primary"
+            variant="red"
             type="button"
             :disabled="calendar.date.start === null || calendar.date.end === null"
           >
             Test button
           </sds-button>
           <sds-datepicker
+            v-if="calendar2.min && calendar2.max"
             v-model="calendar2.date"
             :min="calendar2.min"
             :max="calendar2.max"
@@ -1845,6 +1830,7 @@
             required
           />
           <sds-datepicker
+            v-if="calendar2.min && calendar2.max"
             v-model="calendar2.date"
             :min="calendar2.min"
             :max="calendar2.max"
@@ -1853,6 +1839,7 @@
             required
           />
           <sds-datepicker
+            v-if="calendar2.min && calendar2.max"
             v-model="calendar2.date"
             :min="calendar2.min"
             :max="calendar2.max"
@@ -1861,6 +1848,7 @@
             required
           />
           <sds-datepicker
+            v-if="calendarSingle.min && calendarSingle.max"
             v-model="calendarSingle.date"
             :min="calendarSingle.min"
             :max="calendarSingle.max"
@@ -1869,6 +1857,7 @@
             required
           />
           <sds-datepicker
+            v-if="calendarSingle.min && calendarSingle.max"
             v-model="calendarSingle.date"
             :min="calendarSingle.min"
             :max="calendarSingle.max"
@@ -1877,6 +1866,7 @@
             required
           />
           <sds-datepicker
+            v-if="calendarSingle.min && calendarSingle.max"
             v-model="calendarSingle.date"
             :min="calendarSingle.min"
             :max="calendarSingle.max"
@@ -1958,7 +1948,7 @@
             <sds-filter-by-dropdown
               v-model="filterby.options"
               :title="filterByBtnText"
-              variant="primary"
+              kind="primary"
               right
               @update:model-value="filtered"
             />
@@ -1986,7 +1976,7 @@
           <sds-combo-box
             v-model="text"
             placeholder="Search for a fruit"
-            variant="primary"
+            kind="primary"
             @enter="search"
           />
           <sds-combo-box
@@ -2118,6 +2108,152 @@
 </template>
 
 <script lang="ts">
+import { CalendarMode } from '../../components/Calendar/Calendar.vue';
+import { FilterByDropdownOption } from '../../components/FilterByDropdown/FilterByDropdown.vue';
+import { MegaMenuItem } from '../../components/MegaMenu/MegaMenu.vue';
+import { MultiselectOption } from '../../components/Multiselect/Multiselect.vue';
+import { TableField, TableItem } from '../../components/Table/Table.vue';
+import { TabItem } from '../../components/Tabs/Tabs.vue';
+import { ToasterToast } from '../../components/Toaster/Toaster.vue';
+
+interface MegaMenuContent {
+  aboutLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  aboutRows?: {
+    description: string
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[][],
+  divisionLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  divisionRows?: {
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  topicsLink?: {
+    href: string
+    description?: string
+    label: string
+    key: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  topicsColumns?: {
+    key: string
+    title: string
+    href: string
+  }[][],
+  extra?: {
+    cta: boolean
+    description: string
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  links?: {
+    href: string,
+    key: string,
+    label: string,
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  blogPosts?: {
+    key: number,
+    title: string
+    published: string
+    author: string
+  }[],
+  careersLink?: {
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  careersLinks?: {
+    href: string
+    description: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  jobsLink?: {
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  jobs?: {
+    href: string
+    key: string
+    label: string
+    posted: string
+    locations: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[][],
+  educationLinks?: {
+    href: string
+    description?: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  trainings?: {
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[],
+  eventLink?: {
+    href: string
+    key: string
+    label: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  },
+  events?: {
+    dateRange: string
+    description: string
+    href: string
+    key: string
+    label: string
+    month: string
+    startDay: string
+    kind?: 'landing-page' | 'descriptive' | 'simple'
+  }[]
+}
+
+interface MobileMenuContent {
+  children?: {
+    key: string
+    title: string
+    href?: string
+    type?: 'title' | 'simple' | 'slide' | 'back' | 'expand'
+    disabled?: boolean
+  }[],
+  children_1?: {
+    key: string,
+    title: string,
+    href: string
+  }[],
+  children_2?: {
+    key: string,
+    title: string,
+    href: string
+  }[]
+}
+
 export default defineComponent({
   name: "ExamplesSection",
   emits: ["radioGroupChange", "hello"],
@@ -2587,12 +2723,12 @@ export default defineComponent({
           href: "#",
           title: "Dark Mode",
           alignment: "right",
-          onClick: (link: any, event: any) => {
+          onClick: (link: MegaMenuItem, event: Event) => {
             event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
-      ],
+      ] as MegaMenuItem<MegaMenuContent>[],
       megaMenu2: [
         {
           key: "about-1",
@@ -3049,12 +3185,12 @@ export default defineComponent({
           tag: "a",
           href: "#",
           title: "Dark Mode",
-          onClick: (link: any, event: any) => {
+          onClick: (link: MegaMenuItem, event: Event) => {
             event.preventDefault()
             document.body.classList.toggle('dark')
           }
         }
-      ],
+      ] as MegaMenuItem<MegaMenuContent>[],
       toggleSwitchValue: false,
       fabTabs: [
         { key: "tab1", tabName: "Tab 1 is the title", title: "Active Tab 1", active: true },
@@ -3072,7 +3208,7 @@ export default defineComponent({
         { key: "link-to-google", title: "Link to Google", tag: "a", href: "https://google.com", external: true, disabled: true },
         { key: "link-trigger", title: "Link Trigger", href: "https://google.com" },
         { key: "groups", align: "right" }
-      ],
+      ] as TabItem[],
       selectModel: 2,
       selectOptions: [
         { id: 1, value: 1, text: "Option 1" },
@@ -3091,7 +3227,7 @@ export default defineComponent({
         },
         { key: "lastModified", label: "Last Modified", align: "right", sortable: true, format: (date: Date) => date.toLocaleDateString() },
         { key: "actions", label: "Actions" }
-      ],
+      ] as TableField[],
       tableItems: [
         { id: 1, title: "First entry", author: "Jason Shimkoski", lastModified: new Date() },
         { id: 2, title: "Second entry", author: "Steve Scholnick", lastModified: new Date("2021-12-01") },
@@ -3101,11 +3237,11 @@ export default defineComponent({
       sortField: "lastModified",
       sortDesc: true,
       countText: "",
-      toasts: [] as any,
+      toasts: [] as ToasterToast[],
       showDropdown: false,
       showModal: false,
       showModalSizeDropdown: false,
-      modalSize: "md",
+      modalSize: "md" as '2xl' | 'xl' | 'lg' | 'md' | 'sm',
       maxTextarea: {
         input: "",
       },
@@ -3114,24 +3250,24 @@ export default defineComponent({
         // date: new Date('03/23/2001'),
         max: null,
         min: null,
-        mode: "dateTime",
-        size: "md"
+        mode: "dateTime" as CalendarMode,
+        size: "md" as 'md' | 'sm'
       },
       calendarSingle: {
         date: new Date('03-04-2022'),
         // date: new Date('03/23/2001'),
         max: null,
         min: null,
-        mode: "dateTime",
-        size: "md"
+        mode: "dateTime" as CalendarMode,
+        size: "md" as 'md' | 'sm'
       },
       calendar2: {
         date: { start: null, end: null },
         // date: new Date('03/23/2001'),
         max: null,
         min: null,
-        mode: "dateTime",
-        size: "md"
+        mode: "dateTime" as CalendarMode,
+        size: "md" as 'md' | 'sm'
       },
       paginator: {
         currentPage: 2,
@@ -3145,8 +3281,8 @@ export default defineComponent({
           { key: 3, value: "Orange" },
           { key: 4, value: "Lemon" },
           { key: 5, value: "Pear" },
-        ],
-        selected: [],
+        ] as MultiselectOption[],
+        selected: [] as MultiselectOption[],
       },
       filterby: {
         options: [
@@ -3171,10 +3307,9 @@ export default defineComponent({
           { id: 19, text: "Option 19", selected: false },
           { id: 20, text: "Option 20", selected: false },
         ],
-        idsText: null,
+        idsText: null as string | null,
       },
       text: "",
-      items: [] as any,
       fakeAjaxItems: [
         { term: "Apple", payload: "test" },
         {
@@ -3241,7 +3376,7 @@ export default defineComponent({
   },
   computed: {
     filteredMultiselectOptions() {
-      return this.multiselect.options.filter((i) => i.value.toLowerCase().includes(this.multiselect.input.toLowerCase()));
+      return this.multiselect.options.filter((i) => (i.value as string).toLowerCase().includes(this.multiselect.input.toLowerCase()));
     },
     filterByBtnText() {
       return this.filterBySelectedOptions.length > 0
@@ -3281,47 +3416,44 @@ export default defineComponent({
           id: Math.random(),
           title: "Success Toast",
           text: "This is the content of this toast.",
-          type: "success",
+          type: "success" as 'success' | 'info' | 'warning' | 'danger',
         },
         {
           id: Math.random(),
           title: "Info Toast",
           text: "This is the content of this toast.",
-          type: "info",
+          type: "info" as 'success' | 'info' | 'warning' | 'danger',
         },
         {
           id: Math.random(),
           title: "Warning Toast",
           text: "This is the content of this toast.",
-          type: "warning",
+          type: "warning" as 'success' | 'info' | 'warning' | 'danger',
         },
         {
           id: Math.random(),
           title: "Danger Toast",
           text: "This is the content of this toast.",
-          type: "danger",
+          type: "danger" as 'success' | 'info' | 'warning' | 'danger',
           noAutoHide: true,
         },
       ];
       this.toasts.unshift(toasts[index]);
     },
-    changeModalSize(size: string) {
+    changeModalSize(size: 'sm' | 'md' | 'lg' | 'xl') {
       this.modalSize = size;
     },
-    updateSelected(selections: any) {
+    updateSelected(selections: MultiselectOption[]) {
       this.multiselect.selected = selections;
     },
-    filtered(options: any) {
+    filtered(options: FilterByDropdownOption[]) {
       this.filterby.idsText = options
-        .filter((i: any) => i.selected)
-        .map((i: any) => i.id)
-        .join(", ");
-    },
-    result(result: any) {
-      console.log(result);
+        .filter((i: FilterByDropdownOption) => i.selected)
+        .map((i: FilterByDropdownOption) => i.id)
+        .join(", ")
     },
     // Perform a search
-    search(q: any) {
+    search(q: string) {
       this.$emit("hello", q);
       this.searchText = this.text;
     },
@@ -3340,19 +3472,19 @@ export default defineComponent({
       console.log("Close now!");
       res();
     },
-    async willChangeTab(tab: any, res: Function, rej: Function) {
+    async willChangeTab(tab: TabItem, res: Function, rej: Function) {
       console.log("Pause for 1/2 second to get fake api request", tab);
       await new Promise(r => setTimeout(r, 500));
       console.log("Open now!");
       res();
     },
-    changeTab(tab: any) {
+    changeTab(tab: TabItem) {
       console.log(tab);
     },
-    handleDrawerOpen(item: any) {
+    handleDrawerOpen(item: TableItem) {
       console.log(item);
     },
-    sortTableItems({ field, sortBy, sortDesc }: any) {
+    sortTableItems({ field, sortBy, sortDesc }: { field: TableField, sortBy: string, sortDesc: boolean }) {
       console.log(field);
       this.sortField = sortBy;
       this.sortDesc = sortDesc;

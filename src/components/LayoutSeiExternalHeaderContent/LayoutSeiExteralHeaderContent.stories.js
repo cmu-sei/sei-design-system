@@ -19,7 +19,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-layout-sei-external-header-content v-bind="args"></sds-layout-sei-external-content>
+    <sds-layout-sei-external-header-content v-bind="args" />
   `
 });
 

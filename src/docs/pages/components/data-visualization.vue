@@ -6,12 +6,18 @@
       </h2>
       <div class="grid grid-cols-4 gap-4">
         <div>
-          <SdsAvatar
-            shape="circle"
-            variant="gray"
+          <SdsIndicator
+            placement-over="circle"
+            placement="bottom-right"
             size="lg"
-            name="John Smith"
-          />
+          >
+            <SdsAvatar
+              shape="circle"
+              variant="gray"
+              size="lg"
+              name="John Smith"
+            />
+          </SdsIndicator>
         </div>
         <div>
           <SdsAvatar
@@ -54,12 +60,77 @@
           />
         </div>
         <div>
-          <SdsAvatar
-            shape="portrait"
-            variant="gray"
-            size="md"
-            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
-          />
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="portrait"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="portrait"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="portrait"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="portrait"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
+          <SdsTooltip
+            size="auto"
+            type="dark"
+            :disabled="false"
+          >
+            <template #trigger>
+              <SdsIndicator
+                variant="green"
+                size="sm"
+                placement="bottom-right"
+                placement-over="circle"
+                status="Online"
+              >
+                <SdsAvatar
+                  shape="circle"
+                  variant="gray"
+                  size="sm"
+                  name="Jason Shimkoski"
+                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
+                />
+              </SdsIndicator>
+            </template>
+            <p>Jason Shimkoski is available.</p>
+          </SdsTooltip>
         </div>
       </div>
     </div>
@@ -76,7 +147,7 @@
         </SdsBadge>
         <SdsBadge
           type="medium"
-          variant="purple"
+          variant="blue"
           class="w-48"
         >
           Badge
@@ -110,7 +181,7 @@
         <SdsDatapoint
           v-model="datapointModelValue"
           size="sm"
-          variant="black"
+          variant="gray"
           label="Report Downloads"
         />
         <SdsDatapoint
@@ -218,7 +289,7 @@
             </p>
           </template>
           <template #cell(actions)="{ item }">
-            <button @click="edit(item.id)">
+            <button @click="edit(item)">
               Edit
             </button>
           </template>
@@ -227,19 +298,19 @@
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>
-                  <span>{{ item.additionalData.store }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).store }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Aisle:</span>
-                  <span>{{ item.additionalData.aisle }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
                 </p>
               </li>
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Price:</span>
-                  <span>{{ item.additionalData.price }}</span>
+                  <span>{{ (item.additionalData as AdditionalData).price }}</span>
                 </p>
               </li>
             </ul>
@@ -332,23 +403,17 @@
           variant="teal"
           :view-all-url="viewAllUrl"
         />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="pink"
-          :view-all-url="viewAllUrl"
-        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { TableField, TableItem } from '../../../components/Table/Table.vue';
+
 const datapointModelValue = ref(1451)
 
-const fields = ref([
+const fields = ref<TableField[]>([
   {
     key: "id",
     label: "ID",
@@ -387,7 +452,13 @@ const fields = ref([
   }
 ])
 
-const items = ref([
+interface AdditionalData {
+  store: string;
+  aisle: string;
+  price: string;
+}
+
+const items = ref<TableItem[]>([
   {
     id: 1,
     fruit: "Apple",
@@ -450,8 +521,8 @@ const items = ref([
   }
 ])
 
-const edit = (id: any) => {
-  console.log(id)
+const edit = (item: TableItem) => {
+  console.log(item)
 }
 
 const title = ref('Chart title')

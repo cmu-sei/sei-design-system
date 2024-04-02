@@ -44,7 +44,7 @@
       <h2 class="text-xl">
         Dropdown
       </h2> 
-      <div>
+      <div class="space-x-4">
         <sds-dropdown
           title="Dropdown"
         >
@@ -61,7 +61,49 @@
           >
             Guide
           </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
           <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+            >
+              Sign out
+            </sds-dropdown-item>
+          </form>
+        </sds-dropdown>
+        <sds-dropdown
+          title="Dropdown"
+          type="dark"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
             Support
           </sds-dropdown-item>
           <sds-dropdown-item href="#">
@@ -210,6 +252,8 @@
 </template>
 
 <script setup lang="ts">
+import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
+
 const expandCollapseModel = ref(false)
 
 const filterBy = reactive({
@@ -235,7 +279,7 @@ const filterBy = reactive({
     { id: 19, text: "Option 19", selected: false },
     { id: 20, text: "Option 20", selected: false },
   ],
-  idsText: null
+  idsText: null as string | null
 })
 
 const filterBySelectedOptions = computed(() => {
@@ -248,10 +292,10 @@ const filterByBtnText = computed(() => {
     : "No options are selected";
 })
 
-const filtered = (options: any) => {
+const filtered = (options: FilterByDropdownOption[]) => {
   filterBy.idsText = options
-    .filter((i: any) => i.selected)
-    .map((i: any) => i.id)
+    .filter((i: FilterByDropdownOption) => i.selected)
+    .map((i: FilterByDropdownOption) => i.id)
     .join(", ");
 }
 

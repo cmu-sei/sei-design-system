@@ -11,7 +11,7 @@
       <!-- @slot Header content. -->
       <slot name="header" />
     </header>
-    <main class="flex-grow">
+    <main class="grow">
       <!-- @slot Page content. -->
       <slot />
     </main>

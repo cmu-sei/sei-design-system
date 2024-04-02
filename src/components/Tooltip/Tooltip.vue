@@ -46,7 +46,7 @@
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
-type Placement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+export type TooltipPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsPopover'
@@ -80,7 +80,7 @@ const props = defineProps({
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<Placement>, default: 'top' },
+  placement: { type: String as PropType<TooltipPlacement>, default: 'top' },
   /**
    * Determines if the popover should display or not.
    */

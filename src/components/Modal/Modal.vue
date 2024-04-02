@@ -29,9 +29,13 @@
         <div
           v-if="showModal"
           class="fixed inset-0 block h-full w-full overflow-auto z-50"
+          @click.self="close"
         >
           <button
             class="fixed inset-0 h-full w-full cursor-auto"
+            :class="{
+              'sr-only': hideHeader
+            }"
             @click="close"
           >
             <span class="sr-only">Close modal</span>
@@ -43,6 +47,7 @@
             :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
             class="z-50 p-2"
             @keydown="checkKeyEvent"
+            @click.self="close"
           >
             <div
               class="
@@ -54,26 +59,35 @@
                 border
                 rounded-lg
                 shadow-xl
-                dark:bg-gray-900 dark:border-gray-700
+                dark:text-gray-25
+                dark:bg-gray-900 dark:border-gray-800
                 md:my-8
               "
               :class="{
                 [zIndexClass]: true,
                 'md:max-w-sm': size === 'sm',
                 'md:max-w-xl': size === 'md',
-                'md:max-w-xl lg:max-w-4xl': size === 'lg',
-                'md:max-w-xl lg:max-w-4xl xl:max-w-6xl': size === 'xl',
+                'md:max-w-xl lg:max-w-2xl': size === 'lg',
+                'md:max-w-xl lg:max-w-2xl xl:max-w-4xl': size === 'xl',
+                'md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl': size === '2xl',
               }"
             >
-              <header class="flex items-center p-6 pb-0">
+              <header
+                class="flex items-center p-6 pb-0"
+                :class="{
+                  'sr-only': hideHeader
+                }"
+              >
                 <div
-                  v-if="hasTitleSlot"
+                  v-if="hasTitleSlot || title"
                   ref="titleWrapper"
                   v-uid
                   class="flex items-center gap-2 text-2xl leading-7 font-light"
                 >
                   <!-- @slot Modal title content. -->
-                  <slot name="title" />
+                  <slot name="title">
+                    {{ title }}
+                  </slot>
                 </div>
                 <button
                   v-focus
@@ -155,9 +169,17 @@ const props = defineProps({
    * Determines the size of the modal.
    */
   size: {
-    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
+    type: String as PropType<'2xl' | 'xl' | 'lg' | 'md' | 'sm'>,
     default: "md",
   },
+  /**
+   * Determines the title of the modal.
+   */
+  title: { type: String, default: null },
+  /**
+   * Determines if the modal header should be hidden.
+   */
+  hideHeader: { type: Boolean, default: false },
   /**
    * The z-index for the popover.
    */

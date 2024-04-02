@@ -2,7 +2,7 @@
 
 exports[`Badge > should match its default snapshot 1`] = `
 <div
-  class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-white bg-gray-500"
+  class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded text-white dark:text-black bg-gray-500 dark:bg-gray-400"
   data-id="sds-badge"
   role="status"
 >

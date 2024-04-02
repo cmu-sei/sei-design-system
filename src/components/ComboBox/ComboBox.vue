@@ -12,9 +12,10 @@
       }"
     >
       <button
-        class="input-group-text"
+        class="input-group-addon"
         :disabled="disabled"
         tabindex="-1"
+        type="button"
         @click="inputField?.focus()"
       >
         <span class="sr-only">Combo box</span>
@@ -56,7 +57,7 @@
         @keyup.enter.prevent.self="handleEnterKeyUp"
       >
       <button
-        v-if="query.length > 0 && !disabled"
+        v-if="filterQuery.length > 0 && !disabled"
         tabindex="-1"
         type="button"
         class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
@@ -84,7 +85,7 @@
       </button>
       <div
         v-if="focusOnKeyPress"
-        class="input-group-text"
+        class="input-group-addon"
       >
         <SdsTooltip>
           <template #trigger>
@@ -110,11 +111,11 @@
     >
       <div
         v-if="dropdownIsOpen"
-        class="absolute z-50 w-full p-0 mt-1 overflow-auto bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
+        class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
-          v-if="groups.length > 1"
-          class="overflow-x-auto flex gap-2 p-2 [&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700"
+          v-if="!disableGroupTabs && groups.length > 1"
+          class="overflow-x-auto flex gap-2 p-2 border-b border-gray-100 dark:border-gray-700"
         >
           <button
             v-for="group in groups"
@@ -141,78 +142,83 @@
             >{{ group.count }}</span>
           </button>
         </div>
-        <template
-          v-for="s, sindex in suggestionOptions"
-          :key="`${s}_${sindex}`"
+        <SdsScrollArea
+          ref="scrollArea"
+          class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
         >
-          <div
-            v-if="optionGroupChildren && s[optionGroupChildren]"
-            class="[&+button]:border-t [&+button]:border-gray-100 dark:[&+button]:border-gray-700 border-t border-gray-100 dark:border-gray-700"
+          <template
+            v-for="s, sindex in suggestionOptions"
+            :key="`${s}_${sindex}`"
           >
             <div
-              v-if="activeGroupKey === -1"
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              v-if="optionGroupChildren && s[optionGroupChildren]"
+              class="border-b border-gray-100 dark:border-gray-700"
             >
-              <!-- @slot Option Group content. Good for customizing the content for each group option -->
-              <slot
-                name="optionGroup"
-                :option="s"
-                :label="optionGroupLabel ? s[optionGroupLabel] : s"
+              <div
+                v-if="activeGroupKey === -1"
+                class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
               >
-                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
-              </slot>
+                <!-- @slot Option Group content. Good for customizing the content for each group option -->
+                <slot
+                  name="optionGroup"
+                  :option="s"
+                  :label="optionGroupLabel ? s[optionGroupLabel] : s"
+                >
+                  {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+                </slot>
+              </div>
+              <button
+                v-for="c, cindex in s[optionGroupChildren]"
+                :key="`${s}_${c}_${cindex}`"
+                ref="dropdownOption"
+                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                :class="{
+                  'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
+                }"
+                :data-active="c.index === arrowCounter"
+                type="button"
+                tabindex="-1"
+                @click="handleSuggestionClick(c)"
+              >
+                <!-- @slot Option content. Good for customizing the content for each option -->
+                <slot
+                  name="option"
+                  :option="c"
+                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                >
+                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                </slot>
+              </button>
             </div>
             <button
-              v-for="c, cindex in s[optionGroupChildren]"
-              :key="`${s}_${c}_${cindex}`"
+              v-else
               ref="dropdownOption"
-              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
               :class="{
-                'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                'text-black dark:text-white bg-gray-100 dark:bg-gray-800': c.index === arrowCounter
+                'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
               }"
-              :data-active="c.index === arrowCounter"
+              :data-active="s.index === arrowCounter"
               type="button"
               tabindex="-1"
-              @click="handleSuggestionClick(c)"
+              @click="handleSuggestionClick(s)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
               <slot
                 name="option"
-                :option="c"
-                :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                :option="s"
+                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
               >
-                {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
             </button>
-          </div>
-          <button
-            v-else
-            ref="dropdownOption"
-            class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-            :class="{
-              'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-              'text-black dark:text-white bg-gray-100 dark:bg-gray-800': s.index === arrowCounter
-            }"
-            :data-active="s.index === arrowCounter"
-            type="button"
-            tabindex="-1"
-            @click="handleSuggestionClick(s)"
-          >
-            <!-- @slot Option content. Good for customizing the content for each option -->
-            <slot
-              name="option"
-              :option="s"
-              :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-            >
-              {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
-            </slot>
-          </button>
-        </template>
+          </template>
+        </SdsScrollArea>
         <!-- Footer section -->
-        <div class="border-t border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
-          <div class="flex items-center gap-1.5">
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+        <div class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
+          <div class="ml-auto flex items-center gap-1.5">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -226,8 +232,6 @@
                   d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
                 />
               </svg>
-            </div>
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -248,7 +252,7 @@
             v-if="groups.length > 1"
             class="flex items-center gap-1.5"
           >
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -262,8 +266,6 @@
                   d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
                 />
               </svg>
-            </div>
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -306,6 +308,11 @@
 
 <script setup lang="ts">
 import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
+
+export type ComboBoxSuggestion = {
+  [id: string | number]: unknown
+} | string
 
 defineOptions({
   name: 'SdsComboBox'
@@ -347,7 +354,7 @@ const props = defineProps({
   /**
    * The suggestions used for autosuggest.
    */
-  suggestions: { type: Array as PropType<any[]>, default: undefined },
+  suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
   /**
    * The label key used for each non-group suggestion.
    */
@@ -365,51 +372,90 @@ const props = defineProps({
    */
   filterSuggestions: { type: Boolean, default: undefined },
   /**
-   * The debounce period before the suggestions are updated.
+   * The debounce period before complete event is emitted.
    */
-  debounceSuggestions: { type: Number, default: 250 }
+  debounceComplete: { type: Number, default: 350 },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  hideEmptyGroups: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide empty groups from the tabbed group suggestions.
+   */
+  disableGroupTabs: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
+const removeHtmlFromString = (value: string) => {
+  if (typeof document === 'undefined') return value
+  let div = document.createElement('div')
+  div.innerHTML = value
+  return div.textContent || div.innerText || ''
+}
+
 const root = ref()
+const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
-const query = ref(props.modelValue)
+
+const query = computed({
+  get() {
+    return props.modelValue
+  },
+  set(value: string) {
+    /**
+     * Emmited when the modelValue changes.
+     */
+    emit('update:model-value', value)
+  }
+})
+
 const filterQuery = ref(props.modelValue)
 const showDropdown = ref(false)
+const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
 watch(query, (value) => {
   activeGroupKey.value = -1
-  filterQuery.value = value
-  emitComplete()
+  arrowCounter.value = -1
+  filterQuery.value = removeHtmlFromString(value)
 })
+
+watchDebounced(query, () => {
+  emitComplete()
+}, { debounce: props.debounceComplete })
 
 watch(showDropdown, () => {
   arrowCounter.value = -1
   activeGroupKey.value = -1
 })
 
-watchDebounced(() => props.suggestions, (value) => {
-  if (query.value !== props.modelValue) {
+watch(() => props.suggestions, (value) => {
+  if (!preventShowDropdown.value) {
     showDropdown.value = typeof value !== 'undefined' && value.length > 0
   }
-}, { debounce: props.debounceSuggestions })
+})
 
-const reduceList = (arr: any) => {
+watch(filterQuery, (value) => {
+  preventShowDropdown.value = value === removeHtmlFromString(query.value)
+})
+
+const reduceList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
-  const cleanArray = arr.reduce((acc:any, item:any) => {
-    const newItem = item
-    if (props.optionGroupChildren && item[props.optionGroupChildren]) {
-      newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren])
-      if (newItem[props.optionGroupChildren].length > 0) {
-        acc.push(newItem)
-      }
-    } else {
-      if (newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value].toLowerCase().includes(query.value.toLowerCase())) {
-        acc.push(newItem)
+  const cleanArray = arr.reduce((acc:ComboBoxSuggestion[], item:ComboBoxSuggestion) => {
+    if (typeof item !== 'string') {
+      const newItem = item
+      if (props.optionGroupChildren && item[props.optionGroupChildren]) {
+        newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
+        if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length > 0) {
+          acc.push(newItem)
+        }
+      } else {
+        if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
+          acc.push(newItem)
+        }
       }
     }
     return acc
@@ -418,19 +464,23 @@ const reduceList = (arr: any) => {
   return addIndexToList(cleanArray)
 }
 
-const addIndexToList = (arr: any) => {
+const addIndexToList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
   let index = 0
-  return arr.map((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      i[props.optionGroupChildren] = i[props.optionGroupChildren].map((x: any) => {
-        x.index = index
+  return arr.map((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string') {
+      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+        i[props.optionGroupChildren] = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).map((x: ComboBoxSuggestion) => {
+          if (typeof x !== 'string') {
+            x.index = index
+            index++
+          }
+          return x
+        })
+      } else {
+        i.index = index
         index++
-        return x
-      })
-    } else {
-      i.index = index
-      index++
+      }
     }
     return i
   })
@@ -438,9 +488,9 @@ const addIndexToList = (arr: any) => {
 
 const allCount = computed(() => {
   let count = 0
-  allSuggestionOptions.value?.forEach((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      count = count + i[props.optionGroupChildren].length
+  allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
+      count = count + (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length
     } else {
       count = count + 1
     }
@@ -449,7 +499,7 @@ const allCount = computed(() => {
 })
 
 const groupsWithItems = computed(() => {
-  return props.suggestions?.filter(i => props.optionGroupChildren && i[props.optionGroupChildren])
+  return props.suggestions?.filter(i => typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren])
 })
 
 const groups = computed(() => {
@@ -457,27 +507,27 @@ const groups = computed(() => {
   return groupsWithItems.value ? [
     { index: -1, key, label: 'All', count: allCount.value },
     ...groupsWithItems.value.map((i, index) => {
-      const count = props.optionGroupChildren && i[props.optionGroupChildren].length || 0
-      if (count > 0) {
-        key = key + 1
-      }
-      return {
-        index,
-        key,
-        label: i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-        count
-      }
-    })
+        const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
+        if (count > 0) {
+          key = key + 1
+        }
+        return {
+          index,
+          key,
+          label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
+          count
+        }
+    }).filter(i => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 })
 
 const activeGroupKey = ref(-1)
 
 const activeGroup = computed(() => {
-  return groups.value.find(i => i.key === activeGroupKey.value)
+  return groups.value.find(i => typeof i !== 'string' && i?.key === activeGroupKey.value)
 })
 
-const setActiveGroup = (group: { key: number, label: string, count: number }) => {
+const setActiveGroup = (group: { key: number }) => {
   inputField.value.focus()
   arrowCounter.value = -1
   activeGroupKey.value = group.key
@@ -497,18 +547,18 @@ watchEffect(() => {
     }
     return i
   })
-  allSuggestionOptions.value = props.filterSuggestions ?
+  allSuggestionOptions.value = props.filterSuggestions && allSuggestions ?
     reduceList(allSuggestions) :
-    addIndexToList(allSuggestions)
+    allSuggestions && addIndexToList(allSuggestions)
 
   // Group Suggestions
   const groupSuggestions = props.suggestions?.filter(i => {
-    return props.optionGroupChildren &&
+    return typeof i !== 'string' && props.optionGroupChildren &&
       i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label
   })
-  groupSuggestionOptions.value = props.filterSuggestions ?
+  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions ?
     reduceList(groupSuggestions) :
-    addIndexToList(groupSuggestions)
+    groupSuggestions && addIndexToList(groupSuggestions)
   
   // Combined Suggestion Options
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
@@ -523,7 +573,14 @@ onMounted(() => {
 })
 
 onKeyStroke('Escape', () => {
-  filterQuery.value = query.value
+  filterQuery.value = removeHtmlFromString(query.value)
+  preventShowDropdown.value = true
+  showDropdown.value = false
+})
+
+onClickOutside(root, () => {
+  filterQuery.value = removeHtmlFromString(query.value)
+  preventShowDropdown.value = true
   showDropdown.value = false
 })
 
@@ -539,25 +596,50 @@ onKeyStroke('/', (e) => {
   inputField.value.focus()
 })
 
-onClickOutside(root, () => {
-  filterQuery.value = query.value
-  showDropdown.value = false
-})
+const scrollToChild = async () => {
+  await nextTick()
+  if (!scrollArea.value) return
+  const parent = scrollArea.value.$el
+  if (!parent) return
+  const child = parent.querySelector('[data-active="true"]')
+  if (!child) return
+  const parentRect = parent.getBoundingClientRect()
+  const childRect = child.getBoundingClientRect()
+
+  const isViewable = (childRect.top >= parentRect.top) && (childRect.bottom <= parentRect.top + parent.clientHeight);
+
+  // If you can't see the child try to scroll parent
+  if (!isViewable) {
+    // Should we scroll using top or bottom? Find the smaller ABS adjustment
+    const scrollTop = childRect.top - parentRect.top;
+    const scrollBot = childRect.bottom - parentRect.bottom;
+    if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
+      // We're near the top of the list
+      parent.scrollTop += scrollTop
+    } else {
+      // We're near the bottom of the list
+      parent.scrollTop += scrollBot
+    }
+  }
+}
 
 const closeDropdownAndFocusInput = () => {
   showDropdown.value = false
-  inputField.value.focus();
+  inputField.value.focus()
 }
 
 const clearQuery = () => {
-  query.value = '';
-  emitUpdateModelValue()
-  inputField.value.focus();
+  query.value = ''
+  inputField.value.focus()
 }
 
-const handleSuggestionClick = (option: any) => {
-  query.value = props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
-  emitUpdateModelValue()
+const handleSuggestionClick = (option: ComboBoxSuggestion) => {
+  preventShowDropdown.value = true
+  if (typeof option === 'string') {
+    query.value = option
+  } else {
+    query.value = props.optionLabel ? option[props.optionLabel] as string : option[defaultOptionLabel.value] as string
+  }
   emitResult(option)
   emitEnter()
   closeDropdownAndFocusInput()
@@ -565,19 +647,27 @@ const handleSuggestionClick = (option: any) => {
 
 const getCurrentSuggestion = () => {
   let option
-  suggestionOptions.value.forEach((i: any) => {
-    if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-      const tmp = i[props.optionGroupChildren].find((x: any) => x.index === arrowCounter.value)
-      if (tmp) {
-        option = props.optionLabel ? tmp[props.optionLabel] : tmp[defaultOptionLabel.value]
-      }
-    } else {
-      if (i.index === arrowCounter.value) {
-        option = props.optionLabel ? i[props.optionLabel] : i[defaultOptionLabel.value]
+  suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string') {
+      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x.index === arrowCounter.value)
+        if (tmp) {
+          option = tmp
+        }
+      } else {
+        if (i.index === arrowCounter.value) {
+          option = i
+        }
       }
     }
   })
   return option
+}
+
+const getCurrentSuggestionValue = () => {
+  const option = getCurrentSuggestion()
+  if (!option) return ''
+  return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
 const handleEnterKeyUp = () => {
@@ -586,12 +676,12 @@ const handleEnterKeyUp = () => {
   if (dropdownIsOpen.value) {
     const option = getCurrentSuggestion()
     if (option) {
-      query.value = option
+      query.value = getCurrentSuggestionValue()
       emitResult(option)
-      emitUpdateModelValue()
     }
     closeDropdownAndFocusInput()
   }
+  preventShowDropdown.value = true
   emitEnter()
 }
 
@@ -621,7 +711,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "left":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
@@ -630,7 +720,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "right":
-        if (suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
           if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             event.preventDefault()
             arrowCounter.value = -1
@@ -642,21 +732,17 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     // Set the input boxes text to the value of the result
     const option = getCurrentSuggestion()
     if (option) {
-      filterQuery.value = option
+      filterQuery.value = removeHtmlFromString(getCurrentSuggestionValue())
     } else {
-      filterQuery.value = query.value
+      filterQuery.value = removeHtmlFromString(query.value)
     }
+
+    // Scroll to selected result
+    scrollToChild()
   }
 }
 
-const emitUpdateModelValue = () => {
-  /**
-   * Emmited when the modelValue changes.
-   */
-  emit('update:model-value', query.value)
-}
-
-const emitResult = (result: any) => {
+const emitResult = (result: ComboBoxSuggestion) => {
   /**
    * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
    */
@@ -667,13 +753,13 @@ const emitComplete = () => {
   /**
    * Emitted when internal query changes.
    */
-  emit('complete', query.value);
+  emit('complete', filterQuery.value);
 }
 
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', query.value)
+  emit('enter', filterQuery.value)
 }
 </script>

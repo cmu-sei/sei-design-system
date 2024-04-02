@@ -1,9 +1,9 @@
 <template>
   <div
     data-id="sds-section"
-    class="block bg-white dark:bg-gray-900"
+    class="block bg-white dark:bg-gray-950"
     :class="{
-      border: type === 'simple' || type === 'raised',
+      'border border-gray-200 dark:border-gray-800': type === 'simple' || type === 'raised',
       'shadow border rounded-lg': type === 'raised',
     }"
   >
@@ -12,7 +12,7 @@
       :class="{
         'border-b dark:border-gray-800':
           type === 'simple' || type === 'raised',
-        'border-0 border-t-2 border-gray-900 dark:border-gray-500':
+        'border-0 border-t-2 border-gray-900 dark:border-gray-600':
           type === 'accented',
       }"
     >
@@ -20,7 +20,7 @@
         class="flex px-4 py-3"
         :class="{ 'border-b border-gray-300 dark:border-gray-800': type === 'accented' }"
       >
-        <div class="self-center flex-grow">
+        <div class="self-center grow">
           <div
             v-if="hasTitleSlot"
             class="slot-title"

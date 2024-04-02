@@ -5,9 +5,51 @@
     :app-suite="appSuite"
     :enable-collapsible-sidebar="enableCollapsibleSidebar"
     :page-title="pageTitle"
-    :sidebar-navigation-items="sidebarNavigationItems"
+    :sidebar-navigation-items="(sidebarNavigationItems as LayoutAppSidebarNavItem[])"
     @navigate="navigate"
   >
+    <template #user-section>
+      <sds-dropdown
+        title="Dropdown"
+        type="dark"
+        :offset="8"
+      >
+        <sds-dropdown-header>
+          <p>Signed in as</p>
+          <p class="font-semibold truncate">
+            tom@example.com
+          </p>
+        </sds-dropdown-header>
+        <sds-dropdown-divider />
+        <sds-dropdown-item
+          href="/"
+          disabled
+        >
+          Guide
+        </sds-dropdown-item>
+        <sds-dropdown-item
+          href="#"
+          active
+        >
+          Support
+        </sds-dropdown-item>
+        <sds-dropdown-item href="#">
+          License
+        </sds-dropdown-item>
+        <sds-dropdown-divider />
+        <form
+          method="POST"
+          action="#"
+        >
+          <sds-dropdown-item
+            tag="button"
+            type="submit"
+          >
+            Sign out
+          </sds-dropdown-item>
+        </form>
+      </sds-dropdown>
+    </template>
     <template #page-header>
       <sds-button
         kind="secondary"
@@ -36,6 +78,8 @@
 </template>
 
 <script setup lang="ts">
+import { LayoutAppSidebarNavItem } from '../components/LayoutApp/LayoutApp.vue';
+
 defineOptions({
   name: 'AppPage'
 })
@@ -51,7 +95,7 @@ const route = useRoute()
 const collapsed = ref(true)
 const appSuite = ref('SDS')
 const appName = ref('Playground')
-const pageTitle = computed(() => route.meta.title)
+const pageTitle = computed(() => route.meta.title as string)
 const enableCollapsibleSidebar = ref(true)
 const sidebarNavigationItems = computed(() => [
   {id: 1, title: 'Home', active: route.fullPath === '/', href: '/'},
@@ -89,7 +133,7 @@ const toggleDarkMode = () => {
   document.body.classList.toggle('dark')
 }
 
-const navigate = ({group, item, event}: any) => {
+const navigate = ({group, item, event}: { group: LayoutAppSidebarNavItem, item: LayoutAppSidebarNavItem, event: Event }) => {
   event.preventDefault()
   router.push({ path: item.href })
 }

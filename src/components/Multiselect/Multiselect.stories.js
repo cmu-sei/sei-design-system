@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A multiselect is an advanced form field that allows users to search for and select one or more options or type in their own.',
+        component: 'A Multiselect is an advanced form field that allows users to search for and select multiple options from a list or type in their own.',
       },
     },
   },

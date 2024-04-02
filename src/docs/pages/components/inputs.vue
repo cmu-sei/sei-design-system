@@ -98,7 +98,11 @@
           @complete="comboBox.onComplete"
           @result="comboBox.onResult"
           @enter="comboBox.onEnter"
-        />
+        >
+          <template #option="{ label }">
+            <span v-html="label" />
+          </template>
+        </SdsComboBox>
         <SdsComboBox
           v-model="comboBox.modelValue"
           placeholder="Search"
@@ -147,12 +151,19 @@
           v-model="toggleSwitch.modelValue"
           :disabled="false"
         />
+        <SdsToggleSwitch
+          v-model="toggleSwitch.modelValue"
+          :disabled="true"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
+import { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
   options: [
@@ -184,12 +195,12 @@ const input = reactive({
 
 const multiselect = reactive({
   modelValue: '',
-  selected: [],
-  options: [] as { key: number, value: string }[],
+  selected: [] as MultiselectOption[],
+  options: [] as MultiselectOption[],
   loading: false
 })
 
-const multiselectUpdateSelected = (selections: any) => {
+const multiselectUpdateSelected = (selections: MultiselectOption[]) => {
   multiselect.selected = selections
 }
 
@@ -250,20 +261,23 @@ const radioGroup = reactive({
   ]
 })
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+
 const comboBox = reactive({
   modelValue: '',
   onEnter(value: string) {
     console.log(`onEnter`, value)
   },
-  suggestions: [] as { term?: string, label?:string, payload?: string, items?: { term: string, payload?: string }[] }[],
-  // suggestions: [] as any,
-  onResult(option: any) {
+  suggestions: [] as ComboBoxSuggestion[],
+  onResult(option: ComboBoxSuggestion) {
     console.log('onResult', option)
   },
   async onComplete(query: string) {
+    comboBox.suggestions = []
+    await delay(500)
     comboBox.suggestions = query ? [
-      "Testing 123",
-      { term: "Apple", payload: "test" },
+      "Testing <b>123</b>",
+      { term: "<b>App</b>le", payload: "test" },
       {
         term:
           "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
@@ -274,6 +288,7 @@ const comboBox = reactive({
         label: "Group Label",
         items: [
           { term: "Apple Group", payload: "test" },
+          { term: "<b>Uniqu</b>e to Group", payload: "test" },
           { term: "Banana Group", payload: "test" },
           { term: "Orange Group", payload: "test" },
           { term: "Pineapple Group", payload: "test" },
@@ -288,7 +303,7 @@ const comboBox = reactive({
         items: [
           { term: "Apple Group 2", payload: "test" },
           { term: "Banana Group 2", payload: "test" },
-          { term: "Date Group 2", payload: "test" },
+          { term: "<b>Date</b> Group 2", payload: "test" },
           { term: "Orange Group 2", payload: "test" },
           { term: "Pineapple Group 2", payload: "test" },
           { term: "Grape Group 2", payload: "test" },
@@ -299,7 +314,7 @@ const comboBox = reactive({
       { term: "Raspberry", payload: "test" },
       { term: "Watermelon", payload: "test" },
       { term: "Mango", payload: "test" },
-    ] : [] as any
+    ] : [] as ComboBoxSuggestion[]
     // comboBox.suggestions = query ? [
     //   "Apple",
     //   "Banana",

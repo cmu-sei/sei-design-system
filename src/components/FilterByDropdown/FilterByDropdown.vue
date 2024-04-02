@@ -49,7 +49,7 @@
           class="input-group input-group-sm mb-2 border-b"
         >
           <button
-            class="input-group-text mt-0.5"
+            class="input-group-addon mt-0.5"
             @click="filterTextInput?.focus()"
           >
             <svg
@@ -140,13 +140,14 @@ import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
 import { Uid } from '@shimyshack/uid'
 
-interface FilterByDropdownOption {
+export interface FilterByDropdownOption {
   id: string | number
   selected: boolean
   text: string
+  [key: string]: unknown
 }
 
-type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
+export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
 defineOptions({
   name: "SdsFilterByDropdown",

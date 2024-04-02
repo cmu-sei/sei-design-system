@@ -24,9 +24,9 @@
 </template>
 
 <script setup lang="ts">
-type SelectOptionValue = boolean | string | number | null
+export type SelectOptionValue = boolean | string | number | null
 
-interface SelectOption<T> {
+export interface SelectOption<T> {
   [key: string]: T
 }
 

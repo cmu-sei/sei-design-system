@@ -2,10 +2,10 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
-        Loading Box
+        Loading Skeleton
       </h2>
       <div>
-        <SdsLoadingBox
+        <SdsLoadingSkeleton
           height="h-48"
           width="w-1/5"
         />
@@ -39,7 +39,9 @@
 </template>
 
 <script setup lang="ts">
-const modelValue = ref<{ id: number; title: string; text: string; type: string; }[]>([])
+import { ToasterToast } from '../../../components/Toaster/Toaster.vue';
+
+const modelValue = ref<ToasterToast[]>([])
 
 const addToast = () => {
   const index = Math.floor(Math.random() * Math.floor(4));
@@ -48,25 +50,25 @@ const addToast = () => {
       id: Math.random(),
       title: "Success Toast",
       text: "This is the content of this toast.",
-      type: "success",
+      type: "success" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Info Toast",
       text: "This is the content of this toast.",
-      type: "info",
+      type: "info" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Warning Toast",
       text: "This is the content of this toast.",
-      type: "warning",
+      type: "warning" as 'success' | 'info' | 'warning' | 'danger',
     },
     {
       id: Math.random(),
       title: "Danger Toast",
       text: "This is the content of this toast.",
-      type: "danger",
+      type: "danger" as 'success' | 'info' | 'warning' | 'danger',
       noAutoHide: true,
     },
   ];

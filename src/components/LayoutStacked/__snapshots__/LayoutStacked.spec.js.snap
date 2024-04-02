@@ -7,7 +7,7 @@ exports[`LayoutStacked > should match its default snapshot 1`] = `
 >
   <!--v-if-->
   <main
-    class="flex-grow"
+    class="grow"
   >
     <!-- @slot Page content. -->
     

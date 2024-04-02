@@ -12,7 +12,7 @@ export default {
   component: SdsTopFiveChart,
   argTypes: {
     variant: {
-      options: ['gray', 'red', 'green', 'orange', 'blue', 'teal', 'purple', 'indigo', 'pink'],
+      options: ['gray', 'red', 'green', 'orange', 'blue', 'teal', 'purple', 'indigo'],
       type: 'select'
     }
   }

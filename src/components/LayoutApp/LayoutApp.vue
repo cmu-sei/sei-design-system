@@ -64,14 +64,14 @@
         </button>
       </header>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
-        <!-- @slot Suite header content. @binding collapsed -->
+        <!-- @slot User section content. @binding collapsed -->
         <slot
-          name="suite-header"
+          name="user-section"
           :collapsed="collapsed"
         />
       </div>
     </div>
-    <div class="flex flex-grow flex-shrink-0">
+    <div class="flex grow flex-shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
         enter-active-class="transition-opacity ease-linear duration-150"
@@ -113,7 +113,7 @@
             <span class="sr-only">Toggle mobile menu</span>
           </button>
           <div class="h-screen flex flex-col sticky top-0">
-            <div class="overflow-y-auto flex-grow overscroll-contain">
+            <div class="overflow-y-auto grow overscroll-contain">
               <div
                 v-if="appName"
                 class="sticky top-0 bg-gray-900 z-10 flex gap-2 p-4"
@@ -352,7 +352,7 @@
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
-          <div class="overflow-y-auto flex-grow overscroll-contain">
+          <div class="overflow-y-auto grow overscroll-contain">
             <div
               v-if="appName"
               class="sticky top-0 bg-gray-900 z-10"
@@ -618,14 +618,14 @@
           </div>
           <div
             v-if="enableCollapsibleSidebar"
-            class="flex-shrink-0 sticky bottom-0 bg-gray-900"
+            class="flex flex-shrink-0 sticky bottom-0 bg-gray-900"
           >
             <button
               id="btn-collapse-toggle"
               :title="
                 collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
               "
-              class="px-3 ml-auto border-transparent rounded-none tab tab-block tab-dark"
+              class="px-3 ml-auto border-transparent rounded-none btn btn-white btn-ghost"
               :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
               @click="toggleCollapse"
             >
@@ -658,13 +658,13 @@
       </aside>
 
       <!-- Main content -->
-      <div class="flex flex-col items-stretch flex-grow min-w-0">
-        <main class="flex-grow pb-4 bg-gray-25 dark:bg-gray-950">
+      <div class="flex flex-col items-stretch grow min-w-0">
+        <main class="grow pb-4 bg-gray-25 dark:bg-black">
           <div
             v-if="!hidePageHeader"
             class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
-            <div class="flex-grow my-auto flex flex-row gap-2">
+            <div class="grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. @binding collapsed -->
               <slot
                 name="page-title"
@@ -697,7 +697,7 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-black text-xs text-white px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
+        <footer class="bg-gray-900 dark:bg-gray-950 border-t border-gray-800 text-xs text-white px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
           <div class="flex-shrink-0 flex order-2 lg:order-1">
             <sds-link
               href="https://sei.cmu.edu"
@@ -736,7 +736,7 @@
 
         <div
           v-if="hasSlot('actions-bar')"
-          class="sticky bottom-0 z-40"
+          class="bg-white dark:bg-gray-850 p-4 border-t border-gray-100 dark:border-gray-700 sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
@@ -751,7 +751,7 @@ import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
 
-interface LayoutAppSidebarNavItem {
+export interface LayoutAppSidebarNavItem {
   id: number | string
   href: string
   active: boolean

@@ -257,18 +257,19 @@
 </template>
 
 <script setup lang="ts">
-interface TableField {
+export interface TableField {
   key: string
-  label: string
+  label?: string | undefined
   format?: Function | undefined
   sortable?: boolean | undefined
   hidden?: boolean | undefined
   header?: boolean | undefined
   align?: 'left' | 'center' | 'right' | undefined
   fields?: TableField[] | undefined
+  [key: string]: unknown
 }
 
-interface TableItem {
+export interface TableItem {
   id: number
   [key: string]: unknown
 }
