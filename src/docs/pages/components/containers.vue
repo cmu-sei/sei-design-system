@@ -57,8 +57,24 @@
       <h2 class="text-xl">
         Section
       </h2>
-      <div>
+      <div class="space-y-4">
         <SdsSection type="accented">
+          <template #title>
+            <strong class="text-sm uppercase">
+              Section title
+            </strong>
+          </template>
+          <p>Sed libero enim sed faucibus turpis in eu mi.</p>
+        </SdsSection>
+        <SdsSection type="raised">
+          <template #title>
+            <strong class="text-sm uppercase">
+              Section title
+            </strong>
+          </template>
+          <p>Sed libero enim sed faucibus turpis in eu mi.</p>
+        </SdsSection>
+        <SdsSection type="simple">
           <template #title>
             <strong class="text-sm uppercase">
               Section title
