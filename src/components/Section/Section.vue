@@ -3,7 +3,7 @@
     data-id="sds-section"
     class="block bg-white dark:bg-gray-950"
     :class="{
-      border: type === 'simple' || type === 'raised',
+      'border border-gray-200 dark:border-gray-800': type === 'simple' || type === 'raised',
       'shadow border rounded-lg': type === 'raised',
     }"
   >
