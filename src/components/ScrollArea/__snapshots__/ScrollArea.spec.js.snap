@@ -2,11 +2,18 @@
 
 exports[`ScrollArea > should match its default snapshot 1`] = `
 <div
-  class="scroll-area"
-  data-id="sds-scroll-area"
+  data-v-app=""
 >
-  <!-- @slot Scroll area content. -->
   
+  <div
+    class="scroll-area"
+    data-id="sds-scroll-area"
+  >
+    <!-- @slot Scroll area content. -->
+    
+    
+  </div>
+  <!--v-if-->
   
 </div>
 `;
