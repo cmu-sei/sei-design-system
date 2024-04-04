@@ -50,8 +50,8 @@
                 type="button"
                 class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
                 :class="{
-                 'cursor-default after:mr-0.5': !f.sortable,
-                 'after:mr-4' : f.sortable
+                  'cursor-default after:mr-0.5': !f.sortable,
+                  'after:mr-4' : f.sortable
                 }"
                 @click="f.sortable ? handleSortBy(f) : undefined"
               >
