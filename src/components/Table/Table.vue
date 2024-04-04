@@ -48,7 +48,7 @@
                 v-for="f, index in field.fields"
                 :key="f.key"
                 type="button"
-                class="after:content-[/] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
+                class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
                 :class="{
                  'cursor-default after:mr-0.5': !f.sortable,
                  'after:mr-4' : f.sortable
