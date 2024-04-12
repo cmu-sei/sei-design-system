@@ -147,7 +147,7 @@
         </SdsBadge>
         <SdsBadge
           type="medium"
-          variant="purple"
+          variant="blue"
           class="w-48"
         >
           Badge
