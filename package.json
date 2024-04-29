@@ -12,6 +12,7 @@
     "release": "./scripts/release.sh",
     "release-beta": "echo 'prerelease' | ./scripts/release-beta.sh",
     "release-next": "echo 'prerelease' | ./scripts/release-next.sh",
+    "create-component": "./scripts/create-component.sh",
     "storybook": "storybook dev -p 6006 --disable-telemetry",
     "build-storybook": "storybook build --disable-telemetry",
     "gen-volar-dts": "./scripts/gen-component-declarations.sh"
