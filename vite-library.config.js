@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { defineConfig } from 'vitest/config'
+import { defineConfig, configDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import { unheadComposablesImports } from 'unhead'
@@ -52,6 +52,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     exclude: [
+      ...configDefaults.exclude,
       'scripts/templates/*'
     ]
   },
