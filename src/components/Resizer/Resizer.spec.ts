@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-import Component from './Avatar.vue'
+import Component from './Resizer.vue'
 
 
 describe('Resizer', () => {
