@@ -18,7 +18,6 @@ if [ "$version" == "premajor" ] || [ "$version" == "preminor" ] || [ "$version" 
     echo Publishing...
     npm version $version --preid=next
     git push --follow-tags
-    npm publish --tag next --@sds:registry=https://artifacts.sei.cmu.edu/artifactory/api/npm/sei-design-system/
     npm publish --tag next --@sds:registry=https://artifacts-new.sei.cmu.edu/artifactory/api/npm/sei-design-system/
 else
     printf "\nCould not process release.\nEnsure to use a version type for this release: premajor, preminor, prepatch, preminor.\n\n"
