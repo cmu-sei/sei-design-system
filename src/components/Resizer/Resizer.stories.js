@@ -1,11 +1,11 @@
 import SdsResizer from './Resizer.vue';
 
 export default {
-  title: 'CATEGORY/Resizer',
+  title: 'Utility/Resizer',
   parameters: {
     docs: {
       description: {
-        component: 'Resize some components',
+        component: 'Beta: Allow an area to be vertically resized by clicking and dragging on the bottom border.',
       },
     },
   },

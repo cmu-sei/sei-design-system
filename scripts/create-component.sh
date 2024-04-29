@@ -35,3 +35,6 @@ sed -i '' "s/---NAME---/${COMPONENT_NAME}/g" "./src/components/${COMPONENT_NAME}
 # Copy index.ts template to new component folder, modify with chosen component name
 cp ./scripts/templates/index.ts "./src/components/${COMPONENT_NAME}/index.ts"
 sed -i '' "s/---NAME---/${COMPONENT_NAME}/g" "./src/components/${COMPONENT_NAME}/index.ts"
+
+echo "Templates copied to src/components."
+echo "Don't forget to add the Sds${COMPONENT_NAME} to src/components/index.ts"

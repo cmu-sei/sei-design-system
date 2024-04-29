@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="scrollArea"
     data-id="sds-resizer"
     :style="{ height: dynamicHeight }"
   >

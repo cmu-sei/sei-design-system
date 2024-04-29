@@ -26,17 +26,16 @@
         Scroll Area
       </h2>
       <div>
-        <SdsScrollArea
-          class="h-64"
-          expandable
-        >
-          <p
-            v-for="index in 20"
-            :key="index"
-          >
-            Sample text on line {{ index }}
-          </p>
-        </SdsScrollArea>
+        <SdsResizer>
+          <SdsScrollArea class="h-full">
+            <p
+              v-for="index in 20"
+              :key="index"
+            >
+              Sample text on line {{ index }}
+            </p>
+          </SdsScrollArea>
+        </SdsResizer>
       </div>
     </div>
     <div class="grid gap-4">
