@@ -1,24 +1,26 @@
 <template>
-  <div class="flex flex-col-reverse">
+  <div
+    data-id="sds-resizer"
+    class="flex max-w-full"
+    :class="{
+      'flex-col-reverse': direction === 'y',
+      'flex-row-reverse': direction === 'x',
+    }"
+  >
     <div
-      :onmousedown="handleMouseDown"
-      :class="[
-        'flex',
-        'flex-row',
-        'peer',
-        'justify-center',
-        'hover:cursor-grab',
-        'active:cursor-grabbing',
-        'opacity-40',
-        'hover:opacity-100',
-        'w-full',
-        'mx-auto',
-        'relative',
-      ]"
+      :onmousedown="direction === 'x' ? handleMouseDownX : handleMouseDownY"
+      class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 relative"
+      :class="{
+        'flex-col ml-0 mr-auto h-full w-fit': direction === 'x',
+        'flex-row mx-auto w-full h-fit': direction === 'y'
+      }"
     >
       <svg
         v-if="handle === 'arrow'"
         class="-top-3 relative"
+        :class="{
+          'rotate-90': direction === 'x'
+        }"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -31,6 +33,9 @@
       </svg>
       <svg
         v-if="handle === 'bar'"
+        :class="{
+          'rotate-90 -left-10 relative': direction === 'x'
+        }"
         xmlns="http://www.w3.org/2000/svg"
         width="90"
         height="32"
@@ -51,6 +56,9 @@
       </svg>
       <svg
         v-if="handle === 'dots'"
+        :class="{
+          'rotate-90': direction === 'x'
+        }"
         xmlns="http://www.w3.org/2000/svg"
         width="32"
         height="32"
@@ -66,12 +74,16 @@
     </div>
     <div
       ref="scrollArea"
-      data-id="sds-resizer"
-      :style="{ height: dynamicHeight }"
-      class="overflow-auto border-b border-solid border-opacity-0 border-black dark:border-white"
+      :style="{
+        height: dynamicHeight,
+        width: dynamicWidth
+      }"
+      class="overflow-auto border-solid border-transparent"
       :class="{
-        'peer-hover:border-opacity-100': props.border === 'hover',
-        'border-opacity-100': props.border === 'on',
+        'peer-hover:dark:border-white peer-hover:border-black': indicator === 'hover',
+        'dark:border-white border-black': indicator === 'always',
+        'border-b': direction === 'y',
+        'border-r': direction === 'x',
       }"
     >
       <!-- @slot content.  -->
@@ -88,53 +100,96 @@ defineOptions({
 })
 
 const props = defineProps({
-  border: {
-    type: String as PropType<'on' | 'hover'>,
+  cap: {
+    type: Boolean,
+    default: true,
+  },
+  indicator: {
+    type: String as PropType<'always' | 'hover'>,
     default: 'hover'
   },
   handle: {
     type: String as PropType<'arrow' | 'bar' | 'dots'>,
     default: 'arrow'
   },
+  direction: {
+    type: String as PropType<'x' | 'y'>,
+    default: 'y'
+  }
 })
 
 const scrollArea = ref<null | HTMLElement>(null)
 
-let isDragging = false
+let isDraggingX = false
+let isDraggingY = false
 
-const handleMouseDown = (e: MouseEvent) => {
-  e.preventDefault()
-  isDragging = true
-}
+const originalWidth = ref();
+const originalHeight = ref();
 
+const dynamicWidth = ref('');
 const dynamicHeight = ref('');
 
-const handleMouseMove = (e: MouseEvent) => {
-  if (!isDragging) return
-  if (scrollArea.value !== null) {
-    const rect = scrollArea.value.getBoundingClientRect()
-    const dist = e.clientY - rect.bottom;
-    const newHeight = (dist + scrollArea.value.offsetHeight) < 1
-                      ? '0px !important'
-                      : `${(scrollArea.value.offsetHeight + dist)}px !important`
+const handleMouseDownX = (e: MouseEvent) => {
+  e.preventDefault()
+  isDraggingX = true
+}
 
-    dynamicHeight.value = newHeight.toString()
+const handleMouseDownY = (e: MouseEvent) => {
+  e.preventDefault()
+  isDraggingY = true
+}
+
+const handleMouseMove = (e: MouseEvent) => {
+  if (!isDraggingX && !isDraggingY) return
+
+  if (isDraggingX) {
+    if (scrollArea.value !== null) {
+      const rect = scrollArea.value.getBoundingClientRect()
+      const xDist = e.clientX - rect.right;
+      const newWidth = (xDist + scrollArea.value.offsetWidth) < 1
+                        ? '0px !important'
+                        : `${(scrollArea.value.offsetWidth + xDist)}px !important`
+
+      if (props.cap) {
+        dynamicWidth.value = originalWidth.value ? (scrollArea.value.offsetWidth + xDist) > originalWidth.value ? 'fit-content' : newWidth : newWidth
+      } else {
+        dynamicWidth.value = newWidth
+      }
+    }
+  }
+
+  if (isDraggingY) {
+    if (scrollArea.value !== null) {
+      const rect = scrollArea.value.getBoundingClientRect()
+      const yDist = e.clientY - rect.bottom;
+      const newHeight = (yDist + scrollArea.value.offsetHeight) < 1
+                        ? '0px !important'
+                        : `${(scrollArea.value.offsetHeight + yDist)}px !important`
+
+      if (props.cap) {
+        dynamicHeight.value = originalHeight.value ? (scrollArea.value.offsetHeight + yDist) > originalHeight.value ? 'fit-content' : newHeight : newHeight
+      } else {
+        dynamicHeight.value = newHeight
+      }
+    }
   }
 }
 
 const handleMouseUp = () => {
-  if (isDragging) {
-    isDragging = false
-  }
+  isDraggingY = false
+  isDraggingX = false
 }
 
 onMounted(() => {
-  document.addEventListener("mousemove", handleMouseMove);
-  document.addEventListener("mouseup", handleMouseUp);
+  originalHeight.value = scrollArea.value?.offsetHeight;
+  originalWidth.value = scrollArea.value?.offsetWidth;
+
+  document?.addEventListener("mousemove", handleMouseMove);
+  document?.addEventListener("mouseup", handleMouseUp);
 })
 
 onUnmounted(() => {
-  document.removeEventListener("mousemove", handleMouseMove);
-  document.removeEventListener("mouseup", handleMouseUp);
+  document?.removeEventListener("mousemove", handleMouseMove);
+  document?.removeEventListener("mouseup", handleMouseUp);
 })
 </script>

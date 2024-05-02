@@ -275,137 +275,133 @@
         Table
       </h2>
       <div>
-        <SdsResizer handle="dots">
-          <SdsTable
-            :fields="fields"
-            :items="items"
-            enable-drawer
-          >
-            <template #cell(fruit_employee)="{ item }">
-              <p class="font-bold">
-                {{ item.fruit }}
-              </p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Stocked by <span class="font-bold">{{ item.employee }}</span>
-              </p>
-            </template>
-            <template #cell(actions)="{ item }">
-              <button @click="edit(item)">
-                Edit
-              </button>
-            </template>
-            <template #drawer="{item}">
-              <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Store:</span>
-                    <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Aisle:</span>
-                    <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Price:</span>
-                    <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                  </p>
-                </li>
-              </ul>
-            </template>
-          </SdsTable>
-        </SdsResizer>
+        <SdsTable
+          :fields="fields"
+          :items="items"
+          enable-drawer
+        >
+          <template #cell(fruit_employee)="{ item }">
+            <p class="font-bold">
+              {{ item.fruit }}
+            </p>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Stocked by <span class="font-bold">{{ item.employee }}</span>
+            </p>
+          </template>
+          <template #cell(actions)="{ item }">
+            <button @click="edit(item)">
+              Edit
+            </button>
+          </template>
+          <template #drawer="{item}">
+            <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+              <li>
+                <p class="space-x-1">
+                  <span class="font-bold">Store:</span>
+                  <span>{{ (item.additionalData as AdditionalData).store }}</span>
+                </p>
+              </li>
+              <li>
+                <p class="space-x-1">
+                  <span class="font-bold">Aisle:</span>
+                  <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
+                </p>
+              </li>
+              <li>
+                <p class="space-x-1">
+                  <span class="font-bold">Price:</span>
+                  <span>{{ (item.additionalData as AdditionalData).price }}</span>
+                </p>
+              </li>
+            </ul>
+          </template>
+        </SdsTable>
       </div>
     </div>
-    <div class="grid gap-4">
+    <div class="grid gap-4 h-full">
       <h2 class="text-xl">
         Top Five Chart
       </h2>
-      <div>
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="gray"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="tan"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="yellow"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="orange"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="green"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="blue"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="purple"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="indigo"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="red"
-          :view-all-url="viewAllUrl"
-        />
-        <SdsTopFiveChart
-          :title="title"
-          :entries="entries"
-          :show-percent="false"
-          :small-heading="false"
-          variant="teal"
-          :view-all-url="viewAllUrl"
-        />
-      </div>
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="gray"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="tan"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="yellow"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="orange"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="green"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="blue"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="purple"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="indigo"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="red"
+        :view-all-url="viewAllUrl"
+      />
+      <SdsTopFiveChart
+        :title="title"
+        :entries="entries"
+        :show-percent="false"
+        :small-heading="false"
+        variant="teal"
+        :view-all-url="viewAllUrl"
+      />
     </div>
   </div>
 </template>
