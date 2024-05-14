@@ -356,7 +356,7 @@
                     <p class="uppercase font-semibold text-xs">
                       {{ event.dateRange }}
                     </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
+                    <p class="text-sm text-gray-700 dark:text-gray-300 max-h-9 overflow-y-hidden overflow-ellipsis">
                       {{ event.description }}
                     </p>
                   </template>
@@ -569,7 +569,7 @@
                   <p class="uppercase font-semibold text-xs">
                     {{ event.dateRange }}
                   </p>
-                  <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden overflow-ellipsis">
+                  <p class="text-sm text-gray-700 dark:text-gray-300 max-h-10 overflow-y-hidden overflow-ellipsis">
                     {{ event.description }}
                   </p>
                 </template>
@@ -1431,6 +1431,7 @@
     <sds-scroll-area
       id="scrollspy-parent"
       class="h-96 mb-4"
+      tabindex="0"
     >
       <p
         id="scrollspy-test"
@@ -2084,7 +2085,7 @@
         </template>
         <template #cell(author_title)="{ item, format }">
           <p>{{ item.title }}</p>
-          <p class="text-gray-500 text-sm">
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
             {{ format('author') }}
           </p>
         </template>
@@ -2098,9 +2099,6 @@
         </template>
         <template #head(actions)="{ field }">
           {{ field.label }}
-          <sds-button @click="addField">
-            Add field
-          </sds-button>
         </template>
       </sds-table>
     </sds-section>
