@@ -180,33 +180,39 @@
             <div class="mb-1 text-sm uppercase font-semibold text-gray-500">
               Month
             </div>
-            <select
-              v-model="calendarMonthSelect"
-              class="form-control form-control-sm"
-            >
-              <option
-                v-for="month of calendarMonths"
-                :key="month"
+            <label>
+              <span class="sr-only">Month</span>
+              <select
+                v-model="calendarMonthSelect"
+                class="form-control form-control-sm"
               >
-                {{ month }}
-              </option>
-            </select>
+                <option
+                  v-for="month of calendarMonths"
+                  :key="month"
+                >
+                  {{ month }}
+                </option>
+              </select>
+            </label>
           </div>
           <div class="mt-1">
             <div class="mb-1 text-sm uppercase font-semibold text-gray-500">
               Year
             </div>
-            <select
-              v-model="calendarYearSelect"
-              class="form-control form-control-sm"
-            >
-              <option
-                v-for="year of calendarYears"
-                :key="year"
+            <label>
+              <span class="sr-only">Year</span>
+              <select
+                v-model="calendarYearSelect"
+                class="form-control form-control-sm"
               >
-                {{ year }}
-              </option>
-            </select>
+                <option
+                  v-for="year of calendarYears"
+                  :key="year"
+                >
+                  {{ year }}
+                </option>
+              </select>
+            </label>
           </div>
           <button
             class="mt-2 btn btn-primary btn-sm"
@@ -276,46 +282,55 @@
               fill="currentColor"
             />
           </svg>
-          <select
-            v-model="startTimeHour"
-            :disabled="!startTimeHour"
-            class="form-control form-control-sm"
-            @change="changeTime('hour', ($event.target as HTMLSelectElement).value)"
-          >
-            <option
-              v-for="hour of getCalendarHours"
-              :key="hour"
+          <label class="w-full">
+            <span class="sr-only">Hour</span>
+            <select
+              v-model="startTimeHour"
+              :disabled="!startTimeHour"
+              class="form-control form-control-sm"
+              @change="changeTime('hour', ($event.target as HTMLSelectElement).value)"
             >
-              {{ hour }}
-            </option>
-          </select>
+              <option
+                v-for="hour of getCalendarHours"
+                :key="hour"
+              >
+                {{ hour }}
+              </option>
+            </select>
+          </label>
           <span class="my-auto">:</span>
-          <select
-            v-model="startTimeMinutes"
-            :disabled="!startTimeMinutes"
-            class="form-control form-control-sm"
-            @change="changeTime('minutes', ($event.target as HTMLSelectElement).value)"
-          >
-            <option
-              v-for="minutes of getCalendarMinutes"
-              :key="minutes"
+          <label class="w-full">
+            <span class="sr-only">Minutes</span>
+            <select
+              v-model="startTimeMinutes"
+              :disabled="!startTimeMinutes"
+              class="form-control form-control-sm"
+              @change="changeTime('minutes', ($event.target as HTMLSelectElement).value)"
             >
-              {{ minutes }}
-            </option>
-          </select>
-          <select
-            v-model="startTimeMeridian"
-            :disabled="!startTimeMeridian"
-            class="form-control form-control-sm"
-            @change="changeTime('meridian', ($event.target as HTMLSelectElement).value)"
-          >
-            <option
-              v-for="meridian of getCalendarMeridian"
-              :key="meridian"
+              <option
+                v-for="minutes of getCalendarMinutes"
+                :key="minutes"
+              >
+                {{ minutes }}
+              </option>
+            </select>
+          </label>
+          <label class="w-full">
+            <span class="sr-only">Meridian</span>
+            <select
+              v-model="startTimeMeridian"
+              :disabled="!startTimeMeridian"
+              class="form-control form-control-sm"
+              @change="changeTime('meridian', ($event.target as HTMLSelectElement).value)"
             >
-              {{ meridian }}
-            </option>
-          </select>
+              <option
+                v-for="meridian of getCalendarMeridian"
+                :key="meridian"
+              >
+                {{ meridian }}
+              </option>
+            </select>
+          </label>
         </div>
       </div>
       <div
@@ -349,46 +364,55 @@
               fill="currentColor"
             />
           </svg>
-          <select
-            v-model="endTimeHour"
-            :disabled="!endTimeHour"
-            class="form-control form-control-sm"
-            @change="changeTime('hour', ($event.target as HTMLSelectElement).value, true)"
-          >
-            <option
-              v-for="hour of getCalendarHours"
-              :key="hour"
+          <label class="w-full">
+            <span class="sr-only">Hour</span>
+            <select
+              v-model="endTimeHour"
+              :disabled="!endTimeHour"
+              class="form-control form-control-sm"
+              @change="changeTime('hour', ($event.target as HTMLSelectElement).value, true)"
             >
-              {{ hour }}
-            </option>
-          </select>
+              <option
+                v-for="hour of getCalendarHours"
+                :key="hour"
+              >
+                {{ hour }}
+              </option>
+            </select>
+          </label>
           <span class="my-auto">:</span>
-          <select
-            v-model="endTimeMinutes"
-            :disabled="!endTimeMinutes"
-            class="form-control form-control-sm"
-            @change="changeTime('minutes', ($event.target as HTMLSelectElement).value, true)"
-          >
-            <option
-              v-for="minutes of getCalendarMinutes"
-              :key="minutes"
+          <label class="w-full">
+            <span class="sr-only">Minute</span>
+            <select
+              v-model="endTimeMinutes"
+              :disabled="!endTimeMinutes"
+              class="form-control form-control-sm"
+              @change="changeTime('minutes', ($event.target as HTMLSelectElement).value, true)"
             >
-              {{ minutes }}
-            </option>
-          </select>
-          <select
-            v-model="endTimeMeridian"
-            :disabled="!endTimeMeridian"
-            class="form-control form-control-sm"
-            @change="changeTime('meridian', ($event.target as HTMLSelectElement).value, true)"
-          >
-            <option
-              v-for="meridian of getCalendarMeridian"
-              :key="meridian"
+              <option
+                v-for="minutes of getCalendarMinutes"
+                :key="minutes"
+              >
+                {{ minutes }}
+              </option>
+            </select>
+          </label>
+          <label class="w-full">
+            <span class="sr-only">Meridian</span>
+            <select
+              v-model="endTimeMeridian"
+              :disabled="!endTimeMeridian"
+              class="form-control form-control-sm"
+              @change="changeTime('meridian', ($event.target as HTMLSelectElement).value, true)"
             >
-              {{ meridian }}
-            </option>
-          </select>
+              <option
+                v-for="meridian of getCalendarMeridian"
+                :key="meridian"
+              >
+                {{ meridian }}
+              </option>
+            </select>
+          </label>
         </div>
       </div>
     </div>

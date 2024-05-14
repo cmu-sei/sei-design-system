@@ -4,7 +4,10 @@
       <h2 class="text-xl">
         Components
       </h2>
-      <nav class="grid gap-2 ml-4">
+      <nav
+        class="grid gap-2 ml-4"
+        title="Components Navigation"
+      >
         <RouterLink
           to="/components/buttons"
           class="link link-secondary w-fit"
@@ -59,7 +62,10 @@
       <h2 class="text-xl">
         Patterns
       </h2>
-      <nav class="grid gap-2 ml-4">
+      <nav
+        class="grid gap-2 ml-4"
+        title="Patterns Navigation"
+      >
         <RouterLink
           to="/patterns/form-group"
           class="link link-secondary w-fit"
@@ -72,7 +78,10 @@
       <h2 class="text-xl">
         CSS
       </h2>
-      <nav class="grid gap-2 ml-4">
+      <nav
+        class="grid gap-2 ml-4"
+        title="CSS Components Navigation"
+      >
         <RouterLink
           to="/css/css-components"
           class="link link-secondary w-fit"
