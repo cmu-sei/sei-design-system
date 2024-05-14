@@ -8,7 +8,8 @@
     }"
   >
     <div
-      :onmousedown="(e: MouseEvent) => handleMouseDown(e, direction)"
+      :onmousedown="(e: MouseEvent) => handleDown(e, direction)"
+      :ontouchstart="(e: TouchEvent) => handleDown(e, direction)"
       class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 relative z-20"
       :class="{
         'flex-col ml-0 -mr-2 h-full w-2': direction === 'right',
@@ -53,7 +54,7 @@
       <div
         :style="slotSizerInner()"
       >
-        <!-- @slot content to be resized.  -->
+        <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
         <slot />
       </div>
     </div>
@@ -68,39 +69,36 @@ defineOptions({
 })
 
 const props = defineProps({
-  /*
+  /**
    * If the "clamp" property is set,
    * the slot content can not be
    * resized beyond its original size.
    */
-  clamp: {
-    type: Boolean,
-    default: true,
-  },
-  /*
+  clamp: { type: Boolean, default: true },
+  /**
    * Set the direction you'd like the
    * resizer to grow/shrink. This is
    * the side of the slot content that
    * can be clicked and dragged.
    */
-  direction: {
-    type: String as PropType<'right' | 'bottom'>,
-    default: 'bottom'
-  }
+  direction: { type: String as PropType<'right' | 'bottom'>, default: 'bottom' }
 })
 
 const scrollArea = ref<null | HTMLElement>(null)
+
 // Variables to keep track of the resizing state
 let isDraggingRight = false
 let isDraggingBottom = false
+
 // Starting width/height of the slot content
 const originalWidth = ref();
 const originalHeight = ref();
+
 // Dynamic width/height as the slot content is being resized
 const dynamicWidth = ref('');
 const dynamicHeight = ref('');
 
-const handleMouseDownRight = (e: MouseEvent) => {
+const handleDownRight = (e: MouseEvent | TouchEvent) => {
   /* Resizer event on mouse down, starts
    * the horizontal re-sizing function by
    * setting isDraggingRight */
@@ -108,7 +106,7 @@ const handleMouseDownRight = (e: MouseEvent) => {
   isDraggingRight = true
 }
 
-const handleMouseDownBottom = (e: MouseEvent) => {
+const handleDownBottom = (e: MouseEvent | TouchEvent) => {
   /* Resizer event on mouse down, starts
    * the vertical re-sizing function by
    * setting isDraggingBottom */
@@ -116,24 +114,24 @@ const handleMouseDownBottom = (e: MouseEvent) => {
   isDraggingBottom = true
 }
 
-const handleMouseDown = (e: MouseEvent, direction: 'bottom' | 'right') => {
+const handleDown = (e: MouseEvent | TouchEvent, direction: 'bottom' | 'right') => {
   /* Handle mouse down event,
    * pass to appropriate callback
    * based on direction. */
   switch (direction) {
     case 'bottom':
-      handleMouseDownBottom(e)
+      handleDownBottom(e)
       break
     case 'right':
-      handleMouseDownRight(e)
+      handleDownRight(e)
       break
     default:
-      handleMouseDownBottom(e)
+      handleDownBottom(e)
       break
   }
 }
 
-const handleMouseMove = (e: MouseEvent) => {
+const handleMove = (e: MouseEvent | TouchEvent) => {
   // Return immediately if the mouse isn't being dragged
   if (!isDraggingRight && !isDraggingBottom) return
   // Handle mouse resizing horizontally
@@ -142,7 +140,13 @@ const handleMouseMove = (e: MouseEvent) => {
       // Get the bounding rectangle of the scroll area
       const rect = scrollArea.value.getBoundingClientRect()
       // Get the distance of the mouse from the right edge of the scroll area
-      const xDist = e.clientX - rect.right;
+      let xDist = 0;
+      if (e instanceof TouchEvent) {
+        xDist = e.touches[0].clientX - rect.right;
+      }
+      if (e instanceof MouseEvent) {
+        xDist = e.clientX - rect.right;
+      }
       // Set the new width of the scroll area
       const newWidth = (xDist + scrollArea.value.offsetWidth) < 1
                         ? '0px !important'
@@ -161,7 +165,13 @@ const handleMouseMove = (e: MouseEvent) => {
       // Get the bounding rectangle of the scroll area
       const rect = scrollArea.value.getBoundingClientRect()
       // Get the distance of the mouse from the bottom edge of the scroll area
-      const yDist = e.clientY - rect.bottom;
+      let yDist = 0;
+      if (e instanceof TouchEvent) {
+        yDist = e.touches[0].clientY - rect.bottom;
+      }
+      if (e instanceof MouseEvent) {
+        yDist = e.clientY - rect.bottom;
+      }
       // Set the new height of the scroll area
       const newHeight = (yDist + scrollArea.value.offsetHeight) < 1
                         ? '0px !important'
@@ -176,7 +186,7 @@ const handleMouseMove = (e: MouseEvent) => {
   }
 }
 
-const handleMouseUp = () => {
+const handleUp = () => {
   /* Stop resizing when the mouse is released */
   isDraggingRight = false
   isDraggingBottom = false
@@ -248,13 +258,17 @@ onMounted(() => {
   originalHeight.value = scrollArea.value?.offsetHeight;
   originalWidth.value = scrollArea.value?.offsetWidth;
   /* Setup mouse handler events on the document */
-  document?.addEventListener("mousemove", handleMouseMove);
-  document?.addEventListener("mouseup", handleMouseUp);
+  document?.addEventListener("mousemove", handleMove);
+  document?.addEventListener("touchmove", handleMove);
+  document?.addEventListener("mouseup", handleUp);
+  document?.addEventListener("touchend", handleUp);
 })
 
 onUnmounted(() => {
   /* Clean up mouse handlers on unmount */
-  document?.removeEventListener("mousemove", handleMouseMove);
-  document?.removeEventListener("mouseup", handleMouseUp);
+  document?.removeEventListener("mousemove", handleMove);
+  document?.removeEventListener("touchmove", handleMove);
+  document?.removeEventListener("mouseup", handleUp);
+  document?.removeEventListener("touchend", handleUp);
 })
 </script>

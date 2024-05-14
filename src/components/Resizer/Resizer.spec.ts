@@ -14,9 +14,8 @@ describe('Resizer', () => {
 
   it('Should match with specific props and src snapshot', () => {
     const wrapper = shallowMount(Component, {
-      /* Put specific props here to test */
+      /* Put specific (non-default) props here to test */
       props: {
-        /* Props here */
         clamp: false,
         direction: 'right'
       }
