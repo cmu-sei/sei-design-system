@@ -5,100 +5,200 @@
         Resizer
       </h2>
       <div class="space-y-4">
-        <SdsResizer
-          handle="bar"
-          direction="x"
-          class="w-full"
-        >
-          <SdsTable
-            :fields="fields"
-            :items="items"
-            enable-drawer
-            class="w-full"
+        <div class="flex flex-row justify-start">
+          <SdsResizer
+            handle="bar"
+            direction="right"
+            :clamp="false"
           >
-            <template #cell(fruit_employee)="{ item }">
-              <p class="font-bold">
-                {{ item.fruit }}
-              </p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Stocked by <span class="font-bold">{{ item.employee }}</span>
-              </p>
-            </template>
-            <template #cell(actions)="{ item }">
-              <button @click="edit(item)">
-                Edit
-              </button>
-            </template>
-            <template #drawer="{item}">
-              <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Store:</span>
-                    <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Aisle:</span>
-                    <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Price:</span>
-                    <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                  </p>
-                </li>
-              </ul>
-            </template>
-          </SdsTable>
-        </SdsResizer>
-        <SdsResizer
-          handle="bar"
-        >
-          <SdsTable
-            :fields="fields"
-            :items="items"
-            enable-drawer
-            class="min-w-full"
+            <SdsTable
+              :fields="fields"
+              :items="items"
+              enable-drawer
+              class="w-full mr-auto"
+            >
+              <template #cell(fruit_employee)="{ item }">
+                <p class="font-bold">
+                  {{ item.fruit }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Stocked by <span class="font-bold">{{ item.employee }}</span>
+                </p>
+              </template>
+              <template #cell(actions)="{ item }">
+                <button @click="edit(item)">
+                  Edit
+                </button>
+              </template>
+              <template #drawer="{item}">
+                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Store:</span>
+                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Aisle:</span>
+                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Price:</span>
+                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
+                    </p>
+                  </li>
+                </ul>
+              </template>
+            </SdsTable>
+          </SdsResizer>
+          <SdsResizer
+            handle="bar"
+            direction="right"
+            :clamp="false"
           >
-            <template #cell(fruit_employee)="{ item }">
-              <p class="font-bold">
-                {{ item.fruit }}
-              </p>
-              <p class="text-sm text-gray-600 dark:text-gray-400">
-                Stocked by <span class="font-bold">{{ item.employee }}</span>
-              </p>
-            </template>
-            <template #cell(actions)="{ item }">
-              <button @click="edit(item)">
-                Edit
-              </button>
-            </template>
-            <template #drawer="{item}">
-              <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Store:</span>
-                    <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Aisle:</span>
-                    <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                  </p>
-                </li>
-                <li>
-                  <p class="space-x-1">
-                    <span class="font-bold">Price:</span>
-                    <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                  </p>
-                </li>
-              </ul>
-            </template>
-          </SdsTable>
-        </SdsResizer>
+            <SdsTable
+              :fields="fields"
+              :items="items"
+              enable-drawer
+              class="w-full mr-auto"
+            >
+              <template #cell(fruit_employee)="{ item }">
+                <p class="font-bold">
+                  {{ item.fruit }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Stocked by <span class="font-bold">{{ item.employee }}</span>
+                </p>
+              </template>
+              <template #cell(actions)="{ item }">
+                <button @click="edit(item)">
+                  Edit
+                </button>
+              </template>
+              <template #drawer="{item}">
+                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Store:</span>
+                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Aisle:</span>
+                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Price:</span>
+                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
+                    </p>
+                  </li>
+                </ul>
+              </template>
+            </SdsTable>
+          </SdsResizer>
+        </div>
+        <div class="flex flex-col">
+          <SdsResizer
+            handle="bar"
+            :clamp="false"
+          >
+            <SdsTable
+              :fields="fields"
+              :items="items"
+              enable-drawer
+              class="min-w-full"
+            >
+              <template #cell(fruit_employee)="{ item }">
+                <p class="font-bold">
+                  {{ item.fruit }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Stocked by <span class="font-bold">{{ item.employee }}</span>
+                </p>
+              </template>
+              <template #cell(actions)="{ item }">
+                <button @click="edit(item)">
+                  Edit
+                </button>
+              </template>
+              <template #drawer="{item}">
+                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Store:</span>
+                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Aisle:</span>
+                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Price:</span>
+                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
+                    </p>
+                  </li>
+                </ul>
+              </template>
+            </SdsTable>
+          </SdsResizer>
+          <SdsResizer
+            handle="bar"
+            :clamp="false"
+          >
+            <SdsTable
+              :fields="fields"
+              :items="items"
+              enable-drawer
+              class="min-w-full"
+            >
+              <template #cell(fruit_employee)="{ item }">
+                <p class="font-bold">
+                  {{ item.fruit }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Stocked by <span class="font-bold">{{ item.employee }}</span>
+                </p>
+              </template>
+              <template #cell(actions)="{ item }">
+                <button @click="edit(item)">
+                  Edit
+                </button>
+              </template>
+              <template #drawer="{item}">
+                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Store:</span>
+                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Aisle:</span>
+                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="space-x-1">
+                      <span class="font-bold">Price:</span>
+                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
+                    </p>
+                  </li>
+                </ul>
+              </template>
+            </SdsTable>
+          </SdsResizer>
+        </div>
       </div>
     </div>
     <div class="grid gap-4">
