@@ -2,50 +2,90 @@
 
 exports[`Resizer > Should match its default snapshot 1`] = `
 <div
+  class="flex max-w-full justify-end flex-col-reverse"
   data-id="sds-resizer"
 >
-  <!-- @slot content.  -->
-  
-  
   <div
-    class="flex flex-row justify-center hover:cursor-row-resize opacity-50 hover:opacity-100 -top-3 w-full mx-auto relative"
+    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 relative z-20 flex-row mx-auto -mb-2 w-full h-2"
   >
-    <svg
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      class="absolute"
     >
-      <path
-        d="m12 19.15l3.875-3.875q.3-.3.7-.3t.7.3q.3.3.3.713t-.3.712l-3.85 3.875q-.575.575-1.425.575t-1.425-.575L6.7 16.7q-.3-.3-.288-.712t.313-.713q.3-.3.713-.3t.712.3zm0-14.3L8.15 8.7q-.3.3-.7.288t-.7-.288q-.3-.3-.312-.712t.287-.713l3.85-3.85Q11.15 2.85 12 2.85t1.425.575l3.85 3.85q.3.3.288.713t-.313.712q-.3.275-.7.288t-.7-.288z"
-        fill="currentColor"
-      />
-    </svg>
+      <svg
+        class="mx-auto"
+        height="8"
+        viewBox="0 0 10 10"
+        width="64"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="currentColor"
+          height="4"
+          rx="2"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="0"
+          width="32"
+          x="-10"
+          y="3"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black border-b overflow-y-auto overflow-x-hidden"
+  >
+    <div>
+      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
+      
+      
+    </div>
   </div>
 </div>
 `;
 
 exports[`Resizer > Should match with specific props and src snapshot 1`] = `
 <div
+  class="flex max-w-full justify-end flex-row-reverse"
   data-id="sds-resizer"
 >
-  <!-- @slot content.  -->
-  
-  
   <div
-    class="flex flex-row justify-center hover:cursor-row-resize opacity-50 hover:opacity-100 -top-3 w-full mx-auto relative"
+    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 relative z-20 flex-col ml-0 -mr-2 h-full w-2"
   >
-    <svg
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-      xmlns="http://www.w3.org/2000/svg"
+    <div
+      class="absolute"
     >
-      <path
-        d="m12 19.15l3.875-3.875q.3-.3.7-.3t.7.3q.3.3.3.713t-.3.712l-3.85 3.875q-.575.575-1.425.575t-1.425-.575L6.7 16.7q-.3-.3-.288-.712t.313-.713q.3-.3.713-.3t.712.3zm0-14.3L8.15 8.7q-.3.3-.7.288t-.7-.288q-.3-.3-.312-.712t.287-.713l3.85-3.85Q11.15 2.85 12 2.85t1.425.575l3.85 3.85q.3.3.288.713t-.313.712q-.3.275-.7.288t-.7-.288z"
-        fill="currentColor"
-      />
-    </svg>
+      <svg
+        class="my-auto"
+        height="64"
+        viewBox="0 0 10 10"
+        width="8"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="currentColor"
+          height="32"
+          rx="2"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="0"
+          width="4"
+          x="3"
+          y="-10"
+        />
+      </svg>
+    </div>
+  </div>
+  <div
+    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black border-r overflow-x-auto overflow-y-hidden"
+  >
+    <div>
+      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
+      
+      
+    </div>
   </div>
 </div>
 `;
