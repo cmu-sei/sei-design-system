@@ -108,9 +108,9 @@
                 v-if="appName"
                 class="px-3"
               >
-                <div class="border-b border-gray-100 dark:border-gray-800 mb-4">
+                <div class="border-b border-gray-100 dark:border-gray-800 mb-3">
                   <p
-                    class="flex gap-2 py-4"
+                    class="flex gap-2 py-3"
                   >
                     <!-- @slot App icon content. @binding classList -->
                     <slot
@@ -239,7 +239,7 @@
                           >{{ itemsGroupBadgeCount(item) }}</span>
                         </span>
                         <svg
-                          class="shrink-0 w-4 h-4 ml-auto my-auto -mr-2"
+                          class="shrink-0 w-4 h-4 ml-auto my-auto"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -340,9 +340,9 @@
                 </slot>
                 <div
                   v-if="hasSlot('user-section')"
-                  class="p-4"
+                  class="p-3"
                 >
-                  <div class="pt-4 border-t border-gray-100 dark:border-gray-800 items-center flex gap-2 flex-shrink-0">
+                  <div class="pt-3 border-t border-gray-100 dark:border-gray-800 items-center flex gap-2 flex-shrink-0">
                     <!-- @slot User section content. @binding collapsed -->
                     <slot
                       name="user-section"
@@ -364,7 +364,7 @@
         <div class="h-screen flex flex-col sticky top-0">
           <header class="my-auto px-3">
             <div class="border-b border-gray-100 dark:border-gray-800">
-              <div class="flex items-center gap-2 pt-4">
+              <div class="flex items-center gap-2 pt-3">
                 <h1
                   v-if="appSuite && !collapsed"
                   class="hidden md:block grow"
@@ -467,7 +467,7 @@
               >
                 <p
                   v-if="appName"
-                  class="flex gap-2 py-4"
+                  class="flex gap-2 py-3"
                 >
                   <!-- @slot App icon content. @binding classList -->
                   <slot
@@ -537,7 +537,7 @@
               </div>
             </div>
           </header>
-          <div class="overflow-y-auto grow overscroll-contain pt-4">
+          <div class="overflow-y-auto grow overscroll-contain pt-3">
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1 pb-24"
@@ -616,7 +616,7 @@
                           </span>
                           <svg
                             v-if="!collapsed"
-                            class="shrink-0 w-4 h-4 ml-auto my-auto -mr-2"
+                            class="shrink-0 w-4 h-4 ml-auto my-auto"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -742,7 +742,7 @@
           </div>
           <div
             v-if="hasSlot('user-section')"
-            class="items-center flex gap-2 flex-shrink-0"
+            class="items-center flex gap-2 flex-shrink-0 p-3"
           >
             <!-- @slot User section content. @binding collapsed -->
             <slot
