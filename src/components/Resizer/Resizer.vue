@@ -10,17 +10,23 @@
     <div
       :onmousedown="(e: MouseEvent) => handleDown(e, direction)"
       :ontouchstart="(e: TouchEvent) => handleDown(e, direction)"
-      class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-40 hover:opacity-100 relative z-20"
+      class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-100 relative z-20"
       :class="{
-        'flex-col ml-0 -mr-2 h-full w-2': direction === 'right',
-        'flex-row mx-auto -mb-2 w-full h-2': direction === 'bottom'
+        'flex-col ml-0 -mr-4 h-full w-4': direction === 'right',
+        'flex-row mx-auto -mb-4 w-full h-4': direction === 'bottom'
       }"
     >
-      <div class="absolute">
+      <div
+        class="absolute"
+        :class="{
+          'h-4': direction === 'bottom',
+          'w-4': direction === 'right',
+        }"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          :width="direction === 'bottom' ? 64 : 8"
-          :height="direction === 'bottom' ? 8 : 64"
+          :width="direction === 'bottom' ? 64 : 16"
+          :height="direction === 'bottom' ? 16 : 64"
           :class="{
             'mx-auto': direction === 'bottom',
             'my-auto': direction === 'right'
@@ -30,8 +36,8 @@
           <rect
             :width="direction === 'bottom' ? 32 : 4"
             :height="direction === 'bottom' ? 4 : 32"
-            :x="direction === 'bottom' ? -10 : 3"
-            :y="direction === 'bottom' ? 3 : -10"
+            :x="direction === 'bottom' ? -11.5 : 4"
+            :y="direction === 'bottom' ? 4 : -11.5"
             fill="currentColor"
             stroke="currentColor"
             stroke-linecap="round"
@@ -45,10 +51,10 @@
     <div
       ref="scrollArea"
       :style="slotSizerOuter()"
-      class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black"
+      class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5"
       :class="{
-        'border-b overflow-y-auto overflow-x-hidden': direction === 'bottom',
-        'border-r overflow-x-auto overflow-y-hidden': direction === 'right',
+        'border-b overflow-y-auto overflow-x-hidden peer-hover:after:border-b peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:bottom-0 after:w-fit': direction === 'bottom',
+        'border-r overflow-x-auto overflow-y-hidden peer-hover:after:border-r peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]': direction === 'right',
       }"
     >
       <div
@@ -81,7 +87,21 @@ const props = defineProps({
    * the side of the slot content that
    * can be clicked and dragged.
    */
-  direction: { type: String as PropType<'right' | 'bottom'>, default: 'bottom' }
+  direction: { type: String as PropType<'right' | 'bottom'>, default: 'bottom' },
+  /**
+   * Set the max width (if direction right)
+   * or max height (if direction bottom) of
+   * the resizer. If no max is set, the original
+   * width or height will be used (if clamp is true).
+   */
+  max: { type: Number, default: null },
+  /**
+   * Set the min width (if direction right)
+   * or min height (if direction bottom) of
+   * the resizer. If no min is set, resizer
+   * will be able to shrink to 0.
+   */
+  min: { type: Number, default: null }
 })
 
 const scrollArea = ref<null | HTMLElement>(null)
@@ -98,8 +118,8 @@ let xDist = 0;
 let yDist = 0;
 
 // Starting width/height of the slot content
-const originalWidth = ref();
-const originalHeight = ref();
+const originalWidth = props.max ? props.direction === 'right' ? ref(props.max) : ref() : ref();
+const originalHeight = props.max ? props.direction === 'bottom' ? ref(props.max) : ref() : ref();
 
 // Dynamic width/height as the slot content is being resized
 const dynamicWidth = ref('');
@@ -164,7 +184,10 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
                         : `${(scrollArea.value.offsetWidth + xDist)}px !important`
       // If "clamp" property is set, limit the width to the original width
       if (props.clamp) {
-        dynamicWidth.value = originalWidth.value ? (scrollArea.value.offsetWidth + xDist) > originalWidth.value ? dynamicWidth.value : newWidth : newWidth
+        const nextValue = originalWidth.value ? (scrollArea.value.offsetWidth + xDist) > originalWidth.value ? dynamicWidth.value : newWidth : newWidth
+        if (parseInt(nextValue) > props.min) {
+          dynamicWidth.value = nextValue
+        }
       } else {
         dynamicWidth.value = newWidth
       }
@@ -187,7 +210,10 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
                         : `${(scrollArea.value.offsetHeight + yDist)}px !important`
       // If "clamp" property is set, limit the height to the original height
       if (props.clamp) {
-        dynamicHeight.value = originalHeight.value ? (scrollArea.value.offsetHeight + yDist) > originalHeight.value ? dynamicHeight.value : newHeight : newHeight
+        const nextValue = originalHeight.value ? (scrollArea.value.offsetHeight + yDist) > originalHeight.value ? dynamicHeight.value : newHeight : newHeight
+        if (parseInt(nextValue) > props.min) {
+          dynamicHeight.value = nextValue
+        }
       } else {
         dynamicHeight.value = newHeight
       }
@@ -227,7 +253,7 @@ const slotSizerOuter = () => {
   /* Configure outer slot dimensions */
   return {
     height: slotOuterHeight(),
-    width: slotOuterWidth()
+    width: slotOuterWidth(),
   } as StyleValue
 }
 
@@ -257,7 +283,7 @@ const slotSizerInner = () => {
   /* Configure inner slot dimensions for clamping */
   return {
     height: slotInnerHeight(),
-    width: slotInnerWidth()
+    width: slotInnerWidth(),
   } as StyleValue
 }
 
@@ -266,8 +292,8 @@ onMounted(() => {
    * Get the original width/height of the scroll
    * area and save that initial value for reference.
    */
-  originalHeight.value = scrollArea.value?.offsetHeight;
-  originalWidth.value = scrollArea.value?.offsetWidth;
+  originalHeight.value = originalHeight.value ? originalHeight.value : scrollArea.value?.offsetHeight;
+  originalWidth.value = originalWidth.value ? originalWidth.value : scrollArea.value?.offsetWidth;
   // Setup mouse handler events on the document
   document?.addEventListener("mousemove", handleMove);
   document?.addEventListener("touchmove", handleMove);
