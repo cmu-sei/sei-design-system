@@ -11,9 +11,19 @@ export default {
   },
   component: SdsResizer,
   argTypes: {
+    clamp: {
+      options: [true, false],
+      control: { type: 'boolean' }
+    },
+    min: {
+      control: { type: 'number' }
+    },
+    max: {
+      control: { type: 'number' }
+    },
     direction: {
       options: ['bottom', 'right'],
-      control: {type: 'select'}
+      control: { type: 'select' }
     }
   }
 };
@@ -24,10 +34,10 @@ const Template = (args) => ({
     return {args}
   },
   template: `
-    <sds-resizer v-bind="args" class="w-full">
+    <sds-resizer v-bind="args" class="w-full h-36">
       <div class="p-4">
         <div class="w-full flex flex-col justify-start bg-black dark:bg-white rounded-lg bg-opacity-5 p-4">
-          <h1 class="text-xl font-bold mb-2">Resizer</h1>
+          <h1 class="text-xl font-bold">Resizer</h1>
           <p class="max-w-60 mb-1 mr-auto">This is the Storybook example for the Resizer component.</p>
         </div>
       </div>

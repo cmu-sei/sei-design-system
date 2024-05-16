@@ -7,9 +7,7 @@
       <div class="space-y-4">
         <div class="flex flex-row justify-start">
           <SdsResizer
-            handle="bar"
             direction="right"
-            :clamp="false"
           >
             <SdsTable
               :fields="fields"
@@ -55,9 +53,7 @@
             </SdsTable>
           </SdsResizer>
           <SdsResizer
-            handle="bar"
             direction="right"
-            :clamp="false"
           >
             <SdsTable
               :fields="fields"
@@ -104,10 +100,7 @@
           </SdsResizer>
         </div>
         <div class="flex flex-col">
-          <SdsResizer
-            handle="bar"
-            :clamp="false"
-          >
+          <SdsResizer>
             <SdsTable
               :fields="fields"
               :items="items"
@@ -151,10 +144,7 @@
               </template>
             </SdsTable>
           </SdsResizer>
-          <SdsResizer
-            handle="bar"
-            :clamp="false"
-          >
+          <SdsResizer>
             <SdsTable
               :fields="fields"
               :items="items"
