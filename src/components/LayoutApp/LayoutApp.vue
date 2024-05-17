@@ -120,7 +120,6 @@
                       <span
                         v-if="!hideAppIcon"
                         class="block w-4 h-4 my-auto flex-shrink-0"
-                        :class="{ 'mx-auto': collapsed }"
                       >
                         <template v-if="appUrl">
                           <a
@@ -164,7 +163,6 @@
                       v-if="appUrl && appName"
                       :href="appUrl"
                       class="my-auto hover:underline"
-                      :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
                       @click="navigate(null, { title: appName, href: appUrl }, $event)"
                     >
                       {{ appName }}
@@ -172,7 +170,6 @@
                     <span
                       v-else-if="appName"
                       class="my-auto"
-                      :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
                     >
                       {{ appName }}
                     </span>
