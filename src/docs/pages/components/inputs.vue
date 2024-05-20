@@ -139,6 +139,7 @@
           :maxlength="textarea.maxlength"
           :readonly="false"
           :valid="false"
+          :resize="false"
         />
       </div>
     </div>

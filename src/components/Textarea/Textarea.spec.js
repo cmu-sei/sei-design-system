@@ -62,4 +62,12 @@ describe("Textarea.vue", () => {
     const wrapper = shallowMount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it("matches snapshot with resize prop assigned", () => {
+    const props = {
+      resize: true,
+    };
+    const wrapper = shallowMount(Component, { props });
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 });

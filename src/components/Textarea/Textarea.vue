@@ -7,7 +7,7 @@
       :id="id"
       v-model="text"
       class="form-control"
-      :class="{ valid, invalid }"
+      :class="{ valid, invalid, 'resize-none': !resize }"
       :rows="rows"
       :maxlength="maxlength"
       :placeholder="placeholder"
@@ -15,6 +15,7 @@
       :disabled="disabled"
       :readonly="readonly"
       :required="required"
+      :resize="resize"
     />
     <character-counter
       v-if="countCharacters"
@@ -81,6 +82,10 @@ const props = defineProps({
    * Gives the component an invalid/danger styling.
    */
   invalid: { type: Boolean, default: false },
+ /**
+   * Determines whether or not the component can be resized
+   */
+  resize: { type: Boolean, default: false}
 })
 
 const emit = defineEmits(['update:model-value'])
