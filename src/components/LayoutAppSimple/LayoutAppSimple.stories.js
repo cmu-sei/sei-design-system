@@ -44,10 +44,10 @@ const Template = (args) => ({
             <p class="ml-auto my-auto mr-2 font-semibold">
               Action bar content area
             </p>
-            <sds-button kind="ghost">
+            <sds-button kind="ghost" variant="white">
               Cancel
             </sds-button>
-            <sds-button kind="primary">
+            <sds-button kind="primary" variant="white">
               Save
             </sds-button>
           </div>

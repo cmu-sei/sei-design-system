@@ -27,15 +27,17 @@ const Template = (args) => ({
   template: `
     <sds-layout-app v-model="localValue" v-bind="args" @navigate="navigate">
       <template #user-section>
-        User section content area
-        <sds-tooltip data-id="avatarContainer" size="auto" variant="light" placement="left">
-          <template data-id="avatarTooltipTrigger" #trigger>
-            <sds-avatar size="xs" shape="circle" name="John Smith" />
-          </template>
-          <p data-id="avatarTooltipContent">
-            John Smith
-          </p>
-        </sds-tooltip>
+        <div class="p-3">
+          User section content area
+          <sds-tooltip data-id="avatarContainer" size="auto" variant="light" placement="top">
+            <template data-id="avatarTooltipTrigger" #trigger>
+              <sds-avatar size="xs" shape="circle" name="John Smith" />
+            </template>
+            <p data-id="avatarTooltipContent">
+              John Smith
+            </p>
+          </sds-tooltip>
+        </div>
       </template>
       <template #page-header>
         Page header content area
@@ -47,10 +49,10 @@ const Template = (args) => ({
             <p class="ml-auto my-auto mr-2 font-semibold">
               Action bar content area
             </p>
-            <sds-button kind="ghost">
+            <sds-button kind="ghost" variant="white">
               Cancel
             </sds-button>
-            <sds-button kind="primary">
+            <sds-button kind="primary" variant="white">
               Save
             </sds-button>
           </div>
