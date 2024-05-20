@@ -43,9 +43,11 @@ import SdsPaginator from "./Paginator";
 import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
+import SdsResizer from "./Resizer";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
 import SdsSection from "./Section";
+import SdsSeiWordmark from "./SeiWordmark";
 import SdsSelect from "./Select";
 import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
@@ -105,9 +107,11 @@ const Components: ComponentList = {
   SdsPanel,
   SdsPopover,
   SdsRadioGroup,
+  SdsResizer,
   SdsScrollArea,
   SdsScrollspy,
   SdsSection,
+  SdsSeiWordmark,
   SdsSelect,
   SdsTabs,
   SdsTable,
@@ -171,9 +175,11 @@ export { default as SdsPaginator } from "./Paginator";
 export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
+export { default as SdsResizer } from "./Resizer";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSection } from "./Section";
+export { default as SdsSeiWordmark } from "./SeiWordmark";
 export { default as SdsSelect } from "./Select";
 export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";

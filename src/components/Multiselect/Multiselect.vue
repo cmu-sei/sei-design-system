@@ -671,7 +671,7 @@ const search = ($event: Event) => {
 }
 
 const resizeInput = () => {
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     if (showPlaceholder.value) {
       inputWidth.value = "100%";
     } else {
@@ -680,13 +680,13 @@ const resizeInput = () => {
         fauxInput.value && typeof fauxInput.value !== "undefined"
           ? (fauxInput.value as HTMLElement).clientWidth + 20
           : 0;
-      let elWidth = root.value.clientWidth - 20;
+      let elWidth = (root.value?.clientWidth || 0) - 20;
       if (!props.hideCaret || (props.showClear && props.selected.length > 0))
         elWidth = elWidth - 10;
       const width = Math.min(Math.max(fauxInputWidth, minWidth), elWidth);
       inputWidth.value = width + "px";
     }
-  }, 0);
+  });
 }
 
 const removeLastSelection = () => {
@@ -1188,7 +1188,7 @@ fieldset[disabled] .sds-multiselect * {
 }
 
 .tag-list {
-  @apply block py-[2px] px-[8px];
+  @apply flex flex-wrap items-center py-[2px] px-[8px];
 }
 
 .hideCaret .tag-list,

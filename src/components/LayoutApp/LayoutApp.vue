@@ -3,74 +3,64 @@
     data-id="sds-layout-app"
     class="flex flex-col h-screen dark:text-gray-50"
   >
-    <div class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0">
-      <header class="my-auto">
+    <!-- Mobile header -->
+    <header class="md:hidden my-auto p-3 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2">
         <h1
-          v-if="appSuite"
-          class="hidden md:block"
+          v-if="appSuite && !collapsed"
+          class="hidden md:block grow"
         >
           <a
             v-if="appSuiteUrl"
             :href="appSuiteUrl"
-            class="text-xl flex hover:underline"
+            class="flex hover:underline"
             @click="navigate(null, { title: appSuite, href: appSuiteUrl }, $event)"
           >
-            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </a>
           <p
             v-else
-            class="text-xl flex"
+            class="flex"
           >
-            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </p>
         </h1>
-        <button
-          v-if="appSuite || appName"
-          ref="mobileMenuOpenBtn"
-          class="flex md:hidden gap-1 focus:outline-none"
-          @click="showMobileMenu = !showMobileMenu"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="text-white h-6 w-6 inline-block"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 48 48"
-          ><g
-            fill="none"
-            stroke="currentColor"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
-          <span class="text-xl leading-6 flex">
-            <span
-              v-if="appSuitePrefix"
-              class="text-red-400 font-bold"
-            >{{ appSuitePrefix }}</span>
-            <span
-              v-if="appSuite"
-            >{{ appSuite }}</span>
-            <span
-              v-if="appName && !hideAppNameInMobileHeader"
-              class="text-sm text-left font-bold text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
-              :class="[appSuite ? 'ml-1' : '']"
-            >{{ appName }}</span>
-          </span>
-        </button>
-      </header>
-      <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
-        <!-- @slot User section content. @binding collapsed -->
-        <slot
-          name="user-section"
-          :collapsed="collapsed"
-        />
       </div>
-    </div>
+      <button
+        v-if="appSuite || appName"
+        ref="mobileMenuOpenBtn"
+        class="flex items-center md:hidden gap-1 focus:outline-none"
+        @click="showMobileMenu = !showMobileMenu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          role="img"
+          class="text-black dark:text-white h-6 w-6 inline-block"
+          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 48 48"
+        ><g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
+        <span class="flex items-center">
+          <span
+            v-if="appSuitePrefix"
+            class="text-red-600 dark:text-red-400 font-bold"
+          >{{ appSuitePrefix }}</span>
+          <span
+            v-if="appSuite"
+          >{{ appSuite }}</span>
+        </span>
+      </button>
+    </header>
+
     <div class="flex grow flex-shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
@@ -102,7 +92,7 @@
         <aside
           v-if="showMobileMenu"
           ref="mobileSidebarContainer"
-          class="md:hidden fixed w-2/3 z-50 bg-gray-900 text-white flex-shrink-0"
+          class="md:hidden fixed w-2/3 z-50 bg-white dark:bg-gray-950 flex-shrink-0 border-r border-gray-200 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
           <button
@@ -114,72 +104,77 @@
           </button>
           <div class="h-screen flex flex-col sticky top-0">
             <div class="overflow-y-auto grow overscroll-contain">
-              <div
+              <div 
                 v-if="appName"
-                class="sticky top-0 bg-gray-900 z-10 flex gap-2 p-4"
+                class="px-3"
               >
-                <!-- @slot App icon content. @binding classList -->
-                <slot
-                  name="app-icon"
-                  class-list="block w-8 h-8 my-auto flex-shrink-0"
-                >
-                  <span
-                    v-if="!hideAppIcon"
-                    class="block w-8 h-8 my-auto flex-shrink-0"
+                <div class="border-b border-gray-100 dark:border-gray-800 mb-3">
+                  <p
+                    class="flex gap-2 py-3"
                   >
-                    <template v-if="appUrl">
-                      <a
-                        :href="appUrl"
-                        @click="navigate(null, { title: appName, href: appUrl }, $event)"
+                    <!-- @slot App icon content. @binding classList -->
+                    <slot
+                      name="app-icon"
+                      class-list="block w-4 h-4 my-auto flex-shrink-0"
+                    >
+                      <span
+                        v-if="!hideAppIcon"
+                        class="block w-4 h-4 my-auto flex-shrink-0"
                       >
-                        <img
-                          v-if="appIconUrl"
-                          :src="appIconUrl"
-                          :alt="appName"
-                          class="w-8 h-8"
-                        >
-                        <svg
-                          v-else
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 576 512"
-                          aria-hidden="true"
-                          class="w-8 h-8 fill-current text-blue-400"
-                        ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
-                        <span class="sr-only">{{ appName }}</span>
-                      </a>
-                    </template>
-                    <template v-else>
-                      <img
-                        v-if="appIconUrl"
-                        :src="appIconUrl"
-                        :alt="appName"
-                        class="w-8 h-8"
-                      >
-                      <svg
-                        v-else
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 576 512"
-                        aria-hidden="true"
-                        class="w-8 h-8 fill-current text-blue-400"
-                      ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
-                      <span class="sr-only">{{ appName }}</span>
-                    </template>
-                  </span>
-                </slot>
-                <a
-                  v-if="appUrl"
-                  :href="appUrl"
-                  class="text-lg font-bold my-auto hover:underline"
-                  @click="navigate(null, { title: appName, href: appUrl }, $event)"
-                >
-                  {{ appName }}
-                </a>
-                <span
-                  v-else
-                  class="text-lg font-bold my-auto"
-                >
-                  {{ appName }}
-                </span>
+                        <template v-if="appUrl">
+                          <a
+                            :href="appUrl"
+                            @click="navigate(null, { title: appName, href: appUrl }, $event)"
+                          >
+                            <img
+                              v-if="appIconUrl"
+                              :src="appIconUrl"
+                              :alt="appName"
+                              class="w-4 h-4"
+                            >
+                            <svg
+                              v-else
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 576 512"
+                              aria-hidden="true"
+                              class="w-4 h-4 fill-current text-blue-400"
+                            ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                            <span class="sr-only">{{ appName }}</span>
+                          </a>
+                        </template>
+                        <template v-else>
+                          <img
+                            v-if="appIconUrl"
+                            :src="appIconUrl"
+                            :alt="appName"
+                            class="w-4 h-4"
+                          >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 576 512"
+                            aria-hidden="true"
+                            class="w-4 h-4 fill-current text-blue-400"
+                          ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                          <span class="sr-only">{{ appName }}</span>
+                        </template>
+                      </span>
+                    </slot>
+                    <a
+                      v-if="appUrl && appName"
+                      :href="appUrl"
+                      class="my-auto hover:underline"
+                      @click="navigate(null, { title: appName, href: appUrl }, $event)"
+                    >
+                      {{ appName }}
+                    </a>
+                    <span
+                      v-else-if="appName"
+                      class="my-auto"
+                    >
+                      {{ appName }}
+                    </span>
+                  </p>
+                </div>
               </div>
               <nav
                 v-if="sidebarNavigationItems.length > 0"
@@ -198,10 +193,10 @@
                     <template v-if="item.items">
                       <button
                         :href="item.href"
-                        class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
+                        class="flex items-center relative w-full gap-2 pl-2 px-3 py-2 border-l-4"
                         :class="{
-                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
-                          'text-white border-red-700': itemsGroupIsActive(item) && !showItemsGroup(item)
+                          'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !itemsGroupIsActive(item) || showItemsGroup(item),
+                          'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': itemsGroupIsActive(item) && !showItemsGroup(item)
                         }"
                         @click="toggleItemsGroup(item)"
                       >
@@ -209,24 +204,24 @@
                         <slot
                           name="mobile-sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                            class="inline-block w-4 h-4 my-auto flex-shrink-0"
                           >
                             <img
                               v-if="item.iconUrl"
                               :src="item.iconUrl"
                               :alt="item.title"
-                              class="w-8 h-8"
+                              class="w-4 h-4"
                             >
                             <svg
                               v-else
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 512 512"
                               aria-hidden="true"
-                              class="w-8 h-8 fill-current"
+                              class="w-4 h-4 fill-current"
                             ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
@@ -237,11 +232,11 @@
                           class="inline-block my-auto"
                         >
                           <span
-                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-500"
+                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ itemsGroupBadgeCount(item) }}</span>
                         </span>
                         <svg
-                          class="absolute w-4 h-4 right-2 top-1/3"
+                          class="shrink-0 w-4 h-4 ml-auto my-auto"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -269,12 +264,12 @@
                           v-for="subitem in item.items"
                           :key="subitem.id"
                           :href="subitem.href"
-                          class="flex relative gap-2 px-4 py-2 border-l-8"
+                          class="flex relative gap-2 px-3 py-2 border-l-4"
                           :class="{
-                            'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
-                            'text-white border-red-700 pointer-events-none': subitem.active,
-                            'pl-12': !hideSidebarIcons,
-                            'pl-8': hideSidebarIcons
+                            'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
+                            'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
+                            'pl-8': !hideSidebarIcons,
+                            'pl-4': hideSidebarIcons
                           }"
                           @click="navigate(item, subitem, $event)"
                         >
@@ -286,7 +281,7 @@
                             class="inline-block my-auto"
                           >
                             <span
-                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
+                              class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                             >{{ subitem.badgeCount }}</span>
                           </span>
                         </a>
@@ -295,10 +290,10 @@
                     <a
                       v-else
                       :href="item.href"
-                      class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
+                      class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
                       :class="{
-                        'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
-                        'text-white border-red-700 pointer-events-none': item.active
+                        'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
+                        'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
                       }"
                       @click="navigate(null, item, $event)"
                     >
@@ -306,24 +301,24 @@
                       <slot
                         name="mobile-sidebar-navigation-item-icon"
                         :item="item"
-                        class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
+                        class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
                       >
                         <span
                           v-if="!hideSidebarIcons"
-                          class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          class="inline-block w-4 h-4 my-auto flex-shrink-0"
                         >
                           <img
                             v-if="item.iconUrl"
                             :src="item.iconUrl"
                             :alt="item.title"
-                            class="w-8 h-8"
+                            class="w-4 h-4"
                           >
                           <svg
                             v-else
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
                             aria-hidden="true"
-                            class="w-8 h-8 fill-current"
+                            class="w-4 h-4 fill-current"
                           ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                           <span class="sr-only">{{ item.title }}</span>
                         </span>
@@ -334,12 +329,24 @@
                         class="inline-block my-auto"
                       >
                         <span
-                          class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
+                          class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                         >{{ item.badgeCount }}</span>
                       </span>
                     </a>
                   </template>
                 </slot>
+                <div
+                  v-if="hasSlot('user-section')"
+                  class="p-3"
+                >
+                  <div class="pt-3 border-t border-gray-100 dark:border-gray-800 items-center flex gap-2 flex-shrink-0">
+                    <!-- @slot User section content. @binding collapsed -->
+                    <slot
+                      name="user-section"
+                      :collapsed="collapsed"
+                    />
+                  </div>
+                </div>
               </nav>
             </div>
           </div>
@@ -348,84 +355,186 @@
 
       <!-- Desktop sidebar -->
       <aside
-        class="hidden md:block bg-gray-900 text-white border-r border-black flex-shrink-0 z-50"
+        class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 flex-shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
-          <div class="overflow-y-auto grow overscroll-contain">
-            <div
-              v-if="appName"
-              class="sticky top-0 bg-gray-900 z-10"
-            >
-              <p
-                v-if="appName"
-                class="flex gap-2 p-4"
-              >
-                <!-- @slot App icon content. @binding classList -->
-                <slot
-                  name="app-icon"
-                  class-list="block w-8 h-8 my-auto flex-shrink-0"
+          <header class="my-auto px-3">
+            <div class="border-b border-gray-100 dark:border-gray-800">
+              <div class="flex items-center gap-2 pt-3">
+                <h1
+                  v-if="appSuite && !collapsed"
+                  class="hidden md:block grow"
                 >
-                  <span
-                    v-if="!hideAppIcon"
-                    class="block w-8 h-8 my-auto flex-shrink-0"
+                  <a
+                    v-if="appSuiteUrl"
+                    :href="appSuiteUrl"
+                    class="flex hover:underline"
+                    @click="navigate(null, { title: appSuite, href: appSuiteUrl }, $event)"
                   >
-                    <template v-if="appUrl">
-                      <a
-                        :href="appUrl"
-                        @click="navigate(null, { title: appName, href: appUrl }, $event)"
-                      >
+                    <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
+                    <span>{{ appSuite }}</span>
+                  </a>
+                  <p
+                    v-else
+                    class="flex"
+                  >
+                    <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
+                    <span>{{ appSuite }}</span>
+                  </p>
+                </h1>
+                <div
+                  v-if="enableCollapsibleSidebar"
+                  class="mx-auto"
+                >
+                  <button
+                    id="btn-collapse-toggle"
+                    :title="
+                      collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
+                    "
+                    class="btn btn-ghost btn-sm px-1 py-1 text-gray-700 dark:text-gray-300"
+                    :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
+                    @click="toggleCollapse"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="w-4 h-4 mx-auto"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        v-if="collapsed"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 5l7 7-7 7M5 5l7 7-7 7"
+                      />
+                      <path
+                        v-else
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <button
+                v-if="appSuite || appName"
+                ref="mobileMenuOpenBtn"
+                class="flex md:hidden gap-1 focus:outline-none"
+                @click="showMobileMenu = !showMobileMenu"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  aria-hidden="true"
+                  role="img"
+                  class="text-white h-6 w-6 inline-block"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 48 48"
+                ><g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ><path d="M7.95 11.95h32" /><path d="M7.95 23.95h32" /><path d="M7.95 35.95h32" /></g></svg>
+                <span class="text-xl leading-6 flex">
+                  <span
+                    v-if="appSuitePrefix"
+                    class="text-red-600 dark:text-red-400 font-bold"
+                  >{{ appSuitePrefix }}</span>
+                  <span
+                    v-if="appSuite"
+                  >{{ appSuite }}</span>
+                  <span
+                    v-if="appName && !hideAppNameInMobileHeader"
+                    class="text-sm text-left font-bold text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap w-40 mt-auto mr-auto"
+                    :class="[appSuite ? 'ml-1' : '']"
+                  >{{ appName }}</span>
+                </span>
+              </button>
+              <div
+                v-if="appName"
+                class="sticky top-0 z-10"
+              >
+                <p
+                  v-if="appName"
+                  class="flex gap-2 py-3"
+                >
+                  <!-- @slot App icon content. @binding classList -->
+                  <slot
+                    name="app-icon"
+                    class-list="block w-4 h-4 my-auto flex-shrink-0"
+                  >
+                    <span
+                      v-if="!hideAppIcon"
+                      class="block w-4 h-4 my-auto flex-shrink-0"
+                      :class="{ 'mx-auto': collapsed }"
+                    >
+                      <template v-if="appUrl">
+                        <a
+                          :href="appUrl"
+                          @click="navigate(null, { title: appName, href: appUrl }, $event)"
+                        >
+                          <img
+                            v-if="appIconUrl"
+                            :src="appIconUrl"
+                            :alt="appName"
+                            class="w-4 h-4"
+                          >
+                          <svg
+                            v-else
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 576 512"
+                            aria-hidden="true"
+                            class="w-4 h-4 fill-current text-blue-400"
+                          ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
+                          <span class="sr-only">{{ appName }}</span>
+                        </a>
+                      </template>
+                      <template v-else>
                         <img
                           v-if="appIconUrl"
                           :src="appIconUrl"
                           :alt="appName"
-                          class="w-8 h-8"
+                          class="w-4 h-4"
                         >
                         <svg
-                          v-else
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 576 512"
                           aria-hidden="true"
-                          class="w-8 h-8 fill-current text-blue-400"
+                          class="w-4 h-4 fill-current text-blue-400"
                         ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
                         <span class="sr-only">{{ appName }}</span>
-                      </a>
-                    </template>
-                    <template v-else>
-                      <img
-                        v-if="appIconUrl"
-                        :src="appIconUrl"
-                        :alt="appName"
-                        class="w-8 h-8"
-                      >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 576 512"
-                        aria-hidden="true"
-                        class="w-8 h-8 fill-current text-blue-400"
-                      ><path d="M172.1 40.16L268.1 3.76C280.9-1.089 295.1-1.089 307.9 3.76L403.9 40.16C425.6 48.41 440 69.25 440 92.52V204.7C441.3 205.1 442.6 205.5 443.9 205.1L539.9 242.4C561.6 250.6 576 271.5 576 294.7V413.9C576 436.1 562.9 456.2 542.5 465.1L446.5 507.3C432.2 513.7 415.8 513.7 401.5 507.3L288 457.5L174.5 507.3C160.2 513.7 143.8 513.7 129.5 507.3L33.46 465.1C13.13 456.2 0 436.1 0 413.9V294.7C0 271.5 14.39 250.6 36.15 242.4L132.1 205.1C133.4 205.5 134.7 205.1 136 204.7V92.52C136 69.25 150.4 48.41 172.1 40.16V40.16zM290.8 48.64C289 47.95 286.1 47.95 285.2 48.64L206.8 78.35L287.1 109.5L369.2 78.35L290.8 48.64zM392 210.6V121L309.6 152.6V241.8L392 210.6zM154.8 250.9C153 250.2 150.1 250.2 149.2 250.9L70.81 280.6L152 311.7L233.2 280.6L154.8 250.9zM173.6 455.3L256 419.1V323.2L173.6 354.8V455.3zM342.8 280.6L424 311.7L505.2 280.6L426.8 250.9C425 250.2 422.1 250.2 421.2 250.9L342.8 280.6zM528 413.9V323.2L445.6 354.8V455.3L523.2 421.2C526.1 419.9 528 417.1 528 413.9V413.9z" /></svg>
-                      <span class="sr-only">{{ appName }}</span>
-                    </template>
+                      </template>
+                    </span>
+                  </slot>
+                  <a
+                    v-if="appUrl && appName"
+                    :href="appUrl"
+                    class="my-auto hover:underline"
+                    :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                    @click="navigate(null, { title: appName, href: appUrl }, $event)"
+                  >
+                    {{ appName }}
+                  </a>
+                  <span
+                    v-else-if="appName"
+                    class="my-auto"
+                    :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
+                  >
+                    {{ appName }}
                   </span>
-                </slot>
-                <a
-                  v-if="appUrl && appName"
-                  :href="appUrl"
-                  class="text-lg font-bold my-auto hover:underline"
-                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
-                  @click="navigate(null, { title: appName, href: appUrl }, $event)"
-                >
-                  {{ appName }}
-                </a>
-                <span
-                  v-else-if="appName"
-                  class="text-lg font-bold my-auto"
-                  :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
-                >
-                  {{ appName }}
-                </span>
-              </p>
+                </p>
+              </div>
             </div>
+          </header>
+          <div class="overflow-y-auto grow overscroll-contain pt-3">
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1 pb-24"
@@ -448,10 +557,10 @@
                       <template #trigger>
                         <button
                           :href="item.href"
-                          class="flex relative w-full gap-2 pl-2 px-4 py-2 border-l-8"
+                          class="flex item-center relative w-full gap-2 pl-2 px-3 py-2 border-l-4"
                           :class="{
-                            'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !itemsGroupIsActive(item) || showItemsGroup(item),
-                            'text-white border-red-700': itemsGroupIsActive(item) && (!showItemsGroup(item) || collapsed)
+                            'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !itemsGroupIsActive(item) || showItemsGroup(item),
+                            'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': itemsGroupIsActive(item) && (!showItemsGroup(item) || collapsed)
                           }"
                           @click="toggleItemsGroup(item)"
                         >
@@ -459,24 +568,25 @@
                           <slot
                             name="sidebar-navigation-item-icon"
                             :item="item"
-                            class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
+                            class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
                           >
                             <span
                               v-if="!hideSidebarIcons"
-                              class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                              class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                              :class="{ 'mx-auto': collapsed }"
                             >
                               <img
                                 v-if="item.iconUrl"
                                 :src="item.iconUrl"
                                 :alt="item.title"
-                                class="w-8 h-8"
+                                class="w-4 h-4"
                               >
                               <svg
                                 v-else
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
                                 aria-hidden="true"
-                                class="w-8 h-8 fill-current"
+                                class="w-4 h-4 fill-current"
                               ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                               <span class="sr-only">{{ item.title }}</span>
                             </span>
@@ -489,16 +599,21 @@
                             v-if="itemsGroupBadgeCount(item) && !showItemsGroup(item)"
                             class="inline-block my-auto"
                             :class="{
-                              'absolute bottom-1 right-1': collapsed
+                              'absolute bottom-1 right-3': collapsed
                             }"
                           >
                             <span
-                              class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
+                              v-if="!collapsed"
+                              class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                             >{{ itemsGroupBadgeCount(item) }}</span>
+                            <span
+                              v-else
+                              class="flex justify-center p-1 rounded-full bg-red-600"
+                            ><span class="sr-only">{{ itemsGroupBadgeCount(item) }}</span></span>
                           </span>
                           <svg
                             v-if="!collapsed"
-                            class="absolute w-4 h-4 right-2 top-1/3"
+                            class="shrink-0 w-4 h-4 ml-auto my-auto"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -529,12 +644,12 @@
                         v-for="subitem in item.items"
                         :key="subitem.id"
                         :href="subitem.href"
-                        class="flex relative gap-2 px-4 py-2 border-l-8"
+                        class="flex relative gap-2 px-3 py-2 border-l-4"
                         :class="{
-                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !subitem.active,
-                          'text-white border-red-700 pointer-events-none': subitem.active,
-                          'pl-12': !hideSidebarIcons,
-                          'pl-8': hideSidebarIcons
+                          'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
+                          'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
+                          'pl-8': !hideSidebarIcons,
+                          'pl-4': hideSidebarIcons
                         }"
                         @click="navigate(item, subitem, $event)"
                       >
@@ -546,7 +661,7 @@
                           class="inline-block my-auto"
                         >
                           <span
-                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
+                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ subitem.badgeCount }}</span>
                         </span>
                       </a>
@@ -560,10 +675,10 @@
                     <template #trigger>
                       <a
                         :href="item.href"
-                        class="flex relative gap-2 pl-2 px-4 py-2 border-l-8"
+                        class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
                         :class="{
-                          'border-transparent bg-gray-900 text-gray-100 hover:bg-gray-800 hover:text-white opacity-75 hover:opacity-100': !item.active,
-                          'text-white border-red-700 pointer-events-none': item.active
+                          'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
+                          'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
                         }"
                         @click="navigate(null, item, $event)"
                       >
@@ -571,24 +686,25 @@
                         <slot
                           name="sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-8 h-8 my-auto flex-shrink-0"
+                          class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-8 h-8 my-auto flex-shrink-0"
+                            class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                            :class="{ 'mx-auto': collapsed }"
                           >
                             <img
                               v-if="item.iconUrl"
                               :src="item.iconUrl"
                               :alt="item.title"
-                              class="w-8 h-8"
+                              class="w-4 h-4"
                             >
                             <svg
                               v-else
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 512 512"
                               aria-hidden="true"
-                              class="w-8 h-8 fill-current"
+                              class="w-4 h-4 fill-current"
                             ><path d="M384 215.1V102.5c0-15-9.3-28.4-23.4-33.7l-92-34.5c-8.1-3.1-17.1-3.1-25.3 0l-92 34.5c-14.1 5.3-23.4 18.7-23.4 33.7v112.6L23.4 254.4C9.3 259.6 0 273.1 0 288.1v106.6c0 13.6 7.7 26.1 19.9 32.2l98.6 49.3c10.1 5.1 22.1 5.1 32.2 0L256 423.6l105.3 52.6c10.1 5.1 22.1 5.1 32.2 0l98.6-49.3c12.2-6.1 19.9-18.6 19.9-32.2V288.1c0-15-9.3-28.4-23.4-33.7L384 215.1zm-116 34.8V152l92-31.7v97.6l-92 32zM152 94.2l104-39 104 39v.2L256 131 152 94.3v-.1zm0 26.1l92 31.7v97.9l-92-32v-97.6zm-30 329.4l-96.8-48.4V308l96.8 39.3v102.4zM25.2 280.8v-.2l109.4-41 108.1 40.5v1.2l-108.1 43.9-109.4-44.4zm122 66.5l95.5-38.8V402l-95.5 47.8V347.3zm217.6 102.4L269.3 402v-93.4l95.5 38.8v102.3zm122-48.4L390 449.7V347.3l96.8-39.3v93.3zm0-120.5l-109.4 44.4-108.1-43.9v-1.2l108.1-40.5 109.4 41v.2z" /></svg>
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
@@ -601,12 +717,17 @@
                           v-if="item.badgeCount"
                           class="inline-block my-auto"
                           :class="{
-                            'absolute bottom-1 right-1': collapsed
+                            'absolute bottom-1 right-3': collapsed
                           }"
                         >
                           <span
-                            class="flex items-center justify-center px-2 h-6 text-xs font-bold rounded-full bg-red-700"
+                            v-if="!collapsed"
+                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ item.badgeCount }}</span>
+                          <span
+                            v-else
+                            class="flex justify-center p-1 rounded-full bg-red-600 dark:bg-red-700"
+                          ><span class="sr-only">{{ item.badgeCount }}</span></span>
                         </span>
                       </a>
                     </template>
@@ -617,61 +738,32 @@
             </nav>
           </div>
           <div
-            v-if="enableCollapsibleSidebar"
-            class="flex flex-shrink-0 sticky bottom-0 bg-gray-900"
+            v-if="hasSlot('user-section')"
+            class="items-center flex gap-2 flex-shrink-0 p-3"
           >
-            <button
-              id="btn-collapse-toggle"
-              :title="
-                collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
-              "
-              class="px-3 ml-auto border-transparent rounded-none btn btn-white btn-ghost"
-              :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
-              @click="toggleCollapse"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-6 h-6 mx-auto"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  v-if="collapsed"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                />
-                <path
-                  v-else
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-                />
-              </svg>
-            </button>
+            <!-- @slot User section content. @binding collapsed -->
+            <slot
+              name="user-section"
+              :collapsed="collapsed"
+            />
           </div>
         </div>
       </aside>
 
       <!-- Main content -->
-      <div class="flex flex-col items-stretch grow min-w-0">
-        <main class="grow pb-4 bg-gray-25 dark:bg-black">
+      <div class="bg-gray-50 dark:bg-black flex flex-col items-stretch grow min-w-0">
+        <main class="grow pb-4">
           <div
             v-if="!hidePageHeader"
-            class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
+            class="bg-gray-25 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-3 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
             <div class="grow my-auto flex flex-row gap-2">
-              <!-- @slot Page title content. @binding collapsed -->
+              <!-- @slot Page title content. -->
               <slot
                 name="page-title"
-                :collapsed="collapsed"
-                class-list="text-2xl font-light text-gray-900 dark:text-gray-100"
+                class-list="text-xl font-light text-gray-900 dark:text-gray-100"
               >
-                <p class="text-2xl font-light text-gray-900 dark:text-gray-100">
+                <p class="text-xl font-light text-gray-900 dark:text-gray-100">
                   {{ pageTitle }}
                 </p>
               </slot>
@@ -680,16 +772,15 @@
               v-if="hasSlot('page-header')"
               class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2"
             >
-              <!-- @slot Page header content. @binding collapsed -->
+              <!-- @slot Page header content. -->
               <slot
                 name="page-header"
-                :collapsed="collapsed"
               />
             </div>
           </div>
           <div class="p-4">
-            <!-- @slot Page content. @binding collapsed -->
-            <slot :collapsed="collapsed" />
+            <!-- @slot Page content. -->
+            <slot />
           </div>
         </main>
 
@@ -697,50 +788,57 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-gray-950 border-t border-gray-800 text-xs text-white px-4 pt-4 pb-16 flex flex-col lg:flex-row gap-4">
-          <div class="flex-shrink-0 flex order-2 lg:order-1">
-            <sds-link
-              href="https://sei.cmu.edu"
-              title="Software Engineering Institute"
-              class="my-auto"
-              external
-            >
-              <img
-                class="h-10"
-                :src="wordmark"
-                alt="Software Engineering Institute"
+        <footer class="text-xs p-4 pb-8">
+          <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
+            <div class="flex-shrink-0 flex order-2 lg:order-1">
+              <sds-link
+                href="https://sei.cmu.edu"
+                title="Software Engineering Institute"
+                class="my-auto text-black dark:text-white"
+                external
               >
-            </sds-link>
-          </div>
-          <div
-            v-if="hasSlot('footer-middle')"
-            class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
-          >
-            <div class="my-auto">
-              <!-- @slot Footer middle (top in mobile) content. -->
-              <slot name="footer-middle" />
+                <SdsSeiWordmark class="h-10" />
+                <span class="sr-only">Software Engineering Institute</span>
+              </sds-link>
             </div>
-          </div>
-          <div class="flex-shrink-0 flex lg:ml-auto order-3">
-            <div class="my-auto">
-              <!-- @slot Footer right (bottom in mobile) content. @binding year -->
-              <slot
-                name="footer-right"
-                :year="year"
-              >
-                <p>&copy; {{ year }} Carnegie Mellon University</p>
-              </slot>
+            <div
+              v-if="hasSlot('footer-middle')"
+              class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
+            >
+              <div class="my-auto">
+                <!-- @slot Footer middle (top in mobile) content. -->
+                <slot name="footer-middle" />
+              </div>
+            </div>
+            <div class="flex-shrink-0 flex lg:ml-auto order-3">
+              <div class="my-auto">
+                <!-- @slot Footer right (bottom in mobile) content. @binding year -->
+                <slot
+                  name="footer-right"
+                  :year="year"
+                >
+                  <div class="flex flex-col">
+                    <p class="ml-auto">
+                      &copy; {{ year }} Carnegie Mellon University
+                    </p>
+                    <p class="ml-auto">
+                      Proprietary. SEI Internal Use Only
+                    </p>
+                  </div>
+                </slot>
+              </div>
             </div>
           </div>
         </footer>
 
-        <div
+        <!-- Actions bar-->
+        <aside
           v-if="hasSlot('actions-bar')"
-          class="bg-white dark:bg-gray-850 p-4 border-t border-gray-100 dark:border-gray-700 sticky bottom-0 z-40"
+          class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
-        </div>
+        </aside>
       </div>
     </div>
   </div>
@@ -749,7 +847,7 @@
 <script setup lang="ts">
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
-import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
+import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
 export interface LayoutAppSidebarNavItem {
   id: number | string
@@ -849,10 +947,6 @@ const mobileMenuCloseBtn = ref()
 const mobileMenuOpenBtn = ref()
 const mobileSidebarContainer = ref()
 const openItemsGroups = ref<LayoutAppSidebarNavItem[]>([])
-
-const wordmark = computed(() => {
-  return wordmarkSvg
-})
 
 const year = computed(() => {
   const d = new Date();

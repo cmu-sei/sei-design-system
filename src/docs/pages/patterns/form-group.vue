@@ -230,7 +230,8 @@
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ required }"
+      v-slot="{ required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -239,11 +240,14 @@
         v-model="checkboxModelValue"
         :options="options"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
         stacked
       />
     </SdsFormGroup>
     <SdsFormGroup
-      v-slot="{ required }"
+      v-slot="{ required, valid, invalid }"
+      :state="state"
       el="fieldset"
       label="Field label"
       helper-text="Field helper text"
@@ -252,6 +256,8 @@
         v-model="radioModelValue"
         :options="options"
         :required="required"
+        :valid="valid"
+        :invalid="invalid"
         stacked
       />
     </SdsFormGroup>
