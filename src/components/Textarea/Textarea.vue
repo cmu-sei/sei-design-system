@@ -15,7 +15,6 @@
       :disabled="disabled"
       :readonly="readonly"
       :required="required"
-      :resize="resize"
     />
     <character-counter
       v-if="countCharacters"
