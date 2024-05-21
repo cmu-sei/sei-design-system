@@ -72,7 +72,7 @@
                 'md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl': size === '2xl',
               }"
             >
-              <header
+              <div
                 class="flex items-center p-6 pb-0"
                 :class="{
                   'sr-only': hideHeader
@@ -120,18 +120,18 @@
                     <path d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
-              </header>
-              <main class="p-6">
+              </div>
+              <div class="p-6">
                 <!-- @slot Modal content. -->
                 <slot />
-              </main>
-              <footer
+              </div>
+              <div
                 v-if="hasFooterSlot"
                 class="p-6 pt-0"
               >
                 <!-- @slot Modal footer content. -->
                 <slot name="footer" />
-              </footer>
+              </div>
             </div>
           </div>
         </div>

@@ -53,6 +53,9 @@ const Template = (args) => ({
           </div>
         </div>
       </template>
+      <template #footer-top>
+        Footer top content area
+      </template>
       <template #footer-middle>
         Footer middle content area
       </template>
