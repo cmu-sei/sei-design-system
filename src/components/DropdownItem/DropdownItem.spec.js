@@ -13,4 +13,13 @@ describe('DropdownItem', () => {
     })
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  it('should match its variant primary snapshot', () => {
+    const wrapper = shallowMount(Component, {
+      props: {
+        variant: 'red'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
 })
