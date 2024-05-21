@@ -55,9 +55,7 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
           
         </div>
       </main>
-      <!-- @slot Footer top content. Great for application-specific footer content. -->
-      
-      
+      <!--v-if-->
       <!-- Footer -->
       <footer
         class="text-xs p-4 pb-8"
