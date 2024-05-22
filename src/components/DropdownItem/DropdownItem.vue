@@ -4,7 +4,8 @@
     data-id="sds-dropdown-item"
 
     :class="[
-      '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black',
+      'block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline',
+      variantClass,
       {
         'border-l-8 border-solid border-red-700 dark:border-red-400': active,
         'pointer-events-none opacity-50': disabled
@@ -28,7 +29,11 @@ defineOptions({
   name: 'SdsDropdownItem'
 })
 
-defineProps({
+const props = defineProps({
+  /**
+   * Styling for the item.
+   */
+  variant: { type: String as PropType<'gray' | 'red'>, default: 'gray' },
   /**
    * Determines the tag use for the component.
    */
@@ -61,4 +66,13 @@ defineProps({
 })
 
 const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')
+
+const variantClass = computed(() => {
+  switch(props.variant) {
+    case 'gray':
+      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black'
+    case 'red':
+    return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600'
+  }
+})
 </script>
