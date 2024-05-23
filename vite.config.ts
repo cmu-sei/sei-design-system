@@ -32,6 +32,7 @@ export default defineConfig({
     vue()
   ],
   server: {
+    hmr: { overlay: false },
     fs: {
       allow: ['..']
     }

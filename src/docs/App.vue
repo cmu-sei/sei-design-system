@@ -3,6 +3,8 @@
     v-model="collapsed"
     :app-name="appName"
     :app-suite="appSuite"
+    app-url="#"
+    app-suite-url="#"
     :enable-collapsible-sidebar="enableCollapsibleSidebar"
     :page-title="pageTitle"
     :sidebar-navigation-items="(sidebarNavigationItems as LayoutAppSidebarNavItem[])"
@@ -10,9 +12,9 @@
   >
     <template #user-section>
       <sds-dropdown
-        title="Dropdown"
-        type="dark"
-        :offset="8"
+        title="Ghost"
+        kind="ghost"
+        block
       >
         <sds-dropdown-header>
           <p>Signed in as</p>
@@ -52,7 +54,8 @@
     </template>
     <template #page-header>
       <sds-button
-        kind="secondary"
+        kind="ghost"
+        size="sm"
         @click="toggleDarkMode"
       >
         <svg
@@ -74,6 +77,9 @@
     <template #default>
       <RouterView />
     </template>
+    <template #actions-bar>
+      Hello world
+    </template>
   </sds-layout-app>
 </template>
 
@@ -92,7 +98,7 @@ useHead({
 const router = useRouter()
 const route = useRoute()
 
-const collapsed = ref(true)
+const collapsed = ref(false)
 const appSuite = ref('SDS')
 const appName = ref('Playground')
 const pageTitle = computed(() => route.meta.title as string)
@@ -103,8 +109,8 @@ const sidebarNavigationItems = computed(() => [
     id: 2,
     title: 'Components',
     items: [
-      {id: 1, title: 'Buttons', active: route.fullPath === '/components/buttons', href: '/components/buttons'},
-      {id: 2, title: 'Containers', active: route.fullPath === '/components/containers', href: '/components/containers'},
+      {id: 1, title: 'Buttons', active: route.fullPath === '/components/buttons', href: '/components/buttons', badgeCount: 10},
+      {id: 2, title: 'Containers', active: route.fullPath === '/components/containers', href: '/components/containers', badgeCount: 2},
       {id: 3, title: 'Data Visualization', active: route.fullPath === '/components/data-visualization', href: '/components/data-visualization'},
       {id: 4, title: 'Date & Time', active: route.fullPath === '/components/date-and-time', href: '/components/date-and-time'},
       {id: 4, title: 'Feedback', active: route.fullPath === '/components/feedback', href: '/components/feedback'},

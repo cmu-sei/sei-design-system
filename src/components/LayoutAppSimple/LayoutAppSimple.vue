@@ -3,7 +3,7 @@
     data-id="sds-layout-app-simple"
     class="flex flex-col h-screen dark:text-gray-50"
   >
-    <div class="bg-gray-900 text-white px-4 py-2 flex flex-shrink-0">
+    <div class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex flex-shrink-0">
       <header class="my-auto">
         <h1
           v-if="appSuite"
@@ -12,17 +12,17 @@
           <a
             v-if="appSuiteUrl"
             :href="appSuiteUrl"
-            class="text-xl flex hover:underline"
+            class="flex hover:underline"
             @click="navigate(null, { title: appSuite, href: appSuiteUrl }, $event)"
           >
-            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </a>
           <p
             v-else
-            class="text-xl flex"
+            class="flex"
           >
-            <span class="text-red-400 font-bold">{{ appSuitePrefix }}</span>
+            <span class="text-red-600 dark:text-red-400 font-bold">{{ appSuitePrefix }}</span>
             <span>{{ appSuite }}</span>
           </p>
         </h1>
@@ -36,19 +36,19 @@
     </div>
     <div class="flex grow flex-shrink-0">
       <!-- Main content -->
-      <div class="flex flex-col items-stretch grow min-w-0">
-        <main class="grow pb-4 bg-gray-25 dark:bg-black">
+      <div class="bg-gray-50 dark:bg-black flex flex-col items-stretch grow min-w-0">
+        <main class="grow pb-4">
           <div
             v-if="!hidePageHeader"
-            class="bg-white dark:bg-gray-850 shadow px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
+            class="bg-gray-25 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
             <div class="grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. -->
               <slot
                 name="page-title"
-                class-list="text-2xl font-light text-gray-900 dark:text-gray-100"
+                class-list="text-xl font-light text-gray-900 dark:text-gray-100"
               >
-                <p class="text-2xl font-light text-gray-900 dark:text-gray-100">
+                <p class="text-xl font-light text-gray-900 dark:text-gray-100">
                   {{ pageTitle }}
                 </p>
               </slot>
@@ -73,50 +73,57 @@
         <slot name="footer-top" />
 
         <!-- Footer -->
-        <footer class="bg-gray-900 dark:bg-gray-950 border-t border-gray-800 text-xs text-white px-4 pt-4 pb-4 flex flex-col lg:flex-row gap-4">
-          <div class="flex-shrink-0 flex order-2 lg:order-1">
-            <sds-link
-              href="https://sei.cmu.edu"
-              title="Software Engineering Institute"
-              class="my-auto"
-              external
-            >
-              <img
-                class="h-10"
-                :src="wordmark"
-                alt="Software Engineering Institute"
+        <footer class="text-xs p-4 pb-8">
+          <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
+            <div class="flex-shrink-0 flex order-2 lg:order-1">
+              <sds-link
+                href="https://sei.cmu.edu"
+                title="Software Engineering Institute"
+                class="my-auto text-black dark:text-white"
+                external
               >
-            </sds-link>
-          </div>
-          <div
-            v-if="hasSlot('footer-middle')"
-            class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
-          >
-            <div class="my-auto">
-              <!-- @slot Footer middle (top in mobile) content. -->
-              <slot name="footer-middle" />
+                <SdsSeiWordmark class="h-10" />
+                <span class="sr-only">Software Engineering Institute</span>
+              </sds-link>
             </div>
-          </div>
-          <div class="flex-shrink-0 flex lg:ml-auto order-3">
-            <div class="my-auto">
-              <!-- @slot Footer right (bottom in mobile) content. @binding year -->
-              <slot
-                name="footer-right"
-                :year="year"
-              >
-                <p>&copy; {{ year }} Carnegie Mellon University</p>
-              </slot>
+            <div
+              v-if="hasSlot('footer-middle')"
+              class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
+            >
+              <div class="my-auto">
+                <!-- @slot Footer middle (top in mobile) content. -->
+                <slot name="footer-middle" />
+              </div>
+            </div>
+            <div class="flex-shrink-0 flex lg:ml-auto order-3">
+              <div class="my-auto">
+                <!-- @slot Footer right (bottom in mobile) content. @binding year -->
+                <slot
+                  name="footer-right"
+                  :year="year"
+                >
+                  <div class="flex flex-col">
+                    <p class="ml-auto">
+                      &copy; {{ year }} Carnegie Mellon University
+                    </p>
+                    <p class="ml-auto">
+                      Proprietary. SEI Internal Use Only
+                    </p>
+                  </div>
+                </slot>
+              </div>
             </div>
           </div>
         </footer>
 
-        <div
+        <!-- Actions bar -->
+        <aside
           v-if="hasSlot('actions-bar')"
-          class="bg-white dark:bg-gray-850 p-4 border-t border-gray-100 dark:border-gray-700 sticky bottom-0 z-40"
+          class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
           <slot name="actions-bar" />
-        </div>
+        </aside>
       </div>
     </div>
   </div>
@@ -124,7 +131,7 @@
 
 <script setup lang="ts">
 import SdsLink from '../Link/Link.vue'
-import wordmarkSvg from '../../assets/images/Software_Engineering_Institute_Unitmark_White.svg'
+import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
 export interface LayoutAppSidebarNavItem {
   id: number | string
@@ -170,10 +177,6 @@ defineProps({
 const emit = defineEmits(['navigate'])
 
 const slots = useSlots()
-
-const wordmark = computed(() => {
-  return wordmarkSvg
-})
 
 const year = computed(() => {
   const d = new Date();

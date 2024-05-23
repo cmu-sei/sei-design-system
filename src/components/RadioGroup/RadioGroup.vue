@@ -18,6 +18,7 @@
         :id="`${root?.id}__option_${index}`"
         v-model="localModelValue"
         type="radio"
+        :class="{ valid, invalid }"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
         :required="required"
@@ -89,7 +90,15 @@ const props = defineProps({
   /**
    * Determines the value key used for options
    */
-  valueKey: { type: String, default: 'value' }
+  valueKey: { type: String, default: 'value' },
+  /**
+   * Sets a valid styling if true.
+   */
+  valid: { type: Boolean, default: false },
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
