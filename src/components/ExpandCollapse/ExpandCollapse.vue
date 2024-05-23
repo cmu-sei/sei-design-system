@@ -1,6 +1,7 @@
 <template>
   <button
     data-id="sds-expand-collapse"
+    type="button"
     class="link link-primary link-blue link-cta"
     :class="{
       disabled,
