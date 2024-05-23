@@ -92,6 +92,7 @@
         <aside
           v-if="showMobileMenu"
           ref="mobileSidebarContainer"
+          aria-label="mobile sidebar"
           class="md:hidden fixed w-2/3 z-50 bg-white dark:bg-gray-950 flex-shrink-0 border-r border-gray-200 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
@@ -120,7 +121,6 @@
                       <span
                         v-if="!hideAppIcon"
                         class="block w-4 h-4 my-auto flex-shrink-0"
-                        :class="{ 'mx-auto': collapsed }"
                       >
                         <template v-if="appUrl">
                           <a
@@ -164,7 +164,6 @@
                       v-if="appUrl && appName"
                       :href="appUrl"
                       class="my-auto hover:underline"
-                      :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
                       @click="navigate(null, { title: appName, href: appUrl }, $event)"
                     >
                       {{ appName }}
@@ -172,7 +171,6 @@
                     <span
                       v-else-if="appName"
                       class="my-auto"
-                      :class="{ 'sr-only': enableCollapsibleSidebar && collapsed }"
                     >
                       {{ appName }}
                     </span>
@@ -358,6 +356,7 @@
 
       <!-- Desktop sidebar -->
       <aside
+        aria-label="desktop sidebar"
         class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 flex-shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
@@ -787,8 +786,13 @@
           </div>
         </main>
 
-        <!-- @slot Footer top content. Great for application-specific footer content. -->
-        <slot name="footer-top" />
+        <div
+          v-if="hasSlot('footer-top')"
+          class="px-4"
+        >
+          <!-- @slot Footer top content. Great for application-specific footer content. -->
+          <slot name="footer-top" />
+        </div>
 
         <!-- Footer -->
         <footer class="text-xs p-4 pb-8">

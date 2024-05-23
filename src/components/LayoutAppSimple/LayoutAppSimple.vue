@@ -69,8 +69,13 @@
           </div>
         </main>
 
-        <!-- @slot Footer top content. Great for application-specific footer content. -->
-        <slot name="footer-top" />
+        <div
+          v-if="hasSlot('footer-top')"
+          class="px-4"
+        >
+          <!-- @slot Footer top content. Great for application-specific footer content. -->
+          <slot name="footer-top" />
+        </div>
 
         <!-- Footer -->
         <footer class="text-xs p-4 pb-8">

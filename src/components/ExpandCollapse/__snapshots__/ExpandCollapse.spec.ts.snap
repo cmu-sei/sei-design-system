@@ -5,6 +5,7 @@ exports[`ExpandCollapse > should match its default snapshot 1`] = `
   aria-disabled="false"
   class="link link-primary link-blue link-cta link-cta-down"
   data-id="sds-expand-collapse"
+  type="button"
 >
   Show more
 </button>

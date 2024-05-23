@@ -78,6 +78,7 @@
             <sds-dropdown-item
               tag="button"
               type="submit"
+              variant="red"
             >
               Sign out
             </sds-dropdown-item>
@@ -117,6 +118,7 @@
             <sds-dropdown-item
               tag="button"
               type="submit"
+              variant="red"
             >
               Sign out
             </sds-dropdown-item>

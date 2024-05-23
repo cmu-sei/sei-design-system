@@ -25,6 +25,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
     <!--v-if-->
     <!-- Desktop sidebar -->
     <aside
+      aria-label="desktop sidebar"
       class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 flex-shrink-0 z-50 w-72"
     >
       <div
@@ -85,9 +86,7 @@ exports[`LayoutApp > should match its default snapshot 1`] = `
           
         </div>
       </main>
-      <!-- @slot Footer top content. Great for application-specific footer content. -->
-      
-      
+      <!--v-if-->
       <!-- Footer -->
       <footer
         class="text-xs p-4 pb-8"
