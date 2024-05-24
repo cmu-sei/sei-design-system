@@ -53,8 +53,8 @@
       :style="slotSizerOuter()"
       class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5"
       :class="{
-        'border-b overflow-y-auto overflow-x-hidden peer-hover:after:border-b peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:bottom-0 after:w-fit': direction === 'bottom',
-        'border-r overflow-x-auto overflow-y-hidden peer-hover:after:border-r peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]': direction === 'right',
+        'border-b overflow-y-auto overflow-x-hidden peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:bottom-0 after:w-fit': direction === 'bottom',
+        'border-r overflow-x-auto overflow-y-hidden peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]': direction === 'right',
       }"
     >
       <div

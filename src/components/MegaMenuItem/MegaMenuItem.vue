@@ -22,21 +22,44 @@
           'flex flex-col'
         ]"
       >
-        <div class="inline-flex group">
-          <p class="group-hover:text-red-600 dark:group-hover:text-red-300">{{ label }}</p>
-          <svg
-            v-if="cta || type === 'landing-page'"
-            class="w-4 h-4 ml-2 my-auto transition-all text-red-600 dark:text-red-300 group-hover:ml-4"
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="32"
-            viewBox="0 0 448 512"
-          >
-            <path
-              fill="currentColor"
-              d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
-            />
-          </svg>
+        <div class="flex flex-row justify-start w-full group">
+          <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block">
+            <span class="my-auto">{{ label }}</span>
+            <span
+              v-if="cta || type === 'landing-page' || external"
+              class="inline-block w-fit my-auto h-full"
+            >
+              <svg
+                v-if="(cta || type === 'landing-page') && !external"
+                class="inline-block w-4 mb-1 h-4 ml-2 transition-all text-red-600 dark:text-red-300 group-hover:ml-4"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h306.7L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+                />
+              </svg>
+              <svg
+                v-if="external"
+                class="ml-2 relative inline-block fill-red-600 dark:fill-red-300 transition-all"
+                :class="{
+                  'mb-0.5 w-4 h-4 group-hover:ml-4': type === 'landing-page',
+                  'w-3.5 h-3.5 mb-1 opacity-0 group-hover:opacity-100': type === 'simple' || type === 'descriptive',
+                }"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-9.293 9.293a1 1 0 0 1-1.414-1.414L17.586 5zM3 7a2 2 0 0 1 2-2h5a1 1 0 1 1 0 2H5v12h12v-5a1 1 0 1 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                />
+              </svg>
+            </span>
+          </p>
         </div>
         <p class="text-gray-600 dark:text-gray-400"><slot /></p>
       </div>
