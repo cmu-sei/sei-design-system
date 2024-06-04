@@ -10,7 +10,7 @@
     <div
       :onmousedown="(e: MouseEvent) => handleDown(e, direction)"
       :ontouchstart="(e: TouchEvent) => handleDown(e, direction)"
-      class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-100 relative z-20"
+      class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20"
       :class="{
         'flex-col ml-0 -mr-4 h-full w-4': direction === 'right',
         'flex-row mx-auto -mb-4 w-full h-4': direction === 'bottom'
@@ -53,7 +53,7 @@
       :style="slotSizerOuter()"
       class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5"
       :class="{
-        'border-b overflow-y-auto overflow-x-hidden peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:bottom-0 after:w-fit': direction === 'bottom',
+        'border-b overflow-y-auto overflow-x-hidden peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:top-[calc(100%-3rem)] after:w-fit': direction === 'bottom',
         'border-r overflow-x-auto overflow-y-hidden peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]': direction === 'right',
       }"
     >
@@ -88,6 +88,11 @@ const props = defineProps({
    * can be clicked and dragged.
    */
   direction: { type: String as PropType<'right' | 'bottom'>, default: 'bottom' },
+  /**
+   * Set the initial height (if direction == 'bottom') or
+   * width (if direction == 'right').
+   */
+  initial: { type: Number, default: null },
   /**
    * Set the max width (if direction right)
    * or max height (if direction bottom) of
@@ -291,9 +296,25 @@ onMounted(() => {
   /**
    * Get the original width/height of the scroll
    * area and save that initial value for reference.
+   * This calculation uses scrollHeight/scrollWidth
+   * to get the entire calculated content dimensions.
    */
-  originalHeight.value = originalHeight.value ? originalHeight.value : scrollArea.value?.offsetHeight;
-  originalWidth.value = originalWidth.value ? originalWidth.value : scrollArea.value?.offsetWidth;
+  originalHeight.value = originalHeight.value ? originalHeight.value : scrollArea.value?.scrollHeight;
+  originalWidth.value = originalWidth.value ? originalWidth.value : scrollArea.value?.scrollWidth;
+  /**
+   * If there is an initial prop and no one has dragged the handle,
+   * set the initial size. Which one is used, width or height,
+   * is controlled by the "direction" prop.
+   */
+  if (props.initial && (dynamicWidth.value == '' && dynamicHeight.value == '')) {
+    if (props.direction === 'bottom') {
+      // Set initial height if direction is "bottom"
+      dynamicHeight.value = `${props.initial}px`
+    } else {
+      // Otherwise, it's a "right" resizer, so set the initial width
+      dynamicWidth.value = `${props.initial}px`
+    }
+  }
   // Setup mouse handler events on the document
   document?.addEventListener("mousemove", handleMove);
   document?.addEventListener("touchmove", handleMove);

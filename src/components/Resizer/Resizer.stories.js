@@ -15,6 +15,9 @@ export default {
       options: [true, false],
       control: { type: 'boolean' }
     },
+    initial: {
+      control: { type: 'number' }
+    },
     min: {
       control: { type: 'number' }
     },
@@ -34,12 +37,9 @@ const Template = (args) => ({
     return {args}
   },
   template: `
-    <sds-resizer v-bind="args" class="w-full h-36">
-      <div class="p-4">
-        <div class="w-full flex flex-col justify-start bg-black dark:bg-white rounded-lg bg-opacity-5 p-4">
-          <h1 class="text-xl font-bold">Resizer</h1>
-          <p class="max-w-60 mb-1 mr-auto">This is the Storybook example for the Resizer component.</p>
-        </div>
+    <sds-resizer v-bind="args" class="w-full">
+      <div class="w-full flex flex-col justify-start p-4 bg-teal-25">
+        <p class="mb-1 mr-auto w-full">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla urna porttitor rhoncus dolor purus non. Eu consequat ac felis donec et odio pellentesque diam volutpat. Adipiscing vitae proin sagittis nisl rhoncus mattis. Semper feugiat nibh sed pulvinar proin gravida hendrerit. Magna etiam tempor orci eu lobortis elementum nibh tellus. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Auctor augue mauris augue neque gravida in fermentum et. Tempor nec feugiat nisl pretium fusce. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Nulla aliquet porttitor lacus luctus accumsan. Aliquet eget sit amet tellus cras. Dui ut ornare lectus sit amet est placerat in.</p>
       </div>
     </sds-resizer>
   `

@@ -6,7 +6,7 @@ exports[`Resizer > Should match its default snapshot 1`] = `
   data-id="sds-resizer"
 >
   <div
-    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-100 relative z-20 flex-row mx-auto -mb-4 w-full h-4"
+    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 flex-row mx-auto -mb-4 w-full h-4"
   >
     <div
       class="absolute h-4"
@@ -34,7 +34,7 @@ exports[`Resizer > Should match its default snapshot 1`] = `
     </div>
   </div>
   <div
-    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-b overflow-y-auto overflow-x-hidden peer-hover:after:border-b peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:bottom-0 after:w-fit"
+    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-b overflow-y-auto overflow-x-hidden peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:top-[calc(100%-3rem)] after:w-fit"
   >
     <div>
       <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
@@ -51,7 +51,7 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
   data-id="sds-resizer"
 >
   <div
-    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-100 relative z-20 flex-col ml-0 -mr-4 h-full w-4"
+    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 flex-col ml-0 -mr-4 h-full w-4"
   >
     <div
       class="absolute w-4"
@@ -79,7 +79,7 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
     </div>
   </div>
   <div
-    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-r overflow-x-auto overflow-y-hidden peer-hover:after:border-r peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]"
+    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-r overflow-x-auto overflow-y-hidden peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]"
   >
     <div>
       <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
