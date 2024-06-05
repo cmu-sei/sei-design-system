@@ -6,10 +6,10 @@ exports[`Resizer > Should match its default snapshot 1`] = `
   data-id="sds-resizer"
 >
   <div
-    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 flex-row mx-auto -mb-4 w-full h-4"
+    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 w-full h-4 flex-col"
   >
     <div
-      class="absolute h-4"
+      class="absolute w-full h-4"
     >
       <svg
         class="mx-auto"
@@ -34,9 +34,11 @@ exports[`Resizer > Should match its default snapshot 1`] = `
     </div>
   </div>
   <div
-    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-b overflow-y-auto overflow-x-hidden peer-hover:after:w-full peer-hover:after:-mt-12 peer-hover:after:h-12 peer-hover:after:bg-gradient-to-t after:block after:sticky after:top-[calc(100%-3rem)] after:w-fit"
+    class="relative flex overflow-x-auto overflow-y-hidden flex-col"
   >
-    <div>
+    <div
+      class="flex-col overflow-y-scroll after:mx-auto after:border-solid after:border-transparent after:border-b group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent after:z-30 group-[.relative]:after:bg-gradient-to-t after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-full after:h-12 after:block after:absolute after:bottom-0 after:w-fit"
+    >
       <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
       
       
@@ -51,13 +53,13 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
   data-id="sds-resizer"
 >
   <div
-    class="flex peer justify-center self-center hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 flex-col ml-0 -mr-4 h-full w-4"
+    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 w-4"
   >
     <div
-      class="absolute w-4"
+      class="absolute h-full w-4"
     >
       <svg
-        class="my-auto"
+        class="my-auto h-full"
         height="64"
         viewBox="0 0 10 10"
         width="16"
@@ -79,9 +81,11 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
     </div>
   </div>
   <div
-    class="border-solid border-transparent peer-hover:dark:border-white peer-hover:border-black after:content-[''] after:border-solid after:to-transparent after:border-transparent after:z-30 dark:after:via-black/5 dark:after:from-black/40 after:from-black/5 border-r overflow-x-auto overflow-y-hidden peer-hover:after:h-full peer-hover:after:-ml-12 peer-hover:after:w-12 peer-hover:after:bg-gradient-to-l after:block after:relative after:-right-full after:-top-full after:h-[calc(100%+8em)]"
+    class="relative flex overflow-y-auto overflow-x-hidden flex-row"
   >
-    <div>
+    <div
+      class="flex-row overflow-x-scroll after:border-solid after:border-transparent after:border-r group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent after:z-30 group-[.relative]:after:bg-gradient-to-l after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-12 after:h-full after:block after:absolute after:right-0 after:top-0 after:h-[calc(100%+8em)]"
+    >
       <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
       
       

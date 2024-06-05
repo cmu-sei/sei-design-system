@@ -8,192 +8,47 @@
         <div class="flex flex-row justify-start">
           <SdsResizer
             direction="right"
-            :initial="400"
+            :initial="300"
           >
-            <SdsTable
-              :fields="fields"
-              :items="items"
-              enable-drawer
-              class="w-full mr-auto"
-            >
-              <template #cell(fruit_employee)="{ item }">
-                <p class="font-bold">
-                  {{ item.fruit }}
-                </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                  Stocked by <span class="font-bold">{{ item.employee }}</span>
-                </p>
-              </template>
-              <template #cell(actions)="{ item }">
-                <button @click="edit(item)">
-                  Edit
-                </button>
-              </template>
-              <template #drawer="{item}">
-                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Store:</span>
-                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Aisle:</span>
-                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Price:</span>
-                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                    </p>
-                  </li>
-                </ul>
-              </template>
-            </SdsTable>
+            <div class="justify-start p-4 bg-teal-25 dark:bg-teal-800 h-fit overflow-y-hidden">
+              <div class="line-clamp-6 overflow-scroll h-fit">
+                <p class="mb-1 mr-auto w-full block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla urna porttitor rhoncus dolor purus non. Eu consequat ac felis donec et odio pellentesque diam volutpat. Adipiscing vitae proin sagittis nisl rhoncus mattis. Semper feugiat nibh sed pulvinar proin gravida hendrerit. Magna etiam tempor orci eu lobortis elementum nibh tellus. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Auctor augue mauris augue neque gravida in fermentum et. Tempor nec feugiat nisl pretium fusce. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Nulla aliquet porttitor lacus luctus accumsan. Aliquet eget sit amet tellus cras. Dui ut ornare lectus sit amet est placerat in.</p>
+              </div>
+            </div>
           </SdsResizer>
           <SdsResizer
             direction="right"
-            :initial="400"
+            class="ml-0.5"
+            :initial="300"
           >
-            <SdsTable
-              :fields="fields"
-              :items="items"
-              enable-drawer
-              class="w-full mr-auto"
-            >
-              <template #cell(fruit_employee)="{ item }">
-                <p class="font-bold">
-                  {{ item.fruit }}
-                </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                  Stocked by <span class="font-bold">{{ item.employee }}</span>
-                </p>
-              </template>
-              <template #cell(actions)="{ item }">
-                <button @click="edit(item)">
-                  Edit
-                </button>
-              </template>
-              <template #drawer="{item}">
-                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Store:</span>
-                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Aisle:</span>
-                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Price:</span>
-                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                    </p>
-                  </li>
-                </ul>
-              </template>
-            </SdsTable>
+            <div class="justify-start p-4 bg-teal-25 dark:bg-teal-800 h-fit overflow-y-hidden">
+              <div class="line-clamp-6 overflow-scroll h-fit">
+                <p class="mb-1 mr-auto w-full block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla urna porttitor rhoncus dolor purus non. Eu consequat ac felis donec et odio pellentesque diam volutpat. Adipiscing vitae proin sagittis nisl rhoncus mattis. Semper feugiat nibh sed pulvinar proin gravida hendrerit. Magna etiam tempor orci eu lobortis elementum nibh tellus. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Auctor augue mauris augue neque gravida in fermentum et. Tempor nec feugiat nisl pretium fusce. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Nulla aliquet porttitor lacus luctus accumsan. Aliquet eget sit amet tellus cras. Dui ut ornare lectus sit amet est placerat in.</p>
+              </div>
+            </div>
           </SdsResizer>
         </div>
         <div class="flex flex-col">
           <SdsResizer
             :initial="100"
-            class="mb-5"
+            :clamp="false"
+            class="mb-1"
           >
-            <SdsTable
-              :fields="fields"
-              :items="items"
-              enable-drawer
-              class="min-w-full"
-            >
-              <template #cell(fruit_employee)="{ item }">
-                <p class="font-bold">
-                  {{ item.fruit }}
-                </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                  Stocked by <span class="font-bold">{{ item.employee }}</span>
-                </p>
-              </template>
-              <template #cell(actions)="{ item }">
-                <button @click="edit(item)">
-                  Edit
-                </button>
-              </template>
-              <template #drawer="{item}">
-                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Store:</span>
-                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Aisle:</span>
-                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Price:</span>
-                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                    </p>
-                  </li>
-                </ul>
-              </template>
-            </SdsTable>
+            <div class="justify-start p-4 bg-teal-25 dark:bg-teal-800 h-fit overflow-y-hidden">
+              <div class="h-fit">
+                <p class="mb-1 mr-auto w-full block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla urna porttitor rhoncus dolor purus non. Eu consequat ac felis donec et odio pellentesque diam volutpat. Adipiscing vitae proin sagittis nisl rhoncus mattis. Semper feugiat nibh sed pulvinar proin gravida hendrerit. Magna etiam tempor orci eu lobortis elementum nibh tellus. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Auctor augue mauris augue neque gravida in fermentum et. Tempor nec feugiat nisl pretium fusce. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Nulla aliquet porttitor lacus luctus accumsan. Aliquet eget sit amet tellus cras. Dui ut ornare lectus sit amet est placerat in.</p>
+              </div>
+            </div>
           </SdsResizer>
           <SdsResizer
-            :initial="200"
+            :initial="100"
+            :clamp="false"
           >
-            <SdsTable
-              :fields="fields"
-              :items="items"
-              enable-drawer
-              class="min-w-full"
-            >
-              <template #cell(fruit_employee)="{ item }">
-                <p class="font-bold">
-                  {{ item.fruit }}
-                </p>
-                <p class="text-sm text-gray-600 dark:text-gray-400">
-                  Stocked by <span class="font-bold">{{ item.employee }}</span>
-                </p>
-              </template>
-              <template #cell(actions)="{ item }">
-                <button @click="edit(item)">
-                  Edit
-                </button>
-              </template>
-              <template #drawer="{item}">
-                <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Store:</span>
-                      <span>{{ (item.additionalData as AdditionalData).store }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Aisle:</span>
-                      <span>{{ (item.additionalData as AdditionalData).aisle }}</span>
-                    </p>
-                  </li>
-                  <li>
-                    <p class="space-x-1">
-                      <span class="font-bold">Price:</span>
-                      <span>{{ (item.additionalData as AdditionalData).price }}</span>
-                    </p>
-                  </li>
-                </ul>
-              </template>
-            </SdsTable>
+            <div class="justify-start p-4 bg-teal-25 dark:bg-teal-800 h-fit overflow-y-hidden">
+              <div class="h-fit">
+                <p class="mb-1 mr-auto w-full block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fringilla urna porttitor rhoncus dolor purus non. Eu consequat ac felis donec et odio pellentesque diam volutpat. Adipiscing vitae proin sagittis nisl rhoncus mattis. Semper feugiat nibh sed pulvinar proin gravida hendrerit. Magna etiam tempor orci eu lobortis elementum nibh tellus. Massa sapien faucibus et molestie ac feugiat sed lectus vestibulum. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Risus commodo viverra maecenas accumsan lacus vel facilisis volutpat est. Auctor augue mauris augue neque gravida in fermentum et. Tempor nec feugiat nisl pretium fusce. Tempor orci eu lobortis elementum nibh tellus molestie nunc non. Nulla aliquet porttitor lacus luctus accumsan. Aliquet eget sit amet tellus cras. Dui ut ornare lectus sit amet est placerat in.</p>
+              </div>
+            </div>
           </SdsResizer>
         </div>
       </div>
