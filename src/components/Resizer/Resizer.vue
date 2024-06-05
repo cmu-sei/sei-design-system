@@ -133,9 +133,14 @@ let isHovering = ref(false)
  * Track click events, set an ephemeral timer to monitor
  * for a second click before the delay amount.
  */
-let doubleClick = ref({
+type DoubleClick = {
+  clicks: number,
+  timer?: number,
+  delay: number,
+}
+let doubleClick = ref<DoubleClick>({
   clicks: 0,
-  timer: null,
+  timer: undefined,
   delay: 300
 })
 
@@ -151,8 +156,8 @@ const originalWidth = props.max ? props.direction === 'right' ? ref(props.max) :
 const originalHeight = props.max ? props.direction === 'bottom' ? ref(props.max) : ref() : ref();
 
 // Dynamic width/height as the slot content is being resized
-const dynamicWidth = ref('');
-const dynamicHeight = ref('');
+const dynamicWidth = ref<null | string>(null);
+const dynamicHeight = ref<null | string>(null);
 
 // Classes for styling the active bottom handle
 const activeBottomHandle = [
@@ -237,7 +242,8 @@ const handleDouble = (e: MouseEvent | TouchEvent) => {
     dynamicWidth.value = props.initial ? `${props.initial}px` : originalWidth.value ? `${originalWidth.value}px` : null
     dynamicHeight.value = props.initial ? `${props.initial}px` : originalHeight.value ? `${originalHeight.value}px` : null
     // Scroll to the top (or left for "right" resize direction)
-    resetScroll(scrollAreaInner.value, props.direction)
+    if (scrollAreaInner.value)
+      resetScroll(scrollAreaInner.value, props.direction)
     // Reset clicks
     doubleClick.value['clicks'] = 0
   }
@@ -315,8 +321,10 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       // If "clamp" property is set, limit the width to the original width
       if (props.clamp) {
         const nextValue = originalWidth.value ? (scrollAreaOuter.value.offsetWidth + xDist) > originalWidth.value ? dynamicWidth.value : newWidth : newWidth
-        if (parseInt(nextValue) > props.min) {
-          dynamicWidth.value = nextValue
+        if (nextValue) {
+          if (parseInt(nextValue) > props.min) {
+            dynamicWidth.value = nextValue
+          }
         }
       } else {
         dynamicWidth.value = newWidth
@@ -341,8 +349,10 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       // If "clamp" property is set, limit the height to the original height
       if (props.clamp) {
         const nextValue = originalHeight.value ? (scrollAreaOuter.value.offsetHeight + yDist) > originalHeight.value ? dynamicHeight.value : newHeight : newHeight
-        if (parseInt(nextValue) > props.min) {
-          dynamicHeight.value = nextValue
+        if (nextValue) {
+          if (parseInt(nextValue) > props.min) {
+            dynamicHeight.value = nextValue
+          }
         }
       } else {
         dynamicHeight.value = newHeight
@@ -360,10 +370,12 @@ const handleUp = (_e: MouseEvent | TouchEvent) => {
 const slotOuterHeight = () => {
   /* Configure outer slot height */
   if (props.direction === 'bottom') {
-    if (dynamicHeight.value > originalHeight.value) {
-        return 'fit-content'
-    } else {
-        return dynamicHeight.value
+    if (dynamicHeight.value) {
+      if (dynamicHeight.value > originalHeight.value) {
+          return 'fit-content'
+      } else {
+          return dynamicHeight.value
+      }
     }
   } else if (props.direction === 'right') {
     return ''
@@ -373,7 +385,8 @@ const slotOuterHeight = () => {
 const slotOuterWidth = () => {
   /* Configure outer slot width */
   if (props.direction === 'right') {
-    return dynamicWidth.value
+    if (dynamicWidth.value)
+      return dynamicWidth.value
   } else if (props.direction === 'bottom') {
     return ''
   }
@@ -390,10 +403,12 @@ const slotSizerOuter = () => {
 const slotInnerHeight = () => {
   /* Configure slot inner height for clamping */
   if (props.direction === 'bottom') {
-    if (dynamicHeight.value > originalHeight.value) {
-      return 'fit-content'
-    } else {
-      return dynamicHeight
+    if (dynamicHeight.value) {
+      if (dynamicHeight.value > originalHeight.value) {
+        return 'fit-content'
+      } else {
+        return dynamicHeight.value
+      }
     }
   } else if (props.direction === 'right') {
     return 'fit-content'
@@ -431,7 +446,7 @@ onMounted(() => {
    * set the initial size. Which one is used, width or height,
    * is controlled by the "direction" prop.
    */
-  if (props.initial && (dynamicWidth.value == '' && dynamicHeight.value == '')) {
+  if (props.initial && (dynamicWidth.value == null && dynamicHeight.value == null)) {
     if (props.direction === 'bottom') {
       // Set initial height if direction is "bottom"
       dynamicHeight.value = `${props.initial}px`

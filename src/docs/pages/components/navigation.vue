@@ -1091,6 +1091,7 @@ interface MegaMenuContent {
     href: string
     key: string
     label: string
+    external: boolean
     type?: 'landing-page' | 'descriptive' | 'simple'
   },
   jobs?: {
