@@ -473,6 +473,7 @@
                       :href="content?.jobsLink?.href"
                       :label="content?.jobsLink?.label"
                       :type="content?.jobsLink?.type"
+                      :external="content?.jobsLink?.external"
                     />
                     <div
                       v-for="row, index in content?.jobs"
@@ -659,6 +660,7 @@
                   :href="content?.jobsLink?.href"
                   :label="content?.jobsLink?.label"
                   :type="content?.jobsLink?.type"
+                  :external="content?.jobsLink?.external"
                 />
                 <div
                   v-for="row, index in content?.jobs"
@@ -1466,6 +1468,7 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
+        external: true,
         type: "landing-page"
       },
       jobs: [
@@ -1929,6 +1932,7 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
+        external: true,
         type: "landing-page"
       },
       jobs: [
