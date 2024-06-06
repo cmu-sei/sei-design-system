@@ -394,10 +394,15 @@ const slotOuterWidth = () => {
 
 const slotSizerOuter = () => {
   /* Configure outer slot dimensions */
-  return {
-    height: slotOuterHeight(),
-    width: slotOuterWidth(),
-  } as StyleValue
+  if (props.direction === 'right') {
+    return {
+      width: slotOuterWidth()
+    } as StyleValue
+  } else {
+    return {
+      height: slotOuterHeight()
+    } as StyleValue
+  }
 }
 
 const slotInnerHeight = () => {
@@ -426,10 +431,15 @@ const slotInnerWidth = () => {
 
 const slotSizerInner = () => {
   /* Configure inner slot dimensions for clamping */
-  return {
-    height: slotInnerHeight(),
-    width: slotInnerWidth(),
-  } as StyleValue
+  if (props.direction === 'right') {
+    return {
+      width: slotInnerWidth()
+    } as StyleValue
+  } else {
+    return {
+      height: slotInnerHeight()
+    } as StyleValue
+  }
 }
 
 onMounted(() => {

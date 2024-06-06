@@ -5,10 +5,11 @@
         Resizer
       </h2>
       <div class="space-y-4">
-        <div class="flex flex-row justify-start">
+        <div class="flex flex-row gap-x-1 gap-y-4 flex-wrap justify-start">
           <SdsResizer
             direction="right"
             :initial="300"
+            :max="400"
           >
             <div class="justify-start p-4 bg-teal-25 dark:bg-teal-900 h-fit overflow-y-hidden">
               <div class="line-clamp-6 overflow-scroll h-fit">
@@ -20,7 +21,7 @@
           </SdsResizer>
           <SdsResizer
             direction="right"
-            class="ml-0.5"
+            class="max-w-full"
             :initial="300"
           >
             <div class="justify-start p-4 bg-teal-25 dark:bg-teal-900 h-fit overflow-y-hidden">
