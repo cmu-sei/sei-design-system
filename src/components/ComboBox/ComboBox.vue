@@ -84,7 +84,7 @@
         ><path d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
       <div
-        v-if="focusOnKeyPress"
+        v-if="focusOnKeyPress && !hideFocusHelperText"
         class="input-group-addon"
       >
         <SdsTooltip>
@@ -351,6 +351,10 @@ const props = defineProps({
    * Determines whether to focus the input on "/" key press.
    */
   focusOnKeyPress: { type: Boolean, default: false },
+  /**
+   * Determines whether to display the helper text for the "/" focus key press.
+   */
+  hideFocusHelperText: { type: Boolean, default: false },
   /**
    * The suggestions used for autosuggest.
    */
