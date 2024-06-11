@@ -8,7 +8,7 @@
     }"
   >
     <div
-      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20"
+      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0"
       :class="{
         'w-full h-4 flex-col': direction === 'bottom',
         'w-4': direction === 'right',
@@ -171,7 +171,6 @@ const activeBottomHandle = [
   'group-[.relative]:after:border-black',
   'after:content-[""]',
   'after:to-transparent',
-  'after:z-30',
   'group-[.relative]:after:bg-gradient-to-t',
   'after:from-black/5',
   'dark:after:from-black/40',
@@ -195,7 +194,6 @@ const activeRightHandle = [
   'group-[.relative]:after:border-black',
   'after:content-[""]',
   'after:to-transparent',
-  'after:z-30',
   'group-[.relative]:after:bg-gradient-to-l',
   'after:from-black/5',
   'dark:after:from-black/40',
