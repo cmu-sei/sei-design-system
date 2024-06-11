@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Alpha: Allow an area to be resized (either vertically or horizontally) by clicking and dragging on the border.',
+        component: 'Beta: Allow an area to be resized (either vertically or horizontally) by clicking and dragging on the border.',
       },
     },
   },
