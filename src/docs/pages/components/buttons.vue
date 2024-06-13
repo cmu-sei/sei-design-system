@@ -2,6 +2,31 @@
   <div class="grid gap-12">
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Action Button
+      </h2>
+      <div class="flex gap-2 items-center">
+        <SdsActionButton>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          active
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          disabled
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <h2 class="text-xl">
         Expand Collapse
       </h2>
       <div>
