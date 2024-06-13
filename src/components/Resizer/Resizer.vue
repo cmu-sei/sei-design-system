@@ -1,17 +1,34 @@
 <template>
   <div
     data-id="sds-resizer"
-    class="flex max-w-full justify-end"
+    class="flex justify-end"
     :class="{
-      'flex-col-reverse': direction === 'bottom',
-      'flex-row-reverse': direction === 'right',
+      'flex-col max-w-full': direction === 'bottom',
+      'flex-row max-w-full': direction === 'right',
     }"
   >
     <div
-      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20"
+      ref="scrollAreaOuter"
+      :style="slotSizerOuter()"
+      class="relative flex"
+      :class="[
+        direction === 'right' ? 'overflow-y-auto overflow-x-hidden flex-row' : 'overflow-x-auto overflow-y-hidden flex-col',
+        isHovering ? 'group' : null,
+      ]"
+    >
+      <div
+        ref="scrollAreaInner"
+        :class="direction === 'right' ? activeRightHandle : activeBottomHandle"
+      >
+        <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
+        <slot />
+      </div>
+    </div>
+    <div
+      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0"
       :class="{
-        'w-full h-4 flex-col': direction === 'bottom',
-        'w-4': direction === 'right',
+        'w-full h-4 flex-row': direction === 'bottom',
+        'h-full w-0 mr-4 flex-col': direction === 'right',
       }"
       @click="(e: MouseEvent) => handleDouble(e)"
       @touch="(e: TouchEvent) => handleDouble(e)"
@@ -40,8 +57,8 @@
           <rect
             :width="direction === 'bottom' ? 32 : 4"
             :height="direction === 'bottom' ? 4 : 32"
-            :x="direction === 'bottom' ? -11.5 : 4"
-            :y="direction === 'bottom' ? 4 : -11.5"
+            :x="direction === 'bottom' ? -11.5 : 3"
+            :y="direction === 'bottom' ? 3 : -11.5"
             fill="currentColor"
             stroke="currentColor"
             stroke-linecap="round"
@@ -50,24 +67,6 @@
             rx="2"
           />
         </svg>
-      </div>
-    </div>
-    <div
-      ref="scrollAreaOuter"
-      :style="slotSizerOuter()"
-      class="relative flex"
-      :class="[
-        direction === 'right' ? 'overflow-y-auto overflow-x-hidden flex-row' : 'overflow-x-auto overflow-y-hidden flex-col',
-        isHovering ? 'group' : null,
-      ]"
-    >
-      <div
-        ref="scrollAreaInner"
-        :style="slotSizerInner()"
-        :class="direction === 'right' ? activeRightHandle : activeBottomHandle"
-      >
-        <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
-        <slot />
       </div>
     </div>
   </div>
@@ -171,7 +170,6 @@ const activeBottomHandle = [
   'group-[.relative]:after:border-black',
   'after:content-[""]',
   'after:to-transparent',
-  'after:z-30',
   'group-[.relative]:after:bg-gradient-to-t',
   'after:from-black/5',
   'dark:after:from-black/40',
@@ -195,7 +193,6 @@ const activeRightHandle = [
   'group-[.relative]:after:border-black',
   'after:content-[""]',
   'after:to-transparent',
-  'after:z-30',
   'group-[.relative]:after:bg-gradient-to-l',
   'after:from-black/5',
   'dark:after:from-black/40',
@@ -210,7 +207,6 @@ const activeRightHandle = [
 ]
 
 const resetScroll = (elem: HTMLElement, direction: String) => {
-  console.log(elem)
   if (direction === 'bottom') {
     elem.scrollTop = 0
   } else {
@@ -308,11 +304,12 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
     if (scrollAreaOuter.value !== null) { // Make sure it's slot content is reachable
       // Get the bounding rectangle of the scroll area
       const rect = scrollAreaOuter.value.getBoundingClientRect()
-      if (e instanceof TouchEvent) {
-        xDist = e.touches[0].clientX - rect.right;
-      }
       if (e instanceof MouseEvent) {
         xDist = e.clientX - rect.right;
+      } else {
+        if (window?.TouchEvent && e instanceof TouchEvent) {
+          xDist = e.touches[0].clientX - rect.right;
+        }
       }
       // Set the new width of the scroll area
       const newWidth = (xDist + scrollAreaOuter.value.offsetWidth) < 1
@@ -320,7 +317,7 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
                         : `${(scrollAreaOuter.value.offsetWidth + xDist)}px !important`
       // If "clamp" property is set, limit the width to the original width
       if (props.clamp) {
-        const nextValue = originalWidth.value ? (scrollAreaOuter.value.offsetWidth + xDist) > originalWidth.value ? dynamicWidth.value : newWidth : newWidth
+        const nextValue = originalWidth.value ? (scrollAreaOuter.value.offsetWidth + xDist) > (props.direction === 'right' ? originalWidth.value : originalWidth.value) ? dynamicWidth.value : newWidth : newWidth
         if (nextValue) {
           if (parseInt(nextValue) > props.min) {
             dynamicWidth.value = nextValue
@@ -336,11 +333,12 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
     if (scrollAreaOuter.value !== null) { // Make sure it's slot content is reachable
       // Get the bounding rectangle of the scroll area
       const rect = scrollAreaOuter.value.getBoundingClientRect()
-      if (e instanceof TouchEvent) {
-        yDist = e.touches[0].clientY - rect.bottom;
-      }
       if (e instanceof MouseEvent) {
         yDist = e.clientY - rect.bottom;
+      } else {
+        if (window?.TouchEvent && e instanceof TouchEvent) {
+          yDist = e.touches[0].clientY - rect.bottom;
+        }
       }
       // Set the new height of the scroll area
       const newHeight = (yDist + scrollAreaOuter.value.offsetHeight) < 1
@@ -385,8 +383,7 @@ const slotOuterHeight = () => {
 const slotOuterWidth = () => {
   /* Configure outer slot width */
   if (props.direction === 'right') {
-    if (dynamicWidth.value)
-      return dynamicWidth.value
+    return dynamicWidth.value
   } else if (props.direction === 'bottom') {
     return ''
   }
@@ -405,44 +402,7 @@ const slotSizerOuter = () => {
   }
 }
 
-const slotInnerHeight = () => {
-  /* Configure slot inner height for clamping */
-  if (props.direction === 'bottom') {
-    if (dynamicHeight.value) {
-      if (dynamicHeight.value > originalHeight.value) {
-        return 'fit-content'
-      } else {
-        return dynamicHeight.value
-      }
-    }
-  } else if (props.direction === 'right') {
-    return 'fit-content'
-  }
-}
-
-const slotInnerWidth = () => {
-  /* Configure slot inner width for clamping */
-  if (props.direction === 'right') {
-    return `${originalWidth.value}px`
-  } else if (props.direction === 'bottom') {
-    return `${originalWidth.value}px`
-  }
-}
-
-const slotSizerInner = () => {
-  /* Configure inner slot dimensions for clamping */
-  if (props.direction === 'right') {
-    return {
-      width: slotInnerWidth()
-    } as StyleValue
-  } else {
-    return {
-      height: slotInnerHeight()
-    } as StyleValue
-  }
-}
-
-onMounted(() => {
+const setDefaults = () => {
   /**
    * Get the original width/height of the scroll
    * area and save that initial value for reference.
@@ -465,6 +425,10 @@ onMounted(() => {
       dynamicWidth.value = `${props.initial}px`
     }
   }
+}
+
+onMounted(() => {
+  setDefaults()
   // Setup mouse handler events on the document
   document?.addEventListener("mousemove", handleMove);
   document?.addEventListener("touchmove", handleMove);

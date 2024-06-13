@@ -2,11 +2,22 @@
 
 exports[`Resizer > Should match its default snapshot 1`] = `
 <div
-  class="flex max-w-full justify-end flex-col-reverse"
+  class="flex justify-end flex-col max-w-full"
   data-id="sds-resizer"
 >
   <div
-    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 w-full h-4 flex-col"
+    class="relative flex overflow-x-auto overflow-y-hidden flex-col"
+  >
+    <div
+      class="flex-col overflow-y-scroll after:mx-auto after:border-solid after:border-transparent after:border-b group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent group-[.relative]:after:bg-gradient-to-t after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-full after:h-12 after:block after:absolute after:bottom-0 after:w-fit"
+    >
+      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
+      
+      
+    </div>
+  </div>
+  <div
+    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0 w-full h-4 flex-row"
   >
     <div
       class="absolute w-full h-4"
@@ -28,20 +39,9 @@ exports[`Resizer > Should match its default snapshot 1`] = `
           stroke-width="0"
           width="32"
           x="-11.5"
-          y="4"
+          y="3"
         />
       </svg>
-    </div>
-  </div>
-  <div
-    class="relative flex overflow-x-auto overflow-y-hidden flex-col"
-  >
-    <div
-      class="flex-col overflow-y-scroll after:mx-auto after:border-solid after:border-transparent after:border-b group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent after:z-30 group-[.relative]:after:bg-gradient-to-t after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-full after:h-12 after:block after:absolute after:bottom-0 after:w-fit"
-    >
-      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
-      
-      
     </div>
   </div>
 </div>
@@ -49,11 +49,22 @@ exports[`Resizer > Should match its default snapshot 1`] = `
 
 exports[`Resizer > Should match with specific props and src snapshot 1`] = `
 <div
-  class="flex max-w-full justify-end flex-row-reverse"
+  class="flex justify-end flex-row max-w-full"
   data-id="sds-resizer"
 >
   <div
-    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-20 w-4"
+    class="relative flex overflow-y-auto overflow-x-hidden flex-row"
+  >
+    <div
+      class="flex-row overflow-x-scroll after:border-solid after:border-transparent after:border-r group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent group-[.relative]:after:bg-gradient-to-l after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-12 after:h-full after:block after:absolute after:right-0 after:top-0 after:h-[calc(100%+8em)]"
+    >
+      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
+      
+      
+    </div>
+  </div>
+  <div
+    class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0 h-full w-0 mr-4 flex-col"
   >
     <div
       class="absolute h-full w-4"
@@ -74,21 +85,10 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
           stroke-linejoin="round"
           stroke-width="0"
           width="4"
-          x="4"
+          x="3"
           y="-11.5"
         />
       </svg>
-    </div>
-  </div>
-  <div
-    class="relative flex overflow-y-auto overflow-x-hidden flex-row"
-  >
-    <div
-      class="flex-row overflow-x-scroll after:border-solid after:border-transparent after:border-r group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent after:z-30 group-[.relative]:after:bg-gradient-to-l after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-12 after:h-full after:block after:absolute after:right-0 after:top-0 after:h-[calc(100%+8em)]"
-    >
-      <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
-      
-      
     </div>
   </div>
 </div>

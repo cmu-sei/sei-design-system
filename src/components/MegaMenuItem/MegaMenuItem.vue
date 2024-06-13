@@ -31,7 +31,10 @@
             >
               <svg
                 v-if="(cta || type === 'landing-page') && !external"
-                class="inline-block w-4 mb-1 h-4 ml-2 transition-all text-red-600 dark:text-red-300 group-hover:ml-4"
+                class="inline-block w-4 mb-1 h-4 ml-2 transition-all text-red-600 dark:text-red-300"
+                :class="{
+                  'group-hover:ml-4': !external
+                }"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -46,7 +49,8 @@
                 v-if="external"
                 class="ml-2 relative inline-block fill-red-600 dark:fill-red-300 transition-all"
                 :class="{
-                  'mb-0.5 w-4 h-4 group-hover:ml-4': type === 'landing-page',
+                  'mb-0.5 w-4 h-4': type === 'landing-page',
+                  'group-hover:ml-4': type === 'landing-page' && !external,
                   'w-3.5 h-3.5 mb-1 opacity-0 group-hover:opacity-100': type === 'simple' || type === 'descriptive',
                 }"
                 xmlns="http://www.w3.org/2000/svg"
