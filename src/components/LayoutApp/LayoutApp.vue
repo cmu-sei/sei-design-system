@@ -795,7 +795,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="text-xs p-4 pb-8">
+        <footer class="text-xs p-4">
           <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
               <sds-link
@@ -840,7 +840,7 @@
 
         <!-- Actions bar-->
         <aside
-          v-if="hasSlot('actions-bar')"
+          v-if="!hideActionBar && hasSlot('actions-bar')"
           class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
           <!-- @slot Actions content. Great for application-specific actionable content. -->
@@ -943,6 +943,10 @@ const props = defineProps({
    * Determines whether to hide the icons in the sidebar.
    */
   hideSidebarIcons: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide the action bar slot.
+   */
+  hideActionBar: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:model-value', 'navigate'])
