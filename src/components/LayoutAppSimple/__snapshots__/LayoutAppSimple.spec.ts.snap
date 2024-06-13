@@ -58,7 +58,7 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
       <!--v-if-->
       <!-- Footer -->
       <footer
-        class="text-xs p-4 pb-8"
+        class="text-xs p-4"
       >
         <div
           class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4"
