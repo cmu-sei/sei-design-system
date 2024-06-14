@@ -52,7 +52,7 @@
   "devDependencies": {
     "@floating-ui/dom": "^1.6.5",
     "@sds/components-vue3": "^3.2.0",
-    "@sds/tailwindcss-3": "^3.0.4-beta.7",
+    "@sds/tailwindcss-3": "^3.0.4-beta.10",
     "@shimyshack/uid": "^0.1.9",
     "@storybook/addon-actions": "^8.0.0",
     "@storybook/addon-docs": "^8.0.0",
