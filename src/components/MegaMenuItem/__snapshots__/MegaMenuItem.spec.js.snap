@@ -17,16 +17,12 @@ exports[`MegaMenuItem.vue > matches snapshot 1`] = `
       <div
         class="flex flex-row justify-start w-full group"
       >
-        <div
-          class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"
+        <p
+          class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"
         >
-          <div
-            class="my-auto"
-          >
-            <span />
-            <!--v-if-->
-          </div>
-        </div>
+          <span />
+          <!--v-if-->
+        </p>
       </div>
       <p
         class="text-gray-600 dark:text-gray-400"
@@ -46,11 +42,9 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop a
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <div class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block">
-          <div class="my-auto"><span></span>
-            <!--v-if-->
-          </div>
-        </div>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
+          <!--v-if-->
+        </p>
       </div>
       <p class="text-gray-600 dark:text-gray-400"></p>
     </div>
@@ -65,11 +59,9 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop 
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <div class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block">
-          <div class="my-auto"><span></span>
-            <!--v-if-->
-          </div>
-        </div>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
+          <!--v-if-->
+        </p>
       </div>
       <p class="text-gray-600 dark:text-gray-400"></p>
     </div>
@@ -84,11 +76,9 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assign
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <div class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block">
-          <div class="my-auto"><span></span>
-            <!--v-if-->
-          </div>
-        </div>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
+          <!--v-if-->
+        </p>
       </div>
       <p class="text-gray-600 dark:text-gray-400"></p>
     </div>
@@ -103,11 +93,9 @@ exports[`MegaMenuItem.vue > matches snapshot with no props assigned 1`] = `
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <div class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block">
-          <div class="my-auto"><span></span>
-            <!--v-if-->
-          </div>
-        </div>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
+          <!--v-if-->
+        </p>
       </div>
       <p class="text-gray-600 dark:text-gray-400"></p>
     </div>
