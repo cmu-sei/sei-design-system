@@ -29,7 +29,6 @@
               v-if="cta || type === 'landing-page' || external"
               class="w-fit my-auto h-full whitespace-nowrap"
             >
-
               {{ '\u00a0' /* This is a whitespace character, it will prevent the trailing icon from wrapping */ }}
               <svg
                 v-if="external && type === 'landing-page'"
