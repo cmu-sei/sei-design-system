@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ActionButton > should match its default snapshot 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-ghost action-btn-gray action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  <!-- @slot Button content. -->
+  
+  Button
+  
+</button>
+`;
+
+exports[`ActionButton > should match its variant primary snapshot 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-ghost action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  <!-- @slot Button content. -->
+  
+  Action Button
+  
+</button>
+`;
