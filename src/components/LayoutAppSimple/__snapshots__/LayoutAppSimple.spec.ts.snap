@@ -452,7 +452,7 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
           </div>
         </div>
       </footer>
-      <!-- Actions bar -->
+      <!-- Action bar -->
       <!--v-if-->
     </div>
   </div>

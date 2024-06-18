@@ -77,7 +77,7 @@
     <template #default>
       <RouterView />
     </template>
-    <template #actions-bar>
+    <template #action-bar>
       Hello world
     </template>
   </sds-layout-app>
