@@ -18,11 +18,9 @@ exports[`MegaMenuItem.vue > matches snapshot 1`] = `
         class="flex flex-row justify-start w-full group"
       >
         <p
-          class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"
+          class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"
         >
-          <span
-            class="my-auto"
-          />
+          <span />
           <!--v-if-->
         </p>
       </div>
@@ -44,7 +42,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop a
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"><span class="my-auto"></span>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
           <!--v-if-->
         </p>
       </div>
@@ -61,7 +59,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop 
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"><span class="my-auto"></span>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
           <!--v-if-->
         </p>
       </div>
@@ -78,7 +76,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assign
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"><span class="my-auto"></span>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
           <!--v-if-->
         </p>
       </div>
@@ -95,7 +93,7 @@ exports[`MegaMenuItem.vue > matches snapshot with no props assigned 1`] = `
     <!--v-if-->
     <div class="flex flex-col">
       <div class="flex flex-row justify-start w-full group">
-        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block"><span class="my-auto"></span>
+        <p class="group-hover:text-red-600 dark:group-hover:text-red-300 w-fit inline-block my-auto"><span></span>
           <!--v-if-->
         </p>
       </div>
