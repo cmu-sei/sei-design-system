@@ -838,13 +838,13 @@
           </div>
         </footer>
 
-        <!-- Actions bar-->
+        <!-- Action bar-->
         <aside
-          v-if="!hideActionsBar && hasSlot('actions-bar')"
+          v-if="!hideActionBar && hasSlot('action-bar')"
           class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
-          <!-- @slot Actions content. Great for application-specific actionable content. -->
-          <slot name="actions-bar" />
+          <!-- @slot Action content. Great for application-specific actionable content. -->
+          <slot name="action-bar" />
         </aside>
       </div>
     </div>
@@ -944,9 +944,9 @@ const props = defineProps({
    */
   hideSidebarIcons: { type: Boolean, default: false },
   /**
-   * Determines whether to hide the actions bar slot.
+   * Determines whether to hide the action bar slot.
    */
-   hideActionsBar: { type: Boolean, default: false },
+   hideActionBar: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:model-value', 'navigate'])

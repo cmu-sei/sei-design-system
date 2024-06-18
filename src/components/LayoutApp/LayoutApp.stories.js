@@ -43,7 +43,7 @@ const Template = (args) => ({
         Page header content area
       </template>
       Page content area
-      <template #actions-bar>
+      <template #action-bar>
       <div>
           <div class="flex gap-2">
             <p class="ml-auto my-auto mr-2 font-semibold">
