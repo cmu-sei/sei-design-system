@@ -4,7 +4,7 @@ exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
 "<div data-v-97a593da="" data-id="sds-multiselect" class="sds-multiselect canSearch">
   <ul data-v-97a593da="" class="tag-list single">
     <li data-v-97a593da="" style="width: 0px;" class="tag-list-item input"><span data-v-97a593da="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-97a593da=""><input data-v-97a593da="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-97a593da="" class="sr-only">Enter text</span></label>
+      <!--v-if--><label data-v-97a593da=""><input data-v-97a593da="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-97a593da="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->

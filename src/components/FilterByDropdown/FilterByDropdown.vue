@@ -18,6 +18,7 @@
         type="button"
         aria-haspopup="true"
         :aria-expanded="isOpen"
+        :disabled="$props.disabled"
         @click="toggle(); resetTmpOptions()"
       >
         <!-- @slot Title content of trigger button. -->
@@ -184,7 +185,11 @@ const props = defineProps({
   /**
    * Determines the placement of the dropdown on the screen.
    */
-  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' }
+  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' },
+  /**
+   * Determines if the dropdown is disabled
+   */
+  disabled: { type: Boolean, default: false}
 })
 
 const emit = defineEmits(['update:model-value'])

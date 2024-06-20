@@ -30,4 +30,19 @@ describe("FilterByDropdown.vue", () => {
     });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it("disabled prop", async () => {
+    const props = { disabled: true };
+    const wrapper = shallowMount(Component, {
+      props,
+      directives: {
+        'uid': {
+          created(el) {
+            el.setAttribute('id', 'unique-id')
+          }
+        }
+      }
+    });
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 });
