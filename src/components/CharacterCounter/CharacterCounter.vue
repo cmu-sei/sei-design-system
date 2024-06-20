@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-character-counter"
-    :class="{ 'text-red-700 dark:text-red-300': count < 0 }"
+    :class="{ 'text-red-700 dark:text-red-300': count < 0 || (currentValue < minValue && currentValue > 0) }"
   >
     {{ count.toLocaleString() }}
   </div>
@@ -17,6 +17,10 @@ const props = defineProps({
    * The current count value.
    */
   currentValue: { type: Number, default: 0 },
+  /**
+   * The minimum value allowed.
+   */
+  minValue: { type: Number, default: 0 },
   /**
    * The maximum value allowed.
    */
