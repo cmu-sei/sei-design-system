@@ -4,7 +4,7 @@ exports[`Multiselect.vue > matches invalid prop 1`] = `
 "<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
   <ul data-v-ec654c1c="" class="tag-list single">
     <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
@@ -18,7 +18,7 @@ exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
 "<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect canSearch">
   <ul data-v-ec654c1c="" class="tag-list single">
     <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
@@ -32,7 +32,7 @@ exports[`Multiselect.vue > matches valid prop 1`] = `
 "<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect valid canSearch">
   <ul data-v-ec654c1c="" class="tag-list single">
     <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
