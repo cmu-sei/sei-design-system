@@ -13,4 +13,17 @@ describe("Multiselect.vue", () => {
     const wrapper = shallowMount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it("matches invalid prop", () => {
+    const props = { invalid: true };
+    const wrapper = shallowMount(Component, { props });
+    expect(wrapper.html()).toMatchSnapshot();
+  });
+
+  it("matches valid prop", () => {
+    const props = { valid: true };
+    const wrapper = shallowMount(Component, { props });
+    expect(wrapper.html()).toMatchSnapshot();
+  });
+  
 });

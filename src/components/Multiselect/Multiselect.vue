@@ -4,6 +4,8 @@
     data-id="sds-multiselect"
     class="sds-multiselect"
     :class="{
+      valid,
+      invalid,
       open: showDropdown,
       active,
       disabled,
@@ -12,7 +14,7 @@
       hideCaret,
       showClear,
       hasTags: !hideTags && selected.length > 0,
-      showResults,
+      showResults
     }"
     @mouseup="handleMouseUp"
     @mousedown.prevent.stop.self
@@ -495,6 +497,20 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  /**
+   * Determines if the multiselect shows a valid state
+   */
+  valid: {
+    type: Boolean,
+    default: false
+  },
+    /**
+   * Determines if the multiselect shows an invalid state
+   */
+   invalid: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emit = defineEmits(['update:model-value', 'update-selected', 'update-options', 'open', 'close', 'focus'])
@@ -1055,6 +1071,16 @@ fieldset[disabled] .sds-multiselect {
 .sds-multiselect.disabled *,
 fieldset[disabled] .sds-multiselect * {
   @apply select-none pointer-events-none placeholder:text-gray-400 dark:placeholder:text-gray-600;
+}
+
+.sds-multiselect.invalid,
+fieldset[invalid] .sds-multiselect {
+  @apply border-red-500 dark:border-red-300;
+}
+
+.sds-multiselect.valid,
+fieldset[valid] .sds-multiselect {
+  @apply border-green-500 dark:border-green-400;
 }
 
 .multiselect-caret {
