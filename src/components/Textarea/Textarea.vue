@@ -10,6 +10,7 @@
       :class="{ valid, invalid, 'resize-none': !resize }"
       :rows="rows"
       :maxlength="maxlength"
+      :minlength="minlength"
       :placeholder="placeholder"
       :autofocus="autofocus"
       :disabled="disabled"
@@ -20,6 +21,7 @@
       v-if="countCharacters"
       class="absolute right-0 text-gray-600 dark:text-gray-400"
       :current-value="text.length"
+      :min-value="minlength"
       :max-value="maxlength"
     />
   </div>
@@ -41,6 +43,10 @@ const props = defineProps({
    * Determine whether to display the character counter or not.
    */
   countCharacters: { type: Boolean, default: false },
+  /**
+   * Determines the minlength of the component.
+   */
+  minlength: { type: Number, default: 0 },
   /**
    * Determines the maxlength of the component.
    */
