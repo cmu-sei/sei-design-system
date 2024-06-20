@@ -18,7 +18,7 @@
         type="button"
         aria-haspopup="true"
         :aria-expanded="isOpen"
-        :disabled="$props.disabled"
+        :disabled="disabled"
         @click="toggle(); resetTmpOptions()"
       >
         <!-- @slot Title content of trigger button. -->

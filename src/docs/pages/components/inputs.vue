@@ -60,6 +60,8 @@
           :multiple="true"
           :required="false"
           :taggable="false"
+          :valid="false"
+          :invalid="false"
           default-msg="Search for a fruit such as an apple"
           placeholder="testing"
           show-clear
