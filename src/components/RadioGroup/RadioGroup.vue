@@ -21,7 +21,7 @@
         :class="{ valid, invalid }"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
-        :required="required"
+        :required="required && !localModelValue"
         :disabled="disabled"
         @click="onChange(option[valueKey])"
       >

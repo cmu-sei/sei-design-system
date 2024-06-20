@@ -38,7 +38,7 @@ const Template = (args) => ({
         Page header content area
       </template>
       Page content area
-      <template #actions-bar>
+      <template #action-bar>
       <div>
           <div class="flex gap-2">
             <p class="ml-auto my-auto mr-2 font-semibold">
@@ -52,6 +52,9 @@ const Template = (args) => ({
             </sds-button>
           </div>
         </div>
+      </template>
+      <template #footer-top>
+        Footer top content area
       </template>
       <template #footer-middle>
         Footer middle content area

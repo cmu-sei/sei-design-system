@@ -473,6 +473,7 @@
                       :href="content?.jobsLink?.href"
                       :label="content?.jobsLink?.label"
                       :type="content?.jobsLink?.type"
+                      :external="content?.jobsLink?.external"
                     />
                     <div
                       v-for="row, index in content?.jobs"
@@ -488,6 +489,7 @@
                           :href="job.href"
                           :label="job.label"
                           :type="job.type"
+                          :external="job.external"
                         >
                           <p class="text-xs">
                             <span>Posted {{ job.posted }}</span>
@@ -659,6 +661,7 @@
                   :href="content?.jobsLink?.href"
                   :label="content?.jobsLink?.label"
                   :type="content?.jobsLink?.type"
+                  :external="content?.jobsLink?.external"
                 />
                 <div
                   v-for="row, index in content?.jobs"
@@ -674,6 +677,7 @@
                       :href="job.href"
                       :label="job.label"
                       :type="job.type"
+                      :external="job.external"
                     >
                       <p class="text-xs">
                         <span>Posted {{ job.posted }}</span>
@@ -1089,9 +1093,11 @@ interface MegaMenuContent {
     href: string
     key: string
     label: string
+    external: boolean
     type?: 'landing-page' | 'descriptive' | 'simple'
   },
   jobs?: {
+    external: boolean,
     href: string
     key: string
     label: string
@@ -1466,6 +1472,7 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
+        external: true,
         type: "landing-page"
       },
       jobs: [
@@ -1476,7 +1483,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Assistant Software Engineer",
             posted: "Yesterday",
             locations: "2 Locations",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1484,7 +1492,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Senior Assurance Researcher",
             posted: "2 Days Ago",
             locations: "3 Locations",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ],
         [
@@ -1494,7 +1503,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1502,7 +1512,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Assistant Machine Learning Researcher",
             posted: "3 Days Ago",
             locations: "Pittsburgh",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ],
         [
@@ -1512,7 +1523,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Associate Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1520,7 +1532,8 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Lead Nuclear Surety Software Engineer",
             posted: "6 Days Ago",
             locations: "Pittsburgh",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ]
       ]
@@ -1929,7 +1942,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
         href: "https://www.sei.cmu.edu/news-events/events/index.cfm",
         key: "job-postings",
         label: "Job Postings",
-        type: "landing-page"
+        type: "landing-page",
+        external: true
       },
       jobs: [
         [
@@ -1939,7 +1953,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Assistant Software Engineer",
             posted: "Yesterday",
             locations: "2 Locations",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1947,7 +1962,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Senior Assurance Researcher",
             posted: "2 Days Ago",
             locations: "3 Locations",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ],
         [
@@ -1957,7 +1973,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1965,7 +1982,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Assistant Machine Learning Researcher",
             posted: "3 Days Ago",
             locations: "Pittsburgh",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ],
         [
@@ -1975,7 +1993,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Associate Cybersecurity Operations Researcher",
             posted: "Yesterday",
             locations: "Arlington",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           },
           {
             href: "",
@@ -1983,7 +2002,8 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
             label: "Lead Nuclear Surety Software Engineer",
             posted: "6 Days Ago",
             locations: "Pittsburgh",
-            type: "descriptive"
+            type: "descriptive",
+            external: true
           }
         ]
       ]

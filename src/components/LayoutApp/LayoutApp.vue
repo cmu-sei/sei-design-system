@@ -92,6 +92,7 @@
         <aside
           v-if="showMobileMenu"
           ref="mobileSidebarContainer"
+          aria-label="mobile sidebar"
           class="md:hidden fixed w-2/3 z-50 bg-white dark:bg-gray-950 flex-shrink-0 border-r border-gray-200 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
@@ -355,6 +356,7 @@
 
       <!-- Desktop sidebar -->
       <aside
+        aria-label="desktop sidebar"
         class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 flex-shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
@@ -784,11 +786,16 @@
           </div>
         </main>
 
-        <!-- @slot Footer top content. Great for application-specific footer content. -->
-        <slot name="footer-top" />
+        <div
+          v-if="hasSlot('footer-top')"
+          class="px-4"
+        >
+          <!-- @slot Footer top content. Great for application-specific footer content. -->
+          <slot name="footer-top" />
+        </div>
 
         <!-- Footer -->
-        <footer class="text-xs p-4 pb-8">
+        <footer class="text-xs p-4">
           <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
               <sds-link
@@ -831,13 +838,13 @@
           </div>
         </footer>
 
-        <!-- Actions bar-->
+        <!-- Action bar-->
         <aside
-          v-if="hasSlot('actions-bar')"
+          v-if="!hideActionBar && hasSlot('action-bar')"
           class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
-          <!-- @slot Actions content. Great for application-specific actionable content. -->
-          <slot name="actions-bar" />
+          <!-- @slot Action content. Great for application-specific actionable content. -->
+          <slot name="action-bar" />
         </aside>
       </div>
     </div>
@@ -936,6 +943,10 @@ const props = defineProps({
    * Determines whether to hide the icons in the sidebar.
    */
   hideSidebarIcons: { type: Boolean, default: false },
+  /**
+   * Determines whether to hide the action bar slot.
+   */
+   hideActionBar: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['update:model-value', 'navigate'])
