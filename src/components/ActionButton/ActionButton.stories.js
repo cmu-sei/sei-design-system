@@ -11,7 +11,7 @@ export default {
       },
     },
   },
-  component: SdsButton,
+  component: SdsActionButton,
   argTypes: {
     kind: {
       options: ['primary', 'secondary', 'ghost'],
