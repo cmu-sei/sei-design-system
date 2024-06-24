@@ -10,7 +10,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'An action dropdown displays a list of options in a temporary modal menu so that users can make a selection and complete a task such as downloading or exporting.',
+        component: 'An Action Dropdown displays a list of options in a temporary modal menu so that users can make a selection and complete a task such as downloading or exporting.',
       },
     },
   },
@@ -69,7 +69,7 @@ const Template = (args) => ({
       <sds-dropdown-header>Dropdown header 2</sds-dropdown-header>
       <sds-dropdown-item tag="button" @click="onClick">Item 4</sds-dropdown-item>
       <sds-dropdown-item tag="button" @click="onClick">Item 5</sds-dropdown-item>
-    </sds-dropdown>
+    </sds-action-dropdown>
   </div>
   `,
   data() {
