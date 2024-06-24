@@ -1,6 +1,6 @@
 <template>
   <floating-ui
-    data-id="sds-dropdown"
+    data-id="sds-action-dropdown"
     :offset="offset"
     :strategy="strategy"
     :placement="placement"
@@ -9,7 +9,6 @@
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
     :popper-class="{
-      'bg-gray-850 border-gray-700': type === 'dark',
       'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true
@@ -36,9 +35,6 @@
           :disabled="disabled"
           :class="[
             btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass,
-            type && 'hover:bg-gray-800 text-white border-0',
-            (!isOpen && type) && 'bg-gray-900',
-            (isOpen && type) && 'active bg-gray-800',
             isOpen && 'active'
           ]"
           @click="handleClick(isOpen, open, close)"
@@ -65,10 +61,7 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        :class="[
-          'py-2 rounded',
-          type === 'dark' ? 'dropdown-dark bg-gray-850': ''
-        ]"
+        class="py-2 rounded"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -92,7 +85,7 @@ import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
-  name: 'SdsDropdown',
+  name: 'SdsActionButton',
   directives: {
     uid: Uid
   }
@@ -106,15 +99,11 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
-  /**
-   * Allows you to force dark mode on all child components
-   */
-  type: { type: String as PropType<'dark'>, default: undefined},
+  variant: { type: String as PropType<'gray' | 'red'>, default: 'gray' },
   /**
    * The z-index for the popover.
    */
@@ -134,7 +123,7 @@ const props = defineProps({
   /**
    * Determines the size of the trigger button.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'xs'>, default: 'sm' },
   /**
    * Determines if the arrow should display or not.
    */
@@ -244,29 +233,31 @@ const zIndexClass = computed(() => {
 
 const sizeClass = computed(() => {
   switch (props.size) {
+    case 'lg':
+      return 'action-btn-lg'
     case 'md':
-      return ''
+      return 'action-btn-md'
     case 'sm':
-      return 'btn-sm'
+      return 'action-btn-sm'
+    case 'xs':
+      return 'action-btn-xs'
     default:
       return ''
   }
 })
 
 const btnClass = computed(() => {
-  return props.kind ? 'btn' : ''
+  return props.kind ? 'action-btn' : ''
 })
 
 const kindClass = computed(() => {
   switch (props.kind) {
     case 'primary':
-      return 'btn-primary'
+      return 'action-btn-primary'
     case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
+      return 'action-btn-secondary'
     case 'ghost':
-      return 'btn-ghost'
+      return 'action-btn-ghost'
     default:
       return ''
   }
@@ -274,12 +265,10 @@ const kindClass = computed(() => {
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'blue':
-      return 'btn-blue'
+    case 'gray':
+      return 'action-btn-gray'
     case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
+      return 'action-btn-red'
     default:
       return ''
   }
@@ -290,6 +279,6 @@ const disabledClass = computed(() => {
 })
 
 const blockClass = computed(() => {
-  return props.block ? 'btn-block' : ''
+  return props.block ? 'action-btn-block' : ''
 })
 </script>
