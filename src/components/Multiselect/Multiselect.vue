@@ -989,7 +989,7 @@ const handleCloseOnSelection = () => {
 }
 
 const handleOutsideClick = ($event: MouseEvent) => {
-  if (root.value.contains($event.target)) return;
+  if (root.value?.contains($event.target)) return;
 
   if (showDropdown.value) {
     if (
@@ -1008,7 +1008,7 @@ const handleOutsideClick = ($event: MouseEvent) => {
 }
 
 const handleOutsideKeyUp = ($event: KeyboardEvent) => {
-  if (root.value.contains($event.target)) return;
+  if (root.value?.contains($event.target)) return;
   if (active.value) active.value = false;
 }
 
