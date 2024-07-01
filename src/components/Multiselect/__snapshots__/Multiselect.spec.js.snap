@@ -1,42 +1,42 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Multiselect.vue > matches invalid prop 1`] = `
-"<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
-  <ul data-v-ec654c1c="" class="tag-list single">
-    <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+"<div data-v-f749bbba="" data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
+  <ul data-v-f749bbba="" class="tag-list single">
+    <li data-v-f749bbba="" style="width: 0px;" class="tag-list-item input"><span data-v-f749bbba="" class="faux-input" aria-hidden="true"></span>
+      <!--v-if--><label data-v-f749bbba=""><input data-v-f749bbba="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-f749bbba="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
-  <div data-v-ec654c1c="" aria-hidden="true" class="multiselect-caret"></div>
+  <div data-v-f749bbba="" aria-hidden="true" class="multiselect-caret"></div>
   <!--v-if-->
   <!--v-if-->
 </div>"
 `;
 
 exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-"<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect canSearch">
-  <ul data-v-ec654c1c="" class="tag-list single">
-    <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+"<div data-v-f749bbba="" data-id="sds-multiselect" class="sds-multiselect canSearch">
+  <ul data-v-f749bbba="" class="tag-list single">
+    <li data-v-f749bbba="" style="width: 0px;" class="tag-list-item input"><span data-v-f749bbba="" class="faux-input" aria-hidden="true"></span>
+      <!--v-if--><label data-v-f749bbba=""><input data-v-f749bbba="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-f749bbba="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
-  <div data-v-ec654c1c="" aria-hidden="true" class="multiselect-caret"></div>
+  <div data-v-f749bbba="" aria-hidden="true" class="multiselect-caret"></div>
   <!--v-if-->
   <!--v-if-->
 </div>"
 `;
 
 exports[`Multiselect.vue > matches valid prop 1`] = `
-"<div data-v-ec654c1c="" data-id="sds-multiselect" class="sds-multiselect valid canSearch">
-  <ul data-v-ec654c1c="" class="tag-list single">
-    <li data-v-ec654c1c="" style="width: 0px;" class="tag-list-item input"><span data-v-ec654c1c="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-ec654c1c=""><input data-v-ec654c1c="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-ec654c1c="" class="sr-only">Enter text</span></label>
+"<div data-v-f749bbba="" data-id="sds-multiselect" class="sds-multiselect valid canSearch">
+  <ul data-v-f749bbba="" class="tag-list single">
+    <li data-v-f749bbba="" style="width: 0px;" class="tag-list-item input"><span data-v-f749bbba="" class="faux-input" aria-hidden="true"></span>
+      <!--v-if--><label data-v-f749bbba=""><input data-v-f749bbba="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-f749bbba="" class="sr-only">Enter text</span></label>
     </li>
   </ul>
   <!--v-if-->
-  <div data-v-ec654c1c="" aria-hidden="true" class="multiselect-caret"></div>
+  <div data-v-f749bbba="" aria-hidden="true" class="multiselect-caret"></div>
   <!--v-if-->
   <!--v-if-->
 </div>"
