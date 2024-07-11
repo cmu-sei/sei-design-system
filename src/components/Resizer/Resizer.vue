@@ -12,7 +12,9 @@
       :style="slotSizerOuter()"
       class="relative flex"
       :class="[
-        direction === 'right' ? 'overflow-y-auto overflow-x-hidden flex-row' : 'overflow-x-auto overflow-y-hidden flex-col',
+        direction === 'right' ?
+          'overflow-y-auto overflow-x-hidden flex-row' :
+          'overflow-x-auto overflow-y-hidden flex-col',
         isHovering ? 'group' : null,
       ]"
     >
@@ -25,10 +27,10 @@
       </div>
     </div>
     <div
-      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0"
+      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0 bg-transparent"
       :class="{
-        'w-full h-4 flex-row': direction === 'bottom',
-        'h-full w-0 mr-4 flex-col': direction === 'right',
+        'w-full h-0 flex-row': direction === 'bottom',
+        'h-full w-0 flex-col': direction === 'right',
       }"
       @click="(e: MouseEvent) => handleDouble(e)"
       @touch="(e: TouchEvent) => handleDouble(e)"
