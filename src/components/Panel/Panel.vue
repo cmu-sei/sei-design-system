@@ -117,8 +117,9 @@
 
 <script setup lang="ts">
 import { type Directive } from "vue";
-import ClientOnly from '../ClientOnly/ClientOnly.vue'
+import ClientOnly from '../ClientOnly/ClientOnly.vue';
 import { Uid } from '@shimyshack/uid';
+import { hasSlotContent } from '../../helpers/hasSlotContent';
 
 defineOptions({
   name: 'SdsPanel',
@@ -168,11 +169,11 @@ const titleWrapper = ref(null)
 const panelContainer = ref(null)
 
 const hasTitleSlot = computed(() => {
-  return !!slots.title;
+  return hasSlotContent(slots.title);
 })
 
 const hasFooterSlot = computed(() => {
-  return !!slots.footer;
+  return hasSlotContent(slots.footer);
 })
 
 const showPanel = computed({
