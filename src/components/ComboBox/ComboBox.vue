@@ -47,7 +47,7 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :maxlength="maxlength"
-        @input="query = filterQuery"
+        @input="handleInput()"
         @keydown.tab="showDropdown = false"
         @keydown.down.prevent="handleArrows('down', $event)"
         @keydown.up.prevent="handleArrows('up', $event)"
@@ -672,6 +672,11 @@ const getCurrentSuggestionValue = () => {
   const option = getCurrentSuggestion()
   if (!option) return ''
   return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
+}
+
+const handleInput = async () => {
+  await nextTick()
+  query.value = filterQuery.value
 }
 
 const handleEnterKeyUp = () => {
