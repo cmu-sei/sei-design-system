@@ -1,5 +1,6 @@
 import { App, Component } from "vue";
 import SdsActionButton from "./ActionButton";
+import SdsActionDropdown from "./ActionDropdown";
 import SdsAvatar from "./Avatar";
 import SdsBadge from "./Badge";
 import SdsButton from "./Button";
@@ -65,6 +66,7 @@ interface ComponentList {
 
 const Components: ComponentList = {
   SdsActionButton,
+  SdsActionDropdown,
   SdsAvatar,
   SdsBadge,
   SdsButton,
@@ -134,6 +136,7 @@ export default {
 };
 
 export { default as SdsActionButton } from "./ActionButton";
+export { default as SdsActionDropdown } from "./ActionDropdown";
 export { default as SdsAvatar } from "./Avatar";
 export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";

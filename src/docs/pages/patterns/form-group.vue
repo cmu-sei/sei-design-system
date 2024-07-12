@@ -24,29 +24,38 @@
         :invalid="invalid"
       />
     </SdsFormGroup>
-    <SdsFormGroup
-      v-slot="{ id, disabled, readonly, required, valid, invalid }"
-      :state="state"
-      show-marker
-      label="Field label is so cool lkjasdflk jsdflkj sdflk jsdflkj sdflkj sdflk jsdflkj sdflkj sdf"
-      helper-text="Field helper text"
-      valid-feedback="Field valid feedback"
-      invalid-feedback="Field invalid feedback"
-      type="horizontal"
-      label-position="left"
-      label-alignment="right"
-      :label-width="4"
-    >
-      <SdsTextarea
-        :id="id"
-        v-model="modelValue"
-        :disabled="disabled"
-        :readonly="readonly"
-        :required="required"
-        :valid="valid"
-        :invalid="invalid"
-      />
-    </SdsFormGroup>
+    <form @submit.prevent>
+      <SdsFormGroup
+        v-slot="{ id, disabled, readonly, required, valid, invalid }"
+        :state="state"
+        show-marker
+        required
+        label="Field label is so cool lkjasdflk jsdflkj sdflk jsdflkj sdflkj sdflk jsdflkj sdflkj sdf"
+        helper-text="Field helper text"
+        valid-feedback="Field valid feedback"
+        invalid-feedback="Field invalid feedback"
+        type="horizontal"
+        label-position="left"
+        label-alignment="right"
+        :label-width="4"
+      >
+        <SdsTextarea
+          :id="id"
+          v-model="modelValue"
+          :disabled="disabled"
+          :readonly="readonly"
+          :required="required"
+          :valid="valid"
+          :invalid="invalid"
+          :minlength="10"
+          :maxlength="100"
+          count-characters
+        />
+      </SdsFormGroup>
+      <button type="submit">
+        Submit
+      </button>
+    </form>
     <SdsFormGroup
       v-slot="{ id, disabled, required, valid, invalid }"
       :state="state"
