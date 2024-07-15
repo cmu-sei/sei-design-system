@@ -28,7 +28,7 @@
             :is="tab.tag || 'button' as unknown"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
-              'text-sm inline-block rounded-t py-2 px-4 font-semibold': type === 'folder',
+              'tab text-sm inline-block rounded-t py-2 px-4 font-semibold': type === 'folder',
               'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
               'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
                 type === 'folder' && !tab.active,
