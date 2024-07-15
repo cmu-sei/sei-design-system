@@ -319,9 +319,9 @@ const placeholder = computed(() => {
     case 'date':
       return 'mm/dd/yyyy'
     case 'time':
-      return 'hh:mm a'
+      return 'hh:mm am/pm'
     case 'dateTime':
-      return 'mm/dd/yyyy hh:mm a'
+      return 'mm/dd/yyyy hh:mm am/pm'
     default:
       return 'mm/dd/yyyy'
   }
