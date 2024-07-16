@@ -52,6 +52,26 @@
           size="md"
           readonly
         />
+
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="time"
+          size="md"
+          readonly
+        />
+
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="date"
+          size="md"
+          readonly
+        />
       </div>
     </div>
   </div>
