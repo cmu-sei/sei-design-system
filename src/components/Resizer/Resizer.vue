@@ -27,10 +27,10 @@
       </div>
     </div>
     <div
-      class="hover:cursor-grab active:cursor-grabbing opacity-30 hover:opacity-90 relative z-0 bg-transparent"
+      class="opacity-30 hover:opacity-90 relative z-0 bg-transparent"
       :class="{
-        'w-full h-0 flex-row': direction === 'bottom',
-        'h-full w-0 flex-col': direction === 'right',
+        'w-full h-0 flex-row hover:cursor-row-resize active:cursor-row-resize': direction === 'bottom',
+        'h-full w-0 flex-col hover:cursor-col-resize active:cursor-col-resize': direction === 'right',
       }"
       @click="(e: MouseEvent) => handleDouble(e)"
       @touch="(e: TouchEvent) => handleDouble(e)"
