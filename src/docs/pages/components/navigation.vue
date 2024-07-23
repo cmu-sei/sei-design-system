@@ -1005,6 +1005,29 @@
               </template>
             </sds-tabs>
           </div>
+          <div>
+            Dynamic default panel slot
+            <sds-tabs
+              v-model="tabs"
+              type="block"
+              class="bg-white dark:bg-gray-900 border rounded-b p-4"
+              @change="changeTab"
+            >
+              <template #tab(groups)>
+                <i>Groups (custom style)</i>
+              </template>
+              <template #panel="{ item }">
+                <div class="p-4">
+                  {{ item }}
+                </div>
+              </template>
+              <template #panel(workplace-services)>
+                <div class="p-4">
+                  This is the content for workplace services.
+                </div>
+              </template>
+            </sds-tabs>
+          </div>
         </div>
       </div>
     </div>
