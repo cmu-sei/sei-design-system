@@ -2,11 +2,16 @@
   <button
     data-id="sds-expand-collapse"
     type="button"
-    class="link link-primary link-blue link-cta"
+    class="link link-cta"
     :class="{
       disabled,
       'link-cta-up': modelValue,
       'link-cta-down': !modelValue,
+      'link-primary': kind === 'primary',
+      'link-secondary': kind === 'secondary',
+      'link-tertiary': kind === 'tertiary',
+      'link-blue': variant === 'blue',
+      'link-red': variant === 'red',
     }"
     :disabled="disabled"
     :aria-disabled="disabled"
@@ -26,6 +31,14 @@ defineProps({
    * Determines the expanded state of the component.
    */
   modelValue: { type: Boolean, default: false },
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary'>, default: 'primary' },
+  /**
+   * Determines the color variant of the component.
+   */
+  variant: { type: String as PropType<'blue' | 'red'>, default: 'blue' },
   /**
    * Determines the label for the expanded state.
    */
