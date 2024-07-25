@@ -2,7 +2,7 @@
 
 exports[`DropdownItem > should match its default snapshot 1`] = `
 <a
-  class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black"
+  class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black dark:hover:text-white"
   data-id="sds-dropdown-item"
   disabled="false"
   role="menuitem"
@@ -19,7 +19,7 @@ exports[`DropdownItem > should match its default snapshot 1`] = `
 
 exports[`DropdownItem > should match its variant primary snapshot 1`] = `
 <a
-  class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600"
+  class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-600"
   data-id="sds-dropdown-item"
   disabled="false"
   role="menuitem"
