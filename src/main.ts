@@ -2,9 +2,11 @@ import { createApp } from 'vue'
 import App from './docs/App.vue';
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { createHead } from '@unhead/vue'
+import { routes } from 'vue-router/auto-routes'
 
 const router = createRouter({
-  history: createWebHistory()
+  history: createWebHistory(),
+  routes
 })
 const head = createHead()
 

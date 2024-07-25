@@ -67,11 +67,17 @@
         role="tabpanel"
         tabindex="0"
       >
-        <!-- @slot Dynamic tab panel content. Used to inject content into the panel for an active tab. -->
+        <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
         <slot
           v-if="tab.active"
           :name="`panel(${tab.key})`"
-        />
+        >
+          <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+          <slot
+            name="panel"
+            :item="tab"
+          />
+        </slot>
       </div>
     </template>
   </div>

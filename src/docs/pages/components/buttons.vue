@@ -35,6 +35,8 @@
         </p>
         <SdsExpandCollapse
           v-model="expandCollapseModel"
+          kind="secondary"
+          variant="red"
         />
         <SdsExpandCollapse
           v-model="expandCollapseModel"
