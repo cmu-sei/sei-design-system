@@ -70,9 +70,9 @@ const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inje
 const variantClass = computed(() => {
   switch(props.variant) {
     case 'gray':
-      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black'
+      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
     case 'red':
-    return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600'
+    return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-600'
   }
 })
 </script>
