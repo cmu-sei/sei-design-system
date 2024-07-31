@@ -163,7 +163,7 @@ const dynamicHeight = ref<null | string>(null);
 // Classes for styling the active bottom handle
 const activeBottomHandle = [
   'flex-col',
-  'overflow-y-scroll',
+  'overflow-y-auto',
   'after:mx-auto',
   'after:border-solid',
   'after:border-transparent',
@@ -187,7 +187,6 @@ const activeBottomHandle = [
 // Classes for styling the active right handle
 const activeRightHandle = [
   'flex-row',
-  'overflow-x-scroll',
   'after:border-solid',
   'after:border-transparent',
   'after:border-r',
