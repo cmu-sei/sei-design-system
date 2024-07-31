@@ -56,7 +56,7 @@ exports[`Resizer > Should match with specific props and src snapshot 1`] = `
     class="relative flex overflow-y-auto overflow-x-hidden flex-row"
   >
     <div
-      class="flex-row after:border-solid after:border-transparent after:border-r group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent group-[.relative]:after:bg-gradient-to-l after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-12 after:h-full after:block after:absolute after:right-0 after:top-0 after:h-[calc(100%+8em)]"
+      class="flex-row overflow-x-auto after:border-solid after:border-transparent after:border-r group-[.relative]:dark:after:border-white group-[.relative]:after:border-black after:content-[""] after:to-transparent group-[.relative]:after:bg-gradient-to-l after:from-black/5 dark:after:from-black/40 dark:after:via-black/5 after:w-12 after:h-full after:block after:absolute after:right-0 after:top-0 after:h-[calc(100%+8em)]"
     >
       <!-- @slot The slot contains the content to be resized (either vertically or horizontally).  -->
       
