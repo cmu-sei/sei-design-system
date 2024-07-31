@@ -187,6 +187,7 @@ const activeBottomHandle = [
 // Classes for styling the active right handle
 const activeRightHandle = [
   'flex-row',
+  'overflow-x-auto',
   'after:border-solid',
   'after:border-transparent',
   'after:border-r',
