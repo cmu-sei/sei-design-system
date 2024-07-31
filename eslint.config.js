@@ -23,6 +23,7 @@ export default [
     ignores: [
       'public/',
       'dist/',
+      'src/shims-vue.d.ts',
       'scripts/templates/',
       'storybook-static/',
       'index.html'
@@ -34,6 +35,7 @@ export default [
   pluginVitest.configs.recommended,
   {
     languageOptions: {
+      sourceType: 'module',
       globals: {
         ...globals.browser,
         ...globals.commonjs,
@@ -44,10 +46,9 @@ export default [
       parserOptions: {
         parser: pluginTsEslint.parser,
         extraFileExtensions: ['.vue'],
-        sourceType: 'module'
       }
     },
-    files: ['**/*.{js,vue}'],
+    files: ['**/*.{js,ts,vue}'],
     plugins: {
       'typescript-eslint': pluginTsEslint.plugin
     },
@@ -55,7 +56,13 @@ export default [
       'vue/no-v-html': 'off',
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      'vue/comment-directive': 'off'
+      'vue/comment-directive': 'off',
+      // TODO: Remove the following rules and fix the resulting issues:
+      'no-undef': 0,
+      '@typescript-eslint/ban-types': 0,
+      '@typescript-eslint/no-explicit-any': 0,
+      '@typescript-eslint/no-this-alias': 0,
+      '@typescript-eslint/no-unused-vars': 0,
     }
   }
 ]

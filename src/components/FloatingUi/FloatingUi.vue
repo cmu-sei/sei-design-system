@@ -88,7 +88,8 @@ const openStateDelay = (ms: number) => new Promise(res => {
   openStateTimeout.value = setTimeout(res, ms)
   return openStateTimeout.value
 })
-
+// TODO: Fix ESLint error below:
+// eslint-disable-next-line no-async-promise-executor
 const willOpenStateDelay = (fn: Function) => new Promise<void>(async (res, rej) => {
   return fn ? await fn(res, rej) : res()
 })
@@ -116,7 +117,9 @@ const onClose = async (ms = 0) => {
     await willOpenStateDelay(props.willClose)
     if (!open.value) return
     open.value = false
-  } catch (e) { }
+  } catch (e) {
+    return
+  }
 }
 
 const onToggle = async (openMs = 0, closeMs = 0) => {

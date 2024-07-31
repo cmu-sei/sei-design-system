@@ -20,5 +20,5 @@ describe('Tabs', () => {
 it("matches disabled prop", () => {
   const props = { disabled: true };
   const wrapper = shallowMount(Component, { props });
-  expect(wrapper.html()).toContain('disabled=\"true\"');
+  expect(wrapper.html()).toContain('disabled="true"');
 });
