@@ -1,16 +1,16 @@
-export default function debounce(
-  func: Function,
-  wait: number,
-  immediate: Boolean = false
-) {
-  let timeout: any;
-  return function (this: any, ...args: any[]) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    }, wait);
-    if (immediate && !timeout) func.apply(context, args);
-  };
+export default function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+  return function (this: any, ...args: Parameters<T>) {
+    const context = this
+
+    clearTimeout(timeoutId)
+
+    timeoutId = setTimeout(() => {
+      func.apply(context, args)
+    }, delay)
+  }
 }

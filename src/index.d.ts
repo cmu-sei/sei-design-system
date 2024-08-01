@@ -1,0 +1,1 @@
+type GenericFunctionType = (...arg: any) => void

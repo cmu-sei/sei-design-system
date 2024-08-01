@@ -50,11 +50,11 @@ defineProps({
 
 const slots = useSlots()
 
-const hasHeaderSlot = computed<Boolean>(() => {
+const hasHeaderSlot = computed<boolean>(() => {
   return !!slots.header;
 })
 
-const hasFooterSlot = computed<Boolean>(() => {
+const hasFooterSlot = computed<boolean>(() => {
   return !!slots.footer;
 })
 </script>

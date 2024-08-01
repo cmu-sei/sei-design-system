@@ -154,7 +154,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willChangeTab: { type: Function, default: null },
+  willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
@@ -175,7 +175,7 @@ const tabs = computed({
 
 // TODO: Fix async promise executor ESLint error
 // eslint-disable-next-line no-async-promise-executor
-const willChangeTabStateDelay = (tab: TabItem, fn: Function) => new Promise<void>(async (res, rej) => {
+const willChangeTabStateDelay = (tab: TabItem, fn: GenericFunctionType) => new Promise<void>(async (res, rej) => {
   return fn ? await fn(tab, res, rej) : res()
 })
 

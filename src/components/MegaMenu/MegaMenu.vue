@@ -182,7 +182,7 @@ export type MegaMenuItem<T = Record<string, unknown>> = {
   active?: boolean
   selected?: boolean
   disabled?: boolean
-  onClick?: Function
+  onClick?: GenericFunctionType
   [key: string]: unknown
 }
 
