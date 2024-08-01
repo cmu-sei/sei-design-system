@@ -236,14 +236,14 @@ const props = defineProps({
   placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
   /**
    * The v-model for the component.
-   * 
+   *
    * For single selections, this value can be null or a date object.
-   * 
+   *
    * For range selections, this is an object with start and end keys
    * that can either be null or a date object.
-   * 
+   *
    * Range example:
-   * 
+   *
    * **{ start: new Date(), end: null }**
    */
   modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
@@ -277,7 +277,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   /**
    * Determines whether to use the current time when selecting a date that is equal to today.
-   * 
+   *
    * If false, this sets the time to the start of the date.
    */
   useCurrentTimeForToday: { type: Boolean, default: false }
@@ -343,13 +343,13 @@ const inputFormat = computed(() => {
 const inputPattern = computed(() => {
   switch (props.mode) {
     case 'date':
-      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
     case 'time':
       return '[0-9]{2}:[0-9]{2} [a|p]m'
     case 'dateTime':
-      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}\:[0-9]{2} [a|p]m'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m'
     default:
-      return '[0-9]{2}\/[0-9]{2}\/[0-9]{4}'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
   }
 })
 
