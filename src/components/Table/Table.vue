@@ -261,7 +261,7 @@
 export interface TableField {
   key: string
   label?: string | undefined
-  format?: Function | undefined
+  format?: GenericFunctionType | undefined
   sortable?: boolean | undefined
   hidden?: boolean | undefined
   header?: boolean | undefined
@@ -372,7 +372,7 @@ const props = defineProps({
    * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
    * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
    */
-  onSort: { type: Function, default: undefined }
+  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined }
 })
 
 const emit = defineEmits(['open-drawer'])

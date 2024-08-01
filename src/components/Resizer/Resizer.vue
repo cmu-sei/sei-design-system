@@ -208,7 +208,7 @@ const activeRightHandle = [
   'after:h-[calc(100%+8em)]'
 ]
 
-const resetScroll = (elem: HTMLElement, direction: String) => {
+const resetScroll = (elem: HTMLElement, direction: string) => {
   if (direction === 'bottom') {
     elem.scrollTop = 0
   } else {

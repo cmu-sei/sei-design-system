@@ -578,7 +578,7 @@ watch(localDate, (value: CalendarRange | CalendarDate) => {
   }
 }, { deep: true, immediate: true })
 
-const focusCorrectInput = (value: CalendarDate | CalendarRange, close: Function) => {
+const focusCorrectInput = (value: CalendarDate | CalendarRange, close: GenericFunctionType) => {
   if (value && value instanceof Date) {
     (startDateInput.value as HTMLElement).focus()
   } else if (value && !(value instanceof Date) && !value.start) {

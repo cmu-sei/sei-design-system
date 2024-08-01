@@ -293,7 +293,7 @@
           </svg>
           <span class="sr-only">Education</span>
         </template>
-        <template #panel(education)="{ content, close }: { content?: MegaMenuContent, close: Function }">
+        <template #panel(education)="{ content, close }: { content?: MegaMenuContent, close: GenericFunctionType }">
           <div class="grid grid-cols-3 gap-2">
             <div class="col-span-1">
               <div
@@ -539,7 +539,7 @@
           </svg>
           <span class="sr-only">Education</span>
         </template>
-        <template #panel(education-1)="{ content, close }: { content?: MegaMenuContent, close: Function }">
+        <template #panel(education-1)="{ content, close }: { content?: MegaMenuContent, close: GenericFunctionType }">
           <div class="max-w-lg">
             <SdsMegaMenuItem
               :label="content?.eventLink?.label"
@@ -3458,19 +3458,19 @@ export default defineComponent({
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });
     },
-    async willOpen(res: Function, rej: Function) {
+    async willOpen(res: GenericFunctionType, rej: GenericFunctionType) {
       console.log("Pause for 1 seconds to get fake api request");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Open now!");
       res();
     },
-    async willClose(res: Function, rej: Function) {
+    async willClose(res: GenericFunctionType, rej: GenericFunctionType) {
       console.log("Pause for 1 seconds to do something on close");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Close now!");
       res();
     },
-    async willChangeTab(tab: TabItem, res: Function, rej: Function) {
+    async willChangeTab(tab: TabItem, res: GenericFunctionType, rej: GenericFunctionType) {
       console.log("Pause for 1/2 second to get fake api request", tab);
       await new Promise(r => setTimeout(r, 500));
       console.log("Open now!");

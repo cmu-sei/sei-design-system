@@ -90,7 +90,7 @@ const openStateDelay = (ms: number) => new Promise(res => {
 })
 // TODO: Fix ESLint error below:
 // eslint-disable-next-line no-async-promise-executor
-const willOpenStateDelay = (fn: Function) => new Promise<void>(async (res, rej) => {
+const willOpenStateDelay = (fn: GenericFunctionType) => new Promise<void>(async (res, rej) => {
   return fn ? await fn(res, rej) : res()
 })
 
@@ -134,9 +134,13 @@ const emitter = mitt();
 provide('emitter', emitter);
 emitter.on("floating-ui-toggle", (value) => {
   if (value) {
-    !open.value && onOpen()
+    if (!open.value) {
+      onOpen()
+    }
   } else {
-    open.value && onClose()
+    if (open.value) {
+      onClose()
+    }
   }
 })
 
@@ -175,8 +179,8 @@ const props = defineProps({
   placementRightArrowClass: { type: String, default: undefined },
   placementBottomArrowClass: { type: String, default: undefined },
   placementLeftArrowClass: { type: String, default: undefined },
-  willOpen: { type: Function, default: null },
-  willClose: { type: Function, default: null },
+  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willClose: { type: Function as PropType<GenericFunctionType>, default: null },
 })
 
 const arrowPlacementClass = computed(() => {
@@ -263,7 +267,7 @@ const update = async () => {
   }
 }
 
-let cleanup: null | Function = null
+let cleanup: null | GenericFunctionType = null
 
 watch(open, (value) => {
   if (value) {
@@ -274,7 +278,9 @@ watch(open, (value) => {
       }
     })
   } else {
-    cleanup && cleanup()
+    if (cleanup) {
+      cleanup()
+    }
   }
 })
 </script>

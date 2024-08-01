@@ -183,7 +183,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function, default: null },
+  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
   /**
    * Allows for code execution prior to closing the popover.
    * 
@@ -208,12 +208,12 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function, default: null }
+  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
 })
 
 const button = ref()
 
-const handleClick = (isOpen: boolean, open: Function, close: Function) => {
+const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericFunctionType) => {
   if (isOpen) {
     close(props.closeDelay)
   } else {
