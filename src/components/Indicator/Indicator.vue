@@ -81,6 +81,8 @@ const placementClass = computed(() => {
           return props.placementOver === 'circle' ? 'bottom-0.5 right-0.5' : '-bottom-1 -right-1'
         case 'bottom-left':
           return props.placementOver === 'circle' ? 'bottom-0.5 left-0.5' : '-bottom-1 -left-1'
+        default:
+          return null
       }
     case 'lg':
       switch (props.placement) {
@@ -92,6 +94,8 @@ const placementClass = computed(() => {
           return props.placementOver === 'circle' ? 'bottom-1.5 right-1.5' : '-bottom-2.5 -right-2.5'
         case 'bottom-left':
           return props.placementOver === 'circle' ? 'bottom-1.5 left-1.5' : '-bottom-2.5 -left-2.5'
+        default:
+          return null
       }
     case 'md':
     default:
@@ -104,8 +108,9 @@ const placementClass = computed(() => {
           return props.placementOver === 'circle' ? 'bottom-0.5 right-0.5' : '-bottom-1.5 -right-1.5'
         case 'bottom-left':
           return props.placementOver === 'circle' ? 'bottom-0.5 left-0.5' : '-bottom-1.5 -left-1.5'
+        default:
+          return null
       }
-    return ''
   }
 })
 
@@ -213,6 +218,8 @@ const maskAlign = computed(() => {
       return '100% 100%'
     case 'bottom-left':
       return '0 100%'
+    default:
+      return null
   }
 })
 </script>

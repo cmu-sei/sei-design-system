@@ -275,7 +275,7 @@ const props = defineProps({
   },
   /**
    * The key used for an option's value.
-   * 
+   *
    * Be careful when setting this as it can trigger `undefined`
    * errors if it doesn't exist in the options object.
    */
@@ -601,6 +601,8 @@ const isReadonlyInput = computed(() => {
 })
 
 const isCleanInput = computed(() => {
+  // TODO: Fix this linting issue
+  // eslint-disable-next-line no-constant-binary-expression
   return !trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) !== null;
 })
 

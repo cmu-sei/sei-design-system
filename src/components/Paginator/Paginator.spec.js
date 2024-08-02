@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import Component from "./Paginator.vue";
 
@@ -79,14 +79,19 @@ describe("Paginator.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  // TODO: emitted() doesn't work for some reason
-  // it("fires the go-to-page event when a button is clicked", () => {
-  //   const props = {
-  //     currentPage: 4,
-  //     totalPages: 15,
-  //   };
-  //   const wrapper = shallowMount(Component, { props });
-  //   wrapper.find('button').trigger('click')
-  //   expect(wrapper.emitted('go-to-page')).toBeTruthy();
-  // });
+  /**
+   * TODO: — emitted() doesn't work for some reason.
+   *
+   * Fix or delete this test, then remove the "only" method from other
+   * tests in this suite (use it() directly).
+   */
+  it.skip("fires the go-to-page event when a button is clicked", () => {
+    const props = {
+      currentPage: 4,
+      totalPages: 15,
+    };
+    const wrapper = shallowMount(Component, { props });
+    wrapper.find('button').trigger('click')
+    expect(wrapper.emitted('go-to-page')).toBeTruthy();
+  });
 });

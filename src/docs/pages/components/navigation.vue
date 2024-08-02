@@ -1204,7 +1204,7 @@ const changeTab = (tab: TabItem) => {
   console.log(tab);
 }
 
-const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
+const megaMenu = ref<MegaMenuItem<Record<string, unknown>>[]>([
   {
     key: "home",
     title: "Home",
@@ -1681,7 +1681,7 @@ const megaMenu = ref<MegaMenuItem<MegaMenuContent>[]>([
   }
 ])
 
-const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
+const megaMenu2 = ref<MegaMenuItem<Record<string, unknown>>[]>([
   {
     key: "about-1",
     title: "About",
@@ -2151,7 +2151,7 @@ const megaMenu2 = ref<MegaMenuItem<MegaMenuContent>[]>([
   }
 ])
 
-const mobileMenus = ref<MobileMenuItem<MobileMenuContent>[]>([
+const mobileMenus = ref<MobileMenuItem<Record<string, unknown>>[]>([
   {
     key: "plants",
     title: "Plants",

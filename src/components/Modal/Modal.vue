@@ -61,7 +61,7 @@
                 shadow-xl
                 dark:text-gray-25
                 dark:bg-gray-900 dark:border-gray-800
-                md:my-8
+                md:my-16
               "
               :class="{
                 [zIndexClass]: true,

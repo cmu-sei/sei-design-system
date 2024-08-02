@@ -107,9 +107,9 @@ defineOptions({
 const props = defineProps({
   /**
    * Determines the array of tab objects.
-   * 
+   *
    * Format of tab object:
-   * 
+   *
    * ```
    * {
    *   key: string
@@ -130,16 +130,16 @@ const props = defineProps({
   type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
   /**
    * Allows for code execution prior to changing tabs.
-   * 
+   *
    * Provides the selected `tab` for general use.
-   * 
+   *
    * Must call an `open()` callback to complete the process.
-   * 
+   *
    * A `cancel()` callback can be called to cancel
    * the process.
-   * 
+   *
    * Example definition in parent component:
-   * 
+   *
    * ```
    * async willChangeTab(tab, open, cancel) {
    *  try {
@@ -154,7 +154,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willChangeTab: { type: Function, default: null },
+  willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
 })
 
 const emit = defineEmits(['update:model-value', 'change'])
@@ -173,7 +173,9 @@ const tabs = computed({
   }
 })
 
-const willChangeTabStateDelay = (tab: TabItem, fn: Function) => new Promise<void>(async (res, rej) => {
+// TODO: Fix async promise executor ESLint error
+// eslint-disable-next-line no-async-promise-executor
+const willChangeTabStateDelay = (tab: TabItem, fn: GenericFunctionType) => new Promise<void>(async (res, rej) => {
   return fn ? await fn(tab, res, rej) : res()
 })
 
@@ -188,7 +190,7 @@ const changeTab = async (tab: TabItem) => {
     })
     /**
      * Emmitted when a tab has been successfully made active.
-     * 
+     *
      * Provides the active `tab` object.
      */
     emit('change', tab)
