@@ -8,12 +8,12 @@ exports[`DropdownItem > should match its default snapshot 1`] = `
   role="menuitem"
 >
   <!-- @slot Dropdown item content. -->
-  <div
+  <span
     class="flex py-2"
   >
     
     
-  </div>
+  </span>
 </a>
 `;
 
@@ -25,11 +25,11 @@ exports[`DropdownItem > should match its variant primary snapshot 1`] = `
   role="menuitem"
 >
   <!-- @slot Dropdown item content. -->
-  <div
+  <span
     class="flex py-2"
   >
     
     
-  </div>
+  </span>
 </a>
 `;

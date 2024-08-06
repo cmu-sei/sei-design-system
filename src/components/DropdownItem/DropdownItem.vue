@@ -16,9 +16,9 @@
     @click="closeOnClick ? emitter?.emit('floating-ui-toggle', false) : null"
   >
     <!-- @slot Dropdown item content. -->
-    <div :class="['flex py-2', active && '-ml-2']">
+    <span :class="['flex py-2', active && '-ml-2']">
       <slot />
-    </div>
+    </span>
   </component>
 </template>
 
