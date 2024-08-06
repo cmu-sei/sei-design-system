@@ -864,7 +864,6 @@ export interface LayoutAppSidebarNavItem {
   badgeCount?: number
   iconUrl?: string
   items?: LayoutAppSidebarNavItem[]
-  [key: string]: unknown
 }
 
 defineOptions({

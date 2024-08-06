@@ -95,7 +95,6 @@ export interface TabItem {
   external?: boolean
   active?: boolean
   disabled?: boolean
-  [key: string]: unknown
 }
 
 defineOptions({
