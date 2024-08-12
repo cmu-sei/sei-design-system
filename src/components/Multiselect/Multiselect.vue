@@ -94,6 +94,7 @@
             autocorrect="off"
             type="text"
             class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
+            @blur="handleBlur($event)"
             @input="search($event)"
           >
           <span class="sr-only">Enter text</span>
@@ -892,6 +893,23 @@ const handleDropdownScroll = (jumpToLast = false) => {
   }
 }
 
+const handleBlur = async ($event: FocusEvent) => {
+  if (
+    showDropdown.value &&
+    arrowCounter.value <= filteredOptions.value.length - 1 &&
+    arrowCounter.value > -1 &&
+    canAddItem.value &&
+    props.modelValue && props.modelValue.trim() !== '' &&
+    !isSelectedOption(filteredOptions.value[arrowCounter.value])
+  ) {
+    add(filteredOptions.value[arrowCounter.value]);
+    $event.preventDefault();
+  }
+  setInput('')
+  await nextTick()
+  close()
+}
+
 const handleKeyUp = ($event: KeyboardEvent) => {
   if (props.disabled) return;
   const keys = [
@@ -926,7 +944,7 @@ const handleKeyUp = ($event: KeyboardEvent) => {
       add(filteredOptions.value[arrowCounter.value]);
     }
     // Esc
-  } else if ($event.keyCode === 27) {
+  } else if ($event.key === 'Escape') {
     $event.preventDefault();
     $event.stopPropagation();
     handleEsc();
@@ -942,7 +960,7 @@ const handleKeyUp = ($event: KeyboardEvent) => {
 const handleKeyDown = ($event: KeyboardEvent) => {
   if (props.disabled) return;
   // Space bar
-  if (!props.canSearch && $event.keyCode === 32) $event.preventDefault();
+  if (!props.canSearch && $event.key === 'Space') $event.preventDefault();
   // Enter
   if ($event.key === "Enter" && showDropdown.value) $event.preventDefault();
   // Delete or Backspace
@@ -951,16 +969,15 @@ const handleKeyDown = ($event: KeyboardEvent) => {
     // Tab
   } else if ($event.key === "Tab") {
     if (showDropdown.value) {
+      $event.preventDefault();
       if (
         arrowCounter.value <= filteredOptions.value.length - 1 &&
         arrowCounter.value > -1 &&
         canAddItem.value &&
-        props.modelValue && props.modelValue.trim() !== ''
+        props.modelValue && props.modelValue.trim() !== '' &&
+        !isSelectedOption(filteredOptions.value[arrowCounter.value])
       ) {
         add(filteredOptions.value[arrowCounter.value]);
-        $event.preventDefault();
-      } else {
-        close();
       }
     }
     // Up Arrow
