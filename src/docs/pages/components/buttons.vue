@@ -73,6 +73,8 @@
         >
           Button
         </SdsButton>
+      </div>
+      <div>
         <SdsButton
           kind="secondary"
           size="lg"

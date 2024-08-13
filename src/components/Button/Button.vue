@@ -152,7 +152,7 @@ const pendingClass = computed(() => {
   if (!props.pending) return ''
   switch (props.size) {
     case 'lg':
-      return 'active pointer-events-none px-[2.355rem]'
+      return 'active pointer-events-none px-[2.375rem]'
     case 'sm':
       return 'active pointer-events-none px-[0.5125rem]'
     case 'xs':
