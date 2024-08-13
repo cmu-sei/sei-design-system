@@ -12,13 +12,14 @@ describe('ActionButton', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('should match its variant primary snapshot', () => {
+  it('should match its kind primary, variant blue snapshot', () => {
     const wrapper = shallowMount(Component, {
       slots: {
         default: 'Action Button'
       },
       props: {
-        variant: 'primary'
+        kind: 'primary',
+        variant: 'blue'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
