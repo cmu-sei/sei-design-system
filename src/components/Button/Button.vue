@@ -10,13 +10,14 @@
   >
     <span
       v-if="pending"
+      class="flex items-center"
       :class="{
         'gap-0.5': size === 'xs',
         'gap-1': size !== 'xs'
       }"
     >
       <svg
-        class="animate-spin text-current inline-block -mt-0.5"
+        class="animate-spin text-current"
         :class="{
           'h-2.5 w-2.5': size === 'xs',
           'h-3 w-3': size === 'sm',
