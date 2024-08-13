@@ -29,7 +29,7 @@ export default {
       control: { type: 'select' }
     },
     variant: {
-      options: ['blue', 'red'],
+      options: ['blue', 'red', 'blue'],
       control: { type: 'select' }
     },
     size: {
