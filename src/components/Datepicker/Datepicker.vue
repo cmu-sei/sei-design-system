@@ -67,7 +67,8 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="!readonly ? open() : undefined"
+            @focusin="!readonly ? open() : undefined; !readonly ? focusState.start = true : focusState.start = false"
+            @focusout="focusState.start = false"
             @keydown.tab="updateDatesFromInput(); close()"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
@@ -152,7 +153,8 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="!readonly ? open() : undefined"
+              @focusin="!readonly ? open() : undefined; !readonly ? focusState.end = true : focusState.end = false"
+              @focusout="focusState.end = false"
               @keydown.tab="updateDatesFromInput(); close()"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
@@ -172,6 +174,7 @@
           :max="max"
           :mode="mode"
           :use-current-time-for-today="useCurrentTimeForToday"
+          :focus="focusState"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
         />
       </div>
@@ -288,6 +291,7 @@ const emit = defineEmits(['update:model-value'])
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()
 const endDateInput = ref()
+const focusState = ref({ start: false, end: false })
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {

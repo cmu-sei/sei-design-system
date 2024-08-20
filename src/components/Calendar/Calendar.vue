@@ -487,7 +487,14 @@ const props = defineProps({
    * 
    * If false, this sets the time to the start of the date.
    */
-   useCurrentTimeForToday: { type: Boolean, default: false }
+  useCurrentTimeForToday: { type: Boolean, default: false },
+  /**
+   * When used with the datepicker, this determines where the focus status is.
+   * 
+   * Focus Example:
+   * 
+   */
+  focus: {type: {start: Boolean, end: Boolean}, default: {start: false, end: false}}
 })
 
 const emit = defineEmits(['update:model-value'])
@@ -736,6 +743,7 @@ const formatDate = (date: Date, output: string) => format(date, output)
 const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 
 const setModelValueDate = (day: number, isNextMonth = false) => {
+  console.log(props.focus.start + "\n" + props.focus.end + "\n\n")
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (isRange.value && date.value) {
     if ((date.value as CalendarRange).end || !(date.value as CalendarRange).start) {
