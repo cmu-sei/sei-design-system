@@ -47,7 +47,86 @@
       <h2 class="text-xl">
         Button
       </h2>
+      <div class="space-x-2">
+        <SdsButton
+          kind="primary"
+          size="xs"
+          :pending="pending"
+          @click="pending = !pending"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          variant="red"
+          size="sm"
+          :pending="pending"
+          @click="pending = !pending"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          size="md"
+          :pending="pending"
+          @click="pending = !pending"
+        >
+          Button
+        </SdsButton>
+      </div>
       <div>
+        <SdsButton
+          kind="secondary"
+          size="lg"
+          :pending="pending"
+          @click="pending = !pending"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          active
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          disabled
+        >
+          Button
+        </SdsButton>
+      </div>
+      <div class="space-x-2">
+        <SdsButton
+          kind="primary"
+          size="xs"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          variant="red"
+          size="sm"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          size="md"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          size="lg"
+        >
+          Button
+        </SdsButton>
         <SdsButton
           kind="secondary"
         >
@@ -372,6 +451,8 @@
 import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
 
 const expandCollapseModel = ref(false)
+
+const pending = ref(true)
 
 const filterBy = reactive({
   options: [

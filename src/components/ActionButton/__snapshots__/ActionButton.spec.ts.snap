@@ -14,10 +14,10 @@ exports[`ActionButton > should match its default snapshot 1`] = `
 </button>
 `;
 
-exports[`ActionButton > should match its variant primary snapshot 1`] = `
+exports[`ActionButton > should match its kind primary, variant blue snapshot 1`] = `
 <button
   aria-disabled="false"
-  class="action-btn action-btn-ghost action-btn-sm"
+  class="action-btn action-btn-primary action-btn-blue action-btn-sm"
   data-id="sds-action-button"
   type="button"
 >

@@ -25,7 +25,7 @@ const props = defineProps({
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'red'>, default: 'gray' },
+  variant: { type: String as PropType<'gray' | 'red' | 'blue'>, default: 'gray' },
   /**
    * Determines the HTML type attribute for the button.
    */
@@ -73,6 +73,8 @@ const variantClass = computed(() => {
       return 'action-btn-gray'
     case 'red':
       return 'action-btn-red'
+    case 'blue':
+      return 'action-btn-blue'
     default:
       return ''
   }

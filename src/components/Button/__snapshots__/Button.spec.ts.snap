@@ -2,28 +2,34 @@
 
 exports[`Button > should match its default snapshot 1`] = `
 <button
+  aria-busy="false"
   aria-disabled="false"
   class=""
   data-id="sds-button"
   type="button"
 >
+  
   <!-- @slot Button content. -->
   
   Button
+  
   
 </button>
 `;
 
 exports[`Button > should match its variant primary snapshot 1`] = `
 <button
+  aria-busy="false"
   aria-disabled="false"
   class=""
   data-id="sds-button"
   type="button"
 >
+  
   <!-- @slot Button content. -->
   
   Button
+  
   
 </button>
 `;

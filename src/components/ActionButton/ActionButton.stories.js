@@ -18,7 +18,7 @@ export default {
       control: { type: 'select' }
     },
     variant: {
-      options: ['gray', 'red'],
+      options: ['gray', 'red', 'blue'],
       control: { type: 'select' }
     },
     type: {
