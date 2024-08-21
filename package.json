@@ -24,20 +24,25 @@
     "volar.d.ts"
   ],
   "sideEffects": false,
-  "main": "./dist/index.umd.js",
   "module": "./dist/index.mjs",
   "type": "module",
-  "types": "./dist/types/src/components/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/src/components/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.umd.js"
+      "import": {
+        "types": "./dist/types/src/components/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/types/src/components/index.d.ts",
+        "default": "./dist/index.umd.js"
+      }
     },
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
     "./volar": "./volar.d.ts"
   },
+  "types": "./dist/types/src/components/index.d.ts",
+  "main": "./dist/index.umd.js",
   "bugs": {
     "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
   },

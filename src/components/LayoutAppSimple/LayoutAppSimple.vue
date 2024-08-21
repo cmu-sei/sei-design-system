@@ -138,15 +138,7 @@
 import SdsLink from '../Link/Link.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
-export interface LayoutAppSidebarNavItem {
-  id: number | string
-  href: string
-  active: boolean
-  title: string
-  badgeCount?: number
-  iconUrl?: string
-  items?: LayoutAppSidebarNavItem[]
-}
+import type { LayoutAppSidebarNavItem } from '../LayoutApp/LayoutApp.vue'
 
 defineOptions({
   name: 'SdsLayoutAppSimple'

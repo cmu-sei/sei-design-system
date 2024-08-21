@@ -88,6 +88,7 @@
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { Uid } from '@shimyshack/uid'
 
+import type { GenericFunctionType } from '../..'
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 

@@ -169,6 +169,7 @@
 
 <script setup lang="ts">
 import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import type { GenericFunctionType } from '../..'
 
 /* Top Link navigation label type interface */
 export type MegaMenuItem<T = Record<string, unknown>> = {

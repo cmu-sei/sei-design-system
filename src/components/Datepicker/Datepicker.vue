@@ -199,15 +199,11 @@ import { addDays } from 'date-fns/addDays'
 import { subDays } from 'date-fns/subDays'
 import { addYears } from 'date-fns/addYears'
 
+import type { GenericFunctionType } from '../..'
 import type { Placement as BasePlacement } from '@floating-ui/dom'
-export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+import type { CalendarDate, CalendarMode, CalendarRange } from '../Calendar/Calendar.vue'
 
-export type CalendarDate = Date | null
-export interface CalendarRange {
-  start: CalendarDate
-  end: CalendarDate
-}
-export type CalendarMode = 'date' | 'dateTime' | 'time'
+export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
   name: 'SdsDatepicker'

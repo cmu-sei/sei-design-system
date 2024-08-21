@@ -258,6 +258,8 @@
 </template>
 
 <script setup lang="ts">
+import type { GenericFunctionType } from '../..'
+
 export interface TableField {
   key: string
   label?: string | undefined
