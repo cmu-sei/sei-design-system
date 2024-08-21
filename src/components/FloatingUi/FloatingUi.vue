@@ -64,6 +64,7 @@ import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import mitt from 'mitt';
 
 import type { Placement as BasePlacement, ComputePositionConfig, Alignment, Strategy } from '@floating-ui/dom'
+import type { GenericFunctionType } from '../..'
 export type FloatingUiPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
 defineOptions({
