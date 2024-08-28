@@ -3,7 +3,7 @@
   "version": "3.6.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vue-tsc",
+    "build": "vite build && vue-tsc --noEmit",
     "serve": "vite preview",
     "lint": "NODE_OPTIONS='--trace-warnings' eslint .",
     "test": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest run -c vite-library.config.js",

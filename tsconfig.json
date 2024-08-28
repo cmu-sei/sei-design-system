@@ -6,7 +6,6 @@
     "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "Bundler",
-    "noEmit": true,
     "resolveJsonModule": true,
     "rootDir": ".",
     "skipLibCheck": true,
