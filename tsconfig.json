@@ -1,24 +1,26 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "target": "esnext",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
     "module": "esnext",
     "moduleResolution": "Bundler",
-    "strict": true,
-    "jsx": "preserve",
-    "sourceMap": true,
+    "noEmit": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "allowJs": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
     "types": ["vite/client", "web-bluetooth", "unplugin-vue-router/client"]
   },
   "include": ["*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.stories.ts",
+    "node_modules/*",
     "src/**/*.spec.js",
+    "src/**/*.spec.ts",
     "src/**/*.stories.js",
-    "node_modules/*"
+    "src/**/*.stories.ts"
   ]
 }
