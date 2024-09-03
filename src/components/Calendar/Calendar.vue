@@ -497,7 +497,7 @@ const props = defineProps({
   focus: {type: {start: Boolean, end: Boolean}, default: {start: false, end: false}}
 })
 
-const emit = defineEmits(['update:model-value'])
+const emit = defineEmits(['update:model-value','update:focus'])
 
 const date = computed<CalendarDate | CalendarRange>({
   get() {
@@ -508,6 +508,18 @@ const date = computed<CalendarDate | CalendarRange>({
      * Emitted when modelValue changes.
      */
     emit('update:model-value', value)
+  }
+})
+
+const focus = computed<any>({
+  get() {
+    return props.focus
+  },
+  set(value) {
+    /**
+     * Emitted when modelValue changes.
+     */
+    emit('update:focus', value)
   }
 })
 
@@ -743,31 +755,95 @@ const formatDate = (date: Date, output: string) => format(date, output)
 const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 
 const setModelValueDate = (day: number, isNextMonth = false) => {
-  console.log(props.focus.start + "\n" + props.focus.end + "\n\n")
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (isRange.value && date.value) {
-    if ((date.value as CalendarRange).end || !(date.value as CalendarRange).start) {
+    if(focus.value.start){
+      (date.value as CalendarRange).start = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
+        setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      focus.value.start = false
+    } else if(focus.value.end) {
+      (date.value as CalendarRange).end = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
+        setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      focus.value.end = false
+    }else if (!(date.value as CalendarRange).start) {
       (date.value as CalendarRange) = {
         start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
         end: null
       }
+    } else if((date.value as CalendarRange).start && !(date.value as CalendarRange).end) {
+      const start = (date.value as CalendarRange).start;
+      (date.value as CalendarRange) = {
+        start: start,
+        end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      }
     } else {
       if (
         !(date.value instanceof Date) &&
-        (isDate(date.value.start) && date.value.start instanceof Date)
+        (isDate(date.value.start) && date.value.start instanceof Date) &&
+        (isDate(date.value.end) && date.value.end instanceof Date)
       ) {
         const start = date.value.start
-        const end = endOfDay(setDate(month, day))
-        if (isSameDay(start, end) && isAfter(end, start)) {
-          date.value = { start, end }
-        } else {
-          const minDate = dateFnsMin([start, end])
-          const maxDate = dateFnsMax([start, end])
-          date.value = {
-            start: isEqual(start, minDate) ? minDate : (props.useCurrentTimeForToday && isToday(minDate) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0)),
-            end: endOfDay(maxDate)
+        const startWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(start, 0), 0), 0), 0)
+        const end = date.value.end
+        const endWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(end, 0), 0), 0), 0)
+        const newDate = setDate(month, day)
+        const newDateWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0)
+
+        if(newDateWithoutTime.valueOf() === startWithoutTime.valueOf()) {
+          date.value = { 
+            start: null, 
+            end: end 
           }
+        } else if(newDateWithoutTime.valueOf() === endWithoutTime.valueOf()) {
+          date.value = { 
+            start: start, 
+            end: null 
+          }
+        } else if(isBefore(newDate, start)) {
+          date.value = { 
+            start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0), 
+            end: end 
+          }
+        } else if(isAfter(newDate, start)) {
+          date.value = { 
+            start: start, 
+            end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
+          }
+        } else {
+          // const startWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(start, 0), 0), 0), 0)
+          // const endWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(end, 0), 0), 0), 0)
+          // const newDateWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0)
+          // console.log(startWithoutTime + "\n" + endWithoutTime + "\n" + "\n" + newDateWithoutTime +"\n\n")
+          // if(newDateWithoutTime === startWithoutTime) {
+          //   date.value = { 
+          //     start: null, 
+          //     end: end 
+          //   }
+          // } else if(newDateWithoutTime === endWithoutTime) {
+          //   date.value = { 
+          //     start: start, 
+          //     end: null 
+          //   }
+          // } else {
+            date.value = { 
+              start: start, 
+              end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
+            }
+          //}
         }
+
+        // const start = date.value.start
+        // const end = endOfDay(setDate(month, day))
+        // if (isSameDay(start, end) && isAfter(end, start)) {
+        //   date.value = { start, end }
+        // } else {
+        //   const minDate = dateFnsMin([start, end])
+        //   const maxDate = dateFnsMax([start, end])
+        //   date.value = {
+        //     start: isEqual(start, minDate) ? minDate : (props.useCurrentTimeForToday && isToday(minDate) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0)),
+        //     end: endOfDay(maxDate)
+        //   }
+        // }
       } else {
         (date.value as CalendarRange).end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }

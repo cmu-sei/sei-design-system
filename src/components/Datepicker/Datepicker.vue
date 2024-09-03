@@ -68,7 +68,6 @@
             :required="required"
             :pattern="inputPattern"
             @focusin="!readonly ? open() : undefined; !readonly ? focusState.start = true : focusState.start = false"
-            @focusout="focusState.start = false"
             @keydown.tab="updateDatesFromInput(); close()"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
@@ -154,7 +153,6 @@
               :required="required"
               :pattern="inputPattern"
               @focusin="!readonly ? open() : undefined; !readonly ? focusState.end = true : focusState.end = false"
-              @focusout="focusState.end = false"
               @keydown.tab="updateDatesFromInput(); close()"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
@@ -176,6 +174,7 @@
           :use-current-time-for-today="useCurrentTimeForToday"
           :focus="focusState"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
+          @update:focus="() => clearFocus()"
         />
       </div>
     </template>
@@ -633,5 +632,10 @@ const updateDatesFromInput = () => {
       end: ''
     }
   }
+}
+
+const clearFocus = () => {
+  focusState.value.start = false
+  focusState.value.end = false
 }
 </script>
