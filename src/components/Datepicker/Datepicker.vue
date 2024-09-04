@@ -420,6 +420,7 @@ const formatDate = (dateString: string) => {
     'yyyy-MM-dd HH:mm:ss',
     'MM/dd/yyyy',
     'MM-dd-yyyy',
+    'MMddyyyy',
     'yyyy-MM-dd',
     'M/d',
     'MM/dd',
