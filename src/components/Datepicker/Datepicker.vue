@@ -67,7 +67,7 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="!readonly ? open() : undefined; !readonly ? focusState.start = true : focusState.start = false"
+            @focusin="!readonly ? open() : undefined; !readonly ? setFocus(true, false) : focusState.start = false"
             @keydown.tab="updateDatesFromInput(); close()"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
@@ -152,7 +152,7 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="!readonly ? open() : undefined; !readonly ? focusState.end = true : focusState.end = false"
+              @focusin="!readonly ? open() : undefined; !readonly ? setFocus(false, true) : focusState.end = false"
               @keydown.tab="updateDatesFromInput(); close()"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
@@ -632,6 +632,11 @@ const updateDatesFromInput = () => {
       end: ''
     }
   }
+}
+
+const setFocus = (start: boolean, end: boolean) => {
+  focusState.value.start = start 
+  focusState.value.end = end
 }
 
 const clearFocus = () => {

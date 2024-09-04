@@ -757,25 +757,34 @@ const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 const setModelValueDate = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (isRange.value && date.value) {
-    if(focus.value.start){
+    if (focus.value.start) {
       (date.value as CalendarRange).start = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
         setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       focus.value.start = false
-    } else if(focus.value.end) {
+
+    } else if (focus.value.end) {
       (date.value as CalendarRange).end = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
         setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       focus.value.end = false
-    }else if (!(date.value as CalendarRange).start) {
+
+    } else if (!(date.value as CalendarRange).start) {
+      let end = null 
+      if ((date.value as CalendarRange).end && isBefore(setDate(month,day), (date.value as CalendarRange).end as Date)) {
+        end = (date.value as CalendarRange).end
+      }
+      
       (date.value as CalendarRange) = {
         start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
-        end: null
+        end: end
       }
+
     } else if((date.value as CalendarRange).start && !(date.value as CalendarRange).end) {
       const start = (date.value as CalendarRange).start;
       (date.value as CalendarRange) = {
         start: start,
         end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }
+      
     } else {
       if (
         !(date.value instanceof Date) &&
@@ -789,7 +798,7 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
         const newDate = setDate(month, day)
         const newDateWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0)
 
-        if(newDateWithoutTime.valueOf() === startWithoutTime.valueOf()) {
+        if (newDateWithoutTime.valueOf() === startWithoutTime.valueOf()) {
           date.value = { 
             start: null, 
             end: end 
