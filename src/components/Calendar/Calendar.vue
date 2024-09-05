@@ -819,40 +819,12 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
             end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
           }
         } else {
-          // const startWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(start, 0), 0), 0), 0)
-          // const endWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(end, 0), 0), 0), 0)
-          // const newDateWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0)
-          // console.log(startWithoutTime + "\n" + endWithoutTime + "\n" + "\n" + newDateWithoutTime +"\n\n")
-          // if(newDateWithoutTime === startWithoutTime) {
-          //   date.value = { 
-          //     start: null, 
-          //     end: end 
-          //   }
-          // } else if(newDateWithoutTime === endWithoutTime) {
-          //   date.value = { 
-          //     start: start, 
-          //     end: null 
-          //   }
-          // } else {
-            date.value = { 
-              start: start, 
-              end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
-            }
-          //}
+          date.value = { 
+            start: start, 
+            end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
+          }
         }
 
-        // const start = date.value.start
-        // const end = endOfDay(setDate(month, day))
-        // if (isSameDay(start, end) && isAfter(end, start)) {
-        //   date.value = { start, end }
-        // } else {
-        //   const minDate = dateFnsMin([start, end])
-        //   const maxDate = dateFnsMax([start, end])
-        //   date.value = {
-        //     start: isEqual(start, minDate) ? minDate : (props.useCurrentTimeForToday && isToday(minDate) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(minDate, 0), 0), 0), 0)),
-        //     end: endOfDay(maxDate)
-        //   }
-        // }
       } else {
         (date.value as CalendarRange).end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }
