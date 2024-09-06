@@ -3,7 +3,7 @@
     data-id="sds-filter-by-dropdown"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
-    arrow-class="absolute bg-white border dark:border-gray-700 dark:bg-gray-850 w-3 h-3 rotate-45"
+    hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
     placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
@@ -11,15 +11,16 @@
     shift
   >
     <template #trigger="{ isOpen, toggle }">
-      <button
+      <SdsActionButton 
         ref="button"
         v-uid
-        :class="variantClass"
-        type="button"
+        :kind="kind"
+        :variant="variant"
+        size="md" 
+        :disabled="disabled"
         aria-haspopup="true"
         :aria-expanded="isOpen"
-        :disabled="disabled"
-        @click="toggle(); resetTmpOptions()"
+        @click="toggle(); handleInputFocus(); resetTmpOptions()"
       >
         <!-- @slot Title content of trigger button. -->
         <slot name="title">
@@ -37,7 +38,7 @@
             clip-rule="evenodd"
           />
         </svg>
-      </button>
+      </SdsActionButton>
     </template>
     <template #default="{ close }">
       <div
@@ -165,7 +166,11 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary'>, default: 'secondary' },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  /**
+   * Determines the color of the component.
+   */
+  variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
   /**
    * The z-index for the popover.
    */
@@ -194,8 +199,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value'])
 
-const button = ref()
-const filterTextInput = ref()
+const button = ref<HTMLButtonElement | undefined>()
+const filterTextInput = ref<HTMLInputElement | undefined>()
 const filterText = ref("")
 const tmpOptions = ref([])
 
@@ -251,17 +256,6 @@ const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
   );
 })
 
-const variantClass = computed(() => {
-  switch (props.kind) {
-      case 'primary':
-      return 'link link-primary link-blue'
-    case 'secondary':
-      return 'link link-secondary link-blue'
-    default:
-      return ''
-  }
-})
-
 const toggleSelect = () => {
   if (allSelected.value) {
     deselectAllOptions();
@@ -280,6 +274,15 @@ const saveSelections = () => {
 const cancelSelections = () => {
   // Make a unique copy of default list data
   resetTmpOptions();
+}
+
+const handleInputFocus = () => {
+  if (!props.enableFilter) return
+  const interval = setInterval(() => {
+    if (typeof filterTextInput.value === 'undefined') return
+    filterTextInput.value?.focus()
+    clearInterval(interval)
+  }, 100)
 }
 
 const resetTmpOptions = () => {
