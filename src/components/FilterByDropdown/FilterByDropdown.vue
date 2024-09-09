@@ -85,12 +85,12 @@
               v-for="o in filteredTmpOptions"
               :key="o.id" 
             >
-              <div class="space-x-2 flex items-start pl-4 pr-2 py-1 hover:bg-gray-50">
+              <div class="leading-5 space-x-2 flex items-start pl-4 pr-2 py-1.5 hover:bg-gray-50">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
                   type="checkbox"
-                  class="focus:ring-0 mt-1"
+                  class="focus:ring-0 mt-0.5"
                   :value="o.id"
                 >
                 <label
