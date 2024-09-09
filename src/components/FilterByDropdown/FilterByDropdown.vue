@@ -79,13 +79,13 @@
             <span class="my-auto">Select all</span>
           </label>
         </div>
-        <div class="scroll-area max-h-48">
+        <div class="scroll-area max-h-48 mr-4">
           <ul>
             <li
               v-for="o in filteredTmpOptions"
               :key="o.id" 
             >
-              <div class="space-x-2 flex items-start px-4 py-1 hover:bg-gray-50">
+              <div class="space-x-2 flex items-start pl-4 pr-2 py-1 hover:bg-gray-50">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -95,7 +95,7 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 dark:text-gray-50 ml-1 block w-full"
+                  class="text-gray-900 dark:text-gray-50 block w-full"
                 >{{ o.text }}</label>
               </div>
             </li>
