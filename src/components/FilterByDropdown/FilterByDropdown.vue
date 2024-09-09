@@ -17,6 +17,7 @@
         :kind="kind"
         :variant="variant"
         size="md" 
+        :active="isOpen"
         :disabled="disabled"
         aria-haspopup="true"
         :aria-expanded="isOpen"
