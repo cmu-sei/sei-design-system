@@ -2,7 +2,7 @@
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850 w-72 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -42,44 +42,31 @@
     </template>
     <template #default="{ close }">
       <div
-        class="p-4"
         aria-orientation="vertical"
-        :aria-labelledby="button && (button as HTMLElement).id || undefined"
+        :aria-labelledby="button && button.id || undefined"
       >
         <div
           v-if="enableFilter"
-          class="input-group input-group-sm mb-2 border-b"
+          class="px-4 pt-4 pb-2"
         >
-          <button
-            class="input-group-addon mt-0.5"
-            @click="filterTextInput?.focus()"
+          <div
+            class="input-group input-group-sm"
           >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              class="w-3.5 h-3.5"
-            ><path
-              fill="currentColor"
-              d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-            /></svg>
-          </button>
-          <input
-            ref="filterTextInput"
-            v-model="filterText"
-            type="text"
-            class="form-control"
-            placeholder="Type to filter"
-          >
+            <input
+              ref="filterTextInput"
+              v-model="filterText"
+              type="text"
+              class="form-control"
+              placeholder="Type to filter"
+            >
+          </div>
         </div>
         <div
           v-if="!enableFilter"
-          class="pb-2 mb-2 space-x-2 space-y-2 border-b dark:border-gray-700"
+          class="p-4 mb-2 space-x-2 space-y-2 border-b border-gray-100 dark:border-gray-700"
         >
           <label
-            class="text-gray-900 dark:text-gray-50 flex gap-2 items-center w-max"
+            class="leading-none text-gray-900 dark:text-gray-50 flex gap-2 items-center w-max"
           >
             <input
               type="checkbox"
@@ -95,10 +82,9 @@
           <ul>
             <li
               v-for="o in filteredTmpOptions"
-              :key="o.id"
-              class="space-y-2"
+              :key="o.id" 
             >
-              <div class="space-x-2 flex items-center">
+              <div class="space-x-2 flex items-center px-4 py-1 hover:bg-gray-50">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -108,13 +94,13 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 dark:text-gray-50 ml-1 block"
+                  class="text-gray-900 dark:text-gray-50 ml-1 block w-full"
                 >{{ o.text }}</label>
               </div>
             </li>
           </ul>
         </div>
-        <div class="pt-4 space-y-2">
+        <div class="px-4 pt-2 pb-4 space-y-2">
           <SdsButton
             kind="primary"
             size="sm"
