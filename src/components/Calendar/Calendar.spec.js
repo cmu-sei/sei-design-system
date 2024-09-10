@@ -14,4 +14,21 @@ describe('Calendar', () => {
     })
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  it('start and end date should be correct', () => {
+    const systemDate = new Date(2021, 11, 15)
+    const start = new Date(2021, 11, 19)
+    const end = new Date(2021, 11, 25)
+
+    vi.useFakeTimers()
+    vi.setSystemTime(systemDate)
+
+    const wrapper = shallowMount(Component, {
+      props: {
+        modelValue: { start: start, end: end},
+        mode: 'date'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
 })
