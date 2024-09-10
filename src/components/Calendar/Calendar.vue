@@ -489,10 +489,11 @@ const props = defineProps({
    */
   useCurrentTimeForToday: { type: Boolean, default: false },
   /**
-   * When used with the datepicker, this determines where the focus status is.
+   * When used with the datepicker, this determines where the focus status is. 
+   * The focus status can only be one. If both are true, it will take the start value as the focus value.
    * 
    * Focus Example:
-   * 
+   * **{ start: true, end: false }**
    */
   focus: {type: {start: Boolean, end: Boolean}, default: {start: false, end: false}}
 })
@@ -517,7 +518,7 @@ const focus = computed<any>({
   },
   set(value) {
     /**
-     * Emitted when modelValue changes.
+     * Emitted when focus changes.
      */
     emit('update:focus', value)
   }
