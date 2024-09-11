@@ -441,7 +441,6 @@ import { setMilliseconds } from 'date-fns/setMilliseconds'
 import { subMonths } from 'date-fns/subMonths'
 import { addMonths } from 'date-fns/addMonths'
 import { format } from 'date-fns/format'
-import { endOfDay } from 'date-fns/endOfDay'
 
 export type CalendarDate = Date | null
 export interface CalendarRange {
@@ -495,7 +494,13 @@ const props = defineProps({
    * Focus Example:
    * **{ start: true, end: false }**
    */
-  focus: {type: {start: Boolean, end: Boolean}, default: {start: false, end: false}}
+  focus: {
+    type: Object as PropType<{ start: boolean, end: boolean }>,
+    default: () => ({
+      start: false,
+      end: false
+    })
+  }
 })
 
 const emit = defineEmits(['update:model-value','update:focus'])
