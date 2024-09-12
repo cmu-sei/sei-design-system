@@ -16,7 +16,7 @@
         v-uid
         :kind="kind"
         :variant="variant"
-        size="md" 
+        :size="size" 
         :active="isOpen"
         :disabled="disabled"
         aria-haspopup="true"
@@ -48,7 +48,7 @@
       >
         <div
           v-if="enableFilter"
-          class="px-4 pt-4 pb-2"
+          class="px-4 pt-4 pb-3"
         >
           <div
             class="input-group input-group-sm"
@@ -64,7 +64,7 @@
         </div>
         <div
           v-if="!enableFilter"
-          class="p-4 mb-2 space-x-2 space-y-2 border-b border-gray-100 dark:border-gray-700"
+          class="p-4 mb-3 space-x-2 space-y-2 border-b border-gray-100 dark:border-gray-700"
         >
           <label
             class="leading-none text-gray-900 dark:text-gray-50 flex gap-2 items-center w-max"
@@ -79,13 +79,13 @@
             <span class="my-auto">Select all</span>
           </label>
         </div>
-        <div class="scroll-area max-h-48 mr-4">
+        <div class="scroll-area max-h-56">
           <ul>
             <li
               v-for="o in filteredTmpOptions"
               :key="o.id" 
             >
-              <div class="leading-5 space-x-2 flex items-start pl-4 pr-2 py-1.5 hover:bg-gray-50">
+              <div class="leading-5 space-x-2 flex items-start px-4 py-1 hover:bg-gray-50">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -95,13 +95,13 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 dark:text-gray-50 block w-full"
+                  class="text-gray-900 hover:text-black dark:text-gray-50 block w-full"
                 >{{ o.text }}</label>
               </div>
             </li>
           </ul>
         </div>
-        <div class="px-4 pt-2 pb-4 space-y-2">
+        <div class="px-4 pt-3 pb-4 space-y-2">
           <SdsButton
             kind="primary"
             size="sm"
@@ -158,6 +158,10 @@ const props = defineProps({
    * Determines the color of the component.
    */
   variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
+  /**
+   * Determines the size.
+   */
+  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
   /**
    * The z-index for the popover.
    */
