@@ -67,7 +67,7 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="!readonly ? open() : undefined"
+            @focusin="!readonly ? open() : undefined; !readonly ? setFocus(true, false) : focusState.start = false"
             @keydown.tab="updateDatesFromInput(); close()"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
@@ -152,7 +152,7 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="!readonly ? open() : undefined"
+              @focusin="!readonly ? open() : undefined; !readonly ? setFocus(false, true) : focusState.end = false"
               @keydown.tab="updateDatesFromInput(); close()"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
@@ -172,7 +172,9 @@
           :max="max"
           :mode="mode"
           :use-current-time-for-today="useCurrentTimeForToday"
+          :focus="focusState"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
+          @update:focus="() => clearFocus()"
         />
       </div>
     </template>
@@ -283,6 +285,7 @@ const emit = defineEmits(['update:model-value'])
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()
 const endDateInput = ref()
+const focusState = ref({ start: false, end: false })
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
@@ -412,6 +415,7 @@ const formatDate = (dateString: string) => {
     'yyyy-MM-dd HH:mm:ss',
     'MM/dd/yyyy',
     'MM-dd-yyyy',
+    'MMddyyyy',
     'yyyy-MM-dd',
     'M/d',
     'MM/dd',
@@ -624,5 +628,15 @@ const updateDatesFromInput = () => {
       end: ''
     }
   }
+}
+
+const setFocus = (start: boolean, end: boolean) => {
+  focusState.value.start = start 
+  focusState.value.end = end
+}
+
+const clearFocus = () => {
+  focusState.value.start = false
+  focusState.value.end = false
 }
 </script>

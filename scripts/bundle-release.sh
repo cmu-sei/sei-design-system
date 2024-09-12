@@ -26,7 +26,7 @@ npm test
 
 printf "\nbuilding all components...\n"
 LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
-npx vue-tsc --skipLibCheck --declaration --emitDeclarationOnly --outDir dist/types
+npx vue-tsc --declaration --emitDeclarationOnly --outDir dist/types
 
 # Generate ./volar.d.ts that adds Types for Global Components
 printf "\nGenerating Volar types for global components...\n"
