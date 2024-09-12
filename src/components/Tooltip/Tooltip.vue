@@ -45,7 +45,6 @@
 <script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 
-import type { GenericFunctionType } from '../..'
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type TooltipPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 

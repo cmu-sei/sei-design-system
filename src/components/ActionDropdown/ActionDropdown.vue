@@ -81,7 +81,6 @@
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { Uid } from '@shimyshack/uid'
 
-import type { GenericFunctionType } from '../..'
 import type { DropdownPlacement } from "../Dropdown/Dropdown.vue";
 import type { Strategy } from '@floating-ui/dom'
 

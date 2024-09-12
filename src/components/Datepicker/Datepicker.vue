@@ -199,7 +199,6 @@ import { addDays } from 'date-fns/addDays'
 import { subDays } from 'date-fns/subDays'
 import { addYears } from 'date-fns/addYears'
 
-import type { GenericFunctionType } from '../..'
 import type { Placement as BasePlacement } from '@floating-ui/dom'
 import type { CalendarDate, CalendarMode, CalendarRange } from '../Calendar/Calendar.vue'
 

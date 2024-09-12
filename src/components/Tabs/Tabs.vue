@@ -85,7 +85,6 @@
 
 <script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
-import type { GenericFunctionType } from '../..'
 
 export interface TabItem {
   key: string

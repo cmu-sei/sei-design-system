@@ -2106,7 +2106,6 @@
 </template>
 
 <script lang="ts">
-import type { GenericFunctionType } from '../..'
 import type { CalendarMode } from '../../components/Calendar/Calendar.vue'
 import type { FilterByDropdownOption } from '../../components/FilterByDropdown/FilterByDropdown.vue'
 import type { MegaMenuItem } from '../../components/MegaMenu/MegaMenu.vue'
