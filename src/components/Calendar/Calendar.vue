@@ -757,38 +757,47 @@ const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 
 const setModelValueDate = (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
-  if (isRange.value && date.value) {
+  if (isRange.value && date.value && !(date.value instanceof Date)) {
     if (focus.value.start) {
-      (date.value as CalendarRange).start = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
-        setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      const end = date.value.end;
+      date.value = {
+        start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
+          setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
+        end: end
+      }
+
       focus.value.start = false
 
     } else if (focus.value.end) {
-      (date.value as CalendarRange).end = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
-        setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      const start = date.value.start;
+      date.value = {
+        start: start,
+        end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : 
+          setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      }
+
       focus.value.end = false
 
-    } else if (!(date.value as CalendarRange).start) {
+    } else if (!date.value.start) {
       let end = null 
-      if ((date.value as CalendarRange).end && isBefore(setDate(month,day), (date.value as CalendarRange).end as Date)) {
-        end = (date.value as CalendarRange).end
+      if (date.value.end && isBefore(setDate(month,day), date.value.end)) {
+        end = date.value.end
       }
       
-      (date.value as CalendarRange) = {
+      date.value = {
         start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
         end: end
       }
 
-    } else if((date.value as CalendarRange).start && !(date.value as CalendarRange).end) {
-      const start = (date.value as CalendarRange).start;
-      (date.value as CalendarRange) = {
+    } else if(date.value.start && !date.value.end) {
+      const start = date.value.start;
+      date.value = {
         start: start,
         end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }
       
     } else {
       if (
-        !(date.value instanceof Date) &&
         (isDate(date.value.start) && date.value.start instanceof Date) &&
         (isDate(date.value.end) && date.value.end instanceof Date)
       ) {
@@ -827,11 +836,15 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
         }
 
       } else {
-        (date.value as CalendarRange).end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+        date.value.end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }
     }
   } else {
-    date.value = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+    const start = (date.value as CalendarRange).start;
+      date.value = {
+        start: start,
+        end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      }
   }
 
   nextTick(() => {
