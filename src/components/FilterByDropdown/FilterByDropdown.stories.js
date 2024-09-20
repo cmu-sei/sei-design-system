@@ -15,10 +15,18 @@ export default {
   argTypes: {
     placement: {
       options: ["auto", "left", "top", "right", "bottom", "auto-start", "auto-end", "left-start", "left-end", "top-start", "top-end", "right-start", "right-end", "bottom-start", "bottom-end"],
-      control: {type: 'select'}
+      control: { type: 'select' }
     },
     kind: {
-      options: ['primary', 'secondary'],
+      options: ['primary', 'secondary', 'ghost'],
+      control: { type: 'select' }
+    },
+    variant: {
+      options: ['gray', 'blue'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ['xs', 'sm', 'md', 'lg'],
       control: { type: 'select' }
     },
     zIndex: {
