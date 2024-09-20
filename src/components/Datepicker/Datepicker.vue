@@ -73,7 +73,7 @@
             @keyup.up="close()"
             @keyup.down="!readonly ? open() : undefined"
             @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
-            @change="updateDatesFromInput"
+            @change="updateDatesFromInput()"
           >
         </div>
         <template v-if="isRange">
@@ -158,7 +158,7 @@
               @keyup.up="close()"
               @keyup.down="!readonly ? open() : undefined"
               @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
-              @change="updateDatesFromInput"
+              @change="updateDatesFromInput()"
             >
           </div>
         </template>
@@ -174,7 +174,7 @@
           :use-current-time-for-today="useCurrentTimeForToday"
           :focus="focusState"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
-          @update:focus="() => clearFocus()"
+          @update:focus="() => clearFocus(close)"
         />
       </div>
     </template>
@@ -346,13 +346,13 @@ const inputFormat = computed(() => {
 const inputPattern = computed(() => {
   switch (props.mode) {
     case 'date':
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
+      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/'
     case 'time':
-      return '[0-9]{2}:[0-9]{2} [a|p]m'
+      return '/[0-9]{2}:[0-9]{2} [a|p]m/'
     case 'dateTime':
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m'
+      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m/'
     default:
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
+      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/'
   }
 })
 
@@ -589,10 +589,6 @@ const focusCorrectInput = (value: CalendarDate | CalendarRange, close: GenericFu
     (startDateInput.value as HTMLElement).focus()
   } else if (value && !(value instanceof Date) && !value.end) {
     (endDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && value.end) {
-    (endDateInput.value as HTMLElement).focus()
-  } else {
-    (startDateInput.value as HTMLElement).focus()
   }
 
   if (props.mode === 'date') {
@@ -640,7 +636,7 @@ const setFocus = (start: boolean, end: boolean) => {
   focusState.value.end = end
 }
 
-const clearFocus = () => {
+const clearFocus = (close: GenericFunctionType) => {
   focusState.value.start = false
   focusState.value.end = false
 }
