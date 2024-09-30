@@ -44,4 +44,16 @@ describe('Input', () => {
     })
     expect(wrapper.html()).toMatchSnapshot();
   })
+
+  it('should match its snapshot with size prop assigned a value', async () => {
+    const wrapper = shallowMount(Component, {
+      props: {
+        size: 'md'
+      }
+    });
+    expect(wrapper.html()).toMatchSnapshot();
+
+    await wrapper.setProps({ size: 'sm' });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
 })

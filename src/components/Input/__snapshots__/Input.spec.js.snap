@@ -38,3 +38,15 @@ exports[`Input > should match its snapshot with placeholder prop assigned 1`] = 
   <!--v-if-->
 </div>"
 `;
+
+exports[`Input > should match its snapshot with size prop assigned a value 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Input > should match its snapshot with size prop assigned a value 2`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control form-control-sm" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
