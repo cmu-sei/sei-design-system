@@ -1,20 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-import { nextTick } from 'vue'
 import Component from './Input.vue'
 
 describe('Input', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {})
-    expect(wrapper.element).toMatchSnapshot()
+    const wrapper = shallowMount(Component, {});
+    expect(wrapper.element).toMatchSnapshot();
   })
 
   it('should match its snapshot with maxlength prop assigned', () => {
     const wrapper = shallowMount(Component, {
-      props: {
-        maxlength: 200
-      }
-    })
+      props: { maxlength: 200 }
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 
@@ -24,36 +21,29 @@ describe('Input', () => {
         countCharacters: true,
         type: 'number'
       }
-    })
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 
   it('should match its snapshot with id prop assigned', () => {
     const wrapper = shallowMount(Component, {
-      props: {
-        id: 'unique-identifier'
-      }
-    })
+      props: { id: 'unique-identifier' }
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 
   it('should match its snapshot with placeholder prop assigned', () => {
     const wrapper = shallowMount(Component, {
-      props: {
-        placeholder: 'Firstname Lastname'
-      }
-    })
+      props: { placeholder: 'Firstname Lastname' }
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 
   it('should match its snapshot with size prop assigned a value', async () => {
     const wrapper = shallowMount(Component, {
-      props: {
-        size: 'md'
-      }
+      props: { size: 'md' }
     });
     expect(wrapper.html()).toMatchSnapshot();
-
     await wrapper.setProps({ size: 'sm' });
     expect(wrapper.html()).toMatchSnapshot();
   })
@@ -61,17 +51,15 @@ describe('Input', () => {
   it('should match its snapshot with autofocus prop assigned', () => {
     const wrapper = shallowMount(Component, {
       attachTo: document.body,
-      props: {
-        autofocus: true
-      }
-    })
+      props: { autofocus: true }
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 
   it('should match its snapshot with disabled prop assigned', () => {
     const wrapper = shallowMount(Component, {
       props: { disabled: true }
-    })
+    });
     expect(wrapper.html()).toMatchSnapshot();
   })
 })
