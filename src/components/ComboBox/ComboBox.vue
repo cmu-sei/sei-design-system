@@ -167,17 +167,19 @@
                   {{ optionGroupLabel ? s[optionGroupLabel] : s }}
                 </slot>
               </div>
-              <button
+              <component 
+                :is="optionType"
                 v-for="c, cindex in s[optionGroupChildren]"
                 :key="`${s}_${c}_${cindex}`"
-                ref="dropdownOption"
+                ref="dropdownOption" 
+                :href="optionType === 'a' ? c.href : undefined"
                 class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                 :class="{
                   'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
                   'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
                 }"
                 :data-active="c.index === arrowCounter"
-                type="button"
+                :type="optionType === 'button' ? 'button' : undefined"
                 tabindex="-1"
                 @click="handleSuggestionClick(c)"
               >
@@ -189,18 +191,20 @@
                 >
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
-              </button>
+              </component>
             </div>
-            <button
+            <component
+              :is="optionType"
               v-else
               ref="dropdownOption"
+              :href="optionType === 'a' ? s.href : undefined"
               class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
               :class="{
                 'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
                 'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
               }"
               :data-active="s.index === arrowCounter"
-              type="button"
+              :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
               @click="handleSuggestionClick(s)"
             >
@@ -212,7 +216,7 @@
               >
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
-            </button>
+            </component>
           </template>
         </SdsScrollArea>
         <!-- Footer section -->
@@ -359,6 +363,13 @@ const props = defineProps({
    * The suggestions used for autosuggest.
    */
   suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
+  /**
+   * Determines the type, or tag, use for the option/component
+   */
+  optionType: {
+    type: String as PropType<'a' | 'button'>,
+    default: 'button'
+  },
   /**
    * The label key used for each non-group suggestion.
    */
