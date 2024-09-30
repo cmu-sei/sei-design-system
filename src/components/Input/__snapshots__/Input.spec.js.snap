@@ -80,3 +80,15 @@ exports[`Input > should match its snapshot with size prop assigned a value 2`] =
   <!--v-if-->
 </div>"
 `;
+
+exports[`Input > should match its snapshot with valid, invalid props assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control valid" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Input > should match its snapshot with valid, invalid props assigned 2`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control invalid" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;

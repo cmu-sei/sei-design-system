@@ -85,5 +85,13 @@ describe('Input', () => {
       props: { readonly: true }
     });
     expect(wrapper.html()).toMatchSnapshot();
-  }) 
+  })
+
+  it('should match its snapshot with valid, invalid props assigned', async () => {
+    const wrapper = shallowMount(Component, {});
+    await wrapper.setProps({ valid: true });
+    expect(wrapper.html()).toMatchSnapshot();
+    await wrapper.setProps({ invalid: true, valid: false });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
 })
