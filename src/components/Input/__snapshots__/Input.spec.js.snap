@@ -27,6 +27,12 @@ exports[`Input > should match its snapshot with countCharacters prop assigned 1`
 </div>"
 `;
 
+exports[`Input > should match its snapshot with disabled prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" disabled="">
+  <!--v-if-->
+</div>"
+`;
+
 exports[`Input > should match its snapshot with id prop assigned 1`] = `
 "<div data-id="sds-input" class="w-full relative"><input id="unique-identifier" class="form-control" type="text" maxlength="524288" placeholder="">
   <!--v-if-->

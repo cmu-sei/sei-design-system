@@ -67,4 +67,11 @@ describe('Input', () => {
     })
     expect(wrapper.html()).toMatchSnapshot();
   })
+
+  it('should match its snapshot with disabled prop assigned', () => {
+    const wrapper = shallowMount(Component, {
+      props: { disabled: true }
+    })
+    expect(wrapper.html()).toMatchSnapshot();
+  })
 })
