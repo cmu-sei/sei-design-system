@@ -15,6 +15,12 @@ exports[`Input > should match its default snapshot 1`] = `
 </div>
 `;
 
+exports[`Input > should match its snapshot with autofocus prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" autofocus="">
+  <!--v-if-->
+</div>"
+`;
+
 exports[`Input > should match its snapshot with countCharacters prop assigned 1`] = `
 "<div data-id="sds-input" class="w-full relative"><input class="form-control" type="number" maxlength="524288" placeholder="">
   <div data-id="sds-character-counter" class="absolute right-0 text-gray-600 dark:text-gray-400">524,288</div>

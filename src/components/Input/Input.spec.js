@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import Component from './Input.vue'
 
 describe('Input', () => {
@@ -54,6 +55,16 @@ describe('Input', () => {
     expect(wrapper.html()).toMatchSnapshot();
 
     await wrapper.setProps({ size: 'sm' });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+
+  it('should match its snapshot with autofocus prop assigned', () => {
+    const wrapper = shallowMount(Component, {
+      attachTo: document.body,
+      props: {
+        autofocus: true
+      }
+    })
     expect(wrapper.html()).toMatchSnapshot();
   })
 })
