@@ -1,5 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Input > matches snapshot with placeholder prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="Firstname Lastname">
+  <!--v-if-->
+</div>"
+`;
+
 exports[`Input > should match its default snapshot 1`] = `
 <div
   class="w-full relative"

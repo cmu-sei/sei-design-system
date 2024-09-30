@@ -7,4 +7,13 @@ describe('Input', () => {
     const wrapper = shallowMount(Component, {})
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  it('matches snapshot with placeholder prop assigned', () => {
+    const wrapper = shallowMount(Component, {
+      props: {
+        placeholder: 'Firstname Lastname'
+      }
+    })
+    expect(wrapper.html()).toMatchSnapshot();
+  })
 })
