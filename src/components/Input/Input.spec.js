@@ -62,4 +62,28 @@ describe('Input', () => {
     });
     expect(wrapper.html()).toMatchSnapshot();
   })
+
+  it('should match its snapshot with required prop assigned', () => {
+    const wrapper = shallowMount(Component, {
+      props: { required: true }
+    });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+
+  it('should match its snapshot with pattern prop assigned a value', () => {
+    const wrapper = shallowMount(Component, {
+      props: { 
+        pattern: '[0-9]{3}-[0-9]{3}-[0-9]{4}',
+        type: 'tel'
+      }
+    });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+  
+  it('should match its snapshot with readonly prop assigned', () => {
+    const wrapper = shallowMount(Component, {
+      props: { readonly: true }
+    });
+    expect(wrapper.html()).toMatchSnapshot();
+  }) 
 })

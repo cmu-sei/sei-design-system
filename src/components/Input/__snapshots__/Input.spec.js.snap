@@ -45,8 +45,26 @@ exports[`Input > should match its snapshot with maxlength prop assigned 1`] = `
 </div>"
 `;
 
+exports[`Input > should match its snapshot with pattern prop assigned a value 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="tel" maxlength="524288" placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+  <!--v-if-->
+</div>"
+`;
+
 exports[`Input > should match its snapshot with placeholder prop assigned 1`] = `
 "<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="Firstname Lastname">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Input > should match its snapshot with readonly prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" readonly="">
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Input > should match its snapshot with required prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" required="">
   <!--v-if-->
 </div>"
 `;
