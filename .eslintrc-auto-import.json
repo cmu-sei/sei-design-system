@@ -296,6 +296,10 @@
     "whenever": true,
     "injectLocal": true,
     "provideLocal": true,
-    "useClipboardItems": true
+    "useClipboardItems": true,
+    "onWatcherCleanup": true,
+    "useId": true,
+    "useModel": true,
+    "useTemplateRef": true
   }
 }

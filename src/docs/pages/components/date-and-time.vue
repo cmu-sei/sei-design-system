@@ -31,6 +31,14 @@
           :min="min"
           :max="max"
           placement="right"
+          mode="date"
+          size="md"
+        />
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
           mode="dateTime"
           size="sm"
         />
