@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-const singleModelValue = ref(new Date(2022, 9, 10))
+const singleModelValue = ref(null)
 const modelValue = ref({ start: null, end: null })
 const min = ref()
 const max = ref()
