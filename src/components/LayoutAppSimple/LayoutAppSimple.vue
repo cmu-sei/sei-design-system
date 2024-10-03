@@ -79,7 +79,9 @@
             <slot name="footer-top" />
           </div>
 
-          <div class="text-xs p-4 border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
+          <hr class="mx-4 border-t border-gray-200 dark:border-gray-800">
+
+          <div class="text-xs p-4 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
               <sds-link
                 href="https://sei.cmu.edu"
