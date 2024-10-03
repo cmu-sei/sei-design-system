@@ -180,6 +180,7 @@
               <nav
                 v-if="sidebarNavigationItems.length > 0"
                 class="grid grid-cols-1 pb-24"
+                aria-label="Mobile sidebar"
               >
                 <!-- @slot Mobile sidebar navigation content wrapper. @binding items, collapsed -->
                 <slot
@@ -265,7 +266,7 @@
                           v-for="subitem in item.items"
                           :key="subitem.id"
                           :href="subitem.href"
-                          class="flex relative gap-2 px-3 py-2 border-l-4"
+                          class="flex relative gap-2 px-3 py-2 border-l-4 group"
                           :class="{
                             'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
                             'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
@@ -285,13 +286,24 @@
                               class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                             >{{ subitem.badgeCount }}</span>
                           </span>
+                          <span 
+                            v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
+                            class="inline-flex gap-1 my-auto ml-auto"
+                          >
+                            <kbd 
+                              v-for="(kbdSc, index) in subitem.keyboardShortcut"
+                              :key="index"
+                              class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                              v-html="kbdSc"
+                            />
+                          </span>
                         </a>
                       </template>
                     </template>
                     <a
                       v-else
                       :href="item.href"
-                      class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
+                      class="flex relative gap-2 pl-2 px-3 py-2 border-l-4 group"
                       :class="{
                         'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
                         'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
@@ -332,6 +344,17 @@
                         <span
                           class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                         >{{ item.badgeCount }}</span>
+                      </span>
+                      <span 
+                        v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
+                        class="inline-flex gap-1 my-auto ml-auto"
+                      >
+                        <kbd 
+                          v-for="(kbdSc, index) in item.keyboardShortcut"
+                          :key="index"
+                          class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                          v-html="kbdSc"
+                        />
                       </span>
                     </a>
                   </template>
@@ -540,6 +563,7 @@
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1 pb-24"
+              aria-label="Sidebar"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -646,7 +670,7 @@
                         v-for="subitem in item.items"
                         :key="subitem.id"
                         :href="subitem.href"
-                        class="flex relative gap-2 px-3 py-2 border-l-4"
+                        class="flex relative gap-2 px-3 py-2 border-l-4 group"
                         :class="{
                           'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
                           'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
@@ -666,6 +690,17 @@
                             class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ subitem.badgeCount }}</span>
                         </span>
+                        <span 
+                          v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
+                          class="inline-flex gap-1 my-auto ml-auto"
+                        >
+                          <kbd 
+                            v-for="(kbdSc, index) in subitem.keyboardShortcut"
+                            :key="index"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            v-html="kbdSc"
+                          />
+                        </span>
                       </a>
                     </template>
                   </template>
@@ -677,7 +712,7 @@
                     <template #trigger>
                       <a
                         :href="item.href"
-                        class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
+                        class="flex relative gap-2 pl-2 px-3 py-2 border-l-4 group"
                         :class="{
                           'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
                           'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
@@ -730,6 +765,17 @@
                             v-else
                             class="flex justify-center p-1 rounded-full bg-red-600 dark:bg-red-700"
                           ><span class="sr-only">{{ item.badgeCount }}</span></span>
+                        </span>
+                        <span 
+                          v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
+                          class="inline-flex gap-1 my-auto ml-auto"
+                        >
+                          <kbd 
+                            v-for="(kbdSc, index) in item.keyboardShortcut"
+                            :key="index"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 font-sans text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            v-html="kbdSc"
+                          />
                         </span>
                       </a>
                     </template>
@@ -786,17 +832,19 @@
           </div>
         </main>
 
-        <div
-          v-if="hasSlot('footer-top')"
-          class="px-4"
-        >
-          <!-- @slot Footer top content. Great for application-specific footer content. -->
-          <slot name="footer-top" />
-        </div>
-
         <!-- Footer -->
-        <footer class="text-xs p-4">
-          <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
+        <footer>
+          <div
+            v-if="hasSlot('footer-top')"
+            class="p-4"
+          >
+            <!-- @slot Footer top content. Great for application-specific footer content. -->
+            <slot name="footer-top" />
+          </div>
+
+          <hr class="mx-4 border-t border-gray-200 dark:border-gray-800">
+
+          <div class="text-xs p-4 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
               <sds-link
                 href="https://sei.cmu.edu"
@@ -863,6 +911,7 @@ export interface LayoutAppSidebarNavItem {
   title: string
   badgeCount?: number
   iconUrl?: string
+  keyboardShortcut?: string | string[]
   items?: LayoutAppSidebarNavItem[]
 }
 

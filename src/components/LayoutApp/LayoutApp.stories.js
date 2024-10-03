@@ -110,5 +110,6 @@ Default.args = {
       ]
     },
     { id: 6, title: 'Help & Support', active: false, href: '#' },
+    { id: 7, title: 'Search', active: false, href: "#", keyboardShortcut: ['/'] }
   ]
 };

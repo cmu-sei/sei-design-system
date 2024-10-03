@@ -156,7 +156,10 @@
       <div>
         <div class="grid gap-4">
           <div>
-            <SdsMegaMenu v-model="megaMenu">
+            <SdsMegaMenu
+              v-model="megaMenu"
+              aria-label="Mega Menu 1"
+            >
               <template #default="{ content }">
                 {{ content }}
               </template>
@@ -525,6 +528,7 @@
               v-model="megaMenu2"
               type="block"
               width="auto"
+              aria-label="Mega Menu 2"
             >
               <template #panel(about-1)="{ content }: { content?: MegaMenuContent }">
                 <SdsMegaMenuItem

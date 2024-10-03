@@ -3,6 +3,7 @@
     ref="root"
     data-id="sds-megamenu"
     class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800"
+    :aria-label="ariaLabel"
     :class="{
       'z-20': isOpen
     }"
@@ -229,6 +230,10 @@ const props = defineProps({
    * Auto width will fit the width of the content inside the panel.
    */
   width: { type: String as PropType<'auto' | 'full'>, default: 'full' },
+  /**
+   * Sets the aria-label for the component
+   */
+  ariaLabel: { type: String, default: undefined }
 })
 
 const emits = defineEmits(
