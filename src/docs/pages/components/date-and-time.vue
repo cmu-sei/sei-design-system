@@ -19,6 +19,14 @@
       </h2>
       <div class="space-y-4">
         <SdsDatepicker
+          v-model="singleModelValue"
+          :min="min"
+          :max="max"
+          placement="right"
+          mode="date"
+          size="md"
+        />
+        <SdsDatepicker
           v-model="modelValue"
           :min="min"
           :max="max"
@@ -86,6 +94,7 @@
 </template>
 
 <script setup lang="ts">
+const singleModelValue = ref(null)
 const modelValue = ref({ start: null, end: null })
 const min = ref()
 const max = ref()
