@@ -21,20 +21,22 @@
     "storybook-static",
     "dist",
     "src",
-    "volar.d.ts"
+    "volar.d.ts",
+    "sds-types.d.ts"
   ],
   "sideEffects": false,
   "module": "./dist/index.mjs",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types/src/components/main.d.ts",
+      "types": "./dist/types/src/components/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.umd.js"
     },
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
-    "./volar": "./volar.d.ts"
+    "./volar": "./volar.d.ts",
+    "./sds-types": "./sds-types.d.ts"
   },
   "types": "./dist/types/src/components/main.d.ts",
   "main": "./dist/index.umd.js",
