@@ -265,7 +265,7 @@
                           v-for="subitem in item.items"
                           :key="subitem.id"
                           :href="subitem.href"
-                          class="flex relative gap-2 px-3 py-2 border-l-4"
+                          class="flex relative gap-2 px-3 py-2 border-l-4 group"
                           :class="{
                             'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
                             'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
@@ -285,13 +285,24 @@
                               class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                             >{{ subitem.badgeCount }}</span>
                           </span>
+                          <span 
+                            v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
+                            class="inline-flex gap-1 my-auto ml-auto"
+                          >
+                            <kbd 
+                              v-for="(kbdSc, index) in subitem.keyboardShortcut"
+                              :key="index"
+                              class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                              v-html="kbdSc"
+                            />
+                          </span>
                         </a>
                       </template>
                     </template>
                     <a
                       v-else
                       :href="item.href"
-                      class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
+                      class="flex relative gap-2 pl-2 px-3 py-2 border-l-4 group"
                       :class="{
                         'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
                         'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
@@ -332,6 +343,17 @@
                         <span
                           class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                         >{{ item.badgeCount }}</span>
+                      </span>
+                      <span 
+                        v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
+                        class="inline-flex gap-1 my-auto ml-auto"
+                      >
+                        <kbd 
+                          v-for="(kbdSc, index) in item.keyboardShortcut"
+                          :key="index"
+                          class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                          v-html="kbdSc"
+                        />
                       </span>
                     </a>
                   </template>
@@ -646,7 +668,7 @@
                         v-for="subitem in item.items"
                         :key="subitem.id"
                         :href="subitem.href"
-                        class="flex relative gap-2 px-3 py-2 border-l-4"
+                        class="flex relative gap-2 px-3 py-2 border-l-4 group"
                         :class="{
                           'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !subitem.active,
                           'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': subitem.active,
@@ -666,6 +688,17 @@
                             class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ subitem.badgeCount }}</span>
                         </span>
+                        <span 
+                          v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
+                          class="inline-flex gap-1 my-auto ml-auto"
+                        >
+                          <kbd 
+                            v-for="(kbdSc, index) in subitem.keyboardShortcut"
+                            :key="index"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            v-html="kbdSc"
+                          />
+                        </span>
                       </a>
                     </template>
                   </template>
@@ -677,7 +710,7 @@
                     <template #trigger>
                       <a
                         :href="item.href"
-                        class="flex relative gap-2 pl-2 px-3 py-2 border-l-4"
+                        class="flex relative gap-2 pl-2 px-3 py-2 border-l-4 group"
                         :class="{
                           'border-transparent text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800': !item.active,
                           'border-red-600 bg-gray-25 dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800': item.active
@@ -730,6 +763,17 @@
                             v-else
                             class="flex justify-center p-1 rounded-full bg-red-600 dark:bg-red-700"
                           ><span class="sr-only">{{ item.badgeCount }}</span></span>
+                        </span>
+                        <span 
+                          v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
+                          class="inline-flex gap-1 my-auto ml-auto"
+                        >
+                          <kbd 
+                            v-for="(kbdSc, index) in item.keyboardShortcut"
+                            :key="index"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 font-sans text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            v-html="kbdSc"
+                          />
                         </span>
                       </a>
                     </template>
@@ -863,6 +907,7 @@ export interface LayoutAppSidebarNavItem {
   title: string
   badgeCount?: number
   iconUrl?: string
+  keyboardShortcut?: string | string[]
   items?: LayoutAppSidebarNavItem[]
 }
 
