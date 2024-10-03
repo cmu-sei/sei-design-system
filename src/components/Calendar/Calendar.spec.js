@@ -31,4 +31,56 @@ describe('Calendar', () => {
     })
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  it('calendar mode should be dateTime', () => {
+    const systemDate = new Date(2021, 11, 15)
+    const start = new Date(2021, 11, 19)
+    const end = new Date(2021, 11, 25)
+
+    vi.useFakeTimers()
+    vi.setSystemTime(systemDate)
+
+    const wrapper = shallowMount(Component, {
+      props: {
+        modelValue: { start: start, end: end},
+        mode: 'dateTime'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('calendar mode should be time', () => {
+    const systemDate = new Date(2021, 11, 15)
+    const start = new Date(2021, 11, 19)
+    const end = new Date(2021, 11, 25)
+
+    vi.useFakeTimers()
+    vi.setSystemTime(systemDate)
+
+    const wrapper = shallowMount(Component, {
+      props: {
+        modelValue: { start: start, end: end},
+        mode: 'time'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('calendar mode min and max is correct', () => {
+    const systemDate = new Date(2021, 11, 15)
+    const start = new Date(2021, 11, 19)
+    const end = new Date(2021, 11, 25)
+
+    vi.useFakeTimers()
+    vi.setSystemTime(systemDate)
+
+    const wrapper = shallowMount(Component, {
+      props: {
+        modelValue: { start: start, end: end},
+        min: new Date(2021, 11, 15),
+        max: new Date(2021, 11, 29)
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
 })
