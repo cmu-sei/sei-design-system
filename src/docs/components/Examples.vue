@@ -99,7 +99,10 @@
     </div>
     <p>MegaMenu</p>
     <div class="my-10">
-      <SdsMegaMenu v-model="megaMenu">
+      <SdsMegaMenu
+        v-model="megaMenu"
+        aria-label="Mega menu example 1"
+      >
         <template #default="{ content }">
           {{ content }}
         </template>
@@ -464,6 +467,7 @@
     <div class="my-10">
       <SdsMegaMenu
         v-model="megaMenu2"
+        aria-label="Mega menu example 2"
         type="block"
         width="auto"
       >

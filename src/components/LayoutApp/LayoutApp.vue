@@ -180,6 +180,7 @@
               <nav
                 v-if="sidebarNavigationItems.length > 0"
                 class="grid grid-cols-1 pb-24"
+                aria-label="Mobile sidebar"
               >
                 <!-- @slot Mobile sidebar navigation content wrapper. @binding items, collapsed -->
                 <slot
@@ -540,6 +541,7 @@
             <nav
               v-if="sidebarNavigationItems.length > 0"
               class="grid grid-cols-1 pb-24"
+              aria-label="Sidebar"
             >
               <!-- @slot Nav content. @binding items, collapsed -->
               <slot
@@ -786,17 +788,17 @@
           </div>
         </main>
 
-        <div
-          v-if="hasSlot('footer-top')"
-          class="px-4"
-        >
-          <!-- @slot Footer top content. Great for application-specific footer content. -->
-          <slot name="footer-top" />
-        </div>
-
         <!-- Footer -->
-        <footer class="text-xs p-4">
-          <div class="border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
+        <footer>
+          <div
+            v-if="hasSlot('footer-top')"
+            class="p-4"
+          >
+            <!-- @slot Footer top content. Great for application-specific footer content. -->
+            <slot name="footer-top" />
+          </div>
+
+          <div class="text-xs p-4 border-t border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
               <sds-link
                 href="https://sei.cmu.edu"

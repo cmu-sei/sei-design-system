@@ -80,6 +80,15 @@
     <template #action-bar>
       Hello world
     </template>
+    <template #footer-top>
+      Footer top
+    </template>
+    <template #footer-middle>
+      Footer middle
+    </template>
+    <template #footer-right>
+      Footer right
+    </template>
   </sds-layout-app>
 </template>
 

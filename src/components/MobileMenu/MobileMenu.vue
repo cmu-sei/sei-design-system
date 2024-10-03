@@ -2,6 +2,7 @@
   <nav
     data-id="sds-mobilemenu"
     role="menu"
+    :aria-label="ariaLabel"
   >
     <SdsPanel
       v-model="showPanel"
@@ -121,6 +122,10 @@ const props = defineProps({
    * The z-index for the popover.
    */
   zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  /**
+   * Sets the aria-label for the component
+   */
+  ariaLabel: { type: String, default: undefined }
 });
 
 const emits = defineEmits([
