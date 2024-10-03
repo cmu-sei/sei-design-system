@@ -20,8 +20,6 @@
       <div class="space-y-4">
         <SdsDatepicker
           v-model="singleModelValue"
-          :min="min"
-          :max="max"
           placement="right"
           mode="date"
           size="md"
