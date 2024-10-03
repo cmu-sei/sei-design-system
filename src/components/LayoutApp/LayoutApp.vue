@@ -792,12 +792,13 @@
         <footer>
           <div
             v-if="hasSlot('footer-top')"
-            class="p-4 pb-0"
+            class="p-4"
           >
             <!-- @slot Footer top content. Great for application-specific footer content. -->
             <slot name="footer-top" />
-            <hr class="mt-4 border-t border-gray-200 dark:border-gray-800">
           </div>
+
+          <hr class="mx-4 border-t border-gray-200 dark:border-gray-800">
 
           <div class="text-xs p-4 flex flex-col lg:flex-row gap-4 pt-4">
             <div class="flex-shrink-0 flex order-2 lg:order-1">
