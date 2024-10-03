@@ -554,7 +554,7 @@ const formatDate = (dateString: string) => {
     const dateIsBeforeMin = isBefore(date, props.min)
     const dateIsAfterMax = isAfter(subDays(date, 1), props.max)
     const dateEqualsMax = isEqual(subDays(date, 1), props.max)
-    if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
+    if ((props.min === null && props.max === null) || !dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
       return { date, text: format(date, inputFormat.value) }
     }
   }
