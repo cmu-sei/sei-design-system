@@ -845,11 +845,7 @@ const setModelValueDate = (day: number, isNextMonth = false) => {
       }
     }
   } else {
-    const start = (date.value as CalendarRange).start;
-      date.value = {
-        start: start,
-        end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
-      }
+      date.value = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
   }
 
   nextTick(() => {
