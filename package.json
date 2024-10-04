@@ -21,8 +21,7 @@
     "storybook-static",
     "dist",
     "src",
-    "volar.d.ts",
-    "sds-types.d.ts"
+    "volar.d.ts"
   ],
   "sideEffects": false,
   "module": "./dist/index.mjs",
@@ -35,8 +34,7 @@
     },
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
-    "./volar": "./volar.d.ts",
-    "./sds-types": "./sds-types.d.ts"
+    "./volar": "./volar.d.ts"
   },
   "types": "./dist/types/src/components/index.d.ts",
   "main": "./dist/index.umd.js",
