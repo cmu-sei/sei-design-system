@@ -51,7 +51,7 @@ export type {
 }
 
 export namespace SDS {
-  export {
+  export type {
     DropdownPlacement,
     CalendarDate,
     CalendarMode,
