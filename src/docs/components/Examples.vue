@@ -2110,13 +2110,13 @@
 </template>
 
 <script lang="ts">
-import { CalendarMode } from '../../components/Calendar/Calendar.vue';
-import { FilterByDropdownOption } from '../../components/FilterByDropdown/FilterByDropdown.vue';
-import { MegaMenuItem } from '../../components/MegaMenu/MegaMenu.vue';
-import { MultiselectOption } from '../../components/Multiselect/Multiselect.vue';
-import { TableField, TableItem } from '../../components/Table/Table.vue';
-import { TabItem } from '../../components/Tabs/Tabs.vue';
-import { ToasterToast } from '../../components/Toaster/Toaster.vue';
+import type { CalendarMode } from '../../components/Calendar/Calendar.vue'
+import type { FilterByDropdownOption } from '../../components/FilterByDropdown/FilterByDropdown.vue'
+import type { MegaMenuItem } from '../../components/MegaMenu/MegaMenu.vue'
+import type { MultiselectOption } from '../../components/Multiselect/Multiselect.vue'
+import type { TableField, TableItem } from '../../components/Table/Table.vue'
+import type { TabItem } from '../../components/Tabs/Tabs.vue'
+import type { ToasterToast } from '../../components/Toaster/Toaster.vue'
 
 interface MegaMenuContent {
   aboutLink?: {

@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { Uid } from "@shimyshack/uid";
 
-type RadioGroupOptionValue = boolean | string | number
+export type RadioGroupOptionValue = boolean | string | number
 
 export interface RadioGroupOption<T> {
   [key: string]: T

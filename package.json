@@ -21,13 +21,12 @@
     "storybook-static",
     "dist",
     "src",
-    "volar.d.ts"
+    "volar.d.ts",
+    "sds-types.d.ts"
   ],
   "sideEffects": false,
-  "main": "./dist/index.umd.js",
   "module": "./dist/index.mjs",
   "type": "module",
-  "types": "./dist/types/src/components/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/src/components/index.d.ts",
@@ -36,8 +35,11 @@
     },
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
-    "./volar": "./volar.d.ts"
+    "./volar": "./volar.d.ts",
+    "./sds-types": "./sds-types.d.ts"
   },
+  "types": "./dist/types/src/components/index.d.ts",
+  "main": "./dist/index.umd.js",
   "bugs": {
     "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
   },

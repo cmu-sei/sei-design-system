@@ -1,3 +1,5 @@
+export type * from "../../sds-types"
+
 import { App, Component } from "vue";
 import SdsActionButton from "./ActionButton";
 import SdsActionDropdown from "./ActionDropdown";

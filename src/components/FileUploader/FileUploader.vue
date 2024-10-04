@@ -159,7 +159,7 @@
 <script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
 
-type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
+export type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
 
 const emit = defineEmits(['add', 'remove', 'remove-invalid', 'update:model-value'])
 
