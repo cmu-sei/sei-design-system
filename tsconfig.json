@@ -14,7 +14,7 @@
     "target": "esnext",
     "types": ["vite/client", "web-bluetooth", "unplugin-vue-router/client"]
   },
-  "include": ["*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "sds-types.d.ts"],
+  "include": ["*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
     "node_modules/*",
     "src/**/*.spec.js",
