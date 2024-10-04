@@ -5,14 +5,14 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
   class="flex flex-col h-screen dark:text-gray-50"
   data-id="sds-layout-app-simple"
 >
-  <div
+  <header
     class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex flex-shrink-0"
   >
-    <header
+    <div
       class="my-auto"
     >
       <!--v-if-->
-    </header>
+    </div>
     <div
       class="ml-auto my-auto items-center flex gap-2 flex-shrink-0"
     >
@@ -20,7 +20,7 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
       
       
     </div>
-  </div>
+  </header>
   <div
     class="flex grow flex-shrink-0"
   >
