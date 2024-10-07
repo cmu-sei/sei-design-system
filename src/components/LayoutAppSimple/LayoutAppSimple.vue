@@ -3,8 +3,8 @@
     data-id="sds-layout-app-simple"
     class="flex flex-col h-screen dark:text-gray-50"
   >
-    <div class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex flex-shrink-0">
-      <header class="my-auto">
+    <header class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex flex-shrink-0">
+      <div class="my-auto">
         <h1
           v-if="appSuite"
           class="block"
@@ -26,14 +26,14 @@
             <span>{{ appSuite }}</span>
           </p>
         </h1>
-      </header>
+      </div>
       <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
         <!-- @slot User section content. -->
         <slot
           name="user-section"
         />
       </div>
-    </div>
+    </header>
     <div class="flex grow flex-shrink-0">
       <!-- Main content -->
       <div class="bg-gray-50 dark:bg-black flex flex-col items-stretch grow min-w-0">
@@ -140,15 +140,7 @@
 import SdsLink from '../Link/Link.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
-export interface LayoutAppSidebarNavItem {
-  id: number | string
-  href: string
-  active: boolean
-  title: string
-  badgeCount?: number
-  iconUrl?: string
-  items?: LayoutAppSidebarNavItem[]
-}
+import type { LayoutAppSidebarNavItem } from '../LayoutApp/LayoutApp.vue'
 
 defineOptions({
   name: 'SdsLayoutAppSimple'
