@@ -5,11 +5,7 @@
 
     :class="[
       'block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline',
-      variantClass,
-      {
-        'border-l-8 border-solid border-red-700 dark:border-red-400': active,
-        'pointer-events-none opacity-50': disabled
-      }
+      variantClass
     ]"
     :disabled="disabled"
     role="menuitem"
@@ -68,12 +64,22 @@ const props = defineProps({
 const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')
 
 const variantClass = computed(() => {
+  if(props.disabled) return 'pointer-events-none bg-white text-gray-400 text-sm'
+
   switch(props.variant) {
     case 'gray':
-      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
+      if(props.active) {
+        return 'text-sm border-l-4 border-solid border-blue-500 bg-gray-25 text-gray-900 hover:bg-gray-50 hover:text-black active:bg-gray-100 active:text-black [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white dark:text-white dark:hover:bg-gray-800 dark:hover:text-white'
+      } 
+      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-black active:bg-gray-100 active:text-black [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white dark:text-white dark:hover:bg-gray-800 dark:hover:text-white'
     case 'red':
+      if(props.active) {
+        return 'text-sm border-l-4 border-solid border-red-500 bg-red-25 text-red-600 hover:bg-red-50 hover:text-red-700 active:bg-red-100 active:text-red-700 [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 dark:text-red-300 dark:hover:bg-gray-800 dark:hover:text-red-600'
+      }
+      return 'text-sm bg-white text-red-600 hover:bg-red-50 hover:text-red-700 active:bg-red-100 active:text-red-700 [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 dark:text-red-300 dark:hover:bg-gray-800 dark:hover:text-red-600'
     default:
-      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-600'
+      // Default is the same as the regular gray variant
+      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-black active:bg-gray-100 active:text-black [.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white dark:text-white dark:hover:bg-gray-800 dark:hover:text-white'
   }
 })
 </script>

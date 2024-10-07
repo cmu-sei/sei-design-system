@@ -276,6 +276,14 @@
             >
               Sign out
             </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+              active
+            >
+              Destructive item
+            </sds-dropdown-item>
           </form>
         </sds-dropdown>
         <sds-dropdown
