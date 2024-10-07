@@ -67,12 +67,12 @@
             :disabled="disabled"
             :required="required"
             :pattern="inputPattern"
-            @focusin="!readonly ? open() : undefined; !readonly ? setFocus(true, false) : focusState.start = false"
-            @keydown.tab="updateDatesFromInput(); close()"
+            @focusin="!readonly ? open() : undefined"
+            @keydown.tab="updateDatesFromInput(close)"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
             @keyup.down="!readonly ? open() : undefined"
-            @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
+            @keydown.enter.prevent="updateDatesFromInput(toggle)"
             @change="updateDatesFromInput()"
           >
         </div>
@@ -152,12 +152,12 @@
               :disabled="disabled"
               :required="required"
               :pattern="inputPattern"
-              @focusin="!readonly ? open() : undefined; !readonly ? setFocus(false, true) : focusState.end = false"
-              @keydown.tab="updateDatesFromInput(); close()"
+              @focusin="!readonly ? open() : undefined"
+              @keydown.tab="updateDatesFromInput(close)"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
               @keyup.down="!readonly ? open() : undefined"
-              @keydown.enter.prevent="updateDatesFromInput(); !readonly ? toggle() : undefined"
+              @keydown.enter.prevent="updateDatesFromInput(toggle)"
               @change="updateDatesFromInput()"
             >
           </div>
@@ -172,9 +172,7 @@
           :max="max"
           :mode="mode"
           :use-current-time-for-today="useCurrentTimeForToday"
-          :focus="focusState"
-          @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput($event, close)"
-          @update:focus="() => clearFocus(close)"
+          @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput(close)"
         />
       </div>
     </template>
@@ -285,7 +283,6 @@ const emit = defineEmits(['update:model-value'])
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()
 const endDateInput = ref()
-const focusState = ref({ start: false, end: false })
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
@@ -365,6 +362,8 @@ const localDate = computed({
     emit('update:model-value', value)
   }
 })
+
+const previousDateValues = ref<CalendarDate | CalendarRange>()
 
 const formatDate = (dateString: string) => {
   if (dateString === 'now') {
@@ -556,7 +555,8 @@ const formatDate = (dateString: string) => {
   return { date: null, text: '' }
 }
 
-watch(localDate, (value: CalendarRange | CalendarDate) => {
+watch(localDate, (value: CalendarRange | CalendarDate, oldValue) => {
+  previousDateValues.value = oldValue
   if (isRange.value) {
     const formattedStartDate = value && (value as CalendarRange).start && formatDate(format((value as CalendarRange).start as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
     const formattedEndDate = (value as CalendarRange).end && formatDate(format((value as CalendarRange).end as Date, 'yyyy-MM-dd HH:mm:ss')) || { date: null, text: '' }
@@ -580,27 +580,46 @@ watch(localDate, (value: CalendarRange | CalendarDate) => {
   }
 }, { deep: true, immediate: true })
 
-const focusCorrectInput = (value: CalendarDate | CalendarRange, close: GenericFunctionType) => {
-  if (value && value instanceof Date) {
-    (startDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && !value.start) {
-    (startDateInput.value as HTMLElement).focus()
-  } else if (value && !(value instanceof Date) && !value.end) {
-    (endDateInput.value as HTMLElement).focus()
+const focusCorrectInput = async (close: GenericFunctionType) => {
+  await nextTick()
+
+  /**
+   * Single mode
+   */
+
+  if (localDate.value instanceof Date || !localDate.value) {
+    startDateInput.value.focus()
+  }
+  
+  /**
+   * Range mode
+   */
+
+  else if (
+    typeof localDate.value === 'object' && 
+    typeof previousDateValues.value === 'object' && 
+    !(previousDateValues.value instanceof Date)
+  ) {
+    // End Date
+    if (localDate.value?.end !== previousDateValues.value?.end) {
+      endDateInput.value.focus()
+    }
+    // Start Date
+    if (localDate.value?.start !== previousDateValues.value?.start) {
+      startDateInput.value.focus()
+    }
   }
 
   if (props.mode === 'date') {
-    nextTick(() => {
-      if (isRange.value && inputDate.value.start && inputDate.value.end) {
-        close()
-      } else if (!isRange.value && inputDate.value.start) {
-        close()
-      }
-    })
+    if (isRange.value && inputDate.value.start && inputDate.value.end) {
+      close()
+    } else if (!isRange.value && inputDate.value.start) {
+      close()
+    }
   }
 }
 
-const updateDatesFromInput = () => {
+const updateDatesFromInput = (dropdownFn: null | GenericFunctionType = null) => {
   if (isRange.value) {
     const formattedStartDate = formatDate(inputDate.value.start)
     const formattedEndDate = formatDate(inputDate.value.end)
@@ -627,15 +646,9 @@ const updateDatesFromInput = () => {
       end: ''
     }
   }
-}
 
-const setFocus = (start: boolean, end: boolean) => {
-  focusState.value.start = start 
-  focusState.value.end = end
-}
-
-const clearFocus = (close: GenericFunctionType) => {
-  focusState.value.start = false
-  focusState.value.end = false
+  if (!props.readonly && dropdownFn) {
+    dropdownFn()
+  }
 }
 </script>
