@@ -801,7 +801,7 @@ const updateOptions = (s: MultiselectOption[]) => {
   emit("update-options", s);
 }
 
-const open = () => {
+const open = async () => {
   if (props.disabled) return;
   if (!showDropdown.value) {
     /**
@@ -810,9 +810,8 @@ const open = () => {
     emit("open");
     focusInput();
     isOpen.value = true;
-    nextTick(() => {
-      arrowCounter.value = 0;
-    });
+    await nextTick()
+    arrowCounter.value = 0;
   }
 }
 
@@ -1031,23 +1030,22 @@ const handleOutsideKeyUp = ($event: KeyboardEvent) => {
   if (active.value) active.value = false;
 }
 
-const positionDropdown = () => {
+const positionDropdown = async () => {
   if (!showDropdown.value) return;
-  nextTick(() => {
-    if (props.openDirection === "down") dropUp.value = false;
-    if (props.openDirection === "up") {
-      dropUp.value = true;
-      bottom.value = root.value.clientHeight + "px";
-    }
-    if (props.openDirection === "auto") {
-      // const spaceAbove = root.value.getBoundingClientRect().top
-      const spaceBelow =
-        window.innerHeight - root.value.getBoundingClientRect().bottom;
-      const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
-      dropUp.value = notEnoughSpaceBelow;
-      bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
-    }
-  });
+  await nextTick()
+  if (props.openDirection === "down") dropUp.value = false;
+  if (props.openDirection === "up") {
+    dropUp.value = true;
+    bottom.value = root.value.clientHeight + "px";
+  }
+  if (props.openDirection === "auto") {
+    // const spaceAbove = root.value.getBoundingClientRect().top
+    const spaceBelow =
+      window.innerHeight - root.value.getBoundingClientRect().bottom;
+    const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
+    dropUp.value = notEnoughSpaceBelow;
+    bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+  }
 }
 
 const handleEsc = () => {
