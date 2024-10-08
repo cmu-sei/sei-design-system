@@ -555,7 +555,7 @@ onMounted(async () => {
 
 watch(() => props.modelValue, () => {
   updateTimeSelects()
-})
+}, { deep: true })
 
 const initTimeMode = () => {
   if (props.mode === 'time') {
@@ -736,24 +736,32 @@ const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
 const setModelValueDate = async (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
   if (isRange.value && date.value && !(date.value instanceof Date)) {
-    if (!date.value.start) {
-      let end = null 
-      if (date.value.end && isBefore(setDate(month,day), date.value.end)) {
-        end = date.value.end
-      }
-      
+    if (!date.value.start && !date.value.end) {
       date.value = {
         start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0),
+        end: null
+      }
+    } else if (!date.value.start && date.value.end) {
+      const newDate = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      let start = null
+      let end = null
+      if (date.value.end && isBefore(date.value.end, newDate)) {
+        start = date.value.end
+        end = newDate
+      } else {
+        start = newDate
+        end = date.value.end
+      }
+      date.value = {
+        start,
         end
       }
-
     } else if (date.value.start && !date.value.end) {
-      const start = date.value.start;
+      const start = date.value.start
       date.value = {
         start,
         end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
       }
-
     } else {
       if (
         (isDate(date.value.start) && date.value.start instanceof Date) &&
@@ -794,18 +802,12 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
             end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
           }
         }
-
       } else {
-        date.value.end = setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
-      }
-    }
-
-    await nextTick()
-    if (!date.value.start && date.value.end) {
-      const newStart = date.value.end
-      date.value = {
-        start: newStart,
-        end: null
+        const start = date.value.start
+        date.value = {
+          start,
+          end: setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+        }
       }
     }
   } else {
@@ -813,7 +815,15 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
   }
 
   await nextTick()
-  updateTimeSelects()
+
+  if (!(date.value instanceof Date)) {
+    if (date.value.start instanceof Date && date.value.end instanceof Date) {
+      const start = dateFnsMin([date.value.start, date.value.end])
+      const end = dateFnsMax([date.value.start, date.value.end])
+      date.value.start = start
+      date.value.end = end
+    }
+  }
 }
 
 const dateIsBeforeMin = (day: number, isNextMonth = false) => {
