@@ -487,6 +487,13 @@ const props = defineProps({
    * If false, this sets the time to the start of the date.
    */
   useCurrentTimeForToday: { type: Boolean, default: false },
+  /**
+   * Determines the input to prioritize for changes to the modelValue.
+   */
+  inputToChange: {
+    type: String as PropType<'start' | 'end'>,
+    default: undefined
+  }
 })
 
 const emit = defineEmits(['update:model-value'])
@@ -767,8 +774,8 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
         (isDate(date.value.start) && date.value.start instanceof Date) &&
         (isDate(date.value.end) && date.value.end instanceof Date)
       ) {
-        const start = isBefore(date.value.start, date.value.end) ? date.value.start : date.value.end
-        const end = isBefore(date.value.start, date.value.end) ? date.value.end : date.value.start
+        const start = dateFnsMin([date.value.start, date.value.end])
+        const end = dateFnsMax([date.value.start, date.value.end])
 
         const startWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(start, 0), 0), 0), 0)
         const endWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(end, 0), 0), 0), 0)
@@ -784,22 +791,39 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
         } else if (newDateWithoutTime.valueOf() === endWithoutTime.valueOf()) {
           date.value = { 
             start, 
-            end: null 
+            end: null
           }
         } else if (isBefore(newDate, start)) {
           date.value = { 
-            start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0), 
+            start: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : newDateWithoutTime, 
             end 
           }
         } else if (isAfter(newDate, start)) {
-          date.value = { 
-            start, 
-            end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
+          if (props.inputToChange === 'start') {
+            const newValue = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : newDateWithoutTime
+            if (isAfter(newValue, date.value.end)) {
+              const start = date.value.start
+              date.value = {
+                start,
+                end: newValue
+              }
+            } else {
+              const endValue = date.value.end
+              date.value = { 
+                start: dateFnsMin([newValue, endValue]),
+                end: dateFnsMax([newValue, endValue])
+              }
+            }
+          } else {
+            date.value = { 
+              start, 
+              end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : newDateWithoutTime
+            }
           }
         } else {
           date.value = { 
             start, 
-            end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0) 
+            end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : newDateWithoutTime
           }
         }
       } else {

@@ -68,6 +68,8 @@
             :required="required"
             :pattern="inputPattern"
             @focusin="!readonly ? open() : undefined"
+            @mouseup="inputToChange = 'start'"
+            @keyup="inputToChange = 'start'"
             @keydown.tab="updateDatesFromInput(close)"
             @mousedown.stop="!readonly ? toggle() : undefined"
             @keyup.up="close()"
@@ -153,6 +155,8 @@
               :required="required"
               :pattern="inputPattern"
               @focusin="!readonly ? open() : undefined"
+              @mouseup="inputToChange = 'end'"
+              @keyup="inputToChange = 'end'"
               @keydown.tab="updateDatesFromInput(close)"
               @mousedown.stop="!readonly ? toggle() : undefined"
               @keyup.up="close()"
@@ -172,6 +176,7 @@
           :max="max"
           :mode="mode"
           :use-current-time-for-today="useCurrentTimeForToday"
+          :input-to-change="inputToChange"
           @update:model-value="($event: CalendarDate | CalendarRange) => focusCorrectInput(close)"
         />
       </div>
@@ -362,6 +367,8 @@ const localDate = computed({
     emit('update:model-value', value)
   }
 })
+
+const inputToChange = ref<'start' | 'end'>()
 
 const previousDateValues = ref<CalendarDate | CalendarRange>()
 
@@ -600,13 +607,19 @@ const focusCorrectInput = async (close: GenericFunctionType) => {
     typeof previousDateValues.value === 'object' && 
     !(previousDateValues.value instanceof Date)
   ) {
-    if (localDate.value?.start !== previousDateValues.value?.start && localDate.value?.end !== previousDateValues.value?.end) {
+    if (inputToChange.value === 'start') {
+      startDateInput.value.focus()
+    } else if (inputToChange.value === 'end') {
       endDateInput.value.focus()
     } else {
-      if (localDate.value?.start !== previousDateValues.value?.start) {
-        startDateInput.value.focus()
-      } else {
+      if (localDate.value?.start !== previousDateValues.value?.start && localDate.value?.end !== previousDateValues.value?.end) {
         endDateInput.value.focus()
+      } else {
+        if (localDate.value?.start !== previousDateValues.value?.start) {
+          startDateInput.value.focus()
+        } else {
+          endDateInput.value.focus()
+        }
       }
     }
   }
