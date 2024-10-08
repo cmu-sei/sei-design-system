@@ -603,13 +603,10 @@ const focusCorrectInput = async (close: GenericFunctionType) => {
     if (localDate.value?.start !== previousDateValues.value?.start && localDate.value?.end !== previousDateValues.value?.end) {
       endDateInput.value.focus()
     } else {
-      // End Date
-      if (localDate.value?.end !== previousDateValues.value?.end) {
-        endDateInput.value.focus()
-      } 
-      // Start Date
-      else if (localDate.value?.start !== previousDateValues.value?.start) {
+      if (localDate.value?.start !== previousDateValues.value?.start) {
         startDateInput.value.focus()
+      } else {
+        endDateInput.value.focus()
       }
     }
   }
