@@ -343,16 +343,13 @@ const inputFormat = computed(() => {
 const inputPattern = computed(() => {
   switch (props.mode) {
     case 'date':
-      // eslint-disable-next-line no-useless-escape
-      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
     case 'time':
-      return '/[0-9]{2}:[0-9]{2} [a|p]m/'
+      return '[0-9]{2}:[0-9]{2} [a|p]m'
     case 'dateTime':
-      // eslint-disable-next-line no-useless-escape
-      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m/'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m'
     default:
-      // eslint-disable-next-line no-useless-escape
-      return '/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
   }
 })
 
