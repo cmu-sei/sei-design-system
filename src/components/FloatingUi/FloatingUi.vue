@@ -269,14 +269,13 @@ const update = async () => {
 
 let cleanup: null | GenericFunctionType = null
 
-watch(open, (value) => {
+watch(open, async (value) => {
   if (value) {
-    nextTick(() => {
-      update()
-      if (triggerRef.value && popperRef.value) {
-        cleanup = autoUpdate(triggerRef.value, popperRef.value, update);
-      }
-    })
+    await nextTick()
+    update()
+    if (triggerRef.value && popperRef.value) {
+      cleanup = autoUpdate(triggerRef.value, popperRef.value, update);
+    }
   } else {
     if (cleanup) {
       cleanup()

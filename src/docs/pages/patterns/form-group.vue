@@ -79,28 +79,37 @@
         :invalid="invalid"
       />
     </SdsFormGroup>
-    <SdsFormGroup
-      v-slot="{ disabled, readonly, required, valid, invalid }"
-      :state="state"
-      el="fieldset"
-      label="Field label"
-      helper-text="Field helper text"
-      valid-feedback="Field valid feedback"
-      invalid-feedback="Field invalid feedback"
-      label-position="left"
-      label-alignment="right"
-      :label-width="4"
-      :label-margin="3"
-    >
-      <SdsDatepicker
-        v-model="datepickerModelValue"
-        :disabled="disabled"
-        :readonly="readonly"
-        :required="required"
-        :valid="valid"
-        :invalid="invalid"
-      />
-    </SdsFormGroup>
+    <form @submit.prevent>
+      <SdsFormGroup
+        v-slot="{ disabled, readonly, required, valid, invalid }"
+        :state="state"
+        el="fieldset"
+        label="Field label"
+        helper-text="Field helper text"
+        valid-feedback="Field valid feedback"
+        invalid-feedback="Field invalid feedback"
+        label-position="left"
+        label-alignment="right"
+        :label-width="4"
+        :label-margin="3"
+        required
+      >
+        <SdsDatepicker
+          v-model="datepickerModelValue"
+          :disabled="disabled"
+          :readonly="readonly"
+          :required="required"
+          :valid="valid"
+          :invalid="invalid"
+        />
+      </SdsFormGroup>
+      <SdsButton
+        kind="primary"
+        type="submit"
+      >
+        Submit
+      </SdsButton>
+    </form>
     <SdsFormGroup
       v-slot="{ required, disabled }"
       el="fieldset"
