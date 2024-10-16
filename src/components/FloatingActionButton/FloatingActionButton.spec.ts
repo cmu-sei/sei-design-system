@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './FloatingActionButton.vue'
 
 describe('SdsFloatingActionButton', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: [
           { key: 'tab1', tabName: 'Tab 1', title: 'Active Tab 1', active: true },

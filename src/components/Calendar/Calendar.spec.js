@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Calendar.vue'
 
 describe('Calendar', () => {
@@ -7,7 +7,7 @@ describe('Calendar', () => {
     const date = new Date(2021, 11, 19)
     vi.useFakeTimers()
     vi.setSystemTime(date)
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: null
       }
@@ -23,7 +23,7 @@ describe('Calendar', () => {
     vi.useFakeTimers()
     vi.setSystemTime(systemDate)
 
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: start, end: end},
         mode: 'date'
@@ -40,7 +40,7 @@ describe('Calendar', () => {
     vi.useFakeTimers()
     vi.setSystemTime(systemDate)
 
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: start, end: end},
         mode: 'dateTime'
@@ -57,7 +57,7 @@ describe('Calendar', () => {
     vi.useFakeTimers()
     vi.setSystemTime(systemDate)
 
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: start, end: end},
         mode: 'time'
@@ -74,7 +74,7 @@ describe('Calendar', () => {
     vi.useFakeTimers()
     vi.setSystemTime(systemDate)
 
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: start, end: end},
         min: new Date(2021, 11, 15),

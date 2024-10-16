@@ -22,13 +22,8 @@ export default defineConfig({
   test: {
     coverage: {
       include: [
-        'src/components/**/*.{spec,vue}',
+        'src/components/**/*.vue',
         'src/helpers/*.{js,ts}'
-      ],
-      exclude: [
-        ...configDefaults.exclude,
-        'scripts/templates/*',
-        'src/docs/*'
       ],
       provider: 'v8'
     },

@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from "./Paginator.vue";
 
 describe("Paginator.vue", () => {
   it("is a Vue instance", () => {
-    const wrapper = shallowMount(Component);
+    const wrapper = mount(Component);
     expect(wrapper.vm).toBeTruthy();
   });
 
   it("matches snapshot with no props assigned", () => {
     const props = {};
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -18,7 +18,7 @@ describe("Paginator.vue", () => {
     const props = {
       totalPages: 10,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -27,7 +27,7 @@ describe("Paginator.vue", () => {
       currentPage: 3,
       totalPages: 10,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -36,7 +36,7 @@ describe("Paginator.vue", () => {
       loading: true,
       totalPages: 10,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -45,7 +45,7 @@ describe("Paginator.vue", () => {
       threshold: 10,
       totalPages: 100,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -56,7 +56,7 @@ describe("Paginator.vue", () => {
       loading: true,
       totalPages: 100,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -65,7 +65,7 @@ describe("Paginator.vue", () => {
       threshold: 10,
       totalPages: 3,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -75,7 +75,7 @@ describe("Paginator.vue", () => {
       threshold: 5,
       totalPages: 15,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -90,7 +90,7 @@ describe("Paginator.vue", () => {
       currentPage: 4,
       totalPages: 15,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     wrapper.find('button').trigger('click')
     expect(wrapper.emitted('go-to-page')).toBeTruthy();
   });
