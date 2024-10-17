@@ -1,7 +1,7 @@
 import type { SnapshotSerializer } from 'vitest'
 import { vi, expect } from 'vitest'
 import { config } from '@vue/test-utils'
-import SeiDesignSystem from '@sds/components-vue3'
+import SeiDesignSystem from './src/components'
 
 config.global.plugins.push(SeiDesignSystem)
 
