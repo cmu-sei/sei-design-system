@@ -8,7 +8,7 @@
     "lint": "NODE_OPTIONS='--trace-warnings' eslint .",
     "test": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest run -c vite-library.config.js",
     "test:watch": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest -c vite-library.config.js",
-    "test:clean": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components vitest run -u -c vite-library.config.js",
+    "test:clean": "vitest run -u",
     "coverage": "vitest run --coverage",
     "bundle:release": "./scripts/bundle-release.sh",
     "release": "./scripts/release.sh",
