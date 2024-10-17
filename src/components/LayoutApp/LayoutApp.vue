@@ -1030,17 +1030,16 @@ const collapsed = computed({
   }
 })
 
-watch(showMobileMenu, (value) => {
+watch(showMobileMenu, async (value) => {
   if (value) {
     // prevent scrolling
-    document.documentElement.classList.add("layout-app-internal-prevent-scroll");
-    nextTick(() => {
-      (mobileMenuCloseBtn.value as HTMLButtonElement).focus()
-    })
+    document.documentElement.classList.add("layout-app-internal-prevent-scroll")
+    await nextTick()
+    mobileMenuCloseBtn.value.focus()
   } else {
     // enable scrolling
-    document.documentElement.classList.remove("layout-app-internal-prevent-scroll");
-    (mobileMenuOpenBtn.value as HTMLButtonElement).focus()
+    document.documentElement.classList.remove("layout-app-internal-prevent-scroll")
+    mobileMenuOpenBtn.value.focus()
   }
 })
 
