@@ -17,7 +17,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have the proper title', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -33,7 +33,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have a primary kind with a gray variant', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -50,7 +50,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have a secondary kind with a red variant', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -67,7 +67,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have a ghost kind with a blue variant', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -84,7 +84,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have an xs size', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -102,7 +102,7 @@ describe('ActionDropdown', () => {
   })
   
   it('should have a md size', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -120,7 +120,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should have a lg size', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -138,7 +138,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should hide the arrow', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -157,7 +157,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should be block styling', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -176,7 +176,7 @@ describe('ActionDropdown', () => {
   })
 
   it('should be disabled', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {

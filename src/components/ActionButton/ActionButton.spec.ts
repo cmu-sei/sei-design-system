@@ -26,7 +26,7 @@ describe('ActionButton', () => {
   })
 
   it('should match its kind secondary, variant gray snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -39,7 +39,7 @@ describe('ActionButton', () => {
   })
 
   it('should match its kind ghost, variant red snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -52,7 +52,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a submit button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -66,7 +66,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a xs button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -80,7 +80,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a md button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -94,7 +94,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a lg button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -108,7 +108,7 @@ describe('ActionButton', () => {
   })
 
   it('should be an active button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -122,7 +122,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a disabled button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
@@ -136,7 +136,7 @@ describe('ActionButton', () => {
   })
 
   it('should be a block button', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
