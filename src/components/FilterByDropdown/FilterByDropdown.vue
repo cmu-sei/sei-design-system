@@ -125,6 +125,7 @@
 </template>
 
 <script setup lang="ts">
+import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
 import { Uid } from '@shimyshack/uid'

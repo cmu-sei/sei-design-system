@@ -34,6 +34,6 @@ export default defineConfig({
       'scripts/templates/*',
       'src/docs/*'
     ],
-    setupFiles: './setup.ts',
+    setupFiles: ['./setup.ts']
   }
 })

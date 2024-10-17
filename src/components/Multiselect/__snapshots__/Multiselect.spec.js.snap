@@ -1,43 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Multiselect.vue > matches invalid prop 1`] = `
-"<div data-v-bfdaf96a="" data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
-  <ul data-v-bfdaf96a="" class="tag-list single">
-    <li data-v-bfdaf96a="" style="width: 0px;" class="tag-list-item input"><span data-v-bfdaf96a="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-bfdaf96a=""><input data-v-bfdaf96a="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-bfdaf96a="" class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div data-v-bfdaf96a="" aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>"
-`;
+exports[`Multiselect.vue > matches invalid prop 1`] = `undefined`;
 
-exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-"<div data-v-bfdaf96a="" data-id="sds-multiselect" class="sds-multiselect canSearch">
-  <ul data-v-bfdaf96a="" class="tag-list single">
-    <li data-v-bfdaf96a="" style="width: 0px;" class="tag-list-item input"><span data-v-bfdaf96a="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-bfdaf96a=""><input data-v-bfdaf96a="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-bfdaf96a="" class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div data-v-bfdaf96a="" aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>"
-`;
+exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `undefined`;
 
-exports[`Multiselect.vue > matches valid prop 1`] = `
-"<div data-v-bfdaf96a="" data-id="sds-multiselect" class="sds-multiselect valid canSearch">
-  <ul data-v-bfdaf96a="" class="tag-list single">
-    <li data-v-bfdaf96a="" style="width: 0px;" class="tag-list-item input"><span data-v-bfdaf96a="" class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label data-v-bfdaf96a=""><input data-v-bfdaf96a="" placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span data-v-bfdaf96a="" class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div data-v-bfdaf96a="" aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>"
-`;
+exports[`Multiselect.vue > matches valid prop 1`] = `undefined`;

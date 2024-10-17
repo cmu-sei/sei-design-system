@@ -1,12 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ExpandCollapse > should match its default snapshot 1`] = `
-<button
-  aria-disabled="false"
-  class="link link-cta link-cta-down link-primary link-blue"
-  data-id="sds-expand-collapse"
-  type="button"
->
-  Show more
-</button>
-`;
+exports[`ExpandCollapse > should match its default snapshot 1`] = `<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-blue" aria-disabled="false">Show more</button>`;
