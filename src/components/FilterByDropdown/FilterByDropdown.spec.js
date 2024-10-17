@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from "./FilterByDropdown.vue";
 
 describe("FilterByDropdown.vue", () => {
   it("is a Vue instance", () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -18,7 +18,7 @@ describe("FilterByDropdown.vue", () => {
 
   it("matches snapshot with no props assigned", async () => {
     const props = {};
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props,
       directives: {
         'uid': {
@@ -33,7 +33,7 @@ describe("FilterByDropdown.vue", () => {
 
   it("disabled prop", async () => {
     const props = { disabled: true };
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props,
       directives: {
         'uid': {

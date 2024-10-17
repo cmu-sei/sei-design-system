@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Badge.vue'
 
 describe('Badge', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Badge'
       }
@@ -13,7 +13,7 @@ describe('Badge', () => {
   })
 
   it('should match its variant primary, type light-border snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Badge'
       },

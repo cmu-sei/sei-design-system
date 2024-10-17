@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from "./TopFiveChart.vue";
 
 describe("TopFiveChart.vue", () => {
   it("is a Vue instance", () => {
-    const wrapper = shallowMount(Component);
+    const wrapper = mount(Component);
     expect(wrapper.vm).toBeTruthy();
   });
 
   it("matches snapshot with no props assigned", () => {
     const props = {};
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -49,7 +49,7 @@ describe("TopFiveChart.vue", () => {
       showPercent: true,
       progressColor: "cyan",
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -86,7 +86,7 @@ describe("TopFiveChart.vue", () => {
       ],
       doNotLinkEntries: true,
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -99,7 +99,7 @@ describe("TopFiveChart.vue", () => {
       ],
       progressColor: "orange",
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -108,7 +108,7 @@ describe("TopFiveChart.vue", () => {
       title: "Top Five Chart (no data)",
       entries: [],
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -120,7 +120,7 @@ describe("TopFiveChart.vue", () => {
         { id: 2, title: "Test 2" },
       ],
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 });

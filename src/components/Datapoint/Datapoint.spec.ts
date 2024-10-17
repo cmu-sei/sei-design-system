@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Datapoint.vue'
 
 describe('Datapoint', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: '4000',
         label: 'label',
@@ -15,7 +15,7 @@ describe('Datapoint', () => {
   })
 
   it('should match its variant green, size sm, label, and context slots snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: '2000'
       },

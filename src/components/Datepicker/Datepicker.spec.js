@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Datepicker.vue'
 
 describe('Datepicker', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {})
+    const wrapper = mount(Component, {})
     expect(wrapper.element).toMatchSnapshot()
   })
 
   it('should show the arrow for a range selection', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3), end: new Date(2022, 8, 8) },
       }
@@ -18,7 +18,7 @@ describe('Datepicker', () => {
   })
 
   it('should hide arrow for a range selection', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3), end: new Date(2022, 8, 8) },
         hideArrow: true
@@ -28,7 +28,7 @@ describe('Datepicker', () => {
   })
 
   it('should show the sm size with the dateTime mode', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         size: 'sm',
@@ -39,7 +39,7 @@ describe('Datepicker', () => {
   })
 
   it('should show the sm size with the time mode', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         size: 'sm',
@@ -50,7 +50,7 @@ describe('Datepicker', () => {
   })
 
   it('should show required', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         required: true
@@ -60,7 +60,7 @@ describe('Datepicker', () => {
   })
 
   it('should show disabled', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         disabled: true
@@ -70,7 +70,7 @@ describe('Datepicker', () => {
   })
 
   it('should show valid', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         valid: true
@@ -80,7 +80,7 @@ describe('Datepicker', () => {
   })
 
   it('should show invalid', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         invalid: true
@@ -90,7 +90,7 @@ describe('Datepicker', () => {
   })
 
   it('should show readonly', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         modelValue: { start: new Date(2022, 8, 3, 8, 0, 0), end: new Date(2022, 8, 8, 10, 0, 0) },
         readonly: true

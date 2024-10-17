@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Tabs.vue'
 
 describe('Tabs', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       directives: {
         'uid': {
           created(el) {
@@ -19,6 +19,6 @@ describe('Tabs', () => {
 
 it("matches disabled prop", () => {
   const props = { disabled: true };
-  const wrapper = shallowMount(Component, { props });
+  const wrapper = mount(Component, { props });
   expect(wrapper.html()).toContain('disabled="true"');
 });

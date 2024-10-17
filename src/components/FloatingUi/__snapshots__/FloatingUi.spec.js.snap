@@ -1,8 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`FloatingUi.vue > matches snapshot with no props assigned 1`] = `
-"<div class="inline-block">
-  <div class="inline-block w-full"></div>
-  <!---->
-</div>"
-`;
+exports[`FloatingUi.vue > matches snapshot with no props assigned 1`] = `undefined`;

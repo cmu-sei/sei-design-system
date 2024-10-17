@@ -54,6 +54,7 @@ export default defineConfig({
     exclude: [
       ...configDefaults.exclude,
       'scripts/templates/*'
-    ]
+    ],
+    setupFiles: ['./setup.ts']
   },
 })
