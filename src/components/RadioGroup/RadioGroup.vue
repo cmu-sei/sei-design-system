@@ -12,12 +12,13 @@
     <div
       v-for="(option, index) in options"
       :key="`${root?.id}_${JSON.stringify(option)}`"
-      class="flex gap-2 items-center"
+      class="flex gap-2 items-start"
     >
       <input
         :id="`${root?.id}__option_${index}`"
         v-model="localModelValue"
         type="radio"
+        class="relative top-1"
         :class="{ valid, invalid }"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
