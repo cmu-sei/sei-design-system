@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Button.vue'
 
 describe('Button', () => {
   /* Default button snapshot. Tests slot content. */
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: { default: 'Button' }
     })
     expect(wrapper.html()).toMatchSnapshot()
@@ -22,7 +22,7 @@ describe('Button', () => {
   /* Loop through options and test against each one */
   kinds.forEach(kind => {
     it(`should match its kind (${kind}) snapshot`, () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         slots: { default: `Button ${kind}` },
         props: { kind: kind }
       })
@@ -35,7 +35,7 @@ describe('Button', () => {
 
   variants.forEach(variant => {
     it(`should match its variant (${variant}) snapshot`, () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         slots: { default: `Button ${variant}` },
         props: { variant: variant }
       })
@@ -48,7 +48,7 @@ describe('Button', () => {
 
   types.forEach(type => {
     it(`should match its type (${type}) snapshot`, () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         slots: { default: `Button ${type}` },
         props: { type: type }
       })
@@ -61,7 +61,7 @@ describe('Button', () => {
 
   sizes.forEach(size => {
     it(`should match its size (${size}) snapshot`, () => {
-      const wrapper = shallowMount(Component, {
+      const wrapper = mount(Component, {
         slots: { default: `Button ${size}` },
         props: { size: size }
       })
@@ -76,7 +76,7 @@ describe('Button', () => {
 
   /* Modifiers (boolean: true/false) */
   it('should match its active snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: { default: 'Button active' },
       props: { active: true }
     })
@@ -87,7 +87,7 @@ describe('Button', () => {
   })
 
   it('should match its disabled snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: { default: 'Button disabled' },
       props: { disabled: true }
     })
@@ -98,7 +98,7 @@ describe('Button', () => {
   })
 
   it('should match its block snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: { default: 'Button block' },
       props: { block: true }
     })
@@ -109,7 +109,7 @@ describe('Button', () => {
   })
 
   it('should match its pending snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: { pending: true }
     })
     expect(wrapper.element).toMatchSnapshot()
@@ -132,7 +132,7 @@ describe('Button', () => {
   }
 
   it('should click', async () => {
-    const wrapper = shallowMount(App)
+    const wrapper = mount(App)
     expect(wrapper.html()).toMatchSnapshot()
     /* Test click trigger (increments by one) */
     await wrapper.trigger('click').then(() => {

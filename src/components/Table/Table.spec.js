@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from "./Table.vue";
 
 describe("Table.vue", () => {
   it("matches snapshot with no props assigned", () => {
     const props = {};
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -36,7 +36,7 @@ describe("Table.vue", () => {
         },
       ],
     };
-    const wrapper = shallowMount(Component, { props });
+    const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
 
@@ -81,7 +81,7 @@ describe("Table.vue", () => {
         </template>
       `,
     };
-    const wrapper = shallowMount(Component, { props, slots });
+    const wrapper = mount(Component, { props, slots });
     expect(wrapper.html()).toMatchSnapshot();
   });
 });

@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Avatar.vue'
 
 
 describe('Avatar', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         variant: 'blue'
     }
@@ -14,7 +14,7 @@ describe('Avatar', () => {
   })
 
   it('should match its variant: random, size: lg, shape: circle, name: Matt Winwood, and src snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       props: {
         variant: 'red',
         size: 'lg',

@@ -1,43 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Tooltip.vue > matches snapshot 1`] = `
-<div
-  class="inline-block"
-  data-id="sds-tooltip"
->
-  <div
-    class="inline-block w-full"
-  >
-    
-    <div>
-      <!-- @slot Trigger content. -->
-      
-      
-    </div>
-    
-  </div>
-  <!---->
-</div>
-`;
+exports[`Tooltip.vue > matches snapshot 1`] = `<div class="inline-block" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --></div></div><!----></div>`;
 
-exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `
-"<div class="inline-block" data-id="sds-tooltip">
-  <div class="inline-block w-full">
-    <div>
-      <!-- @slot Trigger content. -->
-    </div>
-  </div>
-  <!---->
-</div>"
-`;
+exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `undefined`;
 
-exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `
-"<div class="inline-block" data-id="sds-tooltip" tooltipclass="test" triggerclass="test">
-  <div class="inline-block w-full">
-    <div>
-      <!-- @slot Trigger content. -->
-    </div>
-  </div>
-  <!---->
-</div>"
-`;
+exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `undefined`;

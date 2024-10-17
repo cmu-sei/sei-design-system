@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './Resizer.vue'
 
 
 describe('Resizer', () => {
   it('Should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       /* Put default props here or leave empty */
       props: {}
     })
@@ -13,7 +13,7 @@ describe('Resizer', () => {
   })
 
   it('Should match with specific props and src snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       /* Put specific (non-default) props here to test */
       props: {
         clamp: false,

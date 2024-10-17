@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Component from './ActionButton.vue'
 
 describe('ActionButton', () => {
   it('should match its default snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Button'
       }
@@ -13,7 +13,7 @@ describe('ActionButton', () => {
   })
 
   it('should match its kind primary, variant blue snapshot', () => {
-    const wrapper = shallowMount(Component, {
+    const wrapper = mount(Component, {
       slots: {
         default: 'Action Button'
       },
