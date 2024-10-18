@@ -1,14 +1,13 @@
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup.vue'
-import { vi, afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import Component from './CheckboxGroup.vue'
 
 describe('CheckboxGroup', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
 
-  const props: { 
-    modelValue: CheckboxGroupOptionValue[];
-    name?: string;
+  const props: {
+    modelValue: CheckboxGroupOptionValue[],
     options: CheckboxGroupOption<CheckboxGroupOptionValue>[]
   } = {
     modelValue: [],
@@ -20,7 +19,7 @@ describe('CheckboxGroup', () => {
   }
 
   afterEach(() => {
-    vi.clearAllMocks()
+    wrapper.unmount()
   })
 
   beforeEach(() => {
@@ -38,13 +37,6 @@ describe('CheckboxGroup', () => {
   })
 
   it('should match its default snapshot', () => {
-    expect(wrapper.element).toMatchSnapshot()
-  })
-
-  it('emits when `modelValue` changes', async () => {
-    const checkbox = wrapper.find('[id="unique-id__option_0"]')
-    await checkbox.setValue(true)
-    expect(wrapper.emitted()).toHaveProperty('input')
     expect(wrapper.element).toMatchSnapshot()
   })
 
@@ -76,5 +68,17 @@ describe('CheckboxGroup', () => {
   it('should match its snapshot with assigned `invalid` prop', async () => {
     await wrapper.setProps({ invalid: true })
     expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('emits when `modelValue` changes', async () => {
+    const checkbox = wrapper.findAll('input[type="checkbox"]')[0]
+    await checkbox.setValue(true)
+    expect(wrapper.emitted()).toHaveProperty('input')
+  })
+
+  it('emits on click event', async () => {
+    const checkbox = wrapper.findAll('input[type="checkbox"]')[0]
+    await checkbox.trigger('click')
+    expect(wrapper.emitted()['update:model-value'][0]).toEqual([['Option 1']])
   })
 })
