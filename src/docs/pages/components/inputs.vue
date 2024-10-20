@@ -177,13 +177,14 @@ const checkboxGroup = reactive({
 })
 
 const fileUploader = reactive({
-  accept: ".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json",
-  helperText: "Use a JSON, JPG, JPEG, PNG, DOC, DOCX, XLS, XLSX or CSV under 1MB.",
+  accept: ".pdf, .json, .jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv",
+  helperText: "Accepts .pdf, .json, .jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx or .csv files under 1 MB.",
   allowedFiletypes: [
+    'application/pdf',
+    'application/json',
     'image/jpeg',
     'image/png',
     'text/csv',
-    'application/json',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.ms-excel',
