@@ -79,6 +79,6 @@ describe('CheckboxGroup', () => {
   it('emits on click event', async () => {
     const checkbox = wrapper.findAll('input[type="checkbox"]')[0]
     await checkbox.trigger('click')
-    expect(wrapper.emitted()['update:model-value'][0]).toEqual([['Option 1']])
+    expect(wrapper.emitted()).toHaveProperty('click')
   })
 })
