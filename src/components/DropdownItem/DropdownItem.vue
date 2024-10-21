@@ -5,11 +5,7 @@
 
     :class="[
       'block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline',
-      variantClass,
-      {
-        'border-l-8 border-solid border-red-700 dark:border-red-400': active,
-        'pointer-events-none opacity-50': disabled
-      }
+      variantClass
     ]"
     :disabled="disabled"
     role="menuitem"
@@ -68,12 +64,32 @@ const props = defineProps({
 const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')
 
 const variantClass = computed(() => {
+  if(props.disabled) return 'pointer-events-none bg-white text-gray-400 text-sm'
+
   switch(props.variant) {
     case 'gray':
-      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-white hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800 hover:text-black dark:hover:text-white'
+      if(props.active) {
+        return 'text-sm border-l-4 border-solid border-blue-600 bg-gray-25 text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' + 
+          '[.dropdown-dark_&]:border-blue-300 [.dropdown-dark_&]:bg-gray-900 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' + 
+          'dark:border-blue-300 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100' 
+      } 
+      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
+        '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' +
+        'dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100'
     case 'red':
+      if(props.active) {
+        return 'text-sm border-l-4 border-solid border-red-600 bg-gray-25 text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' + 
+          '[.dropdown-dark_&]:border-red-300 [.dropdown-dark_&]:bg-gray-900 [.dropdown-dark_&]:text-red-300 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-red-300 [.dropdown-dark_&]:active:bg-red-900 [.dropdown-dark_&]:active:text-red-300 ' + 
+          'dark:border-red-300 dark:bg-gray-900 dark:text-red-300 dark:hover:bg-gray-850 dark:hover:text-red-300 dark:active:bg-red-900 dark:active:text-red-300'
+      } 
+        return 'text-sm bg-white text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' +
+          '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-red-300 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-red-300 [.dropdown-dark_&]:active:bg-red-900 [.dropdown-dark_&]:active:text-red-300 ' +
+          'dark:bg-gray-950 dark:text-red-300 dark:hover:bg-gray-850 dark:hover:text-red-300 dark:active:bg-red-900 dark:active:text-red-300'
     default:
-      return '[.dropdown-dark_&]:hover:bg-gray-800 [.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:text-red-300 text-red-600 hover:bg-red-50 dark:text-red-300 dark:hover:bg-gray-800 hover:text-red-600 dark:hover:text-red-600'
-  }
+      // Default is the same as the regular gray variant
+      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
+        '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' +
+        'dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100'
+    }
 })
 </script>
