@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white border border-dashed border-gray-200 rounded-lg p-3 relative"
+    class="group bg-white border border-dashed border-gray-200 rounded-lg p-3 relative"
   >
     <input
       ref="fileInput"
@@ -16,7 +16,7 @@
       @change="processFiles"
     >
     <div 
-      class="flex flex-col items-center space-y-1 rounded p-4 bg-gray-25"
+      class="flex flex-col items-center space-y-1 rounded p-4 bg-gray-25 group-hover:bg-gray-50"
       :class="{ 'bg-transparent': disabled }"
     >
       <label
@@ -38,10 +38,10 @@
           aria-hidden="true"
           role="img"
           class="my-auto"
-          width="12"
-          height="13"
+          width="11"
+          height="12"
           preserveAspectRatio="xMidYMid meet"
-          viewBox="0 0 11 13"
+          viewBox="0 0 11 12"
           file="none"
         >
           <path 
@@ -70,52 +70,47 @@
       :remove-invalid-file="removeInvalidFile"
       :byte-to-size="byteToSize"
     >
-      <ul v-if="fileList.length > 0 || invalidFileList.length > 0">
+      <ul
+        v-if="fileList.length > 0 || invalidFileList.length > 0"
+        class="flex flex-col space-y-2 mt-2"
+      >
         <li
           v-for="f in fileList"
           :key="f.name + f.size + f.type + f.lastModified"
-          class="py-2 border-b only:border-0 last:pb-0 last:border-0"
         >
-          <div class="flex">
-            <div class="my-auto flex gap-1 grow">
+          <div class="bg-white border border-gray-100 rounded flex items-center self-stretch gap-2 grow p-2">
+            <div class="bg-gray-25 flex justify-center items-center shrink-0 grow-0 w-10 h-10 p-2">
+              &nbsp;
+            </div>
+            <span class="truncate">{{ f.name }}</span>
+            <SdsActionButton
+              kind="ghost"
+              variant="red"
+              size="md"
+              class="z-10 ml-auto"
+              @click="removeFile(f)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 aria-hidden="true"
                 role="img"
-                class="w-4 h-4 my-auto text-green-700"
-                width="32"
-                height="32"
+                width="12"
+                height="13"
                 preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 512 512"
+                viewBox="0 0 12 13"
+                fill="none"
               >
-                <path
+                <path 
                   fill="currentColor"
-                  d="M243.8 339.8c-10.9 10.9-28.7 10.9-39.6 0l-64-64c-10.9-10.9-10.9-28.7 0-39.6c10.9-10.9 28.7-10.9 39.6 0l44.2 44.2l108.2-108.2c10.9-10.9 28.7-10.9 39.6 0c10.9 10.9 10.9 28.7 0 39.6l-128 128zM512 256c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0s256 114.6 256 256zM256 48C141.1 48 48 141.1 48 256s93.1 208 208 208s208-93.1 208-208S370.9 48 256 48z"
+                  d="M3.91406 0.921875C4.03125 0.664062 4.28906 0.5 4.57031 0.5H7.40625C7.6875 0.5 7.94531 0.664062 8.0625 0.921875L8.25 1.25H10.5C10.8984 1.25 11.25 1.60156 11.25 2C11.25 2.42188 10.8984 2.75 10.5 2.75H1.5C1.07812 2.75 0.75 2.42188 0.75 2C0.75 1.60156 1.07812 1.25 1.5 1.25H3.75L3.91406 0.921875ZM1.47656 3.5H10.5V11C10.5 11.8438 9.82031 12.5 9 12.5H2.97656C2.15625 12.5 1.47656 11.8438 1.47656 11V3.5ZM3.35156 5.375V10.625C3.35156 10.8359 3.53906 11 3.72656 11C3.9375 11 4.10156 10.8359 4.10156 10.625V5.375C4.10156 5.1875 3.9375 5 3.72656 5C3.53906 5 3.35156 5.1875 3.35156 5.375ZM5.60156 5.375V10.625C5.60156 10.8359 5.78906 11 5.97656 11C6.1875 11 6.375 10.8359 6.375 10.625V5.375C6.375 5.1875 6.1875 5 5.97656 5C5.78906 5 5.60156 5.1875 5.60156 5.375ZM7.875 5.375V10.625C7.875 10.8359 8.03906 11 8.25 11C8.4375 11 8.625 10.8359 8.625 10.625V5.375C8.625 5.1875 8.4375 5 8.25 5C8.03906 5 7.875 5.1875 7.875 5.375Z" 
                 />
               </svg>
-              <span class="my-auto">{{ f.name }}</span>
-              <span class="my-auto text-gray-700 text-sm uppercase">({{ byteToSize(f.size) }})</span>
-            </div>
-            <button
-              class="my-auto z-10 link hover:text-red-700 dark:hover:text-red-400"
-              @click="removeFile(f)"
-            >
-              <svg
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                class="h-5 w-5"
-                aria-hidden="true"
-              ><path d="M6 18L18 6M6 6l12 12" /></svg>
               <span class="sr-only">Remove file</span>
-            </button>
+            </SdsActionButton>
           </div>
         </li>
-        <li
+        <!-- <li
           v-for="f in invalidFileList"
           :key="f.name + f.size + f.type + f.lastModified"
           class="py-2 border-b only:border-0 last:pb-0 last:border-0"
@@ -170,7 +165,7 @@
           >
             File size is over {{ filesize }} MB.
           </p>
-        </li>
+        </li> -->
       </ul>
     </slot>
   </div>
@@ -178,6 +173,7 @@
 
 <script setup lang="ts">
 import { Uid } from '@shimyshack/uid'
+import SdsActionButton from '../ActionButton';
 
 export type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
 
