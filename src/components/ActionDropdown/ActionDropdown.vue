@@ -9,7 +9,7 @@
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
     :popper-class="{
-      'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
+      'bg-white absolute border shadow-lg rounded-md bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true
     }"

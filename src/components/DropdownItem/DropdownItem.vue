@@ -64,7 +64,7 @@ const props = defineProps({
 const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')
 
 const variantClass = computed(() => {
-  if(props.disabled) return 'pointer-events-none bg-white text-gray-400 text-sm'
+  if(props.disabled) return 'pointer-events-none text-sm bg-white text-gray-500 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-500 dark:bg-gray-950 dark:text-gray-500'
 
   switch(props.variant) {
     case 'gray':

@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-dropdown-divider"
-    class="[.dropdown-dark_&]:bg-gray-850 [.dropdown-dark_&]:border-gray-700 my-2 border-t bg-white border-gray-100 dark:border-gray-700"
+    class="my-2 border-t bg-white border-gray-100 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:border-gray-700 dark:bg-gray-950 dark:border-gray-700"
   />
 </template>
 
