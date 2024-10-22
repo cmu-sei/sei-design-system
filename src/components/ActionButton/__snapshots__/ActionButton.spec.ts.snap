@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ActionButton > should be a block button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-primary action-btn-gray action-btn-sm action-btn-block" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be a disabled button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-ghost action-btn-gray action-btn-sm disabled" disabled="" aria-disabled="true"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be a lg button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-primary action-btn-blue action-btn-lg" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be a md button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-primary action-btn-blue" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be a submit button 1`] = `<button data-id="sds-action-button" type="submit" class="action-btn action-btn-primary action-btn-blue action-btn-sm" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be a xs button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-primary action-btn-blue action-btn-xs" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should be an active button 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-secondary action-btn-red action-btn-sm active" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
 exports[`ActionButton > should match its default snapshot 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-ghost action-btn-gray action-btn-sm" aria-disabled="false"><!-- @slot Button content. -->Button</button>`;
 
+exports[`ActionButton > should match its kind ghost, variant red snapshot 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-ghost action-btn-red action-btn-sm" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
 exports[`ActionButton > should match its kind primary, variant blue snapshot 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-primary action-btn-blue action-btn-sm" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
+
+exports[`ActionButton > should match its kind secondary, variant gray snapshot 1`] = `<button data-id="sds-action-button" type="button" class="action-btn action-btn-secondary action-btn-gray action-btn-sm" aria-disabled="false"><!-- @slot Button content. -->Action Button</button>`;
