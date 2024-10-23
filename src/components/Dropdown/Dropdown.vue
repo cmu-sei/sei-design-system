@@ -9,8 +9,8 @@
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
     :popper-class="{
-      'bg-gray-850 border-gray-700': type === 'dark',
-      'bg-white absolute border shadow-lg rounded-md bg-white dark:border-gray-700 dark:bg-gray-850': true,
+      '[.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': type === 'dark',
+      'bg-white absolute border shadow-lg rounded-md bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true
     }"
@@ -67,7 +67,7 @@
       <div
         :class="[
           'py-2 rounded',
-          type === 'dark' ? 'dropdown-dark bg-gray-850': ''
+          type === 'dark' ? 'dropdown-dark bg-gray-950': ''
         ]"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
