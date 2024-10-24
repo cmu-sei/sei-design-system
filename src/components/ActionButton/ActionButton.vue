@@ -48,11 +48,7 @@
         </svg>
       </span>
       <span
-        class="inline-flex opacity-0"
-        :class="{
-          'gap-2': size !== 'xs',
-          'gap-1': size === 'xs'
-        }"
+        class="opacity-0"
       >
         <!-- @slot Action Button content. -->
         <slot />
