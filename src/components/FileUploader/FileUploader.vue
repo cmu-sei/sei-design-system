@@ -80,11 +80,26 @@
         class="flex flex-col space-y-2 mt-2"
       >
         <li
-          v-for="f in fileList"
+          v-for="(f, i) in fileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
           <div class="bg-white border border-gray-100 hover:border-gray-200 rounded flex flex-none items-center self-stretch gap-2 p-2 shadow-none hover:shadow-lg">
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 rounded">
+            <div 
+              v-if="uploadedImgSrc(f, allowedFiletypes)"
+              class="flex flex-none w-10 h-10"
+            >
+              <img
+                class="max-h-10 w-full my-auto object-contain"
+                height="auto"
+                width="auto"
+                :alt="f.name"
+                :src="uploadedImgSrc(f, allowedFiletypes)"
+              >
+            </div>
+            <div
+              v-else 
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 rounded"
+            >
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-gray-600"
@@ -97,7 +112,23 @@
                 :width="icons[isFileType(f.type)].width"
               />
             </div>
-            <span class="truncate">{{ f.name }}</span>
+            <div class="flex flex-col w-full">
+              <span class="leading-6 truncate">{{ f.name }}</span>
+              <span
+                v-if="
+                  typeof maxFilesSize !== 'undefined' && 
+                    totalFilesSize > maxFilesSize && 
+                    i === fileList.length - 1 &&
+                    !invalidFileList.length
+                "
+                class="text-xs text-red-600 leading-4"
+              >{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
+            </div>
+            <!-- @slot File type content. @binding f.type -->
+            <slot 
+              name="fileType"
+              :type="f.type"
+            />
             <SdsActionButton
               kind="ghost"
               variant="red"
@@ -120,12 +151,11 @@
           </div>
         </li>
         <li
-          v-for="f in invalidFileList"
+          v-for="(f, i) in invalidFileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
           <div class="bg-white border border-gray-100 rounded flex flex-auto items-center self-stretch gap-2 p-2 hover:shadow-lg">
             <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 rounded">
-              <!-- TODO/STS - Add support for displaying images as thumbnails -->
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-red-600"
@@ -138,7 +168,29 @@
                 :width="icons.error.width"
               />
             </div>
-            <span class="truncate">{{ f.name }}</span>
+            <div class="flex flex-col w-full">
+              <span class="leading-6 truncate">{{ f.name }}</span>
+              <span
+                v-if="f.invalidSize"
+                class="text-xs text-red-600 leading-4"
+              >{{ `File size exceeds the ${filesize} MB limit.` }}</span>
+              <span
+                v-if="
+                  typeof maxFilesSize !== 'undefined' && 
+                    totalFilesSize > maxFilesSize && 
+                    i === invalidFileList.length - 1
+                "
+                class="text-xs text-red-600 leading-4"
+              >
+                <span class="block">OR</span>
+                <span>{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
+              </span>
+            </div>
+            <!-- @slot Invalid file type content. @binding f.type -->
+            <slot 
+              name="invalidFileType"
+              :type="f.type"
+            />
             <SdsActionButton
               kind="ghost"
               variant="red"
@@ -160,62 +212,6 @@
             </SdsActionButton>
           </div>
         </li>
-        <!-- <li
-          v-for="f in invalidFileList"
-          :key="f.name + f.size + f.type + f.lastModified"
-          class="py-2 border-b only:border-0 last:pb-0 last:border-0"
-        >
-          <div class="flex">
-            <div class="my-auto flex gap-1 grow">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                aria-hidden="true"
-                role="img"
-                class="w-4 h-4 my-auto text-red-700"
-                width="32"
-                height="32"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M175 175c9.4-9.3 24.6-9.3 33.1 0l47 47.1L303 175c9.4-9.3 24.6-9.3 33.1 0c10.2 9.4 10.2 24.6 0 33.1l-46.2 47l46.2 47.9c10.2 9.4 10.2 24.6 0 33.1c-8.5 10.2-23.7 10.2-33.1 0l-47.9-46.2l-47 46.2c-8.5 10.2-23.7 10.2-33.1 0c-9.3-8.5-9.3-23.7 0-33.1l47.1-47.9l-47.1-47c-9.3-8.5-9.3-23.7 0-33.1zm337 81c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0s256 114.6 256 256zM256 48C141.1 48 48 141.1 48 256s93.1 208 208 208s208-93.1 208-208S370.9 48 256 48z"
-                />
-              </svg>
-              <span class="my-auto">{{ f.name }}</span>
-              <span class="my-auto text-gray-700 text-sm uppercase">({{ byteToSize(f.size) }})</span>
-            </div>
-            <button
-              class="my-auto z-10 link hover:text-red-700 dark:hover:text-red-400"
-              @click="removeInvalidFile(f)"
-            >
-              <svg
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                class="h-5 w-5"
-                aria-hidden="true"
-              ><path d="M6 18L18 6M6 6l12 12" /></svg>
-              <span class="sr-only">Remove file</span>
-            </button>
-          </div>
-          <p
-            v-if="f.invalidType"
-            class="text-red-700 text-xs ml-5 mt-1"
-          >
-            Invalid file type
-          </p>
-          <p
-            v-if="f.invalidSize"
-            class="text-red-700 text-xs ml-5 mt-1"
-          >
-            File size is over {{ filesize }} MB.
-          </p>
-        </li> -->
       </ul>
     </slot>
   </div>
@@ -231,7 +227,7 @@ export type FileTypes = 'csv' | 'doc' | 'pdf'
 export type SvgIconTypes = FileTypes | 'arrow-up-from-bracket' | 'error' | 'generic' | 'trash-can'
 export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; viewBox: string; width: number; }>
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid', 'update:model-value'])
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:model-value'])
 
 defineOptions({
   name: 'SdsFileUploader',
@@ -273,7 +269,7 @@ const props = defineProps({
   /**
    * Determines the file types used for validation.
    */
-  allowedFiletypes: { type: Array, default: () => [] },
+  allowedFiletypes: { type: Array as PropType<string[]>, default: () => [] },
   /**
    * Determines the maximum allowed filesize in megabytes for each uploaded file.
    */
@@ -337,7 +333,14 @@ const icons = ref<SvgIcons>({
 const invalidFileList = ref<FileWithInvalidDefinitions[]>([])
 const totalFilesSize = ref(0)
 
-const disabled = computed(() => !!invalidFileList.value.length)
+const disabled = computed(() => {
+  if (invalidFileList.value.length > 0) return true
+  if (
+    typeof props.maxFilesSize !== 'undefined' && 
+    totalFilesSize.value > props.maxFilesSize
+  ) return true
+  return false
+})
 
 const removeFile = (file: File) => {
   if (!fileInput.value) return
@@ -354,11 +357,15 @@ const removeFile = (file: File) => {
   })
   fileInput.value.files = dt.files
 
+  const filesize = processFileSize(file)
+  totalFilesSize.value = totalFilesSize.value - filesize <= 0 ? 0 : totalFilesSize.value - filesize
+
   /**
    * Emitted when a valid file is removed.
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('total-files-size', totalFilesSize)
 }
 
 const removeInvalidFile = (file: File) => {
@@ -369,11 +376,15 @@ const removeInvalidFile = (file: File) => {
     i.type === file.type
   ))
 
+  const filesize = processFileSize(file)
+  totalFilesSize.value = totalFilesSize.value - filesize <= 0 ? 0 : totalFilesSize.value - filesize
+
   /**
    * Emitted when an invalid file is removed.
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('total-files-size', totalFilesSize)
 }
 
 const findFile = (file: File) => {
@@ -389,11 +400,6 @@ const processFiles = (event: Event) => {
   if (!event.target) return
   const files = (event.target as HTMLInputElement).files as FileList
 
-  if (typeof props.maxFilesSize !== 'undefined') {
-    const filesSize = processFilesSize(files)
-    console.log('Total files size: ', filesSize + totalFilesSize.value)
-  }
-
   Array.from(files).forEach((file) => {
     const existingFile = findFile(file as File)
     if (!existingFile) {
@@ -406,6 +412,7 @@ const processFiles = (event: Event) => {
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('total-files-size', totalFilesSize)
 }
 
 const processSingleFile = (file: File) => {
@@ -422,13 +429,12 @@ const processSingleFile = (file: File) => {
     })
   }
 
+  totalFilesSize.value += filesize
+
   if (filesize <= props.filesize && filetypeCheckSuccessful) {
     dt.items.add(file)
     fileInput.value.files = dt.files
     fileList.value = Array.from(fileInput.value.files) || []
-
-    totalFilesSize.value += filesize
-
     if (!props.multiple) {
       invalidFileList.value = []
     }
@@ -471,8 +477,6 @@ const processSingleFile = (file: File) => {
   }
 }
 
-const processFilesSize = (files: FileList) => Array.from(files).map((file) => processFileSize(file)).reduce((a, b) => a + b, 0)
-
 const processFileSize = (file: File) => parseFloat(((file.size / 1024) / 1024).toFixed(4)) // MB
 
 const byteToSize = (bytes: number): string => {
@@ -494,6 +498,20 @@ const isFileType = (fileType: string): FileTypes | 'generic' => {
       return 'csv'
     default:
       return 'generic'
+  }
+}
+
+const uploadedImgSrc = (file: File, allowedFiletypes: string[]) => {
+  if (file) {
+    if ('type' in file) {
+      if (allowedFiletypes.includes(file.type)) {
+        if (file.type.split('/')[0] === 'image') {
+          return URL.createObjectURL(file)
+        } else {
+          return undefined
+        }
+      }
+    }
   }
 }
 
