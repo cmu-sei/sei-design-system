@@ -48,7 +48,7 @@
         </svg>
       </span>
       <span
-        class="inline-flex opacity-0 [&_svg]:hidden [&_img]:hidden"
+        class="inline-flex opacity-0"
         :class="{
           'gap-2': size !== 'xs',
           'gap-1': size === 'xs'
