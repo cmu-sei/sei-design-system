@@ -10,7 +10,7 @@
   >
     <span
       v-if="pending"
-      class="relative"
+      class="relative flex items-center"
     >
       <span
         class="absolute inset-0 flex items-center"

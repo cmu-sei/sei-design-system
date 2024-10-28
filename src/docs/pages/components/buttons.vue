@@ -5,6 +5,88 @@
         Action Button
       </h2>
       <div class="flex gap-2 items-center">
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+          :active="false"
+          :block="false"
+          :disabled="false"
+          :pending="false"
+        >
+          <svg
+            class="w-4 h-4"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
+            />
+          </svg>
+          <span>Update photo</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+          :active="false"
+          :block="false"
+          :disabled="false"
+          :pending="true"
+        >
+          <svg
+            class="w-4 h-4"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
+            />
+          </svg>
+          <span>Update photo</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          variant="gray"
+          size="lg"
+          :active="false"
+          :block="true"
+          :disabled="false"
+          :pending="false"
+        >
+          <SdsAvatar
+            shape="circle"
+            variant="gray"
+            size="xs"
+            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+          />
+          <span>Ali Alvarez</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          variant="gray"
+          size="lg"
+          :active="false"
+          :block="true"
+          :disabled="false"
+          :pending="true"
+        >
+          <SdsAvatar
+            shape="circle"
+            variant="gray"
+            size="xs"
+            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+          />
+          <span>Ali Alvarez</span>
+        </SdsActionButton>
         <SdsActionButton>
           Action Button
         </SdsActionButton>
