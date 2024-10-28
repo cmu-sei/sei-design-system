@@ -39,17 +39,15 @@ const Template = (args) => ({
       </template>
       Page content area
       <template #action-bar>
-        <div class="flex flex-col md:flex-row gap-2">
-          <p class="m-auto md:ml-auto md:mr-2 pb-2 md:pb-0">
-            Action bar content area
-          </p>
-          <sds-button kind="ghost" variant="white" class="order-3 md:order-2">
-            Cancel
-          </sds-button>
-          <sds-button kind="primary" variant="white" class="order-2 md:order-3">
-            Save
-          </sds-button>
-        </div>
+        <p class="grow pb-2 md:pb-0 text-center md:text-left">
+          Action bar content
+        </p>
+        <button class="btn btn-ghost btn-white order-3 md:order-2 block">
+          Ghost button
+        </button>
+        <button class="btn btn-primary btn-white order-2 md:order-3 block">
+          Primary button
+        </button>
       </template>
       <template #footer-top>
         Footer top content area

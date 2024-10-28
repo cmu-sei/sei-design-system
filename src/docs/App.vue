@@ -78,7 +78,15 @@
       <RouterView />
     </template>
     <template #action-bar>
-      Hello world
+      <p class="grow pb-2 md:pb-0 text-center md:text-left">
+        Hello world
+      </p>
+      <button class="btn btn-ghost btn-white order-3 md:order-2 block">
+        Ghost button
+      </button>
+      <button class="btn btn-primary btn-white order-2 md:order-3 block">
+        Primary button
+      </button>
     </template>
     <template #footer-top>
       Footer top
