@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white border border-dashed border-gray-200 rounded-lg p-3"
+    class="bg-white dark:bg-black border border-dashed border-gray-200 rounded-lg p-3"
   >
     <div class="group relative">
       <input
@@ -26,7 +26,9 @@
             rounded
             p-4
             bg-gray-25
+            dark:bg-gray-800
             group-hover:bg-gray-50
+            dark:group-hover:bg-gray-900
           "
         :class="[disabled ? 'bg-transparent group-hover:bg-transparent' : '']"
       >
@@ -54,13 +56,13 @@
             :width="icons['arrow-up-from-bracket'].width"
           />Upload files</label>
         <p 
-          class="text-xs text-center font-semibold text-gray-900 leading-4"
+          class="text-xs text-center font-semibold text-gray-900 dark:text-white leading-4"
           :class="{ 'opacity-50': disabled }"
         >
           Click to upload or drag and drop files here
         </p>
         <p 
-          class="text-xs text-center text-gray-600 leading-4"
+          class="text-xs text-center text-gray-600 dark:text-gray-400 leading-4"
           :class="{ 'opacity-50': disabled }"
         >
           {{ helperText ? helperText : `Accepts .pdf, .json, .jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx or .csv files under ${filesize} MB.` }}
@@ -83,9 +85,25 @@
           v-for="(f, i) in fileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
-          <div class="bg-white border border-gray-100 hover:border-gray-200 rounded flex flex-none items-center self-stretch gap-2 p-2 shadow-none hover:shadow-lg">
+          <div class="bg-white dark:bg-black border border-gray-100 hover:border-gray-200 rounded flex flex-none items-center self-stretch gap-2 p-2 shadow-none hover:shadow-lg">
             <div 
-              v-if="uploadedImgSrc(f, allowedFiletypes)"
+              v-if="maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 rounded"
+            >
+              <SdsSvgIcon
+                aria-hidden="true"
+                class="text-red-600"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons.error.height"
+                :path="icons.error.path"
+                :view-box="icons.error.viewBox"
+                :width="icons.error.width"
+              />
+            </div>
+            <div 
+              v-else-if="uploadedImgSrc(f, allowedFiletypes)"
               class="flex flex-none w-10 h-10"
             >
               <img
@@ -115,19 +133,14 @@
             <div class="flex flex-col w-full">
               <span class="leading-6 truncate">{{ f.name }}</span>
               <span
-                v-if="
-                  typeof maxFilesSize !== 'undefined' && 
-                    totalFilesSize > maxFilesSize && 
-                    i === fileList.length - 1 &&
-                    !invalidFileList.length
-                "
+                v-if="maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1"
                 class="text-xs text-red-600 leading-4"
               >{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
             </div>
-            <!-- @slot File type content. @binding f.type -->
+            <!-- @slot Custom file content. @binding f (File) -->
             <slot 
-              name="fileType"
-              :type="f.type"
+              name="file"
+              :type="f"
             />
             <SdsActionButton
               kind="ghost"
@@ -151,10 +164,10 @@
           </div>
         </li>
         <li
-          v-for="(f, i) in invalidFileList"
+          v-for="f in invalidFileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
-          <div class="bg-white border border-gray-100 rounded flex flex-auto items-center self-stretch gap-2 p-2 hover:shadow-lg">
+          <div class="bg-white dark:bg-black border border-gray-100 rounded flex flex-auto items-center self-stretch gap-2 p-2 hover:shadow-lg">
             <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 rounded">
               <SdsSvgIcon
                 aria-hidden="true"
@@ -174,22 +187,11 @@
                 v-if="f.invalidSize"
                 class="text-xs text-red-600 leading-4"
               >{{ `File size exceeds the ${filesize} MB limit.` }}</span>
-              <span
-                v-if="
-                  typeof maxFilesSize !== 'undefined' && 
-                    totalFilesSize > maxFilesSize && 
-                    i === invalidFileList.length - 1
-                "
-                class="text-xs text-red-600 leading-4"
-              >
-                <span class="block">OR</span>
-                <span>{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
-              </span>
             </div>
-            <!-- @slot Invalid file type content. @binding f.type -->
+            <!-- @slot Custom (invalid) file content. @binding f (File) -->
             <slot 
-              name="invalidFileType"
-              :type="f.type"
+              name="invalidFile"
+              :type="f"
             />
             <SdsActionButton
               kind="ghost"
@@ -334,11 +336,9 @@ const invalidFileList = ref<FileWithInvalidDefinitions[]>([])
 const totalFilesSize = ref(0)
 
 const disabled = computed(() => {
-  if (invalidFileList.value.length > 0) return true
-  if (
-    typeof props.maxFilesSize !== 'undefined' && 
-    totalFilesSize.value > props.maxFilesSize
-  ) return true
+  if (props.maxFilesSize && totalFilesSize.value > props.maxFilesSize) {
+    return true
+  }
   return false
 })
 
@@ -429,12 +429,11 @@ const processSingleFile = (file: File) => {
     })
   }
 
-  totalFilesSize.value += filesize
-
   if (filesize <= props.filesize && filetypeCheckSuccessful) {
     dt.items.add(file)
     fileInput.value.files = dt.files
     fileList.value = Array.from(fileInput.value.files) || []
+    totalFilesSize.value += filesize
     if (!props.multiple) {
       invalidFileList.value = []
     }
@@ -491,10 +490,13 @@ const isFileType = (fileType: string): FileTypes | 'generic' => {
   switch (fileType) {
     case 'application/msword':
     case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+    case 'text/plain':
       return 'doc'
     case 'application/pdf':
       return 'pdf'
     case 'text/csv':
+    case 'application/vnd.ms-excel':
+    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
       return 'csv'
     default:
       return 'generic'
