@@ -42,6 +42,11 @@ describe('ComboBox', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its snapshot with assigned `modelValue` prop', async () => {
+    await wrapper.setProps({ modelValue: 'Apple' })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should set focus to input on component mount', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
@@ -62,11 +67,6 @@ describe('ComboBox', () => {
   it('should set focus to input on "click" event', async () => {
     await wrapper.find('.input-group-addon').trigger('click')
     expect(wrapper.find('input[type="text"]').element).toStrictEqual(document.activeElement)
-  })
-
-  it('should match its snapshot with assigned `modelValue` prop', async () => {
-    await wrapper.setProps({ modelValue: 'Apple' })
-    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('should match its snapshot with assigned `filterSuggestions` and `suggestions` props', async () => {
