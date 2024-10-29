@@ -3,7 +3,7 @@ import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calen
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
-import type { FileWithInvalidDefinitions } from './FileUploader/FileUploader.vue'
+import type { FileWithInvalidDefinitions, FileTypes, SvgIconTypes, SvgIcons } from './FileUploader/FileUploader.vue'
 import type { FilterByDropdownOption, FilterByDropdownPlacement } from './FilterByDropdown/FilterByDropdown.vue'
 import type { FloatingUiPlacement } from './FloatingUi/FloatingUi.vue'
 import type { LayoutAppSidebarNavItem } from './LayoutApp/LayoutApp.vue'
@@ -31,6 +31,7 @@ export type {
   FileWithInvalidDefinitions,
   FilterByDropdownOption,
   FilterByDropdownPlacement,
+  FileTypes,
   FloatingUiPlacement,
   LayoutAppSidebarNavItem,
   MegaMenuItem,
@@ -42,6 +43,8 @@ export type {
   RadioGroupOptionValue,
   SelectOption,
   SelectOptionValue,
+  SvgIcons,
+  SvgIconTypes,
   TableField,
   TableItem,
   TabItem,
@@ -103,6 +106,7 @@ import SdsScrollspy from "./Scrollspy";
 import SdsSection from "./Section";
 import SdsSeiWordmark from "./SeiWordmark";
 import SdsSelect from "./Select";
+import SdsSvgIcon from './SvgIcon'
 import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
 import SdsTextarea from "./Textarea";
@@ -169,6 +173,7 @@ const Components: ComponentList = {
   SdsSection,
   SdsSeiWordmark,
   SdsSelect,
+  SdsSvgIcon,
   SdsTabs,
   SdsTable,
   SdsTextarea,
@@ -239,6 +244,7 @@ export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSection } from "./Section";
 export { default as SdsSeiWordmark } from "./SeiWordmark";
 export { default as SdsSelect } from "./Select";
+export { default as SdsSvgIcon } from "./SvgIcon";
 export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
 export { default as SdsTextarea } from "./Textarea";
