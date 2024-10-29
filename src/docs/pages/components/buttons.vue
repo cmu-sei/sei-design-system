@@ -5,6 +5,88 @@
         Action Button
       </h2>
       <div class="flex gap-2 items-center">
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+          :active="false"
+          :block="false"
+          :disabled="false"
+          :pending="false"
+        >
+          <svg
+            class="w-4 h-4"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
+            />
+          </svg>
+          <span>Update photo</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+          :active="false"
+          :block="false"
+          :disabled="false"
+          :pending="true"
+        >
+          <svg
+            class="w-4 h-4"
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="currentColor"
+              d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
+            />
+          </svg>
+          <span>Update photo</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          variant="gray"
+          size="lg"
+          :active="false"
+          :block="true"
+          :disabled="false"
+          :pending="false"
+        >
+          <SdsAvatar
+            shape="circle"
+            variant="gray"
+            size="xs"
+            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+          />
+          <span>Ali Alvarez</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          variant="gray"
+          size="lg"
+          :active="false"
+          :block="true"
+          :disabled="false"
+          :pending="true"
+        >
+          <SdsAvatar
+            shape="circle"
+            variant="gray"
+            size="xs"
+            src="https://images.unsplash.com/photo-1548142542-c53707f8b05b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=778&q=80"
+          />
+          <span>Ali Alvarez</span>
+        </SdsActionButton>
         <SdsActionButton>
           Action Button
         </SdsActionButton>
@@ -23,6 +105,322 @@
           kind="ghost"
           disabled
         >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="flex gap-2 items-center">
+        <SdsActionButton pending>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          active
+          pending
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          disabled
+          pending
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="flex gap-2 items-center">
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            class="w-4 h-4"
+          >
+            <path
+              fill="currentColor"
+              d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
+            />
+          </svg>
+          <span class="sr-only">Edit</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="md"
+          pending
+        >
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            class="w-4 h-4"
+          >
+            <path
+              fill="currentColor"
+              d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
+            />
+          </svg>
+          <span class="sr-only">Edit</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="xs"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="xs"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="sm"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="sm"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="md"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="md"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="lg"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="lg"
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="flex gap-2 items-center">
+        <SdsActionButton
+          kind="primary"
+          size="xs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          <span>Action Button</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="xs"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="space-y-2">
+        <SdsActionButton
+          kind="primary"
+          size="lg"
+          block
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="lg"
+          block
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          pending
+          size="lg"
+          block
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="32"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+            class="w-3 h-3 inline-block"
+          >
+            <path
+              fill="currentColor"
+              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
+            />
+          </svg>
           Action Button
         </SdsActionButton>
       </div>
@@ -110,8 +508,23 @@
         </SdsButton>
         <SdsButton
           kind="primary"
+          size="xs"
+          pending
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
           variant="red"
           size="sm"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          variant="red"
+          size="sm"
+          pending
         >
           Button
         </SdsButton>
@@ -123,12 +536,32 @@
         </SdsButton>
         <SdsButton
           kind="secondary"
+          size="md"
+          pending
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
           size="lg"
         >
           Button
         </SdsButton>
         <SdsButton
           kind="secondary"
+          size="lg"
+          pending
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          pending
         >
           Button
         </SdsButton>
@@ -141,6 +574,21 @@
         <SdsButton
           kind="secondary"
           disabled
+        >
+          Button
+        </SdsButton>
+      </div>
+      <div class="space-y-2">
+        <SdsButton
+          kind="secondary"
+          pending
+          block
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="secondary"
+          block
         >
           Button
         </SdsButton>
