@@ -195,7 +195,8 @@ const fileUploader = reactive({
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   ],
   filesize: 1,
-  maxFilesSize: 5
+  maxFilesSize: 3,
+  multiple: true
 })
 
 const input = reactive({

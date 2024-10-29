@@ -33,13 +33,16 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  accept: ".pdf, .json, .jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv",
-  helperText: "Accepts .pdf, .json, .jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx or .csv files under 1 MB.",
+  accept: ".pdf, .json, .jpg, .jpeg, .png, .webp, .mov, .mp4, .doc, .docx, .xls, .xlsx, .csv",
+  helperText: "Use a PDF, JSON, JPG, JPEG, PNG, WebP, MOV, MP4, DOC, DOCX, XLS, XLSX or CSV under 1 MB.",
   allowedFiletypes: [
     'application/pdf',
     'application/json',
     'image/jpeg',
     'image/png',
+    'image/webp',
+    'video/quicktime',
+    'video/mp4',
     'text/csv',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -47,5 +50,6 @@ Default.args = {
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   ],
   filesize: 1,
+  maxFilesSize: 3,
   multiple: true
 };

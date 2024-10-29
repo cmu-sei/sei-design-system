@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white dark:bg-black border border-dashed border-gray-200 rounded-lg p-3"
+    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-3"
   >
     <div class="group relative">
       <input
@@ -26,9 +26,9 @@
             rounded
             p-4
             bg-gray-25
-            dark:bg-gray-800
+            dark:bg-gray-900
             group-hover:bg-gray-50
-            dark:group-hover:bg-gray-900
+            dark:group-hover:bg-gray-800
           "
         :class="[disabled ? 'bg-transparent group-hover:bg-transparent' : '']"
       >
@@ -85,14 +85,33 @@
           v-for="(f, i) in fileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
-          <div class="bg-white dark:bg-black border border-gray-100 hover:border-gray-200 rounded flex flex-none items-center self-stretch gap-2 p-2 shadow-none hover:shadow-lg">
+          <div
+            class="
+              bg-white 
+              dark:bg-black 
+              border 
+              border-gray-100 
+              hover:border-gray-200
+              dark:border-gray-800
+              hover:dark:border-gray-700
+              rounded 
+              flex 
+              flex-none 
+              items-center 
+              self-stretch 
+              gap-2 
+              p-2 
+              shadow-none 
+              hover:shadow-lg
+            "
+          >
             <div 
               v-if="maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1"
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 rounded"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded"
             >
               <SdsSvgIcon
                 aria-hidden="true"
-                class="text-red-600"
+                class="text-red-600 dark:text-red-300"
                 fill="none"
                 preserveAspectRatio="xMidYMid meet"
                 role="img"
@@ -116,11 +135,11 @@
             </div>
             <div
               v-else 
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 rounded"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded"
             >
               <SdsSvgIcon
                 aria-hidden="true"
-                class="text-gray-600"
+                class="text-gray-600 dark:text-gray-400"
                 fill="none"
                 preserveAspectRatio="xMidYMid meet"
                 role="img"
@@ -134,7 +153,7 @@
               <span class="leading-6 truncate">{{ f.name }}</span>
               <span
                 v-if="maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1"
-                class="text-xs text-red-600 leading-4"
+                class="text-xs text-red-600 dark:text-red-300 leading-4"
               >{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
             </div>
             <!-- @slot Custom file content. @binding f (File) -->
@@ -167,11 +186,30 @@
           v-for="f in invalidFileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
-          <div class="bg-white dark:bg-black border border-gray-100 rounded flex flex-auto items-center self-stretch gap-2 p-2 hover:shadow-lg">
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 rounded">
+          <div 
+            class="
+              bg-white 
+              dark:bg-black 
+              border 
+              border-gray-100 
+              hover:border-gray-200
+              dark:border-gray-800
+              hover:dark:border-gray-700
+              rounded 
+              flex 
+              flex-none 
+              items-center 
+              self-stretch 
+              gap-2 
+              p-2 
+              shadow-none 
+              hover:shadow-lg
+            "
+          >
+            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded">
               <SdsSvgIcon
                 aria-hidden="true"
-                class="text-red-600"
+                class="text-red-600 dark:text-red-300"
                 fill="none"
                 preserveAspectRatio="xMidYMid meet"
                 role="img"
@@ -185,7 +223,7 @@
               <span class="leading-6 truncate">{{ f.name }}</span>
               <span
                 v-if="f.invalidSize"
-                class="text-xs text-red-600 leading-4"
+                class="text-xs text-red-600 dark:text-red-300 leading-4"
               >{{ `File size exceeds the ${filesize} MB limit.` }}</span>
             </div>
             <!-- @slot Custom (invalid) file content. @binding f (File) -->
