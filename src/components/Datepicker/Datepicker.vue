@@ -345,9 +345,9 @@ const inputPattern = computed(() => {
     case 'date':
       return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
     case 'time':
-      return '[0-9]{2}:[0-9]{2} [a|p]m'
+      return '[0-9]{2}:[0-9]{2} [am|pm]'
     case 'dateTime':
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [a|p]m'
+      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [am|pm]'
     default:
       return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
   }
@@ -536,9 +536,7 @@ const formatDate = (dateString: string) => {
     if (props.mode === 'date') {
       date = setHours(setMinutes(setSeconds(setMilliseconds(date, 0), 0), 0), 0)
     } else if (props.mode === 'time') {
-      const time = format(date, 'HH:mm:ss')
-      const days = format(new Date(), 'yyyy-MM-dd')
-      date = parse(`${days} ${time}`, 'yyyy-MM-dd HH:mm:ss', new Date())
+      date = parse(format(date, 'yyyy-MM-dd HH:mm:ss'), 'yyyy-MM-dd HH:mm:ss', new Date())
     }
 
     // Force at least year 2000 when it is less than year 1000

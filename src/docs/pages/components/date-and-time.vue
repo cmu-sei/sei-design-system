@@ -29,6 +29,14 @@
           :min="min"
           :max="max"
           placement="right"
+          mode="time"
+          size="md"
+        />
+        <SdsDatepicker
+          v-model="modelValue"
+          :min="min"
+          :max="max"
+          placement="right"
           mode="dateTime"
           size="md"
         />
@@ -93,7 +101,7 @@
 
 <script setup lang="ts">
 const singleModelValue = ref(null)
-const modelValue = ref({ start: null, end: null })
+const modelValue = ref({ start: new Date(2024, 1, 1), end: new Date(2024, 2, 2) })
 const min = ref()
 const max = ref()
 
