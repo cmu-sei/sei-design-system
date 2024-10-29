@@ -891,8 +891,10 @@
           v-if="!hideActionBar && hasSlot('action-bar')"
           class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
         >
-          <!-- @slot Action content. Great for application-specific actionable content. -->
-          <slot name="action-bar" />
+          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+            <!-- @slot Action content. Great for application-specific actionable content. -->
+            <slot name="action-bar" />
+          </div>
         </aside>
       </div>
     </div>

@@ -22,6 +22,7 @@
           :helper-text="fileUploader.helperText"
           :allowed-filetypes="fileUploader.allowedFiletypes"
           :filesize="fileUploader.filesize"
+          :max-files-size="fileUploader.maxFilesSize"
           multiple
         />
       </div>
@@ -177,19 +178,25 @@ const checkboxGroup = reactive({
 })
 
 const fileUploader = reactive({
-  accept: ".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .csv, .json",
-  helperText: "Use a JSON, JPG, JPEG, PNG, DOC, DOCX, XLS, XLSX or CSV under 1MB.",
+  accept: ".pdf, .json, .jpg, .jpeg, .png, .webp, .mov, .mp4, .doc, .docx, .xls, .xlsx, .csv",
+  helperText: "Use a PDF, JSON, JPG, JPEG, PNG, WebP, MOV, MP4, DOC, DOCX, XLS, XLSX or CSV under 1 MB.",
   allowedFiletypes: [
+    'application/pdf',
+    'application/json',
     'image/jpeg',
     'image/png',
+    'image/webp',
+    'video/quicktime',
+    'video/mp4',
     'text/csv',
-    'application/json',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   ],
-  filesize: 1
+  filesize: 1,
+  maxFilesSize: 3,
+  multiple: true
 })
 
 const input = reactive({
