@@ -164,7 +164,7 @@
           </div>
         </li>
         <li
-          v-for="f, in invalidFileList"
+          v-for="f in invalidFileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
           <div 
