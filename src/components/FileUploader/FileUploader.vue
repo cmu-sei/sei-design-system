@@ -111,7 +111,7 @@
               class="flex flex-none w-10 h-10"
             >
               <img
-                class="max-h-10 w-full my-auto object-cover"
+                class="w-10 h-10 my-auto object-cover"
                 height="auto"
                 width="auto"
                 :alt="f.name"
@@ -134,7 +134,7 @@
                 :width="icons[isFileType(f.type)].width"
               />
             </div>
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full overflow-hidden">
               <span class="leading-6 truncate">{{ f.name }}</span>
             </div>
             <!-- @slot Custom file content. @binding f (File) -->
