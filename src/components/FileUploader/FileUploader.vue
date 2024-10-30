@@ -82,7 +82,7 @@
         class="flex flex-col space-y-2 mt-2"
       >
         <li
-          v-for="(f, i) in fileList"
+          v-for="f in fileList"
           :key="f.name + f.size + f.type + f.lastModified"
         >
           <div
@@ -106,26 +106,8 @@
               hover:shadow-lg
             "
           >
-            <div
-              v-if="
-                maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1
-              "
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded"
-            >
-              <SdsSvgIcon
-                aria-hidden="true"
-                class="text-red-600 dark:text-red-300"
-                fill="none"
-                preserveAspectRatio="xMidYMid meet"
-                role="img"
-                :height="icons.error.height"
-                :path="icons.error.path"
-                :view-box="icons.error.viewBox"
-                :width="icons.error.width"
-              />
-            </div>
             <div 
-              v-else-if="uploadedImgSrc(f, allowedFiletypes)"
+              v-if="uploadedImgSrc(f, allowedFiletypes)"
               class="flex flex-none w-10 h-10"
             >
               <img
@@ -154,12 +136,6 @@
             </div>
             <div class="flex flex-col w-full">
               <span class="leading-6 truncate">{{ f.name }}</span>
-              <span
-                v-if="
-                  maxFilesSize && totalFilesSize > maxFilesSize && i === fileList.length - 1
-                "
-                class="text-xs text-red-600 dark:text-red-300 leading-4"
-              >{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
             </div>
             <!-- @slot Custom file content. @binding f (File) -->
             <slot 
@@ -227,7 +203,19 @@
             <div class="flex flex-col w-full">
               <span class="leading-6 truncate">{{ f.name }}</span>
               <span class="text-xs text-red-600 dark:text-red-300 leading-4">
-                <template v-if="f.invalidType">Invalid file type</template>
+                <template
+                  v-if="
+                    f.invalidType || 
+                      (f.invalidType && f.invalidSize) || 
+                      (f.invalidType && f.invalidFilesSize) || 
+                      (f.invalidType && f.invalidFilesSize && f.invalidSize)
+                  "
+                >
+                  Invalid file type
+                </template>
+                <template v-else-if="f.invalidFilesSize || (f.invalidFilesSize && f.invalidSize)">
+                  {{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}
+                </template>
                 <template v-else-if="f.invalidSize">{{ `File size exceeds the ${filesize} MB limit.` }}</template>
               </span>
             </div>
@@ -267,7 +255,7 @@ import { Uid } from '@shimyshack/uid'
 import SdsActionButton from '../ActionButton';
 import SdsSvgIcon from '../SvgIcon';
 
-export type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean }
+export type FileWithInvalidDefinitions = File & { invalidType?: boolean, invalidSize?: boolean, invalidFilesSize?: boolean }
 export type FileTypes = 'csv' | 'doc' | 'pdf'
 export type SvgIconTypes = FileTypes | 'arrow-up-from-bracket' | 'error' | 'generic' | 'trash-can'
 export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; viewBox: string; width: number; }>
@@ -379,9 +367,8 @@ const invalidFileList = ref<FileWithInvalidDefinitions[]>([])
 const totalFilesSize = ref(0)
 
 const disabled = computed(() => {
-  if (props.maxFilesSize && totalFilesSize.value > props.maxFilesSize) {
-    return true
-  }
+  const invalidFilesSize = invalidFileList.value.filter((file) => !!file.invalidFilesSize)
+  if (invalidFilesSize.length) return true
   return false
 })
 
@@ -418,6 +405,9 @@ const removeInvalidFile = (file: File) => {
     i.size === file.size &&
     i.type === file.type
   ))
+
+  const filesize = processFileSize(file)
+  totalFilesSize.value = totalFilesSize.value - filesize <= 0 ? 0 : totalFilesSize.value - filesize
 
   /**
    * Emitted when an invalid file is removed.
@@ -462,6 +452,7 @@ const processSingleFile = (file: File) => {
   const filesize = processFileSize(file)
   const filetype = file.type
   const filetypeCheckSuccessful = (props.allowedFiletypes.length > 0 && props.allowedFiletypes.includes(filetype)) || props.allowedFiletypes.length < 1
+  const maxFilesSizeCheckSuccessful = !props.maxFilesSize || props.maxFilesSize && ((totalFilesSize.value + filesize) <= props.maxFilesSize) ? true : false
   
   if (props.multiple) {
     fileList.value.forEach((i) => {
@@ -469,7 +460,7 @@ const processSingleFile = (file: File) => {
     })
   }
 
-  if (filesize <= props.filesize && filetypeCheckSuccessful) {
+  if (filesize <= props.filesize && filetypeCheckSuccessful && maxFilesSizeCheckSuccessful) {
     dt.items.add(file)
     fileInput.value.files = dt.files
     fileList.value = Array.from(fileInput.value.files) || []
@@ -477,9 +468,10 @@ const processSingleFile = (file: File) => {
     if (!props.multiple) {
       invalidFileList.value = []
     }
-  } else if (filesize > props.filesize) {
+  } else if (filesize > props.filesize || !maxFilesSizeCheckSuccessful) {
+    if (filesize > props.filesize) (file as FileWithInvalidDefinitions).invalidSize = true
+    if (!maxFilesSizeCheckSuccessful) (file as FileWithInvalidDefinitions).invalidFilesSize = true
     if (props.multiple) {
-      (file as FileWithInvalidDefinitions).invalidSize = true
       invalidFileList.value.push(file)
       invalidFileList.value = invalidFileList.value.filter((file, index, self) =>
         index === self.findIndex((i) => (
@@ -489,11 +481,12 @@ const processSingleFile = (file: File) => {
           i.type === file.type
         ))
       )
+      totalFilesSize.value += filesize
     } else {
       fileList.value = []
       fileInput.value.files = dt.files;
-      (file as FileWithInvalidDefinitions).invalidSize = true
       invalidFileList.value = [file]
+      totalFilesSize.value += filesize
     }
   } else if (!filetypeCheckSuccessful) {
     if (props.multiple) {
@@ -507,11 +500,13 @@ const processSingleFile = (file: File) => {
           i.type === file.type
         ))
       )
+      totalFilesSize.value += filesize
     } else {
       fileList.value = []
       fileInput.value.files = dt.files;
       (file as FileWithInvalidDefinitions).invalidType = true
       invalidFileList.value = [file]
+      totalFilesSize.value += filesize
     }
   }
 }
