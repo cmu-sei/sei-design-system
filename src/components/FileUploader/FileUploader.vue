@@ -89,6 +89,7 @@
             class="
               bg-white 
               dark:bg-black 
+              hover:dark:bg-gray-900
               border 
               border-gray-100 
               hover:border-gray-200
@@ -110,7 +111,7 @@
               class="flex flex-none w-10 h-10"
             >
               <img
-                class="max-h-10 w-full my-auto object-contain"
+                class="w-10 h-10 my-auto object-cover"
                 height="auto"
                 width="auto"
                 :alt="f.name"
@@ -133,7 +134,7 @@
                 :width="icons[isFileType(f.type)].width"
               />
             </div>
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full overflow-hidden">
               <span class="leading-6 truncate">{{ f.name }}</span>
             </div>
             <!-- @slot Custom file content. @binding f (File) -->
@@ -201,16 +202,21 @@
             </div>
             <div class="flex flex-col w-full">
               <span class="leading-6 truncate">{{ f.name }}</span>
-              <span
-                v-if="f.invalidSize"
-                class="text-xs text-red-600 dark:text-red-300 leading-4"
-              >{{ `File size exceeds the ${filesize} MB limit.` }}</span>
-              <span
-                v-if="f.invalidFilesSize"
-                class="text-xs text-red-600 dark:text-red-300 leading-4"
-              >
-                <span class="block uppercase">or</span>
-                <span class="block">{{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}</span>
+              <span class="text-xs text-red-600 dark:text-red-300 leading-4">
+                <template
+                  v-if="
+                    f.invalidType || 
+                      (f.invalidType && f.invalidSize) || 
+                      (f.invalidType && f.invalidFilesSize) || 
+                      (f.invalidType && f.invalidFilesSize && f.invalidSize)
+                  "
+                >
+                  Invalid file type
+                </template>
+                <template v-else-if="f.invalidFilesSize || (f.invalidFilesSize && f.invalidSize)">
+                  {{ `Total file size exceeds the ${maxFilesSize} MB limit. Reduce files.` }}
+                </template>
+                <template v-else-if="f.invalidSize">{{ `File size exceeds the ${filesize} MB limit.` }}</template>
               </span>
             </div>
             <!-- @slot Custom (invalid) file content. @binding f (File) -->
@@ -322,8 +328,8 @@ const icons = ref<SvgIcons>({
   },
   csv: {
     height: 21,
-    path: 'M15.5 18C15.5 19.4062 14.3672 20.5 13 20.5H3C1.59375 20.5 0.5 19.4062 0.5 18H1.75C1.75 18.7031 2.29688 19.25 3 19.25H13C13.6641 19.25 14.25 18.7031 14.25 18H15.5ZM9.875 8C8.82031 8 8 7.17969 8 6.125V1.75L3 1.75C2.29688 1.75 1.75 2.33594 1.75 3V9.25H0.5V3C0.5 1.63281 1.59375 0.5 3 0.5L9.09375 0.5C9.5625 0.5 10.0703 0.734375 10.4219 1.08594L14.9141 5.57812C15.2656 5.92969 15.5 6.4375 15.5 6.90625V9.25H14.25V8H9.875ZM14.0547 6.47656L9.52344 1.94531C9.44531 1.86719 9.32812 1.82812 9.25 1.78906V6.125C9.25 6.47656 9.52344 6.75 9.875 6.75H14.2109C14.1719 6.67188 14.1328 6.55469 14.0547 6.47656ZM4.25 10.5C5.10938 10.5 5.8125 11.2031 5.8125 12.0625V12.375C5.8125 12.7266 5.5 13 5.1875 13C4.83594 13 4.5625 12.7266 4.5625 12.375V12.0625C4.5625 11.9062 4.40625 11.75 4.25 11.75H3.625C3.42969 11.75 3.3125 11.9062 3.3125 12.0625L3.3125 15.1875C3.3125 15.3828 3.42969 15.5 3.625 15.5H4.25C4.40625 15.5 4.5625 15.3828 4.5625 15.1875V14.875C4.5625 14.5625 4.83594 14.25 5.1875 14.25C5.5 14.25 5.8125 14.5625 5.8125 14.875V15.1875C5.8125 16.0859 5.10938 16.75 4.25 16.75H3.625C2.72656 16.75 2.0625 16.0859 2.0625 15.1875L2.0625 12.0625C2.0625 11.2031 2.72656 10.5 3.625 10.5H4.25ZM6.4375 12.3359C6.4375 11.3203 7.21875 10.5 8.23438 10.5H8.9375C9.25 10.5 9.5625 10.8125 9.5625 11.125C9.5625 11.4766 9.25 11.75 8.9375 11.75H8.23438C7.92188 11.75 7.6875 12.0234 7.6875 12.3359C7.6875 12.5312 7.76562 12.7266 7.96094 12.8047L8.9375 13.3906C9.52344 13.7031 9.875 14.2891 9.875 14.9531C9.875 15.9688 9.05469 16.75 8.03906 16.75H7.0625C6.71094 16.75 6.4375 16.4766 6.4375 16.125C6.4375 15.8125 6.71094 15.5 7.0625 15.5H8.03906C8.35156 15.5 8.625 15.2656 8.625 14.9531C8.625 14.7578 8.50781 14.5625 8.3125 14.4844L7.33594 13.8984C6.75 13.5859 6.4375 12.9609 6.4375 12.3359ZM11.4375 12.375C11.4375 13.2734 11.6328 14.1719 12.0625 14.9531C12.4531 14.1719 12.6875 13.2734 12.6875 12.375V11.125C12.6875 10.8125 12.9609 10.5 13.3125 10.5C13.625 10.5 13.9375 10.8125 13.9375 11.125V12.375C13.9375 13.7422 13.5078 15.0703 12.7656 16.2031L12.5703 16.4766C12.4531 16.6719 12.2578 16.75 12.0625 16.75C11.8281 16.75 11.6328 16.6719 11.5156 16.4766L11.3203 16.2031C10.5781 15.0703 10.1875 13.7422 10.1875 12.375V11.125C10.1875 10.8125 10.4609 10.5 10.8125 10.5C11.125 10.5 11.4375 10.8125 11.4375 11.125V12.375Z',
-    viewBox: '0 0 16 21',
+    path: 'M48 448L48 64c0-8.8 7.2-16 16-16l160 0 0 80c0 17.7 14.3 32 32 32l80 0 0 288c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16zM64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-293.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0L64 0zM176 256l0 48-64 0 0-48 64 0zm-64 80l64 0 0 48-64 0 0-48zm96 0l64 0 0 48-64 0 0-48zm-16 80l16 0 64 0c17.7 0 32-14.3 32-32l0-48 0-16 0-16 0-48c0-17.7-14.3-32-32-32l-64 0-16 0-16 0-64 0c-17.7 0-32 14.3-32 32l0 48 0 16 0 16 0 48c0 17.7 14.3 32 32 32l64 0 16 0zm16-112l0-48 64 0 0 48-64 0z',
+    viewBox: '0 0 384 512',
     width: 16
   },
   doc: {
@@ -463,11 +469,9 @@ const processSingleFile = (file: File) => {
       invalidFileList.value = []
     }
   } else if (filesize > props.filesize || !maxFilesSizeCheckSuccessful) {
+    if (filesize > props.filesize) (file as FileWithInvalidDefinitions).invalidSize = true
+    if (!maxFilesSizeCheckSuccessful) (file as FileWithInvalidDefinitions).invalidFilesSize = true
     if (props.multiple) {
-      (file as FileWithInvalidDefinitions).invalidSize = true
-      if (!maxFilesSizeCheckSuccessful) {
-        (file as FileWithInvalidDefinitions).invalidFilesSize = true
-      }
       invalidFileList.value.push(file)
       invalidFileList.value = invalidFileList.value.filter((file, index, self) =>
         index === self.findIndex((i) => (
@@ -481,10 +485,6 @@ const processSingleFile = (file: File) => {
     } else {
       fileList.value = []
       fileInput.value.files = dt.files;
-      (file as FileWithInvalidDefinitions).invalidSize = true
-      if (!maxFilesSizeCheckSuccessful) {
-        (file as FileWithInvalidDefinitions).invalidFilesSize = true
-      }
       invalidFileList.value = [file]
       totalFilesSize.value += filesize
     }

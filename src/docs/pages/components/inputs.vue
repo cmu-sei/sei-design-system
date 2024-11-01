@@ -16,7 +16,7 @@
       <h2 class="text-xl">
         File Uploader
       </h2>
-      <div>
+      <div class="overflow-hidden">
         <SdsFileUploader
           :accept="fileUploader.accept"
           :helper-text="fileUploader.helperText"
