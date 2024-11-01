@@ -547,10 +547,10 @@ const formatDate = (dateString: string) => {
       date = addYears(date, 1900)
     }
 
-    const dateIsBeforeMin = isBefore(date, props.min)
-    const dateIsAfterMax = isAfter(subDays(date, 1), props.max)
-    const dateEqualsMax = isEqual(subDays(date, 1), props.max)
-    if ((props.min === null && props.max === null) || !dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
+    const dateIsBeforeMin = props.min ? isBefore(date, props.min) : false
+    const dateIsAfterMax = props.max ? isAfter(subDays(date, 1), props.max) : false
+    const dateEqualsMax = props.max ? isEqual(subDays(date, 1), props.max) : false
+    if (!dateIsBeforeMin && !dateIsAfterMax && !dateEqualsMax) {
       return { date, text: format(date, inputFormat.value) }
     }
   }
