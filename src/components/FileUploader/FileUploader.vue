@@ -214,7 +214,7 @@
                   Invalid file type
                 </template>
                 <template v-else-if="f.invalidFilesSize || (f.invalidFilesSize && f.invalidSize)">
-                  {{ `Total file size exceeds the ${maxFilesSize} MB limit. Remove or reduce files.` }}
+                  {{ `Total file size exceeds the ${maxFilesSize} MB limit. Reduce files.` }}
                 </template>
                 <template v-else-if="f.invalidSize">{{ `File size exceeds the ${filesize} MB limit.` }}</template>
               </span>
