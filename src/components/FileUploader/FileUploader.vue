@@ -54,12 +54,12 @@
             :path="icons['arrow-up-from-bracket'].path"
             :view-box="icons['arrow-up-from-bracket'].viewBox"
             :width="icons['arrow-up-from-bracket'].width"
-          />Upload files</label>
+          />{{ multiple ? 'Upload files' : 'Upload file' }}</label>
         <p 
           class="text-xs text-center font-semibold text-gray-900 dark:text-white leading-4"
           :class="{ 'opacity-50': disabled }"
         >
-          Click to upload or drag and drop files here
+          {{ multiple ? 'Click to upload or drag and drop files here' : 'Click to upload or drag and drop a file here' }}
         </p>
         <p 
           class="text-xs text-center text-gray-600 dark:text-gray-400 leading-4"
