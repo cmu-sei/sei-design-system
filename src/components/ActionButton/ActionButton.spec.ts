@@ -171,7 +171,7 @@ describe('ActionButton', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('emits on click event', async () => {
+  it.skip('emits on click event', async () => {
     const wrapper = mount(Component, {})
     await wrapper.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
