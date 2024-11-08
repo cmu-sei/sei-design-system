@@ -1,10 +1,14 @@
 <template>
-  <button
+  <component
+    :is="href ? 'a' : 'button'"
     data-id="sds-action-button"
     :data-pending="pending || undefined"
-    :type="type"
+    :type="!href ? type : undefined"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
+    :href="href ?? undefined"
     :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass]"
-    :disabled="disabled"
+    :disabled="!href ? disabled : undefined"
     :aria-disabled="disabled"
     @click="onClick"
   >
@@ -54,15 +58,15 @@
           'gap-1': size === 'xs'
         }"
       >
-        <!-- @slot Action Button content. -->
+        <!-- @slot ActionButton content. -->
         <slot />
       </span>
     </span>
     <template v-else>
-      <!-- @slot Button content. -->
+      <!-- @slot ActionButton content. -->
       <slot />
     </template>
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -79,6 +83,20 @@ const props = defineProps({
    * Determines the color of the component.
    */
   variant: { type: String as PropType<'gray' | 'red' | 'blue'>, default: 'gray' },
+  /**
+   * Determines the HTML tag use for the component
+   */
+  href: {
+    type: String,
+    default: null
+  },
+  /**
+   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+   */
+   external: {
+    type: Boolean,
+    default: false
+  },
   /**
    * Determines the HTML type attribute for the button.
    */
