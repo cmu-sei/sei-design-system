@@ -1,7 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Multiselect.vue > matches invalid prop 1`] = `undefined`;
-
-exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `undefined`;
-
-exports[`Multiselect.vue > matches valid prop 1`] = `undefined`;

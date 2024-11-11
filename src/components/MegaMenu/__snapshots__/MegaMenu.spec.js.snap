@@ -1,5 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MegaMenu.vue > matches snapshot 1`] = `<div ><nav data-id="sds-megamenu" class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800"><div class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"><div class="flex flex-row gap-4 xl:gap-8" role="menu"></div></div><!--v-if--></nav><!-- Overlay used to dim background when "width" property set to full. --><!--v-if--></div>`;
+exports[`MegaMenu.vue > matches snapshot 1`] = `
+<div>
+  <nav data-id="sds-megamenu" class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800">
+    <div class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl">
+      <div class="flex flex-row gap-4 xl:gap-8" role="menu"></div>
+    </div><!--v-if-->
+  </nav><!-- Overlay used to dim background when "width" property set to full. --><!--v-if-->
+</div>
+`;
 
-exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `undefined`;
+exports[`MegaMenu.vue > matches snapshot with no props assigned 1`] = `
+<nav data-id="sds-megamenu" class="relative w-full flex flex-col bg-white dark:bg-gray-900 border-b-2 border-gray-100 dark:border-gray-800">
+  <div class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl">
+    <div class="flex flex-row gap-4 xl:gap-8" role="menu"></div>
+  </div>
+  <!--v-if-->
+</nav>
+<!-- Overlay used to dim background when "width" property set to full. -->
+<!--v-if-->
+`;

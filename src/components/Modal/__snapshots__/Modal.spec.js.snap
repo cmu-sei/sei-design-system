@@ -1,3 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Modal > should match its default snapshot 1`] = `undefined`;
+exports[`Modal > should match its default snapshot 1`] = `<!---->`;

@@ -1,3 +1,25 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Section > should match its default snapshot 1`] = `<div data-id="sds-section" class="block bg-white dark:bg-gray-950"><header class=""><div class="flex px-4 py-3"><div class="self-center grow"><!--v-if--><!--v-if--></div><!--v-if--></div></header><!--v-if--></div>`;
+exports[`Section > should match its default snapshot 1`] = `
+<div
+  class="block bg-white dark:bg-gray-950"
+  data-id="sds-section"
+>
+  <header
+    class=""
+  >
+    <div
+      class="flex px-4 py-3"
+    >
+      <div
+        class="self-center grow"
+      >
+        <!--v-if-->
+        <!--v-if-->
+      </div>
+      <!--v-if-->
+    </div>
+  </header>
+  <!--v-if-->
+</div>
+`;

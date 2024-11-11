@@ -1,3 +1,43 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Dropdown > should match its default snapshot 1`] = `<div class="inline-block" data-id="sds-dropdown"><div class="inline-block w-full"><!-- @slot Trigger content (used to replace trigger button). @binding open, close, isOpen, toggle --><button id="unique-id" type="button" class="space-x btn btn-secondary" aria-haspopup="true" aria-expanded="false"><!-- @slot Title content of trigger button. --><svg class="inline-block self-center w-5 h-5 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button></div><!----></div>`;
+exports[`Dropdown > should match its default snapshot 1`] = `
+<div
+  class="inline-block"
+  data-id="sds-dropdown"
+>
+  <div
+    class="inline-block w-full"
+  >
+    
+    <!-- @slot Trigger content (used to replace trigger button). @binding open, close, isOpen, toggle -->
+    
+    <button
+      aria-expanded="false"
+      aria-haspopup="true"
+      class="space-x btn btn-secondary"
+      id="unique-id"
+      type="button"
+    >
+      <!-- @slot Title content of trigger button. -->
+      
+      
+      
+      <svg
+        class="inline-block self-center w-5 h-5 -mr-1"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clip-rule="evenodd"
+          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+          fill-rule="evenodd"
+        />
+      </svg>
+    </button>
+    
+    
+  </div>
+  <!---->
+</div>
+`;
