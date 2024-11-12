@@ -1,3 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LayoutSeiExternalNav > should match its default snapshot 1`] = `<div data-id="sds-layout-sei-external-nav" class="space-y-4"></div>`;
+exports[`LayoutSeiExternalNav > should match its default snapshot 1`] = `
+<div
+  class="space-y-4"
+  data-id="sds-layout-sei-external-nav"
+>
+  
+  
+</div>
+`;
