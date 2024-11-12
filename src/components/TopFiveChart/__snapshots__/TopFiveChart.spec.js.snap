@@ -1,34 +1,34 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`TopFiveChart.vue > matches snapshot with malformed data 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light">Top Five Chart (malformed data)</h3>
   <div>
     <p>The chart data is malformed and cannot be displayed at this time.</p>
   </div>
-</div>
+</div>"
 `;
 
 exports[`TopFiveChart.vue > matches snapshot with no data 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light">Top Five Chart (no data)</h3>
   <div>
     <p>There is no chart data to display at this time.</p>
   </div>
-</div>
+</div>"
 `;
 
 exports[`TopFiveChart.vue > matches snapshot with no props assigned 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light"></h3>
   <div>
     <p>There is no chart data to display at this time.</p>
   </div>
-</div>
+</div>"
 `;
 
 exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="orange">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="orange">
   <h3 class="text-2xl font-light">Top Five Chart (no urls)</h3>
   <div>
     <ul class="space-y-6">
@@ -55,11 +55,11 @@ exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
       <!--v-if-->
     </ul>
   </div>
-</div>
+</div>"
 `;
 
 exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="cyan">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="cyan">
   <h3 class="text-2xl font-light">Top Five Chart (with urls, view all url, showPercent)</h3>
   <div>
     <ul class="space-y-6">
@@ -116,11 +116,11 @@ exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
       <li class="mt-4"><a href="https://seinet.sei.cmu.edu" class="link link-primary link-blue link-cta"> View All </a></li>
     </ul>
   </div>
-</div>
+</div>"
 `;
 
 exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
-<div data-id="sds-top-five-chart" class="space-y-4 chart">
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light">Top Five Chart (with urls, doNotLinkEntries)</h3>
   <div>
     <ul class="space-y-6">
@@ -177,5 +177,5 @@ exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
       <!--v-if-->
     </ul>
   </div>
-</div>
+</div>"
 `;

@@ -10,7 +10,7 @@ exports[`MobileMenu.vue > matches snapshot 1`] = `
 `;
 
 exports[`MobileMenu.vue > matches snapshot with no props assigned 1`] = `
-<nav data-id="sds-mobilemenu" role="menu">
+"<nav data-id="sds-mobilemenu" role="menu">
   <!---->
-</nav>
+</nav>"
 `;

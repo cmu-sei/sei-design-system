@@ -1,43 +1,61 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Multiselect.vue > matches invalid prop 1`] = `
-<div data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
-  <ul class="tag-list single">
-    <li style="width: 0px;" class="tag-list-item input"><span  class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label><input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span  class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>
+"<div data-id="sds-multiselect" class="sds-multiselect invalid canSearch">
+    <ul class="tag-list single">
+        <li style="width: 0px;" class="tag-list-item input"><span class="faux-input" aria-hidden="true"></span>
+
+            <!--v-if-->
+            <label>
+                <input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false"
+                autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
+                value=""><span class="sr-only">Enter text</span>
+            </label>
+        </li>
+    </ul>
+    <!--v-if-->
+    <div aria-hidden="true" class="multiselect-caret"></div>
+    <!--v-if-->
+    <!--v-if-->
+</div>"
 `;
 
 exports[`Multiselect.vue > matches snapshot with no props assigned 1`] = `
-<div data-id="sds-multiselect" class="sds-multiselect canSearch">
-  <ul class="tag-list single">
-    <li style="width: 0px;" class="tag-list-item input"><span  class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label><input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span  class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>
+"<div data-id="sds-multiselect" class="sds-multiselect canSearch">
+    <ul class="tag-list single">
+        <li style="width: 0px;" class="tag-list-item input"><span class="faux-input" aria-hidden="true"></span>
+
+            <!--v-if-->
+            <label>
+                <input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false"
+                autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
+                value=""><span class="sr-only">Enter text</span>
+            </label>
+        </li>
+    </ul>
+    <!--v-if-->
+    <div aria-hidden="true" class="multiselect-caret"></div>
+    <!--v-if-->
+    <!--v-if-->
+</div>"
 `;
 
 exports[`Multiselect.vue > matches valid prop 1`] = `
-<div data-id="sds-multiselect" class="sds-multiselect valid canSearch">
-  <ul class="tag-list single">
-    <li style="width: 0px;" class="tag-list-item input"><span  class="faux-input" aria-hidden="true"></span>
-      <!--v-if--><label><input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false" autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0" value=""><span  class="sr-only">Enter text</span></label>
-    </li>
-  </ul>
-  <!--v-if-->
-  <div aria-hidden="true" class="multiselect-caret"></div>
-  <!--v-if-->
-  <!--v-if-->
-</div>
+"<div data-id="sds-multiselect" class="sds-multiselect valid canSearch">
+    <ul class="tag-list single">
+        <li style="width: 0px;" class="tag-list-item input"><span class="faux-input" aria-hidden="true"></span>
+
+            <!--v-if-->
+            <label>
+                <input placeholder="" style="width: 0px;" autocomplete="off" spellcheck="false"
+                autocorrect="off" type="text" class="p-0 m-0 border-0 focus:shadow-none focus:ring-0"
+                value=""><span class="sr-only">Enter text</span>
+            </label>
+        </li>
+    </ul>
+    <!--v-if-->
+    <div aria-hidden="true" class="multiselect-caret"></div>
+    <!--v-if-->
+    <!--v-if-->
+</div>"
 `;

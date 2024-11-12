@@ -1,49 +1,49 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Textarea.vue > matches snapshot with disabled prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" disabled=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" disabled=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with maxlength and count-characters prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="50" minlength="0" placeholder=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="50" minlength="0" placeholder=""></textarea>
   <div data-id="sds-character-counter" class="absolute right-0 text-gray-600 dark:text-gray-400">50</div>
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with no props assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with placeholder prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="This is a placeholder"></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="This is a placeholder"></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with readonly prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" readonly=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" readonly=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with resize prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with rows prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="2" maxlength="524288" minlength="0" placeholder=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="2" maxlength="524288" minlength="0" placeholder=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;
 
 exports[`Textarea.vue > matches snapshot with value prop assigned 1`] = `
-<div data-id="sds-textarea" class="w-full relative" value="This is the text content"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative" value="This is the text content"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder=""></textarea>
   <!--v-if-->
-</div>
+</div>"
 `;

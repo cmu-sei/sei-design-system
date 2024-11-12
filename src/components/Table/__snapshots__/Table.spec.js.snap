@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Table.vue > matches snapshot with entries but no action col props assigned 1`] = `
-<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
     <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
@@ -74,11 +74,11 @@ exports[`Table.vue > matches snapshot with entries but no action col props assig
     </tr>
     <!--v-if-->
   </tbody>
-</table>
+</table>"
 `;
 
 exports[`Table.vue > matches snapshot with items and action col props assigned 1`] = `
-<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
     <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
@@ -140,11 +140,11 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
     </tr>
     <!--v-if-->
   </tbody>
-</table>
+</table>"
 `;
 
 exports[`Table.vue > matches snapshot with no props assigned 1`] = `
-<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup></colgroup>
   <thead class="border-t dark:border-gray-700">
@@ -153,5 +153,5 @@ exports[`Table.vue > matches snapshot with no props assigned 1`] = `
     </tr>
   </thead>
   <tbody></tbody>
-</table>
+</table>"
 `;
