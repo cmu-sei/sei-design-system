@@ -1,29 +1,94 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Input > should match its default snapshot 1`] = `<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder=""><!--v-if--></div>`;
+exports[`Input > should match its default snapshot 1`] = `
+<div
+  class="w-full relative"
+  data-id="sds-input"
+>
+  <input
+    class="form-control"
+    maxlength="524288"
+    placeholder=""
+    type="text"
+  />
+  <!--v-if-->
+</div>
+`;
 
-exports[`Input > should match its snapshot with autofocus prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with autofocus prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" autofocus="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with countCharacters prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with countCharacters prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="number" maxlength="524288" placeholder="">
+  <div data-id="sds-character-counter" class="absolute right-0 text-gray-600 dark:text-gray-400">524,288</div>
+</div>"
+`;
 
-exports[`Input > should match its snapshot with disabled prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with disabled prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" disabled="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with id prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with id prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input id="unique-identifier" class="form-control" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with maxlength prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with maxlength prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="200" placeholder="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with pattern prop assigned a value 1`] = `undefined`;
+exports[`Input > should match its snapshot with pattern prop assigned a value 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="tel" maxlength="524288" placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with placeholder prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with placeholder prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="Firstname Lastname">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with readonly prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with readonly prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" readonly="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with required prop assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with required prop assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="" required="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with size prop assigned a value 1`] = `undefined`;
+exports[`Input > should match its snapshot with size prop assigned a value 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with size prop assigned a value 2`] = `undefined`;
+exports[`Input > should match its snapshot with size prop assigned a value 2`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control form-control-sm" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with valid, invalid props assigned 1`] = `undefined`;
+exports[`Input > should match its snapshot with valid, invalid props assigned 1`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control valid" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;
 
-exports[`Input > should match its snapshot with valid, invalid props assigned 2`] = `undefined`;
+exports[`Input > should match its snapshot with valid, invalid props assigned 2`] = `
+"<div data-id="sds-input" class="w-full relative"><input class="form-control invalid" type="text" maxlength="524288" placeholder="">
+  <!--v-if-->
+</div>"
+`;

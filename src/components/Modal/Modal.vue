@@ -312,6 +312,7 @@ watch(showModal, (value) => {
 
 <style>
 .modal-prevent-scroll {
+  scrollbar-gutter: stable;
   overflow: hidden;
 }
 </style>

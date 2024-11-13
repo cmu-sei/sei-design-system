@@ -1,3 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DropdownDivider > should match its default snapshot 1`] = `<div data-id="sds-dropdown-divider" class="my-2 border-t bg-white border-gray-100 [.dropdown-dark_&amp;]:bg-gray-950 [.dropdown-dark_&amp;]:border-gray-700 dark:bg-gray-950 dark:border-gray-700"></div>`;
+exports[`DropdownDivider > should match its default snapshot 1`] = `
+<div
+  class="my-2 border-t bg-white border-gray-100 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:border-gray-700 dark:bg-gray-950 dark:border-gray-700"
+  data-id="sds-dropdown-divider"
+/>
+`;

@@ -1,15 +1,546 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CheckboxGroup > should match its default snapshot 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 1"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 2"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 3"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its default snapshot 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_0"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_1"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_2"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 1" disabled=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class="opacity-50 pointer-events-none select-none"><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 2" disabled=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class="opacity-50 pointer-events-none select-none"><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 3" disabled=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class="opacity-50 pointer-events-none select-none"><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` prop 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      disabled=""
+      id="unique-id__option_0"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class="opacity-50 pointer-events-none select-none"
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      disabled=""
+      id="unique-id__option_1"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class="opacity-50 pointer-events-none select-none"
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      disabled=""
+      id="unique-id__option_2"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class="opacity-50 pointer-events-none select-none"
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1 invalid" name="unique-id__option" value="Option 1"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1 invalid" name="unique-id__option" value="Option 2"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1 invalid" name="unique-id__option" value="Option 3"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` prop 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 invalid"
+      id="unique-id__option_0"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 invalid"
+      id="unique-id__option_1"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 invalid"
+      id="unique-id__option_2"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1" name="options-group" value="Option 1"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1" name="options-group" value="Option 2"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1" name="options-group" value="Option 3"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_0"
+      name="options-group"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_1"
+      name="options-group"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_2"
+      name="options-group"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`required\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 1" required=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 2" required=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 3" required=""><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`required\` prop 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_0"
+      name="unique-id__option"
+      required=""
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_1"
+      name="unique-id__option"
+      required=""
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_2"
+      name="unique-id__option"
+      required=""
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex flex-col gap-2"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 1"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 2"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1" name="unique-id__option" value="Option 3"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` prop 1`] = `
+<div
+  class="flex flex-col gap-2"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_0"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_1"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1"
+      id="unique-id__option_2"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;
 
-exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 1`] = `<div id="unique-id" data-id="sds-checkbox-group" class="flex gap-4"><div class="flex gap-2 items-start"><input id="unique-id__option_0" type="checkbox" class="relative top-1 valid" name="unique-id__option" value="Option 1"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_0" class=""><span>Option 1</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_1" type="checkbox" class="relative top-1 valid" name="unique-id__option" value="Option 2"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_1" class=""><span>Option 2</span></label></div><div class="flex gap-2 items-start"><input id="unique-id__option_2" type="checkbox" class="relative top-1 valid" name="unique-id__option" value="Option 3"><!-- @slot Label content (used to replace label element). @binding optionId, option --><label for="unique-id__option_2" class=""><span>Option 3</span></label></div></div>`;
+exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 1`] = `
+<div
+  class="flex gap-4"
+  data-id="sds-checkbox-group"
+  id="unique-id"
+>
+  
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 valid"
+      id="unique-id__option_0"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 1"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_0"
+    >
+      <span>
+        Option 1
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 valid"
+      id="unique-id__option_1"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 2"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_1"
+    >
+      <span>
+        Option 2
+      </span>
+    </label>
+    
+  </div>
+  <div
+    class="flex gap-2 items-start"
+  >
+    <input
+      class="relative top-1 valid"
+      id="unique-id__option_2"
+      name="unique-id__option"
+      type="checkbox"
+      value="Option 3"
+    />
+    <!-- @slot Label content (used to replace label element). @binding optionId, option -->
+    
+    <label
+      class=""
+      for="unique-id__option_2"
+    >
+      <span>
+        Option 3
+      </span>
+    </label>
+    
+  </div>
+  
+</div>
+`;

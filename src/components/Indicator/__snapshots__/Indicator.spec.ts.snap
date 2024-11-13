@@ -1,5 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Indicator > should match its default snapshot 1`] = `<div  data-id="sds-indicator" class="inline-block"><div  class="flex items-start relative"><!-- @slot Indicator content.  -->Indicator<div  role="status" class="absolute rounded-full -top-1.5 -right-1.5 h-4 w-4 bg-blue-500 dark:bg-blue-300"><!--v-if--></div></div></div>`;
+exports[`Indicator > should match its default snapshot 1`] = `
+"<div data-id="sds-indicator" class="inline-block">
+    <div class="flex items-start relative">
+        <!-- @slot Indicator content. -->Indicator
+        <div role="status" class="absolute rounded-full -top-1.5 -right-1.5 h-4 w-4 bg-blue-500 dark:bg-blue-300">
+            <!--v-if-->
+        </div>
+    </div>
+</div>"
+`;
 
-exports[`Indicator > should match its variant green, placement bottom-right snapshot 1`] = `<div  data-id="sds-indicator" class="inline-block"><div  class="flex items-start relative"><!-- @slot Indicator content.  -->Indicator<div  role="status" class="absolute rounded-full -bottom-1.5 -right-1.5 h-4 w-4 bg-green-500 dark:bg-green-300"><!--v-if--></div></div></div>`;
+exports[`Indicator > should match its variant green, placement bottom-right snapshot 1`] = `
+"<div data-id="sds-indicator" class="inline-block">
+    <div class="flex items-start relative">
+        <!-- @slot Indicator content. -->Indicator
+        <div role="status" class="absolute rounded-full -bottom-1.5 -right-1.5 h-4 w-4 bg-green-500 dark:bg-green-300">
+            <!--v-if-->
+        </div>
+    </div>
+</div>"
+`;
