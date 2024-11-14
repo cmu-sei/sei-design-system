@@ -11,13 +11,15 @@ import Component from './Modal.vue'
 
 describe('Modal', () => {
   it('should match its default snapshot', async () => {
-    const wrapper = mount(Component, {})
-    await wrapper.vm.$nextTick() 
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+    })
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
   it('modelValue: true, size: md, title: Wonderful SEI modal, hideHeader: false', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
@@ -38,6 +40,7 @@ describe('Modal', () => {
 
   it('modelValue: true, size: md, title: Wonderful SEI modal, hideHeader: true', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
@@ -52,12 +55,13 @@ describe('Modal', () => {
         hideHeader: true
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
   it('modelValue: true, size: sm, title: Wonderful SEI modal, hideHeader: false, z-index: 40', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
@@ -79,6 +83,7 @@ describe('Modal', () => {
 
   it('modelValue: true, size: lg, title: Wonderful SEI modal, hideHeader: false, z-index: 30', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
@@ -100,6 +105,7 @@ describe('Modal', () => {
 
   it('modelValue: true, size: xl, title: Wonderful SEI modal, hideHeader: false, z-index: 20', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
@@ -121,6 +127,7 @@ describe('Modal', () => {
 
   it('modelValue: true, size: 2xl, title: Wonderful SEI modal, hideHeader: false, z-index: 10', async () => {
     const wrapper = mount(Component, {
+      attachTo: document.body,
       directives: {
         'uid': {
           created(el) {
