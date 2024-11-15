@@ -14,7 +14,7 @@ exports[`Avatar > should match its default snapshot 1`] = `
 </div>
 `;
 
-exports[`Avatar > should match its variant: random, size: lg, shape: circle, name: Matt Winwood, and src snapshot 1`] = `
+exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: Matt Winwood, and src snapshot 1`] = `
 <div
   aria-label="Matt Winwood"
   class="inline-flex items-center justify-center bg-red-100 dark:text-red-500 dark:bg-red-900 w-44 rounded-full aspect-square"
@@ -25,6 +25,81 @@ exports[`Avatar > should match its variant: random, size: lg, shape: circle, nam
     class="bg-cover bg-center w-44 rounded-full aspect-square"
     style="background-image: url(https://seinet.sei.cmu.edu/api/photos/mrwinwood?full=true);"
     title="Matt Winwood"
+  />
+</div>
+`;
+
+exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
+<div
+  aria-label="Brandon Jabout"
+  class="inline-flex items-center justify-center bg-blue-50 dark:text-blue-400 dark:bg-blue-900 w-16 aspect-[4/5]"
+  data-id="sds-avatar"
+  role="img"
+>
+  <div
+    class="bg-cover bg-right w-16 aspect-[4/5]"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
+    title="Brandon Jabout"
+  />
+</div>
+`;
+
+exports[`Avatar > variant: gray, position: bottom, shape: circle, size: md, name: Brandon Jabout, and src 1`] = `
+<div
+  aria-label="Brandon Jabout"
+  class="inline-flex items-center justify-center bg-gray-100 dark:text-gray-400 dark:bg-gray-900 w-16 rounded-full aspect-square"
+  data-id="sds-avatar"
+  role="img"
+>
+  <div
+    class="bg-cover bg-bottom w-16 rounded-full aspect-square"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
+    title="Brandon Jabout"
+  />
+</div>
+`;
+
+exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name: Brandon Jabout, and src 1`] = `
+<div
+  aria-label="Brandon Jabout"
+  class="inline-flex items-center justify-center bg-green-50 dark:text-green-400 dark:bg-green-900 w-8 rounded-full aspect-square"
+  data-id="sds-avatar"
+  role="img"
+>
+  <div
+    class="bg-cover bg-left w-8 rounded-full aspect-square"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
+    title="Brandon Jabout"
+  />
+</div>
+`;
+
+exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
+<div
+  aria-label="Brandon Jabout"
+  class="inline-flex items-center justify-center bg-purple-100 dark:text-purple-400 dark:bg-purple-900 w-16 aspect-[4/5]"
+  data-id="sds-avatar"
+  role="img"
+>
+  <div
+    class="bg-cover bg-top w-16 aspect-[4/5]"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
+    title="Brandon Jabout"
+  />
+</div>
+`;
+
+exports[`Avatar > variant: yellow, position: center, shape: circle, size: sm, name: Brandon Jabout, and src 1`] = `
+<div
+  aria-label="Brandon Jabout"
+  class="inline-flex items-center justify-center bg-yellow-25 dark:text-yellow-400 dark:bg-yellow-900 w-12 rounded-full aspect-square"
+  data-id="sds-avatar"
+  role="img"
+>
+  <div
+    class="bg-cover bg-center w-12 rounded-full aspect-square"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
+    title="Brandon Jabout"
   />
 </div>
 `;

@@ -29,7 +29,7 @@
         <div
           v-if="showModal"
           class="fixed inset-0 block h-full w-full overflow-auto z-50"
-          @click.self="close"
+          @mousedown.self="close"
         >
           <button
             class="fixed inset-0 h-full w-full cursor-auto"
@@ -47,7 +47,7 @@
             :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
             class="z-50 p-2"
             @keydown="checkKeyEvent"
-            @click.self="close"
+            @mousedown.self="close"
           >
             <div
               class="
