@@ -2,6 +2,7 @@
   <div 
     v-uid
     data-id="sds-tag"
+    :class="[sizeClass]"
   >
     <div class="flex flex-row">
       <span>
@@ -57,5 +58,16 @@ const props = defineProps({
    * Determines the color of the chip.
    */
   variant: { type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>, default: 'gray' }
+})
+
+const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'text-sm'
+    case 'md':
+      return 'text-base'
+    default:
+      return ''
+  }
 })
 </script>
