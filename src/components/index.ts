@@ -109,6 +109,7 @@ import SdsSelect from "./Select";
 import SdsSvgIcon from './SvgIcon'
 import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
+import SdsTag from "./Tag";
 import SdsTextarea from "./Textarea";
 import SdsToast from "./Toast";
 import SdsToaster from "./Toaster";
@@ -176,6 +177,7 @@ const Components: ComponentList = {
   SdsSvgIcon,
   SdsTabs,
   SdsTable,
+  SdsTag,
   SdsTextarea,
   SdsToast,
   SdsToaster,
@@ -247,6 +249,7 @@ export { default as SdsSelect } from "./Select";
 export { default as SdsSvgIcon } from "./SvgIcon";
 export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
+export { default as SdsTag } from "./Tag";
 export { default as SdsTextarea } from "./Textarea";
 export { default as SdsToast } from "./Toast";
 export { default as SdsToaster } from "./Toaster";
