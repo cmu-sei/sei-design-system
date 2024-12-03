@@ -97,10 +97,11 @@
               hover:dark:border-gray-700
               rounded 
               flex 
-              flex-none 
+              flex-row
               items-center 
               self-stretch 
-              gap-2 
+              gap-2
+              w-full
               p-2 
               shadow-none 
               hover:shadow-lg
@@ -134,8 +135,8 @@
                 :width="icons[isFileType(f.type)].width"
               />
             </div>
-            <div class="flex flex-col w-full overflow-hidden">
-              <span class="leading-6 truncate">{{ f.name }}</span>
+            <div class="truncate">
+              <span class="leading-6">{{ f.name }}</span>
             </div>
             <!-- @slot Custom file content. @binding f (File) -->
             <slot 
@@ -178,10 +179,11 @@
               hover:dark:border-gray-700
               rounded 
               flex 
-              flex-none 
+              flex-row 
               items-center 
               self-stretch 
               gap-2 
+              w-full
               p-2 
               shadow-none 
               hover:shadow-lg
@@ -200,9 +202,13 @@
                 :width="icons.error.width"
               />
             </div>
-            <div class="flex flex-col w-full">
-              <span class="leading-6 truncate">{{ f.name }}</span>
-              <span class="text-xs text-red-600 dark:text-red-300 leading-4">
+            <div class="overflow-hidden">
+              <div class="w-full">
+                <div class="truncate">
+                  <span class="leading-6">{{ f.name }}</span>
+                </div>
+              </div>
+              <span class="block text-xs text-red-600 dark:text-red-300 leading-4">
                 <template
                   v-if="
                     f.invalidType || 
