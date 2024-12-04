@@ -4,13 +4,14 @@
     data-id="sds-tag"
     :class="[sizeClass]"
   >
-    <div class="flex flex-row flex-nowrap">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
       <!-- @slot Left slot content. -->
       <slot name="leftSlot" />
       <SdsLink 
         v-if="href && !readonly"
         kind="tertiary"
         type="standalone"
+        class="leading-none"
         :href="href"
         :external="external"
         :size="size"
@@ -20,7 +21,10 @@
           {{ label }}
         </slot>
       </SdsLink>
-      <span v-else>
+      <span 
+        v-else 
+        class="leading-none"
+      >
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
@@ -31,7 +35,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-blue-600 hover:bg-blue-50 rounded-full"
+            class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
           >
             <SdsSvgIcon
               aria-hidden="true"
@@ -50,7 +54,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-gray-600 hover:bg-gray-50 rounded-full"
+            class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
           >
             <SdsSvgIcon
               aria-hidden="true"
@@ -69,7 +73,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-red-600 hover:bg-red-50 rounded-full"
+            class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
           >
             <SdsSvgIcon
               aria-hidden="true"
