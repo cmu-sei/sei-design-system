@@ -1,6 +1,6 @@
 <template>
   <div 
-    v-uid
+    :id="id"
     data-id="sds-tag"
     class="
       bg-white
@@ -46,64 +46,65 @@
           {{ label }}
         </slot>
       </span>
-      <template v-if="action && !readonly">
-        <template v-if="action === 'add'">
-          <button 
-            ref="button" 
-            type="button"
-            class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
-          >
-            <SdsSvgIcon
-              aria-hidden="true"
-              fill="none"
-              preserveAspectRatio="xMidYMid meet"
-              role="img"
-              :height="icons.add.height"
-              :path="icons.add.path"
-              :width="icons.add.width"
-              :view-box="icons.add.viewBox"
-            />
-            <span class="sr-only">Add</span>
-          </button>
-        </template>
-        <template v-else-if="action === 'remove'">
-          <button 
-            ref="button" 
-            type="button"
-            class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
-          >
-            <SdsSvgIcon
-              aria-hidden="true"
-              fill="none"
-              preserveAspectRatio="xMidYMid meet"
-              role="img"
-              :height="icons.remove.height"
-              :path="icons.remove.path"
-              :width="icons.remove.width"
-              :view-box="icons.remove.viewBox"
-            />
-            <span class="sr-only">Remove</span>
-          </button>
-        </template>
-        <template v-else-if="action === 'destroy'">
-          <button 
-            ref="button" 
-            type="button"
-            class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
-          >
-            <SdsSvgIcon
-              aria-hidden="true"
-              fill="none"
-              preserveAspectRatio="xMidYMid meet"
-              role="img"
-              :height="icons.destroy.height"
-              :path="icons.destroy.path"
-              :width="icons.destroy.width"
-              :view-box="icons.destroy.viewBox"
-            />
-            <span class="sr-only">Destroy</span>
-          </button>
-        </template>
+      <template v-if="action === 'add'">
+        <button 
+          ref="button" 
+          type="button"
+          class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
+          @click="increment"
+        >
+          <SdsSvgIcon
+            aria-hidden="true"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons.add.height"
+            :path="icons.add.path"
+            :width="icons.add.width"
+            :view-box="icons.add.viewBox"
+          />
+          <span class="sr-only">Add</span>
+        </button>
+      </template>
+      <template v-else-if="action === 'remove'">
+        <button 
+          ref="button" 
+          type="button"
+          class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
+          @click="decrement"
+        >
+          <SdsSvgIcon
+            aria-hidden="true"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons.remove.height"
+            :path="icons.remove.path"
+            :width="icons.remove.width"
+            :view-box="icons.remove.viewBox"
+          />
+          <span class="sr-only">Remove</span>
+        </button>
+      </template>
+      <template v-else-if="action === 'destroy'">
+        <button 
+          ref="button" 
+          type="button"
+          class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
+          @click="remove"
+        >
+          <SdsSvgIcon
+            aria-hidden="true"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons.destroy.height"
+            :path="icons.destroy.path"
+            :width="icons.destroy.width"
+            :view-box="icons.destroy.viewBox"
+          />
+          <span class="sr-only">Destroy</span>
+        </button>
       </template>
       <!-- @slot Action slot content -->
       <slot 
@@ -115,13 +116,8 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 defineOptions({
-  name: 'SdsTag',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsTag'
 })
 
 const props = defineProps({
@@ -138,6 +134,10 @@ const props = defineProps({
    */
   href: { type: String, default: null },
   /**
+   * Determines the id of the component.
+   */
+  id: { type: String, default: undefined },
+  /**
    * Determines the text of the label.
    */
   label: { type: String as PropType<string | null>, default: null },
@@ -150,6 +150,8 @@ const props = defineProps({
    */
   size: { type: String as PropType<'sm' | 'md'>, default: 'sm' },
 })
+
+const emit = defineEmits(['increment', 'decrement', 'remove'])
 
 const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
   add: {
@@ -172,6 +174,8 @@ const icons = ref<Record<string, { height: number; path: string; viewBox: string
   }
 })
 
+const count = ref(0)
+
 const paddingClass = computed(() => {
   const { action, size } = props
   switch (size) {
@@ -187,11 +191,26 @@ const paddingClass = computed(() => {
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'text-sm leading-4'
+      return 'text-xs leading-4'
     case 'md':
       return 'text-base leading-6'
     default:
       return ''
   }
 })
+
+// Add action
+const increment = () => {
+  count.value += 1
+  emit('increment', count.value)
+}
+
+// Remove action
+const decrement = () => {
+  count.value -= 1
+  emit('decrement', count.value)
+}
+
+// Destroy action
+const remove = () => emit('remove', props.id)
 </script>
