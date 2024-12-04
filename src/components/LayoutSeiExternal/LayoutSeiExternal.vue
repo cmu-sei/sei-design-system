@@ -14,10 +14,10 @@
     >
       <layout-sei-external-masthead :page="page" />
     </slot>
-    <main class="grow">
-      <div
+    <main class="grow flex flex-col justify-end">
+      <section
         :class="{
-          'bg-gray-25': showMasthead,
+          'bg-gray-25 h-full flex flex-col justify-end': showMasthead,
         }"
       >
         <template v-if="removeContentPadding">
@@ -30,7 +30,7 @@
             <slot />
           </div>
         </template>
-      </div>
+      </section>
     </main>
     <layout-sei-external-footer />
   </div>

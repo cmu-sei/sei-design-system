@@ -72,6 +72,12 @@
         >
           Form Group
         </RouterLink>
+        <RouterLink
+          to="/patterns/layout-external"
+          class="link link-secondary w-fit"
+        >
+          Layout External
+        </RouterLink>
       </nav>
     </div>
     <div class="grid gap-4">
