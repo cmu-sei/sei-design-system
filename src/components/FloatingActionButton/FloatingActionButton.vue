@@ -20,8 +20,8 @@
                 class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'btn-blue': localVariant === 'blue',
-                  'btn-red': localVariant === 'red',
+                  'bg-blue-600 dark:bg-blue-300': localVariant === 'blue',
+                  'bg-red-600 dark:bg-red-300': localVariant === 'red'
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
@@ -73,22 +73,24 @@
               <div
                 v-if="open"
                 ref="modal"
-                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-900 shadow-lg"
+                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
               >
                 <div
                   class="p-6 rounded-t-lg flex gap-4"
                   :class="{
-                    'text-white bg-blue-500': localVariant === 'blue',
-                    'text-white bg-red-500': localVariant === 'red',
+                    'text-white bg-blue-600 dark:text-gray-950 dark:bg-blue-300': localVariant === 'blue',
+                    'text-white bg-red-600 dark:text-gray-950 dark:bg-red-300': localVariant === 'red',
                   }"
                 >
                   <h2 class="grow uppercase font-bold text-lg">
                     {{ activeTab.title }}
                   </h2>
-                  <button
-                    class="hover:text-blue-200"
+                  <ActionButton
+                    kind="ghost"
+                    size="sm"
+                    class="text-gray-100 dark:text-gray-900 h-[30px] w-[30px] py-[9px] px-[7px]"
                     @click="open = false"
                   >
                     <svg
@@ -104,9 +106,9 @@
                       />
                     </svg>
                     <span class="sr-only">Close</span>
-                  </button>
+                  </ActionButton>
                 </div>
-                <div class="grow mx-6 mt-4 mb-2 overflow-auto">
+                <div class="grow mx-6 mt-4 mb-2 overflow-auto text-black dark:text-white">
                   <!-- @slot Content of the active tab. -->
                   <slot
                     v-if="activeTab"
@@ -123,8 +125,9 @@
                       v-for="tab in tabs"
                       :key="tab.key"
                       :class="{
-                        'border-t-gray-900 hover:border-t-900 dark:hover:border-t-200 dark:border-t-gray-200': tab.active,
-                        'border-t-transparent hover:border-t-gray-100 dark:hover:border-t-gray-500': !tab.active
+                        'border-t-blue-600 hover:border-t-blue-600 text-blue-600 bg-white dark:border-t-blue-300 dark:hover:border-t-blue-300 dark:text-blue-300 dark:bg-gray-950': tab.active && localVariant === 'blue',
+                        'border-t-red-600 hover:border-t-red-600 text-red-600 bg-white dark:border-t-red-300 dark:hover:border-t-red-300 dark:text-red-300 dark:bg-gray-950': tab.active && localVariant === 'red',
+                        'border-t-transparent hover:border-t-gray-100 text-gray-600 bg-white hover:text-black dark:hover:border-t-gray-600 dark:text-gray-400 dark:bg-gray-950 dark:hover:text-white': !tab.active
                       }"
                       class="flex flex-col gap-2 p-6 pt-4 text-sm font-bold border-t-4 transition-colors duration-200"
                       @click="setActiveTab(tab)"
@@ -162,6 +165,7 @@ import { Uid } from '@shimyshack/uid'
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
+import ActionButton from '../ActionButton/ActionButton.vue';
 
 defineOptions({
   name: 'SdsFloatingActionButton',
