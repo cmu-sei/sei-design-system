@@ -121,40 +121,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
-
-const router = useRouter()
-const route = useRoute()
-
-/* Automatic meta tag setup per-page */
-router.beforeResolve((to, _from) => {
-  document.title = to.meta.title || "Default Title | SDS Boilerplate"
-  to.meta.metaTags?.forEach(tag => {
-    let tags = document.getElementsByTagName('meta') ?? [];
-    for (let oldTag of tags) {
-      if (oldTag.name === tag.name) oldTag.remove()
-    }
-    let meta = document.createElement('meta')
-    if ('name' in tag) {
-      meta.name = tag.name
-      meta.content = tag.content
-    }
-    if ('property' in tag) {
-      meta.property = tag.name
-      meta.content = tag.content
-    }
-    document.head.appendChild(meta)
-  })
-})
-
 defineOptions({
   name: 'LayoutExternalPage'
 })
 
 definePage({
-  meta: {
-    title: 'Layout External'
-  }
+  meta: { title: 'Layout External' }
 })
 
 useHead({
