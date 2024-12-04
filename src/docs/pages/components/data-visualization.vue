@@ -463,6 +463,66 @@
             </SdsTag>
           </li>
         </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag size="md">
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag 
+              href="https://designsystem.sei.cmu.edu/"
+              size="md"
+              :external="true"
+            >
+              <template #label>
+                Link
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              size="md"
+              :readonly="true"
+            >
+              <template #label>
+                Read-only
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              action="add"
+              size="md"
+            >
+              <template #label>
+                Add
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              action="remove"
+              size="md"
+            >
+              <template #label>
+                Remove
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              action="destroy"
+              size="md"
+            >
+              <template #label>
+                Destroy
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

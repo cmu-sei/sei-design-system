@@ -2,29 +2,45 @@
   <div 
     v-uid
     data-id="sds-tag"
-    :class="[sizeClass]"
+    class="
+      bg-white
+      hover:bg-gray-25
+      active:bg-gray-50
+      border
+      border-gray-200
+      hover:border-gray-600
+      active:border-gray-900
+      rounded-full
+      font-semibold
+      text-gray-600
+      hover:text-gray-900
+      active:text-black
+    "
+    :class="[
+      paddingClass,
+      sizeClass
+    ]"
   >
-    <div class="flex flex-row flex-nowrap items-center gap-1">
+    <div 
+      class="flex flex-row flex-nowrap items-center"
+      :class="[size === 'sm' ? 'gap-1' : 'gap-1.5']"
+    >
       <!-- @slot Left slot content. -->
       <slot name="leftSlot" />
       <SdsLink 
         v-if="href && !readonly"
         kind="tertiary"
         type="standalone"
-        class="leading-none"
         :href="href"
         :external="external"
-        :size="size"
+        :size="size === 'sm' ? 'xs' : 'md'"
       >
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
         </slot>
       </SdsLink>
-      <span 
-        v-else 
-        class="leading-none"
-      >
+      <span v-else>
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
@@ -156,12 +172,24 @@ const icons = ref<Record<string, { height: number; path: string; viewBox: string
   }
 })
 
+const paddingClass = computed(() => {
+  const { action, size } = props
+  switch (size) {
+    case 'sm':
+      return action ? 'pl-2 pr-1 py-1' : 'px-2 py-1'
+    case 'md':
+      return action ? 'pl-3 pr-1.5 py-1.5' : 'px-3 py-1.5'
+    default:
+      return ''
+  }
+})
+
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'text-sm'
+      return 'text-sm leading-4'
     case 'md':
-      return 'text-base'
+      return 'text-base leading-6'
     default:
       return ''
   }
