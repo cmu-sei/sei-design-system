@@ -1,7 +1,7 @@
 <template>
   <header data-id="sds-layout-sei-external-header">
-    <div class="bg-red-500">
-      <div class="container px-4 py-2 mx-auto md:px-8">
+    <div class="bg-red-600">
+      <div class="container px-4 pt-4 pb-2 mx-auto md:px-8">
         <a
           href="https://www.cmu.edu/"
           target="_self"

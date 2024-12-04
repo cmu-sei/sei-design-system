@@ -29,5 +29,6 @@ declare module 'vue-router/auto-routes' {
     '/components/utility': RouteRecordInfo<'/components/utility', '/components/utility', Record<never, never>, Record<never, never>>,
     '/css/css-components': RouteRecordInfo<'/css/css-components', '/css/css-components', Record<never, never>, Record<never, never>>,
     '/patterns/form-group': RouteRecordInfo<'/patterns/form-group', '/patterns/form-group', Record<never, never>, Record<never, never>>,
+    '/patterns/layout-external': RouteRecordInfo<'/patterns/layout-external', '/patterns/layout-external', Record<never, never>, Record<never, never>>,
   }
 }

@@ -141,6 +141,7 @@ const sidebarNavigationItems = computed(() => [
     title: 'Patterns',
     items: [
       {id: 1, title: 'Form Group', active: route.fullPath === '/patterns/form-group', href: '/patterns/form-group'},
+      {id: 2, title: 'Layout External', active: route.fullPath === '/patterns/layout-external', href: '/patterns/layout-external'},
     ]
   },
   {
