@@ -4,15 +4,64 @@ import Component from './Tag.vue'
 
 describe('Tag', () => {
   it('should match its default snapshot', () => {
+    const wrapper = mount(Component)
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `id` prop', () => {
     const wrapper = mount(Component, {
-      directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        }
+      props: {
+        id: 'unique-id',
+        label: 'Tag'
       }
     })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `size` prop', () => {
+    const wrapper = mount(Component, {
+      props: {
+        label: 'Tag',
+        size: 'md'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `href`, `external` props', () => {
+    const wrapper = mount(Component, {
+      props: {
+        href: 'https://www.google.com/',
+        label: 'Google',
+        external: true
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `readonly` prop', () => {
+    const wrapper = mount(Component, {
+      props: {
+        label: 'Tag',
+        readonly: true
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot(s) with assigned `action` prop', async () => {
+    const wrapper = mount(Component, {
+      props: {
+        label: 'Tag',
+        action: 'add'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+
+    await wrapper.setProps({ action: 'remove' })
+    expect(wrapper.element).toMatchSnapshot()
+
+    await wrapper.setProps({ action: 'destroy' })
     expect(wrapper.element).toMatchSnapshot()
   })
 })
