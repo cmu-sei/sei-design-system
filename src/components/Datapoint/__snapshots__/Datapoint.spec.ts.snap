@@ -1,67 +1,173 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Datapoint > should match its default snapshot 1`] = `
-<div>
-  <div
-    class="text-base"
-  >
-    <!-- @slot Label context.  -->
-    
-    label
-    
+"<div>
+  <div class="text-base">
+    <!-- @slot Label context.  -->label
   </div>
-  <div
-    class="flex gap-2"
-  >
-    <div
-      class="font-bold text-3xl text-black dark:text-white"
-    >
-      <!-- @slot Datapoint context.  -->
-      
-      4000
-      
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-black dark:text-white">
+      <!-- @slot Datapoint context.  -->4000
     </div>
-    <div
-      class="text-base mt-auto"
-    >
-      <!-- @slot Context context.  -->
-      
-      context
-      
+    <div class="text-base mt-auto">
+      <!-- @slot Context context.  -->context
     </div>
   </div>
-</div>
+</div>"
 `;
 
-exports[`Datapoint > should match its variant green, size sm, label, and context slots snapshot 1`] = `
-<div>
-  <div
-    class="text-base"
-  >
-    <!-- @slot Label context.  -->
-    
-    label
-    
-  </div>
-  <div
-    class="flex gap-2"
-  >
-    <div
-      class="font-bold text-lg text-green-600 dark:text-green-400"
-    >
-      <!-- @slot Datapoint context.  -->
-      
-      2000
-      
+exports[`Datapoint > should match its size (lg) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-5xl text-black dark:text-white">
+      <!-- @slot Datapoint context.  -->Datapoint lg
     </div>
-    <div
-      class="text-base mt-auto"
-    >
-      <!-- @slot Context context.  -->
-      
-      context
-      
-    </div>
+    <!--v-if-->
   </div>
-</div>
+</div>"
+`;
+
+exports[`Datapoint > should match its size (md) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-black dark:text-white">
+      <!-- @slot Datapoint context.  -->Datapoint md
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its size (sm) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-lg text-black dark:text-white">
+      <!-- @slot Datapoint context.  -->Datapoint sm
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (blue) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-blue-600 dark:text-blue-400">
+      <!-- @slot Datapoint context.  -->Datapoint blue
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (gray) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-gray-600 dark:text-gray-300">
+      <!-- @slot Datapoint context.  -->Datapoint gray
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (green) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-green-600 dark:text-green-400">
+      <!-- @slot Datapoint context.  -->Datapoint green
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (indigo) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-indigo-600 dark:text-indigo-400">
+      <!-- @slot Datapoint context.  -->Datapoint indigo
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (orange) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-orange-500 dark:text-orange-300">
+      <!-- @slot Datapoint context.  -->Datapoint orange
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (purple) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-purple-600 dark:text-purple-400">
+      <!-- @slot Datapoint context.  -->Datapoint purple
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (red) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-red-600 dark:text-red-400">
+      <!-- @slot Datapoint context.  -->Datapoint red
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (tan) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-tan-600 dark:text-tan-400">
+      <!-- @slot Datapoint context.  -->Datapoint tan
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (teal) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-teal-600 dark:text-teal-400">
+      <!-- @slot Datapoint context.  -->Datapoint teal
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`Datapoint > should match its variant (yellow) snapshot 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex gap-2">
+    <div class="font-bold text-3xl text-yellow-500 dark:text-yellow-300">
+      <!-- @slot Datapoint context.  -->Datapoint yellow
+    </div>
+    <!--v-if-->
+  </div>
+</div>"
 `;
