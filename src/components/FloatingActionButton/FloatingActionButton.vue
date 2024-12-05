@@ -20,8 +20,8 @@
                 class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'bg-blue-600 dark:bg-blue-300': localVariant === 'blue',
-                  'bg-red-600 dark:bg-red-300': localVariant === 'red'
+                  'bg-blue-600 hover:bg-blue-500 dark:bg-blue-300 dark:hover:bg-blue-200' : localVariant === 'blue',
+                  'bg-red-600 hover:bg-red-500 dark:bg-red-300 dark:hover:bg-red-200': localVariant === 'red'
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
@@ -118,7 +118,7 @@
                 </div>
                 <div
                   v-if="tabs.length > 1"
-                  class="border-t border-gray-100 dark:border-gray-700"
+                  class="border-t border-gray-100 dark:border-gray-700 px-6"
                 >
                   <nav class="grid grid-flow-col auto-cols-fr">
                     <button
