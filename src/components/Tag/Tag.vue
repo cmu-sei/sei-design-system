@@ -1,21 +1,28 @@
 <template>
   <div 
     :id="id"
+    ref="tag"
     data-id="sds-tag"
     :class="[styles]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
-      :class="[size === 'sm' ? 'gap-1' : 'gap-1.5']"
+      :class="{
+        'gap-1': size === 'sm',
+        'gap-1.5': size === 'md'
+      }"
     >
-      <!-- @slot Left slot content. -->
-      <slot name="leftSlot" />
+      <span v-if="$slots.leftSlot">
+        <!-- @slot Left slot content. -->
+        <slot name="leftSlot" />
+      </span>
       <a
         v-if="href && !readonly"
+        ref="link"
         class="group-hover:underline group-active:underline"
         :href="href"
-        :target="external ? '_blank' : undefined"
         :rel="external ? 'noopener noreferrer' : undefined"
+        :target="external ? '_blank' : undefined"
       >
         <!-- @slot Label content. -->
         <slot name="label">
@@ -28,71 +35,84 @@
           {{ label }}
         </slot>
       </span>
-      <template v-if="action === 'add'">
-        <button 
-          ref="button" 
-          type="button"
-          class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
-          @click="increment"
-        >
-          <SdsSvgIcon
-            aria-hidden="true"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons.add.height"
-            :path="icons.add.path"
-            :width="icons.add.width"
-            :view-box="icons.add.viewBox"
-          />
-          <span class="sr-only">Add</span>
-        </button>
+      <template v-if="action && !readonly">
+        <template v-if="action === 'add'">
+          <button 
+            ref="button" 
+            type="button"
+            class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
+            @click="increment"
+            @mouseover="onMouseover"
+            @mouseleave="onMouseleave"
+            @mousedown="onMousedown"
+            @mouseup="onMouseup"
+          >
+            <SdsSvgIcon
+              aria-hidden="true"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons.add.height"
+              :path="icons.add.path"
+              :width="icons.add.width"
+              :view-box="icons.add.viewBox"
+            />
+            <span class="sr-only">Add</span>
+          </button>
+        </template>
+        <template v-else-if="action === 'remove'">
+          <button 
+            ref="button" 
+            type="button"
+            class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
+            @click="decrement"
+            @mouseover="onMouseover"
+            @mouseleave="onMouseleave"
+            @mousedown="onMousedown"
+            @mouseup="onMouseup"
+          >
+            <SdsSvgIcon
+              aria-hidden="true"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons.remove.height"
+              :path="icons.remove.path"
+              :width="icons.remove.width"
+              :view-box="icons.remove.viewBox"
+            />
+            <span class="sr-only">Remove</span>
+          </button>
+        </template>
+        <template v-else-if="action === 'destroy'">
+          <button 
+            ref="button" 
+            type="button"
+            class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
+            @click="remove"
+            @mouseover="onMouseover"
+            @mouseleave="onMouseleave"
+            @mousedown="onMousedown"
+            @mouseup="onMouseup"
+          >
+            <SdsSvgIcon
+              aria-hidden="true"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons.destroy.height"
+              :path="icons.destroy.path"
+              :width="icons.destroy.width"
+              :view-box="icons.destroy.viewBox"
+            />
+            <span class="sr-only">Destroy</span>
+          </button>
+        </template>
       </template>
-      <template v-else-if="action === 'remove'">
-        <button 
-          ref="button" 
-          type="button"
-          class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
-          @click="decrement"
-        >
-          <SdsSvgIcon
-            aria-hidden="true"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons.remove.height"
-            :path="icons.remove.path"
-            :width="icons.remove.width"
-            :view-box="icons.remove.viewBox"
-          />
-          <span class="sr-only">Remove</span>
-        </button>
-      </template>
-      <template v-else-if="action === 'destroy'">
-        <button 
-          ref="button" 
-          type="button"
-          class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
-          @click="remove"
-        >
-          <SdsSvgIcon
-            aria-hidden="true"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons.destroy.height"
-            :path="icons.destroy.path"
-            :width="icons.destroy.width"
-            :view-box="icons.destroy.viewBox"
-          />
-          <span class="sr-only">Destroy</span>
-        </button>
-      </template>
-      <!-- @slot Action slot content -->
-      <slot 
-        v-else 
-        name="action"
-      />
+      <span v-else-if="$slots.action">
+        <!-- @slot Action slot content -->
+        <slot name="action" />
+      </span>
     </div>
   </div>
 </template>
@@ -135,6 +155,10 @@ const props = defineProps({
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
 
+const tag = ref<HTMLDivElement>()
+const link = ref<HTMLAnchorElement>()
+const count = ref(0)
+
 const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
   add: {
     height: 16,
@@ -155,8 +179,6 @@ const icons = ref<Record<string, { height: number; path: string; viewBox: string
     width: 16
   }
 })
-
-const count = ref(0)
 
 const paddingClass = computed(() => {
   const { action, size } = props
@@ -198,14 +220,18 @@ const styles = computed(() => {
     items-center
     group
     bg-white
-    ${props.readonly ? '' : 'hover:bg-gray-25 active:bg-gray-50'}
+    shadow-none
+    ${props.readonly ? '' : 'hover:bg-gray-25 hover:shadow-sm'}
+    ${props.href && !props.readonly ? 'active:bg-gray-50 active:shadow-sm' : ''}
     border
     border-gray-200
-    ${props.readonly ? '' : 'hover:border-gray-600 active:border-gray-900'}
+    ${props.readonly ? '' : 'hover:border-gray-600'}
+    ${props.href && !props.readonly ? 'active:border-gray-900' : ''}
     rounded-full
     font-semibold
     text-gray-600
-    ${props.readonly ? '' : 'hover:text-gray-900 active:text-black'}
+    ${props.readonly ? '' : 'hover:text-gray-900'}
+    ${props.href && !props.readonly ? 'active:text-black' : ''}
     ${textSizeClass.value}
     ${sizeClass.value}
     ${paddingClass.value}
@@ -226,4 +252,28 @@ const decrement = () => {
 
 // Destroy action
 const remove = () => emit('remove', props.id)
+
+/**
+ * Mouse events
+ */
+
+const onMouseover = () => {
+  tag.value?.classList.remove('hover:bg-gray-25', 'hover:shadow-sm', 'hover:border-gray-600', 'hover:text-gray-900')
+  link.value?.classList.remove('group-hover:underline')
+}
+
+const onMouseleave = () => {
+  tag.value?.classList.add('hover:bg-gray-25', 'hover:shadow-sm', 'hover:border-gray-600', 'hover:text-gray-900')
+  link.value?.classList.add('group-hover:underline')
+}
+
+const onMousedown = () => {
+  tag.value?.classList.remove('active:bg-gray-50', 'active:shadow-sm', 'active:border-gray-900', 'active:text-black')
+  link.value?.classList.remove('group-active:underline')
+}
+
+const onMouseup = () => {
+  tag.value?.classList.add('active:bg-gray-50', 'active:shadow-sm', 'active:border-gray-900', 'active:text-black')
+  link.value?.classList.add('group-active:underline')
+}
 </script>
