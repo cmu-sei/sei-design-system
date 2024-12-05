@@ -2,28 +2,7 @@
   <div 
     :id="id"
     data-id="sds-tag"
-    class="
-      flex
-      items-center
-      group
-      bg-white
-      hover:bg-gray-25
-      active:bg-gray-50
-      border
-      border-gray-200
-      hover:border-gray-600
-      active:border-gray-900
-      rounded-full
-      font-semibold
-      text-gray-600
-      hover:text-gray-900
-      active:text-black
-    "
-    :class="[
-      paddingClass,
-      sizeClass,
-      textSizeClass
-    ]"
+    :class="[styles]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
@@ -211,6 +190,26 @@ const textSizeClass = computed(() => {
     default:
       return ''
   }
+})
+
+const styles = computed(() => {
+  return `
+    flex
+    items-center
+    group
+    bg-white
+    ${props.readonly ? '' : 'hover:bg-gray-25 active:bg-gray-50'}
+    border
+    border-gray-200
+    ${props.readonly ? '' : 'hover:border-gray-600 active:border-gray-900'}
+    rounded-full
+    font-semibold
+    text-gray-600
+    ${props.readonly ? '' : 'hover:text-gray-900 active:text-black'}
+    ${textSizeClass.value}
+    ${sizeClass.value}
+    ${paddingClass.value}
+  `.replace(/\s+/g, ' ')
 })
 
 // Add action
