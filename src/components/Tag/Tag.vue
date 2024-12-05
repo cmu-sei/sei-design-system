@@ -3,6 +3,9 @@
     :id="id"
     data-id="sds-tag"
     class="
+      flex
+      items-center
+      group
       bg-white
       hover:bg-gray-25
       active:bg-gray-50
@@ -18,7 +21,8 @@
     "
     :class="[
       paddingClass,
-      sizeClass
+      sizeClass,
+      textSizeClass
     ]"
   >
     <div 
@@ -27,19 +31,18 @@
     >
       <!-- @slot Left slot content. -->
       <slot name="leftSlot" />
-      <SdsLink 
+      <a
         v-if="href && !readonly"
-        kind="tertiary"
-        type="standalone"
+        class="group-hover:underline group-active:underline"
         :href="href"
-        :external="external"
-        :size="size === 'sm' ? 'xs' : 'md'"
+        :target="external ? '_blank' : undefined"
+        :rel="external ? 'noopener noreferrer' : undefined"
       >
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
         </slot>
-      </SdsLink>
+      </a>
       <span v-else>
         <!-- @slot Label content. -->
         <slot name="label">
@@ -180,15 +183,26 @@ const paddingClass = computed(() => {
   const { action, size } = props
   switch (size) {
     case 'sm':
-      return action ? 'pl-2 pr-1 py-1' : 'px-2 py-1'
+      return action ? 'pl-2 pr-1' : 'px-2'
     case 'md':
-      return action ? 'pl-3 pr-1.5 py-1.5' : 'px-3 py-1.5'
+      return action ? 'pl-3 pr-1.5' : 'px-3'
     default:
       return ''
   }
 })
 
 const sizeClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'h-6'
+    case 'md':
+      return 'h-8'
+    default:
+      return ''
+  }
+})
+
+const textSizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
       return 'text-xs leading-4'
