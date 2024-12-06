@@ -3,7 +3,20 @@
     :id="id"
     ref="tag"
     data-id="sds-tag"
-    :class="[styles]"
+    class="
+      flex
+      items-center
+      bg-white
+      shadow-none
+      border
+      border-gray-200
+      rounded-full
+      font-semibold
+      text-gray-600
+    "
+    :data-link="props.href ? true : undefined"
+    :data-readonly="props.readonly || undefined"
+    :class="[textSizeClass, sizeClass, paddingClass]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
@@ -19,7 +32,6 @@
       <a
         v-if="href && !readonly"
         ref="link"
-        class="group-hover:underline group-active:underline"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
@@ -42,10 +54,6 @@
             type="button"
             class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
             @click="increment"
-            @mouseover="onMouseover"
-            @mouseleave="onMouseleave"
-            @mousedown="onMousedown"
-            @mouseup="onMouseup"
           >
             <SdsSvgIcon
               aria-hidden="true"
@@ -66,10 +74,6 @@
             type="button"
             class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
             @click="decrement"
-            @mouseover="onMouseover"
-            @mouseleave="onMouseleave"
-            @mousedown="onMousedown"
-            @mouseup="onMouseup"
           >
             <SdsSvgIcon
               aria-hidden="true"
@@ -90,10 +94,6 @@
             type="button"
             class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
             @click="remove"
-            @mouseover="onMouseover"
-            @mouseleave="onMouseleave"
-            @mousedown="onMousedown"
-            @mouseup="onMouseup"
           >
             <SdsSvgIcon
               aria-hidden="true"
@@ -214,30 +214,6 @@ const textSizeClass = computed(() => {
   }
 })
 
-const styles = computed(() => {
-  return `
-    flex
-    items-center
-    group
-    bg-white
-    shadow-none
-    ${props.readonly ? '' : 'hover:bg-gray-25 hover:shadow-sm'}
-    ${props.href && !props.readonly ? 'active:bg-gray-50 active:shadow-sm' : ''}
-    border
-    border-gray-200
-    ${props.readonly ? '' : 'hover:border-gray-600'}
-    ${props.href && !props.readonly ? 'active:border-gray-900' : ''}
-    rounded-full
-    font-semibold
-    text-gray-600
-    ${props.readonly ? '' : 'hover:text-gray-900'}
-    ${props.href && !props.readonly ? 'active:text-black' : ''}
-    ${textSizeClass.value}
-    ${sizeClass.value}
-    ${paddingClass.value}
-  `.replace(/\s+/g, ' ')
-})
-
 // Add action
 const increment = () => {
   count.value += 1
@@ -252,28 +228,23 @@ const decrement = () => {
 
 // Destroy action
 const remove = () => emit('remove', props.id)
-
-/**
- * Mouse events
- */
-
-const onMouseover = () => {
-  tag.value?.classList.remove('hover:bg-gray-25', 'hover:shadow-sm', 'hover:border-gray-600', 'hover:text-gray-900')
-  link.value?.classList.remove('group-hover:underline')
-}
-
-const onMouseleave = () => {
-  tag.value?.classList.add('hover:bg-gray-25', 'hover:shadow-sm', 'hover:border-gray-600', 'hover:text-gray-900')
-  link.value?.classList.add('group-hover:underline')
-}
-
-const onMousedown = () => {
-  tag.value?.classList.remove('active:bg-gray-50', 'active:shadow-sm', 'active:border-gray-900', 'active:text-black')
-  link.value?.classList.remove('group-active:underline')
-}
-
-const onMouseup = () => {
-  tag.value?.classList.add('active:bg-gray-50', 'active:shadow-sm', 'active:border-gray-900', 'active:text-black')
-  link.value?.classList.add('group-active:underline')
-}
 </script>
+
+<style lang="postcss" scoped>
+[data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
+  @apply hover:underline !important;
+}
+
+[data-id="sds-tag"]:not([data-readonly="true"]):hover:not(:has(button:hover)),
+[data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
+  @apply hover:bg-gray-25 hover:shadow-sm hover:border-gray-600 hover:text-gray-900 !important;
+}
+
+[data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
+  @apply active:underline !important;
+}
+
+[data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
+  @apply active:bg-gray-50 active:shadow-sm active:border-gray-900 active:text-black !important;
+}
+</style>
