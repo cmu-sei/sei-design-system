@@ -4,7 +4,7 @@
     ref="tag"
     data-id="sds-tag"
     class="
-      flex
+      inline-flex
       items-center
       bg-white
       dark:bg-gray-850
@@ -121,6 +121,8 @@
 </template>
 
 <script setup lang="ts">
+import SdsSvgIcon from '../SvgIcon'
+
 defineOptions({
   name: 'SdsTag'
 })
@@ -145,7 +147,7 @@ const props = defineProps({
   /**
    * Determines the text of the label.
    */
-  label: { type: String as PropType<string | null>, default: null },
+  label: { type: String, default: '' },
   /**
    * Determines whether or not the tag is read-only.
    */
