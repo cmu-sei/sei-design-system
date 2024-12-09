@@ -1,7 +1,6 @@
 <template>
   <div 
     :id="id"
-    ref="tag"
     data-id="sds-tag"
     class="
       inline-flex
@@ -34,7 +33,6 @@
       </span>
       <a
         v-if="href && !readonly"
-        ref="link"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
@@ -160,8 +158,6 @@ const props = defineProps({
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
 
-const tag = ref<HTMLDivElement>()
-const link = ref<HTMLAnchorElement>()
 const count = ref(0)
 
 const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
