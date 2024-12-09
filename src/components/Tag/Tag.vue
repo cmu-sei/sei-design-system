@@ -7,12 +7,15 @@
       flex
       items-center
       bg-white
+      dark:bg-gray-850
       shadow-none
       border
       border-gray-200
+      dark:border-gray-700
       rounded-full
       font-semibold
       text-gray-600
+      dark:text-gray-400
     "
     :data-link="props.href ? true : undefined"
     :data-readonly="props.readonly || undefined"
@@ -52,7 +55,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-blue-600 hover:bg-blue-50 rounded-full w-4 h-4"
+            class="text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-full w-4 h-4"
             @click="increment"
           >
             <SdsSvgIcon
@@ -72,7 +75,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-gray-600 hover:bg-gray-50 rounded-full w-4 h-4"
+            class="text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full w-4 h-4"
             @click="decrement"
           >
             <SdsSvgIcon
@@ -92,7 +95,7 @@
           <button 
             ref="button" 
             type="button"
-            class="text-red-600 hover:bg-red-50 rounded-full w-4 h-4"
+            class="text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-full w-4 h-4"
             @click="remove"
           >
             <SdsSvgIcon
@@ -237,7 +240,7 @@ const remove = () => emit('remove', props.id)
 
 [data-id="sds-tag"]:not([data-readonly="true"]):hover:not(:has(button:hover)),
 [data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
-  @apply hover:bg-gray-25 hover:shadow-sm hover:border-gray-600 hover:text-gray-900 !important;
+  @apply hover:bg-gray-25 dark:hover:bg-gray-850 hover:shadow-sm hover:border-gray-600 dark:hover:border-gray-400 hover:text-gray-900 dark:hover:text-gray-100 !important;
 }
 
 [data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
@@ -245,6 +248,6 @@ const remove = () => emit('remove', props.id)
 }
 
 [data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
-  @apply active:bg-gray-50 active:shadow-sm active:border-gray-900 active:text-black !important;
+  @apply active:bg-gray-50 dark:active:bg-gray-800 active:shadow-sm active:border-gray-900 dark:active:border-gray-100 active:text-black dark:active:text-white !important;
 }
 </style>
