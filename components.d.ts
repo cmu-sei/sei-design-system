@@ -25,6 +25,7 @@ declare module 'vue' {
     PagesComponentsUtility: typeof import('./src/docs/pages/components/utility.vue')['default']
     PagesCssComponents: typeof import('./src/docs/pages/css/css-components.vue')['default']
     PagesPatternsFormGroup: typeof import('./src/docs/pages/patterns/form-group.vue')['default']
+    PagesPatternsLayoutExternal: typeof import('./src/docs/pages/patterns/layout-external.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

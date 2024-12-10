@@ -5,10 +5,10 @@ exports[`LayoutSeiExternalHeader > should match its default snapshot 1`] = `
   data-id="sds-layout-sei-external-header"
 >
   <div
-    class="bg-red-500"
+    class="bg-red-600"
   >
     <div
-      class="container px-4 py-2 mx-auto md:px-8"
+      class="container px-4 pt-4 pb-2 mx-auto md:px-8"
     >
       <a
         class="block w-80"
