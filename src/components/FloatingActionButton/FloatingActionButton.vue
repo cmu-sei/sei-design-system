@@ -20,8 +20,8 @@
                 class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
-                  'bg-blue-600 hover:bg-blue-500 dark:bg-blue-300 dark:hover:bg-blue-200' : localVariant === 'blue',
-                  'bg-red-600 hover:bg-red-500 dark:bg-red-300 dark:hover:bg-red-200': localVariant === 'red'
+                  'btn-blue' : localVariant === 'blue',
+                  'btn-red': localVariant === 'red'
                 }"
                 :aria-expanded="open"
                 @click="open = !open"
@@ -80,8 +80,8 @@
                 <div
                   class="p-6 rounded-t-lg flex gap-4"
                   :class="{
-                    'text-white bg-blue-600 dark:text-gray-950 dark:bg-blue-300': localVariant === 'blue',
-                    'text-white bg-red-600 dark:text-gray-950 dark:bg-red-300': localVariant === 'red',
+                    'text-white bg-blue-600 dark:text-gray-950 dark:bg-blue-400': localVariant === 'blue',
+                    'text-white bg-red-600 dark:text-gray-950 dark:bg-red-400': localVariant === 'red',
                   }"
                 >
                   <h2 class="grow uppercase font-bold text-lg">
@@ -90,11 +90,11 @@
                   <ActionButton
                     kind="ghost"
                     size="sm"
-                    class="text-gray-100 dark:text-gray-900 h-[30px] w-[30px] py-[9px] px-[7px]"
+                    class="text-gray-100 dark:text-gray-900"
                     @click="open = false"
                   >
                     <svg
-                      class="inline-block h-6 w-6"
+                      class="inline-block h-4 w-4"
                       aria-hidden="true"
                       role="img"
                       xmlns="http://www.w3.org/2000/svg"
@@ -125,8 +125,8 @@
                       v-for="tab in tabs"
                       :key="tab.key"
                       :class="{
-                        'border-t-blue-600 hover:border-t-blue-600 text-blue-600 bg-white dark:border-t-blue-300 dark:hover:border-t-blue-300 dark:text-blue-300 dark:bg-gray-950': tab.active && localVariant === 'blue',
-                        'border-t-red-600 hover:border-t-red-600 text-red-600 bg-white dark:border-t-red-300 dark:hover:border-t-red-300 dark:text-red-300 dark:bg-gray-950': tab.active && localVariant === 'red',
+                        'border-t-blue-600 hover:border-t-blue-600 text-blue-600 bg-white dark:border-t-blue-400 dark:hover:border-t-blue-400 dark:text-blue-400 dark:bg-gray-950': tab.active && localVariant === 'blue',
+                        'border-t-red-600 hover:border-t-red-600 text-red-600 bg-white dark:border-t-red-400 dark:hover:border-t-red-400 dark:text-red-400 dark:bg-gray-950': tab.active && localVariant === 'red',
                         'border-t-transparent hover:border-t-gray-100 text-gray-600 bg-white hover:text-black dark:hover:border-t-gray-600 dark:text-gray-400 dark:bg-gray-950 dark:hover:text-white': !tab.active
                       }"
                       class="flex flex-col gap-2 p-6 pt-4 text-sm font-bold border-t-4 transition-colors duration-200"
