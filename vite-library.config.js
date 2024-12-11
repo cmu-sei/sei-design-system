@@ -45,7 +45,17 @@ export default defineConfig({
         // for externalized deps
         globals: {
           vue: 'Vue'
-        }
+        },
+        // ensure we use style.css naming
+        assetFileNames: (assetInfo) => {
+          const names = assetInfo.names.map(name => {
+            if (name === 'components-vue3.css') {
+              return 'style.css'
+            }
+            return name
+          })
+          return `${names}`;
+        },
       }
     }
   },
