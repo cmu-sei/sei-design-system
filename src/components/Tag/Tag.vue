@@ -16,8 +16,8 @@
       text-gray-600
       dark:text-gray-400
     "
-    :data-link="props.href ? true : undefined"
-    :data-readonly="props.readonly || undefined"
+    :data-link="href && !readonly ? true : undefined"
+    :data-readonly="readonly"
     :class="[textSizeClass, sizeClass, paddingClass]"
   >
     <div 
@@ -182,12 +182,12 @@ const icons = ref<Record<string, { height: number; path: string; viewBox: string
 })
 
 const paddingClass = computed(() => {
-  const { action, size } = props
+  const { action, readonly, size } = props
   switch (size) {
     case 'sm':
-      return action ? 'pl-2 pr-1' : 'px-2'
+      return action && !readonly ? 'pl-2 pr-1' : 'px-2'
     case 'md':
-      return action ? 'pl-3 pr-1.5' : 'px-3'
+      return action && !readonly ? 'pl-3 pr-1.5' : 'px-3'
     default:
       return ''
   }
