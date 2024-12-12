@@ -1,5 +1,5 @@
 <template>
-  <footer data-id="sds-layout-sei-external-footer">
+  <section data-id="sds-layout-sei-external-footer">
     <div class="py-8 text-gray-100 bg-gray-900">
       <div class="container px-4 max-w-screen-xl mx-auto space-y-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -254,7 +254,7 @@
         </div>
       </div>
     </div>
-  </footer>
+  </section>
 </template>
 
 <script setup lang="ts">

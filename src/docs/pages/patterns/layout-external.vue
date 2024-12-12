@@ -20,7 +20,7 @@
           />
         </symbol>
       </svg>
-      <section class="flex flex-col">
+      <div class="flex flex-col">
         <div class="flex flex-col-reverse lg:flex-row gap-8 container mx-auto max-w-screen-xl p-4 md:p-8">
           <div class="flex flex-col gap-4 w-full lg:w-1/3">
             <div class="bg-gray-50 p-4 flex flex-col gap-2">
@@ -110,31 +110,33 @@
             </p>
           </div>
         </div>
-        <div class="py-8 text-white bg-gray-400">
-          <div class="container px-4 mx-auto max-w-screen-xl space-y-6 lg:px-8">
-            <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <li>
-                <a
-                  href="https://vulcoord.cert.org/VulReport/"
-                  class="hover:underline focus:underline focus:outline-none"
-                >Report a Vulnerability to CERT/CC</a>
-              </li>
-              <li>
-                <a
-                  href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
-                  class="hover:underline focus:underline focus:outline-none"
-                >Subscribe to SEI Bulletin</a>
-              </li>
-              <li>
-                <a
-                  href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
-                  class="hover:underline focus:underline focus:outline-none"
-                >Request Permission to Use SEI Materials</a>
-              </li>
-            </ul>
-          </div>
+      </div>
+    </template>
+    <template #footer>
+      <div class="py-8 text-white bg-gray-400">
+        <div class="container px-4 mx-auto max-w-screen-xl space-y-6 lg:px-8">
+          <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <li>
+              <a
+                href="https://vulcoord.cert.org/VulReport/"
+                class="hover:underline focus:underline focus:outline-none"
+              >Report a Vulnerability to CERT/CC</a>
+            </li>
+            <li>
+              <a
+                href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
+                class="hover:underline focus:underline focus:outline-none"
+              >Subscribe to SEI Bulletin</a>
+            </li>
+            <li>
+              <a
+                href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
+                class="hover:underline focus:underline focus:outline-none"
+              >Request Permission to Use SEI Materials</a>
+            </li>
+          </ul>
         </div>
-      </section>
+      </div>
     </template>
   </SdsLayoutSeiExternal>
 </template>

@@ -1,0 +1,99 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tag > should match its default snapshot 1`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 px-2"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. --></span>
+        <!--v-if-->
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` props 1`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 px-2"
+data-link="true" data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><a href="https://www.google.com/" rel="noopener noreferrer" target="_blank"><!-- @slot Label content. -->Google</a>
+        <!--v-if-->
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot with assigned \`id\` prop 1`] = `
+"<div id="unique-id" data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 px-2"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <!--v-if-->
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot with assigned \`readonly\` prop 1`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 px-2"
+data-readonly="true">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <!--v-if-->
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot with assigned \`size\` prop 1`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-base leading-6 h-8 px-3"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1.5">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <!--v-if-->
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 pl-2 pr-1"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <button type="button" class="text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-full w-4 h-4">
+            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+                <path d="M12.0625 8.25C12.0625 8.60156 11.7695 8.89453 11.4375 8.89453H8.625V11.707C8.625 12.0391 8.33203 12.3125 8 12.3125C7.64844 12.3125 7.375 12.0391 7.375 11.707V8.89453H4.5625C4.21094 8.89453 3.9375 8.60156 3.9375 8.25C3.9375 7.91797 4.21094 7.64453 4.5625 7.64453H7.375V4.83203C7.375 4.48047 7.64844 4.1875 8 4.1875C8.33203 4.1875 8.625 4.48047 8.625 4.83203V7.64453H11.4375C11.7695 7.625 12.0625 7.91797 12.0625 8.25Z"
+                fill="currentColor"></path>
+            </svg><span class="sr-only">Add</span>
+        </button>
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 pl-2 pr-1"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <button type="button" class="text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full w-4 h-4">
+            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+                <path d="M11.4375 8.875H4.5625C4.21094 8.875 3.9375 8.60156 3.9375 8.25C3.9375 7.91797 4.21094 7.625 4.5625 7.625H11.4375C11.7695 7.625 12.0625 7.91797 12.0625 8.25C12.0625 8.60156 11.7695 8.875 11.4375 8.875Z"
+                fill="currentColor"></path>
+            </svg><span class="sr-only">Remove</span>
+        </button>
+    </div>
+</div>"
+`;
+
+exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = `
+"<div data-id="sds-tag" class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full font-semibold text-gray-600 dark:text-gray-400 text-xs leading-4 h-6 pl-2 pr-1"
+data-readonly="false">
+    <div class="flex flex-row flex-nowrap items-center gap-1">
+        <!--v-if--><span><!-- @slot Label content. -->Tag</span>
+        <button type="button" class="text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-full w-4 h-4">
+            <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+                <path d="M10.9297 10.3203C11.1836 10.5547 11.1836 10.9648 10.9297 11.1992C10.8125 11.3164 10.6562 11.375 10.5 11.375C10.3242 11.375 10.168 11.3164 10.0508 11.1992L8 9.14844L5.92969 11.1992C5.8125 11.3164 5.65625 11.375 5.5 11.375C5.32422 11.375 5.16797 11.3164 5.05078 11.1992C4.79688 10.9648 4.79688 10.5547 5.05078 10.3203L7.10156 8.25L5.05078 6.19922C4.79688 5.96484 4.79688 5.55469 5.05078 5.32031C5.28516 5.06641 5.69531 5.06641 5.92969 5.32031L8 7.37109L10.0508 5.32031C10.2852 5.06641 10.6953 5.06641 10.9297 5.32031C11.1836 5.55469 11.1836 5.96484 10.9297 6.19922L8.87891 8.26953L10.9297 10.3203Z"
+                fill="currentColor"></path>
+            </svg><span class="sr-only">Destroy</span>
+        </button>
+    </div>
+</div>"
+`;

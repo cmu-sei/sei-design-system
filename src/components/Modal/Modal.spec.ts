@@ -1,4 +1,5 @@
-import { describe, expect, it } from 'vitest'
+import type { Directive } from 'vue'
+import { afterEach, describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Component from './Modal.vue'
 
@@ -10,6 +11,10 @@ import Component from './Modal.vue'
  */
 
 describe('Modal', () => {
+  afterEach(() => {
+    document.body.outerHTML = ''
+  })
+
   it('should match its default snapshot', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
@@ -22,10 +27,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -34,7 +44,7 @@ describe('Modal', () => {
         hideHeader: false
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
@@ -43,10 +53,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -64,10 +79,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -77,7 +97,7 @@ describe('Modal', () => {
         zIndex: '40'
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
@@ -86,10 +106,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -99,7 +124,7 @@ describe('Modal', () => {
         zIndex: '30'
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
@@ -108,10 +133,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -121,7 +151,7 @@ describe('Modal', () => {
         zIndex: '20'
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
@@ -130,10 +160,15 @@ describe('Modal', () => {
       attachTo: document.body,
       directives: {
         'uid': {
-          created(el) {
+          created(el: HTMLDivElement) {
             el.setAttribute('id', 'unique-id')
           }
-        }
+        },
+        focus: {
+          mounted(el: HTMLElement) {
+            el.focus();
+          },
+        } as Directive
       },
       props: {
         modelValue: true,
@@ -143,7 +178,7 @@ describe('Modal', () => {
         zIndex: '10'
       }
     })
-    await wrapper.vm.$nextTick() 
+    await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 })

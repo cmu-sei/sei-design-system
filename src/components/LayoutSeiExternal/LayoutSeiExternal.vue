@@ -1,32 +1,32 @@
 <template>
+  <!-- To set a different root-level background/text color, override with the !important flag -->
   <div
     data-id="sds-layout-sei-external"
-    class="flex flex-col relative w-full min-h-screen text-gray-900 bg-white"
+    class="flex flex-col justify-between w-full min-h-screen text-gray-900 bg-white"
   >
-    <!-- @slot Header content. -->
-    <slot name="header">
-      <layout-sei-external-header :page="page" />
-    </slot>
-    <main v-if="$slots.default">
-      <template v-if="removeContentPadding">
-        <!-- @slot Page content. -->
-        <slot />
-      </template>
-      <template v-else>
-        <div class="container p-4 mx-auto md:p-8">
+    <main>
+      <!-- @slot Header content. -->
+      <slot name="header">
+        <layout-sei-external-header :page="page" />
+      </slot>
+      <section v-if="$slots.default">
+        <template v-if="removeContentPadding">
           <!-- @slot Page content. -->
           <slot />
-        </div>
-      </template>
+        </template>
+        <template v-else>
+          <div class="container p-4 mx-auto max-w-screen-xl md:p-8">
+            <!-- @slot Page content. -->
+            <slot />
+          </div>
+        </template>
+      </section>
     </main>
     <!-- @slot Footer content. -->
-    <slot
-      v-if="showFooter"
-      name="footer"
-      class="absolute bottom-0"
-    >
-      <layout-sei-external-footer />
-    </slot>
+    <footer v-if="showFooter || $slots.footer">
+      <slot name="footer" />
+      <layout-sei-external-footer v-if="showFooter" />
+    </footer>
   </div>
 </template>
 
