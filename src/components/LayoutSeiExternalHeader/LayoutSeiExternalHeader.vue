@@ -1,7 +1,7 @@
 <template>
   <header data-id="sds-layout-sei-external-header">
     <div class="bg-red-600">
-      <div class="container px-4 pt-4 pb-2 mx-auto md:px-8">
+      <div class="container px-4 pt-4 pb-2 mx-auto max-w-screen-xl md:px-8">
         <a
           href="https://www.cmu.edu/"
           target="_self"
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="text-gray-700 bg-white">
-      <div class="container px-4 pt-8 mx-auto space-y-8 md:px-8">
+      <div class="container px-4 pt-8 mx-auto max-w-screen-xl space-y-8 md:px-8">
         <div class="pb-6 space-y-4 border-b">
           <h1 class="text-5xl font-extralight">
             <a

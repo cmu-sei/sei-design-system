@@ -28,7 +28,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  showMasthead: true,
   page: {
     organization: 'Page Organization',
     title: 'Page Title',
