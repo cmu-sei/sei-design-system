@@ -6,9 +6,9 @@
     <div
       v-for="item in page.nav"
       :key="item.title"
-      class="p-4 space-y-2 bg-gray-100"
+      class="p-4 space-y-2 bg-gray-50"
     >
-      <h3 class="text-xl text-gray-600 break-words">
+      <h3 class="text-xl text-gray-400 break-words">
         {{ item.title }}
       </h3>
       <ul class="pb-2 space-y-2">
@@ -18,17 +18,17 @@
         >
           <a
             :href="link.url"
-            class="text-red-500 break-words hover:text-red-700 hover:underline"
+            class="text-red-600 break-words hover:text-red-700 hover:underline"
           >{{ link.title }}</a>
         </li>
       </ul>
       <div
         v-if="item.seeAll"
-        class="pt-2 border-t"
+        class="pt-2 border-t border-t-gray-100"
       >
         <a
           :href="item.seeAll.url"
-          class="inline-flex font-bold uppercase group text-gray-900"
+          class="inline-flex font-bold uppercase group text-gray-600"
         >
           <span class="group-hover:underline">{{ item.seeAll.title }}</span>
           <svg
