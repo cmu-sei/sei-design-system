@@ -28,6 +28,7 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
+  showFooter: true,
   page: {
     organization: 'Page Organization',
     title: 'Page Title',
@@ -53,7 +54,14 @@ Default.args = {
         items: [
           { title: 'Link title 1', url: 'https://designsystem.sei.cmu.edu' },
           { title: 'Link title 2', url: 'https://designsystem.sei.cmu.edu' },
-        ]
+          { title: 'Link title 3', url: 'https://designsystem.sei.cmu.edu' },
+          { title: 'Link title 4', url: 'https://designsystem.sei.cmu.edu' },
+          { title: 'Link title 5', url: 'https://designsystem.sei.cmu.edu' },
+        ],
+        seeAll: {
+          title: 'See All title',
+          url: 'https://designsystem.sei.cmu.edu'
+        }
       }
     ]
   }
