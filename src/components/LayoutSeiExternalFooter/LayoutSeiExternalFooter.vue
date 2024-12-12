@@ -1,32 +1,8 @@
 <template>
   <footer data-id="sds-layout-sei-external-footer">
-    <div class="py-8 text-white bg-gray-400">
-      <div class="container px-4 mx-auto space-y-6 md:px-8">
-        <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <li>
-            <a
-              href="https://vulcoord.cert.org/VulReport/"
-              class="hover:underline focus:underline focus:outline-none"
-            >Report a Vulnerability to CERT/CC</a>
-          </li>
-          <li>
-            <a
-              href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
-              class="hover:underline focus:underline focus:outline-none"
-            >Subscribe to SEI Bulletin</a>
-          </li>
-          <li>
-            <a
-              href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
-              class="hover:underline focus:underline focus:outline-none"
-            >Request Permission to Use SEI Materials</a>
-          </li>
-        </ul>
-      </div>
-    </div>
     <div class="py-8 text-gray-100 bg-gray-900">
-      <div class="container px-4 mx-auto space-y-6 md:px-8">
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div class="container px-4 max-w-screen-xl mx-auto space-y-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <address class="not-italic">
               Carnegie Mellon University<br>
