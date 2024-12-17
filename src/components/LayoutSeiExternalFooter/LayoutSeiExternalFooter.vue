@@ -1,7 +1,7 @@
 <template>
   <section data-id="sds-layout-sei-external-footer">
     <div class="py-8 text-gray-100 bg-gray-900">
-      <div class="container px-4 max-w-screen-xl mx-auto space-y-6 lg:px-8">
+      <div class="container px-4 max-w-screen-xl mx-auto space-y-6 md:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <address class="not-italic">

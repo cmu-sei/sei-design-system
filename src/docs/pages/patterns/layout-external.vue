@@ -41,7 +41,7 @@
     </template>
     <template #footer>
       <div class="py-8 text-white bg-gray-400">
-        <div class="container px-4 mx-auto max-w-screen-xl space-y-6 lg:px-8">
+        <div class="container px-4 mx-auto max-w-screen-xl space-y-6 md:px-8">
           <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <li>
               <a
