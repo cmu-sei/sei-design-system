@@ -18,7 +18,7 @@
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
-    :class="[textSizeClass, sizeClass, paddingClass]"
+    :class="[textSizeClass, sizeClass, paddingClass, linkStyles]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
@@ -33,9 +33,14 @@
       </span>
       <a
         v-if="href && !readonly"
+        class="hover:underline active:underline"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
+        @mouseover="handleMouseover"
+        @mouseleave="handleMouseleave"
+        @mousedown="handleMousedown"
+        @mouseup="handleMouseup"
       >
         <!-- @slot Label content. -->
         <slot name="label">
@@ -127,7 +132,6 @@ defineOptions({
   name: 'SdsTag'
 })
 
-// Helpers
 const actions = ['increment', 'decrement', 'remove'] as const
 const isAction = (action: ActionType): action is ActionType => actions.includes(action)
 
@@ -165,6 +169,9 @@ const props = defineProps({
 const emit = defineEmits(['increment', 'decrement', 'remove'])
 
 const count = ref(0)
+
+const isPressed = ref(false)
+const isHovering = ref(false)
 
 const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
   increment: {
@@ -221,6 +228,28 @@ const textSizeClass = computed(() => {
   }
 })
 
+const linkStyles = computed(() => {
+  if (isPressed.value && isHovering.value) {
+    return 'bg-gray-50 dark:bg-gray-800 shadow-sm border-gray-900 dark:border-gray-100 text-black dark:text-white'
+  } else if (isHovering.value && !isPressed.value) {
+    return 'bg-gray-25 dark:bg-gray-850 shadow-sm border-gray-600 dark:border-gray-400 text-gray-900 dark:text-gray-100'
+  } else {
+    return ''
+  }
+})
+
+const handleMouseover = () => isHovering.value = true
+
+const handleMouseleave = () => {
+  isHovering.value = false
+  if (isPressed.value) {
+    isPressed.value = false
+  }
+}
+
+const handleMousedown = () => isPressed.value = true
+const handleMouseup = () => isPressed.value = false
+
 const increment = () => {
   count.value += 1
   emit('increment', count.value)
@@ -233,22 +262,3 @@ const decrement = () => {
 
 const remove = () => emit('remove', props.id)
 </script>
-
-<style lang="postcss" scoped>
-[data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
-  @apply hover:underline !important;
-}
-
-[data-id="sds-tag"]:not([data-readonly="true"]):hover:not(:has(button:hover)),
-[data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
-  @apply hover:bg-gray-25 dark:hover:bg-gray-850 hover:shadow-sm hover:border-gray-600 dark:hover:border-gray-400 hover:text-gray-900 dark:hover:text-gray-100 !important;
-}
-
-[data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
-  @apply active:underline !important;
-}
-
-[data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
-  @apply active:bg-gray-50 dark:active:bg-gray-800 active:shadow-sm active:border-gray-900 dark:active:border-gray-100 active:text-black dark:active:text-white !important;
-}
-</style>
