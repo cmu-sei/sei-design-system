@@ -1,4 +1,5 @@
 import type DropdownPlacement from './Dropdown'
+import type { ActionType } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
@@ -21,6 +22,7 @@ import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
 
 export type {
   DropdownPlacement,
+  ActionType,
   CalendarDate,
   CalendarMode,
   CalendarRange,
