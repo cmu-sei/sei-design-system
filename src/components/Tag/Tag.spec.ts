@@ -65,6 +65,12 @@ describe('Tag', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it.todo('emits count on increment event')
+
+  it.todo('emits counts on decrement event')
+
+  it.todo('emits `id` on remove event')
+
   it('should match its snapshot on mouseover, mouseleave events', async () => {
     const wrapper = mount(Component, {
       props: {
