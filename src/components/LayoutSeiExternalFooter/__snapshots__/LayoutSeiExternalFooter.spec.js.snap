@@ -338,7 +338,7 @@ exports[`LayoutSeiExternalFooter > should match its default snapshot 1`] = `
       <div
         class="text-sm"
       >
-         © 2024 Carnegie Mellon University 
+         © 2025 Carnegie Mellon University 
       </div>
     </div>
   </div>
