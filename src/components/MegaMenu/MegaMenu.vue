@@ -148,24 +148,24 @@
         </div>
       </div>
     </transition>
+    <!-- Overlay used to dim background when "width" property set to full. -->
+    <transition
+      enter-active-class="transition-opacity ease-in-out duration-150"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-opacity ease-in-out duration-150"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div
+        v-if="width === 'full' && isOpen"
+        class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
+        :style="{
+          top: `${rootBottom}px`
+        }"
+      />
+    </transition>
   </nav>
-  <!-- Overlay used to dim background when "width" property set to full. -->
-  <transition
-    enter-active-class="transition-opacity ease-in-out duration-150"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-active-class="transition-opacity ease-in-out duration-150"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
-  >
-    <div
-      v-if="width === 'full' && isOpen"
-      class="z-10 mt-auto fixed inset-x-0 bottom-0 bg-black/50"
-      :style="{
-        top: `${rootBottom}px`
-      }"
-    />
-  </transition>
 </template>
 
 <script setup lang="ts">
