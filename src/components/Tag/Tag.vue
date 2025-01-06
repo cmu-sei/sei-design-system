@@ -27,7 +27,10 @@
         'gap-1.5': size === 'md'
       }"
     >
-      <span v-if="$slots.leftSlot">
+      <span 
+        v-if="$slots.leftSlot"
+        class="leading-none"
+      >
         <!-- @slot Left slot content. -->
         <slot name="leftSlot" />
       </span>
@@ -124,6 +127,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSlots } from 'vue'
 import SdsSvgIcon from '../SvgIcon'
 
 export type ActionType = typeof actions[number]
@@ -131,6 +135,8 @@ export type ActionType = typeof actions[number]
 defineOptions({
   name: 'SdsTag'
 })
+
+const slots = useSlots()
 
 const actions = ['increment', 'decrement', 'remove'] as const
 const isAction = (action: ActionType): action is ActionType => actions.includes(action)
@@ -140,6 +146,10 @@ const props = defineProps({
    * Determines the type of action or button.
    */
   action: { type: String as PropType<ActionType>, default: null },
+  /**
+   * Determines the default count(er).
+   */
+  counter: { type: Number, default: null },
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
    */
@@ -168,7 +178,7 @@ const props = defineProps({
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
 
-const count = ref(0)
+const count = ref(props.counter ? props.counter : 0)
 
 const isPressed = ref(false)
 const isHovering = ref(false)
@@ -194,13 +204,15 @@ const icons = ref<Record<string, { height: number; path: string; viewBox: string
   }
 })
 
+const renderLeftSlot = computed(() => !!slots.leftSlot)
+
 const paddingClass = computed(() => {
   const { action, readonly, size } = props
   switch (size) {
     case 'sm':
-      return isAction(action) && !readonly ? 'pl-2 pr-1' : 'px-2'
+      return isAction(action) && !readonly ? renderLeftSlot.value ? 'px-1' : 'pl-2 pr-1' : 'px-2'
     case 'md':
-      return isAction(action) && !readonly ? 'pl-3 pr-1.5' : 'px-3'
+      return isAction(action) && !readonly ? renderLeftSlot.value ? 'px-1.5' : 'pl-3 pr-1.5' : 'px-3'
     default:
       return ''
   }
@@ -252,12 +264,12 @@ const handleMouseup = () => isPressed.value = false
 
 const increment = () => {
   count.value += 1
-  emit('increment', count.value)
+  emit('increment', { id: props.id, count: count.value })
 }
 
 const decrement = () => {
   count.value -= 1
-  emit('decrement', count.value)
+  emit('decrement', { id: props.id, count: count.value })
 }
 
 const remove = () => emit('remove', props.id)
