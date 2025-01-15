@@ -921,6 +921,23 @@ defineOptions({
   name: 'SdsLayoutApp'
 })
 
+defineSlots<{
+  default: () => unknown
+  'app-icon': () => unknown
+  'user-section': () => unknown
+  'page-header': () => unknown
+  'page-title': () => unknown
+  'mobile-sidebar-navigation': () => unknown
+  'mobile-sidebar-navigation-item-icon': () => unknown
+  'sidebar-navigation': () => unknown
+  'sidebar-navigation-item-icon': () => unknown
+  'footer-top': () => unknown
+  'footer-left': () => unknown
+  'footer-middle': () => unknown
+  'footer-right': () => unknown
+  'action-bar': () => unknown
+}>()
+
 const props = defineProps({
   /**
    * The v-model that determines collapsed state.
@@ -1094,7 +1111,7 @@ const toggleItemsGroup = (item: LayoutAppSidebarNavItem) => {
   }
 }
 
-const hasSlot = (title: string) => {
+const hasSlot = (title: 'default' | 'app-icon' | 'user-section' | 'page-header' | 'page-title' | 'mobile-sidebar-navigation' | 'mobile-sidebar-navigation-item-icon' | 'sidebar-navigation' | 'sidebar-navigation-item-icon' | 'footer-top' | 'footer-left' | 'footer-middle' | 'footer-right' | 'action-bar') => {
   return !!slots[title]
 }
 
