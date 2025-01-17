@@ -70,35 +70,4 @@ describe('Tag', () => {
   it.todo('emits counts on decrement event')
 
   it.todo('emits `id` on remove event')
-
-  it('should match its snapshot on mouseover, mouseleave events', async () => {
-    const wrapper = mount(Component, {
-      props: {
-        href: 'https://www.google.com/',
-        label: 'Google'
-      }
-    })
-
-    await wrapper.find('a').trigger('mouseover')
-    expect(wrapper.element).toMatchSnapshot()
-
-    await wrapper.find('a').trigger('mouseleave')
-    expect(wrapper.element).toMatchSnapshot()
-  })
-
-  it('should match its snapshot on mousedown, mouseup events', async () => {
-    const wrapper = mount(Component, {
-      props: {
-        href: 'https://www.google.com/',
-        label: 'Google'
-      }
-    })
-
-    await wrapper.find('a').trigger('mouseover')
-    await wrapper.find('a').trigger('mousedown')
-    expect(wrapper.element).toMatchSnapshot()
-
-    await wrapper.find('a').trigger('mouseup')
-    expect(wrapper.element).toMatchSnapshot()
-  })
 })
