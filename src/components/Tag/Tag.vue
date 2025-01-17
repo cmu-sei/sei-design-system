@@ -15,10 +15,20 @@
       font-semibold
       text-gray-600
       dark:text-gray-400
+      has-[a:hover]:bg-gray-25
+      has-[a:hover]:dark:bg-gray-850
+      has-[a:hover]:shadow-sm
+      has-[a:hover]:border-gray-600
+      has-[a:hover]:dark:border-gray-400
+      has-[a:hover:active]:bg-gray-50
+      has-[a:hover:active]:dark:bg-gray-800
+      has-[a:hover:active]:shadow-sm
+      has-[a:hover:active]:border-gray-900
+      has-[a:hover:active]:dark:border-gray-100
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
-    :class="[textSizeClass, sizeClass, paddingClass, linkStyles]"
+    :class="[textSizeClass, sizeClass, paddingClass]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
@@ -36,14 +46,17 @@
       </span>
       <a
         v-if="href && !readonly"
-        class="hover:underline active:underline"
+        class="
+          hover:underline
+          active:underline
+          hover:text-gray-900
+          hover:dark:text-gray-100
+          active:text-black
+          active:dark:text-white
+        "
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
-        @mouseover="handleMouseover"
-        @mouseleave="handleMouseleave"
-        @mousedown="handleMousedown"
-        @mouseup="handleMouseup"
       >
         <!-- @slot Label content. -->
         <slot name="label">
@@ -180,8 +193,8 @@ const emit = defineEmits(['increment', 'decrement', 'remove'])
 
 const count = ref(props.counter ? props.counter : 0)
 
-const isPressed = ref(false)
-const isHovering = ref(false)
+// const isPressed = ref(false)
+// const isHovering = ref(false)
 
 const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
   increment: {
@@ -240,27 +253,33 @@ const textSizeClass = computed(() => {
   }
 })
 
-const linkStyles = computed(() => {
-  if (isPressed.value && isHovering.value) {
-    return 'bg-gray-50 dark:bg-gray-800 shadow-sm border-gray-900 dark:border-gray-100 text-black dark:text-white'
-  } else if (isHovering.value && !isPressed.value) {
-    return 'bg-gray-25 dark:bg-gray-850 shadow-sm border-gray-600 dark:border-gray-400 text-gray-900 dark:text-gray-100'
-  } else {
-    return ''
-  }
-})
+// const linkStyles = computed(() => {
+//   if (isPressed.value && isHovering.value) {
+//     return 'bg-gray-50 dark:bg-gray-800 shadow-sm border-gray-900 dark:border-gray-100 text-black dark:text-white'
+//   } else if (isHovering.value && !isPressed.value) {
+//     return 'bg-gray-25 dark:bg-gray-850 shadow-sm border-gray-600 dark:border-gray-400 text-gray-900 dark:text-gray-100'
+//   } else {
+//     return ''
+//   }
+// })
 
-const handleMouseover = () => isHovering.value = true
+// has-[a:hover:not(a:active)]:text-gray-900
+// has-[a:hover:not(a:active)]:dark:text-gray-100
 
-const handleMouseleave = () => {
-  isHovering.value = false
-  if (isPressed.value) {
-    isPressed.value = false
-  }
-}
+// has-[a:hover:active]:text-black
+// has-[a:hover:active]:dark:text-white
 
-const handleMousedown = () => isPressed.value = true
-const handleMouseup = () => isPressed.value = false
+// const handleMouseover = () => isHovering.value = true
+
+// const handleMouseleave = () => {
+//   isHovering.value = false
+//   if (isPressed.value) {
+//     isPressed.value = false
+//   }
+// }
+
+// const handleMousedown = () => isPressed.value = true
+// const handleMouseup = () => isPressed.value = false
 
 const increment = () => {
   count.value += 1
