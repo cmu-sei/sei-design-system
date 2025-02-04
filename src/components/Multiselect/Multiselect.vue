@@ -1059,6 +1059,8 @@ const handleRequired = () => {
 </script>
 
 <style lang="postcss" scoped>
+@reference "../../index.css";
+
 .sds-multiselect {
   @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded w-full dark:text-gray-50 dark:bg-gray-900;
 }

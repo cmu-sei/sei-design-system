@@ -232,20 +232,22 @@ const remove = () => emit('remove', props.id)
 </script>
 
 <style lang="postcss" scoped>
+@reference "../../index.css";
+
 [data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
-  @apply hover:underline !important;
+  @apply hover:underline;
 }
 
 [data-id="sds-tag"]:not([data-readonly="true"]):hover:not(:has(button:hover)),
 [data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
-  @apply hover:bg-gray-25 dark:hover:bg-gray-850 hover:shadow-xs hover:border-gray-600 dark:hover:border-gray-400 hover:text-gray-900 dark:hover:text-gray-100 !important;
+  @apply hover:bg-gray-25 dark:hover:bg-gray-850 hover:shadow-xs hover:border-gray-600 dark:hover:border-gray-400 hover:text-gray-900 dark:hover:text-gray-100;
 }
 
 [data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
-  @apply active:underline !important;
+  @apply active:underline;
 }
 
 [data-id="sds-tag"][data-link="true"]:active:not(:has(button:active)) {
-  @apply active:bg-gray-50 dark:active:bg-gray-800 active:shadow-xs active:border-gray-900 dark:active:border-gray-100 active:text-black dark:active:text-white !important;
+  @apply active:bg-gray-50 dark:active:bg-gray-800 active:shadow-xs active:border-gray-900 dark:active:border-gray-100 active:text-black dark:active:text-white;
 }
 </style>
