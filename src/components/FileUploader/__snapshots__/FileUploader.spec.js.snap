@@ -15,7 +15,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
       type="file"
     />
     <div
-      class="flex flex-col items-center space-y-1 rounded p-4 bg-gray-25 dark:bg-gray-900 group-hover:bg-gray-50 dark:group-hover:bg-gray-800"
+      class="flex flex-col items-center space-y-1 rounded-sm p-4 bg-gray-25 dark:bg-gray-900 group-hover:bg-gray-50 dark:group-hover:bg-gray-800"
     >
       <label
         class="action-btn action-btn-ghost action-btn-blue action-btn-sm cursor-pointer font-semibold z-10"

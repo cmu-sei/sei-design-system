@@ -3,14 +3,14 @@
     data-id="sds-toast"
     role="alert"
     aria-live="polite"
-    class="w-full max-w-sm bg-white rounded shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
+    class="w-full max-w-sm bg-white rounded-sm shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
     @mouseenter="clearTimer"
     @mouseleave="setTimer"
   >
-    <div class="overflow-hidden rounded ring-1 ring-black dark:ring-gray-700 ring-opacity-5">
+    <div class="overflow-hidden rounded-sm ring-1 ring-black/5 dark:ring-gray-700">
       <div class="p-4">
         <div class="flex toasts-start">
-          <div class="flex-shrink-0">
+          <div class="shrink-0">
             <!-- Heroicon name: check-circle -->
             <svg
               v-if="localType"
@@ -81,9 +81,9 @@
               {{ text }}
             </p>
           </div>
-          <div class="flex flex-shrink-0 ml-4">
+          <div class="flex shrink-0 ml-4">
             <button
-              class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-none hover:text-gray-900 dark:hover:text-gray-100"
+              class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-hidden hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >
               <svg

@@ -23,7 +23,7 @@
             flex-col
             items-center
             space-y-1
-            rounded
+            rounded-sm
             p-4
             bg-gray-25
             dark:bg-gray-900
@@ -95,7 +95,7 @@
               hover:border-gray-200
               dark:border-gray-800
               hover:dark:border-gray-700
-              rounded 
+              rounded-sm 
               flex 
               flex-row
               items-center 
@@ -121,7 +121,7 @@
             </div>
             <div
               v-else 
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-sm"
             >
               <SdsSvgIcon
                 aria-hidden="true"
@@ -177,7 +177,7 @@
               hover:border-gray-200
               dark:border-gray-800
               hover:dark:border-gray-700
-              rounded 
+              rounded-sm 
               flex 
               flex-row 
               items-center 
@@ -189,7 +189,7 @@
               hover:shadow-lg
             "
           >
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded">
+            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-sm">
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-red-600 dark:text-red-300"

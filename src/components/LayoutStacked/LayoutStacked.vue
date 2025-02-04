@@ -5,8 +5,8 @@
   >
     <header
       v-if="hasHeaderSlot"
-      class="z-30 flex-shrink"
-      :class="{ 'sticky top-0 shadow': stickyHeader }"
+      class="z-30 shrink"
+      :class="{ 'sticky top-0 shadow-sm': stickyHeader }"
     >
       <!-- @slot Header content. -->
       <slot name="header" />
@@ -17,8 +17,8 @@
     </main>
     <footer
       v-if="hasFooterSlot"
-      class="z-20 flex-shrink"
-      :class="{ 'sticky bottom-0 shadow': stickyFooter }"
+      class="z-20 shrink"
+      :class="{ 'sticky bottom-0 shadow-sm': stickyFooter }"
     >
       <!-- @slot Footer content. -->
       <slot name="footer" />

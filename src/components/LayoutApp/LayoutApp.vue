@@ -31,7 +31,7 @@
       <button
         v-if="appSuite || appName"
         ref="mobileMenuOpenBtn"
-        class="flex items-center md:hidden gap-1 focus:outline-none"
+        class="flex items-center md:hidden gap-1 focus:outline-hidden"
         @click="showMobileMenu = !showMobileMenu"
       >
         <svg
@@ -61,7 +61,7 @@
       </button>
     </header>
 
-    <div class="flex grow flex-shrink-0">
+    <div class="flex grow shrink-0">
       <!-- Mobile sidebar close section -->
       <transition
         enter-active-class="transition-opacity ease-linear duration-150"
@@ -73,7 +73,7 @@
       >
         <button
           v-if="showMobileMenu"
-          class="bg-black bg-opacity-40 fixed inset h-screen w-screen z-50 md:hidden"
+          class="bg-black/40 fixed inset h-screen w-screen z-50 md:hidden"
           @click="showMobileMenu = !showMobileMenu"
         >
           <span class="sr-only">Toggle mobile menu</span>
@@ -93,7 +93,7 @@
           v-if="showMobileMenu"
           ref="mobileSidebarContainer"
           aria-label="mobile sidebar"
-          class="md:hidden fixed w-2/3 z-50 bg-white dark:bg-gray-950 flex-shrink-0 border-r border-gray-200 dark:border-gray-800"
+          class="md:hidden fixed w-2/3 z-50 bg-white dark:bg-gray-950 shrink-0 border-r border-gray-200 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
           <button
@@ -116,11 +116,11 @@
                     <!-- @slot App icon content. @binding classList -->
                     <slot
                       name="app-icon"
-                      class-list="block w-4 h-4 my-auto flex-shrink-0"
+                      class-list="block w-4 h-4 my-auto shrink-0"
                     >
                       <span
                         v-if="!hideAppIcon"
-                        class="block w-4 h-4 my-auto flex-shrink-0"
+                        class="block w-4 h-4 my-auto shrink-0"
                       >
                         <template v-if="appUrl">
                           <a
@@ -206,11 +206,11 @@
                         <slot
                           name="mobile-sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
+                          class-list="inline-block w-4 h-4 my-auto shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                            class="inline-block w-4 h-4 my-auto shrink-0"
                           >
                             <img
                               v-if="item.iconUrl"
@@ -293,7 +293,7 @@
                             <kbd 
                               v-for="(kbdSc, index) in subitem.keyboardShortcut"
                               :key="index"
-                              class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                              class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
                               v-html="kbdSc"
                             />
                           </span>
@@ -314,11 +314,11 @@
                       <slot
                         name="mobile-sidebar-navigation-item-icon"
                         :item="item"
-                        class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
+                        class-list="inline-block w-4 h-4 my-auto shrink-0"
                       >
                         <span
                           v-if="!hideSidebarIcons"
-                          class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                          class="inline-block w-4 h-4 my-auto shrink-0"
                         >
                           <img
                             v-if="item.iconUrl"
@@ -352,7 +352,7 @@
                         <kbd 
                           v-for="(kbdSc, index) in item.keyboardShortcut"
                           :key="index"
-                          class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                          class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
                           v-html="kbdSc"
                         />
                       </span>
@@ -363,7 +363,7 @@
                   v-if="hasSlot('user-section')"
                   class="p-3"
                 >
-                  <div class="pt-3 border-t border-gray-100 dark:border-gray-800 items-center flex gap-2 flex-shrink-0">
+                  <div class="pt-3 border-t border-gray-100 dark:border-gray-800 items-center flex gap-2 shrink-0">
                     <!-- @slot User section content. @binding collapsed -->
                     <slot
                       name="user-section"
@@ -380,7 +380,7 @@
       <!-- Desktop sidebar -->
       <aside
         aria-label="desktop sidebar"
-        class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 flex-shrink-0 z-50"
+        class="hidden md:block bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800 shrink-0 z-50"
         :class="[computedSidebarWidth]"
       >
         <div class="h-screen flex flex-col sticky top-0">
@@ -450,7 +450,7 @@
               <button
                 v-if="appSuite || appName"
                 ref="mobileMenuOpenBtn"
-                class="flex md:hidden gap-1 focus:outline-none"
+                class="flex md:hidden gap-1 focus:outline-hidden"
                 @click="showMobileMenu = !showMobileMenu"
               >
                 <svg
@@ -494,11 +494,11 @@
                   <!-- @slot App icon content. @binding classList -->
                   <slot
                     name="app-icon"
-                    class-list="block w-4 h-4 my-auto flex-shrink-0"
+                    class-list="block w-4 h-4 my-auto shrink-0"
                   >
                     <span
                       v-if="!hideAppIcon"
-                      class="block w-4 h-4 my-auto flex-shrink-0"
+                      class="block w-4 h-4 my-auto shrink-0"
                       :class="{ 'mx-auto': collapsed }"
                     >
                       <template v-if="appUrl">
@@ -594,11 +594,11 @@
                           <slot
                             name="sidebar-navigation-item-icon"
                             :item="item"
-                            class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
+                            class-list="inline-block w-4 h-4 my-auto shrink-0"
                           >
                             <span
                               v-if="!hideSidebarIcons"
-                              class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                              class="inline-block w-4 h-4 my-auto shrink-0"
                               :class="{ 'mx-auto': collapsed }"
                             >
                               <img
@@ -697,7 +697,7 @@
                           <kbd 
                             v-for="(kbdSc, index) in subitem.keyboardShortcut"
                             :key="index"
-                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
                             v-html="kbdSc"
                           />
                         </span>
@@ -723,11 +723,11 @@
                         <slot
                           name="sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-4 h-4 my-auto flex-shrink-0"
+                          class-list="inline-block w-4 h-4 my-auto shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-4 h-4 my-auto flex-shrink-0"
+                            class="inline-block w-4 h-4 my-auto shrink-0"
                             :class="{ 'mx-auto': collapsed }"
                           >
                             <img
@@ -773,7 +773,7 @@
                           <kbd 
                             v-for="(kbdSc, index) in item.keyboardShortcut"
                             :key="index"
-                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded p-1.5 font-sans text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 font-sans text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
                             v-html="kbdSc"
                           />
                         </span>
@@ -787,7 +787,7 @@
           </div>
           <div
             v-if="hasSlot('user-section')"
-            class="items-center flex gap-2 flex-shrink-0 p-3"
+            class="items-center flex gap-2 shrink-0 p-3"
           >
             <!-- @slot User section content. @binding collapsed -->
             <slot
@@ -818,7 +818,7 @@
             </div>
             <div
               v-if="hasSlot('page-header')"
-              class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2"
+              class="shrink-0 my-auto flex flex-col md:flex-row gap-2"
             >
               <!-- @slot Page header content. -->
               <slot
@@ -845,7 +845,7 @@
           <hr class="mx-4 border-t border-gray-200 dark:border-gray-800">
 
           <div class="text-xs p-4 flex flex-col lg:flex-row gap-4 pt-4">
-            <div class="flex-shrink-0 flex order-2 lg:order-1">
+            <div class="shrink-0 flex order-2 lg:order-1">
               <sds-link
                 href="https://sei.cmu.edu"
                 title="Software Engineering Institute"
@@ -858,14 +858,14 @@
             </div>
             <div
               v-if="hasSlot('footer-middle')"
-              class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
+              class="shrink flex lg:mx-auto order-1 lg:order-2"
             >
               <div class="my-auto">
                 <!-- @slot Footer middle (top in mobile) content. -->
                 <slot name="footer-middle" />
               </div>
             </div>
-            <div class="flex-shrink-0 flex lg:ml-auto order-3">
+            <div class="shrink-0 flex lg:ml-auto order-3">
               <div class="my-auto">
                 <!-- @slot Footer right (bottom in mobile) content. @binding year -->
                 <slot

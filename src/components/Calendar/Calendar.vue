@@ -10,7 +10,7 @@
           :class="{ 'sm:w-120': isRange }"
         >
           <button
-            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToPrevMonth"
@@ -60,7 +60,7 @@
             </button>
           </div>
           <button
-            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToNextMonth"
@@ -271,7 +271,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             aria-hidden="true"
             role="img"
-            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
@@ -353,7 +353,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             aria-hidden="true"
             role="img"
-            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"

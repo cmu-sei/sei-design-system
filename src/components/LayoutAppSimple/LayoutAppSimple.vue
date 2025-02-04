@@ -3,7 +3,7 @@
     data-id="sds-layout-app-simple"
     class="flex flex-col h-screen dark:text-gray-50"
   >
-    <header class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex flex-shrink-0">
+    <header class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 px-4 py-2 flex shrink-0">
       <div class="my-auto">
         <h1
           v-if="appSuite"
@@ -27,14 +27,14 @@
           </p>
         </h1>
       </div>
-      <div class="ml-auto my-auto items-center flex gap-2 flex-shrink-0">
+      <div class="ml-auto my-auto items-center flex gap-2 shrink-0">
         <!-- @slot User section content. -->
         <slot
           name="user-section"
         />
       </div>
     </header>
-    <div class="flex grow flex-shrink-0">
+    <div class="flex grow shrink-0">
       <!-- Main content -->
       <div class="bg-gray-50 dark:bg-black flex flex-col items-stretch grow min-w-0">
         <main class="grow pb-4">
@@ -55,7 +55,7 @@
             </div>
             <div
               v-if="hasSlot('page-header')"
-              class="flex-shrink-0 my-auto flex flex-col md:flex-row gap-2"
+              class="shrink-0 my-auto flex flex-col md:flex-row gap-2"
             >
               <!-- @slot Page header content. -->
               <slot
@@ -82,7 +82,7 @@
           <hr class="mx-4 border-t border-gray-200 dark:border-gray-800">
 
           <div class="text-xs p-4 flex flex-col lg:flex-row gap-4 pt-4">
-            <div class="flex-shrink-0 flex order-2 lg:order-1">
+            <div class="shrink-0 flex order-2 lg:order-1">
               <sds-link
                 href="https://sei.cmu.edu"
                 title="Software Engineering Institute"
@@ -95,14 +95,14 @@
             </div>
             <div
               v-if="hasSlot('footer-middle')"
-              class="flex-shrink flex lg:mx-auto order-1 lg:order-2"
+              class="shrink flex lg:mx-auto order-1 lg:order-2"
             >
               <div class="my-auto">
                 <!-- @slot Footer middle (top in mobile) content. -->
                 <slot name="footer-middle" />
               </div>
             </div>
-            <div class="flex-shrink-0 flex lg:ml-auto order-3">
+            <div class="shrink-0 flex lg:ml-auto order-3">
               <div class="my-auto">
                 <!-- @slot Footer right (bottom in mobile) content. @binding year -->
                 <slot

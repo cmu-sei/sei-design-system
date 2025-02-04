@@ -15,7 +15,7 @@
             inset-0
             block
             h-full
-            bg-black bg-opacity-50
+            bg-black/50
           "
           :class="[zIndexClass]"
         />
@@ -100,8 +100,8 @@
                 bg-transparent
                 border-0
                 cursor-pointer
-                hover:text-gray-700 hover:outline-none
-                focus:text-gray-700 focus:outline-none
+                hover:text-gray-700 hover:outline-hidden
+                focus:text-gray-700 focus:outline-hidden
                 dark:hover:text-gray-300 dark:focus:text-gray-300
                 active:text-gray-500
                 dark:active:text-gray-600

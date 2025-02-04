@@ -81,7 +81,7 @@
         <template v-if="isRange">
           <div
             v-if="!hideArrow"
-            class="flex my-auto flex-shrink-0"
+            class="flex my-auto shrink-0"
             :class="{
               'opacity-50': disabled || readonly
             }"

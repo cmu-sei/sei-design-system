@@ -66,7 +66,7 @@
     <template #default="{ open, close, toggle, isOpen }">
       <div
         :class="[
-          'py-2 rounded',
+          'py-2 rounded-sm',
           type === 'dark' ? 'dropdown-dark bg-gray-950': ''
         ]"
         aria-orientation="vertical"

@@ -1065,7 +1065,7 @@ const handleRequired = () => {
 
 .sds-multiselect.active,
 .sds-multiselect.open {
-  @apply border-blue-500 rounded ring-2 ring-blue-300 dark:ring-blue-700;
+  @apply border-blue-500 rounded-sm ring-2 ring-blue-300 dark:ring-blue-700;
 }
 
 .sds-multiselect.open:not(.up) {

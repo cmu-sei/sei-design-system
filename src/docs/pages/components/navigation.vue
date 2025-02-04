@@ -403,7 +403,7 @@
                         :type="event.type"
                       >
                         <template #left>
-                          <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                          <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-xs">
                             <div class="font-bold uppercase">
                               {{ event.month }}
                             </div>
@@ -416,7 +416,7 @@
                           <p class="uppercase font-semibold text-xs">
                             {{ event.dateRange }}
                           </p>
-                          <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden overflow-ellipsis">
+                          <p class="text-sm text-gray-700 dark:text-gray-500 max-h-9 overflow-y-hidden text-ellipsis">
                             {{ event.description }}
                           </p>
                         </template>
@@ -619,7 +619,7 @@
                       :type="event.type"
                     >
                       <template #left>
-                        <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                        <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-xs">
                           <div class="font-bold uppercase">
                             {{ event.month }}
                           </div>
@@ -632,7 +632,7 @@
                         <p class="uppercase font-semibold text-xs">
                           {{ event.dateRange }}
                         </p>
-                        <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden overflow-ellipsis">
+                        <p class="text-sm text-gray-700 dark:text-gray-500 max-h-10 overflow-y-hidden text-ellipsis">
                           {{ event.description }}
                         </p>
                       </template>
@@ -969,7 +969,7 @@
             <sds-tabs
               v-model="tabs"
               type="underline"
-              class="bg-white dark:bg-gray-900 border rounded-b p-4"
+              class="bg-white dark:bg-gray-900 border rounded-b-sm p-4"
               @change="changeTab"
             >
               <template #tab(groups)>
@@ -991,7 +991,7 @@
             <sds-tabs
               v-model="tabs"
               type="block"
-              class="bg-white dark:bg-gray-900 border rounded-b p-4"
+              class="bg-white dark:bg-gray-900 border rounded-b-sm p-4"
               @change="changeTab"
             >
               <template #tab(groups)>
@@ -1014,7 +1014,7 @@
             <sds-tabs
               v-model="tabs"
               type="block"
-              class="bg-white dark:bg-gray-900 border rounded-b p-4"
+              class="bg-white dark:bg-gray-900 border rounded-b-sm p-4"
               @change="changeTab"
             >
               <template #tab(groups)>

@@ -11,7 +11,7 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
       class="flex relative gap-1 mb-2 w-56 sm:w-120"
     >
       <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         disabled=""
         tabindex="-1"
         type="button"
@@ -69,7 +69,7 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
         </button>
       </div>
       <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         disabled=""
         tabindex="-1"
         type="button"
@@ -1000,7 +1000,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       class="flex relative gap-1 mb-2 w-56 sm:w-120"
     >
       <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -1057,7 +1057,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
         </button>
       </div>
       <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -1943,7 +1943,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
           height="32"
           preserveAspectRatio="xMidYMid meet"
           role="img"
@@ -2249,7 +2249,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
           height="32"
           preserveAspectRatio="xMidYMid meet"
           role="img"
@@ -2569,7 +2569,7 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
           height="32"
           preserveAspectRatio="xMidYMid meet"
           role="img"
@@ -2875,7 +2875,7 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
           height="32"
           preserveAspectRatio="xMidYMid meet"
           role="img"
@@ -3181,7 +3181,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
       class="flex relative gap-1 mb-2 w-56"
     >
       <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -3226,7 +3226,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
       </div>
       <!--v-if-->
       <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -3695,7 +3695,7 @@ exports[`Calendar > start and end date should be correct 1`] = `
       class="flex relative gap-1 mb-2 w-56 sm:w-120"
     >
       <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >
@@ -3752,7 +3752,7 @@ exports[`Calendar > start and end date should be correct 1`] = `
         </button>
       </div>
       <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
         tabindex="-1"
         type="button"
       >

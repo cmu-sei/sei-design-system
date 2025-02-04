@@ -71,7 +71,7 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
   >
     <!--v-if-->
     <div
@@ -222,7 +222,7 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -263,7 +263,7 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -465,7 +465,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
   >
     <!--v-if-->
     <div
@@ -616,7 +616,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -657,7 +657,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
         >
           <svg
             aria-hidden="true"

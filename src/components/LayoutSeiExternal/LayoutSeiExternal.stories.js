@@ -52,19 +52,19 @@ const Template = (args) => ({
               <li>
                 <a
                   href="https://vulcoord.cert.org/VulReport/"
-                  class="hover:underline focus:underline focus:outline-none"
+                  class="hover:underline focus:underline focus:outline-hidden"
                 >Report a Vulnerability to CERT/CC</a>
               </li>
               <li>
                 <a
                   href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
-                  class="hover:underline focus:underline focus:outline-none"
+                  class="hover:underline focus:underline focus:outline-hidden"
                 >Subscribe to SEI Bulletin</a>
               </li>
               <li>
                 <a
                   href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
-                  class="hover:underline focus:underline focus:outline-none"
+                  class="hover:underline focus:underline focus:outline-hidden"
                 >Request Permission to Use SEI Materials</a>
               </li>
             </ul>

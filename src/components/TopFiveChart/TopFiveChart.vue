@@ -21,7 +21,7 @@
             <div class="grow">
               <div class="mb-2">
                 <div
-                  class="h-6 mr-2 rounded"
+                  class="h-6 mr-2 rounded-sm"
                   role="progressbar"
                   :title="`${result.count}`"
                   :aria-valuenow="result.count"
@@ -43,13 +43,13 @@
                   <template v-if="resultHasUrl(result)">
                     <a
                       :href="result.url"
-                      class="hover:underline focus:underline focus:outline-none"
+                      class="hover:underline focus:underline focus:outline-hidden"
                     >{{ result.title }}</a>
                   </template>
                   <template v-else>
                     <a
                       href="#"
-                      class="hover:underline focus:underline focus:outline-none"
+                      class="hover:underline focus:underline focus:outline-hidden"
                       @click.prevent="resultClick(result)"
                     >{{ result.title }}</a>
                   </template>

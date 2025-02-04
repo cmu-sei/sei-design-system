@@ -194,7 +194,7 @@ exports[`Datepicker > should show disabled 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0 opacity-50"
+        class="flex my-auto shrink-0 opacity-50"
       >
         <svg
           aria-hidden="true"
@@ -305,7 +305,7 @@ exports[`Datepicker > should show invalid 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
@@ -416,7 +416,7 @@ exports[`Datepicker > should show readonly 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0 opacity-50"
+        class="flex my-auto shrink-0 opacity-50"
       >
         <svg
           aria-hidden="true"
@@ -528,7 +528,7 @@ exports[`Datepicker > should show required 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
@@ -638,7 +638,7 @@ exports[`Datepicker > should show the arrow for a range selection 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
@@ -747,7 +747,7 @@ exports[`Datepicker > should show the sm size with the dateTime mode 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
@@ -857,7 +857,7 @@ exports[`Datepicker > should show the sm size with the time mode 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
@@ -967,7 +967,7 @@ exports[`Datepicker > should show valid 1`] = `
       </div>
       
       <div
-        class="flex my-auto flex-shrink-0"
+        class="flex my-auto shrink-0"
       >
         <svg
           aria-hidden="true"
