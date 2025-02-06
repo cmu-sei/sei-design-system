@@ -70,4 +70,11 @@ describe("Textarea.vue", () => {
     const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it('emits when `modelValue` changes', async () => {
+    const wrapper = mount(Component);
+    const textarea = wrapper.find('textarea');
+    await textarea.setValue('New content');
+    expect(wrapper.emitted()).toHaveProperty('change');
+  })
 });
