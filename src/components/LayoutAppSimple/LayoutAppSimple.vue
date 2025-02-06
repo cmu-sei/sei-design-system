@@ -144,6 +144,18 @@ import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
 import type { LayoutAppSidebarNavItem } from '../LayoutApp/LayoutApp.vue'
 
+defineSlots<{
+  default: () => unknown
+  'user-section': () => unknown
+  'page-header': () => unknown
+  'page-title': () => unknown
+  'footer-top': () => unknown
+  'footer-left': () => unknown
+  'footer-middle': () => unknown
+  'footer-right': () => unknown
+  'action-bar': () => unknown
+}>()
+
 defineOptions({
   name: 'SdsLayoutAppSimple'
 })
@@ -188,7 +200,7 @@ const year = computed(() => {
   return d.getFullYear();
 })
 
-const hasSlot = (title: string) => {
+const hasSlot = (title: 'default' | 'user-section' | 'page-header' | 'page-title' | 'footer-top' | 'footer-left' | 'footer-middle' | 'footer-right' | 'action-bar') => {
   return !!slots[title]
 }
 

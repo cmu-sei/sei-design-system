@@ -1,4 +1,5 @@
 import type DropdownPlacement from './Dropdown'
+import type { ActionType } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
@@ -21,6 +22,7 @@ import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
 
 export type {
   DropdownPlacement,
+  ActionType,
   CalendarDate,
   CalendarMode,
   CalendarRange,
@@ -83,7 +85,6 @@ import SdsLayoutSeiExternal from "./LayoutSeiExternal";
 import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
 import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader";
 import SdsLayoutSeiExternalHeaderContent from "./LayoutSeiExternalHeaderContent";
-import SdsLayoutSeiExternalMasthead from "./LayoutSeiExternalMasthead";
 import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav";
 import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark";
 import SdsLayoutStacked from "./LayoutStacked";
@@ -151,7 +152,6 @@ const Components: ComponentList = {
   SdsLayoutSeiExternalFooter,
   SdsLayoutSeiExternalHeader,
   SdsLayoutSeiExternalHeaderContent,
-  SdsLayoutSeiExternalMasthead,
   SdsLayoutSeiExternalNav,
   SdsLayoutSeiExternalWordmark,
   SdsLayoutStacked,
@@ -223,7 +223,6 @@ export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
 export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
 export { default as SdsLayoutSeiExternalHeader } from "./LayoutSeiExternalHeader";
 export { default as SdsLayoutSeiExternalHeaderContent } from "./LayoutSeiExternalHeaderContent";
-export { default as SdsLayoutSeiExternalMasthead } from "./LayoutSeiExternalMasthead";
 export { default as SdsLayoutSeiExternalNav } from "./LayoutSeiExternalNav";
 export { default as SdsLayoutSeiExternalWordmark } from "./LayoutSeiExternalWordmark";
 export { default as SdsLayoutStacked } from "./LayoutStacked";

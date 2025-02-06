@@ -437,10 +437,19 @@
           </li>
           <li>
             <SdsTag
-              action="add"
+              action="increment"
             >
               <template #label>
-                Add
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              action="decrement"
+            >
+              <template #label>
+                Decrement
               </template>
             </SdsTag>
           </li>
@@ -450,15 +459,6 @@
             >
               <template #label>
                 Remove
-              </template>
-            </SdsTag>
-          </li>
-          <li>
-            <SdsTag
-              action="destroy"
-            >
-              <template #label>
-                Destroy
               </template>
             </SdsTag>
           </li>
@@ -494,11 +494,21 @@
           </li>
           <li>
             <SdsTag
-              action="add"
+              action="increment"
               size="md"
             >
               <template #label>
-                Add
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              action="decrement"
+              size="md"
+            >
+              <template #label>
+                Decrement
               </template>
             </SdsTag>
           </li>
@@ -509,16 +519,6 @@
             >
               <template #label>
                 Remove
-              </template>
-            </SdsTag>
-          </li>
-          <li>
-            <SdsTag
-              action="destroy"
-              size="md"
-            >
-              <template #label>
-                Destroy
               </template>
             </SdsTag>
           </li>

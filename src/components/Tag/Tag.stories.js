@@ -12,7 +12,7 @@ export default {
   component: SdsTag,
   argTypes: {
     action: {
-      options: ['add', 'remove', 'destroy'],
+      options: ['increment', 'decrement', 'remove'],
       control: { type: 'select' }
     },
     size: {

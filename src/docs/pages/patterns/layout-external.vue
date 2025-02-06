@@ -1,17 +1,10 @@
 <template>
   <SdsLayoutSeiExternal
-    :page="{ organization: 'Page Organization' }"
-    :show-masthead="true"
+    :page="page"
+    :show-footer="true"
     :remove-content-padding="true"
   >
     <template #default>
-      <div class="container mx-auto py-8 px-4 md:px-8">
-        <p class="text-gray-900">
-          Page description
-        </p>
-      </div>
-    </template>
-    <template #masthead>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="hidden"
@@ -27,95 +20,50 @@
           />
         </symbol>
       </svg>
-      <section class="flex flex-col-reverse lg:flex-row gap-8 container mx-auto p-4 md:p-8">
-        <div class="flex flex-col gap-4 w-full lg:w-1/3">
-          <div class="bg-gray-50 p-4 flex flex-col gap-2">
-            <h3 class="text-xl text-gray-400">
-              Section 1
-            </h3>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 1</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 2</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 3</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 4</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 5</a>
-            <hr>
-            <a
-              href="#"
-              class="text-gray-600 uppercase font-bold inline-flex"
-            >
-              <span>See all titles </span>
-              <svg
-                width="15"
-                height="24"
-                class="flex flex-col justify-center py-1 ml-1"
-              ><use href="#fa6-solid-caret-right" /></svg>
-            </a>
+      <div class="flex flex-col">
+        <div class="flex flex-col-reverse lg:flex-row gap-8 container mx-auto max-w-screen-xl p-4 md:p-8">
+          <div class="flex flex-col gap-4 w-full lg:w-1/3">
+            <SdsLayoutSeiExternalNav :page="page" />
           </div>
-          <div class="bg-gray-50 p-4 flex flex-col gap-2">
-            <h3 class="text-xl text-gray-400">
-              Section 2
-            </h3>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 1</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 2</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 3</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 4</a>
-            <a
-              href="#"
-              class="text-red-600 w-full"
-            >Link title 5</a>
-            <hr>
-            <a
-              href="#"
-              class="text-gray-600 uppercase font-bold inline-flex"
-            >
-              <span>See all titles </span>
-              <svg
-                width="15"
-                height="24"
-                class="flex flex-col justify-center py-1 ml-1"
-              ><use href="#fa6-solid-caret-right" /></svg>
-            </a>
+          <div class="flex flex-col gap-4 w-full lg:w-2/3">
+            <h1 class="text-3xl text-gray-400">
+              Page Title
+            </h1>
+            <h2 class="text-xl text-gray-400">
+              Page Subtitle
+            </h2>
+            <p class="text-gray-900">
+              Page description
+            </p>
           </div>
         </div>
-        <div class="flex flex-col gap-4 w-full lg:w-2/3">
-          <h1 class="text-3xl text-gray-400">
-            Page Title
-          </h1>
-          <h2 class="text-xl text-gray-400">
-            Page Subtitle
-          </h2>
-          <p class="text-gray-900">
-            Page description
-          </p>
+      </div>
+    </template>
+    <template #footer>
+      <div class="py-8 text-white bg-gray-400">
+        <div class="container px-4 mx-auto max-w-screen-xl space-y-6 md:px-8">
+          <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <li>
+              <a
+                href="https://vulcoord.cert.org/VulReport/"
+                class="hover:underline focus:underline focus:outline-none"
+              >Report a Vulnerability to CERT/CC</a>
+            </li>
+            <li>
+              <a
+                href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
+                class="hover:underline focus:underline focus:outline-none"
+              >Subscribe to SEI Bulletin</a>
+            </li>
+            <li>
+              <a
+                href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
+                class="hover:underline focus:underline focus:outline-none"
+              >Request Permission to Use SEI Materials</a>
+            </li>
+          </ul>
         </div>
-      </section>
+      </div>
     </template>
   </SdsLayoutSeiExternal>
 </template>
@@ -128,6 +76,40 @@ defineOptions({
 definePage({
   meta: { title: 'Layout External' }
 })
+
+const page = {
+  organization: 'Page Organization',
+  nav: [
+    {
+      title: 'Section 1',
+      items: [
+        { title: 'Link title 1', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 2', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 3', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 4', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 5', url: 'https://designsystem.sei.cmu.edu' },
+      ],
+      seeAll: {
+        title: 'See All title',
+        url: 'https://designsystem.sei.cmu.edu'
+      }
+    },
+    {
+      title: 'Section 2',
+      items: [
+        { title: 'Link title 1', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 2', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 3', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 4', url: 'https://designsystem.sei.cmu.edu' },
+        { title: 'Link title 5', url: 'https://designsystem.sei.cmu.edu' },
+      ],
+      seeAll: {
+        title: 'See All title',
+        url: 'https://designsystem.sei.cmu.edu'
+      }
+    }
+  ]
+}
 
 useHead({
   title: 'Layout External'

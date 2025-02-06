@@ -593,11 +593,378 @@
           Button
         </SdsButton>
       </div>
+      <h3 class="text-lg">
+        Plaid Theme
+      </h3>
+      <div class="bg-white p-4 flex flex-col gap-2 w-fit">
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="primary"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="secondary"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="tertiary"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="ghost"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+      </div>
+      <div class="bg-white p-4 flex flex-col gap-2 w-fit">
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="primary"
+            variant="blue"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="blue"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="blue"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="secondary"
+            variant="blue"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="blue"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="blue"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="tertiary"
+            variant="blue"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="blue"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="blue"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="ghost"
+            variant="blue"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="blue"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="blue"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+      </div>
+      <div class="bg-white p-4 flex flex-col gap-2 w-fit">
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="primary"
+            variant="red"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="red"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="red"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="secondary"
+            variant="red"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="red"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="red"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="tertiary"
+            variant="red"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="red"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="red"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="ghost"
+            variant="red"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="red"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="red"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+      </div>
+      <div class="bg-blue-500 p-4 flex flex-col gap-2 w-fit">
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="primary"
+            variant="white"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="white"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="primary"
+            variant="white"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="secondary"
+            variant="white"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="white"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="secondary"
+            variant="white"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="tertiary"
+            variant="white"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="white"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="tertiary"
+            variant="white"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+        <div class="flex flex-row space-x-2 sds-theme-plaid">
+          <SdsButton
+            kind="ghost"
+            variant="white"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="white"
+            :pending="pending"
+            @click="pending = !pending"
+          >
+            Button label
+          </SdsButton>
+          <SdsButton
+            kind="ghost"
+            variant="white"
+            disabled
+          >
+            Button label
+          </SdsButton>
+        </div>
+      </div>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Action Dropdown
-      </h2> 
+      </h2>
       <div class="space-x-4">
         <sds-action-dropdown
           title="Dropdown"
@@ -685,7 +1052,7 @@
     <div class="grid gap-4">
       <h2 class="text-xl">
         Dropdown
-      </h2> 
+      </h2>
       <div class="space-x-4">
         <sds-dropdown
           title="Dropdown"
