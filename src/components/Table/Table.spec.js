@@ -2,6 +2,31 @@ import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Component from "./Table.vue";
 
+const items = [
+  {
+    id: 1,
+    name: "A title",
+    createdDate: new Date("2000-01-01"),
+    lastUpdatedDate: new Date("2014-11-12"),
+  },
+  {
+    id: 2,
+    name: "B title",
+    createdDate: new Date("2013-02-01"),
+    lastUpdatedDate: new Date("2013-10-10"),
+  },
+]
+
+const fields = [
+  { key: "name", label: "Title", sortable: true },
+  { key: "createdDate", label: "Created", sortable: true, format: (date) => date.toLocaleDateString() },
+  {
+    key: "lastUpdatedDate",
+    label: "Last modified",
+    sortable: true, format: (date) => date.toLocaleDateString()
+  }
+]
+
 describe("Table.vue", () => {
   it("matches snapshot with no props assigned", () => {
     const props = {};
@@ -11,30 +36,9 @@ describe("Table.vue", () => {
 
   it("matches snapshot with items and action col props assigned", () => {
     const props = {
-      items: [
-        {
-          id: 1,
-          name: "A title",
-          createdDate: new Date("2000-01-01"),
-          lastUpdatedDate: new Date("2014-11-12"),
-        },
-        {
-          id: 2,
-          name: "B title",
-          createdDate: new Date("2013-02-01"),
-          lastUpdatedDate: new Date("2013-10-10"),
-        },
-      ],
-      sortBy: "lastUpdatedDate",
-      fields: [
-        { key: "name", label: "Title", sortable: true },
-        { key: "createdDate", label: "Created", sortable: true, format: (date) => date.toLocaleDateString() },
-        {
-          key: "lastUpdatedDate",
-          label: "Last modified",
-          sortable: true, format: (date) => date.toLocaleDateString()
-        },
-      ],
+      items: [...items],
+      fields: [...fields],
+      sortBy: "lastUpdatedDate"
     };
     const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
@@ -43,30 +47,8 @@ describe("Table.vue", () => {
   it("matches snapshot with entries but no action col props assigned", () => {
     const props = {
       enableDrawer: false,
-      items: [
-        {
-          id: 1,
-          name: "A title",
-          createdDate: new Date("2000-01-01"),
-          lastUpdatedDate: new Date("2014-11-12"),
-        },
-        {
-          id: 2,
-          name: "B title",
-          createdDate: new Date("2013-02-01"),
-          lastUpdatedDate: new Date("2013-10-10"),
-        },
-      ],
-      fields: [
-        { key: "name", label: "Title", sortable: true },
-        { key: "createdDate", label: "Created", sortable: true, format: (date) => date.toLocaleDateString() },
-        {
-          key: "lastUpdatedDate",
-          label: "Last modified",
-          sortable: true, format: (date) => date.toLocaleDateString()
-        },
-        { key: "actions", label: "Actions" }
-      ]
+      items: [...items],
+      fields: [...fields, { key: "actions", label: "Actions" }]
     };
     const slots = {
       'cell(actions)': `
