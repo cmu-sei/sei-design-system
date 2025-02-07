@@ -27,7 +27,7 @@
       </div>
     </div>
     <div
-      class="opacity-30 hover:opacity-90 relative z-0 bg-transparent"
+      class="opacity-30 hover:opacity-55 relative z-0 bg-transparent"
       :class="{
         'w-full h-0 flex-row hover:cursor-row-resize active:cursor-row-resize': direction === 'bottom',
         'h-full w-0 flex-col hover:cursor-col-resize active:cursor-col-resize': direction === 'right',
@@ -169,7 +169,7 @@ const activeBottomHandle = [
   'after:border-transparent',
   'after:border-b',
   'group-[.relative]:dark:after:border-white',
-  'group-[.relative]:after:border-black',
+  'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',
   'group-[.relative]:after:bg-gradient-to-t',
@@ -192,7 +192,7 @@ const activeRightHandle = [
   'after:border-transparent',
   'after:border-r',
   'group-[.relative]:dark:after:border-white',
-  'group-[.relative]:after:border-black',
+  'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',
   'group-[.relative]:after:bg-gradient-to-l',
