@@ -56,27 +56,6 @@ describe('Table', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('matches snapshot with multisort columns', async () => {
-    const [name,,, createdDate, lastUpdatedDate] = fields
-    const props = {
-      items: [...items],
-      fields: [
-        name,
-        { 
-          key: 'fruit_vegetable', 
-          fields: [
-            { key: 'fruit', label: 'Fruit', sortable: true },
-            { key: 'vegetable', label: 'Vegetable', sortable: true }
-          ] 
-        },
-        createdDate,
-        lastUpdatedDate
-      ]
-    }
-    const wrapper = mount(Component, { props })
-    expect(wrapper.html()).toMatchSnapshot()
-  })
-
   it('sorts table by field (column)', async () => {
     const props = {
       items: [...items],
@@ -106,6 +85,57 @@ describe('Table', () => {
       sortBy: 'vegetable',
       sortDesc: false
     })
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('matches snapshot with multisort columns', async () => {
+    const [name,,, createdDate, lastUpdatedDate] = fields
+    const props = {
+      items: [...items],
+      fields: [
+        name,
+        { 
+          key: 'fruit_vegetable', 
+          fields: [
+            { key: 'fruit', label: 'Fruit', sortable: true },
+            { key: 'vegetable', label: 'Vegetable', sortable: true }
+          ] 
+        },
+        createdDate,
+        lastUpdatedDate
+      ]
+    }
+    const wrapper = mount(Component, { props })
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('sorts table by fields (multisort columns)', async () => {
+    const [name,,, createdDate, lastUpdatedDate] = fields
+    const props = {
+      items: [...items],
+      fields: [
+        name,
+        { 
+          key: 'fruit_vegetable', 
+          fields: [
+            { key: 'fruit', label: 'Fruit', sortable: true },
+            { key: 'vegetable', label: 'Vegetable', sortable: true }
+          ] 
+        },
+        createdDate,
+        lastUpdatedDate
+      ]
+    }
+    const wrapper = mount(Component, { props })
+    await wrapper
+      .find('table thead tr th:nth-child(2) button:nth-child(1)')
+      .trigger('click') // Fruit
+    await wrapper.vm.$nextTick()
+    expect(wrapper.html()).toMatchSnapshot()
+    await wrapper
+      .find('table thead tr th:nth-child(2) button:nth-child(2)')
+      .trigger('click') // Vegetable
+    await wrapper.vm.$nextTick()
     expect(wrapper.html()).toMatchSnapshot()
   })
 
