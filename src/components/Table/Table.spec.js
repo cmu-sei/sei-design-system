@@ -66,4 +66,50 @@ describe("Table.vue", () => {
     const wrapper = mount(Component, { props, slots });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it('matches snapshot with caption', () => {
+    const props = {
+      items: [...items],
+      fields: [...fields],
+      caption: 'Caption'
+    };
+    const wrapper = mount(Component, { props });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+
+  it('matches snapshot with assigned `enableDrawer` prop', () => {
+    const props = {
+      enableDrawer: true,
+      items: [...items.map((i) => ({ ...i, additionalData: { description: 'Lorem ipsum dolor sit amet' } }))],
+      fields: [...fields]
+    };
+    const slots = {
+      'cell(drawer)': `
+        <template #drawer="{ item }">
+          <p>{{ item.additionalData.description }}</p>
+        </template>
+      `
+    };
+    const wrapper = mount(Component, { props, slots });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+
+  it('emits when toggling a table drawer', async () => {
+    const props = {
+      enableDrawer: true,
+      items: [...items.map((i) => ({ ...i, additionalData: { description: 'Lorem ipsum dolor sit amet' } }))],
+      fields: [...fields]
+    };
+    const slots = {
+      'cell(drawer)': `
+        <template #drawer="{ item }">
+          <p>{{ item.additionalData.description }}</p>
+        </template>
+      `
+    };
+    const wrapper = mount(Component, { props, slots });
+    const button = wrapper.find('table tbody tr:nth-child(1) td:nth-child(1) button')
+    await button.trigger('click')
+    expect(wrapper.emitted()['open-drawer'][0][0]).toStrictEqual(props.items[0])
+  })
 });
