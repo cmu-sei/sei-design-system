@@ -6,12 +6,16 @@ const items = [
   {
     id: 1,
     name: "A title",
+    fruit: 'Apple',
+    vegetable: 'Broccoli',
     createdDate: new Date("2000-01-01"),
     lastUpdatedDate: new Date("2014-11-12"),
   },
   {
     id: 2,
     name: "B title",
+    fruit: 'Banana',
+    vegetable: 'Carrots',
     createdDate: new Date("2013-02-01"),
     lastUpdatedDate: new Date("2013-10-10"),
   },
@@ -19,12 +23,10 @@ const items = [
 
 const fields = [
   { key: "name", label: "Title", sortable: true },
+  { key: 'fruit', label: 'Fruit', sortable: true },
+  { key: 'vegetable', label: 'Vegetable', sortable: true },
   { key: "createdDate", label: "Created", sortable: true, format: (date) => date.toLocaleDateString() },
-  {
-    key: "lastUpdatedDate",
-    label: "Last modified",
-    sortable: true, format: (date) => date.toLocaleDateString()
-  }
+  { key: "lastUpdatedDate", label: "Last modified", sortable: true, format: (date) => date.toLocaleDateString() }
 ]
 
 describe("Table.vue", () => {
@@ -33,6 +35,16 @@ describe("Table.vue", () => {
     const wrapper = mount(Component, { props });
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it('matches snapshot with assigned `caption` prop', () => {
+    const props = {
+      items: [...items],
+      fields: [...fields],
+      caption: 'Caption'
+    };
+    const wrapper = mount(Component, { props });
+    expect(wrapper.html()).toMatchSnapshot();
+  })
 
   it("matches snapshot with items and action col props assigned", () => {
     const props = {
@@ -67,14 +79,57 @@ describe("Table.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it('matches snapshot with caption', () => {
+  it('matches snapshot with multisort columns', async () => {
+    const [name,,, createdDate, lastUpdatedDate] = fields
+    const props = {
+      items: [...items],
+      fields: [
+        name,
+        { 
+          key: 'fruit_vegetable', 
+          fields: [
+            { key: 'fruit', label: 'Fruit', sortable: true },
+            { key: 'vegetable', label: 'Vegetable', sortable: true }
+          ] 
+        },
+        createdDate,
+        lastUpdatedDate
+      ]
+    };
+    const wrapper = mount(Component, { props })
+    expect(wrapper.html()).toMatchSnapshot();
+  })
+
+  it('sorts table by field (column)', async () => {
     const props = {
       items: [...items],
       fields: [...fields],
-      caption: 'Caption'
+      sortBy: 'name'
     };
     const wrapper = mount(Component, { props });
-    expect(wrapper.html()).toMatchSnapshot();
+    const button = wrapper.find('table thead tr th:nth-child(2) button') // Fruit
+    await button.trigger('click')
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('sorts table using an external source as its sorting behavior', async () => {
+    const sortTableItems = vi.fn()
+    const props = {
+      items: [...items],
+      fields: [...fields],
+      sortBy: 'name',
+      sortDesc: true,
+      onSort: sortTableItems
+    };
+    const wrapper = mount(Component, { props });
+    const button = wrapper.find('table thead tr th:nth-child(3) button') // Vegetable
+    await button.trigger('click')
+    expect(sortTableItems).toHaveBeenCalledWith({
+      field: { ...fields[2] },
+      sortBy: 'vegetable',
+      sortDesc: false
+    })
+    expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('matches snapshot with assigned `enableDrawer` prop', () => {
