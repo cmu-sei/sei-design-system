@@ -1,6 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Table.vue > matches snapshot with assigned \`caption\` prop 1`] = `
+exports[`Table > matches default snapshot 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup></colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <!--v-if-->
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <caption>
     <!-- @slot Caption content. This will override the **caption** prop. -->Caption
@@ -96,7 +109,7 @@ exports[`Table.vue > matches snapshot with assigned \`caption\` prop 1`] = `
 </table>"
 `;
 
-exports[`Table.vue > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
+exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
@@ -194,112 +207,7 @@ exports[`Table.vue > matches snapshot with assigned \`enableDrawer\` prop 1`] = 
 </table>"
 `;
 
-exports[`Table.vue > matches snapshot with entries but no action col props assigned 1`] = `
-"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <!--v-if-->
-  <colgroup>
-    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="">
-  </colgroup>
-  <thead class="border-t dark:border-gray-700">
-    <tr>
-      <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="cursor-default">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Actions</span>
-          <!--v-if-->
-        </button></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="sds-table_tr_1" class="">
-      <!--v-if-->
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format --><button class="btn btn-link text-red-300 btn-sm"><i class="fas fa-trash"></i> Remove entry </button>
-      </td>
-    </tr>
-    <!--v-if-->
-    <tr id="sds-table_tr_2" class="">
-      <!--v-if-->
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format --><button class="btn btn-link text-red-300 btn-sm"><i class="fas fa-trash"></i> Remove entry </button>
-      </td>
-    </tr>
-    <!--v-if-->
-  </tbody>
-</table>"
-`;
-
-exports[`Table.vue > matches snapshot with items and action col props assigned 1`] = `
+exports[`Table > matches snapshot with assigned props 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
@@ -393,7 +301,7 @@ exports[`Table.vue > matches snapshot with items and action col props assigned 1
 </table>"
 `;
 
-exports[`Table.vue > matches snapshot with multisort columns 1`] = `
+exports[`Table > matches snapshot with multisort columns 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
@@ -479,20 +387,7 @@ exports[`Table.vue > matches snapshot with multisort columns 1`] = `
 </table>"
 `;
 
-exports[`Table.vue > matches snapshot with no props assigned 1`] = `
-"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <!--v-if-->
-  <colgroup></colgroup>
-  <thead class="border-t dark:border-gray-700">
-    <tr>
-      <!--v-if-->
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>"
-`;
-
-exports[`Table.vue > sorts table by field (column) 1`] = `
+exports[`Table > sorts table by field (column) 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
@@ -586,7 +481,7 @@ exports[`Table.vue > sorts table by field (column) 1`] = `
 </table>"
 `;
 
-exports[`Table.vue > sorts table using an external source as its sorting behavior 1`] = `
+exports[`Table > sorts table using an external source as its sorting behavior 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
