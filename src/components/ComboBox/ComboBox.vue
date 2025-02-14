@@ -122,7 +122,7 @@
             :key="group.index"
             type="button"
             tabindex="-1"
-            class="text-xs font-semibold p-2 rounded space-x-1.5"
+            class="text-xs font-semibold p-2 rounded space-x-1.5 whitespace-nowrap"
             :disabled="group.count < 1"
             :class="{
               'text-gray-300 dark:text-gray-700': group.count < 1,
