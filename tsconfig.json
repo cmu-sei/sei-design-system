@@ -16,6 +16,7 @@
   },
   "include": ["*.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": [
+    "cypress.config.js",
     "node_modules/*",
     "src/**/*.spec.js",
     "src/**/*.spec.ts",
