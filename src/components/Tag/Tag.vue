@@ -148,8 +148,8 @@ import SdsSvgIcon from '../SvgIcon'
 
 export type TagActionType = typeof actions[number]
 export type TagIconAttrs = { height: number; path: string; viewBox: string; width: number; }
-export type TagIconSizes = 'sm' | 'md'
-export type TagIconTypes = Record<TagActionType, Record<TagIconSizes, TagIconAttrs>>
+export type TagIconSize = 'sm' | 'md'
+export type TagIconTypes = Record<TagActionType, Record<TagIconSize, TagIconAttrs>>
 
 defineOptions({
   name: 'SdsTag'
@@ -192,7 +192,7 @@ const props = defineProps({
   /**
    * Determines the size of the tag.
    */
-  size: { type: String as PropType<TagIconSizes>, default: 'sm' },
+  size: { type: String as PropType<TagIconSize>, default: 'sm' },
 })
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
