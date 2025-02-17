@@ -143,7 +143,6 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from 'vue'
 import SdsSvgIcon from '../SvgIcon'
 
 export type TagActionType = typeof actions[number]
