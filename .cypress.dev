@@ -1,3 +1,0 @@
-export CYPRESS_DOWNLOAD_MIRROR=https://artifacts.sei.cmu.edu:443/artifactory/cypress-remote/
-export CYPRESS_AUTOMATED_USER_USERNAME=admin_local
-export CYPRESS_AUTOMATED_USER_PASSWORD=$(/usr/local/bin/pass admin_local)
