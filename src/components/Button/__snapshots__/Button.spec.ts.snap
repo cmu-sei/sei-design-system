@@ -200,6 +200,13 @@ exports[`Button > should match its variant (blue) snapshot 1`] = `
 </button>"
 `;
 
+exports[`Button > should match its variant (gray) snapshot 1`] = `
+"<button data-id="sds-button" type="button" class="btn-gray" aria-disabled="false" aria-busy="false">
+  <!-- @slot Button content. -->Button gray
+  <!--v-if-->
+</button>"
+`;
+
 exports[`Button > should match its variant (red) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-red" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button red
