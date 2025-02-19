@@ -171,6 +171,7 @@ const activeBottomHandle = [
   'flex-col',
   'overflow-y-auto',
   'after:mx-auto',
+  'after:pointer-events-none',
   'after:border-solid',
   'after:border-transparent',
   'after:border-b',
@@ -194,6 +195,7 @@ const activeBottomHandle = [
 const activeRightHandle = [
   'flex-row',
   'overflow-x-auto',
+  'after:pointer-events-none',
   'after:border-solid',
   'after:border-transparent',
   'after:border-r',
