@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+/* Overall theme */
+@import './theme/breakpoints';
+@import './theme/colors';
+@import './theme/fonts';
+
+/* Variants */
+@import './variants/theme';
+
+/* Forge theme */
+@import './components/forge/action-btn';
+@import './components/forge/btn';
+@import './components/forge/form-control';
+@import './components/forge/input-group';
+@import './components/forge/link';
+@import './components/forge/scroll-area';
+@import './components/forge/tab';
+
+/* Plaid theme */
+@import './components/plaid/btn';
+
+/* SDS plugins */
+@plugin './plugins/table-prose';
+
+/* Plugins */
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* Additional JavaScript-based config */
+@config './tailwind.config.js';
+
+/**
+ * The default border color has changed to `currentColor` in Tailwind CSS v4,
+ * so we've added these compatibility styles to make sure everything still
+ * looks the same as it did with Tailwind CSS v3.
+ *
+ * If we ever want to remove these styles, we need to add an explicit border
+ * color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+/**
+ * Restore cursor-pointer behavior of v3
+ */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/**
+ * Restore padding and margins of container from v3
+ */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}

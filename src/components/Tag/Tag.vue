@@ -232,7 +232,7 @@ const remove = () => emit('remove', props.id)
 </script>
 
 <style lang="postcss" scoped>
-@reference "../../index.css";
+@reference "../../../tailwindcss/tailwind.css";
 
 [data-id="sds-tag"][data-link="true"]:hover:not(:has(button:hover)) {
   @apply hover:underline;
