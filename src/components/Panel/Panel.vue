@@ -163,17 +163,21 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value'])
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  footer: () => unknown
+}>()
 
 const titleWrapper = ref(null)
 const panelContainer = ref(null)
 
 const hasTitleSlot = computed(() => {
-  return hasSlotContent(slots.title);
+  return !!slots.title
 })
 
 const hasFooterSlot = computed(() => {
-  return hasSlotContent(slots.footer);
+  return !!slots.footer
 })
 
 const showPanel = computed({

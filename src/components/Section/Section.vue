@@ -99,7 +99,13 @@ defineProps({
   },
 })
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  subtitle: () => unknown
+  nav: () => unknown
+  footer: () => unknown
+}>()
 
 const hasTitleSlot = computed(() => {
   return !!slots.title;

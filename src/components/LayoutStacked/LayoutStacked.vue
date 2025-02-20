@@ -48,7 +48,11 @@ defineProps({
   },
 })
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  header: () => unknown
+  footer: () => unknown
+}>()
 
 const hasHeaderSlot = computed<boolean>(() => {
   return !!slots.header;

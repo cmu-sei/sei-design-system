@@ -921,7 +921,7 @@ defineOptions({
   name: 'SdsLayoutApp'
 })
 
-defineSlots<{
+const slots = defineSlots<{
   default: () => unknown
   'app-icon': () => unknown
   'user-section': () => unknown
@@ -1018,8 +1018,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:model-value', 'navigate'])
-
-const slots = useSlots()
 
 const showMobileMenu = ref(false)
 const mobileMenuCloseBtn = ref()
@@ -1177,13 +1175,9 @@ const checkKeyEvent = (event: KeyboardEvent) => {
 </script>
 
 <style lang="postcss">
-.layout-app-internal-prevent-scroll {
-  overflow: hidden;
-}
+@reference "../../../tailwindcss/tailwind.css";
 
-@screen md {
-  .layout-app-internal-prevent-scroll {
-    overflow: visible;
-  }
+.layout-app-internal-prevent-scroll {
+  @apply overflow-hidden md:overflow-visible;
 }
 </style>

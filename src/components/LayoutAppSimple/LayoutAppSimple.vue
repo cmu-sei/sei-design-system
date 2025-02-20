@@ -144,7 +144,7 @@ import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
 
 import type { LayoutAppSidebarNavItem } from '../LayoutApp/LayoutApp.vue'
 
-defineSlots<{
+const slots = defineSlots<{
   default: () => unknown
   'user-section': () => unknown
   'page-header': () => unknown
@@ -192,8 +192,6 @@ defineProps({
 })
 
 const emit = defineEmits(['navigate'])
-
-const slots = useSlots()
 
 const year = computed(() => {
   const d = new Date();

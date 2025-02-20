@@ -188,7 +188,11 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value'])
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  footer: () => unknown
+}>()
 
 const titleWrapper = ref(null)
 const modalContainer = ref(null)
