@@ -27,7 +27,8 @@
       </div>
     </div>
     <div
-      class="opacity-30 hover:opacity-90 relative z-0 bg-transparent"
+      ref="handle"
+      class="opacity-30 hover:opacity-55 relative z-0 bg-transparent"
       :class="{
         'w-full h-0 flex-row hover:cursor-row-resize active:cursor-row-resize': direction === 'bottom',
         'h-full w-0 flex-col hover:cursor-col-resize active:cursor-col-resize': direction === 'right',
@@ -120,15 +121,20 @@ const scrollAreaOuter = ref<null | HTMLElement>(null)
 const scrollAreaInner = ref<null | HTMLElement>(null)
 
 /**
+ * The handle used for dragging
+ */
+const handle = ref()
+
+/**
  * Variables to keep track of the resizing (dragging) state
  */
-let isDraggingRight = false
-let isDraggingBottom = false
+const isDraggingRight = ref(false)
+const isDraggingBottom = ref(false)
 /**
  * Detect if the handle is hovered to add
  * gradient/shadow effect on scroll area.
  */
-let isHovering = ref(false)
+const isHovering = ref(false)
 /**
  * Configure JSON for double-click event.
  * Track click events, set an ephemeral timer to monitor
@@ -165,11 +171,12 @@ const activeBottomHandle = [
   'flex-col',
   'overflow-y-auto',
   'after:mx-auto',
+  'after:pointer-events-none',
   'after:border-solid',
   'after:border-transparent',
   'after:border-b',
   'group-[.relative]:dark:after:border-white',
-  'group-[.relative]:after:border-black',
+  'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',
   'group-[.relative]:after:bg-gradient-to-t',
@@ -188,11 +195,12 @@ const activeBottomHandle = [
 const activeRightHandle = [
   'flex-row',
   'overflow-x-auto',
+  'after:pointer-events-none',
   'after:border-solid',
   'after:border-transparent',
   'after:border-r',
   'group-[.relative]:dark:after:border-white',
-  'group-[.relative]:after:border-black',
+  'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',
   'group-[.relative]:after:bg-gradient-to-l',
@@ -254,7 +262,7 @@ const handleDownRight = (e: MouseEvent | TouchEvent) => {
    * setting isDraggingRight
    */
   e.preventDefault()
-  isDraggingRight = true
+  isDraggingRight.value = true
 }
 
 const handleDownBottom = (e: MouseEvent | TouchEvent) => {
@@ -264,7 +272,7 @@ const handleDownBottom = (e: MouseEvent | TouchEvent) => {
    * setting isDraggingBottom
    */
   e.preventDefault()
-  isDraggingBottom = true
+  isDraggingBottom.value = true
 }
 
 const handleDown = (e: MouseEvent | TouchEvent, direction: 'bottom' | 'right') => {
@@ -288,21 +296,21 @@ const handleDown = (e: MouseEvent | TouchEvent, direction: 'bottom' | 'right') =
 
 const handleOver = (e: MouseEvent) => {
   e.preventDefault()
-  if (isDraggingRight || isDraggingBottom) return
+  if (isDraggingRight.value || isDraggingBottom.value) return
   isHovering.value = true
 }
 
 const handleOut = (e: MouseEvent) => {
   e.preventDefault()
-  if (isDraggingRight || isDraggingBottom) return
+  if (isDraggingRight.value || isDraggingBottom.value) return
   isHovering.value = false
 }
 
 const handleMove = (e: MouseEvent | TouchEvent) => {
   // Return immediately if the mouse isn't being dragged
-  if (!isDraggingRight && !isDraggingBottom) return
+  if (!isDraggingRight.value && !isDraggingBottom.value) return
   // Handle mouse resizing horizontally
-  if (isDraggingRight) {
+  if (isDraggingRight.value) {
     if (scrollAreaOuter.value !== null) { // Make sure it's slot content is reachable
       // Get the bounding rectangle of the scroll area
       const rect = scrollAreaOuter.value.getBoundingClientRect()
@@ -331,7 +339,7 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
     }
   }
   // Handle mouse resizing vertically
-  if (isDraggingBottom) {
+  if (isDraggingBottom.value) {
     if (scrollAreaOuter.value !== null) { // Make sure it's slot content is reachable
       // Get the bounding rectangle of the scroll area
       const rect = scrollAreaOuter.value.getBoundingClientRect()
@@ -361,10 +369,14 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
   }
 }
 
-const handleUp = (_e: MouseEvent | TouchEvent) => {
+const handleUp = (e: MouseEvent | TouchEvent) => {
   /* Stop resizing when the mouse is released */
-  isDraggingRight = false
-  isDraggingBottom = false
+  isDraggingRight.value = false
+  isDraggingBottom.value = false
+
+  if (!handle.value.contains(e.target)) {
+    isHovering.value = false
+  }
 }
 
 const slotOuterHeight = () => {

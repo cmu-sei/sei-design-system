@@ -53,15 +53,21 @@ describe('Tag', () => {
     const wrapper = mount(Component, {
       props: {
         label: 'Tag',
-        action: 'add'
+        action: 'increment'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
 
-    await wrapper.setProps({ action: 'remove' })
+    await wrapper.setProps({ action: 'decrement' })
     expect(wrapper.element).toMatchSnapshot()
 
-    await wrapper.setProps({ action: 'destroy' })
+    await wrapper.setProps({ action: 'remove' })
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  it.todo('emits count on increment event')
+
+  it.todo('emits counts on decrement event')
+
+  it.todo('emits `id` on remove event')
 })
