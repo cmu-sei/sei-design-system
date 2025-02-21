@@ -79,7 +79,7 @@ exports[`LayoutAppSimple > should match its default snapshot 1`] = `
               
               <svg
                 aria-hidden="true"
-                class="h-10"
+                class="h-10 text-black dark:text-white"
                 data-id="sds-sei-wordmark"
                 id="Layer_1"
                 style="enable-background: new 0 0 851.9 144.2;"
