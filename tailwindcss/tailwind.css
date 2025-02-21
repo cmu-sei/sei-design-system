@@ -6,6 +6,7 @@
 @import './theme/fonts';
 
 /* Variants */
+@import './variants/dark-mode';
 @import './variants/theme';
 
 /* Forge theme */

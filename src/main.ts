@@ -11,9 +11,9 @@ const router = createRouter({
 const head = createHead()
 
 // SEI Design System
-import "../open-sans/index.css";
-import "../tailwindcss/tailwind.css";
-import SdsComponents from "./components";
+import '../open-sans/index.css'
+import '../tailwindcss/tailwind.css'
+import SdsComponents from './components'
 
 createApp(App)
   .use(SdsComponents)

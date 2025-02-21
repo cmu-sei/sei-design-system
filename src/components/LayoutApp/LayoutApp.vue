@@ -849,10 +849,10 @@
               <sds-link
                 href="https://sei.cmu.edu"
                 title="Software Engineering Institute"
-                class="my-auto text-black dark:text-white"
+                class="my-auto"
                 external
               >
-                <SdsSeiWordmark class="h-10" />
+                <SdsSeiWordmark class="h-10 text-black dark:text-white" />
                 <span class="sr-only">Software Engineering Institute</span>
               </sds-link>
             </div>

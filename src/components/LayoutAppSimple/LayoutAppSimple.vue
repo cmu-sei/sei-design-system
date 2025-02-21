@@ -89,7 +89,7 @@
                 class="my-auto text-black dark:text-white"
                 external
               >
-                <SdsSeiWordmark class="h-10" />
+                <SdsSeiWordmark class="h-10 text-black dark:text-white" />
                 <span class="sr-only">Software Engineering Institute</span>
               </sds-link>
             </div>
