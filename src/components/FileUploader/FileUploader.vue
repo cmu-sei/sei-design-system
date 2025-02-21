@@ -5,8 +5,8 @@
   >
     <div class="group relative">
       <input
+        :id="id"
         ref="fileInput"
-        v-uid
         type="file"
         :name="name"
         :accept="accept"
@@ -19,17 +19,17 @@
       >
       <div 
         class="
-            flex
-            flex-col
-            items-center
-            space-y-1
-            rounded-sm
-            p-4
-            bg-gray-25
-            dark:bg-gray-900
-            group-hover:bg-gray-50
-            dark:group-hover:bg-gray-800
-          "
+          flex
+          flex-col
+          items-center
+          space-y-1
+          rounded-sm
+          p-4
+          bg-gray-25
+          dark:bg-gray-900
+          group-hover:bg-gray-50
+          dark:group-hover:bg-gray-800
+        "
         :class="[disabled ? 'bg-transparent group-hover:bg-transparent' : '']"
       >
         <label
@@ -257,7 +257,6 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
 import SdsActionButton from '../ActionButton';
 import SdsSvgIcon from '../SvgIcon';
 
@@ -268,11 +267,10 @@ export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; view
 
 const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:model-value'])
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsFileUploader',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsFileUploader'
 })
 
 const props = defineProps({

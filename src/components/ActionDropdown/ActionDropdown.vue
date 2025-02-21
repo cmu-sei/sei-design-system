@@ -26,8 +26,8 @@
         :toggle="toggle"
       >
         <button
+          :id="id"  
           ref="button"
-          v-uid
           type="button"
           class="space-x"
           aria-haspopup="true"
@@ -79,17 +79,15 @@
 
 <script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
-import { Uid } from '@shimyshack/uid'
 
 import type { DropdownPlacement } from "../Dropdown/Dropdown.vue";
 import type { Strategy } from '@floating-ui/dom'
 
 defineOptions({
-  name: 'SdsActionButton',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsActionButton'
 })
+
+const id = useId()
 
 const props = defineProps({
   /**

@@ -12,8 +12,8 @@
   >
     <template #trigger="{ isOpen, toggle }">
       <SdsActionButton 
+        :id="id"
         ref="button"
-        v-uid
         :kind="kind"
         :variant="variant"
         :size="size" 
@@ -128,7 +128,6 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
-import { Uid } from '@shimyshack/uid'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -139,11 +138,10 @@ export interface FilterByDropdownOption {
 
 export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
+const id = useId()
+
 defineOptions({
-  name: "SdsFilterByDropdown",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsFilterByDropdown"
 })
 
 const props = defineProps({

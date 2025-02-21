@@ -3,7 +3,7 @@
 exports[`Tabs > should match its default snapshot 1`] = `
 <div
   data-id="sds-tabs"
-  id="unique-id"
+  id="v-0"
 >
   <div
     class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"

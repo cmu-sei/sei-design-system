@@ -14,8 +14,8 @@
               :variant="indicatorVariant"
             >
               <button
+                :id="id"
                 ref="button"
-                v-uid
                 type="button"
                 class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
@@ -161,17 +161,15 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
 import ActionButton from '../ActionButton/ActionButton.vue';
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsFloatingActionButton',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsFloatingActionButton'
 })
 
 const props = defineProps({

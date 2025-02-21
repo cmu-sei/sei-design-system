@@ -1,7 +1,7 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-radio-group"
     class="flex"
     :class="{
@@ -44,19 +44,16 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from "@shimyshack/uid";
-
 export type RadioGroupOptionValue = boolean | string | number
 
 export interface RadioGroupOption<T> {
   [key: string]: T
 }
 
+const id = useId()
+
 defineOptions({
-  name: "SdsRadioGroup",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsRadioGroup"
 })
 
 const props = defineProps({

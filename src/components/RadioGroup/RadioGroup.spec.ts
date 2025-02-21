@@ -25,14 +25,7 @@ describe('RadioGroup', () => {
   beforeEach(() => {
     wrapper = mount(Component, {
       attachTo: document.body,
-      props,
-      directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        }
-      }
+      props
     })
   })
 

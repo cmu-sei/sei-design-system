@@ -59,8 +59,8 @@
           <header class="flex items-center p-6 pb-0">
             <div
               v-if="hasTitleSlot"
+              :id="id"
               ref="titleWrapper"
-              v-uid
               class="flex items-center gap-2 text-2xl leading-7 font-light"
             >
               <!-- @slot Panel header content. -->
@@ -118,13 +118,12 @@
 <script setup lang="ts">
 import { type Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue';
-import { Uid } from '@shimyshack/uid';
-import { hasSlotContent } from '../../helpers/hasSlotContent';
+
+const id = useId()
 
 defineOptions({
   name: 'SdsPanel',
   directives: {
-    uid: Uid,
     focus: {
       mounted(el: HTMLElement) {
         el.focus();

@@ -10,7 +10,7 @@ exports[`FileUploader > should match its default snapshot 1`] = `
   >
     <input
       class="absolute inset-0 opacity-0 cursor-pointer"
-      id="unique-id"
+      id="v-0"
       name="sdsFileUploader"
       type="file"
     />

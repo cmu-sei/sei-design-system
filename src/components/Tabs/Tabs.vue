@@ -1,7 +1,7 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-tabs"
   >
     <div
@@ -84,8 +84,6 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 export interface TabItem {
   key: string
   tag?: 'button' | 'a'
@@ -97,11 +95,10 @@ export interface TabItem {
   disabled?: boolean
 }
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsTabs',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsTabs'
 })
 
 const props = defineProps({

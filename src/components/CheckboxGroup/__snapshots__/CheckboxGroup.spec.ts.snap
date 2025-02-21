@@ -4,7 +4,7 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -12,8 +12,8 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
   >
     <input
       class="relative top-1"
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       type="checkbox"
       value="Option 1"
     />
@@ -21,7 +21,7 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -34,8 +34,8 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
   >
     <input
       class="relative top-1"
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       type="checkbox"
       value="Option 2"
     />
@@ -43,7 +43,7 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -56,8 +56,8 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
   >
     <input
       class="relative top-1"
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       type="checkbox"
       value="Option 3"
     />
@@ -65,7 +65,7 @@ exports[`CheckboxGroup > should match its default snapshot 1`] = `
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -81,7 +81,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -90,8 +90,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     <input
       class="relative top-1"
       disabled=""
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       type="checkbox"
       value="Option 1"
     />
@@ -99,7 +99,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     
     <label
       class="opacity-50 pointer-events-none select-none"
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -113,8 +113,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     <input
       class="relative top-1"
       disabled=""
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       type="checkbox"
       value="Option 2"
     />
@@ -122,7 +122,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     
     <label
       class="opacity-50 pointer-events-none select-none"
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -136,8 +136,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     <input
       class="relative top-1"
       disabled=""
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       type="checkbox"
       value="Option 3"
     />
@@ -145,7 +145,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`disabled\` pr
     
     <label
       class="opacity-50 pointer-events-none select-none"
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -161,7 +161,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -169,8 +169,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
   >
     <input
       class="relative top-1 invalid"
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       type="checkbox"
       value="Option 1"
     />
@@ -178,7 +178,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -191,8 +191,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
   >
     <input
       class="relative top-1 invalid"
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       type="checkbox"
       value="Option 2"
     />
@@ -200,7 +200,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -213,8 +213,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
   >
     <input
       class="relative top-1 invalid"
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       type="checkbox"
       value="Option 3"
     />
@@ -222,7 +222,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`invalid\` pro
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -238,7 +238,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -246,7 +246,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
   >
     <input
       class="relative top-1"
-      id="unique-id__option_0"
+      id="v-0__option_0"
       name="options-group"
       type="checkbox"
       value="Option 1"
@@ -255,7 +255,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -268,7 +268,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
   >
     <input
       class="relative top-1"
-      id="unique-id__option_1"
+      id="v-0__option_1"
       name="options-group"
       type="checkbox"
       value="Option 2"
@@ -277,7 +277,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -290,7 +290,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
   >
     <input
       class="relative top-1"
-      id="unique-id__option_2"
+      id="v-0__option_2"
       name="options-group"
       type="checkbox"
       value="Option 3"
@@ -299,7 +299,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`name\` prop 1
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -315,7 +315,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -323,8 +323,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
   >
     <input
       class="relative top-1"
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       required=""
       type="checkbox"
       value="Option 1"
@@ -333,7 +333,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -346,8 +346,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
   >
     <input
       class="relative top-1"
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       required=""
       type="checkbox"
       value="Option 2"
@@ -356,7 +356,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -369,8 +369,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
   >
     <input
       class="relative top-1"
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       required=""
       type="checkbox"
       value="Option 3"
@@ -379,7 +379,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`required\` pr
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -395,7 +395,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
 <div
   class="flex flex-col gap-2"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -403,8 +403,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
   >
     <input
       class="relative top-1"
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       type="checkbox"
       value="Option 1"
     />
@@ -412,7 +412,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -425,8 +425,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
   >
     <input
       class="relative top-1"
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       type="checkbox"
       value="Option 2"
     />
@@ -434,7 +434,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -447,8 +447,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
   >
     <input
       class="relative top-1"
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       type="checkbox"
       value="Option 3"
     />
@@ -456,7 +456,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`stacked\` pro
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
@@ -472,7 +472,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
 <div
   class="flex gap-4"
   data-id="sds-checkbox-group"
-  id="unique-id"
+  id="v-0"
 >
   
   <div
@@ -480,8 +480,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
   >
     <input
       class="relative top-1 valid"
-      id="unique-id__option_0"
-      name="unique-id__option"
+      id="v-0__option_0"
+      name="v-0__option"
       type="checkbox"
       value="Option 1"
     />
@@ -489,7 +489,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
     
     <label
       class=""
-      for="unique-id__option_0"
+      for="v-0__option_0"
     >
       <span>
         Option 1
@@ -502,8 +502,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
   >
     <input
       class="relative top-1 valid"
-      id="unique-id__option_1"
-      name="unique-id__option"
+      id="v-0__option_1"
+      name="v-0__option"
       type="checkbox"
       value="Option 2"
     />
@@ -511,7 +511,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
     
     <label
       class=""
-      for="unique-id__option_1"
+      for="v-0__option_1"
     >
       <span>
         Option 2
@@ -524,8 +524,8 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
   >
     <input
       class="relative top-1 valid"
-      id="unique-id__option_2"
-      name="unique-id__option"
+      id="v-0__option_2"
+      name="v-0__option"
       type="checkbox"
       value="Option 3"
     />
@@ -533,7 +533,7 @@ exports[`CheckboxGroup > should match its snapshot with assigned \`valid\` prop 
     
     <label
       class=""
-      for="unique-id__option_2"
+      for="v-0__option_2"
     >
       <span>
         Option 3
