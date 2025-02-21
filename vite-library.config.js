@@ -49,7 +49,7 @@ export default defineConfig({
         // ensure we use style.css naming
         assetFileNames: (assetInfo) => {
           const names = assetInfo.names.map(name => {
-            if (name === 'components-vue3.css') {
+            if (name === 'sei-design-system.css') {
               return 'style.css'
             }
             return name

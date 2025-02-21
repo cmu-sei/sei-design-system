@@ -26,7 +26,7 @@ if [ "$version" == "major" ] || [ "$version" == "minor" ] || [ "$version" == "pa
     echo Publishing...
     npm version $version
     git push --follow-tags
-    npm publish --@sds:registry=https://artifacts.sei.cmu.edu/artifactory/api/npm/sei-design-system/
+    npm publish --@cmu-sei:registry=https://artifacts.sei.cmu.edu/artifactory/api/npm/sei-design-system/
 else
     printf "\nCould not process release.\nEnsure to use a version type for this release: major, minor, or patch.\n\n"
     exit 0

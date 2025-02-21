@@ -44,16 +44,10 @@
   },
   "types": "./dist/types/src/components/index.d.ts",
   "main": "./dist/index.umd.js",
-  "bugs": {
-    "url": "https://issues.sei.cmu.edu/jira/projects/SDS"
-  },
-  "homepage": "https://designsystem.sei.cmu.edu/",
-  "repository": {
-    "type": "git",
-    "url": "https://code.sei.cmu.edu/bitbucket/projects/SDS/repos/components-vue3/"
-  },
   "peerDependencies": {
-    "vue": ">=3.0.0"
+    "vue": ">=3.0.0",
+    "tailwindcss": ">=4.0.0",
+    "@tailwindcss/postcss": ">=4.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.6",
