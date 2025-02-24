@@ -1,0 +1,684 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/function 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="true"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-2__tab"
+    id="sds-tabs-unique-id__tab-2__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 2. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its default snapshot 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="true"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-1__tab"
+    id="sds-tabs-unique-id__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot when changing tabs 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="true"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-2__tab"
+    id="sds-tabs-unique-id__tab-2__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the content for tab 2. 
+    </div>
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot when property \`disabled\` in tab item(s) is set to "true" 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-disabled="true"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          disabled=""
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+          tabindex="-1"
+          type="button"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="true"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+          type="button"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+          type="button"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-2__tab"
+    id="sds-tabs-unique-id__tab-2__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 2. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) is set to "a" 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <a
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          href="https://seinet.sei.cmu.edu/"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </a>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <a
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          href="https://designsystem.sei.cmu.edu/"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </a>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <a
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab text-sm inline-block rounded-t py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          href="https://www.google.com/"
+          id="sds-tabs-unique-id__tab-3__tab"
+          rel="noopener noreferrer"
+          role="tab"
+          target="_blank"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-block tab-red active"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-block tab-red"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-block tab-red"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-1__tab"
+    id="sds-tabs-unique-id__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underline" 1`] = `
+<div
+  data-id="sds-tabs"
+  id="unique-id"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-underline tab-red active"
+          data-active="true"
+          id="sds-tabs-unique-id__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-underline tab-red"
+          id="sds-tabs-unique-id__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-unique-id__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-underline tab-red"
+          id="sds-tabs-unique-id__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-unique-id__tab-1__tab"
+    id="sds-tabs-unique-id__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
