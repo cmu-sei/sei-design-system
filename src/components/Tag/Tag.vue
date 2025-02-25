@@ -33,8 +33,8 @@
     <div 
       class="flex flex-row flex-nowrap items-center"
       :class="{
-        'gap-1': size === 'sm',
-        'gap-1.5': size === 'md'
+        'gap-x-0.5': size === 'sm',
+        'gap-x-1': size === 'md'
       }"
     >
       <span 
@@ -74,7 +74,8 @@
           <button 
             ref="button" 
             type="button"
-            class="text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-full w-4 h-4"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full"
+            :class="[buttonSizeClass]"
             @click.stop="increment"
           >
             <SdsSvgIcon
@@ -82,10 +83,10 @@
               fill="none"
               preserveAspectRatio="xMidYMid meet"
               role="img"
-              :height="icons.increment.height"
-              :path="icons.increment.path"
-              :width="icons.increment.width"
-              :view-box="icons.increment.viewBox"
+              :height="icons.increment[size].height"
+              :path="icons.increment[size].path"
+              :width="icons.increment[size].width"
+              :view-box="icons.increment[size].viewBox"
             />
             <span class="sr-only">Increment</span>
           </button>
@@ -94,7 +95,8 @@
           <button 
             ref="button" 
             type="button"
-            class="text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full w-4 h-4"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full"
+            :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
             <SdsSvgIcon
@@ -102,10 +104,10 @@
               fill="none"
               preserveAspectRatio="xMidYMid meet"
               role="img"
-              :height="icons.decrement.height"
-              :path="icons.decrement.path"
-              :width="icons.decrement.width"
-              :view-box="icons.decrement.viewBox"
+              :height="icons.decrement[size].height"
+              :path="icons.decrement[size].path"
+              :width="icons.decrement[size].width"
+              :view-box="icons.decrement[size].viewBox"
             />
             <span class="sr-only">Decrement</span>
           </button>
@@ -114,7 +116,8 @@
           <button 
             ref="button" 
             type="button"
-            class="text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-full w-4 h-4"
+            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-r-full"
+            :class="[buttonSizeClass]"
             @click.stop="remove"
           >
             <SdsSvgIcon
@@ -122,10 +125,10 @@
               fill="none"
               preserveAspectRatio="xMidYMid meet"
               role="img"
-              :height="icons.remove.height"
-              :path="icons.remove.path"
-              :width="icons.remove.width"
-              :view-box="icons.remove.viewBox"
+              :height="icons.remove[size].height"
+              :path="icons.remove[size].path"
+              :width="icons.remove[size].width"
+              :view-box="icons.remove[size].viewBox"
             />
             <span class="sr-only">Remove</span>
           </button>
@@ -140,10 +143,12 @@
 </template>
 
 <script setup lang="ts">
-import { useSlots } from 'vue'
 import SdsSvgIcon from '../SvgIcon'
 
-export type ActionType = typeof actions[number]
+export type TagActionType = typeof actions[number]
+export type TagIconAttrs = { height: number; path: string; viewBox: string; width: number; }
+export type TagIconSize = 'sm' | 'md'
+export type TagIconTypes = Record<TagActionType, Record<TagIconSize, TagIconAttrs>>
 
 defineOptions({
   name: 'SdsTag'
@@ -152,13 +157,13 @@ defineOptions({
 const slots = useSlots()
 
 const actions = ['increment', 'decrement', 'remove'] as const
-const isAction = (action: ActionType): action is ActionType => actions.includes(action)
+const isAction = (action: TagActionType): action is TagActionType => actions.includes(action)
 
 const props = defineProps({
   /**
    * Determines the type of action or button.
    */
-  action: { type: String as PropType<ActionType>, default: null },
+  action: { type: String as PropType<TagActionType>, default: null },
   /**
    * Determines the default count(er).
    */
@@ -180,37 +185,61 @@ const props = defineProps({
    */
   label: { type: String, default: '' },
   /**
-   * Determines whether or not the tag is read-only.
+   * Determines whether or not the tag is readonly.
    */
   readonly: { type: Boolean, default: false },
   /**
    * Determines the size of the tag.
    */
-  size: { type: String as PropType<'sm' | 'md'>, default: 'sm' },
+  size: { type: String as PropType<TagIconSize>, default: 'sm' },
 })
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
 
 const count = ref(props.counter ? props.counter : 0)
 
-const icons = ref<Record<string, { height: number; path: string; viewBox: string; width: number; }>>({
+const icons = ref<TagIconTypes>({
   increment: {
-    height: 16,
-    path: 'M12.0625 8.25C12.0625 8.60156 11.7695 8.89453 11.4375 8.89453H8.625V11.707C8.625 12.0391 8.33203 12.3125 8 12.3125C7.64844 12.3125 7.375 12.0391 7.375 11.707V8.89453H4.5625C4.21094 8.89453 3.9375 8.60156 3.9375 8.25C3.9375 7.91797 4.21094 7.64453 4.5625 7.64453H7.375V4.83203C7.375 4.48047 7.64844 4.1875 8 4.1875C8.33203 4.1875 8.625 4.48047 8.625 4.83203V7.64453H11.4375C11.7695 7.625 12.0625 7.91797 12.0625 8.25Z',
-    viewBox: '0 0 16 16',
-    width: 16
+    sm: {
+      height: 16,
+      path: 'M12.875 8.5C12.875 8.92188 12.5234 9.27344 12.125 9.27344H8.75V12.6484C8.75 13.0469 8.39844 13.375 8 13.375C7.57812 13.375 7.25 13.0469 7.25 12.6484V9.27344H3.875C3.45312 9.27344 3.125 8.92188 3.125 8.5C3.125 8.10156 3.45312 7.77344 3.875 7.77344H7.25V4.39844C7.25 3.97656 7.57812 3.625 8 3.625C8.39844 3.625 8.75 3.97656 8.75 4.39844V7.77344H12.125C12.5234 7.75 12.875 8.10156 12.875 8.5Z',
+      viewBox: '0 0 16 16',
+      width: 16
+    },
+    md: {
+      height: 18,
+      path: 'M14.6875 8.75C14.6875 9.24219 14.2773 9.65234 13.8125 9.65234H9.875V13.5898C9.875 14.0547 9.46484 14.4375 9 14.4375C8.50781 14.4375 8.125 14.0547 8.125 13.5898V9.65234H4.1875C3.69531 9.65234 3.3125 9.24219 3.3125 8.75C3.3125 8.28516 3.69531 7.90234 4.1875 7.90234H8.125V3.96484C8.125 3.47266 8.50781 3.0625 9 3.0625C9.46484 3.0625 9.875 3.47266 9.875 3.96484V7.90234H13.8125C14.2773 7.875 14.6875 8.28516 14.6875 8.75Z',
+      viewBox: '0 0 18 18',
+      width: 18
+    }
   },
   decrement: {
-    height: 16,
-    path: 'M11.4375 8.875H4.5625C4.21094 8.875 3.9375 8.60156 3.9375 8.25C3.9375 7.91797 4.21094 7.625 4.5625 7.625H11.4375C11.7695 7.625 12.0625 7.91797 12.0625 8.25C12.0625 8.60156 11.7695 8.875 11.4375 8.875Z',
-    viewBox: '0 0 16 16',
-    width: 16
+    sm: {
+      height: 16,
+      path: 'M12.125 9.25H3.875C3.45312 9.25 3.125 8.92188 3.125 8.5C3.125 8.10156 3.45312 7.75 3.875 7.75H12.125C12.5234 7.75 12.875 8.10156 12.875 8.5C12.875 8.92188 12.5234 9.25 12.125 9.25Z',
+      viewBox: '0 0 16 16',
+      width: 16
+    },
+    md: {
+      height: 18,
+      path: 'M13.8125 9.625H4.1875C3.69531 9.625 3.3125 9.24219 3.3125 8.75C3.3125 8.28516 3.69531 7.875 4.1875 7.875H13.8125C14.2773 7.875 14.6875 8.28516 14.6875 8.75C14.6875 9.24219 14.2773 9.625 13.8125 9.625Z',
+      viewBox: '0 0 18 18',
+      width: 18
+    }
   },
   remove: {
-    height: 16,
-    path: 'M10.9297 10.3203C11.1836 10.5547 11.1836 10.9648 10.9297 11.1992C10.8125 11.3164 10.6562 11.375 10.5 11.375C10.3242 11.375 10.168 11.3164 10.0508 11.1992L8 9.14844L5.92969 11.1992C5.8125 11.3164 5.65625 11.375 5.5 11.375C5.32422 11.375 5.16797 11.3164 5.05078 11.1992C4.79688 10.9648 4.79688 10.5547 5.05078 10.3203L7.10156 8.25L5.05078 6.19922C4.79688 5.96484 4.79688 5.55469 5.05078 5.32031C5.28516 5.06641 5.69531 5.06641 5.92969 5.32031L8 7.37109L10.0508 5.32031C10.2852 5.06641 10.6953 5.06641 10.9297 5.32031C11.1836 5.55469 11.1836 5.96484 10.9297 6.19922L8.87891 8.26953L10.9297 10.3203Z',
-    viewBox: '0 0 16 16',
-    width: 16
+    sm: {
+      height: 16,
+      path: 'M11.5156 10.9844C11.8203 11.2656 11.8203 11.7578 11.5156 12.0391C11.375 12.1797 11.1875 12.25 11 12.25C10.7891 12.25 10.6016 12.1797 10.4609 12.0391L8 9.57812L5.51562 12.0391C5.375 12.1797 5.1875 12.25 5 12.25C4.78906 12.25 4.60156 12.1797 4.46094 12.0391C4.15625 11.7578 4.15625 11.2656 4.46094 10.9844L6.92188 8.5L4.46094 6.03906C4.15625 5.75781 4.15625 5.26562 4.46094 4.98438C4.74219 4.67969 5.23438 4.67969 5.51562 4.98438L8 7.44531L10.4609 4.98438C10.7422 4.67969 11.2344 4.67969 11.5156 4.98438C11.8203 5.26562 11.8203 5.75781 11.5156 6.03906L9.05469 8.52344L11.5156 10.9844Z',
+      viewBox: '0 0 16 16',
+      width: 16
+    },
+    md: {
+      height: 18,
+      path: 'M13.1016 11.6484C13.457 11.9766 13.457 12.5508 13.1016 12.8789C12.9375 13.043 12.7188 13.125 12.5 13.125C12.2539 13.125 12.0352 13.043 11.8711 12.8789L9 10.0078L6.10156 12.8789C5.9375 13.043 5.71875 13.125 5.5 13.125C5.25391 13.125 5.03516 13.043 4.87109 12.8789C4.51562 12.5508 4.51562 11.9766 4.87109 11.6484L7.74219 8.75L4.87109 5.87891C4.51562 5.55078 4.51562 4.97656 4.87109 4.64844C5.19922 4.29297 5.77344 4.29297 6.10156 4.64844L9 7.51953L11.8711 4.64844C12.1992 4.29297 12.7734 4.29297 13.1016 4.64844C13.457 4.97656 13.457 5.55078 13.1016 5.87891L10.2305 8.77734L13.1016 11.6484Z',
+      viewBox: '0 0 18 18',
+      width: 18
+    }
   }
 })
 
@@ -220,9 +249,9 @@ const paddingClass = computed(() => {
   const { action, readonly, size } = props
   switch (size) {
     case 'sm':
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'px-1' : 'pl-2 pr-1' : 'px-2'
+      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
     case 'md':
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'px-1.5' : 'pl-3 pr-1.5' : 'px-3'
+      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
     default:
       return ''
   }
@@ -245,6 +274,17 @@ const textSizeClass = computed(() => {
       return 'text-xs leading-4'
     case 'md':
       return 'text-base leading-6'
+    default:
+      return ''
+  }
+})
+
+const buttonSizeClass = computed(() => {
+  switch (props.size) {
+    case 'sm':
+      return 'h-[1.375rem] w-6'
+    case 'md':
+      return 'h-[1.875rem] w-8'
     default:
       return ''
   }

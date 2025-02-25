@@ -67,7 +67,7 @@ const props = defineProps({
   /**
    * The width of the popover.
    */
-  size: { type: String as PropType<'lg' | 'sm' | 'auto' | ''>, default: 'lg' },
+  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'lg' },
   /**
    * The strategy of the popover on the screen.
    */
@@ -156,13 +156,15 @@ const zIndexClass = computed(() => {
 const sizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
+      return 'w-64'
+    case 'md':
       return 'w-80'
     case 'lg':
       return 'w-96'
     case 'auto':
-      return 'w-auto'
+      return 'min-w-96 w-auto'
     default:
-      return 'w-80'
+      return 'w-64'
   }
 })
 </script>

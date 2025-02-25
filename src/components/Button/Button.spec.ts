@@ -15,7 +15,7 @@ describe('Button', () => {
 
   /* All props */
   const kinds = ['primary', 'secondary', 'tertiary', 'ghost']
-  const variants = ['blue', 'red', 'white']
+  const variants = ['gray', 'blue', 'red', 'white']
   const types = ['button', 'submit']
   const sizes = ['lg', 'md', 'sm', 'xs']
 
