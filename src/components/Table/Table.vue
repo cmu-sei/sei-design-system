@@ -275,6 +275,8 @@ export interface TableField {
 
 export interface TableItem {
   id: number
+  enableDrawer?: boolean
+  toggled?: boolean
   [key: string]: unknown
 }
 
@@ -406,9 +408,33 @@ const flatFields = computed(() => {
   })
 })
 
+const itemsNormalized = computed(() => {
+  const items: TableItem[] = []
+  if (props.enableDrawer) {
+    items.push(
+      ...props.items.map((i) => ({
+        ...i,
+        toggled: false
+      }))
+    )
+  } else {
+    for (const [, value] of props.items.entries()) {
+      if ('enableDrawer' in value) {
+        if ('toggled' in value) {
+          items.push(value)
+          continue
+        }
+        value.toggled = false
+      }
+      items.push(value)
+    }
+  }
+  return items
+})
+
 const sortedItems = computed(() => {
-  if (props.onSort) return props.items
-  const items = props.items
+  if (props.onSort) return [...itemsNormalized.value]
+  const items = [...itemsNormalized.value]
   return items.sort((a, b) => sortCompare(a, b, sortField.value))
 })
 
