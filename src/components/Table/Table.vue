@@ -3,6 +3,7 @@
     :id="id || 'sds-table'"
     data-id="sds-table"
     class="table-prose dark:table-prose-invert"
+    :class="[paddingClass]"
   >
     <caption v-if="!!$slots.caption || caption">
       <!-- @slot Caption content. This will override the **caption** prop. -->
@@ -220,11 +221,11 @@
             :key="key"
           >
             <component
-              :is="cellElement(key) as unknown"
+              :is="cellElement(key)"
               :class="{
-                'text-left': displayedFields.find(i => i.key === key)?.align === 'left',
-                'text-center': displayedFields.find(i => i.key === key)?.align === 'center',
-                'text-right': displayedFields.find(i => i.key === key)?.align === 'right'
+                'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
+                'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
+                'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -258,6 +259,8 @@
 </template>
 
 <script setup lang="ts">
+export type TableDensity = typeof densityTypes[number]
+
 export interface TableField {
   key: string
   label?: string | undefined
@@ -278,6 +281,8 @@ export interface TableItem {
 defineOptions({
   name: 'SdsTable'
 })
+
+const densityTypes = ['comfortable', 'condensed'] as const
 
 const props = defineProps({
   /**
@@ -372,7 +377,17 @@ const props = defineProps({
    * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
    * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
    */
-  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined }
+  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined },
+  /**
+   * Determines the table's density, or padding, for the "th", "td" HTML tags
+   * 
+   * Density options:
+   *
+   * * comfortable: p-4 (16px)
+   * * condensed: p-1 (4px)
+   * * default: p-2 (8px)
+   */
+  density: { type: String as PropType<TableDensity>, default: undefined }
 })
 
 const emit = defineEmits(['open-drawer'])
@@ -403,6 +418,18 @@ const displayedFields = computed(() => {
 
 const displayedFieldKeys = computed(() => {
   return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
+})
+
+const paddingClass = computed(() => {
+  const { density } = props
+  switch (density) {
+    case densityTypes[0]: // comfortable
+      return 'table-prose-lg'
+    case densityTypes[1]: // condensed
+      return 'table-prose-sm'
+    default:
+      return ''
+  }
 })
 
 watch(() => props.sortBy, (value) => {
