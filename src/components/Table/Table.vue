@@ -58,9 +58,8 @@
                 fill="currentColor"
               />
             </svg>
-            <span class="sr-only">Toggle drawer</span>
+            <span class="sr-only">Toggle all drawers</span>
           </button>
-          <span class="sr-only">Drawers</span>
         </th>
         <template v-for="field in displayedFields">
           <template v-if="field.fields">

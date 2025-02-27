@@ -124,7 +124,7 @@ exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
     <tr>
       <th><button><svg height="16" class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
             <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path>
-          </svg><span class="sr-only">Toggle drawer</span></button><span class="sr-only">Drawers</span></th>
+          </svg><span class="sr-only">Toggle all drawers</span></button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
           <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
             <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
