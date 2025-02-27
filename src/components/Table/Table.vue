@@ -30,7 +30,7 @@
     </colgroup>
     <thead class="border-t dark:border-gray-700">
       <tr>
-        <th v-if="enableDrawer">
+        <th v-if="hasDrawers">
           <span class="sr-only">Drawers</span>
         </th>
         <template v-for="field in displayedFields">
@@ -179,16 +179,20 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850': item.id === openDrawerID
+            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850': item.toggled
           }"
         >
           <td
-            v-if="enableDrawer"
+            v-if="hasDrawers"
             class="cursor-pointer w-4"
+            :aria-label="hasDrawers ? 'No value' : undefined"
           >
-            <button @click="toggleDrawer(item)">
+            <button 
+              v-if="item.enableDrawer"
+              @click="toggleDrawer(item)"
+            >
               <svg
-                v-if="item.id === openDrawerID"
+                v-if="item.toggled"
                 height="16"
                 class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 viewBox="0 0 512 512"
@@ -241,7 +245,7 @@
           </template>
         </tr>
         <tr
-          v-if="item.id === openDrawerID"
+          v-if="item.toggled"
           :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
           class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850"
         >
@@ -394,9 +398,9 @@ const props = defineProps({
 
 const emit = defineEmits(['open-drawer'])
 
+const itemsNormalized = ref<TableItem[]>([])
 const sortField = ref(props.sortBy)
 const sortOrder = ref(props.sortDesc ? -1 : 1)
-const openDrawerID = ref(-1)
 
 const flatFields = computed(() => {
   return props.fields.flatMap(i => {
@@ -408,30 +412,7 @@ const flatFields = computed(() => {
   })
 })
 
-const itemsNormalized = computed(() => {
-  const items: TableItem[] = []
-  if (props.enableDrawer) {
-    items.push(
-      ...props.items.map((i) => ({
-        ...i,
-        enableDrawer: true,
-        toggled: false
-      }))
-    )
-  } else {
-    for (const [, value] of props.items.entries()) {
-      if ('enableDrawer' in value) {
-        if ('toggled' in value) {
-          items.push(value)
-          continue
-        }
-        value.toggled = false
-      }
-      items.push(value)
-    }
-  }
-  return items
-})
+const hasDrawers = computed(() => itemsNormalized.value.filter((i) => i.enableDrawer).length > 0)
 
 const sortedItems = computed(() => {
   if (props.onSort) return [...itemsNormalized.value]
@@ -459,26 +440,6 @@ const paddingClass = computed(() => {
   }
 })
 
-watch(() => props.sortBy, (value) => {
-  sortField.value = value
-})
-
-watch(() => props.sortDesc, (value) => {
-  sortOrder.value = value ? -1 : 1
-})
-
-const toggleDrawer = (item: TableItem) => {
-  if (openDrawerID.value === item.id) {
-    openDrawerID.value = -1
-  } else {
-    openDrawerID.value = item.id
-    /**
-     * Emitted when a drawer is opened. @binding item
-     */
-    emit('open-drawer', item)
-  }
-}
-
 const cellElement = (key: string) => {
   const field = props.fields.find((f) => f.key === key)
   return field && field.header ? 'th' : 'td'
@@ -502,6 +463,23 @@ const handleSortBy = (field: TableField) => {
   }
 }
 
+const normalizeItems = (items: TableItem[]) => {
+  if (props.enableDrawer) {
+    return [...items].map((i) => ({
+      ...i,
+      enableDrawer: true,
+      toggled: false
+    }))
+  }
+  return [...items].map((i) => {
+    if ('enableDrawer' in i) {
+      if ('toggled' in i) return i
+      return { ...i, toggled: false }
+    }
+    return i
+  })
+}
+
 const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   const a = aRow[key]
   const b = bRow[key]
@@ -514,6 +492,18 @@ const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   } else {
     // Otherwise stringify the field data and use String.prototype.localeCompare
     return toString(a as TableItem).localeCompare(toString(b as TableItem)) * sortOrder.value
+  }
+}
+
+const toggleDrawer = (item: TableItem) => {
+  const i = itemsNormalized.value.find(({ id }) => id === item.id)
+  if (typeof i === 'undefined') return
+  i.toggled = i.toggled ? false : true
+  if (i.toggled) {
+    /**
+     * Emitted when a drawer is opened. @binding item
+     */
+    emit('open-drawer', i)
   }
 }
 
@@ -530,4 +520,16 @@ const toString = (value: TableItem): string => {
     return String(value)
   }
 }
+
+watch(() => props.items, (value) => {
+  itemsNormalized.value = normalizeItems(value)
+}, { deep: true, immediate: true })
+
+watch(() => props.sortBy, (value) => {
+  sortField.value = value
+})
+
+watch(() => props.sortDesc, (value) => {
+  sortOrder.value = value ? -1 : 1
+})
 </script>
