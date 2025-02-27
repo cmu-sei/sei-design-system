@@ -31,6 +31,35 @@
     <thead class="border-t dark:border-gray-700">
       <tr>
         <th v-if="hasDrawers">
+          <button @click="toggleAllDrawers">
+            <svg
+              v-if="isBatchExpanded"
+              height="16"
+              class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              viewBox="0 0 512 512"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                fill="currentColor"
+              />
+            </svg>
+            <svg
+              v-else
+              height="16"
+              class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              viewBox="0 0 384 512"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+                fill="currentColor"
+              />
+            </svg>
+            <span class="sr-only">Toggle drawer</span>
+          </button>
           <span class="sr-only">Drawers</span>
         </th>
         <template v-for="field in displayedFields">
@@ -398,6 +427,7 @@ const props = defineProps({
 
 const emit = defineEmits(['open-drawer'])
 
+const isBatchExpanded = ref(false)
 const itemsNormalized = ref<TableItem[]>([])
 const sortField = ref(props.sortBy)
 const sortOrder = ref(props.sortDesc ? -1 : 1)
@@ -415,8 +445,8 @@ const flatFields = computed(() => {
 const hasDrawers = computed(() => itemsNormalized.value.filter((i) => i.enableDrawer).length > 0)
 
 const sortedItems = computed(() => {
-  if (props.onSort) return [...itemsNormalized.value]
-  const items = [...itemsNormalized.value]
+  if (props.onSort) return [ ...itemsNormalized.value ]
+  const items = [ ...itemsNormalized.value ]
   return items.sort((a, b) => sortCompare(a, b, sortField.value))
 })
 
@@ -465,13 +495,13 @@ const handleSortBy = (field: TableField) => {
 
 const normalizeItems = (items: TableItem[]) => {
   if (props.enableDrawer) {
-    return [...items].map((i) => ({
+    return [ ...items ].map((i) => ({
       ...i,
       enableDrawer: true,
       toggled: false
     }))
   }
-  return [...items].map((i) => {
+  return [ ...items ].map((i) => {
     if ('enableDrawer' in i) {
       if ('toggled' in i) return i
       return { ...i, toggled: false }
@@ -505,6 +535,19 @@ const toggleDrawer = (item: TableItem) => {
      */
     emit('open-drawer', i)
   }
+}
+
+const toggleAllDrawers = () => {
+  isBatchExpanded.value = !isBatchExpanded.value
+  itemsNormalized.value = [ ...itemsNormalized.value ].map((i) => {
+    if (i.enableDrawer) {
+      return {
+        ...i,
+        toggled: isBatchExpanded.value ? true : false
+      }
+    }
+    return i
+  })
 }
 
 // Helper function to stringify the values of an Object
