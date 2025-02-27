@@ -414,6 +414,7 @@ const itemsNormalized = computed(() => {
     items.push(
       ...props.items.map((i) => ({
         ...i,
+        enableDrawer: true,
         toggled: false
       }))
     )
