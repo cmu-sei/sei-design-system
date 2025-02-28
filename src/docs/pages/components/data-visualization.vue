@@ -294,7 +294,7 @@
               Edit
             </button>
           </template>
-          <template #drawer="{item}">
+          <template #drawer="{ item }: { item: TableItem }">
             <ul class="py-2 pl-10 pr-8 rounded-md">
               <li>
                 <p class="space-x-1">
