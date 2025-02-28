@@ -57,7 +57,9 @@
             :name="`link(${topLink.key})`"
             :item="topLink"
           >
-            <span>{{ topLink.title }}</span>
+            <span
+              class="pointer-events-none"
+            >{{ topLink.title }}</span>
             <!-- Below SVG is a caret to indicate Mega Menu opened/closed status -->
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
             <svg
@@ -66,7 +68,7 @@
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
-              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300"
+              class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300 pointer-events-none"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 550 500"
               fill="currentColor"
