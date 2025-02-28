@@ -1,164 +1,153 @@
-@layer components {
+/* Base btn class */
 
-  /**
-   * Base btn class
-   */
+.action-btn {
+  @apply border border-transparent py-1.5 px-1.5 rounded select-none whitespace-nowrap cursor-pointer;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
+  @apply dark:focus-visible:ring-blue-700;
+  @apply inline-flex gap-2 items-center text-left;
+  @apply [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
 
-  .action-btn {
-    @apply border border-transparent py-1.5 px-1.5 rounded select-none whitespace-nowrap cursor-pointer;
-    @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
-    @apply dark:focus-visible:ring-blue-700;
-    @apply inline-flex gap-2 items-center text-left;
-    @apply [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
-
-    &.action-btn-lg {
-      @apply py-2 px-2;
-      @apply [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
-    }
-
-    &.action-btn-sm {
-      @apply py-1.5 px-1.5 text-sm;
-      @apply [&:not(:has(svg))]:px-2 [&:not(:has(img))]:px-2 [&:not(:has([data-id='sds-avatar']))]:px-2 [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
-    }
-
-    &.action-btn-xs {
-      @apply py-1 px-1 text-sm gap-1;
-      @apply [&:not(:has(svg))]:py-0.5 [&:not(:has(img))]:py-0.5 [&:not(:has([data-id='sds-avatar']))]:py-0.5 [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
-    }
+  &.action-btn-lg {
+    @apply py-2 px-2;
+    @apply [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
   }
 
-  /**
-   * Kind
-   */
-
-  .action-btn-primary {
-    @apply text-gray-50 bg-gray-800;
-    @apply dark:text-gray-900 dark:bg-gray-400;
-    @apply hover:text-white hover:bg-gray-500;
-    @apply dark:hover:text-black dark:hover:bg-gray-500;
-    &:active, &.active {
-      @apply text-white bg-gray-700;
-      @apply dark:text-black dark:bg-gray-300;
-    }
+  &.action-btn-sm {
+    @apply py-1.5 px-1.5 text-sm;
+    @apply [&:not(:has(svg))]:px-2 [&:not(:has(img))]:px-2 [&:not(:has([data-id='sds-avatar']))]:px-2 [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
   }
 
-  .action-btn-primary.action-btn-red {
-    @apply text-red-50 bg-red-600;
-    @apply dark:text-red-900 dark:bg-red-400;
-    @apply hover:text-white hover:bg-red-500;
-    @apply dark:hover:text-black dark:hover:bg-red-500;
-    &:active, &.active {
-      @apply text-white bg-red-700;
-      @apply dark:text-black dark:bg-red-300;
-    }
+  &.action-btn-xs {
+    @apply py-1 px-1 text-sm gap-1;
+    @apply [&:not(:has(svg))]:py-0.5 [&:not(:has(img))]:py-0.5 [&:not(:has([data-id='sds-avatar']))]:py-0.5 [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
   }
+}
 
-  .action-btn-primary.action-btn-blue {
-    @apply text-blue-50 bg-blue-600;
-    @apply dark:text-blue-900 dark:bg-blue-400;
-    @apply hover:text-white hover:bg-blue-500;
-    @apply dark:hover:text-black dark:hover:bg-blue-500;
-    &:active, &.active {
-      @apply text-white bg-blue-700;
-      @apply dark:text-black dark:bg-blue-300;
-    }
+/* Kind */
+
+.action-btn-primary {
+  @apply text-gray-50 bg-gray-800;
+  @apply dark:text-gray-900 dark:bg-gray-400;
+  @apply hover:text-white hover:bg-gray-500;
+  @apply dark:hover:text-black dark:hover:bg-gray-500;
+  &:active, &.active {
+    @apply text-white bg-gray-700;
+    @apply dark:text-black dark:bg-gray-300;
   }
+}
 
-  .action-btn-secondary {
-    @apply text-gray-600 bg-gray-600/0;
-    @apply dark:text-gray-400 dark:bg-gray-400/0;
-    @apply border-gray-600/20;
-    @apply dark:border-gray-400/20;
-    @apply hover:text-gray-700 hover:bg-gray-600/10;
-    @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
-    &:active, &.active {
-      @apply text-gray-600 bg-gray-600/20;
-      @apply dark:text-gray-400 dark:bg-gray-400/20;
-    }
+.action-btn-primary.action-btn-red {
+  @apply text-red-50 bg-red-600;
+  @apply dark:text-red-900 dark:bg-red-400;
+  @apply hover:text-white hover:bg-red-500;
+  @apply dark:hover:text-black dark:hover:bg-red-500;
+  &:active, &.active {
+    @apply text-white bg-red-700;
+    @apply dark:text-black dark:bg-red-300;
   }
+}
 
-  .action-btn-secondary.action-btn-red {
-    @apply text-red-600 bg-red-600/0;
-    @apply dark:text-red-300 dark:bg-red-400/0;
-    @apply border-red-600/20;
-    @apply dark:border-red-400/20;
-    @apply hover:text-red-700 hover:bg-red-600/10;
-    @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
-    &:active, &.active {
-      @apply text-red-600 bg-red-600/20;
-      @apply dark:text-red-400 dark:bg-red-400/20;
-    }
+.action-btn-primary.action-btn-blue {
+  @apply text-blue-50 bg-blue-600;
+  @apply dark:text-blue-900 dark:bg-blue-400;
+  @apply hover:text-white hover:bg-blue-500;
+  @apply dark:hover:text-black dark:hover:bg-blue-500;
+  &:active, &.active {
+    @apply text-white bg-blue-700;
+    @apply dark:text-black dark:bg-blue-300;
   }
+}
 
-  .action-btn-secondary.action-btn-blue {
-    @apply text-blue-600 bg-blue-600/0;
-    @apply dark:text-blue-300 dark:bg-blue-400/0;
-    @apply border-blue-600/20;
-    @apply dark:border-blue-400/20;
-    @apply hover:text-blue-700 hover:bg-blue-600/10;
-    @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
-    &:active, &.active {
-      @apply text-blue-600 bg-blue-600/20;
-      @apply dark:text-blue-400 dark:bg-blue-400/20;
-    }
+.action-btn-secondary {
+  @apply text-gray-600 bg-gray-600/0;
+  @apply dark:text-gray-400 dark:bg-gray-400/0;
+  @apply border-gray-600/20;
+  @apply dark:border-gray-400/20;
+  @apply hover:text-gray-700 hover:bg-gray-600/10;
+  @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
+  &:active, &.active {
+    @apply text-gray-600 bg-gray-600/20;
+    @apply dark:text-gray-400 dark:bg-gray-400/20;
   }
+}
 
-  .action-btn-ghost {
-    @apply text-gray-600 bg-gray-600/0;
-    @apply dark:text-gray-400 dark:bg-gray-400/0;
-    @apply hover:text-gray-700 hover:bg-gray-600/10;
-    @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
-    &:active, &.active {
-      @apply text-gray-600 bg-gray-600/20;
-      @apply dark:text-gray-400 dark:bg-transparent;
-    }
+.action-btn-secondary.action-btn-red {
+  @apply text-red-600 bg-red-600/0;
+  @apply dark:text-red-300 dark:bg-red-400/0;
+  @apply border-red-600/20;
+  @apply dark:border-red-400/20;
+  @apply hover:text-red-700 hover:bg-red-600/10;
+  @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
+  &:active, &.active {
+    @apply text-red-600 bg-red-600/20;
+    @apply dark:text-red-400 dark:bg-red-400/20;
   }
+}
 
-  .action-btn-ghost.action-btn-red {
-    @apply text-red-600 bg-red-600/0;
-    @apply dark:text-red-300 dark:bg-red-400/0;
-    @apply hover:text-red-700 hover:bg-red-600/10;
-    @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
-    &:active, &.active {
-      @apply text-red-600 bg-red-600/20;
-      @apply dark:text-red-400 dark:bg-transparent;
-    }
+.action-btn-secondary.action-btn-blue {
+  @apply text-blue-600 bg-blue-600/0;
+  @apply dark:text-blue-300 dark:bg-blue-400/0;
+  @apply border-blue-600/20;
+  @apply dark:border-blue-400/20;
+  @apply hover:text-blue-700 hover:bg-blue-600/10;
+  @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
+  &:active, &.active {
+    @apply text-blue-600 bg-blue-600/20;
+    @apply dark:text-blue-400 dark:bg-blue-400/20;
   }
+}
 
-  .action-btn-ghost.action-btn-blue {
-    @apply text-blue-600 bg-blue-600/0;
-    @apply dark:text-blue-300 dark:bg-blue-400/0;
-    @apply hover:text-blue-700 hover:bg-blue-600/10;
-    @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
-    &:active, &.active {
-      @apply text-blue-600 bg-blue-600/20;
-      @apply dark:text-blue-400 dark:bg-transparent;
-    }
+.action-btn-ghost {
+  @apply text-gray-600 bg-gray-600/0;
+  @apply dark:text-gray-400 dark:bg-gray-400/0;
+  @apply hover:text-gray-700 hover:bg-gray-600/10;
+  @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
+  &:active, &.active {
+    @apply text-gray-600 bg-gray-600/20;
+    @apply dark:text-gray-400 dark:bg-transparent;
   }
+}
 
-  /**
-   * Block variant
-   */
-
-  .action-btn-block {
-    @apply w-full;
+.action-btn-ghost.action-btn-red {
+  @apply text-red-600 bg-red-600/0;
+  @apply dark:text-red-300 dark:bg-red-400/0;
+  @apply hover:text-red-700 hover:bg-red-600/10;
+  @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
+  &:active, &.active {
+    @apply text-red-600 bg-red-600/20;
+    @apply dark:text-red-400 dark:bg-transparent;
   }
+}
 
-  /**
-   * Action states
-   */
+.action-btn-ghost.action-btn-blue {
+  @apply text-blue-600 bg-blue-600/0;
+  @apply dark:text-blue-300 dark:bg-blue-400/0;
+  @apply hover:text-blue-700 hover:bg-blue-600/10;
+  @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
+  &:active, &.active {
+    @apply text-blue-600 bg-blue-600/20;
+    @apply dark:text-blue-400 dark:bg-transparent;
+  }
+}
 
-  .action-btn.disabled, .action-btn[disabled] {
-    @apply pointer-events-none opacity-50;
-    &.action-btn-primary {
-      @apply text-gray-100/50 dark:text-gray-900/50;
-      @apply bg-gray-600/50 dark:bg-gray-400/50;
-    }
-    &.action-btn-secondary, &.action-btn-ghost {
-      @apply text-gray-600/50 dark:text-gray-400/50;
-    }
-    &.action-btn-secondary {
-      @apply border-gray-600/10 dark:border-gray-400/10;
-    }
+/* Block variant */
+
+.action-btn-block {
+  @apply w-full;
+}
+
+/* Action states */
+
+.action-btn.disabled, .action-btn[disabled] {
+  @apply pointer-events-none opacity-50;
+  &.action-btn-primary {
+    @apply text-gray-100/50 dark:text-gray-900/50;
+    @apply bg-gray-600/50 dark:bg-gray-400/50;
+  }
+  &.action-btn-secondary, &.action-btn-ghost {
+    @apply text-gray-600/50 dark:text-gray-400/50;
+  }
+  &.action-btn-secondary {
+    @apply border-gray-600/10 dark:border-gray-400/10;
   }
 }

@@ -1,36 +1,31 @@
-@layer components {
 
-  /**
-   * Base btn class
-   */
+.btn:not([class*='sds-theme-'] *) {
 
-  .btn:not([class*='sds-theme-'] *) {
-    @apply border-2 border-transparent inline-block py-2 px-8 rounded-sm select-none whitespace-nowrap font-semibold cursor-pointer;
-    @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
-    @apply dark:focus-visible:ring-blue-700;
+  /* Base styles */
 
-    &.btn-xl {
-      @apply py-4 px-16 text-xl;
-    }
+  @apply border-2 border-transparent inline-block py-2 px-8 rounded-sm select-none whitespace-nowrap font-semibold cursor-pointer;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
+  @apply dark:focus-visible:ring-blue-700;
 
-    &.btn-lg {
-      @apply py-3 px-12 text-lg;
-    }
-
-    &.btn-sm {
-      @apply py-1 px-4 text-sm;
-    }
-
-    &.btn-xs {
-      @apply py-0.5 px-2 text-xs;
-    }
+  &.btn-xl {
+    @apply py-4 px-16 text-xl;
   }
 
-  /**
-  * Kind
-  */
+  &.btn-lg {
+    @apply py-3 px-12 text-lg;
+  }
 
-  .btn-primary:not([class*='sds-theme-'] *) {
+  &.btn-sm {
+    @apply py-1 px-4 text-sm;
+  }
+
+  &.btn-xs {
+    @apply py-0.5 px-2 text-xs;
+  }
+
+  /* Kind */
+
+  &.btn-primary {
     @apply text-white bg-blue-600;
     @apply dark:bg-blue-400 dark:text-black;
     @apply hover:bg-blue-500;
@@ -41,7 +36,7 @@
     }
   }
 
-  .btn-primary.btn-red:not([class*='sds-theme-'] *) {
+  &.btn-primary.btn-red {
     @apply bg-red-600;
     @apply dark:bg-red-400;
     @apply hover:bg-red-500;
@@ -52,7 +47,7 @@
     }
   }
 
-  .btn-primary.btn-white:not([class*='sds-theme-'] *) {
+  &.btn-primary.btn-white {
     @apply bg-white/90 text-gray-900;
     @apply dark:bg-white/90 text-gray-900;
     @apply hover:text-gray-900 hover:bg-white/100;
@@ -63,7 +58,7 @@
     }
   }
 
-  .btn-secondary:not([class*='sds-theme-'] *) {
+  &.btn-secondary {
     @apply text-blue-600 bg-white border-gray-500;
     @apply dark:border-gray-500 dark:text-blue-300 dark:bg-gray-900;
     @apply hover:bg-gray-50;
@@ -74,7 +69,7 @@
     }
   }
 
-  .btn-secondary.btn-red:not([class*='sds-theme-'] *) {
+  &.btn-secondary.btn-red {
     @apply text-red-600;
     @apply dark:text-red-300 dark:hover:text-red-200;
     &:active, &.active {
@@ -83,7 +78,7 @@
     }
   }
 
-  .btn-secondary.btn-white:not([class*='sds-theme-'] *) {
+  &.btn-secondary.btn-white {
     @apply text-gray-900 bg-white/55 border-white;
     @apply dark:text-gray-900 dark:bg-white/55 dark:border-white;
     @apply dark:hover:text-gray-900 dark:hover:bg-white/65 hover:border-white dark:hover:border-white;
@@ -93,7 +88,7 @@
     }
   }
 
-  .btn-tertiary:not([class*='sds-theme-'] *) {
+  &.btn-tertiary {
     @apply text-blue-600 border-blue-600 hover:text-white hover:bg-blue-500 hover:border-blue-500;
     @apply dark:text-blue-300 dark:border-blue-300;
     @apply hover:text-white hover:bg-blue-500 hover:border-blue-500;
@@ -104,7 +99,7 @@
     }
   }
 
-  .btn-tertiary.btn-red:not([class*='sds-theme-'] *) {
+  &.btn-tertiary.btn-red {
     @apply text-red-600 border-red-600;
     @apply dark:text-red-300 dark:border-red-300;
     @apply hover:text-white hover:bg-red-500 hover:border-red-500;
@@ -115,7 +110,7 @@
     }
   }
 
-  .btn-tertiary.btn-white:not([class*='sds-theme-'] *) {
+  &.btn-tertiary.btn-white {
     @apply text-white border-white;
     @apply dark:text-white dark:border-white;
     @apply hover:text-gray-900 hover:bg-white;
@@ -126,7 +121,7 @@
     }
   }
 
-  .btn-ghost:not([class*='sds-theme-'] *) {
+  &.btn-ghost {
     @apply text-blue-600;
     @apply dark:text-blue-300;
     @apply hover:bg-gray-50;
@@ -137,7 +132,7 @@
     }
   }
 
-  .btn-ghost.btn-red:not([class*='sds-theme-'] *) {
+  &.btn-ghost.btn-red {
     @apply text-red-600;
     @apply dark:text-red-300;
     @apply hover:bg-gray-50;
@@ -148,7 +143,7 @@
     }
   }
 
-  .btn-ghost.btn-white:not([class*='sds-theme-'] *) {
+  &.btn-ghost.btn-white {
     @apply text-white;
     @apply dark:text-white;
     @apply hover:text-white hover:bg-white/10;
@@ -159,19 +154,15 @@
     }
   }
 
-  /**
-  * Block variant
-  */
+  /* Block variant */
 
-  .btn-block:not([class*='sds-theme-'] *) {
+  &.btn-block {
     @apply block w-full;
   }
 
-  /**
-  * Action states
-  */
+  /* Action states */
 
-  .btn.disabled:not([class*='sds-theme-'] *), .btn[disabled]:not([class*='sds-theme-'] *) {
+  &.disabled, &[disabled] {
     /* Default buttons */
     @apply pointer-events-none opacity-50 text-gray-500 dark:text-gray-500;
     &.btn-primary, &.btn-secondary, &.btn-tertiary {
