@@ -9,7 +9,7 @@
 @import './variants/dark-mode';
 @import './variants/theme';
 
-/* Forge theme */
+/* Forge components */
 @import './components/forge/action-btn';
 @import './components/forge/btn';
 @import './components/forge/form-control';
@@ -18,7 +18,7 @@
 @import './components/forge/scroll-area';
 @import './components/forge/tab';
 
-/* Plaid theme */
+/* Plaid components */
 @import './components/plaid/btn';
 
 /* SDS plugins */
