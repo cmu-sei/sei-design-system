@@ -86,7 +86,7 @@
     v-if="$slots.children && type === 'expand'"
     class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top"
     :class="{
-      'z-10 opacity-1 max-h-screen': selected,
+      'z-10 opacity-100 max-h-screen': selected,
       '-z-10 opacity-0 max-h-0 select-none': !selected
     }"
   >

@@ -22,9 +22,9 @@
         <transition
           :enter-active-class="activeClass"
           enter-from-class="opacity-0 -right-full ml-40"
-          enter-to-class="opacity-1 right-0 ml-0"
+          enter-to-class="opacity-100 right-0 ml-0"
           :leave-active-class="activeClass"
-          leave-from-class="opacity-1 right-0 ml-0"
+          leave-from-class="opacity-100 right-0 ml-0"
           leave-to-class="opacity-0 -right-full ml-40"
         >
           <div v-if="typeof activePanel !== 'undefined' && panel === activePanel.key">
@@ -39,9 +39,9 @@
         <transition
           :enter-active-class="activeClass"
           enter-from-class="opacity-0 -left-full mr-40"
-          enter-to-class="opacity-1 left-0 mr-0"
+          enter-to-class="opacity-100 left-0 mr-0"
           :leave-active-class="activeClass"
-          leave-from-class="opacity-1 left-0 mr-0"
+          leave-from-class="opacity-100 left-0 mr-0"
           leave-to-class="opacity-0 -left-full mr-40"
         >
           <div v-if="typeof activePanel === 'undefined'">
