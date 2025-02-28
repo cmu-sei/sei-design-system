@@ -30,35 +30,39 @@
     </colgroup>
     <thead class="border-t dark:border-gray-700">
       <tr>
-        <th v-if="hasDrawers">
-          <button @click="toggleAllDrawers">
-            <svg
+        <th 
+          v-if="hasDrawers"
+          class="w-6"
+        >
+          <button 
+            class="flex items-center justify-center w-6 h-6"
+            @click="toggleAllDrawers"
+          >
+            <SdsSvgIcon
               v-if="isBatchExpanded"
-              height="16"
-              class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-              viewBox="0 0 512 512"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                fill="currentColor"
-              />
-            </svg>
-            <svg
+              aria-hidden="true"
+              class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons['angle-up'].height"
+              :path="icons['angle-up'].path"
+              :view-box="icons['angle-up'].viewBox"
+              :width="icons['angle-up'].width"
+            />
+            <SdsSvgIcon
               v-else
-              height="16"
-              class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-              viewBox="0 0 384 512"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                fill="currentColor"
-              />
-            </svg>
-            <span class="sr-only">Toggle all drawers</span>
+              aria-hidden="true"
+              class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons['angle-down'].height"
+              :path="icons['angle-down'].path"
+              :view-box="icons['angle-down'].viewBox"
+              :width="icons['angle-down'].width"
+            />
+            <span class="sr-only">{{ isBatchExpanded ? 'Collapse all drawers' : 'Expand all drawers' }}</span>
           </button>
         </th>
         <template v-for="field in displayedFields">
@@ -212,40 +216,39 @@
         >
           <td
             v-if="hasDrawers"
-            class="cursor-pointer w-4"
+            class="w-6"
             :aria-label="hasDrawers ? 'No value' : undefined"
           >
             <button 
               v-if="item.enableDrawer"
+              class="flex items-center justify-center w-6 h-6"
               @click="toggleDrawer(item)"
             >
-              <svg
+              <SdsSvgIcon
                 v-if="item.toggled"
-                height="16"
-                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-                viewBox="0 0 512 512"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg
+                aria-hidden="true"
+                class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['angle-up'].height"
+                :path="icons['angle-up'].path"
+                :view-box="icons['angle-up'].viewBox"
+                :width="icons['angle-up'].width"
+              />
+              <SdsSvgIcon
                 v-else
-                height="16"
-                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-                viewBox="0 0 384 512"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  fill="currentColor"
-                />
-              </svg>
-              <span class="sr-only">Toggle drawer</span>
+                aria-hidden="true"
+                class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['angle-down'].height"
+                :path="icons['angle-down'].path"
+                :view-box="icons['angle-down'].viewBox"
+                :width="icons['angle-down'].width"
+              />
+              <span class="sr-only">{{ item.toggled ? 'Collapse drawer' : 'Expand drawer' }}</span>
             </button>
           </td>
           <template
@@ -317,6 +320,21 @@ defineOptions({
 })
 
 const densityTypes = ['comfortable', 'condensed'] as const
+
+const icons = Object.freeze({
+  'angle-down': {
+    height: 6,
+    path: 'M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z',
+    viewBox: '0 0 10 6',
+    width: 10
+  },
+  'angle-up': {
+    height: 6,
+    path: 'M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z',
+    viewBox: '0 0 10 6',
+    width: 10
+  }
+} as const)
 
 const props = defineProps({
   /**
