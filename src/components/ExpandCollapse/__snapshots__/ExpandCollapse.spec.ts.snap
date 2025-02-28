@@ -7,6 +7,24 @@ exports[`ExpandCollapse > should match its default snapshot 1`] = `
   data-id="sds-expand-collapse"
   type="button"
 >
-  Show more
+  ExpandCollapse
 </button>
 `;
+
+exports[`ExpandCollapse > should match its disabled (false) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-blue" aria-disabled="false">Show more: false</button>"`;
+
+exports[`ExpandCollapse > should match its disabled (true) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta disabled link-cta-down link-primary link-blue" disabled="" aria-disabled="true">Show more: true</button>"`;
+
+exports[`ExpandCollapse > should match its kind (primary) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-blue" aria-disabled="false">Show more: primary</button>"`;
+
+exports[`ExpandCollapse > should match its kind (secondary) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-secondary link-blue" aria-disabled="false">Show more: secondary</button>"`;
+
+exports[`ExpandCollapse > should match its kind (tertiary) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-tertiary link-blue" aria-disabled="false">Show more: tertiary</button>"`;
+
+exports[`ExpandCollapse > should match its modelValue (false) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-blue" aria-disabled="false">Show more</button>"`;
+
+exports[`ExpandCollapse > should match its modelValue (true) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-up link-primary link-blue" aria-disabled="false">Show less</button>"`;
+
+exports[`ExpandCollapse > should match its variant (blue) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-blue" aria-disabled="false">Show more: blue</button>"`;
+
+exports[`ExpandCollapse > should match its variant (red) snapshot 1`] = `"<button data-id="sds-expand-collapse" type="button" class="link link-cta link-cta-down link-primary link-red" aria-disabled="false">Show more: red</button>"`;

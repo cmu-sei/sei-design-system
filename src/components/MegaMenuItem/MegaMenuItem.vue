@@ -32,7 +32,7 @@
               {{ '\u00a0' /* This is a whitespace character, it will prevent the trailing icon from wrapping */ }}
               <svg
                 v-if="external && type === 'landing-page'"
-                class="-ml-1 relative inline-block mb-0.5 w-6 h-6 group-hover:ml-1 text-red-600 dark:text-red-300 transition-all"
+                class="-ml-1 relative inline-block mb-0.5 w-6 h-6 group-hover:ml-1 group-hover:-mr-1 text-red-600 dark:text-red-300 transition-all"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -55,7 +55,7 @@
               </svg>
               <svg
                 v-if="(cta || type === 'landing-page') && !external"
-                class="inline-block w-4 mb-1 h-4 transition-all text-red-600 dark:text-red-300 group-hover:ml-2"
+                class="inline-block w-4 mb-1 h-4 transition-all text-red-600 dark:text-red-300 group-hover:ml-2 group-hover:-mr-2"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"

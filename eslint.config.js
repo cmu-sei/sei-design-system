@@ -1,11 +1,14 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import { readFile } from "fs/promises";
 import pluginTsEslint from "typescript-eslint";
 import pluginVitest from "eslint-plugin-vitest";
 import pluginVue from "eslint-plugin-vue";
 
 /* Setup Vue 3 globals */
-import globalsVue from './.eslintrc-auto-import.json' with { type: "json" };
+const globalsVue = JSON.parse(
+  await readFile(new URL('./.eslintrc-auto-import.json', import.meta.url))
+)
 
 /* Setup the .gitignore as a usable ignore pattern file */
 import { includeIgnoreFile } from "@eslint/compat";
