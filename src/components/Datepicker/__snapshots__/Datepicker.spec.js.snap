@@ -379,7 +379,7 @@ exports[`Datepicker > should show readonly 1`] = `
       class="flex w-full gap-2"
     >
       <div
-        class="w-full input-group"
+        class="w-full input-group readonly"
       >
         <button
           class="input-group-addon fill-current pointer-events-none text-gray-300 border-gray-200"
@@ -436,7 +436,7 @@ exports[`Datepicker > should show readonly 1`] = `
         </svg>
       </div>
       <div
-        class="w-full input-group"
+        class="w-full input-group readonly"
       >
         <button
           class="input-group-addon fill-current pointer-events-none opacity-50"

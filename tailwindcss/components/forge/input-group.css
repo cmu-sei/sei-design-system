@@ -13,6 +13,10 @@
       @apply text-gray-400 dark:text-gray-600;
     }
   }
+
+  &.readonly {
+    @apply bg-gray-50 dark:bg-gray-950;
+  }
 }
 
 .btn-group, .input-group {

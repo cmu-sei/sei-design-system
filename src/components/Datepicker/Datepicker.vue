@@ -21,6 +21,7 @@
           :class="{
             'input-group-sm': size === 'sm',
             disabled,
+            readonly,
             valid,
             invalid,
           }"
@@ -109,6 +110,7 @@
             :class="{
               'input-group-sm': size === 'sm',
               disabled,
+              readonly,
               valid,
               invalid
             }"
