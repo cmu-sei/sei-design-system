@@ -211,7 +211,9 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850': item.toggled
+            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0': item.toggled,
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight,
+            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
           }"
         >
           <td
@@ -278,7 +280,9 @@
         <tr
           v-if="item.toggled"
           :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
-          class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850"
+          :class="{
+            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': item.toggled
+          }"
         >
           <td :colspan="displayedFieldKeys.length + 1">
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -439,7 +443,11 @@ const props = defineProps({
    * * condensed: p-1 (4px)
    * * default: p-2 (8px)
    */
-  density: { type: String as PropType<TableDensity>, default: undefined }
+  density: { type: String as PropType<TableDensity>, default: undefined },
+  /**
+   * Determines if rows within a table have a hover state (bg-gray-25)
+   */
+  rowHighlight: { type: Boolean, default: undefined }
 })
 
 const emit = defineEmits(['open-drawer'])
