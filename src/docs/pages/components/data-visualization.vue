@@ -281,7 +281,7 @@
           enable-drawer
           row-highlight
         >
-          <template #cell(fruit_employee)="{ item }">
+          <template #cell(fruit_employee)="{ item }: { item: TableItem }">
             <p class="font-bold">
               {{ item.fruit }}
             </p>
@@ -289,7 +289,7 @@
               Stocked by <span class="font-bold">{{ item.employee }}</span>
             </p>
           </template>
-          <template #cell(actions)="{ item }">
+          <template #cell(actions)="{ item }: { item: TableItem }">
             <button @click="edit(item)">
               Edit
             </button>
