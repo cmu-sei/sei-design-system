@@ -148,7 +148,9 @@ const sidebarNavigationItems = computed(() => [
     id: 4,
     title: 'CSS',
     items: [
-      { id: 1, title: 'CSS Components', active: route.fullPath === '/css/css-components', href: '/css/css-components'}
+      { id: 1, title: 'CSS Components', active: route.fullPath === '/css/css-components', href: '/css/css-components'},
+      { id: 2, title: 'Tailwind Typography', active: route.fullPath === '/css/typography', href: '/css/typography'},
+      { id: 3, title: 'Table Prose', active: route.fullPath === '/css/table-prose', href: '/css/table-prose'},
     ]
   }
 ])

@@ -17,12 +17,10 @@
 @import './components/forge/link';
 @import './components/forge/scroll-area';
 @import './components/forge/tab';
+@import './components/forge/table-prose';
 
 /* Plaid components */
 @import './components/plaid/btn';
-
-/* SDS plugins */
-@plugin './plugins/table-prose';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';
