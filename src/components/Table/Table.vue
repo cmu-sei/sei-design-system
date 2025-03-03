@@ -28,7 +28,12 @@
         </slot>
       </template>
     </colgroup>
-    <thead class="border-t dark:border-gray-700">
+    <thead 
+      class="border-t dark:border-gray-700"
+      :class="{
+        'hidden': hideTableHeader
+      }"
+    >
       <tr>
         <th 
           v-if="hasDrawers"
@@ -430,7 +435,11 @@ const props = defineProps({
   /**
    * Determines if rows within a table have a hover state (bg-gray-25)
    */
-  rowHighlight: { type: Boolean, default: undefined }
+  rowHighlight: { type: Boolean, default: undefined },
+  /**
+   * Determines whether to display or hide the table's header
+   */
+  hideHeader: { type: Boolean, default: undefined }
 })
 
 const emit = defineEmits(['open-drawer'])
@@ -481,6 +490,11 @@ const displayedFields = computed(() => {
 
 const displayedFieldKeys = computed(() => {
   return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
+})
+
+const hideTableHeader = computed(() => {
+  if (typeof props.hideHeader === 'undefined') return false
+  return props.hideHeader ? true : false
 })
 
 const paddingClass = computed(() => {
