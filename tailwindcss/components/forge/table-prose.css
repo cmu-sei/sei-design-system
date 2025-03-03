@@ -9,7 +9,7 @@
   }
   
   & thead th {
-    @apply text-gray-600 bg-gray-25 dark:text-gray-400 dark:bg-gray-950 font-bold text-sm align-bottom p-2 relative select-none;
+    @apply text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-950 font-bold text-sm align-middle p-2 relative select-none;
   }
   
   & tbody tr {
@@ -18,6 +18,18 @@
   
   & tbody td {
     @apply align-top p-2 relative;
+  }
+}
+
+/* sm */
+
+@utility table-prose-sm {
+  & thead th {
+    @apply text-sm p-1;
+  }
+
+  & tbody td {
+    @apply p-1;
   }
 }
 
