@@ -286,10 +286,13 @@
           v-if="item.toggled"
           :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
           :class="{
-            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': item.toggled
+            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
           }"
         >
-          <td :colspan="displayedFieldKeys.length + 1">
+          <td 
+            class="has-[.table-prose]:p-0"
+            :colspan="displayedFieldKeys.length + 1"
+          >
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
             <slot
               name="drawer"
@@ -437,7 +440,7 @@ const props = defineProps({
    */
   rowHighlight: { type: Boolean, default: undefined },
   /**
-   * Determines whether to display or hide the table's header
+   * Determines whether to display or hide the table's header: i.e. "thead"
    */
   hideHeader: { type: Boolean, default: undefined }
 })
