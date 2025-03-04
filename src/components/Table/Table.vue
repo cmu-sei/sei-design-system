@@ -445,7 +445,10 @@ const props = defineProps({
   hideHeader: { type: Boolean, default: undefined }
 })
 
-const emit = defineEmits(['open-drawer'])
+const emit = defineEmits([
+  'open-drawer',
+  'open-all-drawers'
+])
 
 const densityTypes = ['comfortable', 'condensed'] as const
 
@@ -590,6 +593,10 @@ const toggleAllDrawers = () => {
     }
     return i
   })
+  /**
+   * Emitted when all drawers are opened. @binding itemsNormalized
+   */
+  emit('open-all-drawers', itemsNormalized.value)
 }
 
 // Helper function to stringify the values of an Object

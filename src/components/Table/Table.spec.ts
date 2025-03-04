@@ -9,7 +9,7 @@ const items = [
     fruit: 'Apple',
     vegetable: 'Broccoli',
     createdDate: new Date('2000-01-01'),
-    lastUpdatedDate: new Date('2014-11-12'),
+    lastUpdatedDate: new Date('2014-11-12')
   },
   {
     id: 2,
@@ -17,8 +17,8 @@ const items = [
     fruit: 'Banana',
     vegetable: 'Carrots',
     createdDate: new Date('2013-02-01'),
-    lastUpdatedDate: new Date('2013-10-10'),
-  },
+    lastUpdatedDate: new Date('2013-10-10')
+  }
 ]
 
 const fields = [
@@ -28,6 +28,14 @@ const fields = [
   { key: 'createdDate', label: 'Created', sortable: true, format: (date: Date) => date.toLocaleDateString() },
   { key: 'lastUpdatedDate', label: 'Last modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
 ]
+
+const slots = {
+  'cell(drawer)': `
+    <template #drawer='{ item }'>
+      <p>{{ item.additionalData.description }}</p>
+    </template>
+  `
+}
 
 describe('Table', () => {
   it('matches default snapshot', () => {
@@ -142,36 +150,72 @@ describe('Table', () => {
   it('matches snapshot with assigned `enableDrawer` prop', () => {
     const props = {
       enableDrawer: true,
-      items: [...items.map((i) => ({ ...i, additionalData: { description: 'Lorem ipsum dolor sit amet' } }))],
+      items: [
+        ...items.map((i) => ({
+          ...i,
+          additionalData: {
+            description: 'Lorem ipsum dolor sit amet'
+          }
+        }))
+      ],
       fields: [...fields]
     }
-    const slots = {
-      'cell(drawer)': `
-        <template #drawer='{ item }'>
-          <p>{{ item.additionalData.description }}</p>
-        </template>
-      `
+    const wrapper = mount(Component, { props, slots })
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('emits when toggling all table drawers', async () => {
+    const props = {
+      items: [
+        ...items.map((i) => ({ 
+          ...i, 
+          enableDrawer: true, 
+          additionalData: { 
+            description: 'Lorem ipsum dolor sit amet' 
+          }
+        }))
+      ],
+      fields: [...fields]
     }
     const wrapper = mount(Component, { props, slots })
+    const button = wrapper.find('table thead tr th:nth-child(1) button')
+    await button.trigger('click')
+    expect(wrapper.emitted()).toHaveProperty('click')
     expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('emits when toggling a table drawer', async () => {
     const props = {
       enableDrawer: true,
-      items: [...items.map((i) => ({ ...i, additionalData: { description: 'Lorem ipsum dolor sit amet' } }))],
+      items: [
+        ...items.map((i) => ({ 
+          ...i,
+          additionalData: {
+            description: 'Lorem ipsum dolor sit amet'
+          }
+        }))
+      ],
       fields: [...fields]
-    }
-    const slots = {
-      'cell(drawer)': `
-        <template #drawer='{ item }'>
-          <p>{{ item.additionalData.description }}</p>
-        </template>
-      `
     }
     const wrapper = mount(Component, { props, slots })
     const button = wrapper.find('table tbody tr:nth-child(1) td:nth-child(1) button')
     await button.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('matches snapshot with assigned `density` prop', async () => {
+    const props = {
+      items: [...items],
+      fields: [...fields],
+      sortBy: 'lastUpdatedDate',
+      density: 'condensed'
+    }
+    const wrapper = mount(Component, { props })
+    expect(wrapper.classes()).toContain('table-prose-sm')
+    expect(wrapper.html()).toMatchSnapshot()
+    await wrapper.setProps({ density: 'comfortable' })
+    expect(wrapper.classes()).toContain('table-prose-lg')
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })
