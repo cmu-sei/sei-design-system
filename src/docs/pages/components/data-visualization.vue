@@ -635,9 +635,9 @@ const items = ref<TableItem[]>([
     lastDelivered: new Date("01/01/2019"),
     createdDate: new Date("04/10/2017"),
     additionalData: {
-      store: 'Foodland',
-      aisle: '5',
-      price: '$2.00'
+      store: "Foodland",
+      aisle: "5",
+      price: "$2.00"
     }
   }
 ])
