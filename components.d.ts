@@ -16,7 +16,6 @@ declare module 'vue' {
     ComponentsPropsTable: typeof import('./src/docs/components/PropsTable.vue')['default']
     ComponentsSlotsTable: typeof import('./src/docs/components/SlotsTable.vue')['default']
     ComponentsTailwindTypography: typeof import('./src/docs/components/TailwindTypography.vue')['default']
-    copy: typeof import('./src/docs/pages/css/typography copy.vue')['default']
     Pages: typeof import('./src/docs/pages/index.vue')['default']
     PagesComponentsButtons: typeof import('./src/docs/pages/components/buttons.vue')['default']
     PagesComponentsContainers: typeof import('./src/docs/pages/components/containers.vue')['default']
