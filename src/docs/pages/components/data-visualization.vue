@@ -295,7 +295,16 @@
             </button>
           </template>
           <template #drawer="{ item }: { item: TableItem }">
-            <ul class="py-2 pl-10 pr-8 rounded-md">
+            <SdsTable
+              v-if="item.nestedRows"
+              :fields="(item.additionalData as AdditionalData).fields"
+              :items="(item.additionalData as AdditionalData).items"
+              row-highlight
+            />
+            <ul
+              v-else
+              class="py-2 pl-10 pr-8 rounded-md"
+            >
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>
@@ -577,6 +586,8 @@ interface AdditionalData {
   store: string;
   aisle: string;
   price: string;
+  fields: TableField[];
+  items: TableItem[];
 }
 
 const items = ref<TableItem[]>([
@@ -634,10 +645,20 @@ const items = ref<TableItem[]>([
     employee: "Matilda Jeffries",
     lastDelivered: new Date("01/01/2019"),
     createdDate: new Date("04/10/2017"),
+    nestedRows: true,
     additionalData: {
-      store: "Foodland",
-      aisle: "5",
-      price: "$2.00"
+      fields: [
+        { key: 'store', label: 'Store', sortable: true },
+        { key: 'aisle', label: 'Aisle', sortable: false },
+        { key: 'price', label: 'Price', sortable: true }
+      ],
+      items: [
+        { key: 51, store: 'Aldi', aisle: '10', price: '$1.50' },
+        { key: 52, store: 'Foodland', aisle: '5', price: '$2.00' },
+        { key: 53, store: 'Giant Eagle', aisle: '13', price: '$3.00' },
+        { key: 54, store: 'Sam\'s Club', aisle: '3', price: '$2.50' },
+        { key: 55, store: 'Walmart', aisle: '1', price: '$2.50' }
+      ]
     }
   }
 ])
