@@ -218,4 +218,16 @@ describe('Table', () => {
     expect(wrapper.classes()).toContain('table-prose-lg')
     expect(wrapper.html()).toMatchSnapshot()
   })
+
+  it('matches snapshot with assigned `hideHeader` prop', async () => {
+    const props = {
+      items: [...items],
+      fields: [...fields],
+      sortBy: 'lastUpdatedDate',
+      hideHeader: true
+    }
+    const wrapper = mount(Component, { props })
+    expect(wrapper.find('[data-id="sds-table"] thead').attributes('hidden')).not.toBeUndefined()
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })
