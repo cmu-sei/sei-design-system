@@ -30,9 +30,7 @@
     </colgroup>
     <thead 
       class="border-t dark:border-gray-700"
-      :class="{
-        'hidden': hideTableHeader
-      }"
+      :hidden="hideTableHeader ? 'hidden' : undefined"
     >
       <tr>
         <th 
