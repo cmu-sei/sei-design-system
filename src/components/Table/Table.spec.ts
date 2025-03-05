@@ -42,7 +42,6 @@ describe('Table', () => {
   }
 
   const props = {
-    id: 'unique-id',
     items: [...items],
     fields: [...fields],
     sortBy: 'lastUpdatedDate'
@@ -199,6 +198,11 @@ describe('Table', () => {
     expect(wrapper.html()).toMatchSnapshot()
     await wrapper.setProps({ density: 'comfortable' })
     expect(wrapper.classes()).toContain('table-prose-lg')
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('matches snapshot with assigned `rowHighlight` prop', async () => {
+    await wrapper.setProps({ ...props, rowHighlight: true })
     expect(wrapper.html()).toMatchSnapshot()
   })
 
