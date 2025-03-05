@@ -1,76 +1,72 @@
-import { describe, expect, it, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import type { TableField, TableItem } from './Table.vue'
+import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { mount, VueWrapper } from '@vue/test-utils'
 import Component from './Table.vue'
 
-const items = [
-  {
-    id: 1,
-    name: 'A title',
-    fruit: 'Apple',
-    vegetable: 'Broccoli',
-    createdDate: new Date('2000-01-01'),
-    lastUpdatedDate: new Date('2014-11-12')
-  },
-  {
-    id: 2,
-    name: 'B title',
-    fruit: 'Banana',
-    vegetable: 'Carrots',
-    createdDate: new Date('2013-02-01'),
-    lastUpdatedDate: new Date('2013-10-10')
-  }
-]
-
-const fields = [
-  { key: 'name', label: 'Title', sortable: true },
-  { key: 'fruit', label: 'Fruit', sortable: true },
-  { key: 'vegetable', label: 'Vegetable', sortable: true },
-  { key: 'createdDate', label: 'Created', sortable: true, format: (date: Date) => date.toLocaleDateString() },
-  { key: 'lastUpdatedDate', label: 'Last modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
-]
-
-const slots = {
-  'cell(drawer)': `
-    <template #drawer='{ item }'>
-      <p>{{ item.additionalData.description }}</p>
-    </template>
-  `
-}
-
 describe('Table', () => {
+  let wrapper: VueWrapper<InstanceType<typeof Component>>
+
+  const items: TableItem[] = [
+    {
+      id: 1,
+      name: 'A title',
+      fruit: 'Apple',
+      vegetable: 'Broccoli',
+      createdDate: new Date('2000-01-01'),
+      lastUpdatedDate: new Date('2014-11-12')
+    },
+    {
+      id: 2,
+      name: 'B title',
+      fruit: 'Banana',
+      vegetable: 'Carrots',
+      createdDate: new Date('2013-02-01'),
+      lastUpdatedDate: new Date('2013-10-10')
+    }
+  ]
+  
+  const fields: TableField[] = [
+    { key: 'name', label: 'Title', sortable: true },
+    { key: 'fruit', label: 'Fruit', sortable: true },
+    { key: 'vegetable', label: 'Vegetable', sortable: true },
+    { key: 'createdDate', label: 'Created', sortable: true, format: (date: Date) => date.toLocaleDateString() },
+    { key: 'lastUpdatedDate', label: 'Last modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
+  ]
+  
+  const slots = {
+    'cell(drawer)': `
+      <template #drawer='{ item }'>
+        <p>{{ item.additionalData.description }}</p>
+      </template>
+    `
+  }
+
+  const props = {
+    id: 'unique-id',
+    items: [...items],
+    fields: [...fields],
+    sortBy: 'lastUpdatedDate'
+  }
+
+  afterAll(() => {
+    wrapper.unmount()
+  })
+
+  beforeEach(() => {
+    wrapper = mount(Component, { props })
+  })
+
   it('matches default snapshot', () => {
-    const props = {}
-    const wrapper = mount(Component, { props })
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('matches snapshot with assigned props', () => {
-    const props = {
-      items: [...items],
-      fields: [...fields],
-      sortBy: 'lastUpdatedDate'
-    }
-    const wrapper = mount(Component, { props })
-    expect(wrapper.html()).toMatchSnapshot()
-  })
-
-  it('matches snapshot with assigned `caption` prop', () => {
-    const props = {
-      items: [...items],
-      fields: [...fields],
-      caption: 'Caption'
-    }
-    const wrapper = mount(Component, { props })
+  it('matches snapshot with assigned `caption` prop', async () => {
+    await wrapper.setProps({ ...props, caption: 'Caption' })
     expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('sorts table by field (column)', async () => {
-    const props = {
-      items: [...items],
-      fields: [...fields],
-      sortBy: 'name'
-    }
-    const wrapper = mount(Component, { props })
+    await wrapper.setProps({ ...props, sortBy: 'name' })
     const button = wrapper.find('table thead tr th:nth-child(2) button') // Fruit
     await button.trigger('click')
     expect(wrapper.html()).toMatchSnapshot()
@@ -78,14 +74,7 @@ describe('Table', () => {
 
   it('sorts table using an external source as its sorting behavior', async () => {
     const sortTableItems = vi.fn()
-    const props = {
-      items: [...items],
-      fields: [...fields],
-      sortBy: 'name',
-      sortDesc: true,
-      onSort: sortTableItems
-    }
-    const wrapper = mount(Component, { props })
+    await wrapper.setProps({ ...props, sortBy: 'name', sortDesc: true, onSort: sortTableItems })
     const button = wrapper.find('table thead tr th:nth-child(3) button') // Vegetable
     await button.trigger('click')
     expect(sortTableItems).toHaveBeenCalledWith({
@@ -113,7 +102,7 @@ describe('Table', () => {
         lastUpdatedDate
       ]
     }
-    const wrapper = mount(Component, { props })
+    await wrapper.setProps({ ...props })
     expect(wrapper.html()).toMatchSnapshot()
   })
 
@@ -134,7 +123,7 @@ describe('Table', () => {
         lastUpdatedDate
       ]
     }
-    const wrapper = mount(Component, { props })
+    await wrapper.setProps({ ...props })
     await wrapper
       .find('table thead tr th:nth-child(2) button:nth-child(1)')
       .trigger('click') // Fruit
@@ -164,26 +153,6 @@ describe('Table', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('emits when toggling all table drawers', async () => {
-    const props = {
-      items: [
-        ...items.map((i) => ({ 
-          ...i, 
-          enableDrawer: true, 
-          additionalData: { 
-            description: 'Lorem ipsum dolor sit amet' 
-          }
-        }))
-      ],
-      fields: [...fields]
-    }
-    const wrapper = mount(Component, { props, slots })
-    const button = wrapper.find('table thead tr th:nth-child(1) button')
-    await button.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('click')
-    expect(wrapper.html()).toMatchSnapshot()
-  })
-
   it('emits when toggling a table drawer', async () => {
     const props = {
       enableDrawer: true,
@@ -204,14 +173,28 @@ describe('Table', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('matches snapshot with assigned `density` prop', async () => {
+  it('emits when toggling all table drawers', async () => {
     const props = {
-      items: [...items],
-      fields: [...fields],
-      sortBy: 'lastUpdatedDate',
-      density: 'condensed'
+      items: [
+        ...items.map((i) => ({ 
+          ...i, 
+          enableDrawer: true, 
+          additionalData: { 
+            description: 'Lorem ipsum dolor sit amet' 
+          }
+        }))
+      ],
+      fields: [...fields]
     }
-    const wrapper = mount(Component, { props })
+    const wrapper = mount(Component, { props, slots })
+    const button = wrapper.find('table thead tr th:nth-child(1) button')
+    await button.trigger('click')
+    expect(wrapper.emitted()).toHaveProperty('click')
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('matches snapshot with assigned `density` prop', async () => {
+    await wrapper.setProps({ ...props, density: 'condensed' })
     expect(wrapper.classes()).toContain('table-prose-sm')
     expect(wrapper.html()).toMatchSnapshot()
     await wrapper.setProps({ density: 'comfortable' })
@@ -220,13 +203,7 @@ describe('Table', () => {
   })
 
   it('matches snapshot with assigned `hideHeader` prop', async () => {
-    const props = {
-      items: [...items],
-      fields: [...fields],
-      sortBy: 'lastUpdatedDate',
-      hideHeader: true
-    }
-    const wrapper = mount(Component, { props })
+    await wrapper.setProps({ ...props, hideHeader: true })
     expect(wrapper.find('[data-id="sds-table"] thead').attributes('hidden')).not.toBeUndefined()
     expect(wrapper.html()).toMatchSnapshot()
   })

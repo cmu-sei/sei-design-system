@@ -222,7 +222,7 @@
           <td
             v-if="hasDrawers"
             class="w-6"
-            :aria-label="hasDrawers ? 'No value' : undefined"
+            :aria-label="hasDrawers ? undefined : 'No value'"
           >
             <button 
               v-if="item.enableDrawer"
