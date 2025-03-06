@@ -79,7 +79,6 @@
                 'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap select-none group"
-              :width="field.width"
             >
               <button
                 v-for="f, index in field.fields"
@@ -269,7 +268,6 @@
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
-              :width="getTableField(key).width"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
@@ -317,7 +315,6 @@ export interface TableField {
   hidden?: boolean
   header?: boolean
   align?: 'left' | 'center' | 'right'
-  width?: number | string
   fields?: TableField[]
   [key: string]: unknown
 }
@@ -527,10 +524,6 @@ const format = (item: TableItem, key: string = '') => {
   return field && field.format ? field.format(item[key]) : item[key]
 }
 
-const getTableField = (key: TableField['key']) => {
-  return props.fields.filter((field) => field.key === key).pop()
-}
-
 const handleSortBy = (field: TableField) => {
   if (props.onSort) {
     props.onSort({
@@ -630,4 +623,9 @@ watch(() => props.sortBy, (value) => {
 watch(() => props.sortDesc, (value) => {
   sortOrder.value = value ? -1 : 1
 })
+
+watch(() => itemsNormalized.value, (value) => {
+  const items = value.filter(({ toggled }) => toggled)
+  isBatchExpanded.value = value.length === items.length
+}, { deep: true, immediate: true })
 </script>
