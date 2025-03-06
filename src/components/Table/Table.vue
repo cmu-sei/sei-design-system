@@ -269,7 +269,7 @@
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
-              :width="displayedField[key].width"
+              :width="getTableField(key).width"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
@@ -525,6 +525,10 @@ const cellElement = (key: string) => {
 const format = (item: TableItem, key: string = '') => {
   const field = flatFields.value.find(i => i.key === key)
   return field && field.format ? field.format(item[key]) : item[key]
+}
+
+const getTableField = (key: TableField['key']) => {
+  return props.fields.filter((field) => field.key === key).pop()
 }
 
 const handleSortBy = (field: TableField) => {

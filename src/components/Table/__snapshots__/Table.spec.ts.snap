@@ -75,7 +75,7 @@ exports[`Table > emits when toggling a table drawer 1`] = `
       </td>
     </tr>
     <tr id="sds-table_tr_1_drawer" class="">
-      <td class="has-[.table-prose]:pl-10 has-[.table-prose]:pr-0 has-[.table-prose]:py-0" colspan="6">
+      <td class="has-[.table-prose]:p-0" colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
     </tr>
@@ -179,7 +179,7 @@ exports[`Table > emits when toggling all table drawers 1`] = `
       </td>
     </tr>
     <tr id="sds-table_tr_1_drawer" class="">
-      <td class="has-[.table-prose]:pl-10 has-[.table-prose]:pr-0 has-[.table-prose]:py-0" colspan="6">
+      <td class="has-[.table-prose]:p-0" colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
     </tr>
@@ -204,7 +204,7 @@ exports[`Table > emits when toggling all table drawers 1`] = `
       </td>
     </tr>
     <tr id="sds-table_tr_2_drawer" class="">
-      <td class="has-[.table-prose]:pl-10 has-[.table-prose]:pr-0 has-[.table-prose]:py-0" colspan="6">
+      <td class="has-[.table-prose]:p-0" colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
     </tr>
