@@ -79,6 +79,7 @@
                 'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap select-none group"
+              :width="field.width"
             >
               <button
                 v-for="f, index in field.fields"
@@ -267,6 +268,7 @@
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
+              :width="item.width"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
@@ -288,7 +290,7 @@
           }"
         >
           <td 
-            class="has-[.table-prose]:p-0"
+            class="has-[.table-prose]:pl-10 has-[.table-prose]:pr-0 has-[.table-prose]:py-0"
             :colspan="displayedFieldKeys.length + 1"
           >
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -308,13 +310,14 @@ export type TableDensity = typeof densityTypes[number]
 
 export interface TableField {
   key: string
-  label?: string | undefined
-  format?: GenericFunctionType | undefined
-  sortable?: boolean | undefined
-  hidden?: boolean | undefined
-  header?: boolean | undefined
-  align?: 'left' | 'center' | 'right' | undefined
-  fields?: TableField[] | undefined
+  label?: string
+  format?: GenericFunctionType
+  sortable?: boolean
+  hidden?: boolean
+  header?: boolean
+  align?: 'left' | 'center' | 'right'
+  width?: number | string
+  fields?: TableField[]
   [key: string]: unknown
 }
 
@@ -322,6 +325,7 @@ export interface TableItem {
   id: number
   enableDrawer?: boolean
   toggled?: boolean
+  width?: number | string
   [key: string]: unknown
 }
 
