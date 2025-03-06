@@ -150,6 +150,7 @@
                 'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap space-x-1 select-none group"
+              :width="field.width"
             >
               <button
                 :class="{
@@ -268,7 +269,7 @@
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
-              :width="item.width"
+              :width="displayedField[key].width"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
               <slot
@@ -290,7 +291,7 @@
           }"
         >
           <td 
-            class="has-[.table-prose]:pl-10 has-[.table-prose]:pr-0 has-[.table-prose]:py-0"
+            class="has-[.table-prose]:p-0"
             :colspan="displayedFieldKeys.length + 1"
           >
             <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -325,7 +326,6 @@ export interface TableItem {
   id: number
   enableDrawer?: boolean
   toggled?: boolean
-  width?: number | string
   [key: string]: unknown
 }
 
