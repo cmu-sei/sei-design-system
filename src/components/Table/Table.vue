@@ -35,7 +35,7 @@
       <tr>
         <th 
           v-if="hasDrawers"
-          class="w-6"
+          class="[.table-prose_&]:px-2 w-10"
         >
           <button 
             class="flex items-center justify-center w-6 h-6"
@@ -221,7 +221,7 @@
         >
           <td
             v-if="hasDrawers"
-            class="w-6"
+            class="[.table-prose_tbody_&]:px-2 w-10"
             :aria-label="hasDrawers ? undefined : 'No value'"
           >
             <button 
