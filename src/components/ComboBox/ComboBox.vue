@@ -173,6 +173,7 @@
                 :key="`${s}_${c}_${cindex}`"
                 ref="dropdownOption" 
                 :href="optionType === 'a' ? c.href : undefined"
+                :to="optionType === 'NuxtLink' ? c.to : undefined"
                 class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                 :class="{
                   'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
@@ -198,6 +199,7 @@
               v-else
               ref="dropdownOption"
               :href="optionType === 'a' ? s.href : undefined"
+              :to="optionType === 'NuxtLink' ? s.to : undefined"
               class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
               :class="{
                 'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
@@ -367,7 +369,7 @@ const props = defineProps({
    * Determines the type, or tag, use for the option/component
    */
   optionType: {
-    type: String as PropType<'a' | 'button'>,
+    type: String as PropType<'a' | 'button' | 'NuxtLink'>,
     default: 'button'
   },
   /**
