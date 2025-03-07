@@ -146,7 +146,6 @@
                 'text-right': field.align === 'right',
               }"
               class="whitespace-nowrap space-x-1 select-none group"
-              :width="field.width"
             >
               <button
                 :class="{
