@@ -64,3 +64,8 @@
   margin-inline: auto;
   padding-inline: 2rem;
 }
+
+/**
+ * Automatically look into the src directory for CSS classes
+ */
+@source '../src';
