@@ -625,7 +625,8 @@ watch(() => props.sortDesc, (value) => {
 })
 
 watch(() => itemsNormalized.value, (value) => {
-  const items = value.filter(({ toggled }) => toggled)
-  isBatchExpanded.value = value.length === items.length
+  const items = value.filter(({ enableDrawer }) => !!enableDrawer)
+  const itemsToggled = items.filter(({ toggled }) => !!toggled)
+  isBatchExpanded.value = items.length === itemsToggled.length
 }, { deep: true, immediate: true })
 </script>
