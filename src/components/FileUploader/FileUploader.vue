@@ -399,7 +399,7 @@ const removeFile = (file: File) => {
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
-  emit('total-files-size', totalFilesSize)
+  emit('total-files-size', totalFilesSize.value)
 }
 
 const removeInvalidFile = (file: File) => {
@@ -418,7 +418,7 @@ const removeInvalidFile = (file: File) => {
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
-  emit('total-files-size', totalFilesSize)
+  emit('total-files-size', totalFilesSize.value)
 }
 
 const findFile = (file: File) => {
@@ -446,7 +446,7 @@ const processFiles = (event: Event) => {
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
   emit('update:model-value', [...fileList.value, ...invalidFileList.value])
-  emit('total-files-size', totalFilesSize)
+  emit('total-files-size', totalFilesSize.value)
 }
 
 const processSingleFile = (file: File) => {
