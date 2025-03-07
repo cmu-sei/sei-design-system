@@ -28,10 +28,7 @@
         </slot>
       </template>
     </colgroup>
-    <thead 
-      class="border-t dark:border-gray-700"
-      :hidden="hideTableHeader"
-    >
+    <thead class="border-t dark:border-gray-700">
       <tr>
         <th 
           v-if="hasDrawers"
@@ -281,24 +278,63 @@
             </component>
           </template>
         </tr>
-        <tr
-          v-if="item.toggled"
-          :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
-          :class="{
-            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
-          }"
-        >
-          <td 
-            class="has-[.table-prose]:p-0"
-            :colspan="displayedFieldKeys.length + 1"
+        <template v-if="item.nestedRows && item.nestedRows.length">
+          <template v-for="rItem, rIndex in item.nestedRows">
+            <tr
+              v-if="item.enableDrawer && item.toggled"
+              :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
+              :key="rIndex"
+              :class="{
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight
+              }"
+            >
+              <td 
+                aria-label="No value"
+                class="[.table-prose_tbody_&]:px-2 w-10"
+              />
+              <template
+                v-for="key in displayedFieldKeys"
+                :key="key"
+              >
+                <component
+                  :is="cellElement(key)"
+                  :class="{
+                    'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
+                    'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
+                    'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
+                  }"
+                >
+                  <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+                  <slot
+                    :name="`cell(${key})`"
+                    :value="format(rItem, key)"
+                    :item="rItem"
+                    :format="(k: string) => format(rItem, k)"
+                  >
+                    {{ format(rItem, key) }}
+                  </slot>
+                </component>
+              </template>
+            </tr>
+          </template>
+        </template>
+        <template v-else>
+          <tr
+            v-if="item.enableDrawer && item.toggled"
+            :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
+            :class="{
+              '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
+            }"
           >
-            <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
-            <slot
-              name="drawer"
-              :item="item"
-            />
-          </td>
-        </tr>
+            <td :colspan="displayedFieldKeys.length + 1">
+              <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
+              <slot
+                name="drawer"
+                :item="item"
+              />
+            </td>
+          </tr>
+        </template>
       </template>
     </tbody>
   </table>
@@ -323,6 +359,7 @@ export interface TableItem {
   id: number
   enableDrawer?: boolean
   toggled?: boolean
+  nestedRows?: TableItem[]
   [key: string]: unknown
 }
 
@@ -437,11 +474,7 @@ const props = defineProps({
   /**
    * Determines if rows within a table have a hover state (bg-gray-25)
    */
-  rowHighlight: { type: Boolean, default: undefined },
-  /**
-   * Determines whether to display or hide the table's header: i.e. "thead"
-   */
-  hideHeader: { type: Boolean, default: undefined }
+  rowHighlight: { type: Boolean, default: undefined }
 })
 
 const emit = defineEmits([
@@ -495,11 +528,6 @@ const displayedFields = computed(() => {
 
 const displayedFieldKeys = computed(() => {
   return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
-})
-
-const hideTableHeader = computed(() => {
-  if (typeof props.hideHeader === 'undefined') return false
-  return props.hideHeader ? true : false
 })
 
 const paddingClass = computed(() => {

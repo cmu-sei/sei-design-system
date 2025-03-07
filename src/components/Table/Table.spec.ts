@@ -205,10 +205,4 @@ describe('Table', () => {
     await wrapper.setProps({ ...props, rowHighlight: true })
     expect(wrapper.html()).toMatchSnapshot()
   })
-
-  it('matches snapshot with assigned `hideHeader` prop', async () => {
-    await wrapper.setProps({ ...props, hideHeader: true })
-    expect(wrapper.find('[data-id="sds-table"] thead').attributes('hidden')).not.toBeUndefined()
-    expect(wrapper.html()).toMatchSnapshot()
-  })
 })
