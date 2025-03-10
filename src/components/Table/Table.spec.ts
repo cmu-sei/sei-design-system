@@ -29,8 +29,8 @@ describe('Table', () => {
     { key: 'name', label: 'Title', sortable: true },
     { key: 'fruit', label: 'Fruit', sortable: true },
     { key: 'vegetable', label: 'Vegetable', sortable: true },
-    { key: 'createdDate', label: 'Created', sortable: true, format: (date: Date) => date.toLocaleDateString() },
-    { key: 'lastUpdatedDate', label: 'Last modified', sortable: true, format: (date: Date) => date.toLocaleDateString() }
+    { key: 'createdDate', label: 'Created', sortable: true, format: (date: Date | null) => date ? date.toLocaleDateString() : null },
+    { key: 'lastUpdatedDate', label: 'Last modified', sortable: true, format: (date: Date | null) => date ? date.toLocaleDateString() : null }
   ]
   
   const slots = {
@@ -149,6 +149,31 @@ describe('Table', () => {
       fields: [...fields]
     }
     const wrapper = mount(Component, { props, slots })
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('matches snapshot with nested rows and columns', async () => {
+    const props = {
+      items: [
+        items[0],
+        {
+          ...items[1],
+          enableDrawer: true,
+          toggled: true,
+          nestedRows: [
+            {
+              name: 'C title',
+              fruit: 'Avocados',
+              vegetable: 'Cauliflower',
+              createdDate: null,
+              lastUpdatedDate: null
+            }
+          ]
+        }
+      ],
+      fields: [...fields]
+    }
+    const wrapper = mount(Component, { props })
     expect(wrapper.html()).toMatchSnapshot()
   })
 
