@@ -58,6 +58,14 @@
   }
 }
 
+.action-btn-primary.action-btn-white {
+  @apply text-gray-800 bg-gray-50;
+  @apply hover:text-black hover:bg-white;
+  &:active, &.active {
+    @apply text-black bg-gray-100;
+  }
+}
+
 .action-btn-secondary {
   @apply text-gray-600 bg-gray-600/0;
   @apply dark:text-gray-400 dark:bg-gray-400/0;
@@ -97,6 +105,15 @@
   }
 }
 
+.action-btn-secondary.action-btn-white {
+  @apply text-gray-100 bg-gray-50/0;
+  @apply border-white/20;
+  @apply hover:text-white hover:bg-gray-50/10;
+  &:active, &.active {
+    @apply text-white bg-gray-50/20;
+  }
+}
+
 .action-btn-ghost {
   @apply text-gray-600 bg-gray-600/0;
   @apply dark:text-gray-400 dark:bg-gray-400/0;
@@ -127,6 +144,14 @@
   &:active, &.active {
     @apply text-blue-600 bg-blue-600/20;
     @apply dark:text-blue-400 dark:bg-transparent;
+  }
+}
+
+.action-btn-ghost.action-btn-white {
+  @apply text-gray-100 bg-gray-50/0;
+  @apply hover:text-white hover:bg-gray-50/10;
+  &:active, &.active {
+    @apply text-white bg-gray-50/20;
   }
 }
 
