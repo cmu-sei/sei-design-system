@@ -3,6 +3,7 @@
     :id="id || 'sds-table'"
     data-id="sds-table"
     class="table-prose dark:table-prose-invert"
+    :class="[paddingClass]"
   >
     <caption v-if="!!$slots.caption || caption">
       <!-- @slot Caption content. This will override the **caption** prop. -->
@@ -29,8 +30,40 @@
     </colgroup>
     <thead class="border-t dark:border-gray-700">
       <tr>
-        <th v-if="enableDrawer">
-          <span class="sr-only">Drawers</span>
+        <th 
+          v-if="hasDrawers"
+          class="[.table-prose_&]:px-2 w-10"
+        >
+          <button 
+            class="flex items-center justify-center w-6 h-6"
+            @click="toggleAllDrawers"
+          >
+            <SdsSvgIcon
+              v-if="isBatchExpanded"
+              aria-hidden="true"
+              class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons['angle-up'].height"
+              :path="icons['angle-up'].path"
+              :view-box="icons['angle-up'].viewBox"
+              :width="icons['angle-up'].width"
+            />
+            <SdsSvgIcon
+              v-else
+              aria-hidden="true"
+              class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+              fill="none"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              :height="icons['angle-down'].height"
+              :path="icons['angle-down'].path"
+              :view-box="icons['angle-down'].viewBox"
+              :width="icons['angle-down'].width"
+            />
+            <span class="sr-only">{{ isBatchExpanded ? 'Collapse all drawers' : 'Expand all drawers' }}</span>
+          </button>
         </th>
         <template v-for="field in displayedFields">
           <template v-if="field.fields">
@@ -178,41 +211,46 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0 dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850': item.id === openDrawerID
+            'dark:[.table-prose_tbody_&]:border-b-0 [.table-prose_tbody_&]:border-b-0 border-b-0': item.toggled,
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight,
+            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
           }"
         >
           <td
-            v-if="enableDrawer"
-            class="cursor-pointer w-4"
+            v-if="hasDrawers"
+            class="[.table-prose_tbody_&]:px-2 w-10"
+            :aria-label="hasDrawers ? undefined : 'No value'"
           >
-            <button @click="toggleDrawer(item)">
-              <svg
-                v-if="item.id === openDrawerID"
-                height="16"
-                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-                viewBox="0 0 512 512"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7L86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                  fill="currentColor"
-                />
-              </svg>
-              <svg
+            <button 
+              v-if="item.enableDrawer"
+              class="flex items-center justify-center w-6 h-6"
+              @click="toggleDrawer(item)"
+            >
+              <SdsSvgIcon
+                v-if="item.toggled"
+                aria-hidden="true"
+                class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['angle-up'].height"
+                :path="icons['angle-up'].path"
+                :view-box="icons['angle-up'].viewBox"
+                :width="icons['angle-up'].width"
+              />
+              <SdsSvgIcon
                 v-else
-                height="16"
-                class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
-                viewBox="0 0 384 512"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-                  fill="currentColor"
-                />
-              </svg>
-              <span class="sr-only">Toggle drawer</span>
+                aria-hidden="true"
+                class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['angle-down'].height"
+                :path="icons['angle-down'].path"
+                :view-box="icons['angle-down'].viewBox"
+                :width="icons['angle-down'].width"
+              />
+              <span class="sr-only">{{ item.toggled ? 'Collapse drawer' : 'Expand drawer' }}</span>
             </button>
           </td>
           <template
@@ -220,11 +258,11 @@
             :key="key"
           >
             <component
-              :is="cellElement(key) as unknown"
+              :is="cellElement(key)"
               :class="{
-                'text-left': displayedFields.find(i => i.key === key)?.align === 'left',
-                'text-center': displayedFields.find(i => i.key === key)?.align === 'center',
-                'text-right': displayedFields.find(i => i.key === key)?.align === 'right'
+                'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
+                'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
+                'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
               }"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -239,39 +277,88 @@
             </component>
           </template>
         </tr>
-        <tr
-          v-if="item.id === openDrawerID"
-          :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
-          class="dark:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:bg-gray-25 bg-gray-25 dark:bg-gray-850"
-        >
-          <td :colspan="displayedFieldKeys.length + 1">
-            <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
-            <slot
-              name="drawer"
-              :item="item"
-            />
-          </td>
-        </tr>
+        <template v-if="item.nestedRows && item.nestedRows.length">
+          <template v-for="rItem, rIndex in item.nestedRows">
+            <tr
+              v-if="item.enableDrawer && item.toggled"
+              :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
+              :key="rIndex"
+              :class="{
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight
+              }"
+            >
+              <td 
+                aria-label="No value"
+                class="[.table-prose_tbody_&]:px-2 w-10"
+              />
+              <template
+                v-for="key in displayedFieldKeys"
+                :key="key"
+              >
+                <component
+                  :is="cellElement(key)"
+                  :class="{
+                    'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
+                    'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
+                    'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
+                  }"
+                >
+                  <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+                  <slot
+                    :name="`cell(${key})`"
+                    :value="format(rItem, key)"
+                    :item="rItem"
+                    :format="(k: string) => format(rItem, k)"
+                  >
+                    {{ format(rItem, key) }}
+                  </slot>
+                </component>
+              </template>
+            </tr>
+          </template>
+        </template>
+        <template v-else>
+          <tr
+            v-if="item.enableDrawer && item.toggled"
+            :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
+            :class="{
+              '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
+            }"
+          >
+            <td :colspan="displayedFieldKeys.length + 1">
+              <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
+              <slot
+                name="drawer"
+                :item="item"
+              />
+            </td>
+          </tr>
+        </template>
       </template>
     </tbody>
   </table>
 </template>
 
 <script setup lang="ts">
+export type TableDensity = typeof densityTypes[number]
+
 export interface TableField {
   key: string
-  label?: string | undefined
-  format?: GenericFunctionType | undefined
-  sortable?: boolean | undefined
-  hidden?: boolean | undefined
-  header?: boolean | undefined
-  align?: 'left' | 'center' | 'right' | undefined
-  fields?: TableField[] | undefined
+  label?: string
+  format?: GenericFunctionType
+  sortable?: boolean
+  hidden?: boolean
+  header?: boolean
+  align?: 'left' | 'center' | 'right'
+  fields?: TableField[]
   [key: string]: unknown
 }
 
 export interface TableItem {
   id: number
+  enableDrawer?: boolean
+  toggled?: boolean
+  nestedRows?: TableItem[]
   [key: string]: unknown
 }
 
@@ -372,14 +459,49 @@ const props = defineProps({
    * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
    * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
    */
-  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined }
+  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined },
+  /**
+   * Determines the table's density, or padding, for the "th", "td" HTML tags
+   * 
+   * Density options:
+   *
+   * * comfortable: p-4 (16px)
+   * * condensed: p-1 (4px)
+   * * default: p-2 (8px)
+   */
+  density: { type: String as PropType<TableDensity>, default: undefined },
+  /**
+   * Determines if rows within a table have a hover state (bg-gray-25)
+   */
+  rowHighlight: { type: Boolean, default: undefined }
 })
 
-const emit = defineEmits(['open-drawer'])
+const emit = defineEmits([
+  'open-drawer',
+  'open-all-drawers'
+])
 
+const densityTypes = ['comfortable', 'condensed'] as const
+
+const icons = Object.freeze({
+  'angle-down': {
+    height: 6,
+    path: 'M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z',
+    viewBox: '0 0 10 6',
+    width: 10
+  },
+  'angle-up': {
+    height: 6,
+    path: 'M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z',
+    viewBox: '0 0 10 6',
+    width: 10
+  }
+} as const)
+
+const isBatchExpanded = ref(false)
+const itemsNormalized = ref<TableItem[]>([])
 const sortField = ref(props.sortBy)
 const sortOrder = ref(props.sortDesc ? -1 : 1)
-const openDrawerID = ref(-1)
 
 const flatFields = computed(() => {
   return props.fields.flatMap(i => {
@@ -391,9 +513,11 @@ const flatFields = computed(() => {
   })
 })
 
+const hasDrawers = computed(() => itemsNormalized.value.filter((i) => i.enableDrawer).length > 0)
+
 const sortedItems = computed(() => {
-  if (props.onSort) return props.items
-  const items = props.items
+  if (props.onSort) return [ ...itemsNormalized.value ]
+  const items = [ ...itemsNormalized.value ]
   return items.sort((a, b) => sortCompare(a, b, sortField.value))
 })
 
@@ -405,25 +529,17 @@ const displayedFieldKeys = computed(() => {
   return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
 })
 
-watch(() => props.sortBy, (value) => {
-  sortField.value = value
-})
-
-watch(() => props.sortDesc, (value) => {
-  sortOrder.value = value ? -1 : 1
-})
-
-const toggleDrawer = (item: TableItem) => {
-  if (openDrawerID.value === item.id) {
-    openDrawerID.value = -1
-  } else {
-    openDrawerID.value = item.id
-    /**
-     * Emitted when a drawer is opened. @binding item
-     */
-    emit('open-drawer', item)
+const paddingClass = computed(() => {
+  const { density } = props
+  switch (density) {
+    case densityTypes[0]: // comfortable
+      return 'table-prose-lg'
+    case densityTypes[1]: // condensed
+      return 'table-prose-sm'
+    default:
+      return ''
   }
-}
+})
 
 const cellElement = (key: string) => {
   const field = props.fields.find((f) => f.key === key)
@@ -448,6 +564,23 @@ const handleSortBy = (field: TableField) => {
   }
 }
 
+const normalizeItems = (items: TableItem[]) => {
+  if (props.enableDrawer) {
+    return [ ...items ].map((i) => ({
+      ...i,
+      enableDrawer: true,
+      toggled: false
+    }))
+  }
+  return [ ...items ].map((i) => {
+    if ('enableDrawer' in i) {
+      if ('toggled' in i) return i
+      return { ...i, toggled: false }
+    }
+    return i
+  })
+}
+
 const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   const a = aRow[key]
   const b = bRow[key]
@@ -463,6 +596,35 @@ const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   }
 }
 
+const toggleDrawer = (item: TableItem) => {
+  const i = itemsNormalized.value.find(({ id }) => id === item.id)
+  if (typeof i === 'undefined') return
+  i.toggled = i.toggled ? false : true
+  if (i.toggled) {
+    /**
+     * Emitted when a drawer is opened. @binding item
+     */
+    emit('open-drawer', i)
+  }
+}
+
+const toggleAllDrawers = () => {
+  isBatchExpanded.value = !isBatchExpanded.value
+  itemsNormalized.value = [ ...itemsNormalized.value ].map((i) => {
+    if (i.enableDrawer) {
+      return {
+        ...i,
+        toggled: isBatchExpanded.value ? true : false
+      }
+    }
+    return i
+  })
+  /**
+   * Emitted when all drawers are opened. @binding itemsNormalized
+   */
+  emit('open-all-drawers', itemsNormalized.value)
+}
+
 // Helper function to stringify the values of an Object
 const toString = (value: TableItem): string => {
   if (value === null || typeof value === 'undefined') {
@@ -476,4 +638,22 @@ const toString = (value: TableItem): string => {
     return String(value)
   }
 }
+
+watch(() => props.items, (value) => {
+  itemsNormalized.value = normalizeItems(value)
+}, { deep: true, immediate: true })
+
+watch(() => props.sortBy, (value) => {
+  sortField.value = value
+})
+
+watch(() => props.sortDesc, (value) => {
+  sortOrder.value = value ? -1 : 1
+})
+
+watch(() => itemsNormalized.value, (value) => {
+  const items = value.filter(({ enableDrawer }) => !!enableDrawer)
+  const itemsToggled = items.filter(({ toggled }) => !!toggled)
+  isBatchExpanded.value = items.length === itemsToggled.length
+}, { deep: true, immediate: true })
 </script>
