@@ -279,8 +279,9 @@
           :fields="fields"
           :items="items"
           enable-drawer
+          row-highlight
         >
-          <template #cell(fruit_employee)="{ item }">
+          <template #cell(fruit_employee)="{ item }: { item: TableItem }">
             <p class="font-bold">
               {{ item.fruit }}
             </p>
@@ -288,13 +289,13 @@
               Stocked by <span class="font-bold">{{ item.employee }}</span>
             </p>
           </template>
-          <template #cell(actions)="{ item }">
+          <template #cell(actions)="{ item }: { item: TableItem }">
             <button @click="edit(item)">
               Edit
             </button>
           </template>
-          <template #drawer="{item}">
-            <ul class="py-2 px-8 bg-gray-25 dark:bg-gray-850 rounded-md">
+          <template #drawer="{ item }: { item: TableItem }">
+            <ul class="py-2 pl-10 pr-8 rounded-md">
               <li>
                 <p class="space-x-1">
                   <span class="font-bold">Store:</span>

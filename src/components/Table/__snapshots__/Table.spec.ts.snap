@@ -1,213 +1,218 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Table > emits when toggling a table drawer 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Expand all drawers</span></button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_1" class="dark:[.table-prose_tbody_&amp;]:border-b-0 [.table-prose_tbody_&amp;]:border-b-0 border-b-0">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <tr id="sds-table_tr_1_drawer" class="">
+      <td colspan="6">
+        <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
+      </td>
+    </tr>
+    <tr id="sds-table_tr_2" class="">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Expand drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > emits when toggling all table drawers 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse all drawers</span></button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_1" class="dark:[.table-prose_tbody_&amp;]:border-b-0 [.table-prose_tbody_&amp;]:border-b-0 border-b-0">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <tr id="sds-table_tr_1_drawer" class="">
+      <td colspan="6">
+        <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
+      </td>
+    </tr>
+    <tr id="sds-table_tr_2" class="dark:[.table-prose_tbody_&amp;]:border-b-0 [.table-prose_tbody_&amp;]:border-b-0 border-b-0">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <tr id="sds-table_tr_2_drawer" class="">
+      <td colspan="6">
+        <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
+      </td>
+    </tr>
+  </tbody>
+</table>"
+`;
+
 exports[`Table > matches default snapshot 1`] = `
-"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <!--v-if-->
-  <colgroup></colgroup>
-  <thead class="border-t dark:border-gray-700">
-    <tr>
-      <!--v-if-->
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>"
-`;
-
-exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
-"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <caption>
-    <!-- @slot Caption content. This will override the **caption** prop. -->Caption
-  </caption>
-  <colgroup>
-    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="">
-  </colgroup>
-  <thead class="border-t dark:border-gray-700">
-    <tr>
-      <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="sds-table_tr_1" class="">
-      <!--v-if-->
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
-      </td>
-    </tr>
-    <!--v-if-->
-    <tr id="sds-table_tr_2" class="">
-      <!--v-if-->
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
-      </td>
-    </tr>
-    <!--v-if-->
-  </tbody>
-</table>"
-`;
-
-exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
-"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <!--v-if-->
-  <colgroup>
-    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="">
-  </colgroup>
-  <thead class="border-t dark:border-gray-700">
-    <tr>
-      <th><span class="sr-only">Drawers</span></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
-            <!--v-if-->
-            <!--v-if-->
-          </svg>
-        </button></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id="sds-table_tr_1" class="">
-      <td class="cursor-pointer w-4"><button><svg height="16" class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
-            <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path>
-          </svg><span class="sr-only">Toggle drawer</span></button></td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
-      </td>
-    </tr>
-    <!--v-if-->
-    <tr id="sds-table_tr_2" class="">
-      <td class="cursor-pointer w-4"><button><svg height="16" class="mt-1 text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" viewBox="0 0 384 512" width="16" xmlns="http://www.w3.org/2000/svg">
-            <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256L105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" fill="currentColor"></path>
-          </svg><span class="sr-only">Toggle drawer</span></button></td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
-      </td>
-    </tr>
-    <!--v-if-->
-  </tbody>
-</table>"
-`;
-
-exports[`Table > matches snapshot with assigned props 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
   <colgroup>
@@ -301,6 +306,484 @@ exports[`Table > matches snapshot with assigned props 1`] = `
 </table>"
 `;
 
+exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <caption>
+    <!-- @slot Caption content. This will override the **caption** prop. -->Caption
+  </caption>
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="null">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <!--v-if-->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <!--v-if-->
+            <path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" fill="currentColor"></path>
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_2" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_1" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with assigned \`density\` prop 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert table-prose-sm">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="null">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <!--v-if-->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <!--v-if-->
+            <path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" fill="currentColor"></path>
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_2" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_1" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with assigned \`density\` prop 2`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert table-prose-lg">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="null">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <!--v-if-->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <!--v-if-->
+            <path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" fill="currentColor"></path>
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_2" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_1" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Expand all drawers</span></button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_1" class="">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Expand drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_2" class="">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Expand drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with assigned \`rowHighlight\` prop 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="null">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <!--v-if-->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <!--v-if-->
+            <path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" fill="currentColor"></path>
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_2" class="hover:[.table-prose_tbody_&amp;]:bg-gray-25 dark:hover:[.table-prose_tbody_&amp;]:bg-gray-850">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_1" class="hover:[.table-prose_tbody_&amp;]:bg-gray-25 dark:hover:[.table-prose_tbody_&amp;]:bg-gray-850">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
 exports[`Table > matches snapshot with multisort columns 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
   <!--v-if-->
@@ -309,7 +792,7 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="">
+    <col class="null">
   </colgroup>
   <thead class="border-t dark:border-gray-700">
     <tr>
@@ -342,31 +825,15 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
           </svg>
         </button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
-            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-100 -mb-3" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
             <!--v-if-->
+            <path d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z" fill="currentColor"></path>
             <!--v-if-->
           </svg>
         </button></th>
     </tr>
   </thead>
   <tbody>
-    <tr id="sds-table_tr_1" class="">
-      <!--v-if-->
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
-      </td>
-      <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
-      </td>
-    </tr>
-    <!--v-if-->
     <tr id="sds-table_tr_2" class="">
       <!--v-if-->
       <td class="">
@@ -383,6 +850,139 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
       </td>
     </tr>
     <!--v-if-->
+    <tr id="sds-table_tr_1" class="">
+      <!--v-if-->
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+</table>"
+`;
+
+exports[`Table > matches snapshot with nested rows and columns 1`] = `
+"<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
+  <!--v-if-->
+  <colgroup>
+    <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class="">
+  </colgroup>
+  <thead class="border-t dark:border-gray-700">
+    <tr>
+      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse all drawers</span></button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2 opacity-0 -mb-1 group-hover:opacity-50" preserveAspectRatio="xMidYMid meet" viewBox="0 0 320 512">
+            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z" fill="currentColor"></path>
+            <!--v-if-->
+            <!--v-if-->
+          </svg>
+        </button></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="sds-table_tr_1" class="">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10">
+        <!--v-if-->
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->A title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Apple
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+      </td>
+    </tr>
+    <!--v-if-->
+    <tr id="sds-table_tr_2" class="dark:[.table-prose_tbody_&amp;]:border-b-0 [.table-prose_tbody_&amp;]:border-b-0 border-b-0">
+      <td class="[.table-prose_tbody_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+            <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
+          </svg><span class="sr-only">Collapse drawer</span></button></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->B title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Banana
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+      </td>
+    </tr>
+    <tr id="sds-table_tr_0" class="">
+      <td aria-label="No value" class="[.table-prose_tbody_&amp;]:px-2 w-10"></td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->C title
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Avocados
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Cauliflower
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+      </td>
+      <td class="">
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
+      </td>
+    </tr>
   </tbody>
 </table>"
 `;
