@@ -213,7 +213,7 @@
           :class="{
             '[.table-prose_tbody_&]:border-b-0 dark:[.table-prose_tbody_&]:border-b-0': item.toggled && !item.nestedRows,
             'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight,
-            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
+            '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': item.toggled && !item.nestedRows
           }"
         >
           <td
@@ -284,7 +284,7 @@
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
-                '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight
               }"
             >
               <td 
@@ -322,7 +322,7 @@
             v-if="item.enableDrawer && item.toggled"
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             :class="{
-              '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': props.rowHighlight && item.toggled
+              '[.table-prose_tbody_&]:bg-gray-25 dark:[.table-prose_tbody_&]:bg-gray-850': item.toggled
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
