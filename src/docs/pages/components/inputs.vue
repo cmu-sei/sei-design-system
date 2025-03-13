@@ -104,7 +104,7 @@
           @enter="comboBox.onEnter"
         >
           <template #customOption="{ label, classList, onClick }">
-            <span 
+            <a 
               :class="classList" 
               @click="onClick"
               v-html="label" 
