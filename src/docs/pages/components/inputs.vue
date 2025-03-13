@@ -103,9 +103,10 @@
           @result="comboBox.onResult"
           @enter="comboBox.onEnter"
         >
-          <template #customOption="{ label, classList, onClick }">
+          <template #customOption="{ label, classList, href, onClick }">
             <a 
               :class="classList" 
+              :href="href"
               @click="onClick"
               v-html="label" 
             />

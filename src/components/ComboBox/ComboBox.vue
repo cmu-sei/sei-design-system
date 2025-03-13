@@ -200,6 +200,7 @@
                   v-else
                   ref="dropdownOption" 
                   name="customOption"
+                  :href="c.href"
                   :class-list="{
                     'flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
                     'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
@@ -251,6 +252,7 @@
                   'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
                 }"
                 :data-active="s.index === arrowCounter"
+                :href="s.href"
                 tabindex="-1"
                 :option="s"
                 :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
