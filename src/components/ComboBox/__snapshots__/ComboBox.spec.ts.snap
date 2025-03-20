@@ -1432,122 +1432,142 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
       
       
       
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/apple"
-      >
-        Apple
-      </a>
-      
-      
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/banana"
-      >
-        Banana
-      </a>
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/apple"
+        >
+          Apple
+        </a>
+        
+      </div>
       
       
       
       
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/kiwi"
-      >
-        Kiwi
-      </a>
-      
-      
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/orange"
-      >
-        Orange
-      </a>
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/banana"
+        >
+          Banana
+        </a>
+        
+      </div>
       
       
       
       
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/mango"
-      >
-        Mango
-      </a>
-      
-      
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/pineapple"
-      >
-        Pineapple
-      </a>
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/kiwi"
+        >
+          Kiwi
+        </a>
+        
+      </div>
       
       
       
       
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/pomegranate"
-      >
-        Pomegranate
-      </a>
-      
-      
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/raspberry"
-      >
-        Raspberry
-      </a>
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/orange"
+        >
+          Orange
+        </a>
+        
+      </div>
       
       
       
       
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/mango"
+        >
+          Mango
+        </a>
+        
+      </div>
       
       
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/strawberry"
-      >
-        Strawberry
-      </a>
+      
+      
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/pineapple"
+        >
+          Pineapple
+        </a>
+        
+      </div>
       
       
       
       
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/pomegranate"
+        >
+          Pomegranate
+        </a>
+        
+      </div>
       
       
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        href="/watermelon"
-      >
-        Watermelon
-      </a>
       
+      
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/raspberry"
+        >
+          Raspberry
+        </a>
+        
+      </div>
+      
+      
+      
+      
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/strawberry"
+        >
+          Strawberry
+        </a>
+        
+      </div>
+      
+      
+      
+      
+      <div>
+        
+        <a
+          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+          href="/watermelon"
+        >
+          Watermelon
+        </a>
+        
+      </div>
       
       
       
