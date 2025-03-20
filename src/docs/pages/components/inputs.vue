@@ -11,6 +11,14 @@
           :options="checkboxGroup.options"
         />
       </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
+        <SdsCheckboxGroup
+          v-model="checkboxGroup.modelValue"
+          :stacked="true"
+          :options="checkboxGroup.options"
+        />
+      </div>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
@@ -32,6 +40,22 @@
         Input
       </h2>
       <div>
+        <SdsInput
+          v-model="input.modelValue"
+          type="text"
+          :disabled="false"
+          :invalid="false"
+          :readonly="false"
+          :required="false"
+          :valid="false"
+          :autofocus="false"
+          :count-characters="false"
+          size="md"
+          placeholder="testing"
+        />
+      </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
         <SdsInput
           v-model="input.modelValue"
           type="text"
@@ -69,12 +93,39 @@
           @update-selected="multiselectUpdateSelected"
         />
       </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
+        <SdsMultiselect
+          v-model="multiselect.modelValue"
+          :selected="multiselect.selected"
+          :options="multiselect.options"
+          :loading="multiselect.loading"
+          :disabled="false"
+          :multiple="true"
+          :required="false"
+          :taggable="false"
+          :valid="false"
+          :invalid="false"
+          default-msg="Search for a fruit such as an apple"
+          placeholder="testing"
+          show-clear
+          @update-selected="multiselectUpdateSelected"
+        />
+      </div>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Radio Group
       </h2>
       <div>
+        <SdsRadioGroup
+          v-model="radioGroup.modelValue"
+          :stacked="true"
+          :options="radioGroup.options"
+        />
+      </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
         <SdsRadioGroup
           v-model="radioGroup.modelValue"
           :stacked="true"
@@ -128,12 +179,34 @@
           :disabled="false"
         />
       </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
+        <SdsSelect
+          v-model="select.modelValue"
+          :options="select.options"
+          size="md"
+          :disabled="false"
+        />
+      </div>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Textarea
       </h2>
       <div>
+        <SdsTextarea
+          v-model="textarea.modelValue"
+          :count-characters="false"
+          :disabled="false"
+          :invalid="false"
+          :maxlength="textarea.maxlength"
+          :readonly="false"
+          :valid="false"
+          :resize="false"
+        />
+      </div>
+      <div class="sds-theme-plaid">
+        <span class="text-sm">Plaid theme</span>
         <SdsTextarea
           v-model="textarea.modelValue"
           :count-characters="false"

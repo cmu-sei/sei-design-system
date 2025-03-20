@@ -19,7 +19,7 @@
   }
 }
 
-.btn-group, .input-group {
+.btn-group:not([class*='sds-theme-'] *), .input-group:not([class*='sds-theme-'] *) {
   @apply relative flex border rounded shadow-inner border-gray-500/50;
 
   &.disabled {

@@ -20,7 +20,10 @@
 @import './components/forge/table-prose';
 
 /* Plaid components */
+@import './components/plaid/action-btn';
 @import './components/plaid/btn';
+@import './components/plaid/form-control';
+@import './components/plaid/input-group';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';
