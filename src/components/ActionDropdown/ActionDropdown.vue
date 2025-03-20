@@ -9,7 +9,7 @@
     :will-close="willClose"
     :class="[block ? 'w-full' : '']"
     :popper-class="{
-      'bg-white absolute border shadow-lg sds-theme-forge:rounded-md sds-theme-plaid:rounded-none bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
+      'bg-white absolute border shadow-lg rounded-md sds-theme-plaid:rounded-none bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true
     }"
@@ -61,7 +61,7 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2 sds-theme-forge:rounded-sm sds-theme-plaid:rounded-none"
+        class="py-2 rounded-sm sds-theme-plaid:rounded-none"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
