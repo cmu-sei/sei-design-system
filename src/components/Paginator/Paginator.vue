@@ -23,17 +23,24 @@
             bg-white
             hover:bg-gray-600/10
             border
-            border-gray-600/20
             rounded
             p-2
             w-[2.125rem]
             h-[2.125rem]
           "
+          :class="{
+            'border-gray-600/10 pointer-events-none': prevDisabled,
+            'border-gray-600/20': !prevDisabled
+          }"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <SdsSvgIcon
             aria-hidden="true"
-            class="text-gray-600 dark:text-gray-400 w-2 h-[0.813rem] relative right-px pointer-events-none"
+            class="w-2 h-[0.813rem] relative right-px pointer-events-none"
+            :class="{
+              'text-gray-600/10 dark:text-gray-400/10': prevDisabled,
+              'text-gray-600 dark:text-gray-400': !prevDisabled
+            }"
             fill="none"
             preserveAspectRatio="xMidYMid meet"
             role="img"
@@ -85,17 +92,24 @@
             bg-white
             hover:bg-gray-600/10
             border
-            border-gray-600/20
             rounded
             p-2
             w-[2.125rem]
             h-[2.125rem]
           "
+          :class="{
+            'border-gray-600/10': nextDisabled,
+            'border-gray-600/20': !nextDisabled
+          }"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
           <SdsSvgIcon
             aria-hidden="true"
-            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem] relative left-px pointer-events-none"
+            class="w-2 h-[0.813rem] relative left-px pointer-events-none"
+            :class="{
+              'text-gray-600/10 dark:text-gray-400/10': nextDisabled,
+              'text-gray-600 dark:text-gray-400': !nextDisabled
+            }"
             fill="none"
             preserveAspectRatio="xMidYMid meet"
             role="img"
