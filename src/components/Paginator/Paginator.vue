@@ -6,10 +6,10 @@
     aria-label="Page navigation"
   >
     <ul
-      class="btn-toolbar"
+      class="btn-toolbar flex space-x-2"
       role="toolbar"
     >
-      <li class="mr-2">
+      <li>
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
@@ -78,7 +78,7 @@
           class="m-auto text-sm font-semibold"
         >Page {{ currentPage.toLocaleString() }}</span>
       </li>
-      <li class="ml-2">
+      <li>
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
