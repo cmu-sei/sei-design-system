@@ -13,30 +13,6 @@
         <button
           :disabled="prevDisabled"
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="First"
-          @click.prevent="goToPage(1, $event)"
-        >
-          <svg
-            class="w-3 h-3 my-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-            />
-          </svg>
-          <span>First</span>
-        </button>
-      </div>
-      <div class="mr-2 btn-group">
-        <button
-          :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
           title="Prev"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -102,30 +78,6 @@
               stroke-linejoin="round"
               stroke-width="3"
               d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
-      <div class="ml-2 btn-group">
-        <button
-          :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Last"
-          @click.prevent="goToPage(totalPages, $event)"
-        >
-          <span>Last</span>
-          <svg
-            class="w-3 h-3 my-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M13 5l7 7-7 7M5 5l7 7-7 7"
             />
           </svg>
         </button>
