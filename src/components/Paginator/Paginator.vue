@@ -17,20 +17,17 @@
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
-          <svg
-            class="w-3 h-3 my-auto"
+          <SdsSvgIcon
+            aria-hidden="true"
+            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem]"
             fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['chevron-left'].height"
+            :path="icons['chevron-left'].path"
+            :view-box="icons['chevron-left'].viewBox"
+            :width="icons['chevron-left'].width"
+          />
         </button>
       </li>
       <li
@@ -68,20 +65,17 @@
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
-          <svg
-            class="w-3 h-3 my-auto"
+          <SdsSvgIcon
+            aria-hidden="true"
+            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem]"
             fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['chevron-right'].height"
+            :path="icons['chevron-right'].path"
+            :view-box="icons['chevron-right'].viewBox"
+            :width="icons['chevron-right'].width"
+          />
         </button>
       </li>
     </ul>
@@ -123,6 +117,21 @@ const props = defineProps({
     default: 5,
   },
 })
+
+const icons = Object.freeze({
+  'chevron-left': {
+    height: 13,
+    path: 'M0.871094 6.14844L6.12109 0.898438C6.44922 0.542969 7.02344 0.542969 7.35156 0.898438C7.70703 1.22656 7.70703 1.80078 7.35156 2.12891L2.73047 6.75L7.35156 11.3984C7.70703 11.7266 7.70703 12.3008 7.35156 12.6289C7.02344 12.9844 6.44922 12.9844 6.12109 12.6289L0.871094 7.37891C0.515625 7.05078 0.515625 6.47656 0.871094 6.14844Z',
+    viewBox: '0 0 8 13',
+    width: 8
+  },
+  'chevron-right': {
+    height: 13,
+    path: 'M7.10156 6.14844C7.45703 6.47656 7.45703 7.05078 7.10156 7.37891L1.85156 12.6289C1.52344 12.9844 0.949219 12.9844 0.621094 12.6289C0.265625 12.3008 0.265625 11.7266 0.621094 11.3984L5.24219 6.75L0.621094 2.12891C0.265625 1.80078 0.265625 1.22656 0.621094 0.898438C0.949219 0.542969 1.52344 0.542969 1.85156 0.898438L7.10156 6.14844Z',
+    viewBox: '0 0 8 13',
+    width: 8
+  }
+} as const)
 
 const emit = defineEmits(['go-to-page'])
 
