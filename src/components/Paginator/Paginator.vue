@@ -12,8 +12,9 @@
       <div class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
+          :aria-disabled="prevDisabled"
+          aria-label="Previous page"
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Prev"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <svg
@@ -30,7 +31,6 @@
               d="M15 19l-7-7 7-7"
             />
           </svg>
-          <span>Prev</span>
         </button>
       </div>
       <div
@@ -61,11 +61,11 @@
       <div class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
+          :aria-disabled="nextDisabled"
+          aria-label="Next page"
           class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Next"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
-          <span>Next</span>
           <svg
             class="w-3 h-3 my-auto"
             fill="none"
