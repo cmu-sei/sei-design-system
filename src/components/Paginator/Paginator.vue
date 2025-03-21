@@ -5,11 +5,11 @@
     class="paginator"
     aria-label="Page navigation"
   >
-    <div
+    <ul
       class="btn-toolbar"
       role="toolbar"
     >
-      <div class="mr-2 btn-group">
+      <li class="mr-2 btn-group">
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
@@ -32,8 +32,8 @@
             />
           </svg>
         </button>
-      </div>
-      <div
+      </li>
+      <li
         v-if="totalPages > 1"
         class="hidden btn-group md:block"
       >
@@ -54,13 +54,13 @@
             {{ page.toLocaleString() }}
           </button>
         </template>
-      </div>
-      <div class="flex md:hidden mx-3">
+      </li>
+      <li class="flex md:hidden mx-3">
         <span
           class="m-auto text-sm font-semibold"
         >Page {{ currentPage.toLocaleString() }}</span>
-      </div>
-      <div class="ml-2 btn-group">
+      </li>
+      <li class="ml-2 btn-group">
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
@@ -83,8 +83,8 @@
             />
           </svg>
         </button>
-      </div>
-    </div>
+      </li>
+    </ul>
   </nav>
 </template>
 
