@@ -9,17 +9,30 @@
       class="btn-toolbar"
       role="toolbar"
     >
-      <li class="mr-2 btn-group">
+      <li class="mr-2">
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
           aria-label="Previous page"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
+          class="
+            flex
+            items-center
+            justify-center
+            grow-0
+            shrink-0
+            bg-white
+            border
+            border-gray-600/20
+            rounded
+            p-2
+            w-[2.125rem]
+            h-[2.125rem]
+          "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <SdsSvgIcon
             aria-hidden="true"
-            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem]"
+            class="text-gray-600 dark:text-gray-400 w-2 h-[0.813rem] relative right-px pointer-events-none"
             fill="none"
             preserveAspectRatio="xMidYMid meet"
             role="img"
@@ -57,17 +70,30 @@
           class="m-auto text-sm font-semibold"
         >Page {{ currentPage.toLocaleString() }}</span>
       </li>
-      <li class="ml-2 btn-group">
+      <li class="ml-2">
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
           aria-label="Next page"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
+          class="
+            flex
+            items-center
+            justify-center
+            grow-0
+            shrink-0
+            bg-white
+            border
+            border-gray-600/20
+            rounded
+            p-2
+            w-[2.125rem]
+            h-[2.125rem]
+          "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
           <SdsSvgIcon
             aria-hidden="true"
-            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem]"
+            class="text-gray-600 dark:text-gray-400 my-auto w-2 h-[0.813rem] relative left-px pointer-events-none"
             fill="none"
             preserveAspectRatio="xMidYMid meet"
             role="img"
