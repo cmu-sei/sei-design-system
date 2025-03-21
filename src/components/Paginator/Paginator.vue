@@ -21,6 +21,7 @@
             grow-0
             shrink-0
             bg-white
+            hover:bg-gray-600/10
             border
             border-gray-600/20
             rounded
@@ -82,6 +83,7 @@
             grow-0
             shrink-0
             bg-white
+            hover:bg-gray-600/10
             border
             border-gray-600/20
             rounded
