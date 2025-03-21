@@ -46,6 +46,8 @@
               'shadow-none border-transparent': page === '...'
             }"
             :disabled="page === '...' || loading || currentPage === page"
+            :aria-disabled="page === '...' || loading || currentPage === page"
+            :aria-label="currentPage === page ? `Current page, page ${page}` : `Go to page ${page}`"
             class="btn btn-ghost btn-sm py-2"
             @click.prevent="goToPage(page, $event)"
           >
