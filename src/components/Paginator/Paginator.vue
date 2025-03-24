@@ -109,7 +109,7 @@
             p-2
           "
           :class="{
-            'border-gray-600/10': nextDisabled,
+            'border-gray-600/10 pointer-events-none': nextDisabled,
             'border-gray-600/20': !nextDisabled
           }"
           @click.prevent="goToPage(currentPage + 1, $event)"
