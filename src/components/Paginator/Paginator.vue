@@ -65,19 +65,24 @@
           "
           class="
             flex items-center justify-center grow-1 shrink-1
-            border rounded
-            text-gray-600 dark:text-gray-400
+            bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
+            border border-gray-600/20 rounded
+            active:shadow-inner active:shadow-blue-600/15
+            text-gray-600 dark:text-gray-400 active:border-blue-600 dark:active:border-blue-400
             font-semibold
             min-w-[2.125rem] h-[2.125rem]
             p-2
           "
           :class="{
-            'pointer-events-none': loading,
-            'bg-gray-600/20 border-gray-600/20': page === currentPage && loading,
-            'bg-transparent hover:bg-gray-600/10 border-0': page === '...',
-            'bg-white border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page !== '...' && page !== currentPage && loading,
-            'bg-white hover:bg-gray-600/10 border-gray-600/20': page !== '...' && page !== currentPage && !loading,
-            'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage && !loading
+            'pointer-events-none': page === currentPage || loading,
+            'border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page === currentPage,
+            'bg-white/0 active:bg-gray-600/10 dark:active:bg-gray-600/10 active:shadow-none border-0': page === '...'
+            // 'pointer-events-none': loading,
+            // 'bg-gray-600/20 border-gray-600/20': page === currentPage && loading,
+            // 'bg-transparent hover:bg-gray-600/10 border-0': page === '...',
+            // 'bg-white border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page !== '...' && page !== currentPage && loading,
+            // 'bg-white hover:bg-gray-600/10 border-gray-600/20': page !== '...' && page !== currentPage && !loading,
+            // 'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage && !loading
           }"
           @click.prevent="goToPage(page, $event)"
         >
