@@ -9,24 +9,17 @@
       class="btn-toolbar flex space-x-2"
       role="toolbar"
     >
-      <li class="flex grow-1 shrink-1">
+      <li class="flex items-center grow-1 shrink-1">
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
           aria-label="Previous page"
           class="
-            flex
-            items-center
-            justify-center
-            grow-0
-            shrink-0
-            bg-white
-            hover:bg-gray-600/10
-            border
-            rounded
+            flex items-center justify-center grow-0 shrink-0
+            bg-white hover:bg-gray-600/10
+            border rounded
+            w-[2.125rem] h-[2.125rem]
             p-2
-            w-[2.125rem]
-            h-[2.125rem]
           "
           :class="{
             'border-gray-600/10 pointer-events-none': prevDisabled,
@@ -58,26 +51,35 @@
         class="hidden md:flex grow-1 shrink-1"
       >
         <button
-          :disabled="page === '...' || loading || page === currentPage"
-          :aria-disabled="page === '...' || loading || page === currentPage"
+          v-if="page.toLocaleString() === '...'"
+          class="
+            text-gray-600 dark:text-gray-400
+            w-[2.125rem] h-[2.125rem]
+          "
+          :class="{
+            'text-gray-600/10 dark:text-gray-400/10': loading
+          }"
+        >
+          {{ page.toLocaleString() }}
+        </button>
+        <button
+          v-else
+          :disabled="page === currentPage || loading"
+          :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
           :aria-label="page === currentPage ? `Current page, page ${page}` : `Go to page ${page}`"
           class="
-            flex
-            items-center
-            justify-center
-            grow-1
-            shrink-1
+            flex items-center justify-center grow-1 shrink-1
+            border rounded
+            text-gray-600 dark:text-gray-400
             font-semibold
-            min-w-[2.125rem]
-            h-[2.125rem]
+            min-w-[2.125rem] h-[2.125rem]
+            p-2
           "
           :class="{
-            'border rounded p-2': page.toLocaleString() !== '...',
-            'p-0': page.toLocaleString() === '...',
-            'bg-white hover:bg-gray-600/10 border-gray-600/20 text-gray-600 dark:text-gray-400': page !== currentPage && page !== '...' && !loading,
-            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== currentPage && page !== '...' && loading,
-            'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15 text-gray-600 dark:text-gray-400': page === currentPage && page.toLocaleString() !== '...'
+            'bg-white hover:bg-gray-600/10 border-gray-600/20 ': page !== currentPage && !loading,
+            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== currentPage && loading,
+            'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage
           }"
           @click.prevent="goToPage(page, $event)"
         >
@@ -117,18 +119,11 @@
           :aria-disabled="nextDisabled"
           aria-label="Next page"
           class="
-            flex
-            items-center
-            justify-center
-            grow-0
-            shrink-0
-            bg-white
-            hover:bg-gray-600/10
-            border
-            rounded
+            flex items-center justify-center grow-0 shrink-0
+            bg-white hover:bg-gray-600/10
+            border rounded
+            w-[2.125rem] h-[2.125rem]
             p-2
-            w-[2.125rem]
-            h-[2.125rem]
           "
           :class="{
             'border-gray-600/10': nextDisabled,
