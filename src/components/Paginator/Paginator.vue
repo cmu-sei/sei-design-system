@@ -31,7 +31,7 @@
             aria-hidden="true"
             class="w-2 h-[0.813rem] relative right-px pointer-events-none"
             :class="{
-              'text-gray-600/10 dark:text-gray-400/10': prevDisabled,
+              'text-gray-600/50 dark:text-gray-400/50': prevDisabled,
               'text-gray-600 dark:text-gray-400': !prevDisabled
             }"
             fill="none"
@@ -71,7 +71,7 @@
             'pointer-events-none': loading,
             'bg-gray-600/20 border-gray-600/20': page === currentPage && loading,
             'bg-transparent hover:bg-gray-600/10 border-0': page === '...',
-            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== '...' && page !== currentPage && loading,
+            'bg-white border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page !== '...' && page !== currentPage && loading,
             'bg-white hover:bg-gray-600/10 border-gray-600/20': page !== '...' && page !== currentPage && !loading,
             'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage && !loading
           }"
@@ -82,7 +82,7 @@
             aria-hidden="true"
             class="pointer-events-none"
             :class="{
-              'text-gray-600/10 dark:text-gray-400/10': loading,
+              'text-gray-600/50 dark:text-gray-400/50': loading,
               'text-gray-600 dark:text-gray-400': !loading
             }"
             fill="none"
@@ -157,7 +157,7 @@
             aria-hidden="true"
             class="w-2 h-[0.813rem] relative left-px pointer-events-none"
             :class="{
-              'text-gray-600/10 dark:text-gray-400/10': nextDisabled,
+              'text-gray-600/50 dark:text-gray-400/50': nextDisabled,
               'text-gray-600 dark:text-gray-400': !nextDisabled
             }"
             fill="none"
