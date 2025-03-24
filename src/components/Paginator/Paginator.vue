@@ -53,7 +53,7 @@
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page.toLocaleString() === '...' ? 'Jump to page' : page === currentPage ? `Current page, page ${page}` : `Go to page ${page}` "
+          :aria-label="page.toLocaleString() === '...' ? 'Jump to page &quot;x&quot;' : page === currentPage ? `Current page, page ${page}` : `Go to page ${page}` "
           class="
             flex items-center justify-center grow-1 shrink-1
             border rounded
@@ -63,7 +63,7 @@
             p-2
           "
           :class="{
-            'border-0': page === '...',
+            'bg-transparent hover:bg-gray-600/10 border-0': page === '...',
             'bg-white hover:bg-gray-600/10 border-gray-600/20 ': page !== '...' && page !== currentPage && !loading,
             'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== '...' && page !== currentPage && loading,
             'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage
