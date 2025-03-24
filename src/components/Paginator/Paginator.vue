@@ -9,7 +9,7 @@
       class="btn-toolbar flex space-x-2"
       role="toolbar"
     >
-      <li>
+      <li class="flex grow-1 shrink-1">
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
@@ -51,7 +51,40 @@
           />
         </button>
       </li>
+
       <li
+        v-for="(page, key) in pageList"
+        :key="key"
+        class="hidden md:flex grow-1 shrink-1"
+      >
+        <button
+          :disabled="page === '...' || loading || page === currentPage"
+          :aria-disabled="page === '...' || loading || page === currentPage"
+          :aria-current="page === currentPage ? 'page' : undefined"
+          :aria-label="page === currentPage ? `Current page, page ${page}` : `Go to page ${page}`"
+          class="
+            flex
+            items-center
+            justify-center
+            grow-1
+            shrink-1
+            font-semibold
+            min-w-[2.125rem]
+            h-[2.125rem]
+          "
+          :class="{
+            'border rounded p-2': page.toLocaleString() !== '...',
+            'p-0': page.toLocaleString() === '...',
+            'bg-white hover:bg-gray-600/10 border-gray-600/20 text-gray-600 dark:text-gray-400': page !== currentPage && page !== '...' && !loading,
+            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== currentPage && page !== '...' && loading,
+            'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15 text-gray-600 dark:text-gray-400': page === currentPage && page.toLocaleString() !== '...'
+          }"
+          @click.prevent="goToPage(page, $event)"
+        >
+          {{ page.toLocaleString() }}
+        </button>
+      </li>
+      <!-- <li
         v-if="totalPages > 1"
         class="hidden btn-group md:block"
       >
@@ -72,13 +105,13 @@
             {{ page.toLocaleString() }}
           </button>
         </template>
+      </li> -->
+      <li class="flex md:hidden">
+        <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          Page {{ currentPage.toLocaleString() }}
+        </span>
       </li>
-      <li class="flex md:hidden mx-3">
-        <span
-          class="m-auto text-sm font-semibold"
-        >Page {{ currentPage.toLocaleString() }}</span>
-      </li>
-      <li>
+      <li class="flex grow-1 shrink-1">
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
