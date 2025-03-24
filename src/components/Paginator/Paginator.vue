@@ -6,10 +6,13 @@
     aria-label="Page navigation"
   >
     <ul
-      class="btn-toolbar flex space-x-2"
-      role="toolbar"
+      class="flex space-x-2"
+      role="list"
     >
-      <li class="flex items-center grow-1 shrink-1">
+      <li 
+        class="flex items-center grow-1 shrink-1"
+        role="listitem"
+      >
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
@@ -48,6 +51,7 @@
         v-for="(page, key) in pageList"
         :key="key"
         class="hidden md:flex grow-1 shrink-1"
+        role="listitem"
       >
         <button
           :disabled="page === currentPage || loading"
@@ -130,12 +134,18 @@
           </template>
         </button>
       </li>
-      <li class="flex md:hidden">
+      <li
+        class="flex md:hidden"
+        role="listitem"
+      >
         <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
           Page {{ currentPage.toLocaleString() }}
         </span>
       </li>
-      <li class="flex grow-1 shrink-1">
+      <li 
+        class="flex grow-1 shrink-1"
+        role="listitem"
+      >
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
