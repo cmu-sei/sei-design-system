@@ -44,30 +44,16 @@
           />
         </button>
       </li>
-
       <li
         v-for="(page, key) in pageList"
         :key="key"
         class="hidden md:flex grow-1 shrink-1"
       >
         <button
-          v-if="page.toLocaleString() === '...'"
-          class="
-            text-gray-600 dark:text-gray-400
-            w-[2.125rem] h-[2.125rem]
-          "
-          :class="{
-            'text-gray-600/10 dark:text-gray-400/10': loading
-          }"
-        >
-          {{ page.toLocaleString() }}
-        </button>
-        <button
-          v-else
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page === currentPage ? `Current page, page ${page}` : `Go to page ${page}`"
+          :aria-label="page.toLocaleString() === '...' ? 'Jump to page' : page === currentPage ? `Current page, page ${page}` : `Go to page ${page}` "
           class="
             flex items-center justify-center grow-1 shrink-1
             border rounded
@@ -77,37 +63,34 @@
             p-2
           "
           :class="{
-            'bg-white hover:bg-gray-600/10 border-gray-600/20 ': page !== currentPage && !loading,
-            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== currentPage && loading,
+            'border-0': page === '...',
+            'bg-white hover:bg-gray-600/10 border-gray-600/20 ': page !== '...' && page !== currentPage && !loading,
+            'bg-white border-gray-600/10 text-gray-600/10 dark:text-gray-400/10': page !== '...' && page !== currentPage && loading,
             'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage
           }"
           @click.prevent="goToPage(page, $event)"
         >
-          {{ page.toLocaleString() }}
+          <SdsSvgIcon
+            v-if="page === '...'"
+            aria-hidden="true"
+            class="pointer-events-none"
+            :class="{
+              'text-gray-600/10 dark:text-gray-400/10': loading,
+              'text-gray-600 dark:text-gray-400': !loading
+            }"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['ellipsis'].height"
+            :path="icons['ellipsis'].path"
+            :view-box="icons['ellipsis'].viewBox"
+            :width="icons['ellipsis'].width"
+          />
+          <template v-else>
+            {{ page.toLocaleString() }}
+          </template>
         </button>
       </li>
-      <!-- <li
-        v-if="totalPages > 1"
-        class="hidden btn-group md:block"
-      >
-        <template
-          v-for="(page, key) in pageList"
-          :key="key"
-        >
-          <button
-            :class="{
-              'shadow-none border-transparent': page === '...'
-            }"
-            :disabled="page === '...' || loading || currentPage === page"
-            :aria-disabled="page === '...' || loading || currentPage === page"
-            :aria-label="currentPage === page ? `Current page, page ${page}` : `Go to page ${page}`"
-            class="btn btn-ghost btn-sm py-2"
-            @click.prevent="goToPage(page, $event)"
-          >
-            {{ page.toLocaleString() }}
-          </button>
-        </template>
-      </li> -->
       <li class="flex md:hidden">
         <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
           Page {{ currentPage.toLocaleString() }}
@@ -200,8 +183,15 @@ const icons = Object.freeze({
     path: 'M7.10156 6.14844C7.45703 6.47656 7.45703 7.05078 7.10156 7.37891L1.85156 12.6289C1.52344 12.9844 0.949219 12.9844 0.621094 12.6289C0.265625 12.3008 0.265625 11.7266 0.621094 11.3984L5.24219 6.75L0.621094 2.12891C0.265625 1.80078 0.265625 1.22656 0.621094 0.898438C0.949219 0.542969 1.52344 0.542969 1.85156 0.898438L7.10156 6.14844Z',
     viewBox: '0 0 8 13',
     width: 8
+  },
+  'ellipsis': {
+    height: 4,
+    path: 'M3.15625 1.75C3.15625 2.59766 2.44531 3.28125 1.625 3.28125C0.777344 3.28125 0.09375 2.59766 0.09375 1.75C0.09375 0.929688 0.777344 0.21875 1.625 0.21875C2.44531 0.21875 3.15625 0.929688 3.15625 1.75ZM7.53125 1.75C7.53125 2.59766 6.82031 3.28125 6 3.28125C5.15234 3.28125 4.46875 2.59766 4.46875 1.75C4.46875 0.929688 5.15234 0.21875 6 0.21875C6.82031 0.21875 7.53125 0.929688 7.53125 1.75ZM8.84375 1.75C8.84375 0.929688 9.52734 0.21875 10.375 0.21875C11.1953 0.21875 11.9062 0.929688 11.9062 1.75C11.9062 2.59766 11.1953 3.28125 10.375 3.28125C9.52734 3.28125 8.84375 2.59766 8.84375 1.75Z',
+    viewBox: '0 0 12 4',
+    width: 12
   }
 } as const)
+
 
 const emit = defineEmits(['go-to-page'])
 
