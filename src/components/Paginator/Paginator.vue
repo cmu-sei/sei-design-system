@@ -20,15 +20,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -148,15 +144,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
