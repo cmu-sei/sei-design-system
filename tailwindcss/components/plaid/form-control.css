@@ -1,7 +1,3 @@
-input[type='checkbox']:not([class*='sds-theme-'] *) {
-  @apply rounded;
-}
-
 input[type='checkbox'], input[type='radio'] {
   @apply bg-white dark:bg-gray-900 text-blue-500 checked:bg-blue-500 dark:checked:bg-blue-700;
   @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300;
@@ -19,8 +15,8 @@ input[type='checkbox'], input[type='radio'], .form-control {
   }
 }
 
-.form-control:not([class*='sds-theme-'] *) {
-  @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300 placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:italic min-w-0 py-2 px-3 [&.form-control-sm]:py-1 [&.form-control-sm]:px-2 [&.form-control-sm]:text-sm text-base shadow-inner text-gray-900 bg-white rounded w-full dark:text-gray-50 dark:bg-gray-900;
+.sds-theme-plaid .form-control {
+  @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300 placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:italic min-w-0 py-2 px-3 [&.form-control-sm]:py-1 [&.form-control-sm]:px-2 [&.form-control-sm]:text-sm text-base shadow-inner text-gray-900 bg-white w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 select:not([multiple]).form-control option {

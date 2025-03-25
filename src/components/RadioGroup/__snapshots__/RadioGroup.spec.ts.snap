@@ -11,7 +11,7 @@ exports[`RadioGroup > should match its default snapshot 1`] = `
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -33,7 +33,7 @@ exports[`RadioGroup > should match its default snapshot 1`] = `
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -55,7 +55,7 @@ exports[`RadioGroup > should match its default snapshot 1`] = `
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"
@@ -88,7 +88,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       disabled=""
       id="v-0__option_0"
       name="v-0__option"
@@ -111,7 +111,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       disabled=""
       id="v-0__option_1"
       name="v-0__option"
@@ -134,7 +134,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       disabled=""
       id="v-0__option_2"
       name="v-0__option"
@@ -168,7 +168,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`invalid\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 invalid"
+      class="relative top-1 sds-theme-plaid:rounded-none invalid"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -190,7 +190,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`invalid\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 invalid"
+      class="relative top-1 sds-theme-plaid:rounded-none invalid"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -212,7 +212,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`invalid\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 invalid"
+      class="relative top-1 sds-theme-plaid:rounded-none invalid"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"
@@ -245,7 +245,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`name\` prop 1`] 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_0"
       name="options-group"
       type="radio"
@@ -267,7 +267,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`name\` prop 1`] 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_1"
       name="options-group"
       type="radio"
@@ -289,7 +289,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`name\` prop 1`] 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_2"
       name="options-group"
       type="radio"
@@ -322,7 +322,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -344,7 +344,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -366,7 +366,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"
@@ -399,7 +399,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`stacked\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -421,7 +421,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`stacked\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -443,7 +443,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`stacked\` prop 1
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 sds-theme-plaid:rounded-none"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"
@@ -476,7 +476,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`valid\` prop 1`]
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 valid"
+      class="relative top-1 sds-theme-plaid:rounded-none valid"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -498,7 +498,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`valid\` prop 1`]
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 valid"
+      class="relative top-1 sds-theme-plaid:rounded-none valid"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -520,7 +520,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`valid\` prop 1`]
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1 valid"
+      class="relative top-1 sds-theme-plaid:rounded-none valid"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"

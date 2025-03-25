@@ -4,7 +4,7 @@
     class="w-full"
     :placement="placement"
     :disabled="disabled"
-    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-md w-auto ${zIndexClass}`"
+    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-md sds-theme-plaid:rounded-none w-auto ${zIndexClass}`"
     arrow-class="absolute bg-white border dark:bg-gray-850 dark:border-gray-700 w-3 h-3 rotate-45"
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"

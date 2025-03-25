@@ -25,6 +25,16 @@
           mode="date"
           size="md"
         />
+        <div class="sds-theme-plaid">
+          <span class="text-sm">Plaid theme</span>
+          <SdsDatepicker
+            v-model="singleModelValue"
+            :min="min"
+            placement="right"
+            mode="date"
+            size="md"
+          />
+        </div>
         <SdsDatepicker
           v-model="modelValue"
           :min="min"

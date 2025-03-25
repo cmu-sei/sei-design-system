@@ -19,8 +19,8 @@
   }
 }
 
-.btn-group:not([class*='sds-theme-'] *), .input-group:not([class*='sds-theme-'] *) {
-  @apply relative flex border rounded shadow-inner border-gray-500/50;
+.sds-theme-plaid .btn-group, .input-group {
+  @apply relative flex border shadow-inner border-gray-500/50;
 
   &.disabled {
     @apply border-gray-100 dark:border-gray-850;
