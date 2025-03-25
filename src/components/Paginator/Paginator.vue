@@ -19,15 +19,13 @@
           aria-label="Previous page"
           class="
             flex items-center justify-center grow-0 shrink-0
-            bg-white hover:bg-gray-600/10
+            bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
             border rounded
-            w-[2.125rem] h-[2.125rem]
-            p-2
+            border-gray-600/20 active:border-blue-600 dark:active:border-blue-400 disabled:border-gray-600/10
+            active:shadow-inner active:shadow-blue-600/15
+            w-[2.125rem] h-[2.125rem] p-2
+            disabled:pointer-events-none
           "
-          :class="{
-            'border-gray-600/10 pointer-events-none': prevDisabled,
-            'border-gray-600/20': !prevDisabled
-          }"
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
           <SdsSvgIcon
@@ -95,14 +93,12 @@
           class="
             flex items-center justify-center grow-1 shrink-1
             bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
-            border rounded border-gray-600/20 disabled:border-gray-600/10
+            border rounded
+            border-gray-600/20 disabled:border-gray-600/10 active:border-blue-600 dark:active:border-blue-400
             active:shadow-inner active:shadow-blue-600/15
-            text-gray-600 dark:text-gray-400
-            active:border-blue-600 dark:active:border-blue-400
-            disabled:text-gray-600/50 dark:disabled:text-gray-400/50
+            text-gray-600 dark:text-gray-400 disabled:text-gray-600/50 dark:disabled:text-gray-400/50
             font-semibold
-            min-w-[2.125rem] h-[2.125rem]
-            p-2
+            min-w-[2.125rem] h-[2.125rem] p-2
             disabled:pointer-events-none
           "
           :class="{
@@ -163,15 +159,13 @@
           aria-label="Next page"
           class="
             flex items-center justify-center grow-0 shrink-0
-            bg-white hover:bg-gray-600/10
+            bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
             border rounded
-            w-[2.125rem] h-[2.125rem]
-            p-2
+            border-gray-600/20 active:border-blue-600 dark:active:border-blue-400 disabled:border-gray-600/10
+            active:shadow-inner active:shadow-blue-600/15
+            w-[2.125rem] h-[2.125rem] p-2
+            disabled:pointer-events-none
           "
-          :class="{
-            'border-gray-600/10 pointer-events-none': nextDisabled,
-            'border-gray-600/20': !nextDisabled
-          }"
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
           <SdsSvgIcon
