@@ -97,17 +97,19 @@
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
             border-gray-600/20 dark:border-gray-600/20
-            disabled:border-gray-600/10 dark:disabled:border-gray-600/10
             text-gray-600 dark:text-gray-400
-            disabled:text-gray-600/50 dark:disabled:text-gray-400/50
             font-semibold
             min-w-[2.125rem] h-[2.125rem] p-2
           "
           :class="{
-            'bg-blue-50/100 dark:bg-blue-900/100': page === currentPage && !loading,
-            'disabled:border-blue-600/100 dark:disabled:border-blue-400/100': page === currentPage && !loading,
+            // Active state
+            'disabled:bg-blue-50 dark:disabled:bg-blue-900': page === currentPage && !loading,
+            'disabled:border-blue-600 dark:disabled:border-blue-400': page === currentPage && !loading,
             'shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
-            'disabled:text-gray-600/100 dark:disabled:text-gray-400/100': page === currentPage && !loading,
+            // Disabled state
+            'disabled:text-gray-600/50 dark:disabled:text-gray-400/50': page !== currentPage && loading,
+            'disabled:border-gray-600/10 dark:disabled:border-gray-600/10': page !== currentPage && loading,
+            // Loading/Pending state
             'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20': page === currentPage && loading,
             'disabled:border-gray-600/20 dark:disabled:border-gray-400/20': page === currentPage && loading
           }"
