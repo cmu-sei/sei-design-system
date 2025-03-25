@@ -90,7 +90,7 @@
                   <ActionButton
                     kind="ghost"
                     size="sm"
-                    class="text-gray-100 dark:text-gray-900"
+                    variant="white"
                     @click="open = false"
                   >
                     <svg
