@@ -20,15 +20,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -55,52 +51,35 @@
         class="hidden md:flex grow-1 shrink-1"
         role="listitem"
       >
-        <SdsActionDropdown
+        <button
           v-if="page.toLocaleString() === '...'"
-          placement="bottom"
-          auto
-          hide-arrow
+          :disabled="loading"
+          :aria-disabled="loading"
+          :aria-label="`Go to page ${page}`"
+          class="
+            flex items-center justify-center grow-1 shrink-1
+            bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
+            rounded
+            w-[2.125rem] h-[2.125rem]
+            disabled:pointer-events-none
+          "
         >
-          <template #trigger="{ isOpen, toggle }: { isOpen: boolean; toggle: GenericFunctionType; }">
-            <button
-              :disabled="loading"
-              :aria-disabled="loading"
-              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } &quot;Go to page&quot; menu`"
-              class="
-                flex items-center justify-center grow-1 shrink-1
-                bg-transparent hover:bg-gray-600/10 dark:hover:bg-gray-400/10 rounded
-                w-[2.125rem] h-[2.125rem]
-                disabled:pointer-events-none
-              "
-              :class="{
-                'bg-gray-700/10 dark:bg-gray-300/10': isOpen
-              }"
-              @click="toggle"
-            >
-              <SdsSvgIcon
-                aria-hidden="true"
-                class="pointer-events-none"
-                :class="{
-                  'text-gray-600/50 dark:text-gray-400/50': loading,
-                  'text-gray-600 dark:text-gray-400': !loading
-                }"
-                fill="none"
-                preserveAspectRatio="xMidYMid meet"
-                role="img"
-                :height="icons['ellipsis'].height"
-                :path="icons['ellipsis'].path"
-                :view-box="icons['ellipsis'].viewBox"
-                :width="icons['ellipsis'].width"
-              />
-            </button>
-          </template>
-          <div
-            class="px-4"
-            role="menuitem"
-          >
-            <span class="block text-sm">Go to [XXX] page</span>
-          </div>
-        </SdsActionDropdown>
+          <SdsSvgIcon
+            aria-hidden="true"
+            class="pointer-events-none"
+            :class="{
+              'text-gray-600/50 dark:text-gray-400/50': loading,
+              'text-gray-600 dark:text-gray-400': !loading
+            }"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['ellipsis'].height"
+            :path="icons['ellipsis'].path"
+            :view-box="icons['ellipsis'].viewBox"
+            :width="icons['ellipsis'].width"
+          />
+        </button>
         <button
           v-else
           :disabled="page === currentPage || loading"
@@ -114,25 +93,28 @@
           "
           class="
             flex items-center justify-center grow-1 shrink-1
-            bg-white dark:bg-gray-950 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
-            border-gray-600/20 dark:border-gray-600/20 disabled:border-gray-600/10 dark:disabled:border-gray-600/10
-            active:border-blue-600 dark:active:border-blue-400
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
+            border-gray-600/20 dark:border-gray-600/20
+            disabled:border-gray-600/10 dark:disabled:border-gray-600/10
             text-gray-600 dark:text-gray-400
             disabled:text-gray-600/50 dark:disabled:text-gray-400/50
             font-semibold
             min-w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           :class="{
-            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20 disabled:border-gray-600/20 dark:disabled:border-gray-400/20': loading
+            'bg-blue-50/100 dark:bg-blue-900/100': page === currentPage && !loading,
+            'disabled:border-blue-600/100 dark:disabled:border-blue-400/100': page === currentPage && !loading,
+            'shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
+            'disabled:text-gray-600/100 dark:disabled:text-gray-400/100': page === currentPage && !loading,
+            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20': page === currentPage && loading,
+            'disabled:border-gray-600/20 dark:disabled:border-gray-400/20': page === currentPage && loading
           }"
           @click.prevent="goToPage(page, $event)"
         >
           <span 
-            v-if="loading"
+            v-if="page === currentPage && loading"
             class="flex relative h-full w-full"
           >
             <span class="absolute inset-0 flex items-center justify-center">
@@ -166,15 +148,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
