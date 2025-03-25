@@ -1368,7 +1368,7 @@
         <sds-action-dropdown
           title="Dropdown"
           kind="primary"
-          variant="red"
+          variant="white"
         >
           <sds-dropdown-header>
             <p>Signed in as</p>

@@ -103,7 +103,7 @@ const props = defineProps({
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue'>, default: 'gray' },
+  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
   /**
    * The z-index for the popover.
    */
@@ -271,6 +271,8 @@ const variantClass = computed(() => {
       return 'action-btn-red'
     case 'blue':
       return 'action-btn-blue'
+    case 'white':
+        return 'action-btn-white'
     default:
       return ''
   }
