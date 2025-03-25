@@ -88,7 +88,7 @@
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page === currentPage && loading ?
+          :aria-label="loading ?
             'Loading' :
             page === currentPage ? 
               `Current page, page ${page}` : 
@@ -237,7 +237,6 @@ const icons = Object.freeze({
     width: 12
   }
 } as const)
-
 
 const emit = defineEmits(['go-to-page'])
 
