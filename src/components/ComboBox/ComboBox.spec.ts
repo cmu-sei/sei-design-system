@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import Component from './ComboBox.vue'
+import { computed } from 'vue'
 
 describe('ComboBox', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
@@ -16,6 +17,19 @@ describe('ComboBox', () => {
     'Raspberry',
     'Strawberry',
     'Watermelon'
+  ]
+
+  const suggestionsATag = [
+    { label: 'Apple', href: '/apple' },
+    { label: 'Banana', href: '/banana', },
+    { label: 'Kiwi', href: '/kiwi' },
+    { label: 'Orange', href: '/orange' },
+    { label: 'Mango', href: '/mango' },
+    { label: 'Pineapple', href: '/pineapple' },
+    { label: 'Pomegranate', href: '/pomegranate' },
+    { label: 'Raspberry', href: '/raspberry' },
+    { label: 'Strawberry', href: '/strawberry' },
+    { label: 'Watermelon', href: '/watermelon' }
   ]
 
   afterEach(() => {
@@ -107,6 +121,69 @@ describe('ComboBox', () => {
     await wrapper.find('input[type="text"]').trigger('input')
 
     await wrapper.find('input[type="text"]').trigger('keyup', { key: 'Enter' })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `optionType` prop as `a`', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      global: {
+        stubs: {
+          transition: false
+        },
+        mocks: {
+          dropdownIsOpen: computed(() => true),
+          allSuggestions: suggestions
+        }
+      },
+      props: {
+        optionType: 'a',
+        suggestions: suggestionsATag
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `optionType` prop as `button`', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      global: {
+        stubs: {
+          transition: false
+        },
+        mocks: {
+          dropdownIsOpen: computed(() => true),
+          allSuggestions: suggestions
+        }
+      },
+      props: {
+        optionType: 'button',
+        suggestions
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `optionType` prop as `custom`', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      global: {
+        mocks: {
+          dropdownIsOpen: computed(() => true),
+          allSuggestions: suggestions
+        }
+      },
+      props: {
+        optionType: 'custom',
+        suggestions: suggestionsATag
+      },
+      slots: {
+        customOption: '<a :class="classList" :href="href" @click="onClick" v-html="label" />'
+      }
+    })
+    await wrapper.vm.$nextTick()
     expect(wrapper.element).toMatchSnapshot()
   })
 })
