@@ -177,6 +177,22 @@ exports[`ActionButton > should match its kind ghost, variant red snapshot 1`] = 
 </button>
 `;
 
+exports[`ActionButton > should match its kind ghost, variant white snapshot 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-ghost action-btn-white action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  
+  <!-- @slot ActionButton content. -->
+  
+  Action Button
+  
+  
+</button>
+`;
+
 exports[`ActionButton > should match its kind primary, variant blue snapshot 1`] = `
 <button
   aria-disabled="false"
@@ -193,10 +209,42 @@ exports[`ActionButton > should match its kind primary, variant blue snapshot 1`]
 </button>
 `;
 
+exports[`ActionButton > should match its kind primary, variant white snapshot 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-white action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  
+  <!-- @slot ActionButton content. -->
+  
+  Action Button
+  
+  
+</button>
+`;
+
 exports[`ActionButton > should match its kind secondary, variant gray snapshot 1`] = `
 <button
   aria-disabled="false"
   class="action-btn action-btn-secondary action-btn-gray action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  
+  <!-- @slot ActionButton content. -->
+  
+  Action Button
+  
+  
+</button>
+`;
+
+exports[`ActionButton > should match its kind secondary, variant white snapshot 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-secondary action-btn-white action-btn-sm"
   data-id="sds-action-button"
   type="button"
 >
