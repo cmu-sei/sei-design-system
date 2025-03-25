@@ -58,7 +58,8 @@
           :aria-label="`Go to page ${page}`"
           class="
             flex items-center justify-center grow-1 shrink-1
-            bg-transparent hover:bg-gray-600/10 dark:hover:bg-gray-400/10 rounded
+            bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
+            rounded
             w-[2.125rem] h-[2.125rem]
             disabled:pointer-events-none
           "
@@ -92,25 +93,28 @@
           "
           class="
             flex items-center justify-center grow-1 shrink-1
-            bg-white dark:bg-gray-950 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
             border rounded
-            border-gray-600/20 dark:border-gray-600/20 disabled:border-gray-600/10 dark:disabled:border-gray-600/10
-            active:border-blue-600 dark:active:border-blue-400
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
+            border-gray-600/20 dark:border-gray-600/20
+            disabled:border-gray-600/10 dark:disabled:border-gray-600/10
             text-gray-600 dark:text-gray-400
             disabled:text-gray-600/50 dark:disabled:text-gray-400/50
             font-semibold
             min-w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           :class="{
-            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20 disabled:border-gray-600/20 dark:disabled:border-gray-400/20': loading
+            'bg-blue-50/100 dark:bg-blue-900/100': page === currentPage && !loading,
+            'disabled:border-blue-600/100 dark:disabled:border-blue-400/100': page === currentPage && !loading,
+            'shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
+            'disabled:text-gray-600/100 dark:disabled:text-gray-400/100': page === currentPage && !loading,
+            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20': page === currentPage && loading,
+            'disabled:border-gray-600/20 dark:disabled:border-gray-400/20': page === currentPage && loading
           }"
           @click.prevent="goToPage(page, $event)"
         >
           <span 
-            v-if="loading"
+            v-if="page === currentPage && loading"
             class="flex relative h-full w-full"
           >
             <span class="absolute inset-0 flex items-center justify-center">
