@@ -55,34 +55,52 @@
         class="hidden md:flex grow-1 shrink-1"
         role="listitem"
       >
-        <button
+        <SdsActionDropdown
           v-if="page.toLocaleString() === '...'"
-          :disabled="loading"
-          :aria-disabled="loading"
-          :aria-label="`Go to page ${page}`"
-          class="
-            flex items-center justify-center grow-1 shrink-1
-            bg-transparent hover:bg-gray-600/10 dark:hover:bg-gray-400/10 rounded
-            w-[2.125rem] h-[2.125rem]
-            disabled:pointer-events-none
-          "
+          placement="bottom"
+          auto
+          hide-arrow
         >
-          <SdsSvgIcon
-            aria-hidden="true"
-            class="pointer-events-none"
-            :class="{
-              'text-gray-600/50 dark:text-gray-400/50': loading,
-              'text-gray-600 dark:text-gray-400': !loading
-            }"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons['ellipsis'].height"
-            :path="icons['ellipsis'].path"
-            :view-box="icons['ellipsis'].viewBox"
-            :width="icons['ellipsis'].width"
-          />
-        </button>
+          <template #trigger="{ isOpen, toggle }: { isOpen: boolean; toggle: GenericFunctionType; }">
+            <button
+              :disabled="loading"
+              :aria-disabled="loading"
+              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } &quot;Go to page&quot; menu`"
+              class="
+                flex items-center justify-center grow-1 shrink-1
+                bg-transparent hover:bg-gray-600/10 dark:hover:bg-gray-400/10 rounded
+                w-[2.125rem] h-[2.125rem]
+                disabled:pointer-events-none
+              "
+              :class="{
+                'bg-gray-700/10 dark:bg-gray-300/10': isOpen
+              }"
+              @click="toggle"
+            >
+              <SdsSvgIcon
+                aria-hidden="true"
+                class="pointer-events-none"
+                :class="{
+                  'text-gray-600/50 dark:text-gray-400/50': loading,
+                  'text-gray-600 dark:text-gray-400': !loading
+                }"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['ellipsis'].height"
+                :path="icons['ellipsis'].path"
+                :view-box="icons['ellipsis'].viewBox"
+                :width="icons['ellipsis'].width"
+              />
+            </button>
+          </template>
+          <div
+            class="px-4"
+            role="menuitem"
+          >
+            <span class="block text-sm">Go to [XXX] page</span>
+          </div>
+        </SdsActionDropdown>
         <button
           v-else
           :disabled="page === currentPage || loading"

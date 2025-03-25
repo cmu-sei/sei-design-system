@@ -69,6 +69,7 @@
           'py-2 rounded',
           type === 'dark' ? 'dropdown-dark bg-gray-950': ''
         ]"
+        role="menu"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
