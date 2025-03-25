@@ -54,40 +54,18 @@
         role="listitem"
       >
         <button
-          :disabled="page === currentPage || loading"
-          :aria-disabled="page === currentPage || loading"
-          :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page === currentPage && loading ?
-            'Loading' :
-            page === currentPage ? 
-              `Current page, page ${page}` : 
-              `Go to page ${page}`
-          "
+          v-if="page.toLocaleString() === '...'"
+          :disabled="loading"
+          :aria-disabled="loading"
+          :aria-label="`Go to page ${page}`"
           class="
             flex items-center justify-center grow-1 shrink-1
-            bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
-            border border-gray-600/20 rounded
-            active:shadow-inner active:shadow-blue-600/15
-            text-gray-600 dark:text-gray-400 active:border-blue-600 dark:active:border-blue-400
-            font-semibold
-            min-w-[2.125rem] h-[2.125rem]
-            p-2
+            bg-transparent hover:bg-gray-600/10 rounded
+            w-[2.125rem] h-[2.125rem]
+            disabled:pointer-events-none
           "
-          :class="{
-            'pointer-events-none': page === currentPage || loading,
-            'border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page === currentPage,
-            'bg-white/0 active:bg-gray-600/10 dark:active:bg-gray-600/10 active:shadow-none border-0': page === '...'
-            // 'pointer-events-none': loading,
-            // 'bg-gray-600/20 border-gray-600/20': page === currentPage && loading,
-            // 'bg-transparent hover:bg-gray-600/10 border-0': page === '...',
-            // 'bg-white border-gray-600/10 text-gray-600/50 dark:text-gray-400/50': page !== '...' && page !== currentPage && loading,
-            // 'bg-white hover:bg-gray-600/10 border-gray-600/20': page !== '...' && page !== currentPage && !loading,
-            // 'bg-blue-50 dark:bg-blue-900 border-blue-600 dark:border-blue-400 shadow-inner shadow-blue-600/15': page === currentPage && !loading
-          }"
-          @click.prevent="goToPage(page, $event)"
         >
           <SdsSvgIcon
-            v-if="page === '...'"
             aria-hidden="true"
             class="pointer-events-none"
             :class="{
@@ -102,40 +80,68 @@
             :view-box="icons['ellipsis'].viewBox"
             :width="icons['ellipsis'].width"
           />
-          <template v-else>
-            <span 
-              v-if="page === currentPage && loading"
-              class="flex relative h-full w-full"
-            >
-              <span class="absolute inset-0 flex items-center justify-center">
-                <svg
-                  data-id="spinner"
-                  class="animate-spin text-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  role="graphics-symbol"
-                >
-                  <title>Loading</title>
-                  <circle
-                    class="opacity-25 fill-transparent"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  />
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
-                </svg>
-              </span>
+        </button>
+        <button
+          v-else
+          :disabled="page === currentPage || loading"
+          :aria-disabled="page === currentPage || loading"
+          :aria-current="page === currentPage ? 'page' : undefined"
+          :aria-label="page === currentPage && loading ?
+            'Loading' :
+            page === currentPage ? 
+              `Current page, page ${page}` : 
+              `Go to page ${page}`
+          "
+          class="
+            flex items-center justify-center grow-1 shrink-1
+            bg-white hover:bg-gray-600/10 active:bg-blue-50 dark:active:bg-blue-900
+            border rounded border-gray-600/20 disabled:border-gray-600/10
+            active:shadow-inner active:shadow-blue-600/15
+            text-gray-600 dark:text-gray-400
+            active:border-blue-600 dark:active:border-blue-400
+            disabled:text-gray-600/50 dark:disabled:text-gray-400/50
+            font-semibold
+            min-w-[2.125rem] h-[2.125rem]
+            p-2
+            disabled:pointer-events-none
+          "
+          :class="{
+            'disabled:bg-gray-600/20 disabled:border-gray-600/20': loading
+          }"
+          @click.prevent="goToPage(page, $event)"
+        >
+          <span 
+            v-if="loading"
+            class="flex relative h-full w-full"
+          >
+            <span class="absolute inset-0 flex items-center justify-center">
+              <svg
+                data-id="spinner"
+                class="animate-spin text-current text-gray-600 dark:text-gray-400 h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                role="graphics-symbol"
+              >
+                <title>Loading</title>
+                <circle
+                  class="opacity-25 fill-transparent"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                />
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
             </span>
-            <template v-else>
-              {{ page.toLocaleString() }}
-            </template>
+          </span>
+          <template v-else>
+            {{ page.toLocaleString() }}
           </template>
         </button>
       </li>
