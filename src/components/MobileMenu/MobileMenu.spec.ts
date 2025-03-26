@@ -152,7 +152,6 @@ describe('SdsMobileMenu', () => {
     /* Mock changing elements for snapshot */
     panelElement.element.setAttribute('aria-labelledby', 'mocked');
     panelElement.element.setAttribute('id', 'mocked1');
-    console.log(panelElement.html())
 
     await wrapper.vm.$nextTick();
 
