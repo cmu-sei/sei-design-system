@@ -228,6 +228,26 @@
           Action Button
         </SdsActionButton>
       </div>
+      <div class="bg-gray-900 py-2 px-2 space-x-2">
+        <SdsActionButton
+          kind="primary"
+          variant="white"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="secondary"
+          variant="white"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          variant="white"
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
       <div class="flex gap-2 items-center">
         <SdsActionButton
           kind="primary"

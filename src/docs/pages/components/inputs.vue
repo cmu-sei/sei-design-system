@@ -98,12 +98,18 @@
           option-label="term"
           option-group-label="label"
           option-group-children="items"
+          option-type="custom"
           @complete="comboBox.onComplete"
           @result="comboBox.onResult"
           @enter="comboBox.onEnter"
         >
-          <template #option="{ label }">
-            <span v-html="label" />
+          <template #customOption="{ label, classList, href, onClick }">
+            <a 
+              :class="classList" 
+              :href="href"
+              @click="onClick"
+              v-html="label" 
+            />
           </template>
         </SdsComboBox>
         <SdsComboBox
@@ -297,7 +303,7 @@ const comboBox = reactive({
       {
         label: "Group Label",
         items: [
-          { term: "Apple Group", payload: "test" },
+          { term: "Apple Group", payload: "test", href: "https://sei.cmu.edu" },
           { term: "<b>Uniqu</b>e to Group", payload: "test" },
           { term: "Banana Group", payload: "test" },
           { term: "Orange Group", payload: "test" },
