@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SdsMobileMenu > renders slots correctly 1`] = `
+<nav
+  aria-label="Mobile Menu"
+  data-id="sds-mobilemenu"
+  role="menu"
+>
+  
+  
+  
+  
+</nav>
+`;
