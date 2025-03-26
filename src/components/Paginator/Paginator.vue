@@ -284,9 +284,9 @@ const pageNumber = ref<string>()
 
 const isPageNumberInvalid = computed(() => {
   const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
-  const last = pageList.value[pageList.value.length - 1] as number
+  const lastPage = pageList.value[pageList.value.length - 1]
   if (typeof page === 'undefined') return false // Initial state
-  return page < 1 || page > last
+  return page < 1 || page > parseInt(`${lastPage}`, 10)
 })
 
 const prevDisabled = computed(() => {
