@@ -134,7 +134,8 @@ describe('SdsMobileMenu', () => {
 
     await wrapper.vm.$nextTick();
     /* Match snapshot */
-    expect(wrapper.element).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot();
+    expect(document.querySelector('[data-id="sds-panel"]')).toMatchSnapshot();
     /* Ensure slot content works */
     expect(document.getElementById('customTitle')?.innerHTML).toContain(title);
     expect(document.getElementById('customDefault')?.innerHTML).toContain(defaultSlot);
