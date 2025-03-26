@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SdsMobileMenu > renders slots correctly 1`] = `
+exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] = `
 <nav
   aria-label="Mobile Menu"
   data-id="sds-mobilemenu"
@@ -13,32 +13,18 @@ exports[`SdsMobileMenu > renders slots correctly 1`] = `
 </nav>
 `;
 
-exports[`SdsMobileMenu > renders slots correctly 2`] = `
+exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
-  aria-labelledby="m8q1xk8ewllylajtblk"
+  aria-labelledby="mocked"
   class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
   data-id="sds-panel"
+  id="mocked1"
   role="dialog"
 >
   <header
     class="flex items-center p-6 pb-0"
   >
-    <div
-      class="flex items-center gap-2 text-2xl leading-7 font-light"
-      id="m8q1xk8ewllylajtblk"
-    >
-      <!-- @slot Panel header content. -->
-      
-      <!-- @slot The "title" slot used to supply custom logo or panel title that will display in at the top of every panel. I.e.: \`&lt;template #title&gt;...&lt;/template&gt;\` -->
-      
-      <div
-        id="customTitle"
-      >
-        Custom Title
-      </div>
-      
-      
-    </div>
+    <!--v-if-->
     <button
       aria-label="close"
       class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-none focus:text-gray-700 focus:outline-none dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
@@ -67,29 +53,10 @@ exports[`SdsMobileMenu > renders slots correctly 2`] = `
     <div>
       <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that will display in "root" panel. I.e.: \`&lt;template #default&gt;...&lt;/template&gt;\` -->
       
-      <div
-        id="customDefault"
-      >
-        Custom Default
-      </div>
       
     </div>
     
   </main>
-  <footer
-    class="flex flex-shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur"
-  >
-    <!-- @slot Panel footer content. -->
-    
-    <!-- @slot The "footer" slot used to supply custom links or text that will display in at the top of every panel. I.e.: \`&lt;template #footer&gt;...&lt;/template&gt;\` -->
-    
-    <div
-      id="customFooter"
-    >
-      Custom Footer
-    </div>
-    
-    
-  </footer>
+  <!--v-if-->
 </div>
 `;

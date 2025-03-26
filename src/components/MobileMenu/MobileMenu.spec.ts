@@ -133,9 +133,6 @@ describe('SdsMobileMenu', () => {
     expect(wrapper.findComponent(SdsPanel).props('modelValue')).toBe(true);
 
     await wrapper.vm.$nextTick();
-    /* Match snapshot */
-    expect(wrapper.element).toMatchSnapshot();
-    expect(document.querySelector('[data-id="sds-panel"]')).toMatchSnapshot();
     /* Ensure slot content works */
     expect(document.getElementById('customTitle')?.innerHTML).toContain(title);
     expect(document.getElementById('customDefault')?.innerHTML).toContain(defaultSlot);
@@ -148,6 +145,18 @@ describe('SdsMobileMenu', () => {
     });
 
     await wrapper.vm.$nextTick();
+
+    /* Match snapshot of empty nav (panel gets teleported) */
+    expect(wrapper.element).toMatchSnapshot();
+    const panelElement = wrapper.findComponent('[data-id="sds-panel"]');
+    /* Mock changing elements for snapshot */
+    panelElement.element.setAttribute('aria-labelledby', 'mocked');
+    panelElement.element.setAttribute('id', 'mocked1');
+    console.log(panelElement.html())
+
+    await wrapper.vm.$nextTick();
+
+    expect(panelElement.element).toMatchSnapshot();
     expect(wrapper.findComponent(SdsPanel).props('modelValue')).toBe(true);
 
     await wrapper.setProps({ modelValue: false });
