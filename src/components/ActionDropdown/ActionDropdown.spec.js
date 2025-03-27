@@ -49,6 +49,19 @@ describe('ActionDropdown', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its kind primary, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'primary',
+        variant: 'white'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should have a secondary kind with a red variant', () => {
     const wrapper = mount(Component, {
       directives: {
@@ -66,6 +79,19 @@ describe('ActionDropdown', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its kind secondary, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'secondary',
+        variant: 'white'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should have a ghost kind with a blue variant', () => {
     const wrapper = mount(Component, {
       directives: {
@@ -78,6 +104,19 @@ describe('ActionDropdown', () => {
       props: {
         kind: "ghost",
         variant: "blue"
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its kind ghost, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'ghost',
+        variant: 'white'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
