@@ -1,4 +1,4 @@
-import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import Component from "./Paginator.vue"
 
@@ -31,7 +31,7 @@ describe("Paginator", () => {
   it('renders paginator when totalPages > 1', () => {
     expect(wrapper.find('[data-id="sds-paginator"]').exists()).toBeTruthy()
   })
-  
+
   it('disables the previous button on the first page', async () => {
     await wrapper.setProps({ currentPage: 1, totalPages: 10 })
     const prevBtn = wrapper.find('button[aria-label="Previous page"]')
