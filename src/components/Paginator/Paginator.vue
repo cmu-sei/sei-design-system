@@ -61,7 +61,7 @@
             <button
               :disabled="loading"
               :aria-disabled="loading"
-              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } &quot;Go to page&quot; menu`"
+              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
               class="
                 flex items-center justify-center grow-1 shrink-1
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
@@ -127,7 +127,7 @@
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="loading ?
+          :aria-label="page === currentPage && loading ?
             'Loading' :
             page === currentPage ? 
               `Current page, page ${page}` : 
@@ -339,9 +339,11 @@ const goToPage = (page: number | string, event: KeyboardEvent | MouseEvent) => {
 }
 
 const onKeyup = (event: KeyboardEvent) => {
-  const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
-  if (!page || page === props.currentPage || isPageNumberInvalid.value) return
-  pageNumber.value = undefined // Reset page number
-  goToPage(page, event)
+  if (event.key === 'Enter') {
+    const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+    if (!page || page === props.currentPage || isPageNumberInvalid.value) return
+    pageNumber.value = undefined // Reset page number
+    goToPage(page, event)
+  }
 }
 </script>
