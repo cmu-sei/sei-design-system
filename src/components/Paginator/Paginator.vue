@@ -51,35 +51,77 @@
         class="hidden md:flex grow-1 shrink-1"
         role="listitem"
       >
-        <button
+        <SdsActionDropdown
           v-if="page.toLocaleString() === '...'"
-          :disabled="loading"
-          :aria-disabled="loading"
-          :aria-label="`Go to page ${page}`"
-          class="
-            flex items-center justify-center grow-1 shrink-1
-            bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            rounded
-            w-[2.125rem] h-[2.125rem]
-            disabled:pointer-events-none
-          "
+          placement="bottom"
+          auto
+          hide-arrow
         >
-          <SdsSvgIcon
-            aria-hidden="true"
-            class="pointer-events-none"
-            :class="{
-              'text-gray-600/50 dark:text-gray-400/50': loading,
-              'text-gray-600 dark:text-gray-400': !loading
-            }"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons['ellipsis'].height"
-            :path="icons['ellipsis'].path"
-            :view-box="icons['ellipsis'].viewBox"
-            :width="icons['ellipsis'].width"
-          />
-        </button>
+          <template #trigger="{ isOpen, toggle }: { isOpen: boolean; toggle: GenericFunctionType; }">
+            <button
+              :disabled="loading"
+              :aria-disabled="loading"
+              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } &quot;Go to page&quot; menu`"
+              class="
+                flex items-center justify-center grow-1 shrink-1
+                bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
+                rounded
+                w-[2.125rem] h-[2.125rem]
+                disabled:pointer-events-none
+              "
+              :class="{
+                'bg-gray-700/10 dark:bg-gray-300/10': isOpen
+              }"
+              @click="toggle"
+            >
+              <SdsSvgIcon
+                aria-hidden="true"
+                class="pointer-events-none"
+                :class="{
+                  'text-gray-600/50 dark:text-gray-400/50': loading,
+                  'text-gray-600 dark:text-gray-400': !loading
+                }"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['ellipsis'].height"
+                :path="icons['ellipsis'].path"
+                :view-box="icons['ellipsis'].viewBox"
+                :width="icons['ellipsis'].width"
+              />
+            </button>
+          </template>
+          <div
+            class="px-4"
+            role="menuitem"
+          >
+            <form @submit.prevent>
+              <fieldset class="flex flex-row flex-nowrap items-center space-x-2">
+                <span class="text-gray-900 dark:text-white text-sm">Go to</span>
+                <label for="page-number">
+                  <span class="sr-only">Page number</span>
+                  <input
+                    id="page-number"
+                    v-model="pageNumber"
+                    type="number"
+                    class="
+                      form-control
+                      form-control-sm
+                      max-w-[2.125rem]
+                      min-w-[2.125rem]
+                      [&::-webkit-inner-spin-button]:appearance-none
+                    "
+                    :class="{
+                      'invalid': isPageNumberInvalid
+                    }"
+                    @keyup.enter="onKeyup($event)"
+                  >
+                </label>
+                <span class="text-gray-900 dark-text-white text-sm">page</span>
+              </fieldset>
+            </form>
+          </div>
+        </SdsActionDropdown>
         <button
           v-else
           :disabled="page === currentPage || loading"
@@ -238,6 +280,15 @@ const icons = Object.freeze({
 
 const emit = defineEmits(['go-to-page'])
 
+const pageNumber = ref<string>()
+
+const isPageNumberInvalid = computed(() => {
+  const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+  const lastPage = pageList.value[pageList.value.length - 1]
+  if (typeof page === 'undefined') return false // Initial state
+  return page < 1 || page > parseInt(`${lastPage}`, 10)
+})
+
 const prevDisabled = computed(() => {
   return props.currentPage <= 1 || props.loading;
 })
@@ -280,10 +331,17 @@ const pageList = computed(() => {
   }
 })
 
-const goToPage = (page: number | string, event: MouseEvent) => {
+const goToPage = (page: number | string, event: KeyboardEvent | MouseEvent) => {
   /**
    * Passes an object to be used by a parent component: { page, event }
    */
-  emit("go-to-page", { page, event });
+  emit('go-to-page', { page, event });
+}
+
+const onKeyup = (event: KeyboardEvent) => {
+  const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+  if (!page || page === props.currentPage || isPageNumberInvalid.value) return
+  pageNumber.value = undefined // Reset page number
+  goToPage(page, event)
 }
 </script>
