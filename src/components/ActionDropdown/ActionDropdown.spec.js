@@ -51,6 +51,13 @@ describe('ActionDropdown', () => {
 
   it('should match its kind primary, variant white snapshot', () => {
     const wrapper = mount(Component, {
+      directives: {
+        'uid': {
+          created(el) {
+            el.setAttribute('id', 'unique-id')
+          }
+        }
+      },
       slots: {
         default: 'Action Button'
       },
@@ -81,6 +88,13 @@ describe('ActionDropdown', () => {
 
   it('should match its kind secondary, variant white snapshot', () => {
     const wrapper = mount(Component, {
+      directives: {
+        'uid': {
+          created(el) {
+            el.setAttribute('id', 'unique-id')
+          }
+        }
+      },
       slots: {
         default: 'Action Button'
       },
@@ -111,6 +125,13 @@ describe('ActionDropdown', () => {
 
   it('should match its kind ghost, variant white snapshot', () => {
     const wrapper = mount(Component, {
+      directives: {
+        'uid': {
+          created(el) {
+            el.setAttribute('id', 'unique-id')
+          }
+        }
+      },
       slots: {
         default: 'Action Button'
       },
@@ -232,5 +253,4 @@ describe('ActionDropdown', () => {
     })
     expect(wrapper.element).toMatchSnapshot()
   })
-
 })
