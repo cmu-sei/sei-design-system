@@ -112,7 +112,7 @@
                       [&::-webkit-inner-spin-button]:appearance-none
                     "
                     :class="{
-                      'invalid': isPageNumberInvalid
+                      'invalid animate-shake': isPageNumberInvalid
                     }"
                     @keyup.enter="onKeyup($event)"
                   >
