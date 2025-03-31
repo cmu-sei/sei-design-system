@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 
 /* Overall theme */
+@import './theme/animation';
 @import './theme/breakpoints';
 @import './theme/colors';
 @import './theme/fonts';

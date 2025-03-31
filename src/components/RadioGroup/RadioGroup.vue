@@ -18,7 +18,7 @@
         :id="`${root?.id}__option_${index}`"
         v-model="localModelValue"
         type="radio"
-        class="relative top-1 sds-theme-plaid:rounded-none"
+        class="relative top-1"
         :class="{ valid, invalid }"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
