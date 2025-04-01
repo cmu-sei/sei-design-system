@@ -61,7 +61,8 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2 rounded-sm sds-theme-plaid:rounded-none"
+        class="py-2 rounded"
+        role="menu"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"
       >
@@ -101,7 +102,7 @@ const props = defineProps({
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue'>, default: 'gray' },
+  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
   /**
    * The z-index for the popover.
    */
@@ -269,6 +270,8 @@ const variantClass = computed(() => {
       return 'action-btn-red'
     case 'blue':
       return 'action-btn-blue'
+    case 'white':
+        return 'action-btn-white'
     default:
       return ''
   }

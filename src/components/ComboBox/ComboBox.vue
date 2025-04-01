@@ -167,56 +167,106 @@
                   {{ optionGroupLabel ? s[optionGroupLabel] : s }}
                 </slot>
               </div>
-              <component 
-                :is="optionType"
+              <template
                 v-for="c, cindex in s[optionGroupChildren]"
                 :key="`${s}_${c}_${cindex}`"
-                ref="dropdownOption" 
-                :href="optionType === 'a' ? c.href : undefined"
-                class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-                :class="{
-                  'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
-                }"
-                :data-active="c.index === arrowCounter"
-                :type="optionType === 'button' ? 'button' : undefined"
-                tabindex="-1"
-                @click="handleSuggestionClick(c)"
               >
-                <!-- @slot Option content. Good for customizing the content for each option -->
-                <slot
-                  name="option"
-                  :option="c"
-                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                <template v-if="optionType !== 'custom'">
+                  <component 
+                    :is="optionType"
+                    ref="dropdownOption" 
+                    :href="optionType === 'a' ? c.href : undefined"
+                    class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                    :class="{
+                      'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                      'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
+                    }"
+                    :data-active="c.index === arrowCounter"
+                    :type="optionType === 'button' ? 'button' : undefined"
+                    tabindex="-1"
+                    @click="handleSuggestionClick(c)"
+                  >
+                    <!-- @slot Option content. Good for customizing the content for each option -->
+                    <slot
+                      name="option"
+                      :option="c"
+                      :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                    >
+                      {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                    </slot>
+                  </component>
+                </template>
+                <div 
+                  v-else 
+                  ref="dropdownOption"
                 >
-                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
-                </slot>
-              </component>
+                  <slot
+                    name="customOption"
+                    :href="c.href"
+                    :class-list="{
+                      'flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
+                      'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                      'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
+                    }"
+                    :data-active="c.index === arrowCounter"
+                    tabindex="-1"
+                    :option="c"
+                    :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                    @click="handleSuggestionClick(c)"
+                  >
+                    {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                  </slot>
+                </div>
+              </template>
             </div>
-            <component
-              :is="optionType"
-              v-else
-              ref="dropdownOption"
-              :href="optionType === 'a' ? s.href : undefined"
-              class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-              :class="{
-                'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
-              }"
-              :data-active="s.index === arrowCounter"
-              :type="optionType === 'button' ? 'button' : undefined"
-              tabindex="-1"
-              @click="handleSuggestionClick(s)"
-            >
-              <!-- @slot Option content. Good for customizing the content for each option -->
-              <slot
-                name="option"
-                :option="s"
-                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+            <template v-else>
+              <template v-if="optionType !== 'custom'">
+                <component
+                  :is="optionType"
+                  ref="dropdownOption"
+                  :href="optionType === 'a' ? s.href : undefined"
+                  class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                  :class="{
+                    'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                  }"
+                  :data-active="s.index === arrowCounter"
+                  :type="optionType === 'button' ? 'button' : undefined"
+                  tabindex="-1"
+                  @click="handleSuggestionClick(s)"
+                >
+                  <!-- @slot Option content. Good for customizing the content for each option -->
+                  <slot
+                    name="option"
+                    :option="s"
+                    :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                  >
+                    {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                  </slot>
+                </component>
+              </template>
+              <div 
+                v-else 
+                ref="dropdownOption"
               >
-                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
-              </slot>
-            </component>
+                <slot
+                  name="customOption"
+                  :class-list="{
+                    'flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
+                    'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                  }"
+                  :data-active="s.index === arrowCounter"
+                  :href="s.href"
+                  tabindex="-1"
+                  :option="s"
+                  :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                  @click="handleSuggestionClick(s)"
+                >
+                  {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                </slot>
+              </div>
+            </template>
           </template>
         </SdsScrollArea>
         <!-- Footer section -->
@@ -367,7 +417,7 @@ const props = defineProps({
    * Determines the type, or tag, use for the option/component
    */
   optionType: {
-    type: String as PropType<'a' | 'button'>,
+    type: String as PropType<'a' | 'button' | 'custom'>,
     default: 'button'
   },
   /**

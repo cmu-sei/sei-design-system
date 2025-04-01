@@ -799,11 +799,11 @@
       </aside>
 
       <!-- Main content -->
-      <div class="bg-gray-50 dark:bg-black flex flex-col items-stretch grow min-w-0">
+      <div class="bg-gray-25 dark:bg-black flex flex-col items-stretch grow min-w-0">
         <main class="grow pb-4">
           <div
             v-if="!hidePageHeader"
-            class="bg-gray-25 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-3 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
+            class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-3 py-3 sticky top-0 z-40 flex flex-col gap-4 md:flex-row"
           >
             <div class="grow my-auto flex flex-row gap-2">
               <!-- @slot Page title content. -->

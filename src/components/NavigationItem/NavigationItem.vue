@@ -6,7 +6,7 @@
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col"
+      class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col pointer-events-none"
       viewBox="0 0 256 256"
     >
       <path
@@ -14,7 +14,7 @@
         d="M222 128a6 6 0 0 1-6 6H54.49l61.75 61.76a6 6 0 1 1-8.48 8.48l-72-72a6 6 0 0 1 0-8.48l72-72a6 6 0 0 1 8.48 8.48L54.49 122H216a6 6 0 0 1 6 6"
       />
     </svg>
-    <h3 class="text-2xl font-thin">
+    <h3 class="text-2xl font-thin pointer-events-none">
       Go Back
     </h3>
   </button>
@@ -41,7 +41,7 @@
   >
     <div
       v-if="$slots.left"
-      class="my-auto"
+      class="my-auto pointer-events-none"
     >
       <slot name="left" />
     </div>
@@ -50,14 +50,14 @@
     >
       <span
         v-if="label"
-        class="select-none text-lg"
+        class="select-none text-lg pointer-events-none"
       >
         {{ label }}
       </span>
     </slot>
     <div
       v-if="(type === 'expand' && $slots.children) || type === 'slide'"
-      class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100"
+      class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100 pointer-events-none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@
   </component>
   <div
     v-if="$slots.children && type === 'expand'"
-    class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top"
+    class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top pointer-events-none"
     :class="{
       'z-10 opacity-100 max-h-screen': selected,
       '-z-10 opacity-0 max-h-0 select-none': !selected
