@@ -108,8 +108,7 @@ defineOptions({
 })
 
 useHead({
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'SDS Playground' }
+  titleTemplate: '%s | SDS Playground',
 })
 
 const router = useRouter()

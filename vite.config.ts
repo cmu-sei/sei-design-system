@@ -3,7 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import VueRouter from 'unplugin-vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
-import { unheadComposablesImports } from 'unhead'
 import Components from 'unplugin-vue-components/vite'
 
 // https://vitejs.dev/config/
@@ -19,7 +18,9 @@ export default defineConfig({
         'vue',
         '@vueuse/core',
         VueRouterAutoImports,
-        unheadComposablesImports[0]
+        {
+          '@unhead/vue': ['useHead', 'useSeoMeta', 'useScript'],
+        },
       ],
       eslintrc: { enabled: true },
     }),
