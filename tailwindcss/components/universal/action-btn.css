@@ -1,7 +1,7 @@
 /* Base btn class */
 
-.action-btn:not([class*='sds-theme-'] *) {
-  @apply border border-transparent py-1.5 px-1.5 rounded select-none whitespace-nowrap cursor-pointer;
+.action-btn {
+  @apply border border-transparent py-1.5 px-1.5 rounded sds-theme-plaid:rounded-none select-none whitespace-nowrap cursor-pointer;
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
   @apply dark:focus-visible:ring-blue-700;
   @apply inline-flex gap-2 items-center text-left;

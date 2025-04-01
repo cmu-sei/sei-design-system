@@ -10,21 +10,20 @@
 @import './variants/dark-mode';
 @import './variants/theme';
 
+/* Universal theme components */
+@import './components/universal/action-btn';
+@import './components/universal/form-control';
+@import './components/universal/input-group';
+@import './components/universal/link';
+@import './components/universal/scroll-area';
+@import './components/universal/tab';
+@import './components/universal/table-prose';
+
 /* Forge components */
-@import './components/forge/action-btn';
 @import './components/forge/btn';
-@import './components/forge/form-control';
-@import './components/forge/input-group';
-@import './components/forge/link';
-@import './components/forge/scroll-area';
-@import './components/forge/tab';
-@import './components/forge/table-prose';
 
 /* Plaid components */
-@import './components/plaid/action-btn';
 @import './components/plaid/btn';
-@import './components/plaid/form-control';
-@import './components/plaid/input-group';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';

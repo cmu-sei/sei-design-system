@@ -177,12 +177,28 @@ const toggleDarkMode = () => {
   document.body.classList.toggle('dark')
 }
 
-
 const isPlaidTheme = ref(false)
+
 const togglePlaidTheme = () => {
   isPlaidTheme.value = !isPlaidTheme.value
-  document.body.classList.toggle('sds-theme-plaid')
+  if (isPlaidTheme.value) {
+    document.body.classList.add('sds-theme-plaid')
+    document.body.classList.remove('sds-theme-forge')
+  } else {
+    document.body.classList.add('sds-theme-forge')
+    document.body.classList.remove('sds-theme-plaid')
+  }
 }
+
+onMounted(() => {
+  if (isPlaidTheme.value) {
+    document.body.classList.add('sds-theme-plaid')
+    document.body.classList.remove('sds-theme-forge')
+  } else {
+    document.body.classList.add('sds-theme-forge')
+    document.body.classList.remove('sds-theme-plaid')
+  }
+})
 
 const navigate = ({group, item, event}: { group: LayoutAppSidebarNavItem, item: LayoutAppSidebarNavItem, event: Event }) => {
   event.preventDefault()
