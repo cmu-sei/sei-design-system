@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-avatar"
-    :class="['inline-flex items-center justify-center', variantClass, sizeClass, shapeClass]"
+    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, shapeClass]"
     role="img"
     :aria-label="name || 'Avatar'"
   >
@@ -14,7 +14,7 @@
     <span
       v-else
       :title="name"
-      :class="['leading-none text-black cursor-default uppercase', textClass, variantClass]"
+      :class="['leading-none text-black cursor-default uppercase', textClass, variantInnerClass]"
     >
       {{ initials }}
     </span>
@@ -45,19 +45,19 @@ const props = defineProps({
    * Determines the shape of the avatar.
    */
   shape: {
-    type: String as PropType<'portrait' | 'circle'>,
+    type: String as PropType<'portrait' | 'square' | 'circle'>,
     default: 'portrait'
   },
   /**
    * Determines the size of the avatar.
    */
   size: {
-    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'auto'>,
+    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'auto'>,
     default: 'md'
   },
   /**
    * Determines the text name (ex. John Doe) will show "JD" initials as a placeholder when no image is present.
-   * 
+   *
    * The full name, "John Doe" will display on hover with or without an image present.
    */
   name: {
@@ -90,65 +90,96 @@ const positionClass = computed(() => {
 })
 
 const sizeClass = computed(() => {
-  if (props.shape === 'circle') {
-    switch (props.size) {
-      case 'lg':
-        return 'w-44'
-      case 'md':
-        return 'w-16'
-      case 'sm':
-        return 'w-12'
-      case 'xs':
-        return 'w-8'
-    }
-  } else if (props.shape === 'portrait') {
-    switch (props.size) {
-      case 'lg':
-        return 'w-44'
-      case 'md':
-        return 'w-16'
-      case 'sm':
-        return 'w-10'
-      case 'xs':
-        return 'w-6'
-    }
+  switch (props.size) {
+    case '2xl':
+      return 'w-44'
+    case 'xl':
+      return 'w-[88px]'
+    case 'md':
+      return 'w-12'
+    case 'sm':
+      return 'w-8'
+    case 'xs':
+      return 'w-6'
+    case 'auto':
+      return 'w-full'
+    case 'lg':
+    default:
+      return 'w-16'
   }
-  return 'w-full'
 })
 
 const textClass = computed(() => {
-  if (props.size === 'lg') {
-    return 'text-6xl font-light'
-  } else if (props.size === 'sm') {
-    return 'text-xl font-medium'
-  } else if (props.size === 'xs') {
-    return 'text-sm font-semibold'
+  switch (props.size) {
+    case '2xl':
+      return 'text-6xl font-light'
+    case 'xl':
+      return 'text-3xl font-medium'
+    case 'md':
+      return 'text-xl font-medium'
+    case 'sm':
+      return 'text-sm font-semibold'
+    case 'xs':
+      return 'text-xs font-semibold'
+    default:
+    case 'lg':
+      return 'text-2xl font-medium'
   }
-  return 'text-2xl'
-
 })
 
 const shapeClass = computed(() => {
-  if (props.shape === 'circle') {
-    return 'rounded-full aspect-square'
+  const classes = []
+  if (props.shape === 'circle')
+    classes.push('rounded-full aspect-square')
+  if (props.shape === 'portrait')
+    classes.push('aspect-[4/5]')
+  if (props.shape === 'square')
+    classes.push('aspect-square')
+  if (
+    props.shape === 'square' ||
+    props.shape === 'portrait'
+  ) {
+    if (['xs', 'sm'].includes(props.size))
+      classes.push('rounded-sm')
+    if (['md', 'lg'].includes(props.size))
+      classes.push('rounded-md')
+    if (['xl', '2xl'].includes(props.size))
+      classes.push('rounded-lg')
   }
-  return 'aspect-[4/5]'
+  return classes
 })
 
-const variantClass = computed(() => {
-  const colorOptions = [
-    'bg-gray-100 dark:text-gray-400 dark:bg-gray-900', 
-    'bg-red-100 dark:text-red-500 dark:bg-red-900', 
-    'bg-yellow-25 dark:text-yellow-400 dark:bg-yellow-900', 
-    'bg-green-50 dark:text-green-400 dark:bg-green-900', 
-    'bg-blue-50 dark:text-blue-400 dark:bg-blue-900', 
-    'bg-purple-100 dark:text-purple-400 dark:bg-purple-900'
+const variantOuterClass = computed(() => {
+  const shapeVariants = [
+    'bg-gray-100 dark:bg-gray-900',
+    'bg-red-100 dark:bg-red-900',
+    'bg-yellow-25 dark:bg-yellow-900',
+    'bg-green-50 dark:bg-green-900',
+    'bg-blue-50 dark:bg-blue-900',
+    'bg-purple-100 dark:bg-purple-900'
   ]
   if (props.variant && props.variant !== 'random') {
-    return colorOptions.filter((color) => color.includes(props.variant))[0]
+    return shapeVariants.filter((color) => color.includes(props.variant))[0]
   } else {
-    const randomNumber = Math.floor(Math.random() * colorOptions.length)
-    return colorOptions[randomNumber]
+    const randomNumber = Math.floor(Math.random() * shapeVariants.length)
+    return shapeVariants[randomNumber]
+  }
+})
+
+const variantInnerClass = computed(() => {
+  const textVariants = [
+    'dark:text-gray-400',
+    'dark:text-red-500',
+    'dark:text-yellow-400',
+    'dark:text-green-400',
+    'dark:text-blue-400',
+    'dark:text-purple-400'
+  ]
+  if (props.variant && props.variant !== 'random') {
+    return textVariants.filter((color) => color.includes(props.variant))[0]
+  } else {
+    const randomNumber = Math.floor(Math.random() * shapeVariants.length)
+    return textVariants[randomNumber]
   }
 })
 
