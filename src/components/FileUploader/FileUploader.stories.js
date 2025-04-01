@@ -3,7 +3,7 @@ import SdsFileUploader from './FileUploader.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Inputs/File Uploader',
+  title: 'Components/Inputs/File Uploader',
   parameters: {
     docs: {
       description: {

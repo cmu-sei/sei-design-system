@@ -3,7 +3,7 @@ import SdsCalendar from './Calendar.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Date & Time/Calendar',
+  title: 'Components/Date & Time/Calendar',
   parameters: {
     docs: {
       description: {

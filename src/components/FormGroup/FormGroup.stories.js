@@ -2,7 +2,7 @@ import SdsFormGroup from './FormGroup.vue';
 import SdsInput from '../Input/Input.vue';
 
 export default {
-  title: 'Containers/Form Group',
+  title: 'Patterns/Forms/Form Group',
   parameters: {
     docs: {
       description: {

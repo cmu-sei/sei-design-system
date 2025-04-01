@@ -1,7 +1,7 @@
 import SdsSection from './Section.vue';
 
 export default {
-  title: 'Containers/Section',
+  title: 'Components/Containers/Section',
   parameters: {
     docs: {
       description: {

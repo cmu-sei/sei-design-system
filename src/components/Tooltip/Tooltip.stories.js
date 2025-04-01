@@ -2,7 +2,7 @@ import SdsTooltip from './Tooltip.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Utility/Tooltip',
+  title: 'Components/Utility/Tooltip',
   parameters: {
     docs: {
       description: {

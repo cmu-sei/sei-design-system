@@ -1,7 +1,7 @@
 import SdsSelect from './Select.vue';
 
 export default {
-  title: 'Inputs/Selections/Select',
+  title: 'Components/Inputs/Select',
   parameters: {
     docs: {
       description: {

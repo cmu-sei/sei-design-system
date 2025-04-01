@@ -2,7 +2,7 @@ import SdsPopover from './Popover.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Utility/Popover',
+  title: 'Components/Utility/Popover',
   parameters: {
     docs: {
       description: {

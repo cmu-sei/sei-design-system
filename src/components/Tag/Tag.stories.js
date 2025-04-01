@@ -1,7 +1,7 @@
 import SdsTag from './Tag.vue';
 
 export default {
-  title: 'Data Visualization/Tag',
+  title: 'Components/Data Visualization/Tag',
   parameters: {
     docs: {
       description: {

@@ -1,7 +1,7 @@
 import SdsDatapoint from './Datapoint.vue';
 
 export default {
-  title: 'Data Visualization/Datapoint',
+  title: 'Components/Data Visualization/Datapoint',
   parameters: {
     docs: {
       description: {

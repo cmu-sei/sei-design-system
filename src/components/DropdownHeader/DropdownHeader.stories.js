@@ -1,7 +1,7 @@
 import SdsDropdownHeader from './DropdownHeader.vue';
 
 export default {
-  title: 'Buttons/Dropdowns/Dropdown/Dropdown Header',
+  title: 'Components/Buttons/Dropdowns/Dropdown/Dropdown Header',
   parameters: {
     docs: {
       description: {

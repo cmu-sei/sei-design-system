@@ -3,7 +3,7 @@ import SdsButton from './Button.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Buttons/Button',
+  title: 'Components/Buttons/Button',
   parameters: {
     docs: {
       description: {
