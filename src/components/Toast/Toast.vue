@@ -3,11 +3,11 @@
     data-id="sds-toast"
     role="alert"
     aria-live="polite"
-    class="w-full max-w-sm bg-white rounded-sm shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
+    class="w-full max-w-sm bg-white rounded-sm sds-theme-plaid:rounded-none shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
     @mouseenter="clearTimer"
     @mouseleave="setTimer"
   >
-    <div class="overflow-hidden rounded-sm ring-1 ring-black/5 dark:ring-gray-700">
+    <div class="overflow-hidden rounded-sm sds-theme-plaid:rounded-none ring-1 ring-black/5 dark:ring-gray-700">
       <div class="p-4">
         <div class="flex toasts-start">
           <div class="shrink-0">
