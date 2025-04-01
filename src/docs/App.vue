@@ -1,5 +1,5 @@
 <template>
-  <sds-layout-app
+  <sds-application
     v-model="collapsed"
     :app-name="appName"
     :app-suite="appSuite"
@@ -7,7 +7,7 @@
     app-suite-url="#"
     :enable-collapsible-sidebar="enableCollapsibleSidebar"
     :page-title="pageTitle"
-    :sidebar-navigation-items="(sidebarNavigationItems as LayoutAppSidebarNavItem[])"
+    :sidebar-navigation-items="(sidebarNavigationItems as ApplicationSidebarNavItem[])"
     @navigate="navigate"
   >
     <template #user-section>
@@ -116,11 +116,11 @@
     <template #footer-right>
       Footer right
     </template>
-  </sds-layout-app>
+  </sds-application>
 </template>
 
 <script setup lang="ts">
-import { LayoutAppSidebarNavItem } from '../components/LayoutApp/LayoutApp.vue';
+import { ApplicationSidebarNavItem } from '../components/Application/Application.vue';
 
 defineOptions({
   name: 'AppPage'
@@ -200,7 +200,7 @@ onMounted(() => {
   }
 })
 
-const navigate = ({group, item, event}: { group: LayoutAppSidebarNavItem, item: LayoutAppSidebarNavItem, event: Event }) => {
+const navigate = ({group, item, event}: { group: ApplicationSidebarNavItem, item: ApplicationSidebarNavItem, event: Event }) => {
   event.preventDefault()
   router.push({ path: item.href })
 }

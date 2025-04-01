@@ -1,5 +1,5 @@
 <template>
-  <SdsLayoutSeiExternal
+  <SdsBrochureSite
     :page="page"
     :show-footer="true"
     :remove-content-padding="true"
@@ -23,7 +23,7 @@
       <div class="flex flex-col">
         <div class="flex flex-col-reverse lg:flex-row gap-8 container mx-auto max-w-screen-xl p-4 md:p-8">
           <div class="flex flex-col gap-4 w-full lg:w-1/3">
-            <SdsLayoutSeiExternalNav :page="page" />
+            <SdsBrochureSiteNav :page="page" />
           </div>
           <div class="flex flex-col gap-4 w-full lg:w-2/3">
             <h1 class="text-3xl text-gray-400">
@@ -65,7 +65,7 @@
         </div>
       </div>
     </template>
-  </SdsLayoutSeiExternal>
+  </SdsBrochureSite>
 </template>
 
 <script setup lang="ts">
