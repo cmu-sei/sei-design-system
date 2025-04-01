@@ -5,132 +5,219 @@
     class="paginator"
     aria-label="Page navigation"
   >
-    <div
-      class="btn-toolbar"
-      role="toolbar"
+    <ul
+      class="flex space-x-2"
+      role="list"
     >
-      <div class="mr-2 btn-group">
+      <li 
+        class="flex items-center grow-1 shrink-1"
+        role="listitem"
+      >
         <button
           :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="First"
-          @click.prevent="goToPage(1, $event)"
-        >
-          <svg
-            class="w-3 h-3 my-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
-            />
-          </svg>
-          <span>First</span>
-        </button>
-      </div>
-      <div class="mr-2 btn-group">
-        <button
-          :disabled="prevDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Prev"
+          :aria-disabled="prevDisabled"
+          aria-label="Previous page"
+          class="
+            flex items-center justify-center grow-0 shrink-0
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded
+            border-gray-600/20 dark:border-gray-400/20
+            disabled:border-gray-600/10 dark:disabled:border-gray-400/10
+            w-[2.125rem] h-[2.125rem] p-2
+          "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
-          <svg
-            class="w-3 h-3 my-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          <span>Prev</span>
-        </button>
-      </div>
-      <div
-        v-if="totalPages > 1"
-        class="hidden btn-group md:block"
-      >
-        <template
-          v-for="(page, key) in pageList"
-          :key="key"
-        >
-          <button
+          <SdsSvgIcon
+            aria-hidden="true"
+            class="w-2 h-[0.813rem] relative right-px pointer-events-none"
             :class="{
-              'shadow-none border-transparent': page === '...'
+              'text-gray-600/50 dark:text-gray-400/50': prevDisabled,
+              'text-gray-600 dark:text-gray-400': !prevDisabled
             }"
-            :disabled="page === '...' || loading || currentPage === page"
-            class="btn btn-ghost btn-sm py-2"
-            @click.prevent="goToPage(page, $event)"
+            fill="none"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['chevron-left'].height"
+            :path="icons['chevron-left'].path"
+            :view-box="icons['chevron-left'].viewBox"
+            :width="icons['chevron-left'].width"
+          />
+        </button>
+      </li>
+      <li
+        v-for="(page, key) in pageList"
+        :key="key"
+        class="hidden md:flex grow-1 shrink-1"
+        role="listitem"
+      >
+        <SdsActionDropdown
+          v-if="page.toLocaleString() === '...'"
+          placement="bottom"
+          auto
+          hide-arrow
+        >
+          <template #trigger="{ isOpen, toggle }: { isOpen: boolean; toggle: GenericFunctionType; }">
+            <button
+              :disabled="loading"
+              :aria-disabled="loading"
+              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
+              class="
+                flex items-center justify-center grow-1 shrink-1
+                bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
+                rounded
+                w-[2.125rem] h-[2.125rem]
+                disabled:pointer-events-none
+              "
+              :class="{
+                'bg-gray-700/10 dark:bg-gray-300/10': isOpen
+              }"
+              @click="toggle"
+            >
+              <SdsSvgIcon
+                aria-hidden="true"
+                class="pointer-events-none"
+                :class="{
+                  'text-gray-600/50 dark:text-gray-400/50': loading,
+                  'text-gray-600 dark:text-gray-400': !loading
+                }"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['ellipsis'].height"
+                :path="icons['ellipsis'].path"
+                :view-box="icons['ellipsis'].viewBox"
+                :width="icons['ellipsis'].width"
+              />
+            </button>
+          </template>
+          <div
+            class="px-4"
+            role="menuitem"
           >
+            <form @submit.prevent>
+              <fieldset class="flex flex-row flex-nowrap items-center space-x-2">
+                <span class="text-gray-900 dark:text-white text-sm">Go to</span>
+                <label for="page-number">
+                  <span class="sr-only">Page number</span>
+                  <input
+                    id="page-number"
+                    v-model="pageNumber"
+                    type="number"
+                    class="
+                      form-control
+                      form-control-sm
+                      max-w-[2.125rem]
+                      min-w-[2.125rem]
+                      [&::-webkit-inner-spin-button]:appearance-none
+                    "
+                    :class="{
+                      'invalid animate-shake': isPageNumberInvalid
+                    }"
+                    @keyup.enter="onKeyup($event)"
+                  >
+                </label>
+                <span class="text-gray-900 dark-text-white text-sm">page</span>
+              </fieldset>
+            </form>
+          </div>
+        </SdsActionDropdown>
+        <button
+          v-else
+          :disabled="page === currentPage || loading"
+          :aria-disabled="page === currentPage || loading"
+          :aria-current="page === currentPage ? 'page' : undefined"
+          :aria-label="page === currentPage && loading ?
+            'Loading' :
+            page === currentPage ? 
+              `Current page, page ${page}` : 
+              `Go to page ${page}`
+          "
+          class="
+            flex items-center justify-center grow-1 shrink-1
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded
+            border-gray-600/20 dark:border-gray-600/20
+            text-gray-600 dark:text-gray-400
+            font-semibold
+            min-w-[2.125rem] h-[2.125rem] p-2
+          "
+          :class="{
+            // Active state
+            'disabled:bg-blue-50 dark:disabled:bg-blue-900': page === currentPage && !loading,
+            'disabled:border-blue-600 dark:disabled:border-blue-400': page === currentPage && !loading,
+            'shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
+            // Disabled state
+            'disabled:text-gray-600/50 dark:disabled:text-gray-400/50': page !== currentPage && loading,
+            'disabled:border-gray-600/10 dark:disabled:border-gray-600/10': page !== currentPage && loading,
+            // Loading/Pending state
+            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20': page === currentPage && loading,
+            'disabled:border-gray-600/20 dark:disabled:border-gray-400/20': page === currentPage && loading
+          }"
+          @click.prevent="goToPage(page, $event)"
+        >
+          <span 
+            v-if="page === currentPage && loading"
+            class="flex relative h-full w-full"
+          >
+            <span class="absolute inset-0 flex items-center justify-center">
+              <SdsLoadingSpinner
+                size="sm"
+                class="text-gray-600 dark:text-gray-400"
+              />
+            </span>
+          </span>
+          <template v-else>
             {{ page.toLocaleString() }}
-          </button>
-        </template>
-      </div>
-      <div class="flex md:hidden mx-3">
-        <span
-          class="m-auto text-sm font-semibold"
-        >Page {{ currentPage.toLocaleString() }}</span>
-      </div>
-      <div class="ml-2 btn-group">
+          </template>
+        </button>
+      </li>
+      <li
+        class="flex md:hidden"
+        role="listitem"
+      >
+        <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
+          Page {{ currentPage.toLocaleString() }}
+        </span>
+      </li>
+      <li 
+        class="flex grow-1 shrink-1"
+        role="listitem"
+      >
         <button
           :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Next"
+          :aria-disabled="nextDisabled"
+          aria-label="Next page"
+          class="
+            flex items-center justify-center grow-0 shrink-0
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded
+            border-gray-600/20 dark:border-gray-400/20
+            disabled:border-gray-600/10 dark:disabled:border-gray-400/10
+            w-[2.125rem] h-[2.125rem] p-2
+          "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
-          <span>Next</span>
-          <svg
-            class="w-3 h-3 my-auto"
+          <SdsSvgIcon
+            aria-hidden="true"
+            class="w-2 h-[0.813rem] relative left-px pointer-events-none"
+            :class="{
+              'text-gray-600/50 dark:text-gray-400/50': nextDisabled,
+              'text-gray-600 dark:text-gray-400': !nextDisabled
+            }"
             fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            :height="icons['chevron-right'].height"
+            :path="icons['chevron-right'].path"
+            :view-box="icons['chevron-right'].viewBox"
+            :width="icons['chevron-right'].width"
+          />
         </button>
-      </div>
-      <div class="ml-2 btn-group">
-        <button
-          :disabled="nextDisabled"
-          class="flex space-x-1 btn btn-ghost btn-sm py-2"
-          title="Last"
-          @click.prevent="goToPage(totalPages, $event)"
-        >
-          <span>Last</span>
-          <svg
-            class="w-3 h-3 my-auto"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="3"
-              d="M13 5l7 7-7 7M5 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
-    </div>
+      </li>
+    </ul>
   </nav>
 </template>
 
@@ -170,7 +257,37 @@ const props = defineProps({
   },
 })
 
+const icons = Object.freeze({
+  'chevron-left': {
+    height: 13,
+    path: 'M0.871094 6.14844L6.12109 0.898438C6.44922 0.542969 7.02344 0.542969 7.35156 0.898438C7.70703 1.22656 7.70703 1.80078 7.35156 2.12891L2.73047 6.75L7.35156 11.3984C7.70703 11.7266 7.70703 12.3008 7.35156 12.6289C7.02344 12.9844 6.44922 12.9844 6.12109 12.6289L0.871094 7.37891C0.515625 7.05078 0.515625 6.47656 0.871094 6.14844Z',
+    viewBox: '0 0 8 13',
+    width: 8
+  },
+  'chevron-right': {
+    height: 13,
+    path: 'M7.10156 6.14844C7.45703 6.47656 7.45703 7.05078 7.10156 7.37891L1.85156 12.6289C1.52344 12.9844 0.949219 12.9844 0.621094 12.6289C0.265625 12.3008 0.265625 11.7266 0.621094 11.3984L5.24219 6.75L0.621094 2.12891C0.265625 1.80078 0.265625 1.22656 0.621094 0.898438C0.949219 0.542969 1.52344 0.542969 1.85156 0.898438L7.10156 6.14844Z',
+    viewBox: '0 0 8 13',
+    width: 8
+  },
+  'ellipsis': {
+    height: 4,
+    path: 'M3.15625 1.75C3.15625 2.59766 2.44531 3.28125 1.625 3.28125C0.777344 3.28125 0.09375 2.59766 0.09375 1.75C0.09375 0.929688 0.777344 0.21875 1.625 0.21875C2.44531 0.21875 3.15625 0.929688 3.15625 1.75ZM7.53125 1.75C7.53125 2.59766 6.82031 3.28125 6 3.28125C5.15234 3.28125 4.46875 2.59766 4.46875 1.75C4.46875 0.929688 5.15234 0.21875 6 0.21875C6.82031 0.21875 7.53125 0.929688 7.53125 1.75ZM8.84375 1.75C8.84375 0.929688 9.52734 0.21875 10.375 0.21875C11.1953 0.21875 11.9062 0.929688 11.9062 1.75C11.9062 2.59766 11.1953 3.28125 10.375 3.28125C9.52734 3.28125 8.84375 2.59766 8.84375 1.75Z',
+    viewBox: '0 0 12 4',
+    width: 12
+  }
+} as const)
+
 const emit = defineEmits(['go-to-page'])
+
+const pageNumber = ref<string>()
+
+const isPageNumberInvalid = computed(() => {
+  const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+  const lastPage = pageList.value[pageList.value.length - 1]
+  if (typeof page === 'undefined') return false // Initial state
+  return page < 1 || page > parseInt(`${lastPage}`, 10)
+})
 
 const prevDisabled = computed(() => {
   return props.currentPage <= 1 || props.loading;
@@ -214,10 +331,19 @@ const pageList = computed(() => {
   }
 })
 
-const goToPage = (page: number | string, event: MouseEvent) => {
+const goToPage = (page: number | string, event: KeyboardEvent | MouseEvent) => {
   /**
    * Passes an object to be used by a parent component: { page, event }
    */
-  emit("go-to-page", { page, event });
+  emit('go-to-page', { page, event });
+}
+
+const onKeyup = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+    if (!page || page === props.currentPage || isPageNumberInvalid.value) return
+    pageNumber.value = undefined // Reset page number
+    goToPage(page, event)
+  }
 }
 </script>

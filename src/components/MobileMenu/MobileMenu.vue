@@ -182,7 +182,7 @@ const showPanel = computed({
   },
   set(value: boolean) {
     /**
-     * Emmitted when mobileMenus changes.
+     * Emitted when mobileMenus changes.
      */
     emits("update:model-value", value);
   }
@@ -228,6 +228,16 @@ watch(showPanel, (value) => {
     removeDomChanges();
   }
 }, { immediate: true })
+
+defineExpose({
+  activePanel,
+  close,
+  handleEscKey,
+  mobileMenus,
+  navigate,
+  panel,
+  showPanel
+})
 </script>
 
 <style>

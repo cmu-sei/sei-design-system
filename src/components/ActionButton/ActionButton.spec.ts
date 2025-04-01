@@ -25,6 +25,19 @@ describe('ActionButton', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its kind primary, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'primary',
+        variant: 'white'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should match its kind secondary, variant gray snapshot', () => {
     const wrapper = mount(Component, {
       slots: {
@@ -38,6 +51,19 @@ describe('ActionButton', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its kind secondary, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'secondary',
+        variant: 'white'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should match its kind ghost, variant red snapshot', () => {
     const wrapper = mount(Component, {
       slots: {
@@ -46,6 +72,18 @@ describe('ActionButton', () => {
       props: {
         kind: 'ghost',
         variant: 'red'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+  it('should match its kind ghost, variant white snapshot', () => {
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Action Button'
+      },
+      props: {
+        kind: 'ghost',
+        variant: 'white'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
