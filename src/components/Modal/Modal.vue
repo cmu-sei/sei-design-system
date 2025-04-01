@@ -58,6 +58,7 @@
                 bg-white
                 border
                 rounded-lg
+                sds-theme-plaid:rounded-none
                 shadow-xl
                 dark:text-gray-25
                 dark:bg-gray-900 dark:border-gray-800

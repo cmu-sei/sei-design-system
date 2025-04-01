@@ -17,7 +17,7 @@
                 :id="id"
                 ref="button"
                 type="button"
-                class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
+                class="ml-auto mt-auto btn btn-primary rounded-lg sds-theme-plaid:rounded-none p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
                   'btn-blue' : localVariant === 'blue',
@@ -73,12 +73,12 @@
               <div
                 v-if="open"
                 ref="modal"
-                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
+                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg sds-theme-plaid:rounded-none h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
               >
                 <div
-                  class="p-6 rounded-t-lg flex gap-4"
+                  class="p-6 rounded-t-lg sds-theme-plaid:rounded-none flex gap-4"
                   :class="{
                     'text-white bg-blue-600 dark:text-gray-950 dark:bg-blue-400': localVariant === 'blue',
                     'text-white bg-red-600 dark:text-gray-950 dark:bg-red-400': localVariant === 'red',

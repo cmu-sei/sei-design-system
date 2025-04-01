@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-3"
+    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-lg sds-theme-plaid:rounded-none p-3"
   >
     <div class="group relative">
       <input
@@ -24,6 +24,7 @@
           items-center
           space-y-1
           rounded-sm
+          sds-theme-plaid:rounded-none
           p-4
           bg-gray-25
           dark:bg-gray-900
@@ -95,7 +96,8 @@
               hover:border-gray-200
               dark:border-gray-800
               hover:dark:border-gray-700
-              rounded-sm 
+              rounded-sm
+              sds-theme-plaid:rounded-none
               flex 
               flex-row
               items-center 
@@ -121,7 +123,7 @@
             </div>
             <div
               v-else 
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-sm"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-sm sds-theme-plaid:rounded-none"
             >
               <SdsSvgIcon
                 aria-hidden="true"
@@ -178,6 +180,7 @@
               dark:border-gray-800
               hover:dark:border-gray-700
               rounded-sm 
+              sds-theme-plaid:rounded-none
               flex 
               flex-row 
               items-center 
@@ -189,7 +192,7 @@
               hover:shadow-lg
             "
           >
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-sm">
+            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-sm sds-theme-plaid:rounded-none">
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-red-600 dark:text-red-300"

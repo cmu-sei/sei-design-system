@@ -147,9 +147,9 @@ const typeClass = computed(() => {
     case "landing-page":
       return "p-4 text-lg hover:no-underline hover:text-red-600 dark:hover:text-red-300"
     case "descriptive":
-      return "p-4 transition-all rounded-lg hover:no-underline hover:bg-gray-25 hover:dark:bg-gray-850"
+      return "p-4 transition-all rounded-lg sds-theme-plaid:rounded-none hover:no-underline hover:bg-gray-25 hover:dark:bg-gray-850"
     case "simple":
-      return "p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300"
+      return "p-4 text-sm transition-all rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300"
     default:
       return ""
   }

@@ -2,7 +2,7 @@
 
   /* Base styles */
 
-  @apply transition-all duration-100 ease-linear select-none whitespace-nowrap flex flex-row gap-2 cursor-pointer;
+  @apply transition-all duration-100 ease-linear select-none whitespace-nowrap inline-flex flex-row gap-2 cursor-pointer;
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
   @apply text-base;
 

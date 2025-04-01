@@ -2,7 +2,7 @@
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-md sds-theme-plaid:rounded-none bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
