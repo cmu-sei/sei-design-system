@@ -6,11 +6,11 @@
     aria-label="Page navigation"
   >
     <ul
-      class="flex space-x-2"
+      class="flex gap-x-2"
       role="list"
     >
       <li 
-        class="flex items-center grow-1 shrink-1"
+        class="flex items-center grow-0 shrink-0"
         role="listitem"
       >
         <button
@@ -21,7 +21,7 @@
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded
+            border rounded sds-theme-plaid:rounded-none
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2
@@ -48,7 +48,7 @@
       <li
         v-for="(page, key) in pageList"
         :key="key"
-        class="hidden md:flex grow-1 shrink-1"
+        class="hidden md:flex grow-0 shrink-0"
         role="listitem"
       >
         <SdsActionDropdown
@@ -63,9 +63,9 @@
               :aria-disabled="loading"
               :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
               class="
-                flex items-center justify-center grow-1 shrink-1
+                flex items-center justify-center grow-0 shrink-0
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-                rounded
+                rounded sds-theme-plaid:rounded-none
                 w-[2.125rem] h-[2.125rem]
                 disabled:pointer-events-none
               "
@@ -96,7 +96,7 @@
             role="menuitem"
           >
             <form @submit.prevent>
-              <fieldset class="flex flex-row flex-nowrap items-center space-x-2">
+              <fieldset class="flex flex-row flex-nowrap items-center gap-x-2">
                 <span class="text-gray-900 dark:text-white text-sm">Go to</span>
                 <label for="page-number">
                   <span class="sr-only">Page number</span>
@@ -134,10 +134,10 @@
               `Go to page ${page}`
           "
           class="
-            flex items-center justify-center grow-1 shrink-1
+            flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded
+            border rounded sds-theme-plaid:rounded-none
             border-gray-600/20 dark:border-gray-600/20
             text-gray-600 dark:text-gray-400
             font-semibold
@@ -182,7 +182,7 @@
         </span>
       </li>
       <li 
-        class="flex grow-1 shrink-1"
+        class="flex grow-0 shrink-0"
         role="listitem"
       >
         <button
@@ -193,7 +193,7 @@
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded
+            border rounded sds-theme-plaid:rounded-none
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2
