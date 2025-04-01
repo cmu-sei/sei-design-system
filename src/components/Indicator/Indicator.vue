@@ -44,7 +44,7 @@ const props = defineProps({
    * Determines whether the indicator is placed over a portrait (rectangle) or a circle.
    */
   placementOver: {
-    type: String as PropType<'portrait' | 'circle'>,
+    type: String as PropType<'portrait' | 'circle' | 'square'>,
     default: 'portrait'
   },
   /**

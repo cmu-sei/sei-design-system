@@ -4,13 +4,13 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div class="flex flex-row gap-4 h-48">
+      <div class="flex flex-row gap-4">
         <div
-          v-for="size in ['xs', 'sm', 'md', 'lg', 'xl', '2xl']"
+          v-for="size in avatarSizes"
           :key="size"
         >
           <div
-            v-for="shape in ['circle', 'square', 'portrait']"
+            v-for="shape in avatarShapes"
             :key="shape"
             class="flex flex-col justify-center gap-4 h-auto"
           >
@@ -25,9 +25,9 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row gap-4 h-48">
+      <div class="flex flex-row gap-4">
         <div
-          v-for="size in ['xs', 'sm', 'md', 'lg', 'xl', '2xl']"
+          v-for="size in avatarSizes"
           :key="size"
         >
           <div class="h-full flex-col flex justify-end">
@@ -49,9 +49,9 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-row gap-4 h-48">
+      <div class="flex flex-row gap-4">
         <div
-          v-for="size in ['xs', 'sm', 'md', 'lg', 'xl', '2xl']"
+          v-for="size in avatarSizes"
           :key="size"
         >
           <div class="h-full flex-col flex justify-end">
@@ -75,7 +75,7 @@
       </div>
       <div class="flex flex-row gap-4 h-60">
         <div
-          v-for="size in ['xs', 'sm', 'md', 'lg', 'xl', '2xl']"
+          v-for="size in avatarSizes"
           :key="size"
         >
           <div class="h-full flex-col flex justify-end">
@@ -497,6 +497,9 @@
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 
 const datapointModelValue = ref(1451)
+
+const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
+const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
 
 const fields = ref<TableField[]>([
   {

@@ -140,11 +140,11 @@ const shapeClass = computed(() => {
     props.shape === 'portrait'
   ) {
     if (['xs', 'sm'].includes(props.size))
-      classes.push('rounded-sm')
+      classes.push('rounded-sm sds-theme-plaid:rounded-none')
     if (['md', 'lg'].includes(props.size))
-      classes.push('rounded-md')
+      classes.push('rounded-md sds-theme-plaid:rounded-none')
     if (['xl', '2xl'].includes(props.size))
-      classes.push('rounded-lg')
+      classes.push('rounded-lg sds-theme-plaid:rounded-none')
   }
   return classes
 })
@@ -178,7 +178,7 @@ const variantInnerClass = computed(() => {
   if (props.variant && props.variant !== 'random') {
     return textVariants.filter((color) => color.includes(props.variant))[0]
   } else {
-    const randomNumber = Math.floor(Math.random() * shapeVariants.length)
+    const randomNumber = Math.floor(Math.random() * textVariants.length)
     return textVariants[randomNumber]
   }
 })

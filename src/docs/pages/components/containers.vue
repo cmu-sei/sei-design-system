@@ -40,7 +40,7 @@
           <SdsResizer
             :initial="100"
             :clamp="false"
-            class="mb-1 bg-indigo-25 dark:bg-indigo-900 mb-4"
+            class="bg-indigo-25 dark:bg-indigo-900 mb-4"
           >
             <div class="justify-start p-4 h-fit overflow-y-hidden">
               <div class="h-fit">
