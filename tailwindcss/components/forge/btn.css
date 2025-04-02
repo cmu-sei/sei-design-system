@@ -36,6 +36,17 @@
       }
     }
 
+    &.btn-primary.btn-gray {
+      @apply bg-gray-600;
+      @apply dark:bg-gray-400;
+      @apply hover:bg-gray-500;
+      @apply dark:hover:bg-gray-300;
+      &:active, &.active {
+        @apply bg-gray-600;
+        @apply dark:bg-gray-400;
+      }
+    }
+
     &.btn-primary.btn-red {
       @apply bg-red-600;
       @apply dark:bg-red-400;
@@ -69,6 +80,15 @@
       }
     }
 
+    &.btn-secondary.btn-gray {
+      @apply text-gray-600;
+      @apply dark:text-gray-300 dark:hover:text-gray-200;
+      &:active, &.active {
+        @apply text-gray-600;
+        @apply dark:text-gray-300;
+      }
+    }
+
     &.btn-secondary.btn-red {
       @apply text-red-600;
       @apply dark:text-red-300 dark:hover:text-red-200;
@@ -96,6 +116,17 @@
       &:active, &.active {
         @apply shadow-inner text-white bg-blue-600 border-blue-600;
         @apply dark:text-black dark:bg-blue-400 dark:border-blue-400;
+      }
+    }
+
+    &.btn-tertiary.btn-gray {
+      @apply text-gray-600 border-gray-600;
+      @apply dark:text-gray-300 dark:border-gray-300;
+      @apply hover:text-white hover:bg-gray-500 hover:border-gray-500;
+      @apply dark:hover:text-black dark:hover:border-gray-300 dark:hover:bg-gray-300;
+      &:active, &.active {
+        @apply text-white bg-gray-600 border-gray-600;
+        @apply dark:text-black dark:bg-gray-400 dark:border-gray-400;
       }
     }
 
@@ -129,6 +160,17 @@
       &:active, &.active {
         @apply shadow-inner text-blue-600 bg-gray-100;
         @apply dark:shadow-inner dark:text-blue-200 dark:bg-gray-800/40;
+      }
+    }
+
+    &.btn-ghost.btn-gray {
+      @apply text-gray-600;
+      @apply dark:text-gray-300;
+      @apply hover:bg-gray-50;
+      @apply dark:hover:text-gray-200 dark:hover:bg-gray-700/40;
+      &:active, &.active {
+        @apply text-gray-600 bg-gray-100;
+        @apply dark:shadow-inner dark:text-gray-200 dark:bg-gray-800/40;
       }
     }
 
