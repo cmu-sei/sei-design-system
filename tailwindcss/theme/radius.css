@@ -1,0 +1,32 @@
+@theme {
+  --radius-theme-xs: var(--radius-xs);
+  --radius-theme-sm: var(--radius-sm);
+  --radius-theme-md: var(--radius-md);
+  --radius-theme-lg: var(--radius-lg);
+  --radius-theme-xl: var(--radius-xl);
+  --radius-theme-2xl: var(--radius-2xl);
+  --radius-theme-3xl: var(--radius-3xl);
+  --radius-theme-4xl: var(--radius-4xl);
+}
+
+.sds-theme-forge {
+  --radius-theme-xs: var(--radius-xs);
+  --radius-theme-sm: var(--radius-sm);
+  --radius-theme-md: var(--radius-md);
+  --radius-theme-lg: var(--radius-lg);
+  --radius-theme-xl: var(--radius-xl);
+  --radius-theme-2xl: var(--radius-2xl);
+  --radius-theme-3xl: var(--radius-3xl);
+  --radius-theme-4xl: var(--radius-4xl);
+}
+
+.sds-theme-plaid {
+  --radius-theme-xs: none;
+  --radius-theme-sm: none;
+  --radius-theme-md: none;
+  --radius-theme-lg: none;
+  --radius-theme-xl: none;
+  --radius-theme-2xl: none;
+  --radius-theme-3xl: none;
+  --radius-theme-4xl: none;
+}

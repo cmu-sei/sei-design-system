@@ -118,7 +118,7 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-lg sds-theme-plaid:rounded-none': selectedTopLink?.selected,
+            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-theme-lg': selectedTopLink?.selected,
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"

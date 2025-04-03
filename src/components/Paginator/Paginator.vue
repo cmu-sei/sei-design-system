@@ -21,7 +21,7 @@
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2
@@ -65,7 +65,7 @@
               class="
                 flex items-center justify-center grow-0 shrink-0
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-                rounded sds-theme-plaid:rounded-none
+                rounded-theme-sm
                 w-[2.125rem] h-[2.125rem]
                 disabled:pointer-events-none
               "
@@ -137,7 +137,7 @@
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-600/20
             text-gray-600 dark:text-gray-400
             font-semibold
@@ -193,7 +193,7 @@
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2

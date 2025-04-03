@@ -1062,14 +1062,12 @@ const handleRequired = () => {
 @reference "../../../tailwindcss/tailwind.css";
 
 .sds-multiselect {
-  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded w-full dark:text-gray-50 dark:bg-gray-900;
-  @apply sds-theme-plaid:rounded-none;
+  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 .sds-multiselect.active,
 .sds-multiselect.open {
-  @apply border-blue-500 rounded-sm ring-2 ring-blue-300 dark:ring-blue-700;
-  @apply sds-theme-plaid:rounded-none;
+  @apply border-blue-500 rounded-theme-sm ring-2 ring-blue-300 dark:ring-blue-700;
 }
 
 .sds-multiselect.open:not(.up) {

@@ -16,7 +16,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
   aria-labelledby="mocked"
-  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
   data-id="sds-panel"
   id="mocked1"
   role="dialog"

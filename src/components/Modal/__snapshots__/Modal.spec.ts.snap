@@ -8,7 +8,7 @@ exports[`Modal > modelValue: true, size: 2xl, title: Wonderful SEI modal, hideHe
         <button class="fixed inset-0 h-full w-full cursor-auto"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-10 md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-10 md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl">
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
@@ -37,7 +37,7 @@ exports[`Modal > modelValue: true, size: lg, title: Wonderful SEI modal, hideHea
         <button class="fixed inset-0 h-full w-full cursor-auto"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-30 md:max-w-xl lg:max-w-2xl">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-30 md:max-w-xl lg:max-w-2xl">
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
@@ -66,7 +66,7 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
         <button class="fixed inset-0 h-full w-full cursor-auto"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-50 md:max-w-xl">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-50 md:max-w-xl">
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
@@ -95,7 +95,7 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
         <button class="fixed inset-0 h-full w-full cursor-auto sr-only"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-50 md:max-w-xl">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-50 md:max-w-xl">
                 <div class="flex items-center p-6 pb-0 sr-only">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
@@ -124,7 +124,7 @@ exports[`Modal > modelValue: true, size: sm, title: Wonderful SEI modal, hideHea
         <button class="fixed inset-0 h-full w-full cursor-auto"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-40 md:max-w-sm">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-40 md:max-w-sm">
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
@@ -153,7 +153,7 @@ exports[`Modal > modelValue: true, size: xl, title: Wonderful SEI modal, hideHea
         <button class="fixed inset-0 h-full w-full cursor-auto"><span class="sr-only">Close modal</span>
         </button>
         <div role="dialog" data-id="sds-modal" class="z-50 p-2" aria-labelledby="v-0">
-            <div class="relative block w-full mx-auto bg-white border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-20 md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
+            <div class="relative block w-full mx-auto bg-white border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800 md:my-16 z-20 md:max-w-xl lg:max-w-2xl xl:max-w-4xl">
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>

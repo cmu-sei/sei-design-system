@@ -1,5 +1,5 @@
 input[type='checkbox'] {
-  @apply rounded sds-theme-plaid:rounded-none;
+  @apply rounded-theme-sm;
 }
 
 input[type='checkbox'], input[type='radio'] {
@@ -20,7 +20,7 @@ input[type='checkbox'], input[type='radio'], .form-control {
 }
 
 .form-control {
-  @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300 placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:italic min-w-0 py-2 px-3 [&.form-control-sm]:py-1 [&.form-control-sm]:px-2 [&.form-control-sm]:text-sm text-base shadow-inner text-gray-900 bg-white rounded sds-theme-plaid:rounded-none w-full dark:text-gray-50 dark:bg-gray-900;
+  @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300 placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:italic min-w-0 py-2 px-3 [&.form-control-sm]:py-1 [&.form-control-sm]:px-2 [&.form-control-sm]:text-sm text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 select:not([multiple]).form-control option {
