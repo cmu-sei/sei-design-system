@@ -26,7 +26,7 @@
     @apply border-gray-100 dark:border-gray-850;
   }
 
-  & .input-group-addon, & [data-id^='sds-'] .form-control, > .form-control, & .btn, & .action-btn {
+  & .input-group-addon, & [data-id^='sds-'] .form-control, & > .form-control, & .btn, & .action-btn {
     @apply border-0 rounded-none;
   }
 
