@@ -16,7 +16,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
   aria-labelledby="mocked"
-  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg sds-theme-plaid:rounded-none shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
   data-id="sds-panel"
   id="mocked1"
   role="dialog"
@@ -24,10 +24,17 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
   <header
     class="flex items-center p-6 pb-0"
   >
-    <!--v-if-->
+    <div
+      class="flex items-center gap-2 text-2xl leading-7 font-light"
+      id="v-0"
+    >
+      <!-- @slot Panel header content. -->
+      
+      
+    </div>
     <button
       aria-label="close"
-      class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-none focus:text-gray-700 focus:outline-none dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
+      class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
     >
       <svg
         class="w-6 h-6"
@@ -57,6 +64,12 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
     </div>
     
   </main>
-  <!--v-if-->
+  <footer
+    class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
+  >
+    <!-- @slot Panel footer content. -->
+    
+    
+  </footer>
 </div>
 `;

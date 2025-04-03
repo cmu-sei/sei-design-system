@@ -8,7 +8,7 @@ exports[`Avatar > should match its default snapshot 1`] = `
   role="img"
 >
   <span
-    class="leading-none text-black cursor-default uppercase text-xl font-medium dark:text-blue-400"
+    class="leading-none text-black cursor-default uppercase text-xl font-regular dark:text-blue-400"
     title=""
   />
 </div>
