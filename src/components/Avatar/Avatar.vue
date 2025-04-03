@@ -114,16 +114,16 @@ const textClass = computed(() => {
     case '2xl':
       return 'text-6xl font-light'
     case 'xl':
-      return 'text-3xl font-medium'
+      return 'text-3xl font-regular'
     case 'md':
-      return 'text-xl font-medium'
+      return 'text-xl font-regular'
     case 'sm':
       return 'text-sm font-semibold'
     case 'xs':
       return 'text-xs font-semibold'
     default:
     case 'lg':
-      return 'text-2xl font-medium'
+      return 'text-2xl font-regular'
   }
 })
 
