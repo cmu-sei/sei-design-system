@@ -71,7 +71,7 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm sds-theme-plaid:rounded-none shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
   >
     <!--v-if-->
     <div
@@ -236,13 +236,13 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
     </div>
     <!-- Footer section -->
     <div
-      class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      class="border-t rounded-b sds-theme-plaid:rounded-none border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
     >
       <div
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -283,7 +283,7 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -485,7 +485,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm sds-theme-plaid:rounded-none shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
   >
     <!--v-if-->
     <div
@@ -650,13 +650,13 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
     </div>
     <!-- Footer section -->
     <div
-      class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      class="border-t rounded-b sds-theme-plaid:rounded-none border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
     >
       <div
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -697,7 +697,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -846,7 +846,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm sds-theme-plaid:rounded-none shadow-lg dark:border-gray-700 dark:bg-gray-850"
   >
     <!--v-if-->
     <div
@@ -1011,13 +1011,13 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     </div>
     <!-- Footer section -->
     <div
-      class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      class="border-t rounded-b sds-theme-plaid:rounded-none border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
     >
       <div
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -1058,7 +1058,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -1133,7 +1133,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm sds-theme-plaid:rounded-none shadow-lg dark:border-gray-700 dark:bg-gray-850"
   >
     <!--v-if-->
     <div
@@ -1298,13 +1298,13 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     </div>
     <!-- Footer section -->
     <div
-      class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      class="border-t rounded-b sds-theme-plaid:rounded-none border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
     >
       <div
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -1345,7 +1345,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -1420,7 +1420,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-sm sds-theme-plaid:rounded-none shadow-lg dark:border-gray-700 dark:bg-gray-850"
   >
     <!--v-if-->
     <div
@@ -1575,13 +1575,13 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
     </div>
     <!-- Footer section -->
     <div
-      class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      class="border-t rounded-b sds-theme-plaid:rounded-none border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
     >
       <div
         class="ml-auto flex items-center gap-1.5"
       >
         <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"
@@ -1622,7 +1622,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="flex items-center gap-1.5"
       >
         <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm shadow-inner"
+          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-sm sds-theme-plaid:rounded-none shadow-inner"
         >
           <svg
             aria-hidden="true"

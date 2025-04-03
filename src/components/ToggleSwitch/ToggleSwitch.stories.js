@@ -1,7 +1,7 @@
 import SdsToggleSwitch from './ToggleSwitch.vue';
 
 export default {
-  title: 'Inputs/Toggle Switch',
+  title: 'Components/Inputs/Toggle Switch',
   parameters: {
     docs: {
       description: {

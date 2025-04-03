@@ -1,7 +1,7 @@
 import SdsTable from './Table.vue';
 
 export default {
-  title: 'Data Visualization/Table',
+  title: 'Components/Data Visualization/Table',
   parameters: {
     docs: {
       description: {

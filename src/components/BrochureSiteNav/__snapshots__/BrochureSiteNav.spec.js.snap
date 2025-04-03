@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BrochureSiteNav > should match its default snapshot 1`] = `
+<div
+  class="space-y-4"
+  data-id="sds-brochure-site-nav"
+>
+  
+  
+</div>
+`;

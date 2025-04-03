@@ -1,7 +1,7 @@
 import SdsBadge from './Badge.vue';
 
 export default {
-  title: 'Data Visualization/Badge',
+  title: 'Components/Data Visualization/Badge',
   parameters: {
     docs: {
       description: {

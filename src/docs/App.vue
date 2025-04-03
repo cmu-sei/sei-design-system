@@ -1,5 +1,5 @@
 <template>
-  <sds-layout-app
+  <sds-application
     v-model="collapsed"
     :app-name="appName"
     :app-suite="appSuite"
@@ -7,7 +7,7 @@
     app-suite-url="#"
     :enable-collapsible-sidebar="enableCollapsibleSidebar"
     :page-title="pageTitle"
-    :sidebar-navigation-items="(sidebarNavigationItems as LayoutAppSidebarNavItem[])"
+    :sidebar-navigation-items="(sidebarNavigationItems as ApplicationSidebarNavItem[])"
     @navigate="navigate"
   >
     <template #user-section>
@@ -116,11 +116,11 @@
     <template #footer-right>
       Footer right
     </template>
-  </sds-layout-app>
+  </sds-application>
 </template>
 
 <script setup lang="ts">
-import { LayoutAppSidebarNavItem } from '../components/LayoutApp/LayoutApp.vue';
+import { ApplicationSidebarNavItem } from '../components/Application/Application.vue';
 
 defineOptions({
   name: 'AppPage'
@@ -177,14 +177,30 @@ const toggleDarkMode = () => {
   document.body.classList.toggle('dark')
 }
 
-
 const isPlaidTheme = ref(false)
+
 const togglePlaidTheme = () => {
   isPlaidTheme.value = !isPlaidTheme.value
-  document.body.classList.toggle('sds-theme-plaid')
+  if (isPlaidTheme.value) {
+    document.body.classList.add('sds-theme-plaid')
+    document.body.classList.remove('sds-theme-forge')
+  } else {
+    document.body.classList.add('sds-theme-forge')
+    document.body.classList.remove('sds-theme-plaid')
+  }
 }
 
-const navigate = ({group, item, event}: { group: LayoutAppSidebarNavItem, item: LayoutAppSidebarNavItem, event: Event }) => {
+onMounted(() => {
+  if (isPlaidTheme.value) {
+    document.body.classList.add('sds-theme-plaid')
+    document.body.classList.remove('sds-theme-forge')
+  } else {
+    document.body.classList.add('sds-theme-forge')
+    document.body.classList.remove('sds-theme-plaid')
+  }
+})
+
+const navigate = ({group, item, event}: { group: ApplicationSidebarNavItem, item: ApplicationSidebarNavItem, event: Event }) => {
   event.preventDefault()
   router.push({ path: item.href })
 }

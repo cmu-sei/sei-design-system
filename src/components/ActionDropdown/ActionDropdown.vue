@@ -61,7 +61,7 @@
     </template>
     <template #default="{ open, close, toggle, isOpen }">
       <div
-        class="py-2 rounded"
+        class="py-2 rounded-sm sds-theme-plaid:rounded-none"
         role="menu"
         aria-orientation="vertical"
         :aria-labelledby="button && (button as HTMLElement).id || undefined"

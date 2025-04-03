@@ -1,7 +1,7 @@
 import SdsResizer from './Resizer.vue';
 
 export default {
-  title: 'Containers/Resizer',
+  title: 'Components/Containers/Resizer',
   parameters: {
     docs: {
       description: {

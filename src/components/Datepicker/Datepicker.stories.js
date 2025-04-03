@@ -3,7 +3,7 @@ import SdsDatepicker from './Datepicker.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Date & Time/Datepicker',
+  title: 'Components/Date & Time/Datepicker',
   parameters: {
     docs: {
       description: {

@@ -21,7 +21,7 @@
             <div class="grow">
               <div class="mb-2">
                 <div
-                  class="h-6 mr-2 rounded-sm"
+                  class="h-6 mr-2 rounded-sm sds-theme-plaid:rounded-none"
                   role="progressbar"
                   :title="`${result.count}`"
                   :aria-valuenow="result.count"

@@ -1,7 +1,7 @@
 import SdsAvatar from './Avatar.vue';
 
 export default {
-  title: 'Data Visualization/Avatar',
+  title: 'Components/Data Visualization/Avatar',
   parameters: {
     docs: {
       description: {
