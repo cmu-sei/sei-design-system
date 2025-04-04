@@ -656,16 +656,16 @@ const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, is
       if (isRange.value) {
         if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
           const currentHour = getHours(date.value.start)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.start = setHours(date.value.start, hours)
         } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
           const currentHour = getHours(date.value.end)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.end = setHours(date.value.end, hours)
         }
       } else if (date.value instanceof Date) {
         const currentHour = getHours(date.value)
-        let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+        const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
         date.value = setHours(date.value, hours)
       }
       break

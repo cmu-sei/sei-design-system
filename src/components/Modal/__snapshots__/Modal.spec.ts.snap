@@ -174,10 +174,4 @@ exports[`Modal > modelValue: true, size: xl, title: Wonderful SEI modal, hideHea
 </body>"
 `;
 
-exports[`Modal > should match its default snapshot 1`] = `
-"<body>
-    <div>
-        <!---->
-    </div>
-</body>"
-`;
+exports[`Modal > should match its default snapshot 1`] = `"<body></body>"`;

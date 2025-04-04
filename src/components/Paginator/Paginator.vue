@@ -299,31 +299,31 @@ const nextDisabled = computed(() => {
 
 const pageList = computed(() => {
   if (props.totalPages <= props.threshold) {
-    return Array.apply(null, Array(props.totalPages)).map((x, i) => {
+    return [...Array(props.totalPages)].map((x, i) => {
       return i + 1;
     });
   } else if (props.currentPage < props.threshold) {
-    const list: Array<number | string> = Array.apply(null, Array(props.threshold)).map((x, i) => {
+    const list: Array<number | string> = [...Array(props.threshold)].map((x, i) => {
       return i + 1;
     });
     return list.concat(["...", props.totalPages]);
   } else if (props.currentPage > props.totalPages - props.threshold + 1) {
     const list = [1, "..."];
     return list.concat(
-      Array.apply(null, Array(props.threshold)).map((x, i) => {
+      [...Array(props.threshold)].map((x, i) => {
         return props.totalPages - props.threshold + i + 1;
       })
     );
   } else {
     let list = [1, "..."];
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i - props.threshold + 3;
       })
     );
     list.push(props.currentPage);
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i + 1;
       })
     );

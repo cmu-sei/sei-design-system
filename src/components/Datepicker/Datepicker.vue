@@ -526,11 +526,8 @@ const formatDate = (dateString: string) => {
   ]
 
   // validate the format and store the found format for later processing
-  let foundFormat
   const validDates = formats.filter((format) => {
-    const valid = isValid(parse(dateString, format, new Date()))
-    if (valid) foundFormat = format
-    return valid
+    return isValid(parse(dateString, format, new Date()))
   })
 
   if (validDates.length > 0) {

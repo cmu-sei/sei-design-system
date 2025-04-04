@@ -454,7 +454,7 @@ const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
-  let div = document.createElement('div')
+  const div = document.createElement('div')
   div.innerHTML = value
   return div.textContent || div.innerText || ''
 }

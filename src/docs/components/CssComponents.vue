@@ -778,8 +778,6 @@
 </template>
 
 <script setup lang="ts">
-import SdsLink from '../../components/Link/Link.vue'
-
 defineOptions({
   name: "CssComponentsSection"
 })

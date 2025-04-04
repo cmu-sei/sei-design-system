@@ -131,7 +131,7 @@ const props = defineProps({
 
 const linkClass = computed(() => {
   /* If the type is set, or if `cta` prop is set, apply styles */
-  let classes = props.type || props.cta
+  const classes = props.type || props.cta
     ? 'link group w-full no-underline'
     : ''
   return classes

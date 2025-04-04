@@ -105,7 +105,7 @@ const onOpen = async (ms = 0) => {
       shouldOpen.value = false
       open.value = true
     }
-  } catch (e) {
+  } catch {
     shouldOpen.value = false
   }
 }
@@ -117,7 +117,7 @@ const onClose = async (ms = 0) => {
     await willOpenStateDelay(props.willClose)
     if (!open.value) return
     open.value = false
-  } catch (e) {
+  } catch {
     return
   }
 }

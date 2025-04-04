@@ -188,8 +188,8 @@ const variantClass = computed(() => {
 })
 
 const maskSpec = computed(() => {
-  let vbWidth = 1000
-  let vbHeight = 1000
+  const vbWidth = 1000
+  const vbHeight = 1000
 
   let maskX = 0
   let maskY = 0

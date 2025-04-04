@@ -200,7 +200,7 @@ onMounted(() => {
   }
 })
 
-const navigate = ({group, item, event}: { group: ApplicationSidebarNavItem, item: ApplicationSidebarNavItem, event: Event }) => {
+const navigate = ({item, event}: { item: ApplicationSidebarNavItem, event: Event }) => {
   event.preventDefault()
   router.push({ path: item.href })
 }

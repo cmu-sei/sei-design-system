@@ -145,7 +145,7 @@ type DoubleClick = {
   timer?: number,
   delay: number,
 }
-let doubleClick = ref<DoubleClick>({
+const doubleClick = ref<DoubleClick>({
   clicks: 0,
   timer: undefined,
   delay: 300

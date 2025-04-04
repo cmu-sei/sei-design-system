@@ -188,10 +188,7 @@ const entriesHaveAllRequiredProps = computed(() => {
 })
 
 const maxResultValue = computed(() => {
-  return Math.max.apply(
-    Math,
-    results.value.map((o: TopFiveChartResult) => o.count)
-  );
+  return Math.max(...results.value.map((o: TopFiveChartResult) => o.count));
 })
 
 const resultValue = (value: number) => {
