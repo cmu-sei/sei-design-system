@@ -10,7 +10,7 @@
     :class="[block ? 'w-full' : '']"
     :popper-class="{
       '[.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': type === 'dark',
-      'bg-white absolute border shadow-lg rounded-md bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
+      'bg-white absolute border shadow-lg rounded-theme-md bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
       [auto ? 'w-auto' : 'w-56']: true,
       [zIndexClass]: true
     }"
@@ -27,8 +27,8 @@
         :toggle="toggle"
       >
         <button
+          :id="id"
           ref="button"
-          v-uid
           type="button"
           class="space-x"
           aria-haspopup="true"
@@ -66,7 +66,7 @@
     <template #default="{ open, close, toggle, isOpen }">
       <div
         :class="[
-          'py-2 rounded',
+          'py-2 rounded-theme-sm',
           type === 'dark' ? 'dropdown-dark bg-gray-950': ''
         ]"
         role="menu"
@@ -87,16 +87,14 @@
 
 <script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
-import { Uid } from '@shimyshack/uid'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsDropdown',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsDropdown'
 })
 
 const props = defineProps({

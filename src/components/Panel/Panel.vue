@@ -18,7 +18,7 @@
             px-2
             py-0
             overflow-auto
-            bg-black bg-opacity-50
+            bg-black/50
           "
           :class="[zIndexClass]"
         >
@@ -53,14 +53,14 @@
             'right-0 rounded-r-none': side === 'right',
             'left-0 rounded-l-none': side === 'left'
           }"
-          class="fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+          class="fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
           @keydown="checkKeyEvent"
         >
           <header class="flex items-center p-6 pb-0">
             <div
               v-if="hasTitleSlot"
+              :id="id"
               ref="titleWrapper"
-              v-uid
               class="flex items-center gap-2 text-2xl leading-7 font-light"
             >
               <!-- @slot Panel header content. -->
@@ -77,8 +77,8 @@
             bg-transparent
             border-0
             cursor-pointer
-            hover:text-gray-700 hover:outline-none
-            focus:text-gray-700 focus:outline-none
+            hover:text-gray-700 hover:outline-hidden
+            focus:text-gray-700 focus:outline-hidden
             dark:hover:text-gray-300 dark:focus:text-gray-300
             active:text-gray-500
             dark:active:text-gray-600
@@ -104,7 +104,7 @@
           </main>
           <footer
             v-if="hasFooterSlot"
-            class="flex flex-shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur"
+            class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
           >
             <!-- @slot Panel footer content. -->
             <slot name="footer" />
@@ -118,13 +118,12 @@
 <script setup lang="ts">
 import { type Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue';
-import { Uid } from '@shimyshack/uid';
-import { hasSlotContent } from '../../helpers/hasSlotContent';
+
+const id = useId()
 
 defineOptions({
   name: 'SdsPanel',
   directives: {
-    uid: Uid,
     focus: {
       mounted(el: HTMLElement) {
         el.focus();
@@ -163,17 +162,21 @@ const props = defineProps({
 
 const emit = defineEmits(['update:model-value'])
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  footer: () => unknown
+}>()
 
 const titleWrapper = ref(null)
 const panelContainer = ref(null)
 
 const hasTitleSlot = computed(() => {
-  return hasSlotContent(slots.title);
+  return !!slots.title
 })
 
 const hasFooterSlot = computed(() => {
-  return hasSlotContent(slots.footer);
+  return !!slots.footer
 })
 
 const showPanel = computed({

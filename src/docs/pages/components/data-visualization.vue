@@ -4,133 +4,97 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div class="grid grid-cols-4 gap-4">
-        <div>
-          <SdsIndicator
-            placement-over="circle"
-            placement="bottom-right"
-            size="lg"
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div
+            v-for="shape in avatarShapes"
+            :key="shape"
+            class="flex flex-col justify-center gap-4 h-auto"
           >
-            <SdsAvatar
-              shape="circle"
-              variant="gray"
-              size="lg"
-              name="John Smith"
-            />
-          </SdsIndicator>
+            <div>
+              <SdsAvatar
+                :size="size"
+                :shape="shape"
+                variant="gray"
+                :src="`https://picsum.photos/seed/${size}-${shape}/200/200`"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="yellow"
-            size="lg"
-            name="John Smith"
-          />
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="circle"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="circle"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="red"
-            size="lg"
-            name="John Smith"
-          />
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="square"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="square"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="purple"
-            size="lg"
-            name="John Smith"
-          />
-        </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="blue"
-            size="lg"
-            name="John Smith"
-          />
-        </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="green"
-            size="lg"
-            name="John Smith"
-          />
-        </div>
-        <div>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="portrait"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="portrait"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="portrait"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="portrait"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="circle"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="circle"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
+      </div>
+      <div class="flex flex-row gap-4 h-60">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="portrait"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="portrait"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
       </div>
     </div>
@@ -418,7 +382,7 @@
             </SdsTag>
           </li>
           <li>
-            <SdsTag 
+            <SdsTag
               href="https://designsystem.sei.cmu.edu/"
               :external="true"
             >
@@ -473,7 +437,7 @@
             </SdsTag>
           </li>
           <li>
-            <SdsTag 
+            <SdsTag
               href="https://designsystem.sei.cmu.edu/"
               size="md"
               :external="true"
@@ -533,6 +497,9 @@
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 
 const datapointModelValue = ref(1451)
+
+const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
+const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
 
 const fields = ref<TableField[]>([
   {

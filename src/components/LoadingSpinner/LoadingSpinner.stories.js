@@ -2,7 +2,7 @@ import SdsLoadingSpinner from './LoadingSpinner.vue';
 import SdsButton from '../Button/Button.vue';
 
 export default {
-  title: 'Feedback/Loading Spinner',
+  title: 'Components/Feedback/Loading Spinner',
   parameters: {
     docs: {
       description: {

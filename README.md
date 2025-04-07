@@ -1,6 +1,6 @@
-# @SDS/Components-Vue3
+# @cmu-sei/sei-design-system
 
-Vue 3 components for the SEI Design System.
+Vue Components and Tailwind CSS for the SEI Design System.
 
 ## Contributing
 

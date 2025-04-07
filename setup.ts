@@ -19,8 +19,8 @@ const regex = [
   new RegExp(/data-v-\w+="[^"]*"/g),
   new RegExp(/<!--teleport [\s\S]*?-->/g)
 ]
-const isString = (val: any): boolean => !!val && typeof val === 'string'
-const isObject = (val: any): boolean => !!val && typeof val === 'object'
+const isString = (val: string): boolean => !!val && typeof val === 'string'
+const isObject = (val: object): boolean => !!val && typeof val === 'object'
 
 /**
  * Remove all scoped data-v-* attributes and/or teleport HTML comments via applicable components in order 

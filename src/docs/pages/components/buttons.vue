@@ -1447,12 +1447,187 @@
           </form>
         </sds-action-dropdown>
       </div>
+      <span>Plaid theme</span>
+      <div class="space-x-4 sds-theme-plaid">
+        <sds-action-dropdown
+          title="Dropdown"
+          kind="primary"
+          variant="red"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
+          <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+            >
+              Sign out
+            </sds-dropdown-item>
+          </form>
+        </sds-action-dropdown>
+        <sds-action-dropdown
+          title="Dropdown"
+          type="dark"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
+          <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+            >
+              Sign out
+            </sds-dropdown-item>
+          </form>
+        </sds-action-dropdown>
+      </div>
     </div>
+
     <div class="grid gap-4">
       <h2 class="text-xl">
         Dropdown
       </h2>
       <div class="space-x-4">
+        <sds-dropdown
+          title="Dropdown"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
+          <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+            >
+              Sign out
+            </sds-dropdown-item>
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+              active
+            >
+              Destructive item
+            </sds-dropdown-item>
+          </form>
+        </sds-dropdown>
+        <sds-dropdown
+          title="Dropdown"
+          type="dark"
+        >
+          <sds-dropdown-header>
+            <p>Signed in as</p>
+            <p class="font-semibold truncate">
+              tom@example.com
+            </p>
+          </sds-dropdown-header>
+          <sds-dropdown-divider />
+          <sds-dropdown-item
+            href="/"
+            disabled
+          >
+            Guide
+          </sds-dropdown-item>
+          <sds-dropdown-item
+            href="#"
+            active
+          >
+            Support
+          </sds-dropdown-item>
+          <sds-dropdown-item href="#">
+            License
+          </sds-dropdown-item>
+          <sds-dropdown-divider />
+          <form
+            method="POST"
+            action="#"
+          >
+            <sds-dropdown-item
+              tag="button"
+              type="submit"
+              variant="red"
+            >
+              Sign out
+            </sds-dropdown-item>
+          </form>
+        </sds-dropdown>
+      </div>
+      <span>Plaid theme</span>
+      <div class="space-x-4 sds-theme-plaid">
         <sds-dropdown
           title="Dropdown"
         >

@@ -1,7 +1,7 @@
 import SdsDropdownDivider from './DropdownDivider.vue';
 
 export default {
-  title: 'Buttons/Dropdowns/Dropdown/Dropdown Divider',
+  title: 'Components/Buttons/Dropdowns/Dropdown/Dropdown Divider',
   parameters: {
     docs: {
       description: {

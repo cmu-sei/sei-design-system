@@ -2,7 +2,7 @@
 
 exports[`MegaMenuItem.vue > matches snapshot 1`] = `
 <a
-  class="link group w-full no-underline p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300"
+  class="link group w-full no-underline p-4 text-sm transition-all rounded-theme-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300"
   data-id="sds-megamenuitem"
   role="menuitem"
 >
@@ -36,7 +36,7 @@ exports[`MegaMenuItem.vue > matches snapshot 1`] = `
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop assigned 1`] = `
-"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="descriptive">
+"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-theme-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="descriptive">
   <!--v-if-->
   <div class="flex flex-row gap-4">
     <!--v-if-->
@@ -53,7 +53,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "descriptive" prop a
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop assigned 1`] = `
-"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="landing-page">
+"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-theme-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="landing-page">
   <!--v-if-->
   <div class="flex flex-row gap-4">
     <!--v-if-->
@@ -70,7 +70,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "landing-page" prop 
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assigned 1`] = `
-"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="simple">
+"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-theme-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem" kind="simple">
   <!--v-if-->
   <div class="flex flex-row gap-4">
     <!--v-if-->
@@ -87,7 +87,7 @@ exports[`MegaMenuItem.vue > matches snapshot with link kind "simple" prop assign
 `;
 
 exports[`MegaMenuItem.vue > matches snapshot with no props assigned 1`] = `
-"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem">
+"<a data-id="sds-megamenuitem" class="link group w-full no-underline p-4 text-sm transition-all rounded-theme-lg hover:bg-gray-25 hover:dark:bg-gray-850 hover:text-red-600 dark:hover:text-red-300" role="menuitem">
   <!--v-if-->
   <div class="flex flex-row gap-4">
     <!--v-if-->

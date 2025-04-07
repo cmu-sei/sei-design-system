@@ -1,7 +1,7 @@
 import SdsFloatingActionButton from './FloatingActionButton.vue';
 
 export default {
-  title: 'Buttons/Floating Action Button',
+  title: 'Components/Buttons/Floating Action Button',
   parameters: {
     docs: {
       story: {

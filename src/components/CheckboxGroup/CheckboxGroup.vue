@@ -1,7 +1,7 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-checkbox-group"
     class="flex"
     :class="{
@@ -44,19 +44,16 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from "@shimyshack/uid";
-
 export type CheckboxGroupOptionValue = string | number | boolean
 
 export interface CheckboxGroupOption<T> {
   [key: string]: T
 }
 
+const id = useId()
+
 defineOptions({
-  name: "SdsCheckboxGroup",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsCheckboxGroup"
 })
 
 const props = defineProps({

@@ -1,0 +1,97 @@
+.tab {
+  @apply select-none whitespace-nowrap flex items-center text-sm py-3 px-4 w-full font-semibold cursor-pointer;
+}
+
+/* Core styles */
+
+.tab:active {
+  filter: brightness(95%);
+}
+
+.tab.disabled, .tab[disabled] {
+  @apply opacity-50 pointer-events-none;
+}
+
+/* Types */
+
+/* Underline type */
+
+.tab-underline {
+  @apply pt-3 pb-2 border-b-4 border-transparent rounded-none text-gray-600 dark:text-gray-400;
+}
+
+.tab-underline:hover, .tab-underline:active {
+  @apply text-black border-gray-100 dark:text-white dark:border-gray-800;
+}
+
+.tab-underline.active {
+  &.tab-blue {
+    @apply text-blue-600 border-blue-600 dark:text-blue-300 dark:border-blue-300;
+  }
+  &.tab-red {
+    @apply text-red-600 border-red-600 dark:text-red-300 dark:border-red-300;
+  }
+}
+
+/* Overline type */
+
+.tab-overline {
+  @apply pt-2 pb-3 border-t-4 border-transparent rounded-none text-gray-600 dark:text-gray-400;
+}
+
+.tab-overline:hover, .tab-overline:active {
+  @apply text-black border-gray-100 dark:text-white dark:border-gray-800;
+}
+
+.tab-overline.active {
+  &.tab-blue {
+    @apply text-blue-600 border-blue-600 dark:text-blue-300 dark:border-blue-300;
+  }
+  &.tab-red {
+    @apply text-red-600 border-red-600 dark:text-red-300 dark:border-red-300;
+  }
+}
+
+/* Pill type */
+
+.tab-pill {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.tab-pill:hover:not(.active) {
+  @apply rounded text-black dark:text-white bg-gray-100 dark:bg-gray-800;
+}
+
+.tab-pill.active {
+  &.tab-blue {
+    @apply rounded-sm text-white bg-blue-600;
+  }
+  &.tab-red {
+    @apply rounded-sm text-white bg-red-600;
+  }
+}
+
+/* Block type */
+
+.tab-block {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.tab-block:hover:not(.active) {
+  @apply rounded-none text-black dark:text-white bg-gray-100 dark:bg-gray-800;
+}
+
+.tab-block.active {
+  &.tab-blue {
+    @apply rounded-none text-white bg-blue-600;
+  }
+  &.tab-red {
+    @apply rounded-none text-white bg-red-600;
+  }
+}
+
+/* Tab groups */
+
+.tab-group {
+  @apply grid grid-flow-col auto-cols-min;
+}

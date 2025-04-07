@@ -1,0 +1,88 @@
+.input-group-addon {
+  @apply flex items-center text-center whitespace-nowrap py-2 text-gray-500;
+}
+
+.input-group {
+  @apply text-gray-600 bg-white dark:text-gray-400 dark:bg-gray-900;
+  @apply [&.valid]:border-green-500 [&.invalid]:border-red-500 dark:[&.valid]:border-green-400 dark:[&.invalid]:border-red-300;
+
+  &.disabled {
+    @apply text-gray-400 bg-gray-100 shadow-none pointer-events-none select-none dark:text-gray-600 dark:bg-gray-850;
+
+    & .input-group-addon {
+      @apply text-gray-400 dark:text-gray-600;
+    }
+  }
+
+  &.readonly {
+    @apply bg-gray-50 dark:bg-gray-950;
+  }
+}
+
+.btn-group, .input-group {
+  @apply relative flex border rounded-theme-sm shadow-inner border-gray-500/50;
+
+  &.disabled {
+    @apply border-gray-100 dark:border-gray-850;
+  }
+
+  & .input-group-addon, & [data-id^='sds-'] .form-control, & > .form-control, & .btn, & .action-btn {
+    @apply border-0 rounded-none;
+  }
+
+  & .input-group-addon, & [data-id^='sds-'] & .form-control, & > .form-control {
+    @apply px-1.5;
+  }
+
+  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & > .form-control:first-child {
+    @apply pl-3;
+  }
+
+  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & > .form-control:last-child {
+    @apply pr-3;
+  }
+
+  &.btn-group-sm .input-group-addon, &.btn-group-sm [data-id^='sds-'] .form-control, &.btn-group-sm > .form-control, &.input-group-sm .input-group-addon, &.input-group-sm [data-id^='sds-'] .form-control, &.input-group-sm > .form-control {
+    @apply p-1 text-sm;
+  }
+
+  &.btn-group-sm .input-group-addon:first-child, &.btn-group-sm [data-id^='sds-']:first-child .form-control, &.btn-group-sm > .form-control:first-child, &.input-group-sm .input-group-addon:first-child, &.input-group-sm [data-id^='sds-']:first-child .form-control, &.input-group-sm > .form-control:first-child {
+    @apply pl-2;
+  }
+
+  &.btn-group-sm .input-group-addon:last-child, &.btn-group-sm [data-id^='sds-']:last-child .form-control, &.btn-group-sm > .form-control:last-child, &.input-group-sm .input-group-addon:last-child, &.input-group-sm [data-id^='sds-']:last-child .form-control, &.input-group-sm > .form-control:last-child {
+    @apply pr-2;
+  }
+
+  &.btn-group-sm select:not([multiple]).form-control, &.input-group-sm select:not([multiple]).form-control {
+    @apply pr-5 bg-right;
+  }
+
+  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & > .form-control:first-child, & .btn:first-child, & .action-btn:first-child {
+    @apply rounded-l-theme-sm;
+  }
+
+  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & > .form-control:last-child, & .btn:last-child, & .action-btn:last-child {
+    @apply rounded-r-theme-sm;
+  }
+
+  & .form-control {
+    @apply focus-visible:ring-0 bg-transparent shadow-none;
+  }
+
+  & [data-id^='sds-'], & .form-control {
+    @apply grow;
+  }
+}
+
+.btn-group {
+  @apply w-fit;
+}
+
+.input-group:has(:focus-visible) {
+  @apply ring-2 ring-blue-300 dark:ring-blue-500 border-gray-500;
+}
+
+.btn-toolbar, .input-toolbar {
+  @apply flex flex-wrap justify-start;
+}

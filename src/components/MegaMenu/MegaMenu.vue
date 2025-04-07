@@ -49,7 +49,7 @@
             'border-transparent dark:border-transparent': type === 'underline' && ((!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0))
           }"
           role="menuitem"
-          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline focus-visible:outline-2 cursor-pointer"
+          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline-2 cursor-pointer"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -118,7 +118,7 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
+            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-theme-lg': selectedTopLink?.selected,
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"

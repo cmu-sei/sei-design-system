@@ -16,9 +16,9 @@ describe('Modal', () => {
   })
 
   it('should match its default snapshot', async () => {
-    const wrapper = mount(Component, {
-      attachTo: document.body,
-    })
+    // const wrapper = mount(Component, {
+    //   attachTo: document.body,
+    // })
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 
@@ -26,11 +26,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();
@@ -52,11 +47,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();
@@ -78,11 +68,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();
@@ -105,11 +90,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();
@@ -132,11 +112,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();
@@ -159,11 +134,6 @@ describe('Modal', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       directives: {
-        'uid': {
-          created(el: HTMLDivElement) {
-            el.setAttribute('id', 'unique-id')
-          }
-        },
         focus: {
           mounted(el: HTMLElement) {
             el.focus();

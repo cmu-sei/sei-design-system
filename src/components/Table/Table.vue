@@ -527,7 +527,7 @@ const displayedFields = computed(() => {
 })
 
 const displayedFieldKeys = computed(() => {
-  return Object.entries(displayedFields.value).map(([_key, value]) => value.key)
+  return Object.entries(displayedFields.value).map(([, value]) => value.key)
 })
 
 const paddingClass = computed(() => {

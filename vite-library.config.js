@@ -2,7 +2,6 @@ import { resolve } from 'path'
 import { defineConfig, configDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
-import { unheadComposablesImports } from 'unhead'
 
 console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
 
@@ -14,7 +13,9 @@ export default defineConfig({
       imports: [
         'vue',
         '@vueuse/core',
-        unheadComposablesImports[0]
+        {
+          '@unhead/vue': ['useHead', 'useSeoMeta', 'useScript'],
+        },
       ],
       eslintrc: { enabled: true },
     }),
@@ -49,7 +50,7 @@ export default defineConfig({
         // ensure we use style.css naming
         assetFileNames: (assetInfo) => {
           const names = assetInfo.names.map(name => {
-            if (name === 'components-vue3.css') {
+            if (name === 'sei-design-system.css') {
               return 'style.css'
             }
             return name

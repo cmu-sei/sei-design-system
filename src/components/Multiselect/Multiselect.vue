@@ -1059,23 +1059,27 @@ const handleRequired = () => {
 </script>
 
 <style lang="postcss" scoped>
+@reference "../../../tailwindcss/tailwind.css";
+
 .sds-multiselect {
-  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded w-full dark:text-gray-50 dark:bg-gray-900;
+  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 .sds-multiselect.active,
 .sds-multiselect.open {
-  @apply border-blue-500 rounded ring-2 ring-blue-300 dark:ring-blue-700;
+  @apply border-blue-500 rounded-theme-sm ring-2 ring-blue-300 dark:ring-blue-700;
 }
 
 .sds-multiselect.open:not(.up) {
   border-bottom: 1px solid transparent;
   border-radius: 4px 4px 0 0;
+  @apply sds-theme-plaid:rounded-none;
 }
 
 .sds-multiselect.open.up {
   border-top: 1px solid transparent;
   border-radius: 0 0 4px 4px;
+  @apply sds-theme-plaid:rounded-none;
   box-shadow: inset 0 -1px 1px rgba(0, 0, 0, 0.075),
     0 0 8px rgba(102, 175, 233, 0.6);
 }
@@ -1154,6 +1158,7 @@ fieldset[valid] .sds-multiselect {
   padding: 0;
   border: 1px solid theme("colors.blue.400");
   border-radius: 0 0 4px 4px;
+  @apply sds-theme-plaid:rounded-none;
   width: calc(100% + 2px);
   overflow-y: auto;
   left: -1px;
@@ -1168,6 +1173,7 @@ fieldset[valid] .sds-multiselect {
 .open:not(.up) .dropdown-list {
   border-top: 0;
   border-radius: 0 0 4px 4px;
+  @apply sds-theme-plaid:rounded-none;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.175);
 }
 
@@ -1182,6 +1188,7 @@ fieldset[valid] .sds-multiselect {
 .open.up .dropdown-list {
   border-bottom: 0;
   border-radius: 4px 4px 0 0;
+  @apply sds-theme-plaid:rounded-none;
   box-shadow: 0 -10px 10px rgba(0, 0, 0, 0.175);
 }
 
@@ -1244,6 +1251,7 @@ fieldset[valid] .sds-multiselect {
   border: 1px solid theme("colors.gray.300");
   background: theme("colors.white");
   border-radius: 4px;
+  @apply sds-theme-plaid:rounded-none;
   padding: 0 6px;
   margin: 3px 4px;
   cursor: pointer;
@@ -1324,6 +1332,7 @@ fieldset[valid] .sds-multiselect {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   border: 1px solid theme("colors.gray.300");
   border-radius: 4px;
+  @apply sds-theme-plaid:rounded-none;
   padding: 4px;
 }
 

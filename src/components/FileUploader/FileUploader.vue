@@ -1,12 +1,12 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-lg p-3"
+    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-theme-lg p-3"
   >
     <div class="group relative">
       <input
+        :id="id"
         ref="fileInput"
-        v-uid
         type="file"
         :name="name"
         :accept="accept"
@@ -19,17 +19,17 @@
       >
       <div 
         class="
-            flex
-            flex-col
-            items-center
-            space-y-1
-            rounded
-            p-4
-            bg-gray-25
-            dark:bg-gray-900
-            group-hover:bg-gray-50
-            dark:group-hover:bg-gray-800
-          "
+          flex
+          flex-col
+          items-center
+          space-y-1
+          rounded-theme-sm
+          p-4
+          bg-gray-25
+          dark:bg-gray-900
+          group-hover:bg-gray-50
+          dark:group-hover:bg-gray-800
+        "
         :class="[disabled ? 'bg-transparent group-hover:bg-transparent' : '']"
       >
         <label
@@ -95,7 +95,7 @@
               hover:border-gray-200
               dark:border-gray-800
               hover:dark:border-gray-700
-              rounded 
+              rounded-theme-sm
               flex 
               flex-row
               items-center 
@@ -121,7 +121,7 @@
             </div>
             <div
               v-else 
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-theme-sm"
             >
               <SdsSvgIcon
                 aria-hidden="true"
@@ -177,7 +177,7 @@
               hover:border-gray-200
               dark:border-gray-800
               hover:dark:border-gray-700
-              rounded 
+              rounded-theme-sm
               flex 
               flex-row 
               items-center 
@@ -189,7 +189,7 @@
               hover:shadow-lg
             "
           >
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded">
+            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-theme-sm">
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-red-600 dark:text-red-300"
@@ -257,7 +257,6 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
 import SdsActionButton from '../ActionButton';
 import SdsSvgIcon from '../SvgIcon';
 
@@ -268,11 +267,10 @@ export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; view
 
 const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:model-value'])
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsFileUploader',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsFileUploader'
 })
 
 const props = defineProps({

@@ -1,16 +1,13 @@
-export default function debounce<T extends (...args: any[]) => any>(
+export default function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   delay: number
 ): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-  return function (this: any, ...args: Parameters<T>) {
-    const context = this
-
-    clearTimeout(timeoutId)
-
+  return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+    clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      func.apply(context, args)
-    }, delay)
-  }
+      func.apply(this, args);
+    }, delay);
+  };
 }

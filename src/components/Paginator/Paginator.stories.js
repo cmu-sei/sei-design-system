@@ -1,7 +1,7 @@
 import SdsPaginator from './Paginator.vue';
 
 export default {
-  title: 'Navigation/Paginator',
+  title: 'Components/Navigation/Paginator',
   parameters: {
     docs: {
       description: {

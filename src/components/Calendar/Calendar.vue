@@ -10,7 +10,7 @@
           :class="{ 'sm:w-120': isRange }"
         >
           <button
-            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToPrevMonth"
@@ -60,7 +60,7 @@
             </button>
           </div>
           <button
-            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded disabled:pointer-events-none disabled:opacity-50"
+            class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
             type="button"
             tabindex="-1"
             :disabled="!canGoToNextMonth"
@@ -114,7 +114,7 @@
                 type="button"
                 tabindex="-1"
                 :class="{
-                  'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
+                  'px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm': true,
                   'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day),
                   'font-bold bg-blue-500 dark:bg-blue-700 text-white': dateIsSameDay(day),
                   'font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850': dateIsToday(day) && !dateIsSameDay(day) && !dateIsWithinInterval(day),
@@ -154,7 +154,7 @@
                   type="button"
                   tabindex="-1"
                   :class="{
-                    'px-2 py-1 w-8 h-8 rounded-full text-sm': true,
+                    'px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm': true,
                     'hover:bg-gray-100 dark:hover:bg-gray-750': !dateIsSameDay(day, true),
                     'font-bold bg-blue-500 dark:bg-blue-700 text-white': dateIsSameDay(day, true),
                     'font-bold text-blue-500 bg-gray-100 dark:text-blue-400 dark:bg-gray-100': dateIsToday(day, true) && !dateIsSameDay(day, true) && !dateIsWithinInterval(day, true),
@@ -271,7 +271,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             aria-hidden="true"
             role="img"
-            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
@@ -353,7 +353,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             aria-hidden="true"
             role="img"
-            class="my-auto flex-shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
             width="32"
             height="32"
             preserveAspectRatio="xMidYMid meet"
@@ -656,16 +656,16 @@ const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, is
       if (isRange.value) {
         if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
           const currentHour = getHours(date.value.start)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.start = setHours(date.value.start, hours)
         } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
           const currentHour = getHours(date.value.end)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.end = setHours(date.value.end, hours)
         }
       } else if (date.value instanceof Date) {
         const currentHour = getHours(date.value)
-        let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+        const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
         date.value = setHours(date.value, hours)
       }
       break

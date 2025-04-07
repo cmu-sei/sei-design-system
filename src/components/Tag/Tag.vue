@@ -38,7 +38,7 @@
       }"
     >
       <span 
-        v-if="$slots.leftSlot"
+        v-if="!!$slots.leftSlot"
         class="leading-none"
       >
         <!-- @slot Left slot content. -->
@@ -134,7 +134,7 @@
           </button>
         </template>
       </template>
-      <span v-else-if="$slots.action">
+      <span v-else-if="!!$slots.action">
         <!-- @slot Action slot content -->
         <slot name="action" />
       </span>
@@ -154,7 +154,12 @@ defineOptions({
   name: 'SdsTag'
 })
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  leftSlot: () => unknown
+  label: () => unknown
+  action: () => unknown
+}>()
 
 const actions = ['increment', 'decrement', 'remove'] as const
 const isAction = (action: TagActionType): action is TagActionType => actions.includes(action)

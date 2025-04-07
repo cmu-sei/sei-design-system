@@ -2,7 +2,7 @@
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -12,8 +12,8 @@
   >
     <template #trigger="{ isOpen, toggle }">
       <SdsActionButton 
+        :id="id"
         ref="button"
-        v-uid
         :kind="kind"
         :variant="variant"
         :size="size" 
@@ -128,7 +128,6 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
-import { Uid } from '@shimyshack/uid'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -139,11 +138,10 @@ export interface FilterByDropdownOption {
 
 export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
+const id = useId()
+
 defineOptions({
-  name: "SdsFilterByDropdown",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsFilterByDropdown"
 })
 
 const props = defineProps({

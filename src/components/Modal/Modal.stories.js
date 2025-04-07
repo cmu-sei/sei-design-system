@@ -1,7 +1,7 @@
 import SdsModal from './Modal.vue';
 
 export default {
-  title: 'Containers/Modal',
+  title: 'Components/Containers/Modal',
   parameters: {
     docs: {
       story: {

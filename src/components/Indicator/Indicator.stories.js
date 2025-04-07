@@ -2,7 +2,7 @@ import SdsIndicator from './Indicator.vue';
 import SdsAvatar from '../Avatar/Avatar.vue';
 
 export default {
-  title: 'Data Visualization/Indicator',
+  title: 'Components/Data Visualization/Indicator',
   parameters: {
     docs: {
       description: {

@@ -1,7 +1,7 @@
 import SdsMultiselect from './Multiselect.vue';
 
 export default {
-  title: 'Inputs/Text fields/Multiselect',
+  title: 'Components/Inputs/Multiselect',
   parameters: {
     docs: {
       description: {

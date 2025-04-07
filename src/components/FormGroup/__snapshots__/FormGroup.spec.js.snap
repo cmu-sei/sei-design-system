@@ -4,12 +4,12 @@ exports[`Form Group > should match its default snapshot 1`] = `
 <div
   class="flex flex-col gap-2"
   data-id="sds-form-group"
-  id="unique-id"
+  id="v-0"
 >
   <!--v-if-->
   <label
     class="flex font-semibold text-gray-900 dark:text-gray-50 gap-1 items-center place-content-start w-auto"
-    for="undefined_form-control"
+    for="v-0"
   >
     <!-- @slot Label slot content. This will override the \`label\` prop. @binding label. -->
     

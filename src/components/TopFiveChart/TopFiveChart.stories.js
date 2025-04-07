@@ -1,7 +1,7 @@
 import SdsTopFiveChart from './TopFiveChart.vue';
 
 export default {
-  title: 'Data Visualization/Top Five Chart',
+  title: 'Components/Data Visualization/Top Five Chart',
   parameters: {
     docs: {
       description: {

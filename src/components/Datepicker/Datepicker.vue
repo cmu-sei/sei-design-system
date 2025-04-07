@@ -4,7 +4,7 @@
     class="w-full"
     :placement="placement"
     :disabled="disabled"
-    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-md w-auto ${zIndexClass}`"
+    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-theme-md w-auto ${zIndexClass}`"
     arrow-class="absolute bg-white border dark:bg-gray-850 dark:border-gray-700 w-3 h-3 rotate-45"
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -21,6 +21,7 @@
           :class="{
             'input-group-sm': size === 'sm',
             disabled,
+            readonly,
             valid,
             invalid,
           }"
@@ -81,7 +82,7 @@
         <template v-if="isRange">
           <div
             v-if="!hideArrow"
-            class="flex my-auto flex-shrink-0"
+            class="flex my-auto shrink-0"
             :class="{
               'opacity-50': disabled || readonly
             }"
@@ -109,6 +110,7 @@
             :class="{
               'input-group-sm': size === 'sm',
               disabled,
+              readonly,
               valid,
               invalid
             }"
@@ -524,11 +526,8 @@ const formatDate = (dateString: string) => {
   ]
 
   // validate the format and store the found format for later processing
-  let foundFormat
   const validDates = formats.filter((format) => {
-    const valid = isValid(parse(dateString, format, new Date()))
-    if (valid) foundFormat = format
-    return valid
+    return isValid(parse(dateString, format, new Date()))
   })
 
   if (validDates.length > 0) {

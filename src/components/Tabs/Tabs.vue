@@ -1,13 +1,13 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-tabs"
   >
     <div
       class="overflow-x-auto"
       :class="{
-        'bg-gray-50 dark:bg-gray-850 rounded-t': type === 'folder'
+        'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
       }"
     >
       <ul
@@ -28,7 +28,7 @@
             :is="tab.tag || 'button' as unknown"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
-              'tab text-sm inline-block rounded-t py-2 px-4 font-semibold': type === 'folder',
+              'tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
               'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
               'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
                 type === 'folder' && !tab.active,
@@ -84,8 +84,6 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 export interface TabItem {
   key: string
   tag?: 'button' | 'a'
@@ -97,11 +95,10 @@ export interface TabItem {
   disabled?: boolean
 }
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsTabs',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsTabs'
 })
 
 const props = defineProps({

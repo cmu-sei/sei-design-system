@@ -3,8 +3,9 @@
     data-id="sds-section"
     class="block bg-white dark:bg-gray-950"
     :class="{
+      'rounded-theme-sm': type === 'simple',
       'border border-gray-200 dark:border-gray-800': type === 'simple' || type === 'raised',
-      'shadow border rounded-lg': type === 'raised',
+      'shadow-md border rounded-theme-lg': type === 'raised',
     }"
   >
     <header
@@ -99,7 +100,13 @@ defineProps({
   },
 })
 
-const slots = useSlots()
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  subtitle: () => unknown
+  nav: () => unknown
+  footer: () => unknown
+}>()
 
 const hasTitleSlot = computed(() => {
   return !!slots.title;

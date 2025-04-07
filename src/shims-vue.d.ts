@@ -5,4 +5,3 @@ declare module '*.vue' {
 }
 
 declare module 'lodash/uniq';
-declare module '@shimyshack/uid';

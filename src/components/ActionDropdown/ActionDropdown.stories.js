@@ -6,7 +6,7 @@ import SdsDropdownItem from '../DropdownItem';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Buttons/Dropdowns/Action Dropdown',
+  title: 'Components/Buttons/Dropdowns/Action Dropdown',
   parameters: {
     docs: {
       description: {
