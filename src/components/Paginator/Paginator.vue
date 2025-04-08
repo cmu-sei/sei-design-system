@@ -17,6 +17,7 @@
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
           aria-label="Previous page"
+          type="button"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
@@ -62,6 +63,7 @@
               :disabled="loading"
               :aria-disabled="loading"
               :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
+              type="button"
               class="
                 flex items-center justify-center grow-0 shrink-0
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
@@ -133,6 +135,7 @@
               `Current page, page ${page}` : 
               `Go to page ${page}`
           "
+          type="button"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
@@ -188,6 +191,7 @@
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
+          type="button"
           aria-label="Next page"
           class="
             flex items-center justify-center grow-0 shrink-0
