@@ -265,7 +265,7 @@ export type FileTypes = 'csv' | 'doc' | 'pdf'
 export type SvgIconTypes = FileTypes | 'arrow-up-from-bracket' | 'error' | 'generic' | 'trash-can'
 export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; viewBox: string; width: number; }>
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:model-value'])
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:modelValue'])
 
 const id = useId()
 
@@ -274,19 +274,6 @@ defineOptions({
 })
 
 const props = defineProps({
-  /**
-   * An array of files. This prop is optional.
-   * 
-   * This syncs with the internal fileList and invalidFileList
-   * to give developers more control over files.
-   * 
-   * Each file has `name`, `type`, `size`, `lastModified` properties.
-   * 
-   * You can check a file's validity using its `invalidType`
-   * and `invalidSize` boolean properties. They are only
-   * present if the file is invalid
-   */
-  modelValue: { type: Array as PropType<File[]>, default: () => [] },
   /**
    * Determines the form name to use for the upload input field.
    */
@@ -320,6 +307,20 @@ const props = defineProps({
    */
   helperText: { type: String, default: undefined }
 })
+
+/**
+ * An array of files. This prop is optional.
+ * 
+ * This syncs with the internal fileList and invalidFileList
+ * to give developers more control over files.
+ * 
+ * Each file has `name`, `type`, `size`, `lastModified` properties.
+ * 
+ * You can check a file's validity using its `invalidType`
+ * and `invalidSize` boolean properties. They are only
+ * present if the file is invalid
+ */
+const model = defineModel({ type: Array as PropType<File[]>, default: () => [] })
 
 const fileInput = ref<null | HTMLInputElement>(null)
 const fileList = ref<File[]>([])
@@ -398,7 +399,7 @@ const removeFile = (file: File) => {
    * Emitted when a valid file is removed.
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -417,7 +418,7 @@ const removeInvalidFile = (file: File) => {
    * Emitted when an invalid file is removed.
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -445,7 +446,7 @@ const processFiles = (event: Event) => {
    * Emitted when a file or files have been added.
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -556,7 +557,7 @@ const uploadedImgSrc = (file: File, allowedFiletypes: string[]) => {
   }
 }
 
-watch(() => props.modelValue, value => {
+watch(() => model.value, value => {
   if (!fileInput.value) return
   const dt = new DataTransfer()
   value.forEach(file => dt.items.add(file))
