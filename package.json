@@ -10,6 +10,7 @@
     "test:watch": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vitest -c vite-library.config.js",
     "test:clean": "npx vitest run -u",
     "coverage": "npx vitest run --coverage",
+    "change-registry-in-package-lock": "./script/update-package-lock.sh",
     "bundle:release": "./scripts/bundle-release.sh",
     "create-component": "./scripts/create-component.sh",
     "storybook": "npx storybook dev -p 6006 --disable-telemetry",

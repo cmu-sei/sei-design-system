@@ -24,6 +24,9 @@ jobs:
         # Defaults to the user or organization that owns the workflow file
         scope: '@cmu-sei'
 
+    - name: Convert registry in package-lock.json
+      run: npm run change-registry-in-package-lock
+
     - name: Cache dependencies
       uses: actions/cache@v4
       id: cache
