@@ -37,8 +37,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    # - name: Lint components
-    #   run: npm run lint
+    - name: Lint components
+      run: npm run lint
     
     - name: Test components
       run: npm test
