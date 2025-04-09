@@ -37,11 +37,7 @@ defineOptions({
   name: 'SdsInput'
 })
 
-const props = defineProps({
-  /**
-   * The v-model of the component (the text input).
-   */
-  modelValue: { type: String, default: "" },
+defineProps({
   /**
    * Determines whether to display the character counter or not.
    */
@@ -96,17 +92,22 @@ const props = defineProps({
   invalid: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model of the component (the text input).
+ */
+const model = defineModel({ type: String, default: '' })
+
+const emit = defineEmits(['update:modelValue'])
 
 const text = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value: string) {
     /**
-     * Emmitted when modelValue changes.
+     * Emmitted when model changes.
      */
-    emit("update:model-value", value);
-  },
+    emit('update:modelValue', value)
+  }
 })
 </script>
