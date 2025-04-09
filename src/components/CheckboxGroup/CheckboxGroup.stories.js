@@ -22,18 +22,12 @@ const Template = (args) => ({
     <sds-checkbox-group v-model="localValue" v-bind="args" />
   `,
   data() {
-    return { localValue: this.$props.modelValue }
-  },
-  watch: {
-    modelValue(value) {
-      this.localValue = value
-    }
-  },
+    return { localValue: [] }
+  }
 });
 
 export const Default = Template.bind({});
 Default.args = {
-  modelValue: ['option 1'],
   options: [
     { id: 1, value: 'option 1', text: 'Option 1' },
     { id: 2, value: 'option 2', text: 'Option 2' },

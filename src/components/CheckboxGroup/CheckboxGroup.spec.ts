@@ -7,10 +7,8 @@ describe('CheckboxGroup', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
 
   const props: {
-    modelValue: CheckboxGroupOptionValue[],
     options: CheckboxGroupOption<CheckboxGroupOptionValue>[]
   } = {
-    modelValue: [],
     options: [
       { id: 1, text: 'Option 1', value: 'Option 1' },
       { id: 2, text: 'Option 2', value: 'Option 2' },
