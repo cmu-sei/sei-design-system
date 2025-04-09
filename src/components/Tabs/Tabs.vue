@@ -103,25 +103,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * Determines the array of tab objects.
-   *
-   * Format of tab object:
-   *
-   * ```
-   * {
-   *   key: string
-   *   tag?: 'button' | 'a'
-   *   title?: string
-   *   href?: string
-   *   align?: 'left' | 'right' | 'center'
-   *   external?: boolean
-   *   active?: boolean
-   *   disabled?: boolean
-   * }
-   * ```
-   */
-  modelValue: { type: Array as PropType<TabItem[]>, default: () => [] },
-  /**
    * The overall look and feel of the component.
    */
   type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
@@ -154,19 +135,39 @@ const props = defineProps({
   willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
 })
 
-const emit = defineEmits(['update:model-value', 'change'])
+/**
+ * Determines the array of tab objects.
+ *
+ * Format of tab object:
+ *
+ * ```
+ * {
+ *   key: string
+ *   tag?: 'button' | 'a'
+ *   title?: string
+ *   href?: string
+ *   align?: 'left' | 'right' | 'center'
+ *   external?: boolean
+ *   active?: boolean
+ *   disabled?: boolean
+ * }
+ * ```
+ */
+const model = defineModel<TabItem[]>({ type: Array as PropType<TabItem[]>, default: [] })
+
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const root = ref<HTMLElement>()
 
 const tabs = computed({
   get(): TabItem[] {
-    return props.modelValue
+    return model.value
   },
   set(value: TabItem[]) {
     /**
      * Emmitted when the v-model has changed.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
