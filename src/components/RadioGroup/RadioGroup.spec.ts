@@ -7,10 +7,8 @@ describe('RadioGroup', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
 
   const props: {
-    modelValue: RadioGroupOptionValue,
     options: RadioGroupOption<RadioGroupOptionValue>[]
   } = {
-    modelValue: '',
     options: [
       { id: 1, text: 'Option 1', value: 'Option 1' },
       { id: 2, text: 'Option 2', value: 'Option 2' },
@@ -22,11 +20,12 @@ describe('RadioGroup', () => {
     wrapper.unmount()
   })
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(Component, {
       attachTo: document.body,
       props
     })
+    await wrapper.setValue('Option 1')
   })
 
   it('should match its default snapshot', () => {
