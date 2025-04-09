@@ -27,6 +27,9 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+    
+    - name: Show Node modules
+      run: npm list
 
     - name: Lint components
       run: npm run lint
