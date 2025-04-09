@@ -98,7 +98,7 @@ defineProps({
 /**
  * The v-model of the radio group.
  */
-const model = defineModel({ type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>, default: undefined })
+const model = defineModel<RadioGroupOptionValue | undefined>({ type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>, default: undefined })
 
 const emit = defineEmits(['update:modelValue', 'change'])
 

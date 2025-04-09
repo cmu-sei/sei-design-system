@@ -325,7 +325,6 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
       class="relative top-1"
       id="v-0__option_0"
       name="v-0__option"
-      required=""
       type="radio"
       value="Option 1"
     />
@@ -348,7 +347,6 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
       class="relative top-1"
       id="v-0__option_1"
       name="v-0__option"
-      required=""
       type="radio"
       value="Option 2"
     />
@@ -371,7 +369,6 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
       class="relative top-1"
       id="v-0__option_2"
       name="v-0__option"
-      required=""
       type="radio"
       value="Option 3"
     />

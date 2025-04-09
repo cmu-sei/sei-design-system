@@ -22,15 +22,20 @@ const Template = (args) => ({
     <sds-radio-group v-model="localValue" v-bind="args" />
   `,
   data() {
-    return { localValue: '' }
-  }
+    return { localValue: this.$props.modelValue }
+  },
+  watch: {
+    modelValue(value) {
+      this.localValue = value
+    }
+  },
 });
 
 export const Default = Template.bind({});
 Default.args = {
+  modelValue: true,
   options: [
     { id: 1, value: true, text: 'Yes' },
     { id: 2, value: false, text: 'No' },
   ]
 };
-
