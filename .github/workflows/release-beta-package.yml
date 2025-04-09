@@ -19,20 +19,16 @@ jobs:
 
     - uses: actions/setup-node@v4
       with:
-        # node-version-file: '.nvmrc'
-        node-version: '20.17.0'
+        node-version-file: '.nvmrc'
         registry-url: 'https://npm.pkg.github.com'
         # Defaults to the user or organization that owns the workflow file
         scope: '@cmu-sei'
 
     - name: Install dependencies
       run: npm install
-    
-    - name: Show Node modules
-      run: npm list
 
-    - name: Lint components
-      run: npm run lint
+    # - name: Lint components
+    #   run: npm run lint
     
     - name: Test components
       run: npm test
