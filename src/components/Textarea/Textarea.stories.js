@@ -16,8 +16,11 @@ export default {
 
 const Template = (args) => ({
   components: { SdsTextarea },
-  setup() {
-    const localValue = ref('')
+  setup(props) {
+    const localValue = ref(props.modelValue)
+    watch(() => props.modelValue, (newValue) => {
+      localValue.value = newValue
+    })
     return { localValue, args }
   },
   template: `
@@ -27,4 +30,3 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
-

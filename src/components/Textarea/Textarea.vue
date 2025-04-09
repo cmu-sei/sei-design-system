@@ -92,7 +92,7 @@ defineProps({
 /**
  * The v-model for this component's text input.
  */
-const model = defineModel({ type: String, default: '' })
+const model = defineModel<string>({ type: String, default: '' })
 
 const emit = defineEmits(['update:modelValue'])
 
