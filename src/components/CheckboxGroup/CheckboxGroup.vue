@@ -98,7 +98,7 @@ defineProps({
 /**
  * The v-model of the checkbox group.
  */
-const model = defineModel({ type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] })
+const model = defineModel<CheckboxGroupOptionValue[]>({ type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] })
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
