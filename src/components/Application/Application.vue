@@ -940,10 +940,6 @@ const slots = defineSlots<{
 
 const props = defineProps({
   /**
-   * The v-model that determines collapsed state.
-   */
-  modelValue: { type: Boolean, default: false },
-  /**
    * The width class of the non-collapsed sidebar when not in a mobile responsive view.
    */
   sidebarWidth: { type: String, default: 'w-72' },
@@ -1017,7 +1013,12 @@ const props = defineProps({
    hideActionBar: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update:model-value', 'navigate'])
+/**
+ * The v-model that determines collapsed state.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
+
+const emit = defineEmits(['update:modelValue', 'navigate'])
 
 const showMobileMenu = ref(false)
 const mobileMenuCloseBtn = ref()
@@ -1037,13 +1038,13 @@ const computedSidebarWidth = computed(() => {
 
 const collapsed = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(val: boolean) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", val);
+    emit("update:modelValue", val);
   }
 })
 
