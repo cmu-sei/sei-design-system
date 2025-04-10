@@ -557,7 +557,7 @@ const uploadedImgSrc = (file: File, allowedFiletypes: string[]) => {
   }
 }
 
-watch(() => model.value, value => {
+watch(model, value => {
   if (!fileInput.value) return
   const dt = new DataTransfer()
   value.forEach(file => dt.items.add(file))
