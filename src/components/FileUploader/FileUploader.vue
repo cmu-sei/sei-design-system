@@ -265,8 +265,6 @@ export type FileTypes = 'csv' | 'doc' | 'pdf'
 export type SvgIconTypes = FileTypes | 'arrow-up-from-bracket' | 'error' | 'generic' | 'trash-can'
 export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; viewBox: string; width: number; }>
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:modelValue'])
-
 const id = useId()
 
 defineOptions({
@@ -321,6 +319,8 @@ const props = defineProps({
  * present if the file is invalid
  */
 const model = defineModel({ type: Array as PropType<File[]>, default: () => [] })
+
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:modelValue'])
 
 const fileInput = ref<null | HTMLInputElement>(null)
 const fileList = ref<File[]>([])
