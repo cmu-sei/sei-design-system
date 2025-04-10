@@ -12,16 +12,16 @@ describe('Table', () => {
       name: 'A title',
       fruit: 'Apple',
       vegetable: 'Broccoli',
-      createdDate: new Date('2000-01-01'),
-      lastUpdatedDate: new Date('2014-11-12')
+      createdDate: new Date(2000, 1, 1),
+      lastUpdatedDate: new Date(2014, 11, 12)
     },
     {
       id: 2,
       name: 'B title',
       fruit: 'Banana',
       vegetable: 'Carrots',
-      createdDate: new Date('2013-02-01'),
-      lastUpdatedDate: new Date('2013-10-10')
+      createdDate: new Date(2013, 2, 1),
+      lastUpdatedDate: new Date(2013, 10, 10)
     }
   ]
   
