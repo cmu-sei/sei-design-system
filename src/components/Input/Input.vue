@@ -105,7 +105,7 @@ const text = computed({
   },
   set(value: string) {
     /**
-     * Emmitted when model changes.
+     * Emmitted when modelValue changes.
      */
     emit('update:modelValue', value)
   }

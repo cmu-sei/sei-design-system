@@ -774,7 +774,7 @@ const clearOptions = () => {
 
 const setInput = (value: string) => {
   /**
-   * Emmitted when model.value changes.
+   * Emmitted when modelValue changes.
    */
   emit("update:modelValue", value);
   resizeInput();
