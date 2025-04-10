@@ -3,7 +3,7 @@ name: Release Beta Package
 on:
   push:
     branches:
-      - develop
+      - feature/jdshimkoski
 
 # on:
 #   release:
@@ -60,3 +60,5 @@ jobs:
 
     - name: Publish package
       run: npm publish --tag beta
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
