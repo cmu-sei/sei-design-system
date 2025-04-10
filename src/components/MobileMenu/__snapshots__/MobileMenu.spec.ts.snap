@@ -1,17 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] = `
-<nav
-  aria-label="Mobile Menu"
-  data-id="sds-mobilemenu"
-  role="menu"
->
-  
-  
-  
-  
-</nav>
-`;
+exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] = `"<nav data-id="sds-mobilemenu" role="menu" aria-label="Mobile Menu"></nav>"`;
 
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
