@@ -5,8 +5,8 @@
     class="link link-cta"
     :class="{
       disabled,
-      'link-cta-up': modelValue,
-      'link-cta-down': !modelValue,
+      'link-cta-up': model,
+      'link-cta-down': !model,
       'link-primary': kind === 'primary',
       'link-secondary': kind === 'secondary',
       'link-tertiary': kind === 'tertiary',
@@ -15,9 +15,9 @@
     }"
     :disabled="disabled"
     :aria-disabled="disabled"
-    @click="$emit('update:model-value', !modelValue)"
+    @click="onClick"
   >
-    {{ modelValue ? collapseLabel : expandLabel }}
+    {{ model ? collapseLabel : expandLabel }}
   </button>
 </template>
 
@@ -27,10 +27,6 @@ defineOptions({
 })
 
 defineProps({
-  /**
-   * Determines the expanded state of the component.
-   */
-  modelValue: { type: Boolean, default: false },
   /**
    * Determines the purpose and particular function of the component.
    */
@@ -53,5 +49,12 @@ defineProps({
   disabled: { type: Boolean, default: false }
 })
 
-defineEmits(['update:model-value'])
+/**
+ * Determines the expanded state of the component.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
+
+const emit = defineEmits(['update:modelValue'])
+
+const onClick = () => emit('update:modelValue', !model.value)
 </script>
