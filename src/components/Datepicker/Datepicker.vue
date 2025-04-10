@@ -237,19 +237,6 @@ const props = defineProps({
    */
   placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
   /**
-   * The v-model for the component.
-   *
-   * For single selections, this value can be null or a date object.
-   *
-   * For range selections, this is an object with start and end keys
-   * that can either be null or a date object.
-   *
-   * Range example:
-   *
-   * **{ start: new Date(), end: null }**
-   */
-  modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
-  /**
    * The max date allowed for the datepicker.
    */
   max: { type: Date, default: null },
@@ -285,7 +272,24 @@ const props = defineProps({
   useCurrentTimeForToday: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for the component.
+ *
+ * For single selections, this value can be null or a date object.
+ *
+ * For range selections, this is an object with start and end keys
+ * that can either be null or a date object.
+ *
+ * Range example:
+ *
+ * **{ start: new Date(), end: null }**
+ */
+const model = defineModel<CalendarRange | CalendarDate>({
+  type: [Object, Date] as PropType<CalendarRange | CalendarDate>,
+  default: null
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()
@@ -313,7 +317,7 @@ const zIndexClass = computed(() => {
 })
 
 const isRange = computed(() => {
-  return props.modelValue && !(props.modelValue instanceof Date)
+  return model.value && !(model.value instanceof Date)
 })
 
 const placeholder = computed(() => {
@@ -357,13 +361,13 @@ const inputPattern = computed(() => {
 
 const localDate = computed({
   get(): CalendarRange | CalendarDate {
-    return props.modelValue
+    return model.value
   },
   set(value: CalendarRange | CalendarDate) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
