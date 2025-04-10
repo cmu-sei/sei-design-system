@@ -3,7 +3,7 @@ name: Release Beta Package
 on:
   push:
     branches:
-      - feature/jdshimkoski
+      - develop
 
 # on:
 #   release:
