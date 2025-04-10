@@ -32,14 +32,7 @@ defineOptions({
   name: 'SdsToggleSwitch'
 })
 
-const props = defineProps({
-  /**
-   * The v-model state of this component. Determines true or false value.
-   */
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
+defineProps({
   /**
    * Disables the component to prevent user interaction.
    */
@@ -49,17 +42,22 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model state of this component. Determines true or false value.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
+
+const emit = defineEmits(['update:modelValue'])
 
 const isToggled = computed({
   get() {
-    return props.modelValue
+    return model.value
   },
   set(value: boolean) {
     /**
      * Emitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
