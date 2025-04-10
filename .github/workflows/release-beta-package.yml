@@ -58,7 +58,7 @@ jobs:
     - name: Build Storybook
       run: npm run build-storybook
 
-    # - name: Publish package
-    #   run: npm publish --tag beta
+    - name: Publish package
+      run: npm publish --tag beta --dry-run
     #   env:
     #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
