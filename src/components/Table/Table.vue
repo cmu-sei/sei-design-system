@@ -341,6 +341,8 @@
 </template>
 
 <script setup lang="ts">
+import SdsSvgIcon from '../SvgIcon'
+
 export type TableDensity = typeof densityTypes[number]
 
 export interface TableField {
@@ -501,6 +503,7 @@ const icons = Object.freeze({
 
 const isBatchExpanded = ref(false)
 const itemsNormalized = ref<TableItem[]>([])
+const enableDrawer = ref(props.enableDrawer)
 const sortField = ref(props.sortBy)
 const sortOrder = ref(props.sortDesc ? -1 : 1)
 
@@ -566,7 +569,7 @@ const handleSortBy = (field: TableField) => {
 }
 
 const normalizeItems = (items: TableItem[]) => {
-  if (props.enableDrawer) {
+  if (enableDrawer.value) {
     return [ ...items ].map((i) => ({
       ...i,
       enableDrawer: true,
@@ -643,6 +646,11 @@ const toString = (value: TableItem): string => {
 watch(() => props.items, (value) => {
   itemsNormalized.value = normalizeItems(value)
 }, { deep: true, immediate: true })
+
+watch(() => props.enableDrawer, (value) => {
+  enableDrawer.value = value
+  itemsNormalized.value = normalizeItems(props.items)
+})
 
 watch(() => props.sortBy, (value) => {
   sortField.value = value
