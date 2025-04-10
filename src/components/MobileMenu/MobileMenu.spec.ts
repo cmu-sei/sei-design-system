@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
-import SdsMobileMenu from './MobileMenu.vue';
+import SdsMobileMenu, { type MobileMenuItem } from './MobileMenu.vue';
 import SdsPanel from '../Panel/Panel.vue';
 
-const testMenus = [
+const testMenus: MobileMenuItem[] = [
   {
     key: "plants",
     title: "Plants",
@@ -93,9 +93,6 @@ const testMenus = [
 
 const defaultProps = {
   mobileMenus: testMenus,
-  modelValue: false,
-  size: 'md',
-  side: 'right',
   ariaLabel: 'Mobile Menu',
 };
 
@@ -141,17 +138,18 @@ describe('SdsMobileMenu', () => {
 
   it('toggles panel visibility based on modelValue prop', async () => {
     const wrapper = mount(SdsMobileMenu, {
+      attachTo: document.body,
       props: { ...defaultProps, modelValue: true },
     });
 
     await wrapper.vm.$nextTick();
 
     /* Match snapshot of empty nav (panel gets teleported) */
-    expect(wrapper.element).toMatchSnapshot();
+    expect(document.body).toMatchSnapshot();
     const panelElement = wrapper.findComponent('[data-id="sds-panel"]');
     /* Mock changing elements for snapshot */
-    panelElement.element.setAttribute('aria-labelledby', 'mocked');
-    panelElement.element.setAttribute('id', 'mocked1');
+    (panelElement.element as HTMLElement).setAttribute('aria-labelledby', 'mocked');
+    (panelElement.element as HTMLElement).setAttribute('id', 'mocked1');
 
     await wrapper.vm.$nextTick();
 
@@ -174,9 +172,9 @@ describe('SdsMobileMenu', () => {
     const activePanel = wrapper.vm.activePanel;
     expect(activePanel).toBeUndefined();
 
-    await wrapper.vm.navigate('about')
+    wrapper.vm.navigate('about');
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.activePanel.key).toBe('about');
+    expect(wrapper.vm.activePanel?.key).toBe('about');
   });
 
   it('navigates to the correct panel', async () => {
