@@ -1,9 +1,9 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import Component from "./ToggleSwitch.vue"
+import Component from './ToggleSwitch.vue'
 
-describe("ToggleSwitch.vue", () => {
+describe('ToggleSwitch.vue', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
 
   afterAll(() => {
