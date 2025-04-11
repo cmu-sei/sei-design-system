@@ -213,7 +213,7 @@
           :class="{
             '[.table-prose_tbody_&]:border-b-0 dark:[.table-prose_tbody_&]:border-b-0': item.toggled,
             'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
-            'peer has-[+tr[id=$=_drawer]:hover]:bg-gray-25 has-[+tr[id=$=_drawer]:hover]:dark:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
+            'peer has-[+tr[id$=_drawer]:hover]:bg-gray-25 has-[+tr[id$=_drawer]:hover]:dark:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
           }"
         >
           <td
