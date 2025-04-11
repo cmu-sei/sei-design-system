@@ -17,15 +17,15 @@
       text-gray-600
       dark:text-gray-400
       has-[a:hover]:bg-gray-25
-      has-[a:hover]:dark:bg-gray-850
+      dark:has-[a:hover]:bg-gray-850
       has-[a:hover]:shadow-sm
       has-[a:hover]:border-gray-600
-      has-[a:hover]:dark:border-gray-400
+      dark:has-[a:hover]:border-gray-400
       has-[a:hover:active]:bg-gray-50
-      has-[a:hover:active]:dark:bg-gray-800
+      dark:has-[a:hover:active]:bg-gray-800
       has-[a:hover:active]:shadow-sm
       has-[a:hover:active]:border-gray-900
-      has-[a:hover:active]:dark:border-gray-100
+      dark:has-[a:hover:active]:border-gray-100
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
@@ -50,10 +50,10 @@
         class="
           hover:underline
           hover:text-gray-900
-          hover:dark:text-gray-100
+          dark:hover:text-gray-100
           active:underline
           active:text-black
-          active:dark:text-white
+          dark:active:text-white
         "
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"

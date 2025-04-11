@@ -89,12 +89,12 @@
             class="
               bg-white 
               dark:bg-black 
-              hover:dark:bg-gray-900
+              dark:hover:bg-gray-900
               border 
               border-gray-100 
               hover:border-gray-200
               dark:border-gray-800
-              hover:dark:border-gray-700
+              dark:hover:border-gray-700
               rounded-theme-sm
               flex 
               flex-row
@@ -176,7 +176,7 @@
               border-gray-100 
               hover:border-gray-200
               dark:border-gray-800
-              hover:dark:border-gray-700
+              dark:hover:border-gray-700
               rounded-theme-sm
               flex 
               flex-row 

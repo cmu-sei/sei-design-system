@@ -213,7 +213,7 @@
           :class="{
             '[.table-prose_tbody_&]:border-b-0 dark:[.table-prose_tbody_&]:border-b-0': item.toggled,
             'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
-            'peer has-[+tr[id=$=_drawer]:hover]:bg-gray-25 has-[+tr[id=$=_drawer]:hover]:dark:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
           }"
         >
           <td
@@ -322,6 +322,7 @@
           <tr
             v-if="item.enableDrawer && item.toggled"
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
+            data-drawer="true"
             :class="{
               'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-850': rowHighlight
             }"
