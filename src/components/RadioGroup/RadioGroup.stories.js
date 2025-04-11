@@ -39,4 +39,3 @@ Default.args = {
     { id: 2, value: false, text: 'No' },
   ]
 };
-

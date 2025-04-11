@@ -76,6 +76,7 @@
                 class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-theme-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
+                role="dialog"
               >
                 <div
                   class="p-6 rounded-t-theme-lg flex gap-4"
@@ -174,25 +175,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * An array of tab objects. Each object must have a unique "key".
-   *
-   * Example object:
-   *
-   * ```
-   * {
-   *    key: 'tab1',
-   *    tabName: 'Tab 1',
-   *    title: 'Active Tab 1',
-   *    active: true,
-   *    iconSrc: '/file.png'
-   * }
-   * ```
-   */
-  modelValue: {
-    type: Array as PropType<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>,
-    required: true
-  },
-  /**
    * Determines the color of the component.
    */
   variant: {
@@ -214,7 +196,27 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:model-value', 'open', 'close'])
+/**
+ * An array of tab objects. Each object must have a unique "key".
+ *
+ * Example object:
+ *
+ * ```
+ * {
+ *    key: 'tab1',
+ *    tabName: 'Tab 1',
+ *    title: 'Active Tab 1',
+ *    active: true,
+ *    iconSrc: '/file.png'
+ * }
+ * ```
+ */
+const model = defineModel<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>({
+  type: Array as PropType<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>,
+  required: true
+})
+
+const emit = defineEmits(['update:modelValue', 'open', 'close'])
 
 const localVariant = computed<'blue' | 'red'>(() => {
   return props.variant
@@ -222,13 +224,13 @@ const localVariant = computed<'blue' | 'red'>(() => {
 
 const tabs = computed({
   get () {
-    return props.modelValue
+    return model.value
   },
   set (value) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 

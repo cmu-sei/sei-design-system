@@ -98,13 +98,6 @@ const props = defineProps({
     default: () => []
   },
   /**
-   * The v-model that determines the show/hide state of the panel.
-   */
-  modelValue: {
-    type: Boolean,
-    default: false
-  },
-  /**
    * Determines the size of the panel.
    */
   size: {
@@ -128,6 +121,11 @@ const props = defineProps({
   ariaLabel: { type: String, default: undefined }
 });
 
+/**
+ * The v-model that determines the show/hide state of the panel.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
+
 const emits = defineEmits([
   /**
    * When data supplied to the Mobile Menu component
@@ -135,7 +133,7 @@ const emits = defineEmits([
    * trigger other actions off the Mobile Menu's modelValue
    * when it changes.
    */
-  'update:model-value',
+  'update:modelValue',
 ]);
 
 /**
@@ -178,13 +176,13 @@ const activePanel = computed(() => {
 /* Update showPanel to toggle panel visibility */
 const showPanel = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(value: boolean) {
     /**
      * Emitted when mobileMenus changes.
      */
-    emits("update:model-value", value);
+    emits("update:modelValue", value);
   }
 });
 

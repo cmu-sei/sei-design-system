@@ -40,4 +40,3 @@ Default.args = {
     { id: 3, value: 'option 3', text: 'Option 3' },
   ]
 };
-

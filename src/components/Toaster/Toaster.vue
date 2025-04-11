@@ -61,31 +61,26 @@ defineOptions({
   name: 'SdsToaster'
 })
 
-const props = defineProps({
-  /**
-   * The v-model for this component. It accepts an array of toasts. See the Toast component for guidance.
-   */
-  modelValue: {
-    type: Array as PropType<ToasterToast[]>,
-    default: () => [],
-  },
-})
+/**
+ * The v-model for this component. It accepts an array of toasts. See the Toast component for guidance.
+ */
+const model = defineModel<ToasterToast[]>({ type: Array as PropType<ToasterToast[]>, default: [] })
 
-const emit = defineEmits(['update:model-value'])
+const emit = defineEmits(['update:modelValue'])
 
 const toasts = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value: ToasterToast[]) {
     /**
      * Emitted when current array of toasts changes.
      */
-    emit("update:model-value", value);
+    emit('update:modelValue', value)
   }
 })
 
 const removeToast = (id: number | string) => {
-  toasts.value = toasts.value.filter((i) => id !== i.id);
+  toasts.value = toasts.value.filter((i) => id !== i.id)
 }
 </script>

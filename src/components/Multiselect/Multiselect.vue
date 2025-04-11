@@ -66,7 +66,7 @@
           class="faux-input"
           aria-hidden="true"
         >
-          {{ modelValue }}
+          {{ model }}
         </span>
         <select
           v-if="required && selected.length < 1"
@@ -81,7 +81,7 @@
         <label>
           <input
             ref="input"
-            :value="modelValue"
+            :value="model"
             :placeholder="showPlaceholder ? placeholder : ''"
             :readonly="isReadonlyInput"
             :disabled="disabled"
@@ -293,13 +293,6 @@ const props = defineProps({
   labelKey: {
     type: String,
     default: "value",
-  },
-  /**
-   * The v-model that determines the text value of the input field.
-   */
-  modelValue: {
-    type: String,
-    default: "",
   },
   /**
    * Determines whether to enable autofocus or not.
@@ -514,7 +507,12 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:model-value', 'update-selected', 'update-options', 'open', 'close', 'focus'])
+/**
+ * The v-model that determines the text value of the input field.
+ */
+const model = defineModel<string>({ type: String, default: '' })
+
+const emit = defineEmits(['update:modelValue', 'update-selected', 'update-options', 'open', 'close', 'focus'])
 
 const debouncePositionDropdown = ref<null | EventListener>(null)
 const root = ref()
@@ -608,7 +606,7 @@ const isCleanInput = computed(() => {
 })
 
 const trimmedValue = computed(() => {
-  return props.modelValue.trim() || '';
+  return model.value.trim() || '';
 })
 
 const filteredOptions = computed(() => {
@@ -681,7 +679,7 @@ onUnmounted(() => {
 })
 
 const selectText = () => {
-  (input.value as HTMLInputElement).setSelectionRange(0, props.modelValue.length);
+  (input.value as HTMLInputElement).setSelectionRange(0, model.value.length);
 }
 
 const search = ($event: Event) => {
@@ -710,7 +708,7 @@ const resizeInput = () => {
 
 const removeLastSelection = () => {
   if (
-    props.modelValue !== "" ||
+    model.value !== "" ||
     !props.canSearch ||
     props.hideTags ||
     props.disableRemoveLastSelection
@@ -778,7 +776,7 @@ const setInput = (value: string) => {
   /**
    * Emmitted when modelValue changes.
    */
-  emit("update:model-value", value);
+  emit("update:modelValue", value);
   resizeInput();
   positionDropdown();
 }
@@ -898,7 +896,7 @@ const handleBlur = async ($event: FocusEvent) => {
     arrowCounter.value <= filteredOptions.value.length - 1 &&
     arrowCounter.value > -1 &&
     canAddItem.value &&
-    props.modelValue && props.modelValue.trim() !== '' &&
+    model.value && model.value.trim() !== '' &&
     !isSelectedOption(filteredOptions.value[arrowCounter.value])
   ) {
     add(filteredOptions.value[arrowCounter.value]);
@@ -973,7 +971,7 @@ const handleKeyDown = ($event: KeyboardEvent) => {
         arrowCounter.value <= filteredOptions.value.length - 1 &&
         arrowCounter.value > -1 &&
         canAddItem.value &&
-        props.modelValue && props.modelValue.trim() !== '' &&
+        model.value && model.value.trim() !== '' &&
         !isSelectedOption(filteredOptions.value[arrowCounter.value])
       ) {
         add(filteredOptions.value[arrowCounter.value]);
@@ -1014,7 +1012,7 @@ const handleOutsideClick = ($event: MouseEvent) => {
       arrowCounter.value <= filteredOptions.value.length - 1 &&
       arrowCounter.value > -1 &&
       canAddItem.value &&
-      props.modelValue && props.modelValue.trim() !== ''
+      model.value && model.value.trim() !== ''
     ) {
       add(filteredOptions.value[arrowCounter.value]);
       $event.preventDefault();
