@@ -21,7 +21,10 @@
       </thead>
       <tbody>
         <tr>
-          <td>Content of first column</td>
+          <td><img
+        src="https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
+        alt=""
+      ></td>
           <td>Content of second column</td>
           <td>Content of third column</td>
           <td>Content of fourth column</td>
