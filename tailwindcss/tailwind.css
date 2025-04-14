@@ -70,6 +70,12 @@
 }
 
 /**
+ * Safelist pattern: /col-start-(1|2|3|4|5|6|7)/,
+ * Used for Calendar component.
+ */
+ @source inline("col-start-{1,2,3,4,5,6,7}");
+
+/**
  * Automatically look into the src directory for CSS classes
  */
 @source '../src';
