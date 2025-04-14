@@ -56,11 +56,7 @@ defineOptions({
   name: "SdsCheckboxGroup"
 })
 
-const props = defineProps({
-  /**
-   * The v-model of the checkbox group.
-   */
-  modelValue: { type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] },
+defineProps({
   /**
    * The name of the checkbox form field.
    */
@@ -99,19 +95,24 @@ const props = defineProps({
   invalid: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value', 'change'])
+/**
+ * The v-model of the checkbox group.
+ */
+const model = defineModel<CheckboxGroupOptionValue[]>({ type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] })
+
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const root = ref()
 
 const localModelValue = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value: CheckboxGroupOptionValue[]) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value)
+    emit('update:modelValue', value)
   }
 })
 

@@ -34,7 +34,7 @@ defineOptions({
   name: 'SdsSelect'
 })
 
-const props = defineProps({
+defineProps({
   /**
    * Determines the id of the select.
    */
@@ -43,10 +43,6 @@ const props = defineProps({
    * The name of the select form field.
    */
   name: { type: String, default: null },
-  /**
-   * The v-model of the component.
-   */
-  modelValue: { type: [Boolean, String, Number, Array, Object] as PropType<SelectOptionValue>, default: null },
   /**
    * The options for the component.
    * 
@@ -83,17 +79,25 @@ const props = defineProps({
   invalid: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model of the component.
+ */
+const model = defineModel<boolean | string | number | null>({
+  type: [Boolean, String, Number, Array, Object] as PropType<SelectOptionValue>,
+  default: null
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const localValue = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(value: SelectOptionValue) {
     /**
      * Emitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit("update:modelValue", value);
   }
 })
 </script>

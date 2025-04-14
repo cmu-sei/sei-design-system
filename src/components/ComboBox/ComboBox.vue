@@ -378,10 +378,6 @@ const props = defineProps({
    */
   id: { type: String, default: undefined },
   /**
-   * The value of the text input.
-   */
-  modelValue: { type: String, default: '' },
-  /**
    * The placeholder for the input.
    */
   placeholder: { type: String, default: undefined },
@@ -450,7 +446,12 @@ const props = defineProps({
   disableGroupTabs: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
+/**
+ * The value of the text input.
+ */
+const model = defineModel<string>({ type: String, default: '' })
+
+const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -466,17 +467,17 @@ const dropdownOption = ref()
 
 const query = computed({
   get() {
-    return props.modelValue
+    return model.value
   },
   set(value: string) {
     /**
      * Emmited when the modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
-const filterQuery = ref(props.modelValue)
+const filterQuery = ref(model.value)
 const showDropdown = ref(false)
 const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
