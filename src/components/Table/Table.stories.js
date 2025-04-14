@@ -10,7 +10,24 @@ export default {
     },
   },
   component: SdsTable,
-  argTypes: {}
+  argTypes: {
+    density: {
+      options: ['comfortable', 'condensed', 'default'],
+      control: { type: 'select' }
+    },
+    enableDrawer: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
+    rowHighlight: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
+    sortDesc: {
+      options: [true, false],
+      control: { type: 'radio' }
+    }
+  }
 };
 
 const Template = (args) => ({
@@ -33,7 +50,7 @@ const Template = (args) => ({
         <button @click="edit(item.id)">Edit</button>
       </template>
       <template #drawer="{item}">
-        <ul>
+        <ul class="py-2 px-8 rounded-md">
           <li><p><span class="font-bold">Store: </span>{{item.additionalData.store}}</p></li>
           <li><p><span class="font-bold">Aisle: </span>{{item.additionalData.aisle}}</p></li>
           <li><p><span class="font-bold">Price: </span>{{item.additionalData.price}}</p></li>
@@ -70,9 +87,11 @@ Default.args = {
     { id: 4, fruit: "Durian", employee: "Hansel", lastDelivered: new Date("02/01/2021"), createdDate: new Date("12/09/2013"), additionalData: {store: 'Sams Club', aisle: '3', price: '1.23' } },
     { id: 5, fruit: "Elderberry", employee: "Matilda Jeffries", lastDelivered: new Date("01/01/2019"), createdDate: new Date("04/10/2017"), additionalData: {store: 'Foodland', aisle: '5', price: '2.00' } },
   ],
-  enableDrawer: true,
+  enableDrawer: false,
   sortBy: 'lastDelivered',
   sortDesc: true,
-  onSort: undefined
+  onSort: undefined,
+  density: undefined,
+  rowHighlight: false
 };
 

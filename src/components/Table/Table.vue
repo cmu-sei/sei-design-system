@@ -215,6 +215,8 @@
             'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
             'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
           }"
+          @mouseover="onMouseover(item)"
+          @mouseleave="onMouseleave(item)"
         >
           <td
             v-if="hasDrawers"
@@ -324,7 +326,8 @@
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850 [.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-850': rowHighlight
+              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-850': rowHighlight && item.hover
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
@@ -342,6 +345,8 @@
 </template>
 
 <script setup lang="ts">
+import SdsSvgIcon from '../SvgIcon'
+
 export type TableDensity = typeof densityTypes[number]
 
 export interface TableField {
@@ -502,6 +507,7 @@ const icons = Object.freeze({
 
 const isBatchExpanded = ref(false)
 const itemsNormalized = ref<TableItem[]>([])
+const enableDrawer = ref(props.enableDrawer)
 const sortField = ref(props.sortBy)
 const sortOrder = ref(props.sortDesc ? -1 : 1)
 
@@ -567,21 +573,25 @@ const handleSortBy = (field: TableField) => {
 }
 
 const normalizeItems = (items: TableItem[]) => {
-  if (props.enableDrawer) {
+  if (enableDrawer.value) {
     return [ ...items ].map((i) => ({
       ...i,
       enableDrawer: true,
+      hover: false,
       toggled: false
     }))
   }
   return [ ...items ].map((i) => {
     if ('enableDrawer' in i) {
-      if ('toggled' in i) return i
-      return { ...i, toggled: false }
+      if ('toggled' in i) return { ...i, hover: false }
+      return { ...i, hover: false, toggled: false }
     }
     return i
   })
 }
+
+const onMouseover = (item: TableItem) => item.hover = true
+const onMouseleave = (item: TableItem) => item.hover = false 
 
 const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   const a = aRow[key]
@@ -644,6 +654,11 @@ const toString = (value: TableItem): string => {
 watch(() => props.items, (value) => {
   itemsNormalized.value = normalizeItems(value)
 }, { deep: true, immediate: true })
+
+watch(() => props.enableDrawer, (value) => {
+  enableDrawer.value = value
+  itemsNormalized.value = normalizeItems(props.items)
+})
 
 watch(() => props.sortBy, (value) => {
   sortField.value = value
