@@ -16,7 +16,7 @@ export default {
       control: {type: 'select'}
     },
     size: {
-      options: ['xs', 'sm', 'md', 'lg', 'auto'],
+      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'auto'],
       control: {type: 'select'}
     },
     variant: {
@@ -24,7 +24,7 @@ export default {
       control: {type: 'select'}
     },
     shape: {
-      options: ['portrait', 'circle'],
+      options: ['circle', 'square', 'portrait'],
       control: {type: 'select'}
     }
   }
