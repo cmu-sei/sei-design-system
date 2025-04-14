@@ -127,6 +127,9 @@ export default (theme) => ({
       'th, td': {
         padding: '0.5rem'
       },
+      'td': {
+        verticalAlign: 'inherit',
+      },
       a: {
         '@apply hover:text-gray-900 dark:hover:text-gray-200': {}
       },
@@ -225,6 +228,9 @@ export default (theme) => ({
       },
       'th, td': {
         padding: '0.5rem'
+      },
+      'td': {
+        verticalAlign: 'inherit',
       },
       a: {
         '@apply hover:text-gray-900 dark:hover:text-gray-200': {}

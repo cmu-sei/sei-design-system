@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-file-uploader"
-    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-lg sds-theme-plaid:rounded-none p-3"
+    class="bg-white dark:bg-black border border-dashed border-gray-200 dark:border-gray-700 rounded-theme-lg p-3"
   >
     <div class="group relative">
       <input
@@ -23,8 +23,7 @@
           flex-col
           items-center
           space-y-1
-          rounded-sm
-          sds-theme-plaid:rounded-none
+          rounded-theme-sm
           p-4
           bg-gray-25
           dark:bg-gray-900
@@ -90,14 +89,13 @@
             class="
               bg-white 
               dark:bg-black 
-              hover:dark:bg-gray-900
+              dark:hover:bg-gray-900
               border 
               border-gray-100 
               hover:border-gray-200
               dark:border-gray-800
-              hover:dark:border-gray-700
-              rounded-sm
-              sds-theme-plaid:rounded-none
+              dark:hover:border-gray-700
+              rounded-theme-sm
               flex 
               flex-row
               items-center 
@@ -123,7 +121,7 @@
             </div>
             <div
               v-else 
-              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-sm sds-theme-plaid:rounded-none"
+              class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-gray-25 dark:bg-gray-900 rounded-theme-sm"
             >
               <SdsSvgIcon
                 aria-hidden="true"
@@ -178,9 +176,8 @@
               border-gray-100 
               hover:border-gray-200
               dark:border-gray-800
-              hover:dark:border-gray-700
-              rounded-sm 
-              sds-theme-plaid:rounded-none
+              dark:hover:border-gray-700
+              rounded-theme-sm
               flex 
               flex-row 
               items-center 
@@ -192,7 +189,7 @@
               hover:shadow-lg
             "
           >
-            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-sm sds-theme-plaid:rounded-none">
+            <div class="flex flex-none justify-center items-center w-10 h-10 p-2 bg-red-25 dark:bg-red-900 rounded-theme-sm">
               <SdsSvgIcon
                 aria-hidden="true"
                 class="text-red-600 dark:text-red-300"
@@ -268,8 +265,6 @@ export type FileTypes = 'csv' | 'doc' | 'pdf'
 export type SvgIconTypes = FileTypes | 'arrow-up-from-bracket' | 'error' | 'generic' | 'trash-can'
 export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; viewBox: string; width: number; }>
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:model-value'])
-
 const id = useId()
 
 defineOptions({
@@ -277,19 +272,6 @@ defineOptions({
 })
 
 const props = defineProps({
-  /**
-   * An array of files. This prop is optional.
-   * 
-   * This syncs with the internal fileList and invalidFileList
-   * to give developers more control over files.
-   * 
-   * Each file has `name`, `type`, `size`, `lastModified` properties.
-   * 
-   * You can check a file's validity using its `invalidType`
-   * and `invalidSize` boolean properties. They are only
-   * present if the file is invalid
-   */
-  modelValue: { type: Array as PropType<File[]>, default: () => [] },
   /**
    * Determines the form name to use for the upload input field.
    */
@@ -323,6 +305,22 @@ const props = defineProps({
    */
   helperText: { type: String, default: undefined }
 })
+
+/**
+ * An array of files. This prop is optional.
+ * 
+ * This syncs with the internal fileList and invalidFileList
+ * to give developers more control over files.
+ * 
+ * Each file has `name`, `type`, `size`, `lastModified` properties.
+ * 
+ * You can check a file's validity using its `invalidType`
+ * and `invalidSize` boolean properties. They are only
+ * present if the file is invalid
+ */
+const model = defineModel({ type: Array as PropType<File[]>, default: () => [] })
+
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:modelValue'])
 
 const fileInput = ref<null | HTMLInputElement>(null)
 const fileList = ref<File[]>([])
@@ -401,7 +399,7 @@ const removeFile = (file: File) => {
    * Emitted when a valid file is removed.
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -420,7 +418,7 @@ const removeInvalidFile = (file: File) => {
    * Emitted when an invalid file is removed.
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -448,7 +446,7 @@ const processFiles = (event: Event) => {
    * Emitted when a file or files have been added.
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:model-value', [...fileList.value, ...invalidFileList.value])
+  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -559,7 +557,7 @@ const uploadedImgSrc = (file: File, allowedFiletypes: string[]) => {
   }
 }
 
-watch(() => props.modelValue, value => {
+watch(model, value => {
   if (!fileInput.value) return
   const dt = new DataTransfer()
   value.forEach(file => dt.items.add(file))

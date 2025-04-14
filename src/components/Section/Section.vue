@@ -3,9 +3,9 @@
     data-id="sds-section"
     class="block bg-white dark:bg-gray-950"
     :class="{
-      'rounded-sm': type === 'simple',
-      'border border-gray-200 dark:border-gray-800 sds-theme-plaid:rounded-none': type === 'simple' || type === 'raised',
-      'shadow-md border rounded-lg': type === 'raised',
+      'rounded-theme-sm': type === 'simple',
+      'border border-gray-200 dark:border-gray-800': type === 'simple' || type === 'raised',
+      'shadow-md border rounded-theme-lg': type === 'raised',
     }"
   >
     <header

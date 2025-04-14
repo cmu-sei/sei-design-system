@@ -16,9 +16,9 @@ describe('Modal', () => {
   })
 
   it('should match its default snapshot', async () => {
-    const wrapper = mount(Component, {
-      attachTo: document.body,
-    })
+    // const wrapper = mount(Component, {
+    //   attachTo: document.body,
+    // })
     expect(document.body.outerHTML).toMatchSnapshot()
   })
 

@@ -21,7 +21,7 @@
             <div class="grow">
               <div class="mb-2">
                 <div
-                  class="h-6 mr-2 rounded-sm sds-theme-plaid:rounded-none"
+                  class="h-6 mr-2 rounded-theme-sm"
                   role="progressbar"
                   :title="`${result.count}`"
                   :aria-valuenow="result.count"
@@ -188,10 +188,7 @@ const entriesHaveAllRequiredProps = computed(() => {
 })
 
 const maxResultValue = computed(() => {
-  return Math.max.apply(
-    Math,
-    results.value.map((o: TopFiveChartResult) => o.count)
-  );
+  return Math.max(...results.value.map((o: TopFiveChartResult) => o.count));
 })
 
 const resultValue = (value: number) => {

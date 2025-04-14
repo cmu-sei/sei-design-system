@@ -309,6 +309,8 @@
     "useSSRWidth": true,
     "useCountdown": true,
     "createRef": true,
-    "useScript": true
+    "useScript": true,
+    "Slot": true,
+    "Slots": true
   }
 }

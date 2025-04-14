@@ -140,11 +140,11 @@ const shapeClass = computed(() => {
     props.shape === 'portrait'
   ) {
     if (['xs', 'sm'].includes(props.size))
-      classes.push('rounded-sm sds-theme-plaid:rounded-none')
+      classes.push('rounded-theme-sm')
     if (['md', 'lg'].includes(props.size))
-      classes.push('rounded-md sds-theme-plaid:rounded-none')
+      classes.push('rounded-theme-md')
     if (['xl', '2xl'].includes(props.size))
-      classes.push('rounded-lg sds-theme-plaid:rounded-none')
+      classes.push('rounded-theme-lg')
   }
   return classes
 })

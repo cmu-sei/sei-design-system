@@ -145,7 +145,7 @@ type DoubleClick = {
   timer?: number,
   delay: number,
 }
-let doubleClick = ref<DoubleClick>({
+const doubleClick = ref<DoubleClick>({
   clicks: 0,
   timer: undefined,
   delay: 300
@@ -175,7 +175,7 @@ const activeBottomHandle = [
   'after:border-solid',
   'after:border-transparent',
   'after:border-b',
-  'group-[.relative]:dark:after:border-white',
+  'dark:group-[.relative]:after:border-white',
   'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',
@@ -199,7 +199,7 @@ const activeRightHandle = [
   'after:border-solid',
   'after:border-transparent',
   'after:border-r',
-  'group-[.relative]:dark:after:border-white',
+  'dark:group-[.relative]:after:border-white',
   'group-[.relative]:after:border-black/55',
   'after:content-[""]',
   'after:to-transparent',

@@ -37,12 +37,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * Determines the content of the default slot.
-   * 
-   * This is overridden if the default slot is present.
-   */
-  modelValue: { type: [String, Number], default: null },
-  /**
    * Determines the content of the label slot.
    * 
    * This is overridden if the label slot is present.
@@ -70,11 +64,18 @@ const props = defineProps({
   }
 })
 
+/**
+ * Determines the content of the default slot.
+ * 
+ * This is overridden if the default slot is present.
+ */
+const model = defineModel<string | number | null>({ type: [String, Number], default: null })
+
 const modelValueDisplay = computed(() =>  {
-  if (typeof props.modelValue === 'number') {
-    return props.modelValue.toLocaleString()
+  if (typeof model.value === 'number') {
+    return model.value.toLocaleString()
   }
-  return props.modelValue
+  return model.value
 })
 
 const sizeClass = computed(() => {

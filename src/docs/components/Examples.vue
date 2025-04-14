@@ -2236,26 +2236,6 @@ interface MegaMenuContent {
   }[]
 }
 
-interface MobileMenuContent {
-  children?: {
-    key: string
-    title: string
-    href?: string
-    type?: 'title' | 'simple' | 'slide' | 'back' | 'expand'
-    disabled?: boolean
-  }[],
-  children_1?: {
-    key: string,
-    title: string,
-    href: string
-  }[],
-  children_2?: {
-    key: string,
-    title: string,
-    href: string
-  }[]
-}
-
 export default defineComponent({
   name: "ExamplesSection",
   emits: ["radioGroupChange", "hello"],
@@ -3202,7 +3182,7 @@ export default defineComponent({
       ],
       datapointModel: 4567,
       fileUploaderModel: [],
-      uploadedImages: [] as any,
+      uploadedImages: [] as { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }[],
       tabs: [
         { key: "home", title: "Home", disabled: true },
         { key: "about", title: "About Us", active: true },
@@ -3390,10 +3370,10 @@ export default defineComponent({
     },
   },
   watch: {
-    fileUploaderModel(value) {
-      this.uploadedImages = value.map((file: any) => {
+    async fileUploaderModel(value) {
+      this.uploadedImages = await Promise.all(value.map(async (file: { name: string; lastModified: number; size: number; type: string; invalidType?: boolean; invalidSize?: boolean }) => {
         return {
-          src: URL.createObjectURL(file),
+          src: URL.createObjectURL(new Blob([new Uint8Array(await (file as File).arrayBuffer())], { type: file.type })),
           isInvalid: file.invalidType || file.invalidSize,
           caption: "",
           name: file.name,
@@ -3401,7 +3381,7 @@ export default defineComponent({
           size: file.size,
           type: file.type
         };
-      }).filter((file: any) => !file.isInvalid);
+      })).then(files => files.filter((file: { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }) => !file.isInvalid));
     }
   },
   methods: {
@@ -3462,19 +3442,19 @@ export default defineComponent({
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });
     },
-    async willOpen(res: GenericFunctionType, rej: GenericFunctionType) {
+    async willOpen(res: GenericFunctionType) {
       console.log("Pause for 1 seconds to get fake api request");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Open now!");
       res();
     },
-    async willClose(res: GenericFunctionType, rej: GenericFunctionType) {
+    async willClose(res: GenericFunctionType) {
       console.log("Pause for 1 seconds to do something on close");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Close now!");
       res();
     },
-    async willChangeTab(tab: TabItem, res: GenericFunctionType, rej: GenericFunctionType) {
+    async willChangeTab(tab: TabItem, res: GenericFunctionType) {
       console.log("Pause for 1/2 second to get fake api request", tab);
       await new Promise(r => setTimeout(r, 500));
       console.log("Open now!");

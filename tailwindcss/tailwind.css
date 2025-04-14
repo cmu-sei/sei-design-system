@@ -5,6 +5,7 @@
 @import './theme/breakpoints';
 @import './theme/colors';
 @import './theme/fonts';
+@import './theme/radius';
 
 /* Variants */
 @import './variants/dark-mode';
@@ -67,6 +68,12 @@
   margin-inline: auto;
   padding-inline: 2rem;
 }
+
+/**
+ * Safelist pattern: /col-start-(1|2|3|4|5|6|7)/,
+ * Used for Calendar component.
+ */
+ @source inline("col-start-{1,2,3,4,5,6,7}");
 
 /**
  * Automatically look into the src directory for CSS classes

@@ -17,11 +17,12 @@
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
           aria-label="Previous page"
+          type="button"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2
@@ -62,10 +63,11 @@
               :disabled="loading"
               :aria-disabled="loading"
               :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
+              type="button"
               class="
                 flex items-center justify-center grow-0 shrink-0
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-                rounded sds-theme-plaid:rounded-none
+                rounded-theme-sm
                 w-[2.125rem] h-[2.125rem]
                 disabled:pointer-events-none
               "
@@ -133,11 +135,12 @@
               `Current page, page ${page}` : 
               `Go to page ${page}`
           "
+          type="button"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-600/20
             text-gray-600 dark:text-gray-400
             font-semibold
@@ -188,12 +191,13 @@
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
+          type="button"
           aria-label="Next page"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
             hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
-            border rounded sds-theme-plaid:rounded-none
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
             w-[2.125rem] h-[2.125rem] p-2
@@ -299,31 +303,31 @@ const nextDisabled = computed(() => {
 
 const pageList = computed(() => {
   if (props.totalPages <= props.threshold) {
-    return Array.apply(null, Array(props.totalPages)).map((x, i) => {
+    return [...Array(props.totalPages)].map((x, i) => {
       return i + 1;
     });
   } else if (props.currentPage < props.threshold) {
-    const list: Array<number | string> = Array.apply(null, Array(props.threshold)).map((x, i) => {
+    const list: Array<number | string> = [...Array(props.threshold)].map((x, i) => {
       return i + 1;
     });
     return list.concat(["...", props.totalPages]);
   } else if (props.currentPage > props.totalPages - props.threshold + 1) {
     const list = [1, "..."];
     return list.concat(
-      Array.apply(null, Array(props.threshold)).map((x, i) => {
+      [...Array(props.threshold)].map((x, i) => {
         return props.totalPages - props.threshold + i + 1;
       })
     );
   } else {
     let list = [1, "..."];
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i - props.threshold + 3;
       })
     );
     list.push(props.currentPage);
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i + 1;
       })
     );

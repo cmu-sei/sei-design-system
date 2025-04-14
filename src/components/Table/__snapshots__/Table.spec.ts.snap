@@ -68,13 +68,13 @@ exports[`Table > emits when toggling a table drawer 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
-    <tr id="sds-table_tr_1_drawer" class="">
+    <tr id="sds-table_tr_1_drawer" data-drawer="true" class="">
       <td colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
@@ -93,10 +93,10 @@ exports[`Table > emits when toggling a table drawer 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -172,13 +172,13 @@ exports[`Table > emits when toggling all table drawers 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
-    <tr id="sds-table_tr_1_drawer" class="">
+    <tr id="sds-table_tr_1_drawer" data-drawer="true" class="">
       <td colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
@@ -197,13 +197,13 @@ exports[`Table > emits when toggling all table drawers 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
-    <tr id="sds-table_tr_2_drawer" class="">
+    <tr id="sds-table_tr_2_drawer" data-drawer="true" class="">
       <td colspan="6">
         <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
       </td>
@@ -276,10 +276,10 @@ exports[`Table > matches default snapshot 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -295,10 +295,10 @@ exports[`Table > matches default snapshot 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -372,10 +372,10 @@ exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -391,10 +391,10 @@ exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -466,10 +466,10 @@ exports[`Table > matches snapshot with assigned \`density\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -485,10 +485,10 @@ exports[`Table > matches snapshot with assigned \`density\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -560,10 +560,10 @@ exports[`Table > matches snapshot with assigned \`density\` prop 2`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -579,10 +579,10 @@ exports[`Table > matches snapshot with assigned \`density\` prop 2`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -658,10 +658,10 @@ exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -679,10 +679,10 @@ exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -754,10 +754,10 @@ exports[`Table > matches snapshot with assigned \`rowHighlight\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -773,10 +773,10 @@ exports[`Table > matches snapshot with assigned \`rowHighlight\` prop 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -843,10 +843,10 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -859,10 +859,10 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -938,10 +938,10 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -959,10 +959,10 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <tr id="sds-table_tr_0" class="">
@@ -1051,10 +1051,10 @@ exports[`Table > sorts table by field (column) 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -1070,10 +1070,10 @@ exports[`Table > sorts table by field (column) 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -1140,10 +1140,10 @@ exports[`Table > sorts table by fields (multisort columns) 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -1156,10 +1156,10 @@ exports[`Table > sorts table by fields (multisort columns) 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -1226,10 +1226,10 @@ exports[`Table > sorts table by fields (multisort columns) 2`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -1242,10 +1242,10 @@ exports[`Table > sorts table by fields (multisort columns) 2`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->
@@ -1317,10 +1317,10 @@ exports[`Table > sorts table using an external source as its sorting behavior 1`
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Broccoli
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/31/1999
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->2/1/2000
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/11/2014
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->12/12/2014
       </td>
     </tr>
     <!--v-if-->
@@ -1336,10 +1336,10 @@ exports[`Table > sorts table using an external source as its sorting behavior 1`
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->Carrots
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->1/31/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->3/1/2013
       </td>
       <td class="">
-        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->10/9/2013
+        <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
     <!--v-if-->

@@ -191,8 +191,8 @@ const Components: ComponentList = {
 
 export default {
   install(Vue: App) {
-    Object.keys(Components).forEach((name: any) => {
-      Vue.component(name, Components[name]);
+    Object.keys(Components).forEach((name) => {
+      Vue.component(name as string, Components[name]);
     });
   },
 };

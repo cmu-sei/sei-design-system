@@ -3,7 +3,7 @@
 exports[`Avatar > should match its default snapshot 1`] = `
 <div
   aria-label="Avatar"
-  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-md sds-theme-plaid:rounded-none"
+  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
@@ -32,12 +32,12 @@ exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: 
 exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-md sds-theme-plaid:rounded-none"
+  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-right w-12 aspect-[4/5] rounded-md sds-theme-plaid:rounded-none"
+    class="bg-cover bg-right w-12 aspect-[4/5] rounded-theme-md"
     style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
@@ -77,12 +77,12 @@ exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name:
 exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-12 aspect-[4/5] rounded-md sds-theme-plaid:rounded-none"
+  class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-top w-12 aspect-[4/5] rounded-md sds-theme-plaid:rounded-none"
+    class="bg-cover bg-top w-12 aspect-[4/5] rounded-theme-md"
     style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />

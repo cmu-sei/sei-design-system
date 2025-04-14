@@ -20,13 +20,13 @@
 }
 
 .btn-group, .input-group {
-  @apply relative flex border rounded sds-theme-plaid:rounded-none shadow-inner border-gray-500/50;
+  @apply relative flex border rounded-theme-sm shadow-inner border-gray-500/50;
 
   &.disabled {
     @apply border-gray-100 dark:border-gray-850;
   }
 
-  & .input-group-addon, & [data-id^='sds-'] .form-control, > .form-control, & .btn, & .action-btn {
+  & .input-group-addon, & [data-id^='sds-'] .form-control, & > .form-control, & .btn, & .action-btn {
     @apply border-0 rounded-none;
   }
 
@@ -59,11 +59,11 @@
   }
 
   & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & > .form-control:first-child, & .btn:first-child, & .action-btn:first-child {
-    @apply rounded-l sds-theme-plaid:rounded-none;
+    @apply rounded-l-theme-sm;
   }
 
   & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & > .form-control:last-child, & .btn:last-child, & .action-btn:last-child {
-    @apply rounded-r sds-theme-plaid:rounded-none;
+    @apply rounded-r-theme-sm;
   }
 
   & .form-control {

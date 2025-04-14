@@ -2,7 +2,7 @@
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md sds-theme-plaid:rounded-none bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -146,10 +146,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * The v-model for this component. Determines opened/closed state.
-   */
-  modelValue: { type: Array as PropType<FilterByDropdownOption[]>, default: () => [] },
-  /**
    * Determines the purpose and particular function of the component.
    */
   kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
@@ -187,7 +183,12 @@ const props = defineProps({
   disabled: { type: Boolean, default: false}
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for this component. Determines opened/closed state.
+ */
+const model = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
+
+const emit = defineEmits(['update:modelValue'])
 
 const button = ref<HTMLButtonElement | undefined>()
 const filterTextInput = ref<HTMLInputElement | undefined>()
@@ -217,13 +218,13 @@ const zIndexClass = computed(() => {
 
 const options = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(value: FilterByDropdownOption[]) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit("update:modelValue", value);
   },
 })
 
@@ -258,7 +259,7 @@ const saveSelections = () => {
   /**
    * Emmitted when modelValue changes.
    */
-  emit("update:model-value", tmpOptions.value);
+  emit("update:modelValue", tmpOptions.value);
 }
 
 const cancelSelections = () => {

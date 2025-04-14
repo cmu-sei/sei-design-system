@@ -34,11 +34,7 @@ defineOptions({
   name: 'SdsTextarea'
 })
 
-const props = defineProps({
-  /**
-   * The v-model for this component's text input.
-   */
-  modelValue: { type: String, default: "" },
+defineProps({
   /**
    * Determine whether to display the character counter or not.
    */
@@ -58,7 +54,7 @@ const props = defineProps({
   /**
    * Determines the placeholder text of the component.
    */
-  placeholder: { type: String, default: "" },
+  placeholder: { type: String, default: '' },
   /**
    * Determines the row (height) of the component.
    */
@@ -93,17 +89,22 @@ const props = defineProps({
   resize: { type: Boolean, default: false}
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for this component's text input.
+ */
+const model = defineModel<string>({ type: String, default: '' })
+
+const emit = defineEmits(['update:modelValue'])
 
 const text = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value: string) {
     /**
      * Emitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit('update:modelValue', value)
   },
 })
 </script>

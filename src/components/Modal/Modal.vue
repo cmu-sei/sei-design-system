@@ -57,8 +57,7 @@
                 mx-auto
                 bg-white
                 border
-                rounded-lg
-                sds-theme-plaid:rounded-none
+                rounded-theme-lg
                 shadow-xl
                 dark:text-gray-25
                 dark:bg-gray-900 dark:border-gray-800
@@ -160,13 +159,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * The v-model that determines the show/hide state of the modal.
-   */
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
-  /**
    * Determines the size of the modal.
    */
   size: {
@@ -187,7 +179,12 @@ const props = defineProps({
   zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model that determines the show/hide state of the modal.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
+
+const emit = defineEmits(['update:modelValue'])
 
 const slots = defineSlots<{
   default: () => unknown
@@ -208,13 +205,13 @@ const hasFooterSlot = computed(() => {
 
 const showModal = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit("update:modelValue", value);
   },
 })
 

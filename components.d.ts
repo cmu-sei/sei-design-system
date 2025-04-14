@@ -10,11 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     App: typeof import('./src/docs/App.vue')['default']
     ComponentsCssComponents: typeof import('./src/docs/components/CssComponents.vue')['default']
-    ComponentsDocTables: typeof import('./src/docs/components/DocTables.vue')['default']
-    ComponentsEventsTable: typeof import('./src/docs/components/EventsTable.vue')['default']
     ComponentsExamples: typeof import('./src/docs/components/Examples.vue')['default']
-    ComponentsPropsTable: typeof import('./src/docs/components/PropsTable.vue')['default']
-    ComponentsSlotsTable: typeof import('./src/docs/components/SlotsTable.vue')['default']
     ComponentsTailwindTypography: typeof import('./src/docs/components/TailwindTypography.vue')['default']
     Pages: typeof import('./src/docs/pages/index.vue')['default']
     PagesComponentsButtons: typeof import('./src/docs/pages/components/buttons.vue')['default']

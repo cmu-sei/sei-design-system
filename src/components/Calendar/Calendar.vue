@@ -455,19 +455,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * The v-model for the component.
-   * 
-   * For single selections, this value can be null or a date object.
-   * 
-   * For range selections, this is an object with start and end keys
-   * that can either be null or a date object.
-   * 
-   * Range example:
-   * 
-   * **{ start: new Date(), end: null }**
-   */
-  modelValue: { type: [Object, Date] as PropType<CalendarDate | CalendarRange>, default: new Date() },
-  /**
    * Determines the mode in which the calendar will function.
    * 
    * Options include 'date', 'dateTime', and 'time'.
@@ -496,17 +483,34 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for the component.
+ * 
+ * For single selections, this value can be null or a date object.
+ * 
+ * For range selections, this is an object with start and end keys
+ * that can either be null or a date object.
+ * 
+ * Range example:
+ * 
+ * **{ start: new Date(), end: null }**
+ */
+const model = defineModel<CalendarDate | CalendarRange>({
+  type: [Object, Date] as PropType<CalendarDate | CalendarRange>,
+  default: new Date()
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const date = computed<CalendarDate | CalendarRange>({
   get() {
-    return props.modelValue
+    return model.value
   },
   set(value) {
     /**
      * Emitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
@@ -560,7 +564,7 @@ onMounted(async () => {
   updateTimeSelects()
 })
 
-watch(() => props.modelValue, () => {
+watch(() => model.value, () => {
   updateTimeSelects()
 }, { deep: true })
 
@@ -656,16 +660,16 @@ const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, is
       if (isRange.value) {
         if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
           const currentHour = getHours(date.value.start)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.start = setHours(date.value.start, hours)
         } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
           const currentHour = getHours(date.value.end)
-          let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
           date.value.end = setHours(date.value.end, hours)
         }
       } else if (date.value instanceof Date) {
         const currentHour = getHours(date.value)
-        let hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+        const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
         date.value = setHours(date.value, hours)
       }
       break
@@ -738,7 +742,7 @@ const canGoToNextMonth = computed(() => {
 })
 
 const formatDate = (date: Date, output: string) => format(date, output)
-const isRange = computed(() => props.modelValue && !isDate(props.modelValue))
+const isRange = computed(() => model.value && !isDate(model.value))
 
 const setModelValueDate = async (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value
