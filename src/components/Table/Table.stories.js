@@ -12,7 +12,7 @@ export default {
   component: SdsTable,
   argTypes: {
     density: {
-      options: ['comfortable', 'condensed'],
+      options: ['comfortable', 'condensed', 'default'],
       control: { type: 'select' }
     },
     enableDrawer: {
