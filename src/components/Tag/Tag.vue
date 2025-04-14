@@ -12,7 +12,6 @@
       border-gray-200
       dark:border-gray-700
       rounded-full
-      sds-theme-plaid:rounded-none
       font-semibold
       text-gray-600
       dark:text-gray-400
@@ -75,7 +74,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full sds-theme-plaid:rounded-none"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
@@ -96,7 +95,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full sds-theme-plaid:rounded-none"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
@@ -117,7 +116,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-r-full sds-theme-plaid:rounded-none"
+            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-r-full"
             :class="[buttonSizeClass]"
             @click.stop="remove"
           >
