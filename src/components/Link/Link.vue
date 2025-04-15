@@ -1,6 +1,9 @@
 <template>
-  <a
+  <Component
+    :is="linkComponent"  
     data-id="sds-link"
+    :href="href"
+    :to="to"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'noopener noreferrer' : undefined"
     :class="['link', kindClass, typeClass, variantClass, decorationClass, sizeClass, disabledClass]"
@@ -8,7 +11,7 @@
   >
     <!-- @slot Link content. -->
     <slot />
-  </a>
+</Component>
 </template>
 
 <script setup lang="ts">
@@ -17,6 +20,14 @@ defineOptions({
 })
 
 const props = defineProps({
+  /**
+   * Determines the link's destination.
+   */
+  href: { type: String, default: undefined },
+  /**
+   * Determines the link's destination when using NuxtLink.
+   */
+  to: { type: String, default: undefined },
   /**
    * Determines the purpose and particular function of the component.
    */
@@ -45,6 +56,11 @@ const props = defineProps({
    * Disables the component to prevent user interaction.
    */
   disabled: { type: Boolean, default: false }
+})
+
+const linkComponent = computed(() => {
+  if (props.to) return resolveComponent('NuxtLink')
+  return 'a'
 })
 
 const kindClass = computed(() => {
