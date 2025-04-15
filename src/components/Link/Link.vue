@@ -21,6 +21,10 @@ defineOptions({
 
 const props = defineProps({
   /**
+   * Allow the component to be rendered as a different element.
+   */
+  el: { type: [Object, String], default: undefined },
+  /**
    * Determines the link's destination.
    */
   href: { type: String, default: undefined },
@@ -59,7 +63,7 @@ const props = defineProps({
 })
 
 const linkComponent = computed(() => {
-  if (props.to) return getCurrentInstance()?.appContext?.components?.NuxtLink || 'a'
+  if (props.to && props.el) return resolveComponent(props.linkComponent)
   return 'a'
 })
 
