@@ -59,7 +59,7 @@ const props = defineProps({
 })
 
 const linkComponent = computed(() => {
-  if (props.to) return resolveComponent('NuxtLink')
+  if (props.to) return getCurrentInstance().appContext.components.NuxtLink || 'a'
   return 'a'
 })
 
