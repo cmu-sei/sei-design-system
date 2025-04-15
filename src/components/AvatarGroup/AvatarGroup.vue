@@ -209,7 +209,7 @@ const lastClasses = computed(() => {
   ].join(' ')
 })
 
-const indentClass = (index, length) => {
+const indentClass = (index: number, length: number) => {
   if (index === length)
     return 'mask-none'
 }
@@ -278,7 +278,7 @@ const maskSpec = computed(() => {
   return props.shape === 'circle' ? circleMask : squareMask
 })
 
-const maxWidthClass = (index, length) => {
+const maxWidthClass = (index: number, length: number) => {
   if (index === length)
     return 'max-w-fit'
   switch (props.size) {
