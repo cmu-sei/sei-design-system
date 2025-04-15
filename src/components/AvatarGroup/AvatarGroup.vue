@@ -163,7 +163,7 @@ const props = defineProps({
    * src:  Set the image of the avatar.
    */
   srcset: {
-    type: [AvatarType],
+    type: Array as PropType<AvatarType[]>,
     default: () => []
   }
 })
