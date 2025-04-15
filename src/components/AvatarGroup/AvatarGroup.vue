@@ -25,7 +25,6 @@
               :key="index"
               :shape="shape"
               :size="size"
-              :condensed="condensed"
               :variant="item.variant ?? 'gray'"
               :src="item.src ?? ''"
               :name="item.name ?? ''"
@@ -49,7 +48,6 @@
           <SdsAvatar
             :shape="shape"
             :size="size"
-            :condensed="condensed"
             :variant="item.variant ?? 'gray'"
             :src="item.src ?? ''"
             :name="item.name ?? ''"
@@ -230,17 +228,17 @@ const maskSpec = computed(() => {
         case 'xs':
           maskRadius = 1
           maskSize = 13.5
-          offset = props.condensed ? -11 : -4
+          offset = props.density === 'condensed' ? -11 : -4
           break
         case 'sm':
           maskRadius = 1
           maskSize = 17
-          offset = props.condensed ? -8 : 0
+          offset = props.density === 'condensed' ? -8 : 0
           break
         case 'md':
           maskRadius = 1
           maskSize = 26
-          offset = props.condensed ? -12 : 0
+          offset = props.density === 'condensed' ? -12 : 0
           break
       }
       maskX = vbWidth + offset
@@ -251,19 +249,19 @@ const maskSpec = computed(() => {
         case 'xs':
           maskRadius = 4
           maskSize = 26
-          maskX = props.condensed ? 976 : 983
+          maskX = props.density === 'condensed' ? 976 : 983
           maskY = 487
           break
         case 'sm':
           maskRadius = 4
           maskSize = 34
-          maskX = props.condensed ? 975 : 983
+          maskX = props.density === 'condensed' ? 975 : 983
           maskY = 483
           break
         case 'md':
           maskRadius = 6
           maskSize = 50
-          maskX = props.condensed ? 963 : 975
+          maskX = props.density === 'condensed' ? 963 : 975
           maskY = 475
           break
       }
@@ -282,11 +280,11 @@ const maxWidthClass = (index: number, length: number) => {
   switch (props.size) {
     default:
     case 'md':
-      return props.condensed ? 'max-w-6' : 'max-w-9'
+      return props.density === 'condensed' ? 'max-w-6' : 'max-w-9'
     case 'sm':
-      return props.condensed ? 'max-w-5' : 'max-w-7'
+      return props.density === 'condensed' ? 'max-w-5' : 'max-w-7'
     case 'xs':
-      return props.condensed ? 'max-w-3' : 'max-w-5'
+      return props.density === 'condensed' ? 'max-w-3' : 'max-w-5'
   }
 }
 
