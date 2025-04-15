@@ -45,7 +45,7 @@ const props = defineProps({
    * Determines the shape of the avatar.
    */
   shape: {
-    type: String as PropType<'portrait' | 'square' | 'circle'>,
+    type: String as PropType<'circle' | 'square' | 'portrait'>,
     default: 'portrait'
   },
   /**
