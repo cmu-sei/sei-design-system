@@ -10,8 +10,8 @@
         v-if="item.href"
         :key="`${index}-link`"
         :href="item.href"
-        :target="item.newWindow ? '_blank' : undefined"
-        rel="noopener noreferrer"
+        :target="item.target ?? undefined"
+        :rel="item.target === '_blank' ? 'noopener noreferrer' : undefined"
       >
         <SdsTooltip
           size="auto"
@@ -91,8 +91,8 @@
         <a
           v-if="item.href"
           :href="item.href"
-          :target="item.newWindow ? '_blank' : undefined"
-          rel="noopener noreferrer"
+          :target="item.target ?? undefined"
+          :rel="item.target === '_blank' ? 'noopener noreferrer' : undefined"
           class="flex flex-row gap-2"
         >
           <img
@@ -127,7 +127,7 @@ type AvatarType = {
   src: string | null,
   variant: 'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
   href: string | null,
-  newWindow: boolean | null,
+  target: string | null
 }
 
 const props = defineProps({
