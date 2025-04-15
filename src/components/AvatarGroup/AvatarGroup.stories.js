@@ -19,8 +19,8 @@ export default {
       options: ['xs', 'sm', 'md'],
       control: {type: 'select'}
     },
-    condensed: {
-      options: [true, false],
+    density: {
+      options: ['default', 'condensed'],
       control: {type: 'select'}
     }
   }

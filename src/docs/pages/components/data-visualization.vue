@@ -110,7 +110,7 @@
         <SdsAvatarGroup
           size="md"
           shape="circle"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',
@@ -159,7 +159,7 @@
         <SdsAvatarGroup
           size="sm"
           shape="circle"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',
@@ -190,7 +190,7 @@
         <SdsAvatarGroup
           size="xs"
           shape="circle"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',
@@ -215,7 +215,7 @@
         <SdsAvatarGroup
           size="md"
           shape="square"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',
@@ -236,7 +236,7 @@
         <SdsAvatarGroup
           size="sm"
           shape="square"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',
@@ -260,7 +260,7 @@
         <SdsAvatarGroup
           size="xs"
           shape="square"
-          condensed
+          density="condensed"
           :srcset="[
             {
               name: 'Morgan Markowski',

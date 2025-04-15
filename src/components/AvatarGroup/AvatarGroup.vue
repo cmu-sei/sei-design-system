@@ -150,9 +150,9 @@ const props = defineProps({
   /**
    * Determines the spacing between avatar images.
    */
-  condensed: {
-    type: Boolean,
-    default: false
+  density: {
+    type: String as PropType<'default' | 'condensed'>,
+    default: 'default'
   },
   /**
    * name: Determines the text name (ex. John Doe) will show "JD" initials as a placeholder when no image is present.
