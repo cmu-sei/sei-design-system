@@ -1,5 +1,6 @@
 @theme {
-  --animate-shake: shake 0.2s ease-in-out 0s 2;
+  --animate-shake: shake 0.2s var(--ease-in-out) 0s 2;
+  --animate-slide-up: slide-up 0.3s var(--ease-in-out) 0s 1;
 
   @keyframes shake {
     0% {
@@ -13,6 +14,15 @@
     }
     100% {
       transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0%);
     }
   }
 }
