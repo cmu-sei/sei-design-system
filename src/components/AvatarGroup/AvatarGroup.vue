@@ -31,7 +31,6 @@
               :name="item.name ?? ''"
               class="relative cursor-pointer [&>span]:cursor-pointer"
               :class="`${baseClasses} ${indentClass(index, srcset.length-1)}`"
-              @click="index === 4 ? openDropdown : null"
             />
           </template>
           {{ item.name }}
@@ -56,7 +55,6 @@
             :name="item.name ?? ''"
             class="relative"
             :class="`${baseClasses} ${indentClass(index, srcset.length-1)}`"
-            @click="index === 4 ? openDropdown : null"
           />
         </template>
         {{ item.name }}
@@ -102,7 +100,7 @@
           <img
             v-if="item.src"
             :src="item.src"
-            :alt="item.name"
+            :alt="item.name ?? undefined"
             class="size-5 rounded-full"
           />
           {{ item.name }}
@@ -111,7 +109,7 @@
           <img
             v-if="item.src"
             :src="item.src"
-            :alt="item.name"
+            :alt="item.name ?? undefined"
             class="size-5 rounded-full"
           />
           {{ item.name }}
