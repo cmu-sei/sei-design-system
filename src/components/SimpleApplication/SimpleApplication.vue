@@ -126,7 +126,7 @@
         <!-- Action bar -->
         <aside
           v-if="!hideActionBar && hasSlot('action-bar')"
-          class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
+          class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40 animate-slide-up"
         >
           <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
             <!-- @slot Action content. Great for application-specific actionable content. -->
