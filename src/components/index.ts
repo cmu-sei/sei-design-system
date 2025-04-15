@@ -62,6 +62,7 @@ import { App, Component } from "vue";
 import SdsActionButton from "./ActionButton";
 import SdsActionDropdown from "./ActionDropdown";
 import SdsAvatar from "./Avatar";
+import SdsAvatarGroup from "./AvatarGroup";
 import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
@@ -129,6 +130,7 @@ const Components: ComponentList = {
   SdsActionButton,
   SdsActionDropdown,
   SdsAvatar,
+  SdsAvatarGroup,
   SdsBadge,
   SdsButton,
   SdsCalendar,
@@ -200,6 +202,7 @@ export default {
 export { default as SdsActionButton } from "./ActionButton";
 export { default as SdsActionDropdown } from "./ActionDropdown";
 export { default as SdsAvatar } from "./Avatar";
+export { default as SdsAvatarGroup } from "./AvatarGroup";
 export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
