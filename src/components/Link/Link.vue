@@ -63,7 +63,7 @@ const props = defineProps({
 })
 
 const linkComponent = computed(() => {
-  if (props.to && props.el) return resolveComponent(props.el)
+  if (props.to && props.el) return resolveComponent(props.el as string)
   return 'a'
 })
 
