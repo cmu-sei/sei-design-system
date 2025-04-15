@@ -10,7 +10,7 @@
         v-if="item.href"
         :key="`${index}-link`"
         :href="item.href"
-        :target="item.newWindow ? '_blank' : null"
+        :target="item.newWindow ? '_blank' : undefined"
         rel="noopener noreferrer"
       >
         <SdsTooltip
@@ -95,7 +95,7 @@
         <a
           v-if="item.href"
           :href="item.href"
-          :target="item.newWindow ? '_blank' : null"
+          :target="item.newWindow ? '_blank' : undefined"
           rel="noopener noreferrer"
           class="flex flex-row gap-2"
         >
@@ -126,6 +126,14 @@ defineOptions({
   name: 'SdsAvatarGroup'
 })
 
+type AvatarType = {
+  name: string | null,
+  src: string | null,
+  variant: 'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
+  href: string | null,
+  newWindow: boolean | null,
+}
+
 const props = defineProps({
   /**
    * Determines the shape of the avatar.
@@ -155,13 +163,7 @@ const props = defineProps({
    * src:  Set the image of the avatar.
    */
   srcset: {
-    type: [{
-      name: String | null,
-      src: String | null,
-      variant: String<'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'> | null,
-      href: String | null,
-      newWindow: Boolean | null,
-    }],
+    type: [AvatarType],
     default: () => []
   }
 })
