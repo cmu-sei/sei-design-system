@@ -118,6 +118,11 @@
 </template>
 
 <script setup lang="ts">
+import SdsAvatar from '../Avatar/Avatar.vue'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsDropdown from '../Dropdown/Dropdown.vue'
+import SdsDropdownItem from '../DropdownItem/DropdownItem.vue'
+
 defineOptions({
   name: 'SdsAvatarGroup'
 })
