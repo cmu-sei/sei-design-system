@@ -100,11 +100,11 @@
             <form @submit.prevent>
               <fieldset class="flex flex-row flex-nowrap items-center gap-x-2">
                 <span class="text-gray-900 dark:text-white text-sm">Go to</span>
-                <label for="page-number">
+                <label for="page-input-number">
                   <span class="sr-only">Page number</span>
                   <input
-                    id="page-number"
-                    v-model="pageNumber"
+                    id="page-input-number"
+                    v-model="pageInputNumber"
                     type="number"
                     class="
                       form-control
@@ -180,9 +180,20 @@
         class="flex md:hidden"
         role="listitem"
       >
-        <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
-          Page {{ currentPage.toLocaleString() }}
-        </span>
+        <div class="flex flew-nowrap items-center gap-x-2 m-auto">
+          <label 
+            for="page-select-number" 
+            class="text-sm text-gray-600 dark:text-gray-400 font-semibold"
+          >Page</label>
+          <SdsSelect
+            id="page-select-number"
+            v-model="pageSelectNumber"
+            :options="pageOptions"
+            class="h-8.5 w-auto"
+            size="sm"
+            @change="onChange($event)"
+          />
+        </div>
       </li>
       <li 
         class="flex grow-0 shrink-0"
@@ -226,6 +237,9 @@
 </template>
 
 <script setup lang="ts">
+import type { SelectOption, SelectOptionValue } from '../Select/Select.vue'
+import SdsSelect from '../Select/Select.vue'
+
 defineOptions({
   name: 'SdsPaginator'
 })
@@ -284,10 +298,14 @@ const icons = Object.freeze({
 
 const emit = defineEmits(['go-to-page'])
 
-const pageNumber = ref<string>()
+const pageInputNumber = ref<string>()
+const pageOptions = ref<SelectOption<number>[]>(
+  Array.from({ length: props.totalPages }, (_, i) => ({ value: (i + 1), text: (i + 1) }))
+)
+const pageSelectNumber = ref<SelectOptionValue>(props.currentPage)
 
 const isPageNumberInvalid = computed(() => {
-  const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+  const page = typeof pageInputNumber.value === 'undefined' ? undefined : parseInt(pageInputNumber.value, 10)
   const lastPage = pageList.value[pageList.value.length - 1]
   if (typeof page === 'undefined') return false // Initial state
   return page < 1 || page > parseInt(`${lastPage}`, 10)
@@ -342,12 +360,20 @@ const goToPage = (page: number | string, event: KeyboardEvent | MouseEvent) => {
   emit('go-to-page', { page, event });
 }
 
+const onChange = (event: MouseEvent) => {
+  goToPage((pageSelectNumber.value as number), event)
+}
+
 const onKeyup = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
-    const page = typeof pageNumber.value === 'undefined' ? undefined : parseInt(pageNumber.value, 10)
+    const page = typeof pageInputNumber.value === 'undefined' ? undefined : parseInt(pageInputNumber.value, 10)
     if (!page || page === props.currentPage || isPageNumberInvalid.value) return
-    pageNumber.value = undefined // Reset page number
+    pageInputNumber.value = undefined // Reset page number
     goToPage(page, event)
   }
 }
+
+watch(() => props.currentPage, (page) => {
+  pageSelectNumber.value = page
+}, { immediate: true })
 </script>
