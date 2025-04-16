@@ -42,6 +42,7 @@ describe("Paginator", () => {
     const prevBtn = wrapper.find('button[aria-label="Previous page"]')
     await prevBtn.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
+    expect(document.body).toMatchSnapshot()
   })
 
   it('disables the next button on the last page', async () => {
@@ -54,16 +55,25 @@ describe("Paginator", () => {
     const prevBtn = wrapper.find('button[aria-label="Next page"]')
     await prevBtn.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
+    expect(document.body).toMatchSnapshot()
   })
 
   it('does NOT render ellipsis when totalPages is <= threshold', async () => {
     await wrapper.setProps({ currentPage: 1, totalPages: 5, threshold: 5 })
-    expect(wrapper.html()).toMatchSnapshot()
+    expect(document.body).toMatchSnapshot()
   })
 
   it('emits the page event when clicking a page number', async () => {
     const pageBtn = wrapper.find('button[aria-label="Go to page 4"]')
     await pageBtn.trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
+    expect(document.body).toMatchSnapshot()
+  })
+
+  it('emits the page event when the selected value changes', async () => {
+    const select = wrapper.find('select')
+    await select.setValue('4')
+    expect(wrapper.emitted()).toHaveProperty('change')
+    expect(document.body).toMatchSnapshot()
   })
 })
