@@ -79,7 +79,7 @@
             'font-semibold',
             'text-gray-700 dark:text-gray-200'
           ]"
-          @click="toggle"
+          @click="toggle()"
         >
           +{{ srcset.length - 4 }}
         </button>
