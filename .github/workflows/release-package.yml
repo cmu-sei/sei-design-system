@@ -1,0 +1,64 @@
+name: Release Package
+
+on:
+  push:
+    branches:
+      - main
+
+# on:
+#   release:
+#     types: [created]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        registry-url: 'https://npm.pkg.github.com'
+        # Defaults to the user or organization that owns the workflow file
+        scope: '@cmu-sei'
+
+    - name: Convert registry in package-lock.json
+      run: npm run change-registry-in-package-lock
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      id: cache
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Lint components
+      run: npm run lint
+    
+    - name: Test components
+      run: npm test
+    
+    - name: Build components
+      run: |
+        printf "\nbuilding all components...\n"
+        LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
+        npx vue-tsc --declaration --emitDeclarationOnly --outDir dist/types
+
+    - name: Generate Volar types
+      run: |
+        # Generate ./volar.d.ts that adds Types for Global Components
+        printf "\nGenerating Volar types for global components...\n"
+        npm run gen-volar-dts
+
+    - name: Build Storybook
+      run: npm run build-storybook
+
+    - name: Publish package
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
