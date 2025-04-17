@@ -70,16 +70,16 @@
             'dark:bg-gray-900',
             'relative flex flex-col justify-center text-center',
             shape === 'circle' ? 'rounded-full' : '',
-            size === 'md' && shape === 'square' ? 'rounded-md' : '',
-            size === 'sm' && shape === 'square' ? 'rounded' : '',
-            size === 'xs' && shape === 'square' ? 'rounded-sm' : '',
+            size === 'md' && shape === 'square' ? 'sds-theme-plaid:rounded-none rounded-md' : '',
+            size === 'sm' && shape === 'square' ? 'sds-theme-plaid:rounded-none rounded' : '',
+            size === 'xs' && shape === 'square' ? 'sds-theme-plaid:rounded-none rounded-sm' : '',
             size === 'md' ? 'text-md size-12' : '',
             size === 'sm' ? 'text-sm size-8' : '',
             size === 'xs' ? 'text-xs size-6' : '',
             'font-semibold',
             'text-gray-700 dark:text-gray-200'
           ]"
-          @click="toggle"
+          @click="toggle()"
         >
           +{{ srcset.length - 4 }}
         </button>
@@ -118,6 +118,11 @@
 </template>
 
 <script setup lang="ts">
+import SdsAvatar from '../Avatar/Avatar.vue'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsDropdown from '../Dropdown/Dropdown.vue'
+import SdsDropdownItem from '../DropdownItem/DropdownItem.vue'
+
 defineOptions({
   name: 'SdsAvatarGroup'
 })
@@ -210,7 +215,25 @@ const indentClass = (index: number, length: number) => {
     return 'mask-none'
 }
 
-const maskSpec = computed(() => {
+const maxWidthClass = (index: number, length: number) => {
+  if (index === length)
+    return 'max-w-fit'
+  switch (props.size) {
+    default:
+    case 'md':
+      return props.density === 'condensed' ? 'max-w-6' : 'max-w-9'
+    case 'sm':
+      return props.density === 'condensed' ? 'max-w-5' : 'max-w-7'
+    case 'xs':
+      return props.density === 'condensed' ? 'max-w-3' : 'max-w-5'
+  }
+}
+
+const maskAlign = computed(() => {
+  return '99% 50%'
+})
+
+const maskSpec = (theme='forge') => {
   const vbWidth = 1000
   const vbHeight = 1000
 
@@ -247,19 +270,19 @@ const maskSpec = computed(() => {
     case 'square':
       switch (props.size) {
         case 'xs':
-          maskRadius = 4
+          maskRadius = theme === 'plaid' ? 0 : 4
           maskSize = 26
           maskX = props.density === 'condensed' ? 976 : 983
           maskY = 487
           break
         case 'sm':
-          maskRadius = 4
+          maskRadius = theme === 'plaid' ? 0 : 4
           maskSize = 34
           maskX = props.density === 'condensed' ? 975 : 983
           maskY = 483
           break
         case 'md':
-          maskRadius = 6
+          maskRadius = theme === 'plaid' ? 0 : 6
           maskSize = 50
           maskX = props.density === 'condensed' ? 963 : 975
           maskY = 475
@@ -272,34 +295,33 @@ const maskSpec = computed(() => {
   const squareMask = `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><rect x="${maskX}" y="${maskY}" width="${maskSize}" height="${maskSize}" rx="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
 
   return props.shape === 'circle' ? circleMask : squareMask
-})
-
-const maxWidthClass = (index: number, length: number) => {
-  if (index === length)
-    return 'max-w-fit'
-  switch (props.size) {
-    default:
-    case 'md':
-      return props.density === 'condensed' ? 'max-w-6' : 'max-w-9'
-    case 'sm':
-      return props.density === 'condensed' ? 'max-w-5' : 'max-w-7'
-    case 'xs':
-      return props.density === 'condensed' ? 'max-w-3' : 'max-w-5'
-  }
 }
 
-const maskAlign = computed(() => {
-  return '99% 50%'
+const maskSpecForge = computed(() => {
+  return maskSpec('forge')
+})
+
+const maskSpecPlaid = computed(() => {
+  return maskSpec('plaid')
 })
 </script>
 
 <style lang="postcss" scoped>
-div[data-id="sds-avatar"] {
-  mask: v-bind('maskSpec');
+[data-id="sds-avatar"] {
+  mask: v-bind('maskSpecForge');
+  mask-position: v-bind('maskAlign');
   mask-clip: no-clip;
   mask-repeat: no-repeat;
   mask-composite: exclude;
+  mask-origin: border-box;
+  mask-size: 1000px 1000px;
+}
+.sds-theme-plaid [data-id="sds-avatar"] {
+  mask: v-bind('maskSpecPlaid');
   mask-position: v-bind('maskAlign');
+  mask-clip: no-clip;
+  mask-repeat: no-repeat;
+  mask-composite: exclude;
   mask-origin: border-box;
   mask-size: 1000px 1000px;
 }

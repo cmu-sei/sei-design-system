@@ -1,7 +1,7 @@
 import SdsAvatarGroup from './AvatarGroup.vue';
 
 export default {
-  title: 'Components/Data Visualization/AvatarGroup',
+  title: 'Components/Data Visualization/Avatar Group',
   parameters: {
     docs: {
       description: {
@@ -27,16 +27,40 @@ export default {
 };
 
 const Template = (args) => ({
-  components: {SdsAvatarGroup},
+  components: {
+    SdsAvatarGroup,
+  },
   setup() {
-    return {args}
+    return { args }
   },
   template: `
-    <sds-avatargroup v-bind="args"/>
-  `
+    <sds-avatar-group v-bind="args" />
+  `,
 });
 
 export const Default = Template.bind({});
 Default.args = {
-  /* Set default arguments */
+  shape: 'circle',
+  size: 'md',
+  density: 'default',
+  srcset: [
+    {
+      name: 'Jane Doe',
+    },
+    {
+      name: 'Morgan Markowski',
+    },
+    {
+      name: 'Philip Glass',
+    },
+    {
+      name: 'Judd Frye',
+    },
+    {
+      name: 'Thomas Edison',
+    },
+    {
+      name: 'Benjamin Franklin',
+    }
+  ]
 }
