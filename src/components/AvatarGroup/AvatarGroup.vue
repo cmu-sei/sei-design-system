@@ -158,10 +158,16 @@ const props = defineProps({
     default: 'default'
   },
   /**
-   * name: Determines the text name (ex. John Doe) will show "JD" initials as a placeholder when no image is present.
-   *       The full name, "John Doe" will display on hover with or without an image present.
+   * **name** (required) — Determines the text name (e.g. John Doe will show "JD" initials as a placeholder when no image is present)
+   * The full name, "John Doe" will display on hover with or without an image present.
    *
-   * src:  Set the image of the avatar.
+   * **src** (optional) — URL for avatar image
+   *
+   * **variant** (optional) — Determines the background color of the avatar when no image is present.
+   *
+   * **href** (optional) — Link for avatar
+   *
+   * **target** (optional) — Sets the `target` attribute for avatar links (e.g. `_blank`, `_self`, etc.)
    */
   srcset: {
     type: Array as PropType<AvatarType[]>,
