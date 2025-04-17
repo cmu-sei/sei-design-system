@@ -100,10 +100,10 @@
             <form @submit.prevent>
               <fieldset class="flex flex-row flex-nowrap items-center gap-x-2">
                 <span class="text-gray-900 dark:text-white text-sm">Go to</span>
-                <label for="page-input-number">
+                <label :for="pageInputNumberId">
                   <span class="sr-only">Page number</span>
                   <input
-                    id="page-input-number"
+                    :id="pageInputNumberId"
                     v-model="pageInputNumber"
                     type="number"
                     class="
@@ -182,11 +182,11 @@
       >
         <div class="flex flew-nowrap items-center gap-x-2 m-auto">
           <label 
-            for="page-select-number" 
+            :for="pageSelectNumberId" 
             class="text-sm text-gray-600 dark:text-gray-400 font-semibold"
           >Page</label>
           <SdsSelect
-            id="page-select-number"
+            :id="pageSelectNumberId"
             v-model="pageSelectNumber"
             :options="pageOptions"
             class="h-8.5 w-auto"
@@ -298,10 +298,12 @@ const icons = Object.freeze({
 
 const emit = defineEmits(['go-to-page'])
 
+const pageInputNumberId = useId()
 const pageInputNumber = ref<string>()
 const pageOptions = ref<SelectOption<number>[]>(
   Array.from({ length: props.totalPages }, (_, i) => ({ value: (i + 1), text: (i + 1) }))
 )
+const pageSelectNumberId = useId()
 const pageSelectNumber = ref<SelectOptionValue>(props.currentPage)
 
 const isPageNumberInvalid = computed(() => {

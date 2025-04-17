@@ -59,8 +59,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -149,8 +149,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -258,8 +258,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -347,8 +347,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -435,8 +435,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -522,8 +522,8 @@ exports[`Paginator > decrements paginator when clicking the "Previous page" butt
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -614,8 +614,8 @@ exports[`Paginator > disables the "Next page" button when \`currentPage\` is set
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -704,8 +704,8 @@ exports[`Paginator > disables the "Next page" button when \`currentPage\` is set
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -813,8 +813,8 @@ exports[`Paginator > disables the "Next page" button when \`currentPage\` is set
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -902,8 +902,8 @@ exports[`Paginator > disables the "Next page" button when \`currentPage\` is set
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -995,8 +995,8 @@ exports[`Paginator > disables the "Previous page" button when \`currentPage\` is
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1085,8 +1085,8 @@ exports[`Paginator > disables the "Previous page" button when \`currentPage\` is
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1177,8 +1177,8 @@ exports[`Paginator > disables the current page 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1267,8 +1267,8 @@ exports[`Paginator > disables the current page 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1376,8 +1376,8 @@ exports[`Paginator > disables the current page 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1469,8 +1469,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1559,8 +1559,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1668,8 +1668,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1757,8 +1757,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1845,8 +1845,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1932,8 +1932,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -1998,8 +1998,8 @@ exports[`Paginator > does NOT render an ellipsis when \`totalPages\` is <= thres
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2089,8 +2089,8 @@ exports[`Paginator > does NOT render paginator when \`totalPages\` < 1 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2184,8 +2184,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2274,8 +2274,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2383,8 +2383,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2472,8 +2472,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2560,8 +2560,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2647,8 +2647,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2713,8 +2713,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2799,8 +2799,8 @@ exports[`Paginator > emits the page event when clicking a page number 1`] = `
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2891,8 +2891,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -2981,8 +2981,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3090,8 +3090,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3179,8 +3179,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3267,8 +3267,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3354,8 +3354,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3420,8 +3420,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3506,8 +3506,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3593,8 +3593,8 @@ exports[`Paginator > emits the page event when the selected value changes 1`] = 
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3685,8 +3685,8 @@ exports[`Paginator > increments paginator when clicking the "Next page" button 1
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3775,8 +3775,8 @@ exports[`Paginator > increments paginator when clicking the "Next page" button 1
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3884,8 +3884,8 @@ exports[`Paginator > increments paginator when clicking the "Next page" button 1
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -3973,8 +3973,8 @@ exports[`Paginator > increments paginator when clicking the "Next page" button 1
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -4061,8 +4061,8 @@ exports[`Paginator > increments paginator when clicking the "Next page" button 1
                 </li>
                 <li class="flex md:hidden" role="listitem">
                     <div class="flex flew-nowrap items-center gap-x-2 m-auto">
-                        <label for="page-select-number" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
-                        <select id="page-select-number" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
+                        <label for="v-1" class="text-sm text-gray-600 dark:text-gray-400 font-semibold">Page</label>
+                        <select id="v-1" data-id="sds-select" class="form-control form-control-sm h-8.5 w-auto">
                             <option disabled="" value=""></option>
                             <option value="1">1</option>
                             <option value="2">2</option>
