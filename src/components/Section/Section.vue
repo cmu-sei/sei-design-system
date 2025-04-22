@@ -19,7 +19,7 @@
     >
       <div
         class="flex px-4 py-3"
-        :class="{ 'border-b border-gray-300 dark:border-gray-800': type === 'accented' }"
+        :class="{ 'border-b border-gray-200 dark:border-gray-800': type === 'accented' }"
       >
         <div class="self-center grow">
           <div

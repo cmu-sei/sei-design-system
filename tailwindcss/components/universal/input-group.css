@@ -20,7 +20,7 @@
 }
 
 .btn-group, .input-group {
-  @apply relative flex border rounded-theme-sm shadow-inner border-gray-500/50;
+  @apply relative flex border rounded-theme-sm shadow-inner border-gray-200 dark:border-gray-800;
 
   &.disabled {
     @apply border-gray-100 dark:border-gray-850;
