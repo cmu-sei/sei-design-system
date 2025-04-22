@@ -1060,7 +1060,7 @@ const handleRequired = () => {
 @reference "../../../tailwindcss/tailwind.css";
 
 .sds-multiselect {
-  @apply block relative border border-gray-300 dark:border-gray-700 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
+  @apply block relative border border-gray-200 dark:border-gray-800 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
 }
 
 .sds-multiselect.active,
