@@ -83,9 +83,9 @@
           <ul>
             <li
               v-for="o in filteredTmpOptions"
-              :key="o.id" 
+              :key="o.id"
             >
-              <div class="leading-5 space-x-2 flex items-start px-4 py-1 hover:bg-gray-50">
+              <div class="leading-5 flex gap-2 items-start px-4 py-1 hover:bg-gray-50 dark:hover:bg-gray-700">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -95,7 +95,7 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 hover:text-black dark:text-gray-50 block w-full"
+                  class="text-gray-900 hover:text-black dark:text-gray-50 dark:hover:text-white block w-full cursor-pointer"
                 >{{ o.text }}</label>
               </div>
             </li>
