@@ -100,6 +100,353 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Avatar Group
+      </h2>
+      <h3 class="text-lg">
+        Condensed
+      </h3>
+      <h4>Circle</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              variant: 'green',
+            },
+            {
+              name: 'Jacobim Mugatu',
+              variant: 'purple',
+            },
+            {
+              name: 'Maury Ballstein',
+              variant: 'yellow'
+            },
+            {
+              name: 'Morgan Markowski',
+              variant: 'red',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+              variant: 'red',
+              newWindow: true
+            },
+            {
+              name: 'Jacobim Mugatu',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+            },
+            {
+              name: 'Maury Ballstein',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/1/200/200'
+            },
+            {
+              name: 'Morgan Markowski',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/1/200/200'
+            },
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h4>Square</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h3 class="text-lg">
+        Default
+      </h3>
+      <h4>Circle</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h4>Square</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Badge
       </h2>
       <div class="flex gap-4">
