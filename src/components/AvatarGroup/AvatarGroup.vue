@@ -127,12 +127,12 @@ defineOptions({
   name: 'SdsAvatarGroup'
 })
 
-type AvatarType = {
+export interface AvatarGroupItem {
   name: string | null,
-  src: string | null,
-  variant: 'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
-  href: string | null,
-  target: string | null
+  src?: string | null,
+  variant?: 'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
+  href?: string | null,
+  target?: string | null
 }
 
 const props = defineProps({
@@ -170,7 +170,7 @@ const props = defineProps({
    * **target** (optional) — Sets the `target` attribute for avatar links (e.g. `_blank`, `_self`, etc.)
    */
   srcset: {
-    type: Array as PropType<AvatarType[]>,
+    type: Array as PropType<AvatarGroupItem[]>,
     default: () => []
   }
 })

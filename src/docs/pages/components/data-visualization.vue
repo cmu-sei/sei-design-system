@@ -166,7 +166,7 @@
               src: 'https://picsum.photos/seed/1/200/200',
               href: 'https://google.com',
               variant: 'red',
-              newWindow: true
+              target: '_blank'
             },
             {
               name: 'Jacobim Mugatu',
