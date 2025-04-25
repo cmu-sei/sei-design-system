@@ -1,13 +1,8 @@
 name: Release Package
 
 on:
-  push:
-    branches:
-      - main
-
-# on:
-#   release:
-#     types: [created]
+  release:
+    types: [published]
 
 jobs:
   publish:
