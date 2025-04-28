@@ -887,15 +887,22 @@
         </footer>
 
         <!-- Action bar-->
-        <aside
-          v-if="!hideActionBar && hasSlot('action-bar')"
-          class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40 animate-slide-up"
+        <transition
+          enter-active-class="transition-transform ease-in-out delay-250 duration-250"
+          enter-from-class="translate-y-full"
+          enter-to-class="translate-y-0"
+          appear
         >
-          <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
-            <!-- @slot Action content. Great for application-specific actionable content. -->
-            <slot name="action-bar" />
-          </div>
-        </aside>
+          <aside
+            v-if="!hideActionBar && hasSlot('action-bar')"
+            class="bg-blue-500 text-white dark:bg-blue-700 p-4 sticky bottom-0 z-40"
+          >
+            <div class="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+              <!-- @slot Action content. Great for application-specific actionable content. -->
+              <slot name="action-bar" />
+            </div>
+          </aside>
+        </transition>
       </div>
     </div>
   </div>

@@ -129,11 +129,9 @@
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page === currentPage && loading ?
-            'Loading' :
-            page === currentPage ? 
-              `Current page, page ${page}` : 
-              `Go to page ${page}`
+          :aria-label="page === currentPage ? 
+            `Current page, page ${page}` : 
+            `Go to page ${page}`
           "
           type="button"
           class="
@@ -148,32 +146,13 @@
           "
           :class="{
             // Active state
-            'disabled:bg-blue-50 dark:disabled:bg-blue-900': page === currentPage && !loading,
-            'disabled:border-blue-600 dark:disabled:border-blue-400': page === currentPage && !loading,
-            'shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
+            'disabled:bg-blue-50 dark:disabled:bg-blue-900 disabled:border-blue-600 dark:disabled:border-blue-400 shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
             // Disabled state
-            'disabled:text-gray-600/50 dark:disabled:text-gray-400/50': page !== currentPage && loading,
-            'disabled:border-gray-600/10 dark:disabled:border-gray-600/10': page !== currentPage && loading,
-            // Loading/Pending state
-            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20': page === currentPage && loading,
-            'disabled:border-gray-600/20 dark:disabled:border-gray-400/20': page === currentPage && loading
+            'disabled:text-gray-600/50 dark:disabled:text-gray-400/50 disabled:border-gray-600/10 dark:disabled:border-gray-600/10': loading,
           }"
           @click.prevent="goToPage(page, $event)"
         >
-          <span 
-            v-if="page === currentPage && loading"
-            class="flex relative h-full w-full"
-          >
-            <span class="absolute inset-0 flex items-center justify-center">
-              <SdsLoadingSpinner
-                size="sm"
-                class="text-gray-600 dark:text-gray-400"
-              />
-            </span>
-          </span>
-          <template v-else>
-            {{ page.toLocaleString() }}
-          </template>
+          {{ page.toLocaleString() }}
         </button>
       </li>
       <li
