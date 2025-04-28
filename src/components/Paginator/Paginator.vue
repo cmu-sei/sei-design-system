@@ -217,7 +217,9 @@
 
 <script setup lang="ts">
 import type { SelectOption, SelectOptionValue } from '../Select/Select.vue'
+import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsSelect from '../Select/Select.vue'
+import SdsSvgIcon from '../SvgIcon/SvgIcon.vue'
 
 defineOptions({
   name: 'SdsPaginator'
