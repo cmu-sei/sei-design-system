@@ -835,6 +835,92 @@
             </SdsTag>
           </li>
         </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag
+              :counter="4"
+            >
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+            >
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="decrement"
+            >
+              <template #label>
+                Decrement
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="remove"
+            >
+              <template #label>
+                Remove
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag
+              :counter="4"
+              size="md"
+            >
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+              size="md"
+            >
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="decrement"
+              size="md"
+            >
+              <template #label>
+                Decrement
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="remove"
+              size="md"
+            >
+              <template #label>
+                Remove
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
