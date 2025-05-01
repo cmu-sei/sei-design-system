@@ -23,7 +23,7 @@ exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: 
 >
   <div
     class="bg-cover bg-center w-16 rounded-full aspect-square"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/mrwinwood?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/mrwinwood?full=true);"
     title="Matt Winwood"
   />
 </div>
@@ -38,7 +38,7 @@ exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, nam
 >
   <div
     class="bg-cover bg-right w-12 aspect-[4/5] rounded-theme-md"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
 </div>
@@ -53,7 +53,7 @@ exports[`Avatar > variant: gray, position: bottom, shape: circle, size: md, name
 >
   <div
     class="bg-cover bg-bottom w-12 rounded-full aspect-square"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
 </div>
@@ -68,7 +68,7 @@ exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name:
 >
   <div
     class="bg-cover bg-left w-6 rounded-full aspect-square"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
 </div>
@@ -83,7 +83,7 @@ exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, nam
 >
   <div
     class="bg-cover bg-top w-12 aspect-[4/5] rounded-theme-md"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
 </div>
@@ -98,7 +98,7 @@ exports[`Avatar > variant: yellow, position: center, shape: circle, size: sm, na
 >
   <div
     class="bg-cover bg-center w-8 rounded-full aspect-square"
-    style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
+    style="background-image: url(https://seinet.sei.cmu.edu/api/photos/bjabout?full=true);"
     title="Brandon Jabout"
   />
 </div>
