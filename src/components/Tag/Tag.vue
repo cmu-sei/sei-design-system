@@ -13,6 +13,7 @@
       dark:border-gray-700
       rounded-full
       sds-theme-plaid:rounded-md
+      overflow-clip
       font-semibold
       text-gray-600
       dark:text-gray-400
@@ -35,9 +36,14 @@
       class="flex flex-row flex-nowrap items-center"
       :class="{
         'gap-x-0.5': size === 'sm',
-        'gap-x-1': size === 'md'
+        'gap-x-1': size === 'md',
       }"
     >
+      <span
+        v-if="counter"
+        class="bg-blue-600 text-white text-center"
+        :class="size === 'sm' ? 'h-6 w-6 px-1.5 leading-6' : 'h-8 w-8 px-1.5 leading-8'"
+      >{{ counter }}</span>
       <span 
         v-if="!!$slots.leftSlot"
         class="leading-none"
@@ -55,6 +61,7 @@
           active:text-black
           dark:active:text-white
         "
+        :class="counter ? 'pl-1' : ''"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
@@ -64,7 +71,7 @@
           {{ label }}
         </slot>
       </a>
-      <span v-else>
+      <span v-else :class="counter ? 'pl-1' : ''">
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
@@ -75,7 +82,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full sds-theme-plaid:rounded-r-md "
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
@@ -96,7 +103,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-r-full sds-theme-plaid:rounded-r-md"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
@@ -117,7 +124,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 rounded-r-full sds-theme-plaid:rounded-r-md"
+            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900"
             :class="[buttonSizeClass]"
             @click.stop="remove"
           >
@@ -255,8 +262,14 @@ const paddingClass = computed(() => {
   const { action, readonly, size } = props
   switch (size) {
     case 'sm':
+      if(props.counter) {
+        return isAction(action) && !readonly ? '' : 'pr-2'
+      }
       return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
     case 'md':
+      if(props.counter) {
+        return isAction(action) && !readonly ? '' : 'pr-2.5'
+      }
       return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
     default:
       return ''
