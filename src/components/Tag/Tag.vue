@@ -45,7 +45,7 @@
         :class="size === 'sm' ? 'h-6 w-6 px-1.5 leading-6' : 'h-8 w-8 px-1.5 leading-8'"
       >{{ counter }}</span>
       <span 
-        v-else-if="!!$slots.leftSlot"
+        v-if="!!$slots.leftSlot"
         class="leading-none"
       >
         <!-- @slot Left slot content. -->
@@ -61,6 +61,7 @@
           active:text-black
           dark:active:text-white
         "
+        :class="props.counter ? 'pl-1' : ''"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
@@ -70,7 +71,7 @@
           {{ label }}
         </slot>
       </a>
-      <span v-else>
+      <span v-else :class="props.counter ? 'pl-1' : ''">
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
