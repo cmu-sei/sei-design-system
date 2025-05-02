@@ -40,7 +40,7 @@
       }"
     >
       <span
-        v-if="props.counter"
+        v-if="counter"
         class="bg-blue-600 text-white text-center"
         :class="size === 'sm' ? 'h-6 w-6 px-1.5 leading-6' : 'h-8 w-8 px-1.5 leading-8'"
       >{{ counter }}</span>
@@ -61,7 +61,7 @@
           active:text-black
           dark:active:text-white
         "
-        :class="props.counter ? 'pl-1' : ''"
+        :class="counter ? 'pl-1' : ''"
         :href="href"
         :rel="external ? 'noopener noreferrer' : undefined"
         :target="external ? '_blank' : undefined"
@@ -71,7 +71,7 @@
           {{ label }}
         </slot>
       </a>
-      <span v-else :class="props.counter ? 'pl-1' : ''">
+      <span v-else :class="counter ? 'pl-1' : ''">
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
