@@ -4,7 +4,7 @@
     class="w-full"
     :placement="placement"
     :disabled="disabled"
-    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-md w-auto ${zIndexClass}`"
+    :popper-class="`absolute bg-white border dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 shadow-lg rounded-theme-md w-auto ${zIndexClass}`"
     arrow-class="absolute bg-white border dark:bg-gray-850 dark:border-gray-700 w-3 h-3 rotate-45"
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -21,6 +21,7 @@
           :class="{
             'input-group-sm': size === 'sm',
             disabled,
+            readonly,
             valid,
             invalid,
           }"
@@ -81,7 +82,7 @@
         <template v-if="isRange">
           <div
             v-if="!hideArrow"
-            class="flex my-auto flex-shrink-0"
+            class="flex my-auto shrink-0"
             :class="{
               'opacity-50': disabled || readonly
             }"
@@ -109,6 +110,7 @@
             :class="{
               'input-group-sm': size === 'sm',
               disabled,
+              readonly,
               valid,
               invalid
             }"
@@ -235,19 +237,6 @@ const props = defineProps({
    */
   placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
   /**
-   * The v-model for the component.
-   *
-   * For single selections, this value can be null or a date object.
-   *
-   * For range selections, this is an object with start and end keys
-   * that can either be null or a date object.
-   *
-   * Range example:
-   *
-   * **{ start: new Date(), end: null }**
-   */
-  modelValue: { type: [Object, Date] as PropType<CalendarRange | CalendarDate>, default: null },
-  /**
    * The max date allowed for the datepicker.
    */
   max: { type: Date, default: null },
@@ -283,7 +272,24 @@ const props = defineProps({
   useCurrentTimeForToday: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for the component.
+ *
+ * For single selections, this value can be null or a date object.
+ *
+ * For range selections, this is an object with start and end keys
+ * that can either be null or a date object.
+ *
+ * Range example:
+ *
+ * **{ start: new Date(), end: null }**
+ */
+const model = defineModel<CalendarRange | CalendarDate>({
+  type: [Object, Date] as PropType<CalendarRange | CalendarDate>,
+  default: null
+})
+
+const emit = defineEmits(['update:modelValue'])
 
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()
@@ -311,7 +317,7 @@ const zIndexClass = computed(() => {
 })
 
 const isRange = computed(() => {
-  return props.modelValue && !(props.modelValue instanceof Date)
+  return model.value && !(model.value instanceof Date)
 })
 
 const placeholder = computed(() => {
@@ -355,13 +361,13 @@ const inputPattern = computed(() => {
 
 const localDate = computed({
   get(): CalendarRange | CalendarDate {
-    return props.modelValue
+    return model.value
   },
   set(value: CalendarRange | CalendarDate) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
@@ -524,11 +530,8 @@ const formatDate = (dateString: string) => {
   ]
 
   // validate the format and store the found format for later processing
-  let foundFormat
   const validDates = formats.filter((format) => {
-    const valid = isValid(parse(dateString, format, new Date()))
-    if (valid) foundFormat = format
-    return valid
+    return isValid(parse(dateString, format, new Date()))
   })
 
   if (validDates.length > 0) {

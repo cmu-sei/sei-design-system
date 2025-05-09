@@ -2,7 +2,7 @@ import { ref, watch } from 'vue';
 import SdsTextarea from './Textarea.vue';
 
 export default {
-  title: 'Inputs/Text fields/Textarea',
+  title: 'Components/Inputs/Textarea',
   parameters: {
     docs: {
       description: {
@@ -30,4 +30,3 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
-

@@ -1,7 +1,7 @@
 <template>
   <span
     data-id="sds-loading-skeleton"
-    :class="['rounded flex flex-row relative overflow-hidden bg-gray-100 dark:bg-gray-800 animate-pulse', width, height]"
+    :class="['rounded-theme-sm flex flex-row relative overflow-hidden bg-gray-100 dark:bg-gray-800 animate-pulse', width, height]"
   />
 </template>
 

@@ -1,7 +1,7 @@
 import SdsToaster from './Toaster.vue';
 
 export default {
-  title: 'Feedback/Toaster',
+  title: 'Components/Feedback/Toaster',
   parameters: {
     docs: {
       story: {

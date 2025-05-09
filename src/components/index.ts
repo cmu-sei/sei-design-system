@@ -1,4 +1,5 @@
 import type DropdownPlacement from './Dropdown'
+import type { AvatarGroupItem } from './AvatarGroup/AvatarGroup.vue'
 import type { TagActionType, TagIconAttrs, TagIconSize, TagIconTypes } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
@@ -7,7 +8,7 @@ import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
 import type { FileWithInvalidDefinitions, FileTypes, SvgIconTypes, SvgIcons } from './FileUploader/FileUploader.vue'
 import type { FilterByDropdownOption, FilterByDropdownPlacement } from './FilterByDropdown/FilterByDropdown.vue'
 import type { FloatingUiPlacement } from './FloatingUi/FloatingUi.vue'
-import type { LayoutAppSidebarNavItem } from './LayoutApp/LayoutApp.vue'
+import type { ApplicationSidebarNavItem } from './Application/Application.vue'
 import type { MegaMenuItem } from './MegaMenu/MegaMenu.vue'
 import type { MobileMenuItem } from './MobileMenu/MobileMenu.vue'
 import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselect.vue'
@@ -22,6 +23,7 @@ import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
 
 export type {
   DropdownPlacement,
+  AvatarGroupItem,
   TagActionType,
   TagIconAttrs,
   TagIconSize,
@@ -38,7 +40,7 @@ export type {
   FilterByDropdownPlacement,
   FileTypes,
   FloatingUiPlacement,
-  LayoutAppSidebarNavItem,
+  ApplicationSidebarNavItem,
   MegaMenuItem,
   MobileMenuItem,
   MultiselectOption,
@@ -62,6 +64,7 @@ import { App, Component } from "vue";
 import SdsActionButton from "./ActionButton";
 import SdsActionDropdown from "./ActionDropdown";
 import SdsAvatar from "./Avatar";
+import SdsAvatarGroup from "./AvatarGroup";
 import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
@@ -82,15 +85,15 @@ import SdsFloatingUi from "./FloatingUi";
 import SdsFormGroup from "./FormGroup";
 import SdsIndicator from "./Indicator"
 import SdsInput from "./Input"
-import SdsLayoutApp from "./LayoutApp";
-import SdsLayoutAppSimple from "./LayoutAppSimple";
-import SdsLayoutSeiExternal from "./LayoutSeiExternal";
-import SdsLayoutSeiExternalFooter from "./LayoutSeiExternalFooter";
-import SdsLayoutSeiExternalHeader from "./LayoutSeiExternalHeader";
-import SdsLayoutSeiExternalHeaderContent from "./LayoutSeiExternalHeaderContent";
-import SdsLayoutSeiExternalNav from "./LayoutSeiExternalNav";
-import SdsLayoutSeiExternalWordmark from "./LayoutSeiExternalWordmark";
-import SdsLayoutStacked from "./LayoutStacked";
+import SdsApplication from "./Application";
+import SdsSimpleApplication from "./SimpleApplication";
+import SdsBrochureSite from "./BrochureSite";
+import SdsBrochureSiteFooter from "./BrochureSiteFooter";
+import SdsBrochureSiteHeader from "./BrochureSiteHeader";
+import SdsBrochureSiteHeaderContent from "./BrochureSiteHeaderContent";
+import SdsBrochureSiteNav from "./BrochureSiteNav";
+import SdsBrochureSiteWordmark from "./BrochureSiteWordmark";
+import SdsStructuredPage from "./StructuredPage";
 import SdsLink from "./Link";
 import SdsLoadingSkeleton from "./LoadingSkeleton";
 import SdsLoadingSpinner from "./LoadingSpinner";
@@ -129,6 +132,7 @@ const Components: ComponentList = {
   SdsActionButton,
   SdsActionDropdown,
   SdsAvatar,
+  SdsAvatarGroup,
   SdsBadge,
   SdsButton,
   SdsCalendar,
@@ -149,15 +153,15 @@ const Components: ComponentList = {
   SdsFormGroup,
   SdsIndicator,
   SdsInput,
-  SdsLayoutApp,
-  SdsLayoutAppSimple,
-  SdsLayoutSeiExternal,
-  SdsLayoutSeiExternalFooter,
-  SdsLayoutSeiExternalHeader,
-  SdsLayoutSeiExternalHeaderContent,
-  SdsLayoutSeiExternalNav,
-  SdsLayoutSeiExternalWordmark,
-  SdsLayoutStacked,
+  SdsApplication,
+  SdsSimpleApplication,
+  SdsBrochureSite,
+  SdsBrochureSiteFooter,
+  SdsBrochureSiteHeader,
+  SdsBrochureSiteHeaderContent,
+  SdsBrochureSiteNav,
+  SdsBrochureSiteWordmark,
+  SdsStructuredPage,
   SdsLink,
   SdsLoadingSkeleton,
   SdsLoadingSpinner,
@@ -191,8 +195,8 @@ const Components: ComponentList = {
 
 export default {
   install(Vue: App) {
-    Object.keys(Components).forEach((name: any) => {
-      Vue.component(name, Components[name]);
+    Object.keys(Components).forEach((name) => {
+      Vue.component(name as string, Components[name]);
     });
   },
 };
@@ -200,6 +204,7 @@ export default {
 export { default as SdsActionButton } from "./ActionButton";
 export { default as SdsActionDropdown } from "./ActionDropdown";
 export { default as SdsAvatar } from "./Avatar";
+export { default as SdsAvatarGroup } from "./AvatarGroup";
 export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
@@ -220,15 +225,15 @@ export { default as SdsFloatingUi } from "./FloatingUi"
 export { default as SdsFormGroup } from "./FormGroup"
 export { default as SdsIndicator } from "./Indicator"
 export { default as SdsInput } from "./Input"
-export { default as SdsLayoutApp } from "./LayoutApp";
-export { default as SdsLayoutAppSimple } from "./LayoutAppSimple";
-export { default as SdsLayoutSeiExternal } from "./LayoutSeiExternal";
-export { default as SdsLayoutSeiExternalFooter } from "./LayoutSeiExternalFooter";
-export { default as SdsLayoutSeiExternalHeader } from "./LayoutSeiExternalHeader";
-export { default as SdsLayoutSeiExternalHeaderContent } from "./LayoutSeiExternalHeaderContent";
-export { default as SdsLayoutSeiExternalNav } from "./LayoutSeiExternalNav";
-export { default as SdsLayoutSeiExternalWordmark } from "./LayoutSeiExternalWordmark";
-export { default as SdsLayoutStacked } from "./LayoutStacked";
+export { default as SdsApplication } from "./Application";
+export { default as SdsSimpleApplication } from "./SimpleApplication";
+export { default as SdsBrochureSite } from "./BrochureSite";
+export { default as SdsBrochureSiteFooter } from "./BrochureSiteFooter";
+export { default as SdsBrochureSiteHeader } from "./BrochureSiteHeader";
+export { default as SdsBrochureSiteHeaderContent } from "./BrochureSiteHeaderContent";
+export { default as SdsBrochureSiteNav } from "./BrochureSiteNav";
+export { default as SdsBrochureSiteWordmark } from "./BrochureSiteWordmark";
+export { default as SdsStructuredPage } from "./StructuredPage";
 export { default as SdsLink } from "./Link";
 export { default as SdsLoadingSkeleton } from "./LoadingSkeleton";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";

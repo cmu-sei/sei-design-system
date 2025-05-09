@@ -1,7 +1,7 @@
 import SdsInput from './Input.vue';
 
 export default {
-  title: 'Inputs/Text fields/Input',
+  title: 'Components/Inputs/Input',
   parameters: {
     docs: {
       description: {

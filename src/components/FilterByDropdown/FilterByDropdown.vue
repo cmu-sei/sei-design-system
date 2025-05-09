@@ -2,7 +2,7 @@
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
@@ -12,8 +12,8 @@
   >
     <template #trigger="{ isOpen, toggle }">
       <SdsActionButton 
+        :id="id"
         ref="button"
-        v-uid
         :kind="kind"
         :variant="variant"
         :size="size" 
@@ -83,9 +83,9 @@
           <ul>
             <li
               v-for="o in filteredTmpOptions"
-              :key="o.id" 
+              :key="o.id"
             >
-              <div class="leading-5 space-x-2 flex items-start px-4 py-1 hover:bg-gray-50">
+              <div class="leading-5 flex gap-2 items-start px-4 py-1 hover:bg-gray-50 dark:hover:bg-gray-700">
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -95,7 +95,7 @@
                 >
                 <label
                   :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 hover:text-black dark:text-gray-50 block w-full"
+                  class="text-gray-900 hover:text-black dark:text-gray-50 dark:hover:text-white block w-full cursor-pointer"
                 >{{ o.text }}</label>
               </div>
             </li>
@@ -128,7 +128,6 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
-import { Uid } from '@shimyshack/uid'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -139,18 +138,13 @@ export interface FilterByDropdownOption {
 
 export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
 
+const id = useId()
+
 defineOptions({
-  name: "SdsFilterByDropdown",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsFilterByDropdown"
 })
 
 const props = defineProps({
-  /**
-   * The v-model for this component. Determines opened/closed state.
-   */
-  modelValue: { type: Array as PropType<FilterByDropdownOption[]>, default: () => [] },
   /**
    * Determines the purpose and particular function of the component.
    */
@@ -189,7 +183,12 @@ const props = defineProps({
   disabled: { type: Boolean, default: false}
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model for this component. Determines opened/closed state.
+ */
+const model = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
+
+const emit = defineEmits(['update:modelValue'])
 
 const button = ref<HTMLButtonElement | undefined>()
 const filterTextInput = ref<HTMLInputElement | undefined>()
@@ -219,13 +218,13 @@ const zIndexClass = computed(() => {
 
 const options = computed({
   get() {
-    return props.modelValue;
+    return model.value;
   },
   set(value: FilterByDropdownOption[]) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit("update:modelValue", value);
   },
 })
 
@@ -260,7 +259,7 @@ const saveSelections = () => {
   /**
    * Emmitted when modelValue changes.
    */
-  emit("update:model-value", tmpOptions.value);
+  emit("update:modelValue", tmpOptions.value);
 }
 
 const cancelSelections = () => {

@@ -6,7 +6,7 @@
     :disabled="disabled"
     :will-open="willOpen"
     :will-close="willClose"
-    :popper-class="`absolute text-xs shadow border rounded-md text-center ${variantClass} ${sizeClass} ${zIndexClass}`"
+    :popper-class="`absolute text-xs shadow-sm border rounded-theme-md text-center ${variantClass} ${sizeClass} ${zIndexClass}`"
     :arrow-class="`absolute w-2 h-2 rotate-45 ${variantArrowClass}`"
     placement-top-arrow-class="-bottom-1 border-b border-r"
     placement-right-arrow-class="-left-1 border-b border-l"

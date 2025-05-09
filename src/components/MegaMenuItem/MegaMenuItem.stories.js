@@ -1,7 +1,7 @@
 import SdsMegaMenuItem from './MegaMenuItem.vue';
 
 export default {
-  title: 'Navigation/Mega Menu Item',
+  title: 'Patterns/Navigation/Mega Menu/Mega Menu Item',
   parameters: {
     docs: {
       description: {

@@ -89,7 +89,7 @@
       >
         <SdsTooltip>
           <template #trigger>
-            <div class="border dark:border-gray-700 rounded shadow px-1.5 p-1 leading-3 cursor-default">
+            <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 p-1 leading-3 cursor-default">
               <span>/</span>
             </div>
           </template>
@@ -111,7 +111,7 @@
     >
       <div
         v-if="dropdownIsOpen"
-        class="absolute z-50 w-full p-0 mt-1 bg-white border rounded shadow-lg dark:border-gray-700 dark:bg-gray-850"
+        class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
           v-if="!disableGroupTabs && groups.length > 1"
@@ -122,7 +122,7 @@
             :key="group.index"
             type="button"
             tabindex="-1"
-            class="text-xs font-semibold p-2 rounded space-x-1.5 whitespace-nowrap"
+            class="text-xs font-semibold p-2 rounded-theme-sm space-x-1.5 whitespace-nowrap"
             :disabled="group.count < 1"
             :class="{
               'text-gray-300 dark:text-gray-700': group.count < 1,
@@ -133,7 +133,7 @@
           >
             <span>{{ group.label }}</span>
             <span
-              class="text-white px-1 rounded-sm"
+              class="text-white px-1 rounded-theme-xs"
               :class="{
                 'bg-gray-200 dark:bg-gray-800': group.count < 1,
                 'bg-blue-500 dark:bg-blue-700': group.count > 0 && activeGroupKey === group.key,
@@ -270,9 +270,9 @@
           </template>
         </SdsScrollArea>
         <!-- Footer section -->
-        <div class="border-t rounded-b border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
+        <div class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
           <div class="ml-auto flex items-center gap-1.5">
-            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -306,7 +306,7 @@
             v-if="groups.length > 1"
             class="flex items-center gap-1.5"
           >
-            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -337,7 +337,7 @@
             <span class="sr-only">Left, right</span> to switch tabs
           </div>
           <div class="flex items-center gap-1.5">
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded shadow-inner">
+            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
               <svg
                 class="w-3 h-3"
                 aria-hidden="true"
@@ -377,10 +377,6 @@ const props = defineProps({
    * Determines the id of the input.
    */
   id: { type: String, default: undefined },
-  /**
-   * The value of the text input.
-   */
-  modelValue: { type: String, default: '' },
   /**
    * The placeholder for the input.
    */
@@ -450,11 +446,16 @@ const props = defineProps({
   disableGroupTabs: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value', 'complete', 'enter', 'result'])
+/**
+ * The value of the text input.
+ */
+const model = defineModel<string>({ type: String, default: '' })
+
+const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
-  let div = document.createElement('div')
+  const div = document.createElement('div')
   div.innerHTML = value
   return div.textContent || div.innerText || ''
 }
@@ -466,17 +467,17 @@ const dropdownOption = ref()
 
 const query = computed({
   get() {
-    return props.modelValue
+    return model.value
   },
   set(value: string) {
     /**
      * Emmited when the modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 
-const filterQuery = ref(props.modelValue)
+const filterQuery = ref(model.value)
 const showDropdown = ref(false)
 const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)

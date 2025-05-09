@@ -44,14 +44,14 @@ const props = defineProps({
    * Determines whether the indicator is placed over a portrait (rectangle) or a circle.
    */
   placementOver: {
-    type: String as PropType<'portrait' | 'circle'>,
+    type: String as PropType<'portrait' | 'circle' | 'square'>,
     default: 'portrait'
   },
   /**
    * Determines the size of the component.
    */
   size: {
-    type: String as PropType<'sm' | 'md' | 'lg'>,
+    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>,
     default: 'md'
   },
   /**
@@ -71,20 +71,59 @@ const props = defineProps({
 
 const placementClass = computed(() => {
   switch (props.size) {
+    case 'xs':
+      switch (props.placement) {
+        case 'top-right':
+          return props.placementOver === 'circle' ? '-top-0.5 -right-0.5' : '-top-1 -right-1'
+        case 'top-left':
+          return props.placementOver === 'circle' ? '-top-0.5 -left-0.5' : '-top-1 -left-1'
+        case 'bottom-right':
+          return props.placementOver === 'circle' ? '-bottom-0.5 -right-0.5' : '-bottom-1 -right-1'
+        case 'bottom-left':
+          return props.placementOver === 'circle' ? '-bottom-0.5 -left-0.5' : '-bottom-1 -left-1'
+        default:
+          return null
+      }
     case 'sm':
       switch (props.placement) {
         case 'top-right':
-          return props.placementOver === 'circle' ? 'top-0.5 right-0.5' : '-top-1 -right-1'
+          return props.placementOver === 'circle' ? '-top-0.5 -right-0.5' : '-top-0.75 -right-0.75'
         case 'top-left':
-          return props.placementOver === 'circle' ? 'top-0.5 left-0.5' : '-top-1 -left-1'
+          return props.placementOver === 'circle' ? '-top-0.5 -left-0.5' : '-top-0.75 -left-0.75'
         case 'bottom-right':
-          return props.placementOver === 'circle' ? 'bottom-0.5 right-0.5' : '-bottom-1 -right-1'
+          return props.placementOver === 'circle' ? '-bottom-0.5 -right-0.5' : '-bottom-0.75 -right-0.75'
         case 'bottom-left':
-          return props.placementOver === 'circle' ? 'bottom-0.5 left-0.5' : '-bottom-1 -left-1'
+          return props.placementOver === 'circle' ? '-bottom-0.5 -left-0.5' : '-bottom-0.75 -left-0.75'
         default:
           return null
       }
     case 'lg':
+      switch (props.placement) {
+        case 'top-right':
+          return props.placementOver === 'circle' ? '-top-1 -right-1' : '-top-2 -right-2'
+        case 'top-left':
+          return props.placementOver === 'circle' ? '-top-1 -left-1' : '-top-2 -left-2'
+        case 'bottom-right':
+          return props.placementOver === 'circle' ? '-bottom-1 -right-1' : '-bottom-2 -right-2'
+        case 'bottom-left':
+          return props.placementOver === 'circle' ? '-bottom-1 -left-1' : '-bottom-2 -left-2'
+        default:
+          return null
+      }
+    case 'xl':
+      switch (props.placement) {
+        case 'top-right':
+          return props.placementOver === 'circle' ? '-top-1 -right-1' : '-top-2.5 -right-2.5'
+        case 'top-left':
+          return props.placementOver === 'circle' ? '-top-1 -left-1' : '-top-2.5 -left-2.5'
+        case 'bottom-right':
+          return props.placementOver === 'circle' ? '-bottom-1 -right-1' : '-bottom-2.5 -right-2.5'
+        case 'bottom-left':
+          return props.placementOver === 'circle' ? '-bottom-1 -left-1' : '-bottom-2.5 -left-2.5'
+        default:
+          return null
+      }
+    case '2xl':
       switch (props.placement) {
         case 'top-right':
           return props.placementOver === 'circle' ? 'top-1.5 right-1.5' : '-top-2.5 -right-2.5'
@@ -101,13 +140,13 @@ const placementClass = computed(() => {
     default:
       switch (props.placement) {
         case 'top-right':
-          return props.placementOver === 'circle' ? 'top-0.5 right-0.5' : '-top-1.5 -right-1.5'
+          return props.placementOver === 'circle' ? '-top-0.5 -right-0.5' : '-top-1.75 -right-1.75'
         case 'top-left':
-          return props.placementOver === 'circle' ? 'top-0.5 left-0.5' : '-top-1.5 -left-1.5'
+          return props.placementOver === 'circle' ? '-top-0.5 -left-0.5' : '-top-1.75 -left-1.75'
         case 'bottom-right':
-          return props.placementOver === 'circle' ? 'bottom-0.5 right-0.5' : '-bottom-1.5 -right-1.5'
+          return props.placementOver === 'circle' ? '-bottom-0.5 -right-0.5' : '-bottom-1.75 -right-1.75'
         case 'bottom-left':
-          return props.placementOver === 'circle' ? 'bottom-0.5 left-0.5' : '-bottom-1.5 -left-1.5'
+          return props.placementOver === 'circle' ? '-bottom-0.5 -left-0.5' : '-bottom-1.75 -left-1.75'
         default:
           return null
       }
@@ -116,9 +155,15 @@ const placementClass = computed(() => {
 
 const sizeClass = computed(() => {
   switch (props.size) {
+    case 'xs':
+      return 'h-2 w-2'
     case 'sm':
-      return 'h-3 w-3'
+      return 'h-2.5 w-2.5'
     case 'lg':
+      return 'h-6 w-6'
+    case 'xl':
+      return 'h-8 w-8'
+    case '2xl':
       return 'h-10 w-10'
     case 'md':
     default:
@@ -143,8 +188,8 @@ const variantClass = computed(() => {
 })
 
 const maskSpec = computed(() => {
-  let vbWidth = 1000
-  let vbHeight = 1000
+  const vbWidth = 1000
+  const vbHeight = 1000
 
   let maskX = 0
   let maskY = 0
@@ -153,15 +198,27 @@ const maskSpec = computed(() => {
   let offset = 0
 
   switch (props.size) {
+    case 'xs':
+      offset = props.placementOver === 'circle' ? -3 : -2
+      maskRadius = 5
+      break
     case 'sm':
-      offset = props.placementOver === 'circle' ? 0 : -2
-      maskRadius = 8
+      offset = props.placementOver === 'circle' ? -5 : -2
+      maskRadius = 7.5
       break
     case 'md':
-      offset = props.placementOver === 'circle' ? -1 : -4
-      maskRadius = 11
+      offset = props.placementOver === 'circle' ? -4 : -4
+      maskRadius = 10
       break
     case 'lg':
+      offset = props.placementOver === 'circle' ? -7 : -4
+      maskRadius = 15
+      break
+    case 'xl':
+      offset = props.placementOver === 'circle' ? -8 : -4
+      maskRadius = 19.5
+      break
+    case '2xl':
       offset = props.placementOver === 'circle' ? 1 : -2
       maskRadius = 25
       break
@@ -184,6 +241,24 @@ const maskSpec = computed(() => {
       case 'bottom-left':
         maskX = maskRadius + offset
         maskY = vbHeight - maskRadius - offset
+    }
+  } else if (props.placementOver === 'square') {
+    switch (props.placement) {
+      case 'top-left':
+        maskX = maskRadius/2 + offset
+        maskY = maskRadius/2 + offset
+        break
+      case 'top-right':
+        maskX = vbWidth - maskRadius/2 - offset
+        maskY = maskRadius/2 + offset
+        break
+      case 'bottom-right':
+        maskX = vbWidth - maskRadius/2 - offset
+        maskY = vbHeight - maskRadius/2 - offset
+        break
+      case 'bottom-left':
+        maskX = maskRadius/2 + offset
+        maskY = vbHeight - maskRadius/2 - offset
     }
   } else {
     switch (props.placement) {

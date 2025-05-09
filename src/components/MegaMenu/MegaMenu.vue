@@ -49,7 +49,7 @@
             'border-transparent dark:border-transparent': type === 'underline' && ((!topLink.selected && !topLink.active) || (topLink.active && topLinks.filter(i => i.key !== topLink.key && i.selected).length > 0))
           }"
           role="menuitem"
-          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline focus-visible:outline-2 cursor-pointer"
+          class="flex items-center gap-0.5 xl:gap-1 my-auto py-2 space-x border-b-2 group -mb-0.5 overflow-y-visible select-none shrink-0 text-sm xl:text-base focus-visible:outline-2 cursor-pointer"
           @click="changeMenuPanel(topLink, $event); topLink.onClick && topLink?.onClick(topLink, $event)"
         >
           <!-- @slot Dynamic "link" slot. Used to supply custom HTML (such as an SVG icon) within a top-level menu link. I.e.: `<template #link(home)><svg>...</svg></template>` -->
@@ -118,7 +118,7 @@
             right: getRightPos
           }"
           :class="{
-            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-lg': selectedTopLink?.selected,
+            'shadow-lg border-t-2 border-b border-gray-100 dark:border-gray-800 rounded-b-theme-lg': selectedTopLink?.selected,
             'border-x': width === 'auto',
             'w-full': width === 'full'
           }"
@@ -195,35 +195,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * An array of top-level navigation items ("top links").
-   * Each navigation item is defined by a "topLink" object.
-   * A navigation label is applied with the "title" key.
-   * It also supplies the "content" object to retrieve data
-   * from within a Mega Menu panel. I.e.:
-   * `<template #panel(key)={ content }>{{ content.item }}</template>`
-   *
-   * Instead of an accordion-like function, the top link can
-   * also be setup as an anchor tag with the "tag" setting.
-   *
-   * ```
-   * {
-   *   key: string
-   *   tag?: 'button' | 'a'
-   *   title?: string
-   *   href?: string
-   *   alignment?: 'left' | 'right' | 'center'
-   *   content?: Object
-   *   external?: boolean
-   *   active?: boolean
-   *   selected?: boolean
-   *   disabled?: boolean
-   *   onClick?: Function
-   * }
-   *
-   * ```
-   */
-  modelValue: { type: Array as PropType<MegaMenuItem[]>, default: () => [] },
-  /**
    * Overall look and feel of the component (two options)
    */
   type: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
@@ -238,6 +209,36 @@ const props = defineProps({
   ariaLabel: { type: String, default: undefined }
 })
 
+/**
+ * An array of top-level navigation items ("top links").
+ * Each navigation item is defined by a "topLink" object.
+ * A navigation label is applied with the "title" key.
+ * It also supplies the "content" object to retrieve data
+ * from within a Mega Menu panel. I.e.:
+ * `<template #panel(key)={ content }>{{ content.item }}</template>`
+ *
+ * Instead of an accordion-like function, the top link can
+ * also be setup as an anchor tag with the "tag" setting.
+ *
+ * ```
+ * {
+ *   key: string
+ *   tag?: 'button' | 'a'
+ *   title?: string
+ *   href?: string
+ *   alignment?: 'left' | 'right' | 'center'
+ *   content?: Object
+ *   external?: boolean
+ *   active?: boolean
+ *   selected?: boolean
+ *   disabled?: boolean
+ *   onClick?: Function
+ * }
+ *
+ * ```
+ */
+const model = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
+
 const emits = defineEmits(
   [
     /**
@@ -246,14 +247,14 @@ const emits = defineEmits(
      * trigger other actions off the Mega Menu's modelValue
      * when it changes.
      */
-    'update:model-value'
+    'update:modelValue'
   ]
 )
 
 const topLinks = computed({
   /* Get SdsMegaMenu modelValue property */
   get(): MegaMenuItem[] {
-    return props.modelValue
+    return model.value
   },
   /* Set SdsMegaMenu modelValue property */
   set(value: MegaMenuItem[]) {
@@ -261,7 +262,7 @@ const topLinks = computed({
      * Emmitted when the v-model (Mega Menu's data source)
      * has changed.
      */
-    emits('update:model-value', value)
+    emits('update:modelValue', value)
   }
 })
 
@@ -273,7 +274,7 @@ const menu = ref()
 const panel = ref()
 
 const selectedTopLink = computed(() => {
-  const selected = props.modelValue.find(i => i.selected)
+  const selected = model.value.find(i => i.selected)
   return selected || null
 })
 const focusableList = ref<HTMLElement[]>([])

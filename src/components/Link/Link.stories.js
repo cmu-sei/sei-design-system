@@ -1,7 +1,7 @@
 import SdsLink from './Link.vue';
 
 export default {
-  title: 'Navigation/Link',
+  title: 'Components/Navigation/Link',
   parameters: {
     docs: {
       description: {

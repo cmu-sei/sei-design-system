@@ -5,7 +5,7 @@ import SdsNavigationItem from '../NavigationItem/NavigationItem.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Navigation/Mobile Menu',
+  title: 'Patterns/Navigation/Mobile Menu',
   parameters: {
     docs: {
       story: {

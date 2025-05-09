@@ -1,7 +1,7 @@
 import SdsNavigationItem from './NavigationItem.vue';
 
 export default {
-  title: 'Navigation/Navigation Item',
+  title: 'Patterns/Navigation/Mobile Menu/Navigation Item',
   parameters: {
     docs: {
       description: {

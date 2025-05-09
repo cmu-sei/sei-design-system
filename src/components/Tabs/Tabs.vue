@@ -1,13 +1,13 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-tabs"
   >
     <div
       class="overflow-x-auto"
       :class="{
-        'bg-gray-50 dark:bg-gray-850 rounded-t': type === 'folder'
+        'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
       }"
     >
       <ul
@@ -28,7 +28,7 @@
             :is="tab.tag || 'button' as unknown"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             :class="{
-              'tab text-sm inline-block rounded-t py-2 px-4 font-semibold': type === 'folder',
+              'tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
               'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
               'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
                 type === 'folder' && !tab.active,
@@ -84,8 +84,6 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 export interface TabItem {
   key: string
   tag?: 'button' | 'a'
@@ -97,33 +95,13 @@ export interface TabItem {
   disabled?: boolean
 }
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsTabs',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsTabs'
 })
 
 const props = defineProps({
-  /**
-   * Determines the array of tab objects.
-   *
-   * Format of tab object:
-   *
-   * ```
-   * {
-   *   key: string
-   *   tag?: 'button' | 'a'
-   *   title?: string
-   *   href?: string
-   *   align?: 'left' | 'right' | 'center'
-   *   external?: boolean
-   *   active?: boolean
-   *   disabled?: boolean
-   * }
-   * ```
-   */
-  modelValue: { type: Array as PropType<TabItem[]>, default: () => [] },
   /**
    * The overall look and feel of the component.
    */
@@ -157,19 +135,39 @@ const props = defineProps({
   willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
 })
 
-const emit = defineEmits(['update:model-value', 'change'])
+/**
+ * Determines the array of tab objects.
+ *
+ * Format of tab object:
+ *
+ * ```
+ * {
+ *   key: string
+ *   tag?: 'button' | 'a'
+ *   title?: string
+ *   href?: string
+ *   align?: 'left' | 'right' | 'center'
+ *   external?: boolean
+ *   active?: boolean
+ *   disabled?: boolean
+ * }
+ * ```
+ */
+const model = defineModel<TabItem[]>({ type: Array as PropType<TabItem[]>, default: [] })
+
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const root = ref<HTMLElement>()
 
 const tabs = computed({
   get(): TabItem[] {
-    return props.modelValue
+    return model.value
   },
   set(value: TabItem[]) {
     /**
      * Emmitted when the v-model has changed.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 

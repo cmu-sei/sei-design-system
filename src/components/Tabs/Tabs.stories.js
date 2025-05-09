@@ -3,7 +3,7 @@ import SdsTabs from './Tabs.vue';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Navigation/Tabs',
+  title: 'Components/Navigation/Tabs',
   parameters: {
     docs: {
       description: {

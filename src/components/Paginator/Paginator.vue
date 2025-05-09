@@ -6,29 +6,26 @@
     aria-label="Page navigation"
   >
     <ul
-      class="flex space-x-2"
+      class="flex gap-x-2"
       role="list"
     >
       <li 
-        class="flex items-center grow-1 shrink-1"
+        class="flex items-center grow-0 shrink-0"
         role="listitem"
       >
         <button
           :disabled="prevDisabled"
           :aria-disabled="prevDisabled"
           aria-label="Previous page"
+          type="button"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
-            border rounded
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -52,111 +49,148 @@
       <li
         v-for="(page, key) in pageList"
         :key="key"
-        class="hidden md:flex grow-1 shrink-1"
+        class="hidden md:flex grow-0 shrink-0"
         role="listitem"
       >
-        <button
+        <SdsActionDropdown
           v-if="page.toLocaleString() === '...'"
-          :disabled="loading"
-          :aria-disabled="loading"
-          :aria-label="`Go to page ${page}`"
-          class="
-            flex items-center justify-center grow-1 shrink-1
-            bg-transparent hover:bg-gray-600/10 dark:hover:bg-gray-400/10 rounded
-            w-[2.125rem] h-[2.125rem]
-            disabled:pointer-events-none
-          "
+          placement="bottom"
+          auto
+          hide-arrow
         >
-          <SdsSvgIcon
-            aria-hidden="true"
-            class="pointer-events-none"
-            :class="{
-              'text-gray-600/50 dark:text-gray-400/50': loading,
-              'text-gray-600 dark:text-gray-400': !loading
-            }"
-            fill="none"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            :height="icons['ellipsis'].height"
-            :path="icons['ellipsis'].path"
-            :view-box="icons['ellipsis'].viewBox"
-            :width="icons['ellipsis'].width"
-          />
-        </button>
+          <template #trigger="{ isOpen, toggle }: { isOpen: boolean; toggle: GenericFunctionType; }">
+            <button
+              :disabled="loading"
+              :aria-disabled="loading"
+              :aria-label="`${ isOpen ? 'Collapse' : 'Expand' } Go to page menu`"
+              type="button"
+              class="
+                flex items-center justify-center grow-0 shrink-0
+                bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
+                rounded-theme-sm
+                w-[2.125rem] h-[2.125rem]
+                disabled:pointer-events-none
+              "
+              :class="{
+                'bg-gray-700/10 dark:bg-gray-300/10': isOpen
+              }"
+              @click="toggle"
+            >
+              <SdsSvgIcon
+                aria-hidden="true"
+                class="pointer-events-none"
+                :class="{
+                  'text-gray-600/50 dark:text-gray-400/50': loading,
+                  'text-gray-600 dark:text-gray-400': !loading
+                }"
+                fill="none"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                :height="icons['ellipsis'].height"
+                :path="icons['ellipsis'].path"
+                :view-box="icons['ellipsis'].viewBox"
+                :width="icons['ellipsis'].width"
+              />
+            </button>
+          </template>
+          <div
+            class="px-4"
+            role="menuitem"
+          >
+            <form @submit.prevent>
+              <fieldset class="flex flex-row flex-nowrap items-center gap-x-2">
+                <span class="text-gray-900 dark:text-white text-sm">Go to</span>
+                <label :for="pageInputNumberId">
+                  <span class="sr-only">Page number</span>
+                  <input
+                    :id="pageInputNumberId"
+                    v-model="pageInputNumber"
+                    type="number"
+                    class="
+                      form-control
+                      form-control-sm
+                      max-w-[2.125rem]
+                      min-w-[2.125rem]
+                      [&::-webkit-inner-spin-button]:appearance-none
+                    "
+                    :class="{
+                      'invalid animate-shake': isPageNumberInvalid
+                    }"
+                    @keyup.enter="onKeyup($event)"
+                  >
+                </label>
+                <span class="text-gray-900 dark-text-white text-sm">page</span>
+              </fieldset>
+            </form>
+          </div>
+        </SdsActionDropdown>
         <button
           v-else
           :disabled="page === currentPage || loading"
           :aria-disabled="page === currentPage || loading"
           :aria-current="page === currentPage ? 'page' : undefined"
-          :aria-label="page === currentPage && loading ?
-            'Loading' :
-            page === currentPage ? 
-              `Current page, page ${page}` : 
-              `Go to page ${page}`
+          :aria-label="page === currentPage ? 
+            `Current page, page ${page}` : 
+            `Go to page ${page}`
           "
+          type="button"
           class="
-            flex items-center justify-center grow-1 shrink-1
-            bg-white dark:bg-gray-950 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
-            border rounded
-            border-gray-600/20 dark:border-gray-600/20 disabled:border-gray-600/10 dark:disabled:border-gray-600/10
-            active:border-blue-600 dark:active:border-blue-400
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
+            flex items-center justify-center grow-0 shrink-0
+            bg-white dark:bg-gray-950
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded-theme-sm
+            border-gray-600/20 dark:border-gray-600/20
             text-gray-600 dark:text-gray-400
-            disabled:text-gray-600/50 dark:disabled:text-gray-400/50
             font-semibold
             min-w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           :class="{
-            'disabled:bg-gray-600/20 dark:disabled:bg-gray-400/20 disabled:border-gray-600/20 dark:disabled:border-gray-400/20': loading
+            // Active state
+            'disabled:bg-blue-50 dark:disabled:bg-blue-900 disabled:border-blue-600 dark:disabled:border-blue-400 shadow-inner shadow-blue-600/15 dark:shadow-blue-400/15': page === currentPage && !loading,
+            // Disabled state
+            'disabled:text-gray-600/50 dark:disabled:text-gray-400/50 disabled:border-gray-600/10 dark:disabled:border-gray-600/10': loading,
           }"
           @click.prevent="goToPage(page, $event)"
         >
-          <span 
-            v-if="loading"
-            class="flex relative h-full w-full"
-          >
-            <span class="absolute inset-0 flex items-center justify-center">
-              <SdsLoadingSpinner
-                size="sm"
-                class="text-gray-600 dark:text-gray-400"
-              />
-            </span>
-          </span>
-          <template v-else>
-            {{ page.toLocaleString() }}
-          </template>
+          {{ page.toLocaleString() }}
         </button>
       </li>
       <li
         class="flex md:hidden"
         role="listitem"
       >
-        <span class="m-auto text-sm text-gray-600 dark:text-gray-400 font-semibold">
-          Page {{ currentPage.toLocaleString() }}
-        </span>
+        <div class="flex flew-nowrap items-center gap-x-2 m-auto">
+          <label 
+            :for="pageSelectNumberId" 
+            class="text-sm text-gray-600 dark:text-gray-400 font-semibold"
+          >Page</label>
+          <SdsSelect
+            :id="pageSelectNumberId"
+            v-model="pageSelectNumber"
+            :options="pageOptions"
+            class="h-8.5 w-auto"
+            size="sm"
+            @change="onChange($event)"
+          />
+        </div>
       </li>
       <li 
-        class="flex grow-1 shrink-1"
+        class="flex grow-0 shrink-0"
         role="listitem"
       >
         <button
           :disabled="nextDisabled"
           :aria-disabled="nextDisabled"
+          type="button"
           aria-label="Next page"
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:bg-gray-600/10 dark:hover:bg-gray-400/10
-            active:bg-blue-50 dark:active:bg-blue-900
-            border rounded
+            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
-            active:border-blue-600 dark:active:border-blue-400
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            active:shadow-inner active:shadow-blue-600/15 dark:active:shadow-blue-400/15
             w-[2.125rem] h-[2.125rem] p-2
-            disabled:pointer-events-none
           "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
@@ -182,6 +216,11 @@
 </template>
 
 <script setup lang="ts">
+import type { SelectOption, SelectOptionValue } from '../Select/Select.vue'
+import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
+import SdsSelect from '../Select/Select.vue'
+import SdsSvgIcon from '../SvgIcon/SvgIcon.vue'
+
 defineOptions({
   name: 'SdsPaginator'
 })
@@ -238,8 +277,22 @@ const icons = Object.freeze({
   }
 } as const)
 
-
 const emit = defineEmits(['go-to-page'])
+
+const pageInputNumberId = useId()
+const pageInputNumber = ref<string>()
+const pageOptions = ref<SelectOption<number>[]>(
+  Array.from({ length: props.totalPages }, (_, i) => ({ value: (i + 1), text: (i + 1) }))
+)
+const pageSelectNumberId = useId()
+const pageSelectNumber = ref<SelectOptionValue>(props.currentPage)
+
+const isPageNumberInvalid = computed(() => {
+  const page = typeof pageInputNumber.value === 'undefined' ? undefined : parseInt(pageInputNumber.value, 10)
+  const lastPage = pageList.value[pageList.value.length - 1]
+  if (typeof page === 'undefined') return false // Initial state
+  return page < 1 || page > parseInt(`${lastPage}`, 10)
+})
 
 const prevDisabled = computed(() => {
   return props.currentPage <= 1 || props.loading;
@@ -251,31 +304,31 @@ const nextDisabled = computed(() => {
 
 const pageList = computed(() => {
   if (props.totalPages <= props.threshold) {
-    return Array.apply(null, Array(props.totalPages)).map((x, i) => {
+    return [...Array(props.totalPages)].map((x, i) => {
       return i + 1;
     });
   } else if (props.currentPage < props.threshold) {
-    const list: Array<number | string> = Array.apply(null, Array(props.threshold)).map((x, i) => {
+    const list: Array<number | string> = [...Array(props.threshold)].map((x, i) => {
       return i + 1;
     });
     return list.concat(["...", props.totalPages]);
   } else if (props.currentPage > props.totalPages - props.threshold + 1) {
     const list = [1, "..."];
     return list.concat(
-      Array.apply(null, Array(props.threshold)).map((x, i) => {
+      [...Array(props.threshold)].map((x, i) => {
         return props.totalPages - props.threshold + i + 1;
       })
     );
   } else {
     let list = [1, "..."];
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i - props.threshold + 3;
       })
     );
     list.push(props.currentPage);
     list = list.concat(
-      Array.apply(null, Array(props.threshold - 3)).map((x, i) => {
+      [...Array(props.threshold - 3)].map((x, i) => {
         return props.currentPage + i + 1;
       })
     );
@@ -283,10 +336,27 @@ const pageList = computed(() => {
   }
 })
 
-const goToPage = (page: number | string, event: MouseEvent) => {
+const goToPage = (page: number | string, event: KeyboardEvent | MouseEvent) => {
   /**
    * Passes an object to be used by a parent component: { page, event }
    */
-  emit("go-to-page", { page, event });
+  emit('go-to-page', { page, event });
 }
+
+const onChange = (event: MouseEvent) => {
+  goToPage((pageSelectNumber.value as number), event)
+}
+
+const onKeyup = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    const page = typeof pageInputNumber.value === 'undefined' ? undefined : parseInt(pageInputNumber.value, 10)
+    if (!page || page === props.currentPage || isPageNumberInvalid.value) return
+    pageInputNumber.value = undefined // Reset page number
+    goToPage(page, event)
+  }
+}
+
+watch(() => props.currentPage, (page) => {
+  pageSelectNumber.value = page
+}, { immediate: true })
 </script>

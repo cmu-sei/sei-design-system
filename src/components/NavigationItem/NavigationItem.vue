@@ -30,9 +30,9 @@
     class="group flex flex-row gap-4 text-sm transition-all border-l-8 w-[calc(100%+3rem)] -mx-6 py-3 pl-4 pr-6"
     :class="{
       'cursor-pointer': type !== 'title' && !disabled,
-      'text-gray-400 bg-white dark:text-gray-700 dark:bg-gray-900 hover:text-gray-400 hover:bg-white hover:dark:text-gray-600 hover:dark:bg-gray-900 select-none pointer-events-none cursor-default border-l-transparent': disabled,
-      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 hover:dark:text-red-100 hover:dark:bg-gray-850 border-l-transparent': !disabled && !selected && type !== 'title',
-      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 hover:dark:text-red-100 hover:bg-gray-50 hover:dark:bg-gray-850': selected,
+      'text-gray-400 bg-white dark:text-gray-700 dark:bg-gray-900 hover:text-gray-400 hover:bg-white dark:hover:text-gray-600 dark:hover:bg-gray-900 select-none pointer-events-none cursor-default border-l-transparent': disabled,
+      'text-gray-700 bg-white dark:text-gray-400 dark:bg-gray-900 hover:text-red-700 hover:bg-gray-50 dark:hover:text-red-100 dark:hover:bg-gray-850 border-l-transparent': !disabled && !selected && type !== 'title',
+      'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 hover:text-red-700 dark:hover:text-red-100 hover:bg-gray-50 dark:hover:bg-gray-850': selected,
       'border-l-red-700 dark:border-l-red-400 text-gray-900 dark:text-gray-100 cursor-default': type === 'title',
     }"
     :tabindex="disabled || type === 'title' ? -1 : href ? undefined : 0"
@@ -57,7 +57,7 @@
     </slot>
     <div
       v-if="(type === 'expand' && $slots.children) || type === 'slide'"
-      class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 group-hover:dark:text-gray-100 pointer-events-none"
+      class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 dark:group-hover:text-gray-100 pointer-events-none"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@
     v-if="$slots.children && type === 'expand'"
     class="-mx-6 px-6 bg-white dark:bg-gray-900 relative top-0 transition-all ease-in-out duration-200 origin-top pointer-events-none"
     :class="{
-      'z-10 opacity-1 max-h-screen': selected,
+      'z-10 opacity-100 max-h-screen': selected,
       '-z-10 opacity-0 max-h-0 select-none': !selected
     }"
   >

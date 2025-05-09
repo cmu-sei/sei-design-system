@@ -1,7 +1,7 @@
 import SdsCheckboxGroup from './CheckboxGroup.vue';
 
 export default {
-  title: 'Inputs/Selections/Checkbox Group',
+  title: 'Components/Inputs/Checkbox Group',
   parameters: {
     docs: {
       description: {
@@ -40,4 +40,3 @@ Default.args = {
     { id: 3, value: 'option 3', text: 'Option 3' },
   ]
 };
-

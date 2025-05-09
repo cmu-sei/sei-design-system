@@ -346,7 +346,7 @@
                   :kind="event.kind"
                 >
                   <template #left>
-                    <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                    <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-xs">
                       <div class="font-bold uppercase">
                         {{ event.month }}
                       </div>
@@ -359,7 +359,7 @@
                     <p class="uppercase font-semibold text-xs">
                       {{ event.dateRange }}
                     </p>
-                    <p class="text-sm text-gray-700 dark:text-gray-300 max-h-9 overflow-y-hidden overflow-ellipsis">
+                    <p class="text-sm text-gray-700 dark:text-gray-300 max-h-9 overflow-y-hidden text-ellipsis">
                       {{ event.description }}
                     </p>
                   </template>
@@ -560,7 +560,7 @@
                 :kind="event.kind"
               >
                 <template #left>
-                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-sm">
+                  <div class="leading-5 transition-all bg-gray-100 group-hover:bg-gray-200 dark:bg-gray-850 dark:group-hover:bg-gray-950 text-gray-900 dark:text-gray-100 p-4 text-center rounded-xs">
                     <div class="font-bold uppercase">
                       {{ event.month }}
                     </div>
@@ -573,7 +573,7 @@
                   <p class="uppercase font-semibold text-xs">
                     {{ event.dateRange }}
                   </p>
-                  <p class="text-sm text-gray-700 dark:text-gray-300 max-h-10 overflow-y-hidden overflow-ellipsis">
+                  <p class="text-sm text-gray-700 dark:text-gray-300 max-h-10 overflow-y-hidden text-ellipsis">
                     {{ event.description }}
                   </p>
                 </template>
@@ -1228,7 +1228,7 @@
       <sds-tabs
         v-model="tabs"
         type="underline"
-        class="bg-white dark:bg-gray-900 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b-sm p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -1248,7 +1248,7 @@
       <sds-tabs
         v-model="tabs"
         type="block"
-        class="bg-white dark:bg-gray-900 border rounded-b p-4"
+        class="bg-white dark:bg-gray-900 border rounded-b-sm p-4"
         @change="changeTab"
       >
         <template #tab(groups)>
@@ -1309,7 +1309,7 @@
     <div class="p-6 bg-white dark:bg-gray-900">
       Tooltip:
       <sds-floating-ui
-        popper-class="absolute bg-black text-white text-xs shadow rounded-lg w-32 text-center"
+        popper-class="absolute bg-black text-white text-xs shadow-sm rounded-lg w-32 text-center"
         arrow-class="absolute bg-black w-2 h-2 rotate-45"
         placement-top-arrow-class="-bottom-1"
         placement-right-arrow-class="-left-1"
@@ -1394,7 +1394,7 @@
         <div
           v-for="image in uploadedImages"
           :key="image.src"
-          class="border rounded p-4"
+          class="border rounded-sm p-4"
         >
           <img
             :src="image.src"
@@ -2233,26 +2233,6 @@ interface MegaMenuContent {
     month: string
     startDay: string
     kind?: 'landing-page' | 'descriptive' | 'simple'
-  }[]
-}
-
-interface MobileMenuContent {
-  children?: {
-    key: string
-    title: string
-    href?: string
-    type?: 'title' | 'simple' | 'slide' | 'back' | 'expand'
-    disabled?: boolean
-  }[],
-  children_1?: {
-    key: string,
-    title: string,
-    href: string
-  }[],
-  children_2?: {
-    key: string,
-    title: string,
-    href: string
   }[]
 }
 
@@ -3202,7 +3182,7 @@ export default defineComponent({
       ],
       datapointModel: 4567,
       fileUploaderModel: [],
-      uploadedImages: [] as any,
+      uploadedImages: [] as { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }[],
       tabs: [
         { key: "home", title: "Home", disabled: true },
         { key: "about", title: "About Us", active: true },
@@ -3390,10 +3370,10 @@ export default defineComponent({
     },
   },
   watch: {
-    fileUploaderModel(value) {
-      this.uploadedImages = value.map((file: any) => {
+    async fileUploaderModel(value) {
+      this.uploadedImages = await Promise.all(value.map(async (file: { name: string; lastModified: number; size: number; type: string; invalidType?: boolean; invalidSize?: boolean }) => {
         return {
-          src: URL.createObjectURL(file),
+          src: URL.createObjectURL(new Blob([new Uint8Array(await (file as File).arrayBuffer())], { type: file.type })),
           isInvalid: file.invalidType || file.invalidSize,
           caption: "",
           name: file.name,
@@ -3401,7 +3381,7 @@ export default defineComponent({
           size: file.size,
           type: file.type
         };
-      }).filter((file: any) => !file.isInvalid);
+      })).then(files => files.filter((file: { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }) => !file.isInvalid));
     }
   },
   methods: {
@@ -3462,19 +3442,19 @@ export default defineComponent({
     addField() {
       this.fields.push({ key: (new Date).toLocaleDateString(), label: "Test" });
     },
-    async willOpen(res: GenericFunctionType, rej: GenericFunctionType) {
+    async willOpen(res: GenericFunctionType) {
       console.log("Pause for 1 seconds to get fake api request");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Open now!");
       res();
     },
-    async willClose(res: GenericFunctionType, rej: GenericFunctionType) {
+    async willClose(res: GenericFunctionType) {
       console.log("Pause for 1 seconds to do something on close");
       await new Promise(r => setTimeout(r, 1000));
       console.log("Close now!");
       res();
     },
-    async willChangeTab(tab: TabItem, res: GenericFunctionType, rej: GenericFunctionType) {
+    async willChangeTab(tab: TabItem, res: GenericFunctionType) {
       console.log("Pause for 1/2 second to get fake api request", tab);
       await new Promise(r => setTimeout(r, 500));
       console.log("Open now!");

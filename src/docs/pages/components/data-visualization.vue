@@ -4,134 +4,445 @@
       <h2 class="text-xl">
         Avatar
       </h2>
-      <div class="grid grid-cols-4 gap-4">
-        <div>
-          <SdsIndicator
-            placement-over="circle"
-            placement="bottom-right"
-            size="lg"
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div
+            v-for="shape in avatarShapes"
+            :key="shape"
+            class="flex flex-col justify-center gap-4 h-auto"
           >
-            <SdsAvatar
-              shape="circle"
-              variant="gray"
-              size="lg"
-              name="John Smith"
-            />
-          </SdsIndicator>
+            <div>
+              <SdsAvatar
+                :size="size"
+                :shape="shape"
+                variant="gray"
+                :src="`https://picsum.photos/seed/${size}-${shape}/200/200`"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="yellow"
-            size="lg"
-            name="John Smith"
-          />
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="circle"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="circle"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="red"
-            size="lg"
-            name="John Smith"
-          />
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="square"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="square"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="purple"
-            size="lg"
-            name="John Smith"
-          />
+      </div>
+      <div class="flex flex-row gap-4 h-60">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
+          <div class="h-full flex-col flex justify-end">
+            <SdsIndicator
+              variant="green"
+              :size="size"
+              status="Online"
+              placement="top-right"
+              placement-over="portrait"
+            >
+              <SdsAvatar
+                :size="size"
+                shape="portrait"
+                variant="yellow"
+                name="Morgan Markowski"
+                alt="Avatar"
+              />
+            </SdsIndicator>
+          </div>
         </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="blue"
-            size="lg"
-            name="John Smith"
-          />
-        </div>
-        <div>
-          <SdsAvatar
-            shape="circle"
-            variant="green"
-            size="lg"
-            name="John Smith"
-          />
-        </div>
-        <div>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="portrait"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="portrait"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="portrait"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="portrait"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
-          <SdsTooltip
-            size="auto"
-            type="dark"
-            :disabled="false"
-          >
-            <template #trigger>
-              <SdsIndicator
-                variant="green"
-                size="sm"
-                placement="bottom-right"
-                placement-over="circle"
-                status="Online"
-              >
-                <SdsAvatar
-                  shape="circle"
-                  variant="gray"
-                  size="sm"
-                  name="Jason Shimkoski"
-                  src="https://seinet.sei.cmu.edu/api/photos/jdshimkoski?full=false"
-                />
-              </SdsIndicator>
-            </template>
-            <p>Jason Shimkoski is available.</p>
-          </SdsTooltip>
-        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
+        Avatar Group
+      </h2>
+      <h3 class="text-lg">
+        Condensed
+      </h3>
+      <h4>Circle</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              variant: 'green',
+            },
+            {
+              name: 'Jacobim Mugatu',
+              variant: 'purple',
+            },
+            {
+              name: 'Maury Ballstein',
+              variant: 'yellow'
+            },
+            {
+              name: 'Morgan Markowski',
+              variant: 'red',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+              variant: 'red',
+              target: '_blank'
+            },
+            {
+              name: 'Jacobim Mugatu',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+            },
+            {
+              name: 'Maury Ballstein',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/1/200/200'
+            },
+            {
+              name: 'Morgan Markowski',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/1/200/200'
+            },
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h4>Square</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="square"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h3 class="text-lg">
+        Default
+      </h3>
+      <h4>Circle</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="circle"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <h4>Square</h4>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="md"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="xs"
+          shape="square"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            },
+            {
+              name: 'Morgan Markowski',
+            },
+            {
+              name: 'Jacobim Mugatu',
+            },
+            {
+              name: 'Maury Ballstein'
+            }
+          ]"
+        />
       </div>
     </div>
     <div class="grid gap-4">
@@ -418,7 +729,7 @@
             </SdsTag>
           </li>
           <li>
-            <SdsTag 
+            <SdsTag
               href="https://designsystem.sei.cmu.edu/"
               :external="true"
             >
@@ -473,7 +784,7 @@
             </SdsTag>
           </li>
           <li>
-            <SdsTag 
+            <SdsTag
               href="https://designsystem.sei.cmu.edu/"
               size="md"
               :external="true"
@@ -524,6 +835,156 @@
             </SdsTag>
           </li>
         </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag
+              :counter="4"
+            >
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+            >
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="decrement"
+            >
+              <template #label>
+                Decrement
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="remove"
+            >
+              <template #label>
+                Remove
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag
+              :counter="4"
+              size="md"
+            >
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+              size="md"
+            >
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="decrement"
+              size="md"
+            >
+              <template #label>
+                Decrement
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="remove"
+              size="md"
+            >
+              <template #label>
+                Remove
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
+        <ul class="flex flex-row flex-wrap gap-2">
+          <li>
+            <SdsTag
+              :counter="4"
+              size="sm"
+            >
+              <template #leftSlot>
+                <svg class="svg-inline--fa fa-icons fa-fw h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="icons" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path class="" fill="currentColor" d="M500.3 7.3C507.7 13.3 512 22.4 512 32l0 144c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-57L352 90.2 352 208c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-96c0-15.3 10.8-28.4 25.7-31.4l160-32c9.4-1.9 19.1 .6 26.6 6.6zM74.7 304l11.8-17.8c5.9-8.9 15.9-14.2 26.6-14.2l61.7 0c10.7 0 20.7 5.3 26.6 14.2L213.3 304l26.7 0c26.5 0 48 21.5 48 48l0 112c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 352c0-26.5 21.5-48 48-48l26.7 0zM192 408a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM478.7 278.3L440.3 368l55.7 0c6.7 0 12.6 4.1 15 10.4s.6 13.3-4.4 17.7l-128 112c-5.6 4.9-13.9 5.3-19.9 .9s-8.2-12.4-5.3-19.2L391.7 400 336 400c-6.7 0-12.6-4.1-15-10.4s-.6-13.3 4.4-17.7l128-112c5.6-4.9 13.9-5.3 19.9-.9s8.2 12.4 5.3 19.2zm-339-59.2c-6.5 6.5-17 6.5-23 0L19.9 119.2c-28-29-26.5-76.9 5-103.9c27-23.5 68.4-19 93.4 6.5l10 10.5 9.5-10.5c25-25.5 65.9-30 93.9-6.5c31 27 32.5 74.9 4.5 103.9l-96.4 99.9z"></path>
+                </svg>
+              </template>
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+              size="sm"
+            >
+              <template #leftSlot>
+                <svg class="svg-inline--fa fa-icons fa-fw h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="icons" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path class="" fill="currentColor" d="M500.3 7.3C507.7 13.3 512 22.4 512 32l0 144c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-57L352 90.2 352 208c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-96c0-15.3 10.8-28.4 25.7-31.4l160-32c9.4-1.9 19.1 .6 26.6 6.6zM74.7 304l11.8-17.8c5.9-8.9 15.9-14.2 26.6-14.2l61.7 0c10.7 0 20.7 5.3 26.6 14.2L213.3 304l26.7 0c26.5 0 48 21.5 48 48l0 112c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 352c0-26.5 21.5-48 48-48l26.7 0zM192 408a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM478.7 278.3L440.3 368l55.7 0c6.7 0 12.6 4.1 15 10.4s.6 13.3-4.4 17.7l-128 112c-5.6 4.9-13.9 5.3-19.9 .9s-8.2-12.4-5.3-19.2L391.7 400 336 400c-6.7 0-12.6-4.1-15-10.4s-.6-13.3 4.4-17.7l128-112c5.6-4.9 13.9-5.3 19.9-.9s8.2 12.4 5.3 19.2zm-339-59.2c-6.5 6.5-17 6.5-23 0L19.9 119.2c-28-29-26.5-76.9 5-103.9c27-23.5 68.4-19 93.4 6.5l10 10.5 9.5-10.5c25-25.5 65.9-30 93.9-6.5c31 27 32.5 74.9 4.5 103.9l-96.4 99.9z"></path>
+                </svg>
+              </template>
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              size="md"
+            >
+              <template #leftSlot>
+                <svg class="svg-inline--fa fa-icons fa-fw h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="icons" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path class="" fill="currentColor" d="M500.3 7.3C507.7 13.3 512 22.4 512 32l0 144c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-57L352 90.2 352 208c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-96c0-15.3 10.8-28.4 25.7-31.4l160-32c9.4-1.9 19.1 .6 26.6 6.6zM74.7 304l11.8-17.8c5.9-8.9 15.9-14.2 26.6-14.2l61.7 0c10.7 0 20.7 5.3 26.6 14.2L213.3 304l26.7 0c26.5 0 48 21.5 48 48l0 112c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 352c0-26.5 21.5-48 48-48l26.7 0zM192 408a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM478.7 278.3L440.3 368l55.7 0c6.7 0 12.6 4.1 15 10.4s.6 13.3-4.4 17.7l-128 112c-5.6 4.9-13.9 5.3-19.9 .9s-8.2-12.4-5.3-19.2L391.7 400 336 400c-6.7 0-12.6-4.1-15-10.4s-.6-13.3 4.4-17.7l128-112c5.6-4.9 13.9-5.3 19.9-.9s8.2 12.4 5.3 19.2zm-339-59.2c-6.5 6.5-17 6.5-23 0L19.9 119.2c-28-29-26.5-76.9 5-103.9c27-23.5 68.4-19 93.4 6.5l10 10.5 9.5-10.5c25-25.5 65.9-30 93.9-6.5c31 27 32.5 74.9 4.5 103.9l-96.4 99.9z"></path>
+                </svg>
+              </template>
+              <template #label>
+                Default
+              </template>
+            </SdsTag>
+          </li>
+          <li>
+            <SdsTag
+              :counter="4"
+              action="increment"
+              size="md"
+            >
+              <template #leftSlot>
+                <svg class="svg-inline--fa fa-icons fa-fw h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="icons" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path class="" fill="currentColor" d="M500.3 7.3C507.7 13.3 512 22.4 512 32l0 144c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-57L352 90.2 352 208c0 26.5-28.7 48-64 48s-64-21.5-64-48s28.7-48 64-48l0-96c0-15.3 10.8-28.4 25.7-31.4l160-32c9.4-1.9 19.1 .6 26.6 6.6zM74.7 304l11.8-17.8c5.9-8.9 15.9-14.2 26.6-14.2l61.7 0c10.7 0 20.7 5.3 26.6 14.2L213.3 304l26.7 0c26.5 0 48 21.5 48 48l0 112c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 352c0-26.5 21.5-48 48-48l26.7 0zM192 408a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM478.7 278.3L440.3 368l55.7 0c6.7 0 12.6 4.1 15 10.4s.6 13.3-4.4 17.7l-128 112c-5.6 4.9-13.9 5.3-19.9 .9s-8.2-12.4-5.3-19.2L391.7 400 336 400c-6.7 0-12.6-4.1-15-10.4s-.6-13.3 4.4-17.7l128-112c5.6-4.9 13.9-5.3 19.9-.9s8.2 12.4 5.3 19.2zm-339-59.2c-6.5 6.5-17 6.5-23 0L19.9 119.2c-28-29-26.5-76.9 5-103.9c27-23.5 68.4-19 93.4 6.5l10 10.5 9.5-10.5c25-25.5 65.9-30 93.9-6.5c31 27 32.5 74.9 4.5 103.9l-96.4 99.9z"></path>
+                </svg>
+              </template>
+              <template #label>
+                Increment
+              </template>
+            </SdsTag>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -533,6 +994,9 @@
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 
 const datapointModelValue = ref(1451)
+
+const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
+const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
 
 const fields = ref<TableField[]>([
   {

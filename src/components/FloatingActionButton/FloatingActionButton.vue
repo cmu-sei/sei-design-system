@@ -14,10 +14,10 @@
               :variant="indicatorVariant"
             >
               <button
+                :id="id"
                 ref="button"
-                v-uid
                 type="button"
-                class="ml-auto mt-auto btn btn-primary rounded-lg p-4 pointer-events-auto"
+                class="ml-auto mt-auto btn btn-primary rounded-theme-lg p-4 pointer-events-auto"
                 aria-haspopup="true"
                 :class="{
                   'btn-blue' : localVariant === 'blue',
@@ -73,12 +73,13 @@
               <div
                 v-if="open"
                 ref="modal"
-                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
+                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-theme-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
+                role="dialog"
               >
                 <div
-                  class="p-6 rounded-t-lg flex gap-4"
+                  class="p-6 rounded-t-theme-lg flex gap-4"
                   :class="{
                     'text-white bg-blue-600 dark:text-gray-950 dark:bg-blue-400': localVariant === 'blue',
                     'text-white bg-red-600 dark:text-gray-950 dark:bg-red-400': localVariant === 'red',
@@ -90,7 +91,7 @@
                   <ActionButton
                     kind="ghost"
                     size="sm"
-                    class="text-gray-100 dark:text-gray-900"
+                    variant="white"
                     @click="open = false"
                   >
                     <svg
@@ -161,39 +162,18 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
 import { onClickOutside, onKeyStroke } from '@vueuse/core';
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
 import ActionButton from '../ActionButton/ActionButton.vue';
 
+const id = useId()
+
 defineOptions({
-  name: 'SdsFloatingActionButton',
-  directives: {
-    uid: Uid
-  }
+  name: 'SdsFloatingActionButton'
 })
 
 const props = defineProps({
-  /**
-   * An array of tab objects. Each object must have a unique "key".
-   *
-   * Example object:
-   *
-   * ```
-   * {
-   *    key: 'tab1',
-   *    tabName: 'Tab 1',
-   *    title: 'Active Tab 1',
-   *    active: true,
-   *    iconSrc: '/file.png'
-   * }
-   * ```
-   */
-  modelValue: {
-    type: Array as PropType<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>,
-    required: true
-  },
   /**
    * Determines the color of the component.
    */
@@ -216,7 +196,27 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:model-value', 'open', 'close'])
+/**
+ * An array of tab objects. Each object must have a unique "key".
+ *
+ * Example object:
+ *
+ * ```
+ * {
+ *    key: 'tab1',
+ *    tabName: 'Tab 1',
+ *    title: 'Active Tab 1',
+ *    active: true,
+ *    iconSrc: '/file.png'
+ * }
+ * ```
+ */
+const model = defineModel<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>({
+  type: Array as PropType<{ key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }[]>,
+  required: true
+})
+
+const emit = defineEmits(['update:modelValue', 'open', 'close'])
 
 const localVariant = computed<'blue' | 'red'>(() => {
   return props.variant
@@ -224,13 +224,13 @@ const localVariant = computed<'blue' | 'red'>(() => {
 
 const tabs = computed({
   get () {
-    return props.modelValue
+    return model.value
   },
   set (value) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit('update:model-value', value)
+    emit('update:modelValue', value)
   }
 })
 

@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StructuredPage > should match its default snapshot 1`] = `
+<div
+  class="flex flex-col w-full min-h-screen"
+  data-id="sds-structured-page"
+>
+  <!--v-if-->
+  <main
+    class="grow"
+  >
+    <!-- @slot Page content. -->
+    
+    
+  </main>
+  <!--v-if-->
+</div>
+`;

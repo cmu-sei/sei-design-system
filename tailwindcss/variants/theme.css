@@ -1,0 +1,7 @@
+@custom-variant sds-theme-forge (&:is(.sds-theme-forge *));
+@custom-variant sds-theme-plaid (&:is(.sds-theme-plaid *));
+
+/* TODO: Arbitrary custom theme variant: sds-theme-[test] */
+/* matchVariant('sds-theme', (value) => {
+  return `&:is(.sds-theme-${value} *)`;
+}) */

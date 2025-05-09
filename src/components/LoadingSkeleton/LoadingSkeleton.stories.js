@@ -1,7 +1,7 @@
 import SdsLoadingSkeleton from './LoadingSkeleton.vue';
 
 export default {
-  title: 'Feedback/Loading Skeleton',
+  title: 'Components/Feedback/Loading Skeleton',
   parameters: {
     docs: {
       description: {

@@ -1,8 +1,8 @@
 <template>
   <Component
     :is="el"
+    :id="id"
     ref="root"
-    v-uid
     :disabled="el === 'fieldset' ? disabled : undefined"
     data-id="sds-form-group"
     class="flex"
@@ -144,13 +144,8 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from '@shimyshack/uid'
-
 defineOptions({
-  name: 'SdsFormGroup',
-  directives: {
-    uid: Uid,
-  },
+  name: 'SdsFormGroup'
 })
 
 const props = defineProps({
@@ -228,6 +223,6 @@ const props = defineProps({
 const root = ref()
 
 const id = computed(() => {
-  return props.labelFor || `${root.value?.id}_form-control`
+  return props.labelFor || useId()
 })
 </script>

@@ -6,7 +6,7 @@
     :disabled="disabled"
     :will-open="willOpen"
     :will-close="willClose"
-    :popper-class="`absolute bg-white dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 border shadow-lg rounded-md ${sizeClass} ${zIndexClass}`"
+    :popper-class="`absolute bg-white dark:text-gray-50 dark:bg-gray-850 dark:border-gray-700 border shadow-lg rounded-theme-md ${sizeClass} ${zIndexClass}`"
     arrow-class="absolute bg-white dark:bg-gray-850 dark:border-gray-700 border w-3 h-3 rotate-45"
     placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
     placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"

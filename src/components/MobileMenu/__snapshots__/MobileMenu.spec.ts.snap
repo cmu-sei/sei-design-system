@@ -1,22 +1,84 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] = `
-<nav
-  aria-label="Mobile Menu"
-  data-id="sds-mobilemenu"
-  role="menu"
->
-  
-  
-  
-  
-</nav>
+"<body>
+    <!--v-if-->
+    <!--v-if-->
+    <div data-id="sds-panel-backdrop" class="fixed inset-0 block h-full px-2 py-0 overflow-auto bg-black/50 z-50">
+        <button class="absolute inset-0"><span class="sr-only">Close panel</span>
+        </button>
+    </div>
+    <div role="dialog" data-id="sds-panel" class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+    aria-labelledby="v-0">
+        <header class="flex items-center p-6 pb-0">
+            <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
+                <!-- @slot Panel header content. -->
+                <!-- @slot The "title" slot used to supply custom logo or panel title
+                that will display in at the top of every panel. I.e.: \`<template #title>...</template>\` -->
+                <div id="customTitle">Custom Title</div>
+            </div>
+            <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </header>
+        <main class="p-6 flex grow flex-col">
+            <!-- @slot Panel content. -->
+            <!--v-if-->
+            <div>
+                <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that
+                will display in "root" panel. I.e.: \`<template #default>...</template>\` -->
+                <div id="customDefault">Custom Default</div>
+            </div>
+        </main>
+        <footer class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+            <!-- @slot Panel footer content. -->
+            <!-- @slot The "footer" slot used to supply custom links or text that
+            will display in at the top of every panel. I.e.: \`<template #footer>...</template>\` -->
+            <div id="customFooter">Custom Footer</div>
+        </footer>
+    </div>
+    <div>
+        <nav data-id="sds-mobilemenu" role="menu" aria-label="Mobile Menu"></nav>
+    </div>
+    <div data-id="sds-panel-backdrop" class="fixed inset-0 block h-full px-2 py-0 overflow-auto bg-black/50 z-50">
+        <button class="absolute inset-0"><span class="sr-only">Close panel</span>
+        </button>
+    </div>
+    <div role="dialog" data-id="sds-panel" class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+    aria-labelledby="v-0">
+        <header class="flex items-center p-6 pb-0">
+            <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
+                <!-- @slot Panel header content. -->
+            </div>
+            <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </header>
+        <main class="p-6 flex grow flex-col">
+            <!-- @slot Panel content. -->
+            <!--v-if-->
+            <div>
+                <!-- @slot Default "panel" slot. Use this slot to supply custom HTML that
+                will display in "root" panel. I.e.: \`<template #default>...</template>\` -->
+            </div>
+        </main>
+        <footer class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+            <!-- @slot Panel footer content. -->
+        </footer>
+    </div>
+</body>"
 `;
 
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
   aria-labelledby="mocked"
-  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
   data-id="sds-panel"
   id="mocked1"
   role="dialog"
@@ -24,10 +86,17 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
   <header
     class="flex items-center p-6 pb-0"
   >
-    <!--v-if-->
+    <div
+      class="flex items-center gap-2 text-2xl leading-7 font-light"
+      id="v-0"
+    >
+      <!-- @slot Panel header content. -->
+      
+      
+    </div>
     <button
       aria-label="close"
-      class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-none focus:text-gray-700 focus:outline-none dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
+      class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
     >
       <svg
         class="w-6 h-6"
@@ -57,6 +126,12 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
     </div>
     
   </main>
-  <!--v-if-->
+  <footer
+    class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
+  >
+    <!-- @slot Panel footer content. -->
+    
+    
+  </footer>
 </div>
 `;

@@ -1,0 +1,40 @@
+.table-prose {
+  @apply w-full table-auto text-left;
+
+  & thead {
+    @apply border-y border-gray-100 dark:border-gray-700;
+  }
+  
+  & thead th {
+    @apply text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-950 font-bold text-sm align-middle p-2 relative select-none;
+  }
+  
+  & tbody tr {
+    @apply bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 last:border-none;
+  }
+  
+  & tbody td {
+    @apply align-top p-2 relative;
+  }
+}
+
+/* th/td-based variants */
+
+@custom-variant table-prose-th (:is(& th, & thead th));
+@custom-variant table-prose-td (:is(& td, & tbody td));
+
+/* sm */
+
+@utility table-prose-sm {
+  & thead th, & tbody td {
+    @apply p-1;
+  }
+}
+
+/* lg */
+
+@utility table-prose-lg {
+  & thead th, & tbody td {
+    @apply p-4;
+  }
+}

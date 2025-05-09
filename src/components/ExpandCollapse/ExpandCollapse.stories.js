@@ -1,7 +1,7 @@
 import SdsExpandCollapse from './ExpandCollapse.vue';
 
 export default {
-  title: 'Buttons/ExpandCollapse',
+  title: 'Components/Buttons/ExpandCollapse',
   parameters: {
     docs: {
       description: {

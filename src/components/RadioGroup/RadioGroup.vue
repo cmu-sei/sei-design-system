@@ -1,7 +1,7 @@
 <template>
   <div
+    :id="id"
     ref="root"
-    v-uid
     data-id="sds-radio-group"
     class="flex"
     :class="{
@@ -44,26 +44,19 @@
 </template>
 
 <script setup lang="ts">
-import { Uid } from "@shimyshack/uid";
-
 export type RadioGroupOptionValue = boolean | string | number
 
 export interface RadioGroupOption<T> {
   [key: string]: T
 }
 
+const id = useId()
+
 defineOptions({
-  name: "SdsRadioGroup",
-  directives: {
-    uid: Uid
-  }
+  name: "SdsRadioGroup"
 })
 
-const props = defineProps({
-  /**
-   * The v-model of the radio group.
-   */
-  modelValue: { type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>, default: null },
+defineProps({
   /**
    * The name of the radio form field.
    */
@@ -102,19 +95,27 @@ const props = defineProps({
   invalid: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:model-value', 'change'])
+/**
+ * The v-model of the radio group.
+ */
+const model = defineModel<RadioGroupOptionValue | undefined>({
+  type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>,
+  default: undefined
+})
+
+const emit = defineEmits(['update:modelValue', 'change'])
 
 const root = ref()
 
 const localModelValue = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value: RadioGroupOptionValue) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value)
+    emit('update:modelValue', value)
   }
 })
 

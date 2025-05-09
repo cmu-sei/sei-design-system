@@ -1,7 +1,7 @@
 import SdsScrollArea from './ScrollArea.vue';
 
 export default {
-  title: 'Utility/Scroll Area',
+  title: 'Components/Utility/Scroll Area',
   parameters: {
     docs: {
       description: {

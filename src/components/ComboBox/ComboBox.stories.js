@@ -1,7 +1,7 @@
 import SdsComboBox from './ComboBox.vue';
 
 export default {
-  title: 'Inputs/Combo Box',
+  title: 'Components/Inputs/Combo Box',
   parameters: {
     docs: {
       description: {

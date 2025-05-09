@@ -1,7 +1,7 @@
 import SdsPanel from './Panel.vue';
 
 export default {
-  title: 'Containers/Panel',
+  title: 'Components/Containers/Panel',
   parameters: {
     docs: {
       story: {

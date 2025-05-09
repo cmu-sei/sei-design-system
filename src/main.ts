@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './docs/App.vue';
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { createHead } from '@unhead/vue'
+import { createHead } from '@unhead/vue/client'
 import { routes } from 'vue-router/auto-routes'
 
 const router = createRouter({
@@ -11,9 +11,9 @@ const router = createRouter({
 const head = createHead()
 
 // SEI Design System
-import "@sds/tailwindcss-3/open-sans/index.css";
-import "./index.css";
-import SdsComponents from "./components";
+import '../open-sans/index.css'
+import '../tailwindcss/tailwind.css'
+import SdsComponents from './components'
 
 createApp(App)
   .use(SdsComponents)

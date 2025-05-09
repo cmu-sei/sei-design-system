@@ -15,7 +15,7 @@ exports[`Dropdown > should match its default snapshot 1`] = `
       aria-expanded="false"
       aria-haspopup="true"
       class="space-x btn btn-secondary"
-      id="unique-id"
+      id="v-0"
       type="button"
     >
       <!-- @slot Title content of trigger button. -->

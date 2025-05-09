@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BrochureSiteHeaderContent > should match its default snapshot 1`] = `
+<div
+  class="space-y-4"
+  data-id="sds-brochure-site-header-content"
+>
+  <!--v-if-->
+  <!--v-if-->
+  <!--v-if-->
+</div>
+`;

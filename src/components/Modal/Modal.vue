@@ -15,7 +15,7 @@
             inset-0
             block
             h-full
-            bg-black bg-opacity-50
+            bg-black/50
           "
           :class="[zIndexClass]"
         />
@@ -57,7 +57,7 @@
                 mx-auto
                 bg-white
                 border
-                rounded-lg
+                rounded-theme-lg
                 shadow-xl
                 dark:text-gray-25
                 dark:bg-gray-900 dark:border-gray-800
@@ -80,8 +80,8 @@
               >
                 <div
                   v-if="hasTitleSlot || title"
+                  :id="id"
                   ref="titleWrapper"
-                  v-uid
                   class="flex items-center gap-2 text-2xl leading-7 font-light"
                 >
                   <!-- @slot Modal title content. -->
@@ -100,8 +100,8 @@
                 bg-transparent
                 border-0
                 cursor-pointer
-                hover:text-gray-700 hover:outline-none
-                focus:text-gray-700 focus:outline-none
+                hover:text-gray-700 hover:outline-hidden
+                focus:text-gray-700 focus:outline-hidden
                 dark:hover:text-gray-300 dark:focus:text-gray-300
                 active:text-gray-500
                 dark:active:text-gray-600
@@ -143,12 +143,12 @@
 <script setup lang="ts">
 import { type Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
-import { Uid } from '@shimyshack/uid';
+
+const id = useId()
 
 defineOptions({
   name: 'SdsModal',
   directives: {
-    uid: Uid,
     focus: {
       mounted(el: HTMLElement) {
         el.focus();
@@ -158,13 +158,6 @@ defineOptions({
 })
 
 const props = defineProps({
-  /**
-   * The v-model that determines the show/hide state of the modal.
-   */
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
   /**
    * Determines the size of the modal.
    */
@@ -186,9 +179,18 @@ const props = defineProps({
   zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
 })
 
-const emit = defineEmits(['update:model-value'])
+/**
+ * The v-model that determines the show/hide state of the modal.
+ */
+const model = defineModel<boolean>({ type: Boolean, default: false })
 
-const slots = useSlots()
+const emit = defineEmits(['update:modelValue'])
+
+const slots = defineSlots<{
+  default: () => unknown
+  title: () => unknown
+  footer: () => unknown
+}>()
 
 const titleWrapper = ref(null)
 const modalContainer = ref(null)
@@ -203,13 +205,13 @@ const hasFooterSlot = computed(() => {
 
 const showModal = computed({
   get() {
-    return props.modelValue;
+    return model.value
   },
   set(value) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:model-value", value);
+    emit("update:modelValue", value);
   },
 })
 
