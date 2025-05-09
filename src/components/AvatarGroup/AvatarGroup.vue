@@ -99,7 +99,11 @@
             v-if="item.src"
             :src="item.src"
             :alt="item.name ?? undefined"
-            class="size-5 rounded-full"
+            class="bg-gray-100 dark:bg-gray-850 object-cover h-5 w-5"
+            :class="{
+              'rounded-full': shape === 'circle',
+              'rounded-xs sds-theme-plaid:rounded-none': shape === 'square',
+            }"
           />
           {{ item.name }}
         </a>
@@ -108,7 +112,11 @@
             v-if="item.src"
             :src="item.src"
             :alt="item.name ?? undefined"
-            class="size-5 rounded-full"
+            class="bg-gray-100 dark:bg-gray-850 object-cover h-5 w-5"
+            :class="{
+              'rounded-full': shape === 'circle',
+              'rounded-xs sds-theme-plaid:rounded-none': shape === 'square',
+            }"
           />
           {{ item.name }}
         </div>
