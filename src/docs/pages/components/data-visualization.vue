@@ -170,18 +170,28 @@
             },
             {
               name: 'Jacobim Mugatu',
-              src: 'https://picsum.photos/seed/1/200/200',
+              src: 'https://picsum.photos/seed/2/200/200',
               href: 'https://google.com',
             },
             {
               name: 'Maury Ballstein',
               href: 'https://google.com',
-              src: 'https://picsum.photos/seed/1/200/200'
+              src: 'https://picsum.photos/seed/3/200/200'
             },
             {
               name: 'Morgan Markowski',
               href: 'https://google.com',
-              src: 'https://picsum.photos/seed/1/200/200'
+              src: 'https://picsum.photos/seed/4/200/200'
+            },
+            {
+              name: 'Morgan Markowski',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/5/200/200'
+            },
+            {
+              name: 'Morgan Markowski',
+              href: 'https://google.com',
+              src: 'https://picsum.photos/seed/6/200/400'
             },
           ]"
         />
