@@ -132,7 +132,7 @@
               name: 'Jacobim Mugatu',
             },
             {
-              name: 'Maury Ballstein'
+              name: 'Maury Ballstein',
             },
             {
               name: 'Morgan Markowski',
@@ -141,16 +141,19 @@
               name: 'Jacobim Mugatu',
             },
             {
-              name: 'Maury Ballstein'
+              name: 'Maury Ballstein',
             },
             {
               name: 'Morgan Markowski',
+              variant: 'blue',
             },
             {
               name: 'Jacobim Mugatu',
+              variant: 'green',
             },
             {
-              name: 'Maury Ballstein'
+              name: 'Maury Ballstein',
+              variant: 'blue',
             }
           ]"
         />
