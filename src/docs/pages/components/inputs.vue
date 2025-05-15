@@ -397,8 +397,8 @@ const comboBox = reactive({
   onResult(option: ComboBoxSuggestion) {
     console.log('onResult', option)
   },
-  async onComplete(query: string) {
-  //async onComplete() {
+  //async onComplete(query: string) {
+  async onComplete() {
     //await delay(500)
     comboBox.suggestions = [
       {

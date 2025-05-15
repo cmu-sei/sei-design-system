@@ -382,7 +382,6 @@
 <script setup lang="ts">
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
-import { processFiles } from '../FileUploader/FileUploader.vue'
 
 export type ComboBoxSuggestion = {
   [id: string | number]: unknown
