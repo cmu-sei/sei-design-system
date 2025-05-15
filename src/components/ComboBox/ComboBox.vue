@@ -5,101 +5,120 @@
     class="relative"
   >
     <div
-      class="input-group"
+      class="input-group flex flex-col"
       :class="{
         disabled,
         'input-group-sm': size === 'sm'
       }"
     >
-      <button
-        class="input-group-addon"
-        :disabled="disabled"
-        tabindex="-1"
-        type="button"
-        @click="inputField?.focus()"
-      >
-        <span class="sr-only">Combo box</span>
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 512 512"
-          :class="{
-            'w-3.5 h-3.5': size === 'sm',
-            'w-4 h-4': size !== 'sm',
-          }"
-        ><path
-          fill="currentColor"
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-        /></svg>
-      </button>
-      <input
-        :id="id"
-        ref="inputField"
-        v-model.trim="filterQuery"
-        type="text"
-        autocapitalize="off"
-        autocomplete="off"
-        spellcheck="false"
-        autocorrect="off"
-        class="form-control"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :maxlength="maxlength"
-        @input="handleInput()"
-        @keydown.tab="showDropdown = false"
-        @keydown.down.prevent="handleArrows('down', $event)"
-        @keydown.up.prevent="handleArrows('up', $event)"
-        @keydown.left="handleArrows('left', $event)"
-        @keydown.right="handleArrows('right', $event)"
-        @keydown.enter.prevent.self
-        @keyup.enter.prevent.self="handleEnterKeyUp"
-      >
-      <button
-        v-if="filterQuery.length > 0 && !disabled"
-        tabindex="-1"
-        type="button"
-        class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
-        :class="{
-          'btn-sm py-1 px-2': size === 'sm',
-          'btn-sm py-2 px-3': size !== 'sm'
-        }"
-        @click="clearQuery"
-      >
-        <span class="sr-only">Clear query</span>
-        <svg
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          class="mt-0.5"
-          :class="{
-            'w-4 h-4': size === 'sm',
-            'w-5 h-5': size !== 'sm',
-          }"
-          aria-hidden="true"
-        ><path d="M6 18L18 6M6 6l12 12" /></svg>
-      </button>
       <div
-        v-if="focusOnKeyPress && !hideFocusHelperText"
-        class="input-group-addon"
+        v-if="multiselect && selectedOptions.length > 0"
+        class="flex flex-row flex-wrap bg-gray-25 rounded-sm gap-1 p-2 mr-auto justify-start w-full"
       >
-        <SdsTooltip>
-          <template #trigger>
-            <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 p-1 leading-3 cursor-default">
-              <span>/</span>
-            </div>
-          </template>
-          <p>
-            Press "/" to focus
-          </p>
-        </SdsTooltip>
+        <SdsTag
+          v-for="(option, index) in selectedOptions"
+          :key="index"
+          action="remove"
+          class="grow-0"
+          :label="option"
+          @remove="multiselectRemove(index)"
+        />
       </div>
-      <!-- @slot Default content. Good for adding content to the end of the input group -->
-      <slot />
+      <div class="flex flex-row">
+        <button
+          class="input-group-addon"
+          :disabled="disabled"
+          tabindex="-1"
+          type="button"
+          @click="inputField?.focus()"
+        >
+          <span class="sr-only">Combo box</span>
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            :class="{
+              'w-3.5 h-3.5': size === 'sm',
+              'w-4 h-4': size !== 'sm',
+            }"
+          ><path
+            fill="currentColor"
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+          /></svg>
+        </button>
+        <input
+          :id="id"
+          ref="inputField"
+          v-model.trim="filterQuery"
+          type="text"
+          :multiple="multiselect ?? null"
+          autocapitalize="off"
+          autocomplete="off"
+          spellcheck="false"
+          autocorrect="off"
+          class="form-control border-none"
+          :class="multiselect ? 'w-full' : ''"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :maxlength="maxlength"
+          @input="handleInput"
+          @focus="handleFocus"
+          @keydown.delete="handleDelete"
+          @keydown.tab="showDropdown = false"
+          @keydown.down.prevent="handleArrows('down', $event)"
+          @keydown.up.prevent="handleArrows('up', $event)"
+          @keydown.left="handleArrows('left', $event)"
+          @keydown.right="handleArrows('right', $event)"
+          @keydown.enter.prevent.self
+          @keyup.enter.prevent.self="handleEnterKeyUp"
+        >
+        <button
+          v-if="filterQuery.length > 0 && !disabled"
+          tabindex="-1"
+          type="button"
+          class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+          :class="{
+            'btn-sm py-1 px-2': size === 'sm',
+            'btn-sm py-2 px-3': size !== 'sm'
+          }"
+          @click="clearQuery"
+        >
+          <span class="sr-only">Clear query</span>
+          <svg
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            class="mt-0.5"
+            :class="{
+              'w-4 h-4': size === 'sm',
+              'w-5 h-5': size !== 'sm',
+            }"
+            aria-hidden="true"
+          ><path d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <div
+          v-if="focusOnKeyPress && !hideFocusHelperText"
+          class="input-group-addon"
+        >
+          <SdsTooltip>
+            <template #trigger>
+              <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 p-1 leading-3 cursor-default">
+                <span>/</span>
+              </div>
+            </template>
+            <p>
+              Press "/" to focus
+            </p>
+          </SdsTooltip>
+        </div>
+        <!-- @slot Default content. Good for adding content to the end of the input group -->
+        <slot />
+      </div>
     </div>
     <transition
       enter-active-class="transition-opacity ease-linear duration-75"
@@ -172,9 +191,9 @@
                 :key="`${s}_${c}_${cindex}`"
               >
                 <template v-if="optionType !== 'custom'">
-                  <component 
+                  <component
                     :is="optionType"
-                    ref="dropdownOption" 
+                    ref="dropdownOption"
                     :href="optionType === 'a' ? c.href : undefined"
                     class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                     :class="{
@@ -196,8 +215,8 @@
                     </slot>
                   </component>
                 </template>
-                <div 
-                  v-else 
+                <div
+                  v-else
                   ref="dropdownOption"
                 >
                   <slot
@@ -245,8 +264,8 @@
                   </slot>
                 </component>
               </template>
-              <div 
-                v-else 
+              <div
+                v-else
                 ref="dropdownOption"
               >
                 <slot
@@ -363,6 +382,7 @@
 <script setup lang="ts">
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
+import { processFiles } from '../FileUploader/FileUploader.vue'
 
 export type ComboBoxSuggestion = {
   [id: string | number]: unknown
@@ -410,6 +430,10 @@ const props = defineProps({
    */
   suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
   /**
+   * Use combobox as multiselect.
+   */
+  multiselect: { type: Boolean, default: false },
+  /**
    * Determines the type, or tag, use for the option/component
    */
   optionType: {
@@ -451,7 +475,7 @@ const props = defineProps({
  */
 const model = defineModel<string>({ type: String, default: '' })
 
-const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
+const emit = defineEmits(['update:modelValue', 'focused', 'file-upload', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -483,7 +507,7 @@ const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
-watch(query, (value) => {
+watch(query, (value: string) => {
   activeGroupKey.value = -1
   arrowCounter.value = -1
   filterQuery.value = removeHtmlFromString(value)
@@ -498,13 +522,13 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
-watch(() => props.suggestions, (value) => {
+watch(() => props.suggestions, (value: string) => {
   if (!preventShowDropdown.value) {
     showDropdown.value = typeof value !== 'undefined' && value.length > 0
   }
 })
 
-watch(filterQuery, (value) => {
+watch(filterQuery, (value: string) => {
   preventShowDropdown.value = value === removeHtmlFromString(query.value)
 })
 
@@ -602,6 +626,12 @@ const setActiveGroup = (group: { key: number }) => {
 const allSuggestionOptions = ref()
 const groupSuggestionOptions = ref()
 const suggestionOptions = ref()
+/**
+ * For multiselection— if props.multiselect enabled,
+ * selectedOptions will be an array of selected options
+ * shown as dismissable tags in the input field.
+ */
+const selectedOptions = ref([])
 
 watchEffect(() => {
   // All Suggestions
@@ -625,13 +655,13 @@ watchEffect(() => {
   groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions ?
     reduceList(groupSuggestions) :
     groupSuggestions && addIndexToList(groupSuggestions)
-  
+
   // Combined Suggestion Options
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
 })
 
 const dropdownIsOpen = computed(() => {
-  return showDropdown.value && suggestionOptions.value && suggestionOptions.value.length > 0
+  return showDropdown.value
 })
 
 onMounted(() => {
@@ -644,13 +674,14 @@ onKeyStroke('Escape', () => {
   showDropdown.value = false
 })
 
+// Close dropdown when clicking outside of ComboBox
 onClickOutside(root, () => {
   filterQuery.value = removeHtmlFromString(query.value)
   preventShowDropdown.value = true
   showDropdown.value = false
 })
 
-onKeyStroke('/', (e) => {
+onKeyStroke('/', (e: KeyboardEvent) => {
   if (!props.focusOnKeyPress) return
   if (!e.target) return
   const tagName = (e.target as HTMLElement).tagName.toLowerCase()
@@ -699,6 +730,40 @@ const clearQuery = () => {
   inputField.value.focus()
 }
 
+/**
+ * Add a dismissable tag to the ComboBox
+ * input field when multiselect is enabled.
+ */
+const multiselectAdd = async () => {
+  if (props.multiselect) {
+    /* Wait for query.value to be set */
+    await nextTick()
+    if (!selectedOptions.value.includes(filterQuery.value)) {
+      /* Add to selected suggestions if it's not present. */
+      selectedOptions.value.push(filterQuery.value)
+      /* Clear the input value */
+      clearQuery()
+    } else {
+      inputField.value.classList.add('animate-shake')
+      setTimeout(() => {
+        inputField.value.classList.remove('animate-shake')
+      }, 500)
+    }
+  }
+}
+
+const multiselectRemove = async (index: number) => {
+  selectedOptions.value.splice(index, 1)
+}
+
+const handleDelete = () => {
+  // If multiselect is enabled and the input field is empty,
+  if (selectedOptions.value.length > 0 && inputField.value.value === '') {
+    // Remove the last tag from the end of the list
+    multiselectRemove(-1)
+  }
+}
+
 const handleSuggestionClick = (option: ComboBoxSuggestion) => {
   preventShowDropdown.value = true
   if (typeof option === 'string') {
@@ -708,6 +773,7 @@ const handleSuggestionClick = (option: ComboBoxSuggestion) => {
   }
   emitResult(option)
   emitEnter()
+  multiselectAdd() // Will select chosen option if props.multiselect
   closeDropdownAndFocusInput()
 }
 
@@ -736,6 +802,11 @@ const getCurrentSuggestionValue = () => {
   return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
+const handleFocus = () => {
+  showDropdown.value = true
+  emitFocused()
+}
+
 const handleInput = async () => {
   await nextTick()
   query.value = filterQuery.value
@@ -748,6 +819,7 @@ const handleEnterKeyUp = () => {
     const option = getCurrentSuggestion()
     if (option) {
       query.value = getCurrentSuggestionValue()
+      multiselectAdd() // Will select chosen option if props.multiselect
       emitResult(option)
     }
     closeDropdownAndFocusInput()
@@ -813,6 +885,13 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
   }
 }
 
+const emitFocused = () => {
+  /**
+   * Emitted when the input is focused.
+   */
+  emit('focused', true)
+}
+
 const emitResult = (result: ComboBoxSuggestion) => {
   /**
    * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
@@ -831,6 +910,6 @@ const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', filterQuery.value)
+  emit('enter', props.multiselect ? selectedOptions.value : filterQuery.value)
 }
 </script>

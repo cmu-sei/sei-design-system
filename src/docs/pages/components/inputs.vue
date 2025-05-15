@@ -144,22 +144,25 @@
           :disabled="false"
           :autofocus="false"
           :suggestions="comboBox.suggestions"
+          :debounce-complete="0"
+          multiselect
           filter-suggestions
           focus-on-key-press
-          option-label="term"
-          option-group-label="label"
+          option-label="name"
+          option-group-label="section"
           option-group-children="items"
           option-type="custom"
+          @focused="comboBox.onFocused"
           @complete="comboBox.onComplete"
           @result="comboBox.onResult"
           @enter="comboBox.onEnter"
         >
           <template #customOption="{ label, classList, href, onClick }">
-            <a 
-              :class="classList" 
+            <a
+              :class="classList"
               :href="href"
               @click="onClick"
-              v-html="label" 
+              v-html="label"
             />
           </template>
         </SdsComboBox>
@@ -244,8 +247,8 @@
 </template>
 
 <script setup lang="ts">
-import { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
-import { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+import type { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
+import type { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
 
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
@@ -350,65 +353,80 @@ const radioGroup = reactive({
   ]
 })
 
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+//const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
 const comboBox = reactive({
   modelValue: '',
   onEnter(value: string) {
-    console.log(`onEnter`, value)
+    console.log(`onEnter ${value}`)
   },
-  suggestions: [] as ComboBoxSuggestion[],
+  suggestions: [],
+  async onFocused(value: boolean) {
+    if (value) {
+      console.log('focused')
+      comboBox.suggestions = [
+        {
+          section: 'Fruits',
+          items: [
+            { name: 'Apple' },
+            { name: 'Banana' },
+            { name: 'Blueberry' },
+            { name: 'Cantaloupe' },
+            { name: 'Kiwi' },
+            { name: 'Strawberry' }
+          ]
+        },
+        {
+          section: 'Vegetables',
+          items: [
+            { name: 'Artichoke' },
+            { name: 'Avocado' },
+            { name: 'Beetroot' },
+            { name: 'Celery' },
+            { name: 'Cucumber' },
+            { name: 'Daikon' },
+            { name: 'Eggplant' },
+            { name: 'Kale' },
+            { name: 'Shallot' }
+          ]
+        }
+      ]
+    }
+  },
+  //suggestions: [] as ComboBoxSuggestion[],
   onResult(option: ComboBoxSuggestion) {
     console.log('onResult', option)
   },
   async onComplete(query: string) {
-    comboBox.suggestions = []
-    await delay(500)
-    comboBox.suggestions = query ? [
-      "Testing <b>123</b>",
-      { term: "<b>App</b>le", payload: "test" },
+  //async onComplete() {
+    //await delay(500)
+    comboBox.suggestions = [
       {
-        term:
-          "Apple lksd kljsdflk jsdflk sdflkj sdflkj sdflk sdflkj sdflk sdflk sdflkj sdflkj sdflkj sdflkj sdflkj sdflksjd f",
-        payload: "test",
-      },
-      { term: "Banana", payload: "test" },
-      {
-        label: "Group Label",
+        section: 'Fruits',
         items: [
-          { term: "Apple Group", payload: "test", href: "https://sei.cmu.edu" },
-          { term: "<b>Uniqu</b>e to Group", payload: "test" },
-          { term: "Banana Group", payload: "test" },
-          { term: "Orange Group", payload: "test" },
-          { term: "Pineapple Group", payload: "test" },
-          { term: "Grape Group", payload: "test" },
+          { name: 'Apple' },
+          { name: 'Banana' },
+          { name: 'Blueberry' },
+          { name: 'Cantaloupe' },
+          { name: 'Kiwi' },
+          { name: 'Strawberry' }
         ]
       },
-      { term: "Kiwi", payload: "test" },
-      { term: "Pomegranate", payload: "test" },
-      { term: "Strawberry", payload: "test" },
       {
-        label: "Group 2 Label",
+        section: 'Vegetables',
         items: [
-          { term: "Apple Group 2", payload: "test" },
-          { term: "Banana Group 2", payload: "test" },
-          { term: "<b>Date</b> Group 2", payload: "test" },
-          { term: "Orange Group 2", payload: "test" },
-          { term: "Pineapple Group 2", payload: "test" },
-          { term: "Grape Group 2", payload: "test" },
+          { name: 'Artichoke' },
+          { name: 'Avocado' },
+          { name: 'Beetroot' },
+          { name: 'Celery' },
+          { name: 'Cucumber' },
+          { name: 'Daikon' },
+          { name: 'Eggplant' },
+          { name: 'Kale' },
+          { name: 'Shallot' }
         ]
-      },
-      { term: "Orange", payload: "test" },
-      { term: "Pineapple", payload: "test" },
-      { term: "Raspberry", payload: "test" },
-      { term: "Watermelon", payload: "test" },
-      { term: "Mango", payload: "test" },
-    ] : [] as ComboBoxSuggestion[]
-    // comboBox.suggestions = query ? [
-    //   "Apple",
-    //   "Banana",
-    //   "Cranberry"
-    // ] : []
+      }
+    ]
   }
 })
 
