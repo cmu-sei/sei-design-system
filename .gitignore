@@ -2,7 +2,7 @@
 .codecompanion.json
 node_modules
 storybook-static
-public/coverage
+coverage
 dist
 dist-ssr
 .cache

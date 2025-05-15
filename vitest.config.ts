@@ -19,8 +19,7 @@ export default defineConfig({
         'src/components/**/*.vue',
         'src/helpers/*.{js,ts}'
       ],
-      provider: 'v8',
-      reportsDirectory: './public/coverage'
+      provider: 'v8'
     },
     environment: 'jsdom',
     globals: true,
