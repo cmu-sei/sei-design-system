@@ -390,7 +390,7 @@ const comboBox = reactive({
             { name: 'Shallot' }
           ]
         }
-      ]
+      ] as ComboBoxSuggestion
     }
   },
   //suggestions: [] as ComboBoxSuggestion[],

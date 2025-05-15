@@ -521,7 +521,7 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
-watch(() => props.suggestions, (value: string) => {
+watch(() => props.suggestions, (value: string[]) => {
   if (!preventShowDropdown.value) {
     showDropdown.value = typeof value !== 'undefined' && value.length > 0
   }
@@ -737,6 +737,7 @@ const multiselectAdd = async () => {
   if (props.multiselect) {
     /* Wait for query.value to be set */
     await nextTick()
+    if (!filterQuery.value) return
     if (!selectedOptions.value.includes(filterQuery.value)) {
       /* Add to selected suggestions if it's not present. */
       selectedOptions.value.push(filterQuery.value)

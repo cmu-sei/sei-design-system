@@ -6,72 +6,77 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
     <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+    <div
+      class="flex flex-row"
+    >
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <button
+        class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Clear query
+        </span>
+        <svg
+          aria-hidden="true"
+          class="mt-0.5 w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
   >
     <!--v-if-->
     <div
@@ -308,7 +313,6 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
       </div>
     </div>
   </div>
-  <!--v-if-->
 </div>
 `;
 
@@ -318,45 +322,50 @@ exports[`ComboBox > should match its default snapshot 1`] = `
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -368,47 +377,52 @@ exports[`ComboBox > should match its snapshot with assigned \`disabled\` prop 1`
   data-id="sds-combo-box"
 >
   <div
-    class="input-group disabled"
+    class="input-group flex flex-col disabled"
   >
-    <button
-      class="input-group-addon"
-      disabled=""
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        disabled=""
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      disabled=""
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        disabled=""
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -420,69 +434,74 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
     <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+    <div
+      class="flex flex-row"
+    >
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <button
+        class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Clear query
+        </span>
+        <svg
+          aria-hidden="true"
+          class="mt-0.5 w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <div
     class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
@@ -731,69 +750,74 @@ exports[`ComboBox > should match its snapshot with assigned \`modelValue\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
     <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+    <div
+      class="flex flex-row"
+    >
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <button
+        class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Clear query
+        </span>
+        <svg
+          aria-hidden="true"
+          class="mt-0.5 w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -805,45 +829,50 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <div
     class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
@@ -1092,45 +1121,50 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <div
     class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
@@ -1379,45 +1413,50 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <div
     class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
@@ -1656,46 +1695,51 @@ exports[`ComboBox > should match its snapshot with assigned \`placeholder\` prop
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        tabindex="-1"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      placeholder="Search"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        placeholder="Search"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
