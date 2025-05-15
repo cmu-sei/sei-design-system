@@ -521,7 +521,7 @@ watch(showDropdown, () => {
   activeGroupKey.value = -1
 })
 
-watch(() => props.suggestions, (value: string[]) => {
+watch(() => props.suggestions, (value) => {
   if (!preventShowDropdown.value) {
     showDropdown.value = typeof value !== 'undefined' && value.length > 0
   }
@@ -630,7 +630,7 @@ const suggestionOptions = ref()
  * selectedOptions will be an array of selected options
  * shown as dismissable tags in the input field.
  */
-const selectedOptions = ref([])
+const selectedOptions = ref([] as string[])
 
 watchEffect(() => {
   // All Suggestions

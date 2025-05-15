@@ -360,7 +360,7 @@ const comboBox = reactive({
   onEnter(value: string) {
     console.log(`onEnter ${value}`)
   },
-  suggestions: [],
+  suggestions: [] as ComboBoxSuggestion[],
   async onFocused(value: boolean) {
     if (value) {
       console.log('focused')
@@ -390,7 +390,7 @@ const comboBox = reactive({
             { name: 'Shallot' }
           ]
         }
-      ] as ComboBoxSuggestion
+      ] as ComboBoxSuggestion[]
     }
   },
   //suggestions: [] as ComboBoxSuggestion[],
@@ -426,7 +426,7 @@ const comboBox = reactive({
           { name: 'Shallot' }
         ]
       }
-    ]
+    ] as ComboBoxSuggestion[]
   }
 })
 
