@@ -50,10 +50,14 @@
             role="tab"
             @click="changeTab(tab)"
           >
-            <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+            <!-- @slot Custom left-icon slot content. -->
+            <slot :name="`tabIconLeft(${tab.key})`"></slot>
+            <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
             <slot :name="`tab(${tab.key})`">
               {{ tab.title }}
             </slot>
+            <!-- @slot Custom right-icon slot content. -->
+            <slot :name="`tabIconRight(${tab.key})`"></slot>
           </component>
         </li>
       </ul>
