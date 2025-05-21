@@ -107,17 +107,21 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * Determines the size of the tab(s).
-   */
-  size: { type: String as PropType<'sm' | 'md' | 'lg'>, default: 'sm' },
-  /**
    * Optional count to display, typically used to show the number of items or notifications associated with the tab.
    */
   count: { type: Number, default: null },
   /**
+   * Determines the size of the tab(s).
+   */
+  size: { type: String as PropType<'sm' | 'md' | 'lg'>, default: 'sm' },
+  /**
    * The overall look and feel of the component.
    */
   type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
+  /**
+   * Determines the color of the tab(s).
+   */
+  variant: { type: String as PropType<'red' | 'blue' | 'gray'>, default: 'red' },
   /**
    * Allows for code execution prior to changing tabs.
    *
