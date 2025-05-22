@@ -155,10 +155,20 @@
         </SdsSection>
       </div>
     </div>
+        <div class="grid gap-4">
+      <h2 class="text-xl">
+        Callout
+      </h2>
+      <div class="space-y-4 w-[500px] h-[144px]">
+        <Callout></Callout>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Callout from '../../../components/Callout/Callout.vue'
+
 const showModal = ref(false)
 const showPanel = ref(false)
 defineOptions({
