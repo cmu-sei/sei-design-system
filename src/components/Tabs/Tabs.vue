@@ -55,6 +55,12 @@
             </slot>
             <!-- @slot Custom right-icon slot content. -->
             <slot :name="`tabIconRight(${tab.key})`"></slot>
+            <span 
+              v-if="!!tab.count"
+              class="tab-count"
+            >
+              {{ tab.count }}
+            </span>
           </component>
         </li>
       </ul>
@@ -103,6 +109,7 @@
 
 <script setup lang="ts">
 export interface TabItem {
+  count?: number
   key: string
   tag?: 'button' | 'a'
   title?: string
@@ -120,10 +127,6 @@ defineOptions({
 })
 
 const props = defineProps({
-  /**
-   * Optional count to display, typically used to show the number of items or notifications associated with the tab.
-   */
-  count: { type: Number, default: null },
   /**
    * Determines the size of the tab(s).
    */
@@ -172,6 +175,7 @@ const props = defineProps({
  *
  * ```
  * {
+ *   count?: number
  *   key: string
  *   tag?: 'button' | 'a'
  *   title?: string
@@ -202,8 +206,7 @@ const tabs = computed({
 })
 
 const textSizeClass = computed(() => {
-  const { size } = props
-  switch (size) {
+  switch (props.size) {
     case 'lg':
       return 'tab-lg'
     case 'sm':
@@ -213,8 +216,7 @@ const textSizeClass = computed(() => {
 })
 
 const typeClass = computed(() => {
-  const { type } = props
-  switch (type) {
+  switch (props.type) {
     case 'block':
       return 'tab-block'
     case 'underline':
@@ -226,8 +228,7 @@ const typeClass = computed(() => {
 })
 
 const variantClass = computed(() => {
-  const { variant } = props
-  switch (variant) {
+  switch (props.variant) {
     case 'blue':
       return 'tab-blue'
     case 'gray':

@@ -34,6 +34,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -58,6 +59,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -81,6 +83,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       
@@ -152,6 +155,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -175,6 +179,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -198,6 +203,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       
@@ -268,6 +274,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -292,6 +299,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -315,6 +323,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       
@@ -386,6 +395,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -411,6 +421,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -435,6 +446,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       
@@ -506,6 +518,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </a>
       </li>
       <li
@@ -530,6 +543,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </a>
       </li>
       <li
@@ -556,6 +570,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </a>
       </li>
       
@@ -610,6 +625,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -633,6 +649,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -656,6 +673,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       
@@ -727,6 +745,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -750,6 +769,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       <li
@@ -773,6 +793,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           <!-- @slot Custom right-icon slot content. -->
           
           
+          <!--v-if-->
         </button>
       </li>
       

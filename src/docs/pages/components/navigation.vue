@@ -948,7 +948,6 @@
           <div>
             <sds-tabs
               v-model="tabs"
-              size="lg"
               type="folder"
               variant="red"
               @change="changeTab"
@@ -1200,8 +1199,8 @@ const comboBox = reactive({
 
 const tabs = ref<TabItem[]>([
   { key: "home", title: "Home", disabled: true },
-  { key: "about", title: "About Us", active: true },
-  { key: "workplace-services", title: "Workplace Services" },
+  { key: "about", title: "About Us", count: 10, active: true },
+  { key: "workplace-services", title: "Workplace Services", count: 6 },
   { key: "link-to-google", title: "Link to Google", tag: "a", href: "https://google.com", external: true, disabled: true },
   { key: "link-trigger", title: "Link Trigger", href: "https://google.com" },
   { key: "groups", align: "right" }
