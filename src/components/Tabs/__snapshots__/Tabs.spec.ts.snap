@@ -6,10 +6,10 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
   id="v-0"
 >
   <div
-    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm"
+    class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
@@ -20,7 +20,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
         >
@@ -43,7 +43,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="true"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          class="tab tab-sm tab-folder tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
@@ -67,7 +67,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
         >
@@ -123,10 +123,10 @@ exports[`Tabs > should match its default snapshot 1`] = `
   id="v-0"
 >
   <div
-    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm"
+    class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
@@ -137,7 +137,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          class="tab tab-sm tab-folder tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -161,7 +161,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
         >
@@ -184,7 +184,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
         >
@@ -240,10 +240,10 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
   id="v-0"
 >
   <div
-    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm"
+    class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
@@ -254,7 +254,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
         >
@@ -277,7 +277,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="true"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          class="tab tab-sm tab-folder tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
@@ -301,7 +301,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
         >
@@ -354,10 +354,10 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
   id="v-0"
 >
   <div
-    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm"
+    class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
@@ -369,7 +369,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-disabled="true"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           disabled=""
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -395,7 +395,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="true"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300"
+          class="tab tab-sm tab-folder tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
@@ -420,7 +420,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           type="button"
@@ -477,10 +477,10 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
   id="v-0"
 >
   <div
-    class="overflow-x-auto bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm"
+    class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
@@ -491,7 +491,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
         <a
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           href="https://seinet.sei.cmu.edu/"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -515,7 +515,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
         <a
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           href="https://designsystem.sei.cmu.edu/"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
@@ -539,7 +539,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
         <a
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+          class="tab tab-sm tab-folder tab-red"
           href="https://www.google.com/"
           id="sds-tabs-v-0__tab-3__tab"
           rel="noopener noreferrer"
@@ -595,7 +595,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab tab-block tab-red active"
+          class="tab tab-sm tab-block tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -619,7 +619,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab tab-block tab-red"
+          class="tab tab-sm tab-block tab-red"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
         >
@@ -642,7 +642,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab tab-block tab-red"
+          class="tab tab-sm tab-block tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
         >
@@ -712,7 +712,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab tab-underline tab-red active"
+          class="tab tab-sm tab-underline tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -736,7 +736,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab tab-underline tab-red"
+          class="tab tab-sm tab-underline tab-red"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
         >
@@ -759,7 +759,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab tab-underline tab-red"
+          class="tab tab-sm tab-underline tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
         >

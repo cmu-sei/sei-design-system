@@ -6,13 +6,13 @@
   >
     <div
       class="overflow-x-auto"
-      :class="{
-        'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
-      }"
     >
       <ul
         role="tablist"
         class="flex whitespace-nowrap z-10"
+        :class="{
+          'gap-x-1': props.type === 'folder'
+        }"
       >
         <li
           v-for="tab in tabs"
@@ -25,18 +25,15 @@
           }"
         >
           <component
-            :is="tab.tag || 'button' as unknown"
+            :is="tab.tag || ('button' as unknown)"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
-            :class="{
-              'tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
-              'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
-              'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
-                type === 'folder' && !tab.active,
-              'tab tab-underline tab-red': type === 'underline',
-              'tab tab-block tab-red': type === 'block',
-              'active': (type === 'underline' || type === 'block') && tab.active,
-              'disabled': (type === 'underline' || type === 'block') && tab.disabled,
-            }"
+            class="tab"
+            :class="[
+              textSizeClass,
+              typeClass,
+              variantClass,
+              (tab.active ? 'active' : '')
+            ]"
             :href="tab.tag === 'a' && tab.href || undefined"
             :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
             :rel="tab.tag === 'a' && tab.href && tab.external ? 'noopener noreferrer' : undefined"
@@ -87,6 +84,23 @@
   </div>
 </template>
 
+<!-- :class="{
+  'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
+}" -->
+
+<!-- :class="{
+  'tab inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
+  'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
+  'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
+    type === 'folder' && !tab.active,
+  'tab tab-underline tab-red': type === 'underline',
+  'tab tab-block tab-red': type === 'block',
+  'active': (type === 'underline' || type === 'block') && tab.active,
+  'disabled': (type === 'underline' || type === 'block') && tab.disabled,
+  'tab-sm': props.size === 'sm',
+  'tab-lg': props.size === 'lg'
+}" -->
+
 <script setup lang="ts">
 export interface TabItem {
   key: string
@@ -113,7 +127,7 @@ const props = defineProps({
   /**
    * Determines the size of the tab(s).
    */
-  size: { type: String as PropType<'sm' | 'md' | 'lg'>, default: 'sm' },
+  size: { type: String as PropType<'sm' | 'lg'>, default: 'sm' },
   /**
    * The overall look and feel of the component.
    */
@@ -184,6 +198,43 @@ const tabs = computed({
      * Emmitted when the v-model has changed.
      */
     emit('update:modelValue', value)
+  }
+})
+
+const textSizeClass = computed(() => {
+  const { size } = props
+  switch (size) {
+    case 'lg':
+      return 'tab-lg'
+    case 'sm':
+    default:
+      return 'tab-sm'
+  }
+})
+
+const typeClass = computed(() => {
+  const { type } = props
+  switch (type) {
+    case 'block':
+      return 'tab-block'
+    case 'underline':
+      return 'tab-underline'
+    case 'folder':
+    default:
+      return 'tab-folder'
+  }
+})
+
+const variantClass = computed(() => {
+  const { variant } = props
+  switch (variant) {
+    case 'blue':
+      return 'tab-blue'
+    case 'gray':
+      return 'tab-gray'
+    case 'red':
+    default:
+      return 'tab-red'
   }
 })
 

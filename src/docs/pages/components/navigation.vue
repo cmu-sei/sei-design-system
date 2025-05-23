@@ -948,6 +948,9 @@
           <div>
             <sds-tabs
               v-model="tabs"
+              size="lg"
+              type="folder"
+              variant="red"
               @change="changeTab"
             >
               <template #tab(groups)>
