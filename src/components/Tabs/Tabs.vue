@@ -11,7 +11,7 @@
         role="tablist"
         class="flex whitespace-nowrap z-10"
         :class="{
-          'gap-x-1': props.type === 'folder'
+          'gap-x-1': props.type === 'block' || props.type === 'folder'
         }"
       >
         <li

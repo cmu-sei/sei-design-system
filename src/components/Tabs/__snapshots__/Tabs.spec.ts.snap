@@ -599,7 +599,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10"
+      class="flex whitespace-nowrap z-10 gap-x-1"
       role="tablist"
     >
       
