@@ -11,17 +11,55 @@
      @apply opacity-50 pointer-events-none;
   }
 
-  /* Sizes */
-
-  &:not(.tab-lg) {
-    @apply text-sm py-2.5 px-4;
-  }
-
-  &.tab-lg {
-    @apply text-lg py-3.5 px-4;
-  }
-
   /* Types */
+
+  /* Block type */
+
+  &.tab-block {
+    @apply rounded-lg;
+
+    &:hover,
+    &:active {
+      @apply bg-gray-25 dark:bg-gray-900;
+    }
+
+    &.tab-gray {
+      &.active {
+        @apply bg-gray-900 dark:bg-gray-300 text-white;
+        .tab-count {
+          @apply bg-white text-gray-900 dark:text-gray-300;
+        }
+      }
+    }
+
+    &.tab-red {
+      &.active {
+        @apply bg-red-600 dark:bg-red-300 text-white;
+        .tab-count {
+          @apply bg-white text-red-600 dark:text-red-300;
+        }
+      }
+    }
+
+    &.tab-blue {
+      &.active {
+        @apply bg-blue-600 dark:bg-blue-400 text-white;
+        .tab-count {
+          @apply bg-white text-blue-600 dark:text-blue-400;
+        }
+      }
+    }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply text-sm py-2.5 px-4;
+    }
+
+    &.tab-lg {
+      @apply text-lg py-3 px-4;
+    }
+  }
 
   /* Folder type */
 
@@ -33,14 +71,23 @@
     &.active {
       @apply bg-white;
     }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply text-sm py-2.5 px-4;
+    }
+
+    &.tab-lg {
+      @apply text-lg py-3.5 px-4;
+    }
   }
 
   /* Underline type */
 
   &.tab-underline {
-    /* @apply bg-white/0 border-b border-gray-100 dark:border-gray-800; */
     @apply bg-white/0;
-    @apply relative;
+    @apply relative py-3.5 px-4;
 
     &:after {
       @apply bg-gray-100 dark:bg-gray-800 block;
@@ -52,6 +99,16 @@
       &:after {
         @apply h-0.5;
       }
+    }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply text-sm;
+    }
+
+    &.tab-lg {
+      @apply text-lg;
     }
   }
 
