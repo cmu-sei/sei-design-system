@@ -109,7 +109,7 @@
 
 <script setup lang="ts">
 export interface TabItem {
-  count?: number
+  count?: number | string
   key: string
   tag?: 'button' | 'a'
   title?: string

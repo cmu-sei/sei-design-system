@@ -193,19 +193,20 @@
 /* Tab count(er) */
 
 .tab-count {
-  @apply bg-gray-600 dark:bg-gray-400;
-  @apply inline-flex items-center justify-center min-h-5 min-w-5.5;
+  @apply bg-gray-600 dark:bg-gray-400 text-white;
+  @apply inline-flex items-center justify-center;
   @apply rounded-full py-0.5 px-1.75;
-  @apply text-white;
 
   /* Sizes */
 
-  .tab &,
+  .tab:not(.tab-lg) &,
   .tab-sm & {
     @apply text-xs;
+    @apply min-h-5 min-w-5;
   }
 
   .tab-lg & {
     @apply text-sm;
+    @apply min-h-6 min-w-6;
   }
 }

@@ -1197,7 +1197,7 @@ const comboBox = reactive({
 })
 
 const tabs = ref<TabItem[]>([
-  { key: "home", title: "Home", disabled: true },
+  { key: "home", title: "Home", disabled: true, count: '#' },
   { key: "about", title: "About Us", count: 10, active: true },
   { key: "workplace-services", title: "Workplace Services", count: 6 },
   { key: "link-to-google", title: "Link to Google", tag: "a", href: "https://google.com", external: true, disabled: true },
