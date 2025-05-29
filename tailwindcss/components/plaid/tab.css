@@ -1,0 +1,232 @@
+.tab:where(.sds-theme-plaid *) {
+
+  /* Base styles */
+
+  @apply inline-flex items-center justify-center gap-x-2;
+  @apply text-gray-600 dark:text-gray-400;
+  @apply font-semibold cursor-pointer select-none whitespace-nowrap;
+
+  &.disabled,
+  &[disabled] {
+    @apply opacity-50 pointer-events-none;
+  }
+
+  /* Sizes */
+
+  &:not(.tab-lg) {
+    @apply text-sm;
+  }
+
+  &.tab-lg {
+    @apply text-lg;
+  }
+
+  /* Types */
+
+  /* Block type */
+
+  &.tab-block {
+    @apply rounded-lg;
+
+    &:hover {
+      @apply bg-gray-25 dark:bg-gray-900;
+    }
+
+    &:active {
+      @apply bg-gray-50 dark:bg-gray-800;
+    }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply py-2.5 px-4;
+    }
+
+    &.tab-lg {
+      @apply py-3 px-4;
+    }
+
+    /* Variants */
+
+    &.tab-blue {
+      &.active {
+        @apply bg-blue-600 dark:bg-blue-400 text-white;
+        .tab-count {
+          @apply bg-white text-blue-600 dark:text-blue-400;
+        }
+      }
+    }
+
+    &.tab-gray {
+      &.active {
+        @apply bg-gray-900 dark:bg-gray-300 text-white;
+        .tab-count {
+          @apply bg-white text-gray-900 dark:text-gray-300;
+        }
+      }
+    }
+
+    &.tab-red {
+      &.active {
+        @apply bg-red-600 dark:bg-red-300 text-white;
+        .tab-count {
+          @apply bg-white text-red-600 dark:text-red-300;
+        }
+      }
+    }
+  }
+
+  /* Folder type (Default) */
+
+  &.tab-folder {
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800 border-b-white/0;
+
+    &:active,
+    &.active {
+      @apply bg-white;
+    }
+
+    &.active {
+      @apply border-gray-100 dark:border-gray-800 border-b-white dark:border-b-white;
+      @apply relative z-1;
+    }
+
+    &.tab-red {
+      &.active {
+        @apply border-t-gray-100/0 dark:border-t-gray-800/0;
+
+        &:before {
+          @apply content-[''] block absolute top-0 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1 bg-red-600 dark:bg-red-400;
+        }
+      }
+    }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply py-2.5 px-4;
+    }
+
+    &.tab-lg {
+      @apply py-3.5 px-4;
+    }
+  }
+
+  /* Underline type */
+
+  &.tab-underline {
+    @apply bg-white/0;
+    @apply relative py-3.5 px-4;
+
+    &:after {
+      @apply bg-gray-100 dark:bg-gray-800 block;
+      @apply absolute content-[''] bottom-0 w-full h-0.25;
+      @apply rounded-md;
+    }
+
+    &.active {
+      &:after {
+        @apply h-0.5;
+      }
+    }
+  }
+
+  /* Variants */
+
+  &.tab-blue {
+    &:hover,
+    &.active {
+      @apply text-blue-600 dark:text-blue-400;
+      .tab-count {
+        @apply bg-blue-600 dark:bg-blue-400;
+      }
+    }
+
+    &:active:not(.active) {
+      @apply text-blue-700 dark:text-blue-300;
+      .tab-count {
+        @apply bg-blue-700 dark:bg-blue-300;
+      }
+    }
+
+    &.active {
+      &.tab-underline {
+        &:after {
+          @apply bg-blue-600 dark:bg-blue-400;
+        }
+      }
+    }
+  }
+
+  &.tab-gray {
+    &:hover,
+    &.active {
+      @apply text-gray-900 dark:text-gray-300;
+      .tab-count {
+        @apply bg-gray-900 dark:bg-gray-300;
+      }
+    }
+
+    &:active:not(.active) {
+      @apply text-black dark:text-white;
+      .tab-count {
+        @apply bg-black dark:bg-white;
+      }
+    }
+
+    &.active {
+      &.tab-underline {
+        &:after {
+          @apply bg-gray-900 dark:bg-gray-300;
+        }
+      }
+    }
+  }
+
+  /* Default */
+
+  &.tab-red {
+    &:hover,
+    &.active {
+      @apply text-red-600 dark:text-red-300;
+      .tab-count {
+        @apply bg-red-600 dark:bg-red-300;
+      }
+    }
+
+    &:active:not(.active) {
+      @apply text-red-700 dark:text-red-800;
+      .tab-count {
+        @apply bg-red-700 dark:bg-red-800;
+      }
+    }
+
+    &.active {
+      &.tab-underline {
+        &:after {
+          @apply bg-red-600 dark:bg-red-300;
+        }
+      }
+    }
+  }
+
+  /* Tab count(er) */
+
+  .tab-count {
+    @apply bg-gray-600 dark:bg-gray-400 text-white;
+    @apply inline-flex items-center justify-center;
+    @apply rounded-full py-0.5 px-1.75;
+
+    /* Sizes */
+
+    .tab-sm & {
+      @apply text-xs;
+      @apply min-h-5 min-w-5;
+    }
+
+    .tab-lg & {
+      @apply text-sm;
+      @apply min-h-6 min-w-6;
+    }
+  }
+}

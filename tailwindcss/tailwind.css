@@ -26,6 +26,7 @@
 
 /* Plaid components */
 @import './components/plaid/btn';
+@import './components/plaid/tab';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';
