@@ -8,7 +8,17 @@
 
   &.disabled,
   &[disabled] {
-     @apply opacity-50 pointer-events-none;
+    @apply opacity-50 pointer-events-none;
+  }
+
+  /* Sizes */
+
+  &:not(.tab-lg) {
+    @apply text-sm;
+  }
+
+  &.tab-lg {
+    @apply text-lg;
   }
 
   /* Types */
@@ -18,9 +28,33 @@
   &.tab-block {
     @apply rounded-lg;
 
-    &:hover,
-    &:active {
+    &:hover {
       @apply bg-gray-25 dark:bg-gray-900;
+    }
+
+    &:active {
+      @apply bg-gray-50 dark:bg-gray-800;
+    }
+
+    /* Sizes */
+
+    &:not(.tab-lg) {
+      @apply py-2.5 px-4;
+    }
+
+    &.tab-lg {
+      @apply py-3 px-4;
+    }
+
+    /* Variants */
+
+    &.tab-blue {
+      &.active {
+        @apply bg-blue-600 dark:bg-blue-400 text-white;
+        .tab-count {
+          @apply bg-white text-blue-600 dark:text-blue-400;
+        }
+      }
     }
 
     &.tab-gray {
@@ -40,31 +74,12 @@
         }
       }
     }
-
-    &.tab-blue {
-      &.active {
-        @apply bg-blue-600 dark:bg-blue-400 text-white;
-        .tab-count {
-          @apply bg-white text-blue-600 dark:text-blue-400;
-        }
-      }
-    }
-
-    /* Sizes */
-
-    &:not(.tab-lg) {
-      @apply text-sm py-2.5 px-4;
-    }
-
-    &.tab-lg {
-      @apply text-lg py-3 px-4;
-    }
   }
 
-  /* Folder type */
+  /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800 border-b-white/0;
     @apply rounded-tl-md rounded-tr-md;
 
     &:active,
@@ -72,14 +87,19 @@
       @apply bg-white;
     }
 
+    &.active {
+      @apply border-gray-100 dark:border-gray-800 border-b-white dark:border-b-white;
+      @apply relative z-1;
+    }
+
     /* Sizes */
 
     &:not(.tab-lg) {
-      @apply text-sm py-2.5 px-4;
+      @apply py-2.5 px-4;
     }
 
     &.tab-lg {
-      @apply text-lg py-3.5 px-4;
+      @apply py-3.5 px-4;
     }
   }
 
@@ -99,16 +119,6 @@
       &:after {
         @apply h-0.5;
       }
-    }
-
-    /* Sizes */
-
-    &:not(.tab-lg) {
-      @apply text-sm;
-    }
-
-    &.tab-lg {
-      @apply text-lg;
     }
   }
 
@@ -164,6 +174,8 @@
     }
   }
 
+  /* Default */
+
   &.tab-red {
     &:hover,
     &.active {
@@ -188,25 +200,24 @@
       }
     }
   }
-}
 
-/* Tab count(er) */
+  /* Tab count(er) */
 
-.tab-count {
-  @apply bg-gray-600 dark:bg-gray-400 text-white;
-  @apply inline-flex items-center justify-center;
-  @apply rounded-full py-0.5 px-1.75;
+  .tab-count {
+    @apply bg-gray-600 dark:bg-gray-400 text-white;
+    @apply inline-flex items-center justify-center;
+    @apply rounded-full py-0.5 px-1.75;
 
-  /* Sizes */
+    /* Sizes */
 
-  .tab:not(.tab-lg) &,
-  .tab-sm & {
-    @apply text-xs;
-    @apply min-h-5 min-w-5;
-  }
+    .tab-sm & {
+      @apply text-xs;
+      @apply min-h-5 min-w-5;
+    }
 
-  .tab-lg & {
-    @apply text-sm;
-    @apply min-h-6 min-w-6;
+    .tab-lg & {
+      @apply text-sm;
+      @apply min-h-6 min-w-6;
+    }
   }
 }

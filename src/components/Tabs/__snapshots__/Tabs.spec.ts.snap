@@ -96,6 +96,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
+    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -213,6 +214,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -336,6 +338,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
+    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -378,7 +381,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-disabled="true"
           aria-selected="false"
-          class="tab tab-sm tab-folder tab-red"
+          class="tab tab-sm tab-folder tab-red disabled"
           disabled=""
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -459,6 +462,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
+    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -683,6 +687,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    class=""
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -803,6 +808,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    class=""
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"

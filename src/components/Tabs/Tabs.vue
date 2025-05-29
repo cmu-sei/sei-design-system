@@ -32,7 +32,8 @@
               textSizeClass,
               typeClass,
               variantClass,
-              (tab.active ? 'active' : '')
+              (tab.active ? 'active' : ''),
+              (tab.disabled ? 'disabled': '')
             ]"
             :href="tab.tag === 'a' && tab.href || undefined"
             :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
@@ -71,6 +72,9 @@
         :id="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
         :key="tab.key"
         :aria-labelledby="`sds-tabs-${root?.id}__${tab.key}__tab`"
+        :class="{
+          'border-t border-gray-100 dark:border-gray-800 relative -top-0.25': props.type === 'folder'
+        }"
         role="tabpanel"
         tabindex="0"
       >
@@ -89,23 +93,6 @@
     </template>
   </div>
 </template>
-
-<!-- :class="{
-  'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
-}" -->
-
-<!-- :class="{
-  'tab inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
-  'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
-  'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
-    type === 'folder' && !tab.active,
-  'tab tab-underline tab-red': type === 'underline',
-  'tab tab-block tab-red': type === 'block',
-  'active': (type === 'underline' || type === 'block') && tab.active,
-  'disabled': (type === 'underline' || type === 'block') && tab.disabled,
-  'tab-sm': props.size === 'sm',
-  'tab-lg': props.size === 'lg'
-}" -->
 
 <script setup lang="ts">
 export interface TabItem {
