@@ -26,7 +26,12 @@
   /* Block type */
 
   &.tab-block {
-    @apply rounded-lg;
+    @apply border border-gray-100/0 dark:border-gray-800/0;
+
+    &:hover:not(.active),
+    &:active:not(.active) {
+      @apply border-gray-100 dark:border-gray-800;
+    }
 
     &:hover {
       @apply bg-gray-25 dark:bg-gray-900;
