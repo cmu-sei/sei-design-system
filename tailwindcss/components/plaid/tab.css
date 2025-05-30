@@ -121,7 +121,6 @@
     &:after {
       @apply bg-gray-100 dark:bg-gray-800 block;
       @apply absolute content-[''] bottom-0 w-full h-0.25;
-      @apply rounded-md;
     }
 
     &.active {
