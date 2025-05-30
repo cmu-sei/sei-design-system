@@ -155,22 +155,497 @@
         </SdsSection>
       </div>
     </div>
-        <div class="grid gap-4">
+    <div class="grid gap-4">
       <h2 class="text-xl">
         Callout
       </h2>
-      <div class="space-y-4 w-[500px] h-[144px]">
-        <Callout></Callout>
+      <div class="space-x-4 flex pb-16">
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="white">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="white">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="white">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="white">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="white">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="white">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+            />
+        </div>
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+            />
+        </div>
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="md"
+            />
+        </div>
+      </div>
+      <!-- Callout sm -->
+      <div class="space-x-4 flex">
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="white">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="white">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="white">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="white">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="white">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="white">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="bold"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+            />
+        </div>
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="outline"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+            />
+        </div>
+        <div class="w-[352px] space-y-4">
+          <template v-for="v in calloutVariants" :key="v">
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              :variant="v"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass(v,'subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+            </Callout>
+          </template>
+          <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #leftIcon>
+                <svg :class="calloutFillClass('gray','subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z"/>
+                </svg>
+              </template>
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            >
+              <template #buttons>
+                <ActionButton kind="primary" variant="gray">Primary</ActionButton>
+                <ActionButton kind="secondary" variant="gray">Secondary</ActionButton>
+                <ActionButton kind="ghost" variant="gray">Ghost</ActionButton>
+              </template>
+            </Callout>
+            <Callout
+              v-if="!dismiss"
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+              :timestamp="new Date()"
+              dismissable
+              @dismiss="dismiss = true"
+            />
+            <Callout
+              type="subtle"
+              title="This is a title"
+              description="This is an amazing description that spans multiple lines because people love to talk about content."
+              size="sm"
+            />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ActionButton from '../../../components/ActionButton/ActionButton.vue'
 import Callout from '../../../components/Callout/Callout.vue'
 
 const showModal = ref(false)
 const showPanel = ref(false)
+const dismiss = ref(false)
+const calloutVariants = ref<('gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green')[]>(
+  ['gray','orange','red','purple','indigo','blue','teal','green']
+)
+
+const calloutFillClass = (variant: string, type: string) => {
+  switch(variant) {
+    case 'gray':
+      return type === 'bold' ? 'fill-white' :'fill-gray-900'
+    case 'orange':
+      return type === 'bold' ? 'fill-black' : 'fill-orange-600'
+    case 'red': 
+      return type === 'bold' ? 'fill-white' : 'fill-red-600'
+    case 'purple': 
+      return type === 'bold' ? 'fill-white' : 'fill-purple-600'
+    case 'indigo': 
+      return type === 'bold' ? 'fill-white' :'fill-indigo-600'
+    case 'blue': 
+      return type === 'bold' ? 'fill-white' : 'fill-blue-600'
+    case 'teal': 
+      return type === 'bold' ? 'fill-white' : 'fill-teal-600'
+    case 'green': 
+      return type === 'bold' ? 'fill-white' : 'fill-green-600'
+    default:
+      return type === 'bold' ? 'fill-white' : 'fill-gray-900'
+  }
+}
+
 defineOptions({
   name: 'ContainersPage'
 })

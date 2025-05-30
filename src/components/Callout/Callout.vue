@@ -1,27 +1,43 @@
 <template>
-  <div class="p-4 bg-gray-900">
+  <div
+    :class="[
+      styleClass, 
+      size === 'md' ? 'p-4' : 'p-2.5', 
+      inset ? 'rounded-none' : 'rounded-lg sds-theme-plaid:rounded-none'
+    ]"
+  >
     <div class="flex items-top space-x-2">
       <!-- Icon -->
-      <div>
-        <svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6.8125 17.1914V16.125H11.1875L11.1602 17.1914C11.1602 17.3281 11.1055 17.5469 11.0234 17.6562L10.5586 18.3672C10.4219 18.5859 10.0938 18.75 9.82031 18.75H8.15234C7.87891 18.75 7.55078 18.5859 7.41406 18.3672L6.94922 17.6562C6.83984 17.5195 6.8125 17.3555 6.8125 17.1914ZM9 4.75C11.6523 4.77734 13.8125 6.91016 13.8125 9.5625C13.8125 10.793 13.3477 11.8867 12.6094 12.707C12.1445 13.2266 11.4609 14.3203 11.1875 15.2227C11.1875 15.2227 11.1875 15.2227 11.1875 15.25H6.78516C6.78516 15.2227 6.78516 15.2227 6.78516 15.2227C6.51172 14.3203 5.82812 13.2266 5.36328 12.707C4.625 11.8594 4.1875 10.7656 4.1875 9.5625C4.1875 7.01953 6.21094 4.77734 9 4.75ZM11.625 11.8867C12.1719 11.2305 12.5 10.4102 12.5 9.5625C12.5 7.64844 10.9141 6.0625 8.97266 6.0625C6.8125 6.08984 5.5 7.86719 5.5 9.5625C5.5 10.4102 5.80078 11.2305 6.34766 11.8867C6.78516 12.3516 7.30469 13.1445 7.6875 13.9375H10.2852C10.668 13.1445 11.1875 12.3516 11.625 11.8867ZM8.5625 6.9375C8.78125 6.9375 9 7.15625 9 7.40234C9 7.62109 8.78125 7.8125 8.5625 7.8125C7.82422 7.8125 7.25 8.41406 7.25 9.125C7.25 9.37109 7.03125 9.5625 6.8125 9.5625C6.56641 9.5625 6.375 9.37109 6.375 9.125C6.375 7.92188 7.33203 6.9375 8.5625 6.9375Z" fill="white"/>
-        </svg>
+      <div v-if="slots.leftIcon">
+        <slot name="leftIcon" />
       </div>
       <!-- Title and content -->
-      <div class="flex flex-col space-y-0.5 text-white">
-        <span class="font-semibold">Title</span>
-        <span class="text-sm">This will be the contend underneath</span>
-        <span class="text-sm opacity-80">timestamp</span>
+      <div 
+        class="flex flex-col space-y-0.5"
+      >
+        <span v-if="title" class="font-semibold">{{ title }}</span>
+        <span v-if="description && !hasDescriptionSlot" :class="size === 'sm' ? 'text-xs' : 'text-sm'">{{ description }}</span>
+        <slot name="description" />
+        <span v-if="timestamp" class="text-sm opacity-80">{{ format(timestamp, `MMM dd, yyyy 'at' hh:mm aaa`) }}</span>
         <!-- Buttons -->
+        <div
+          v-if="slots.buttons"
+          class="justify-center space-x-2"
+          :class="size === 'md' ? 'pt-4' : 'pt-3'"
+        >
+          <slot name="buttons" />
+        </div>
         <div>
           
         </div>
       </div>
-      <!-- Close button -->
-      <div class="text-white ml-auto">
-        <button>
-          <svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z" fill="white"/>
+      <!-- Close icon -->
+      <div v-if="dismissable" class="ml-auto">
+        <button 
+          @click="dismiss"
+        >
+          <svg :class="fillClass" width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z"/>
           </svg>
         </button>
       </div>
@@ -29,5 +45,113 @@
   </div>
 </template>
 <script setup lang="ts">
+import { format } from 'date-fns/format';
 
+const props = defineProps({
+  /**
+   * Determines the look of the callout
+   */
+  type: { type: String as PropType<'bold' | 'outline' | 'subtle'>, default: 'subtle' },
+  /**
+   * Determines the color of the callout
+   */
+  variant: { type: String as PropType<'gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>, default: 'gray'},
+  /**
+   * Determines the size of the callout
+   */
+  size: { type: String as PropType<'sm' | 'md'>, default: 'md'},
+  /**
+   * Determines the title of the Callout.
+   */
+  title: { type: String, default: null },
+  /**
+   * Determines the description of the Callout. If there is a description slot active, it overrides this.
+   */
+  description: { type: String, default: null },
+  /**
+   * Determines the timestamp of the Callout.
+   */
+  timestamp: { type: Date, default: null },
+  /**
+   * Determines if the Callout can be dismissed or if it is persistent.
+   */
+  dismissable: { type: Boolean, default: false },
+  /**
+   * Determines whether to use block styling or not.
+   */
+  inset: { type: Boolean, default: false }
+})
+
+const slots = defineSlots<{
+  description: () => unknown,
+  buttons: () => unknown,
+  leftIcon: () => unknown
+}>()
+
+const emit = defineEmits(['dismiss'])
+
+const hasDescriptionSlot = computed(() => {
+  return !!slots.description
+})
+
+// Class for style of callout
+const styleClass = computed(() => {
+  switch(props.variant) {
+    case 'gray':
+      return props.type === 'bold' ? 'bg-gray-900 text-white' :
+        (props.type === 'outline' ? 'border border-gray-900 text-gray-900' : 'border border-gray-900 bg-gray-25 text-gray-900')
+    case 'orange':
+      return props.type === 'bold' ? 'bg-orange-200 text-black' :
+        (props.type === 'outline' ? 'border border-orange-300 text-orange-600' : 'border border-orange-300 bg-orange-25/40 text-orange-600')
+    case 'red': 
+      return props.type === 'bold' ? 'bg-red-600 text-white' : 
+        (props.type === 'outline' ? 'border border-red-600 text-red-600' : 'border border-red-600 bg-red-25 text-red-600')
+    case 'purple': 
+      return props.type === 'bold' ? 'bg-purple-600 text-white' : 
+        (props.type === 'outline' ? 'border border-purple-600 text-purple-600' : 'border border-purple-600 bg-purple-25/60 text-purple-600')
+    case 'indigo': 
+      return props.type === 'bold' ? 'bg-indigo-600 text-white' : 
+        (props.type === 'outline' ? 'border border-indigo-600 text-indigo-600' : 'border border-indigo-600 bg-indigo-25/60 text-indigo-600')
+    case 'blue': 
+      return props.type === 'bold' ? 'bg-blue-600 text-white' : 
+        (props.type === 'outline' ? 'border border-blue-600 text-blue-600' : 'border border-blue-600 bg-blue-25 text-blue-600')
+    case 'teal': 
+      return props.type === 'bold' ? 'bg-teal-600 text-white' : 
+        (props.type === 'outline' ? 'border border-teal-600 text-teal-600' : 'border border-teal-600 bg-teal-25/60 text-teal-600')
+    case 'green': 
+      return props.type === 'bold' ? 'bg-green-600 text-white' : (
+        props.type === 'outline' ? 'border border-green-600 text-green-600' : 'border border-green-600 bg-green-25/60 text-green-600')
+    default:
+      return props.type === 'bold' ? 'bg-gray-900 text-white' : 
+        (props.type === 'outline' ? 'border border-gray-900 text-gray-900' : 'border border-gray-900 bg-gray-25 text-gray-900')
+  }
+})
+
+ // Class for close button fill
+const fillClass = computed(() => {
+  switch(props.variant) {
+    case 'gray':
+      return props.type === 'bold' ? 'fill-white' :'fill-gray-900'
+    case 'orange':
+      return props.type === 'bold' ? 'fill-black' : 'fill-orange-600'
+    case 'red': 
+      return props.type === 'bold' ? 'fill-white' : 'fill-red-600'
+    case 'purple': 
+      return props.type === 'bold' ? 'fill-white' : 'fill-purple-600'
+    case 'indigo': 
+      return props.type === 'bold' ? 'fill-white' :'fill-indigo-600'
+    case 'blue': 
+      return props.type === 'bold' ? 'fill-white' : 'fill-blue-600'
+    case 'teal': 
+      return props.type === 'bold' ? 'fill-white' : 'fill-teal-600'
+    case 'green': 
+      return props.type === 'bold' ? 'fill-white' : 'fill-green-600'
+    default:
+      return props.type === 'bold' ? 'fill-white' : 'fill-gray-900'
+  }
+})
+
+const dismiss = () => {
+  emit('dismiss')
+}
 </script>
