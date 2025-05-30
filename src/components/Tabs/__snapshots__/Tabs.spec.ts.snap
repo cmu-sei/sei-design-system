@@ -2,6 +2,7 @@
 
 exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/function 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -9,7 +10,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -96,7 +97,6 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
-    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -123,6 +123,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
 
 exports[`Tabs > should match its default snapshot 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -130,7 +131,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -214,7 +215,6 @@ exports[`Tabs > should match its default snapshot 1`] = `
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
-    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -244,6 +244,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
 
 exports[`Tabs > should match its snapshot when changing tabs 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -251,7 +252,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -338,7 +339,6 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
-    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -362,6 +362,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
 
 exports[`Tabs > should match its snapshot when property \`disabled\` in tab item(s) is set to "true" 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -369,7 +370,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -462,7 +463,6 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-2__tab"
-    class="border-t border-gray-100 dark:border-gray-800 relative -top-0.25"
     id="sds-tabs-v-0__tab-2__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -489,6 +489,7 @@ exports[`Tabs > should match its snapshot when property \`disabled\` in tab item
 
 exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) is set to "a" 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -496,7 +497,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -596,6 +597,7 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
 
 exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -603,7 +605,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
     class="overflow-x-auto"
   >
     <ul
-      class="flex whitespace-nowrap z-10 gap-x-1"
+      class="flex whitespace-nowrap z-10"
       role="tablist"
     >
       
@@ -687,7 +689,6 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
-    class=""
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"
@@ -717,6 +718,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
 
 exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underline" 1`] = `
 <div
+  class="tabs"
   data-id="sds-tabs"
   id="v-0"
 >
@@ -808,7 +810,6 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
   
   <div
     aria-labelledby="sds-tabs-v-0__tab-1__tab"
-    class=""
     id="sds-tabs-v-0__tab-1__tab-content"
     role="tabpanel"
     tabindex="0"

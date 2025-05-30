@@ -1,3 +1,9 @@
+.tabs:where(.sds-theme-forge *) {
+  ul[role="tablist"]:has(.tab-folder) {
+    @apply gap-x-1;
+  }
+}
+
 .tab:where(.sds-theme-forge *) {
 
   /* Base styles */
@@ -79,7 +85,7 @@
   /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800 border-b-white/0;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800 border-b-0;
     @apply rounded-tl-md rounded-tr-md;
 
     &:active,
@@ -88,8 +94,7 @@
     }
 
     &.active {
-      @apply border-gray-100 dark:border-gray-800 border-b-white dark:border-b-white;
-      @apply relative z-1;
+      @apply border-gray-100 dark:border-gray-800;
     }
 
     /* Sizes */

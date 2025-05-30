@@ -3,6 +3,7 @@
     :id="id"
     ref="root"
     data-id="sds-tabs"
+    class="tabs"
   >
     <div
       class="overflow-x-auto"
@@ -10,9 +11,6 @@
       <ul
         role="tablist"
         class="flex whitespace-nowrap z-10"
-        :class="{
-          'gap-x-1': props.type === 'block' || props.type === 'folder'
-        }"
       >
         <li
           v-for="tab in tabs"
@@ -72,9 +70,6 @@
         :id="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
         :key="tab.key"
         :aria-labelledby="`sds-tabs-${root?.id}__${tab.key}__tab`"
-        :class="{
-          'border-t border-gray-100 dark:border-gray-800 relative -top-0.25': props.type === 'folder'
-        }"
         role="tabpanel"
         tabindex="0"
       >
