@@ -47,6 +47,10 @@
 <script setup lang="ts">
 import { format } from 'date-fns/format';
 
+defineOptions({
+  name: 'SdsCallout'
+})
+
 const props = defineProps({
   /**
    * Determines the look of the callout
