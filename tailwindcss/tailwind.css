@@ -22,11 +22,11 @@
 
 /* Forge components */
 @import './components/forge/btn';
-@import './components/forge/tab';
+@import './components/forge/tabs';
 
 /* Plaid components */
 @import './components/plaid/btn';
-@import './components/plaid/tab';
+@import './components/plaid/tabs';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';

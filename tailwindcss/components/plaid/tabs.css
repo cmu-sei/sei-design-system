@@ -1,3 +1,35 @@
+.tabs:where(.sds-theme-plaid *) {
+  [role="tablist"]:has(.tab-block) {
+    @apply border border-gray-100 dark:border-gray-800;
+
+    > li {
+      &:first-of-type {
+        .tab {
+          &:hover {
+            @apply border-l-gray-100/0 dark:border-r-gray-800/0;
+          }
+        }
+      }
+
+      &:last-of-type {
+        .tab {
+          &:hover {
+            @apply border-r-gray-100/0 dark:border-r-gray-800/0;
+          }
+        }
+      }
+    }
+  }
+
+  &:has(.tab-folder),
+  &:has(.tab-underline) {
+    [role="tabpanel"] {
+      @apply border-t border-gray-100 dark:border-gray-800;
+      @apply -mt-0.25;
+    }
+  }
+}
+
 .tab:where(.sds-theme-plaid *) {
 
   /* Base styles */
@@ -26,7 +58,7 @@
   /* Block type */
 
   &.tab-block {
-    @apply border border-gray-100/0 dark:border-gray-800/0;
+    @apply border-r border-l border-gray-100/0 dark:border-gray-800/0;
 
     &:hover:not(.active),
     &:active:not(.active) {
@@ -39,6 +71,10 @@
 
     &:active {
       @apply bg-gray-50 dark:bg-gray-800;
+    }
+
+    &.active {
+      @apply relative z-10;
     }
 
     /* Sizes */
@@ -84,7 +120,7 @@
   /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border border-gray-50 dark:border-gray-800 border-b-white/0;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border-t border-r border-l border-gray-50 dark:border-gray-800;
 
     &:active,
     &.active {
@@ -92,7 +128,7 @@
     }
 
     &.active {
-      @apply border-t-gray-100/0 dark:border-t-gray-800/0 border-b-white dark:border-b-white;
+      @apply border-t-gray-100/0 dark:border-t-gray-800/0;
       @apply relative z-1;
     }
 
@@ -101,7 +137,7 @@
     &.tab-red {
       &.active {
         &:before {
-          @apply content-[''] block absolute -top-0.25 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
+          @apply content-[''] block absolute top-0 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
         }
       }
     }

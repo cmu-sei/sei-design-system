@@ -30,8 +30,8 @@
               textSizeClass,
               typeClass,
               variantClass,
-              (tab.active ? 'active' : ''),
-              (tab.disabled ? 'disabled': '')
+              (!!tab.active ? 'active' : ''),
+              (!!tab.disabled ? 'disabled': '')
             ]"
             :href="tab.tag === 'a' && tab.href || undefined"
             :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
