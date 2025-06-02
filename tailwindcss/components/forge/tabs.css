@@ -17,7 +17,7 @@
 
   &:has(.tab-folder) {
     [role="tabpanel"] {
-        @apply relative z-1;
+      @apply relative z-1;
     }
   }
 }
@@ -103,7 +103,9 @@
   /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border-t border-r border-l border-gray-50 dark:border-gray-800;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02];
+    @apply border-t border-r border-l border-gray-50 dark:border-gray-800;
+    @apply border-b border-b-gray-50/0 dark:border-b-gray-800/0;
     @apply rounded-tl-md rounded-tr-md;
 
     &:active,
@@ -113,17 +115,18 @@
 
     &.active {
       @apply border-gray-100 dark:border-gray-800;
+      @apply border-b-white;
       @apply relative z-2;
     }
 
     /* Sizes */
 
     &:not(.tab-lg) {
-      @apply py-2.5 px-4;
+      @apply py-2.25 px-4;
     }
 
     &.tab-lg {
-      @apply py-3.5 px-4;
+      @apply py-3.25 px-4;
     }
   }
 

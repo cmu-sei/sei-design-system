@@ -1,25 +1,15 @@
 .tabs:where(.sds-theme-plaid *) {
   [role="tablist"]:has(.tab-block) {
     @apply border border-gray-100 dark:border-gray-800;
+  }
 
+  [role="tablist"]:has(.tab-folder) {
     > li {
-      &:first-of-type {
-        .tab {
-          &:hover {
-            @apply border-l-gray-100/0 dark:border-r-gray-800/0;
-          }
-        }
-      }
-
-      &:last-of-type {
-        .tab {
-          &:hover {
-            @apply border-r-gray-100/0 dark:border-r-gray-800/0;
-          }
-        }
+      &:not(:first-of-type) {
+        @apply -ml-0.25;
       }
     }
-  }
+  } 
 
   &:has(.tab-folder),
   &:has(.tab-underline) {
@@ -31,7 +21,7 @@
 
   &:has(.tab-folder) {
     [role="tabpanel"] {
-        @apply relative z-1;
+      @apply relative z-1;
     }
   }
 }
@@ -64,7 +54,8 @@
   /* Block type */
 
   &.tab-block {
-    @apply border-r border-l border-gray-100/0 dark:border-gray-800/0;
+    @apply border border-gray-100/0 dark:border-gray-800/0;
+    @apply relative -m-0.25 z-1;
 
     &:hover:not(.active),
     &:active:not(.active) {
@@ -126,7 +117,9 @@
   /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02] border-t border-r border-l border-gray-50 dark:border-gray-800;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02];
+    @apply border-t border-r border-l border-gray-50 dark:border-gray-800;
+    @apply border-b border-b-gray-50/0 dark:border-b-gray-800/0;
 
     &:active,
     &.active {
@@ -135,6 +128,7 @@
 
     &.active {
       @apply border-gray-100 dark:border-gray-800 border-t-gray-100/0 dark:border-t-gray-800/0;
+      @apply border-b-white;
       @apply relative z-2;
     }
 
@@ -175,11 +169,11 @@
     /* Sizes */
 
     &:not(.tab-lg) {
-      @apply py-2.5 px-4;
+      @apply py-2.25 px-4;
     }
 
     &.tab-lg {
-      @apply py-3.5 px-4;
+      @apply py-3.25 px-4;
     }
   }
 
