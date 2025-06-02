@@ -28,6 +28,12 @@
       @apply -mt-0.25;
     }
   }
+
+  &:has(.tab-folder) {
+    [role="tabpanel"] {
+        @apply relative z-1;
+    }
+  }
 }
 
 .tab:where(.sds-theme-plaid *) {
@@ -128,8 +134,8 @@
     }
 
     &.active {
-      @apply border-t-gray-100/0 dark:border-t-gray-800/0;
-      @apply relative z-1;
+      @apply border-gray-100 dark:border-gray-800 border-t-gray-100/0 dark:border-t-gray-800/0;
+      @apply relative z-2;
     }
 
     &.tab-blue,
@@ -137,7 +143,7 @@
     &.tab-red {
       &.active {
         &:before {
-          @apply content-[''] block absolute top-0 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
+          @apply content-[''] block absolute -top-0.25 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
         }
       }
     }
@@ -161,7 +167,7 @@
     &.tab-red {
       &.active {
         &:before {
-          @apply bg-red-600 dark:bg-red-400;
+          @apply bg-red-600 dark:bg-red-300;
         }
       }
     }
