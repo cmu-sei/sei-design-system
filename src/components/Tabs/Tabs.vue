@@ -55,7 +55,7 @@
             <!-- @slot Custom right-icon slot content. -->
             <slot :name="`tabIconRight(${tab.key})`"></slot>
             <span 
-              v-if="!!tab.count"
+              v-if="tab.count && tab.count >= 0"
               class="tab-count"
             >
               {{ tab.count }}
@@ -91,7 +91,7 @@
 
 <script setup lang="ts">
 export interface TabItem {
-  count?: number | string
+  count?: number
   key: string
   tag?: 'button' | 'a'
   title?: string
