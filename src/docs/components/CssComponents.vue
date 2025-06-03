@@ -116,8 +116,7 @@
       </p>
       <p class="mt-2">
         Types include: <code>.tab-underline</code>,
-        <code>.tab-overline</code>, <code>.tab-pill</code>,
-        <code>.tab-block</code>.
+        <code>.tab-pill</code>, <code>.tab-block</code>.
       </p>
       <p class="mt-2">
         Add <code>.active</code> class to create an active look.
@@ -128,20 +127,20 @@
       </p>
     </template>
     <section>
-      <div class="mb-8 tab-group">
-        <button class="tab active">
+      <div class="mb-8 gap-1 tab-group">
+        <button class="tab tab-folder tab-red active">
           Tab Item 1
         </button>
-        <button class="tab">
+        <button class="tab tab-folder tab-red">
           Tab Item 2
         </button>
         <button
-          class="tab"
+          class="tab tab-folder tab-red"
           disabled
         >
           Tab Item 3
         </button>
-        <button class="tab">
+        <button class="tab tab-folder tab-red">
           Tab Item 4
         </button>
       </div>
@@ -160,42 +159,6 @@
           Tab Item 3
         </button>
         <button class="tab tab-underline tab-red">
-          Tab Item 4
-        </button>
-      </div>
-
-      <div class="gap-2 mb-8 tab-group">
-        <button class="tab tab-underline active">
-          Tab Item 1
-        </button>
-        <button class="tab tab-underline">
-          Tab Item 2
-        </button>
-        <button
-          class="tab tab-underline"
-          disabled
-        >
-          Tab Item 3
-        </button>
-        <button class="tab tab-underline">
-          Tab Item 4
-        </button>
-      </div>
-
-      <div class="gap-2 mb-8 tab-group">
-        <button class="tab tab-overline active">
-          Tab Item 1
-        </button>
-        <button class="tab tab-overline">
-          Tab Item 2
-        </button>
-        <button
-          class="tab tab-overline"
-          disabled
-        >
-          Tab Item 3
-        </button>
-        <button class="tab tab-overline">
           Tab Item 4
         </button>
       </div>
@@ -219,37 +182,37 @@
       </div>
 
       <div class="gap-2 py-1 mb-8 tab-group">
-        <button class="tab tab-pill active">
+        <button class="tab tab-pill tab-red active">
           Tab Item 1
         </button>
-        <button class="tab tab-pill">
+        <button class="tab tab-pill tab-red">
           Tab Item 2
         </button>
         <button
-          class="tab tab-pill"
+          class="tab tab-pill tab-red"
           disabled
         >
           Tab Item 3
         </button>
-        <button class="tab tab-pill">
+        <button class="tab tab-pill tab-red">
           Tab Item 4
         </button>
       </div>
 
       <div class="mb-8 tab-group">
-        <button class="tab tab-block active">
+        <button class="tab tab-blue tab-block active">
           Tab Item 1
         </button>
-        <button class="tab tab-block">
+        <button class="tab tab-blue tab-block">
           Tab Item 2
         </button>
         <button
-          class="tab tab-block"
+          class="tab tab-blue tab-block"
           disabled
         >
           Tab Item 3
         </button>
-        <button class="tab tab-block">
+        <button class="tab tab-blue tab-block">
           Tab Item 4
         </button>
       </div>

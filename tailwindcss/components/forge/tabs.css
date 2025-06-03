@@ -22,7 +22,7 @@
   }
 }
 
-.tab:where(.sds-theme-forge *) {
+.tab:not(.tab-pill):where(.sds-theme-forge *) {
 
   /* Base styles */
 

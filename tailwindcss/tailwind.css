@@ -17,7 +17,7 @@
 @import './components/universal/input-group';
 @import './components/universal/link';
 @import './components/universal/scroll-area';
-/* @import './components/universal/tab'; */
+@import './components/universal/tab';
 @import './components/universal/table-prose';
 
 /* Forge components */
