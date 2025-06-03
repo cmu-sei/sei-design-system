@@ -221,11 +221,16 @@ const variantClass = computed(() => {
   }
 })
 
-// TODO: Fix async promise executor ESLint error
-// eslint-disable-next-line no-async-promise-executor
-const willChangeTabStateDelay = (tab: TabItem, fn: GenericFunctionType) => new Promise<void>(async (res, rej) => {
-  return fn ? await fn(tab, res, rej) : res()
-})
+const willChangeTabStateDelay = async (tab: TabItem, fn: GenericFunctionType) => {
+  if (typeof fn !== 'function') return
+  return new Promise<void>((resolve, reject) => {
+    try {
+      fn(tab, resolve, reject)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
 
 const changeTab = async (tab: TabItem) => {
   if (tab.tag === 'a' && tab.href) {
