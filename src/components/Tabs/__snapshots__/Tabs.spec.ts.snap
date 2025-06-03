@@ -595,6 +595,127 @@ exports[`Tabs > should match its snapshot when property \`tag\` in tab item(s) i
 </div>
 `;
 
+exports[`Tabs > should match its snapshot with assigned \`size\` prop: "lg" 1`] = `
+<div
+  class="tabs"
+  data-id="sds-tabs"
+  id="v-0"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-lg tab-folder tab-red active"
+          data-active="true"
+          id="sds-tabs-v-0__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-lg tab-folder tab-red"
+          id="sds-tabs-v-0__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-lg tab-folder tab-red"
+          id="sds-tabs-v-0__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    id="sds-tabs-v-0__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
 exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1`] = `
 <div
   class="tabs"
@@ -801,6 +922,381 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           
           
           <!--v-if-->
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    id="sds-tabs-v-0__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "blue" 1`] = `
+<div
+  class="tabs"
+  data-id="sds-tabs"
+  id="v-0"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-sm tab-folder tab-blue active"
+          data-active="true"
+          id="sds-tabs-v-0__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-blue"
+          id="sds-tabs-v-0__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-blue"
+          id="sds-tabs-v-0__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    id="sds-tabs-v-0__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "gray" 1`] = `
+<div
+  class="tabs"
+  data-id="sds-tabs"
+  id="v-0"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-sm tab-folder tab-gray active"
+          data-active="true"
+          id="sds-tabs-v-0__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-gray"
+          id="sds-tabs-v-0__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-gray"
+          id="sds-tabs-v-0__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <!--v-if-->
+        </button>
+      </li>
+      
+    </ul>
+  </div>
+  
+  
+  <div
+    aria-labelledby="sds-tabs-v-0__tab-1__tab"
+    id="sds-tabs-v-0__tab-1__tab-content"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <!-- @slot Dynamic tab panel content. Used to inject content into the panel for a specified active tab. -->
+    
+    <!-- @slot Default tab panel content. Used to inject content into the panel for any active tab. -->
+    
+    <div
+      class="p-4"
+    >
+       This is the panel content for Tab label 1. 
+    </div>
+    
+    
+  </div>
+  
+  
+  <!--v-if-->
+  
+  
+  <!--v-if-->
+  
+  
+</div>
+`;
+
+exports[`Tabs > should match its snapshot with property \`count\` in tab item(s) is set to a numerical value 1`] = `
+<div
+  class="tabs"
+  data-id="sds-tabs"
+  id="v-0"
+>
+  <div
+    class="overflow-x-auto"
+  >
+    <ul
+      class="flex whitespace-nowrap z-10"
+      role="tablist"
+    >
+      
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-1__tab-content"
+          aria-selected="true"
+          class="tab tab-sm tab-folder tab-red active"
+          data-active="true"
+          id="sds-tabs-v-0__tab-1__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 1
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <span
+            class="tab-count"
+          >
+            3
+          </span>
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-2__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-red"
+          id="sds-tabs-v-0__tab-2__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 2
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <span
+            class="tab-count"
+          >
+            5
+          </span>
+        </button>
+      </li>
+      <li
+        class=""
+        role="presentation"
+      >
+        <button
+          aria-controls="sds-tabs-v-0__tab-3__tab-content"
+          aria-selected="false"
+          class="tab tab-sm tab-folder tab-red"
+          id="sds-tabs-v-0__tab-3__tab"
+          role="tab"
+        >
+          <!-- @slot Custom left-icon slot content. -->
+          
+          
+          <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
+          
+          Tab label 3
+          
+          <!-- @slot Custom right-icon slot content. -->
+          
+          
+          <span
+            class="tab-count"
+          >
+            1
+          </span>
         </button>
       </li>
       
