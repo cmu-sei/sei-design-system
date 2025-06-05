@@ -769,9 +769,16 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
       }
     } else if (date.value.start && !date.value.end) {
       const start = date.value.start
-      date.value = {
-        start,
-        end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+      if(isSameDay(start, setDate(month,day))) {
+        date.value = {
+          start,
+          end: setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 59), 23)
+        }
+      } else {
+        date.value = {
+          start,
+          end: props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
+        }
       }
     } else {
       if (
@@ -787,15 +794,15 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
         const newDate = setDate(month, day)
         const newDateWithoutTime = setHours(setMinutes(setSeconds(setMilliseconds(newDate, 0), 0), 0), 0)
 
-        if (newDateWithoutTime.valueOf() === startWithoutTime.valueOf()) {
-          date.value = { 
-            start: null, 
-            end 
-          }
-        } else if (newDateWithoutTime.valueOf() === endWithoutTime.valueOf()) {
+        if (newDateWithoutTime.valueOf() === endWithoutTime.valueOf()) {
           date.value = { 
             start, 
             end: null
+          }
+        } else if (newDateWithoutTime.valueOf() === startWithoutTime.valueOf()) {
+          date.value = { 
+            start: null, 
+            end 
           }
         } else if (isBefore(newDate, start)) {
           date.value = { 
