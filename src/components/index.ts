@@ -68,6 +68,7 @@ import SdsAvatarGroup from "./AvatarGroup";
 import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
+import SdsCallout from "./Callout";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
@@ -136,6 +137,7 @@ const Components: ComponentList = {
   SdsBadge,
   SdsButton,
   SdsCalendar,
+  SdsCallout,
   SdsCheckboxGroup,
   SdsClientOnly,
   SdsComboBox,
@@ -208,6 +210,7 @@ export { default as SdsAvatarGroup } from "./AvatarGroup";
 export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
+export { default as SdsCallout } from "./Callout";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
