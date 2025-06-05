@@ -1,0 +1,624 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Callout > should have a bold gray variant 1`] = `
+<div
+  class="bg-gray-900 text-white p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a bold orange variant 1`] = `
+<div
+  class="bg-orange-200 text-black p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a bold red variant 1`] = `
+<div
+  class="bg-red-600 text-white p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a subtle green variant 1`] = `
+<div
+  class="border border-green-600 bg-green-25/60 text-green-600 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a subtle teal variant 1`] = `
+<div
+  class="border border-teal-600 bg-teal-25/60 text-teal-600 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a title, description, timestamp, and be size md 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have a title, description, timestamp, and be size sm 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-2.5 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-xs"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have an outline blue variant 1`] = `
+<div
+  class="border border-blue-600 text-blue-600 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have an outline indigo variant 1`] = `
+<div
+  class="border border-indigo-600 text-indigo-600 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have an outline purple variant 1`] = `
+<div
+  class="border border-purple-600 text-purple-600 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have dismissable icon 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <div
+      class="ml-auto"
+    >
+      <button>
+        <svg
+          class="fill-gray-900"
+          fill="none"
+          height="24"
+          viewBox="0 0 16 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Callout > should have icon in leftSlot 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <div>
+      
+      Left Icon Here
+      
+    </div>
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should have inset 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-4 rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <span
+        class="text-sm"
+      >
+        This is a description
+      </span>
+      
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <div
+      class="ml-auto"
+    >
+      <button>
+        <svg
+          class="fill-gray-900"
+          fill="none"
+          height="24"
+          viewBox="0 0 16 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Callout > should match its default snapshot 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-2.5 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <!--v-if-->
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
+
+exports[`Callout > should override description with slot 1`] = `
+<div
+  class="border border-gray-900 bg-gray-25 text-gray-900 p-4 rounded-lg sds-theme-plaid:rounded-none"
+>
+  <div
+    class="flex items-top space-x-2"
+  >
+    <!-- Icon -->
+    <!--v-if-->
+    <!-- Title and content -->
+    <div
+      class="flex flex-col space-y-0.5"
+    >
+      <span
+        class="font-semibold"
+      >
+        This is a title
+      </span>
+      <!--v-if-->
+      
+      This is an overridden description
+      
+      <span
+        class="text-sm opacity-80"
+      >
+        Dec 04, 2012 at 03:20 am
+      </span>
+      <!-- Buttons -->
+      <!--v-if-->
+      <div />
+    </div>
+    <!-- Close icon -->
+    <!--v-if-->
+  </div>
+</div>
+`;
