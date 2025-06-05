@@ -3,12 +3,10 @@
     :id="id"
     ref="root"
     data-id="sds-tabs"
+    class="tabs"
   >
     <div
       class="overflow-x-auto"
-      :class="{
-        'bg-gray-50 dark:bg-gray-850 rounded-t-theme-sm': type === 'folder'
-      }"
     >
       <ul
         role="tablist"
@@ -25,18 +23,16 @@
           }"
         >
           <component
-            :is="tab.tag || 'button' as unknown"
+            :is="tab.tag || ('button' as unknown)"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
-            :class="{
-              'tab text-sm inline-block rounded-t-theme-sm py-2 px-4 font-semibold': type === 'folder',
-              'bg-white dark:bg-gray-900 border-l border-t border-r text-blue-600 border-gray-200 dark:border-gray-800 dark:text-blue-300': type === 'folder' && tab.active,
-              'text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white':
-                type === 'folder' && !tab.active,
-              'tab tab-underline tab-red': type === 'underline',
-              'tab tab-block tab-red': type === 'block',
-              'active': (type === 'underline' || type === 'block') && tab.active,
-              'disabled': (type === 'underline' || type === 'block') && tab.disabled,
-            }"
+            class="tab"
+            :class="[
+              textSizeClass,
+              typeClass,
+              variantClass,
+              (!!tab.active ? 'active' : ''),
+              (!!tab.disabled ? 'disabled': '')
+            ]"
             :href="tab.tag === 'a' && tab.href || undefined"
             :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
             :rel="tab.tag === 'a' && tab.href && tab.external ? 'noopener noreferrer' : undefined"
@@ -50,10 +46,20 @@
             role="tab"
             @click="changeTab(tab)"
           >
-            <!-- @slot Dynamic tab. Used to for custom HTML within a tab. -->
+            <!-- @slot Custom left-icon slot content. -->
+            <slot :name="`tabIconLeft(${tab.key})`"></slot>
+            <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
             <slot :name="`tab(${tab.key})`">
               {{ tab.title }}
             </slot>
+            <!-- @slot Custom right-icon slot content. -->
+            <slot :name="`tabIconRight(${tab.key})`"></slot>
+            <span 
+              v-if="tab.count && tab.count >= 0"
+              class="tab-count"
+            >
+              {{ tab.count }}
+            </span>
           </component>
         </li>
       </ul>
@@ -85,6 +91,7 @@
 
 <script setup lang="ts">
 export interface TabItem {
+  count?: number
   key: string
   tag?: 'button' | 'a'
   title?: string
@@ -103,9 +110,17 @@ defineOptions({
 
 const props = defineProps({
   /**
+   * Determines the size of the tab(s).
+   */
+  size: { type: String as PropType<'sm' | 'lg'>, default: 'sm' },
+  /**
    * The overall look and feel of the component.
    */
   type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
+  /**
+   * Determines the color of the tab(s).
+   */
+  variant: { type: String as PropType<'red' | 'blue' | 'gray'>, default: 'red' },
   /**
    * Allows for code execution prior to changing tabs.
    *
@@ -142,6 +157,7 @@ const props = defineProps({
  *
  * ```
  * {
+ *   count?: number
  *   key: string
  *   tag?: 'button' | 'a'
  *   title?: string
@@ -171,11 +187,50 @@ const tabs = computed({
   }
 })
 
-// TODO: Fix async promise executor ESLint error
-// eslint-disable-next-line no-async-promise-executor
-const willChangeTabStateDelay = (tab: TabItem, fn: GenericFunctionType) => new Promise<void>(async (res, rej) => {
-  return fn ? await fn(tab, res, rej) : res()
+const textSizeClass = computed(() => {
+  switch (props.size) {
+    case 'lg':
+      return 'tab-lg'
+    case 'sm':
+    default:
+      return 'tab-sm'
+  }
 })
+
+const typeClass = computed(() => {
+  switch (props.type) {
+    case 'block':
+      return 'tab-block'
+    case 'underline':
+      return 'tab-underline'
+    case 'folder':
+    default:
+      return 'tab-folder'
+  }
+})
+
+const variantClass = computed(() => {
+  switch (props.variant) {
+    case 'blue':
+      return 'tab-blue'
+    case 'gray':
+      return 'tab-gray'
+    case 'red':
+    default:
+      return 'tab-red'
+  }
+})
+
+const willChangeTabStateDelay = async (tab: TabItem, fn: GenericFunctionType) => {
+  if (typeof fn !== 'function') return
+  return new Promise<void>((resolve, reject) => {
+    try {
+      fn(tab, resolve, reject)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
 
 const changeTab = async (tab: TabItem) => {
   if (tab.tag === 'a' && tab.href) {
