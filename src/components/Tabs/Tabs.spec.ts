@@ -7,7 +7,9 @@ describe('Tabs', () => {
   let wrapper: VueWrapper<InstanceType<typeof Component>>
 
   const props = {
+    size: 'sm',
     type: 'folder',
+    variant: 'red',
     modelValue: [
       { key: 'tab-1', title: 'Tab label 1', active: true },
       { key: 'tab-2', title: 'Tab label 2' },
@@ -47,6 +49,21 @@ describe('Tabs', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its snapshot with assigned `size` prop: "lg"', async () => {
+    await wrapper.setProps({ size: 'lg' })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `variant` prop: "blue"', async () => {
+    await wrapper.setProps({ variant: 'blue' })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with assigned `variant` prop: "gray"', async () => {
+    await wrapper.setProps({ variant: 'gray' })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
   it('should match its snapshot with assigned `type` prop: "underline"', async () => {
     await wrapper.setProps({ type: 'underline' })
     expect(wrapper.element).toMatchSnapshot()
@@ -70,6 +87,21 @@ describe('Tabs', () => {
     await wrapper
       .findAll('a[role="tab"]')[2]
       .trigger('click')
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should match its snapshot with property `count` in tab item(s) is set to a numerical value', async () => {
+    const props = {
+      size: 'sm',
+      type: 'folder',
+      variant: 'red',
+      modelValue: [
+        { key: 'tab-1', title: 'Tab label 1', count: 3, active: true },
+        { key: 'tab-2', title: 'Tab label 2', count: 5 },
+        { key: 'tab-3', title: 'Tab label 3', count: 1 }
+      ] as TabItem[]
+    }
+    await wrapper.setProps({ ...props })
     expect(wrapper.element).toMatchSnapshot()
   })
 
