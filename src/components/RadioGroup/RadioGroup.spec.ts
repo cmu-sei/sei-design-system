@@ -10,7 +10,7 @@ describe('RadioGroup', () => {
     modelValue: RadioGroupOptionValue,
     options: RadioGroupOption<RadioGroupOptionValue>[]
   } = {
-    modelValue: '',
+    modelValue: 'Option 1',
     options: [
       { id: 1, text: 'Option 1', value: 'Option 1' },
       { id: 2, text: 'Option 2', value: 'Option 2' },
@@ -60,6 +60,13 @@ describe('RadioGroup', () => {
 
   it('should match its snapshot with assigned `invalid` prop', async () => {
     await wrapper.setProps({ invalid: true })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should support "null" types for unchecked items', async () => {
+    await wrapper.setProps({ modelValue: null })
+    expect(wrapper.props('modelValue')).toBeNull()
+    expect(wrapper.find('input[type="radio"]:checked').exists()).toBe(false)
     expect(wrapper.element).toMatchSnapshot()
   })
 
