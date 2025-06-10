@@ -934,7 +934,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
       
     </ul>
     <div
-      class="tab-indicator tab-indicator-red v-enter-from v-enter-active"
+      class="tab-indicator tab-indicator-red tab-indicator-sm v-enter-from v-enter-active"
       role="presentation"
       style="left: 0.0000rem; width: 0.0000rem;"
     />
@@ -1060,7 +1060,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
       
     </ul>
     <div
-      class="tab-indicator tab-indicator-blue v-enter-from v-enter-active"
+      class="tab-indicator tab-indicator-blue tab-indicator-sm v-enter-from v-enter-active"
       role="presentation"
       style="left: 0.0000rem; width: 0.0000rem;"
     />
@@ -1186,7 +1186,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
       
     </ul>
     <div
-      class="tab-indicator tab-indicator-gray v-enter-from v-enter-active"
+      class="tab-indicator tab-indicator-gray tab-indicator-sm v-enter-from v-enter-active"
       role="presentation"
       style="left: 0.0000rem; width: 0.0000rem;"
     />
