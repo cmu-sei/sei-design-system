@@ -7,6 +7,9 @@
   >
     <div
       class="overflow-x-auto"
+      :class="{
+        'relative': props.type === 'underline'
+      }"
     >
       <ul
         role="tablist"
@@ -63,6 +66,17 @@
           </component>
         </li>
       </ul>
+
+      <Transition>
+        <div
+          v-if="props.type === 'underline'"
+          class="tab-indicator"
+          :class="[tabIndicatorClass]"
+          :style="`left: ${pxToRem(activeTabCalcPosition?.left ?? 0, undefined, 2)}rem; width: ${pxToRem(activeTabCalcPosition?.width ?? 0, undefined, 2)}rem;`"
+          role="presentation"
+        />
+      </Transition>
+
     </div>
     <template v-for="tab in tabs">
       <div
@@ -90,6 +104,8 @@
 </template>
 
 <script setup lang="ts">
+import pxToRem from '../../helpers/pxToRem'
+
 export interface TabItem {
   count?: number
   key: string
@@ -184,6 +200,36 @@ const tabs = computed({
      * Emmitted when the v-model has changed.
      */
     emit('update:modelValue', value)
+  }
+})
+
+const activeTab = computed(() => {
+  return tabs.value.find(({ active }) => active) ?? tabs.value[0]
+})
+
+const activeTabElement = computed(() => {
+  if (!root.value) return undefined
+  return (
+    document.querySelector(`#sds-tabs-${root.value.id}__${activeTab.value.key}__tab`) as HTMLAnchorElement | HTMLButtonElement
+  )
+})
+
+const activeTabCalcPosition = computed(() => {
+  if (!activeTabElement.value) return
+  const left = activeTabElement.value.offsetLeft
+  const width = activeTabElement.value.getBoundingClientRect().width
+  return { left, width }
+})
+
+const tabIndicatorClass = computed(() => {
+  switch (props.variant) {
+    case 'blue':
+      return 'tab-indicator-blue'
+    case 'gray':
+      return 'tab-indicator-gray'
+    case 'red':
+    default:
+      return 'tab-indicator-red'
   }
 })
 
