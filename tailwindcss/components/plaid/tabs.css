@@ -24,6 +24,25 @@
       @apply relative z-1;
     }
   }
+
+  /* Tab indicator */
+
+  .tab-indicator {
+    @apply block absolute bottom-0 h-0.5;
+    @apply transition-all delay-50 duration-250;
+
+    &.tab-indicator-blue {
+      @apply bg-blue-600 dark:bg-blue-400;
+    }
+
+    &.tab-indicator-gray {
+      @apply bg-gray-900 dark:bg-gray-300;
+    }
+
+    &.tab-indicator-red {
+      @apply bg-red-600 dark:bg-red-300;
+    }
+  }
 }
 
 .tab:not(.tab-pill):where(.sds-theme-plaid *) {
@@ -181,18 +200,7 @@
 
   &.tab-underline {
     @apply bg-white/0;
-    @apply relative py-3.5 px-4;
-
-    &:after {
-      @apply bg-gray-100 dark:bg-gray-800 block;
-      @apply absolute content-[''] bottom-0 w-full h-0.25;
-    }
-
-    &.active {
-      &:after {
-        @apply h-0.5;
-      }
-    }
+    @apply py-3.5 px-4;
   }
 
   /* Variants */
