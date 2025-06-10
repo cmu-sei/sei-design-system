@@ -72,7 +72,7 @@
           v-if="props.type === 'underline'"
           class="tab-indicator"
           :class="[tabIndicatorClass]"
-          :style="`left: ${pxToRem(activeTabCalcPosition?.left ?? 0, undefined, 2)}rem; width: ${pxToRem(activeTabCalcPosition?.width ?? 0, undefined, 2)}rem;`"
+          :style="`left: ${pxToRem(activeTabCalcPosition?.left ?? 0, undefined, 4)}rem; width: ${pxToRem(activeTabCalcPosition?.width ?? 0, undefined, 4)}rem;`"
           role="presentation"
         />
       </Transition>
