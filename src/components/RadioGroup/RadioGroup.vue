@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-export type RadioGroupOptionValue = boolean | string | number
+export type RadioGroupOptionValue = boolean | string | number | null
 
 export interface RadioGroupOption<T> {
   [key: string]: T
@@ -99,7 +99,7 @@ defineProps({
  * The v-model of the radio group.
  */
 const model = defineModel<RadioGroupOptionValue | undefined>({
-  type: [Boolean, String, Number] as PropType<RadioGroupOptionValue>,
+  type: [Boolean, String, Number, null] as PropType<RadioGroupOptionValue>,
   default: undefined
 })
 
