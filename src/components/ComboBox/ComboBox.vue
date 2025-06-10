@@ -12,8 +12,8 @@
       }"
     >
       <div
-        v-if="multiselect && selectedOptions.length > 0"
-        class="flex flex-row flex-wrap bg-gray-25 rounded-sm gap-1 p-2 mr-auto justify-start w-full"
+        v-if="(type === 'taggable select' || (type === 'select' && multiselect)) && selectedOptions.length > 0"
+        class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
       >
         <SdsTag
           v-for="(option, index) in selectedOptions"
@@ -30,7 +30,7 @@
           :disabled="disabled"
           tabindex="-1"
           type="button"
-          @click="inputField?.focus()"
+          @click="handleEnterKeyUp"
         >
           <span class="sr-only">Combo box</span>
           <svg
@@ -48,23 +48,32 @@
             d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
           /></svg>
         </button>
+        <SdsTag
+          v-if="type === 'select' && !multiselect"
+          v-for="(option, index) in selectedOptions"
+          :key="index"
+          action="remove"
+          class="grow-0 my-auto"
+          :label="option"
+          @remove="multiselectRemove(index)"
+        />
         <input
           :id="id"
           ref="inputField"
           v-model.trim="filterQuery"
           type="text"
-          :multiple="multiselect ?? null"
+          :multiple="type === 'taggable select' || props.multiselect"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
           class="form-control border-none"
-          :class="multiselect ? 'w-full' : ''"
+          :class="['select', 'taggable select'].includes(type) ? 'w-full' : ''"
           :placeholder="placeholder"
           :disabled="disabled"
           :maxlength="maxlength"
           @input="handleInput"
-          @focus="handleFocus"
+          @focus.prevent="handleFocus"
           @keydown.delete="handleDelete"
           @keydown.tab="showDropdown = false"
           @keydown.down.prevent="handleArrows('down', $event)"
@@ -102,12 +111,12 @@
           ><path d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <div
-          v-if="focusOnKeyPress && !hideFocusHelperText"
+          v-if="focusOnKeyPress && !hideFocusHelperText && !showDropdown"
           class="input-group-addon"
         >
           <SdsTooltip>
             <template #trigger>
-              <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 p-1 leading-3 cursor-default">
+              <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 py-1 leading-2.5 cursor-default">
                 <span>/</span>
               </div>
             </template>
@@ -129,34 +138,34 @@
       leave-to-class="opacity-0"
     >
       <div
-        v-if="dropdownIsOpen"
+        v-if="showDropdown && suggestionOptions?.length"
         class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
       >
         <div
           v-if="!disableGroupTabs && groups.length > 1"
-          class="overflow-x-auto flex gap-2 p-2 border-b border-gray-100 dark:border-gray-700"
+          class="overflow-x-auto flex after:w-full after:h-full after:content-[''] after:mt-auto after:border-b-2 after:border-b-gray-100 dark:after:border-b-gray-100"
         >
           <button
             v-for="group in groups"
             :key="group.index"
             type="button"
             tabindex="-1"
-            class="text-xs font-semibold p-2 rounded-theme-sm space-x-1.5 whitespace-nowrap"
+            class="text-sm flex flex-row font-semibold p-3 space-x-1.5 whitespace-nowrap"
             :disabled="group.count < 1"
             :class="{
-              'text-gray-300 dark:text-gray-700': group.count < 1,
-              'bg-blue-25 text-blue-600 dark:bg-blue-900 dark:text-blue-50': group.count > 0 && activeGroupKey === group.key,
-              'text-gray-600 dark:text-gray-300': group.count > 0 && activeGroupKey !== group.key,
+              'text-gray-300 dark:text-gray-600 border-b-2 border-gray-100 dark:border-gray-100': group.count < 1,
+              'border-b-2 border-b-blue-600 text-blue-600 dark:border-b-blue-400 dark:text-blue-400': group.count > 0 && activeGroupKey === group.key,
+              'text-gray-600 dark:text-gray-300 border-b-2 border-gray-100 dark:border-gray-100': group.count > 0 && activeGroupKey !== group.key,
             }"
             @click="setActiveGroup(group)"
           >
             <span>{{ group.label }}</span>
             <span
-              class="text-white px-1 rounded-theme-xs"
+              class="my-auto text-xs px-1 rounded-xl py-0.25 px-1.5"
               :class="{
-                'bg-gray-200 dark:bg-gray-800': group.count < 1,
-                'bg-blue-500 dark:bg-blue-700': group.count > 0 && activeGroupKey === group.key,
-                'bg-gray-500 dark:bg-gray-700': group.count > 0 && activeGroupKey !== group.key,
+                'text-gray-50 dark:text-gray-400 bg-gray-200 dark:bg-gray-700': group.count < 1,
+                'text-white bg-blue-600 dark:bg-blue-400': group.count > 0 && activeGroupKey === group.key,
+                'text-white bg-gray-500 dark:bg-gray-700': group.count > 0 && activeGroupKey !== group.key,
               }"
             >{{ group.count }}</span>
           </button>
@@ -171,7 +180,7 @@
           >
             <div
               v-if="optionGroupChildren && s[optionGroupChildren]"
-              class="border-b border-gray-100 dark:border-gray-700"
+              class="flex flex-col border-b border-gray-100 dark:border-gray-700 py-2"
             >
               <div
                 v-if="activeGroupKey === -1"
@@ -195,7 +204,7 @@
                     :is="optionType"
                     ref="dropdownOption"
                     :href="optionType === 'a' ? c.href : undefined"
-                    class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                    class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                     :class="{
                       'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
                       'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
@@ -222,8 +231,8 @@
                   <slot
                     name="customOption"
                     :href="c.href"
+                    class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                     :class-list="{
-                      'flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
                       'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
                       'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
                     }"
@@ -244,7 +253,7 @@
                   :is="optionType"
                   ref="dropdownOption"
                   :href="optionType === 'a' ? s.href : undefined"
-                  class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                  class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                   :class="{
                     'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
                     'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
@@ -270,8 +279,8 @@
               >
                 <slot
                   name="customOption"
+                  class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                   :class-list="{
-                    'flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
                     'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
                     'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
                   }"
@@ -289,7 +298,9 @@
           </template>
         </SdsScrollArea>
         <!-- Footer section -->
-        <div class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300">
+        <div
+          class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+        >
           <div class="ml-auto flex items-center gap-1.5">
             <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
               <svg
@@ -429,9 +440,14 @@ const props = defineProps({
    */
   suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
   /**
-   * Use combobox as multiselect.
+   * The multiple prop allows the user to select multiple options. If 'type' is set
+   * to 'taggable select', this will be set to true.
    */
   multiselect: { type: Boolean, default: false },
+  /**
+   * Use combobox as text "autosuggest", selectable text, or taggable selection.
+   */
+  type: { type: String as PropType<'text' | 'select' | 'taggable select'>, default: 'text' },
   /**
    * Determines the type, or tag, use for the option/component
    */
@@ -513,7 +529,11 @@ watch(query, (value: string) => {
 })
 
 watchDebounced(query, () => {
-  emitComplete()
+  if (props.type === 'select' && !props.multiselect && selectedOptions.value.length === 1) {
+    query.value = ''
+  } else {
+    emitComplete()
+  }
 }, { debounce: props.debounceComplete })
 
 watch(showDropdown, () => {
@@ -626,7 +646,7 @@ const allSuggestionOptions = ref()
 const groupSuggestionOptions = ref()
 const suggestionOptions = ref()
 /**
- * For multiselection— if props.multiselect enabled,
+ * For multiselection— if props.type === 'taggable select',
  * selectedOptions will be an array of selected options
  * shown as dismissable tags in the input field.
  */
@@ -659,10 +679,6 @@ watchEffect(() => {
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
 })
 
-const dropdownIsOpen = computed(() => {
-  return showDropdown.value
-})
-
 onMounted(() => {
   if (props.autofocus) inputField.value.focus();
 })
@@ -671,6 +687,7 @@ onKeyStroke('Escape', () => {
   filterQuery.value = removeHtmlFromString(query.value)
   preventShowDropdown.value = true
   showDropdown.value = false
+  inputField.value.blur()
 })
 
 // Close dropdown when clicking outside of ComboBox
@@ -719,35 +736,36 @@ const scrollToChild = async () => {
   }
 }
 
-const closeDropdownAndFocusInput = () => {
-  showDropdown.value = false
-  inputField.value.focus()
-}
-
+/* Clear the input field query and filterQuery */
 const clearQuery = () => {
   query.value = ''
-  inputField.value.focus()
+  filterQuery.value = ''
+}
+
+/* Shake the input field when the value is already selected or bad option */
+const shake = () => {
+  inputField.value.classList.add('animate-shake')
+  setTimeout(() => {
+    inputField.value.classList.remove('animate-shake')
+  }, 500)
 }
 
 /**
- * Add a dismissable tag to the ComboBox
- * input field when multiselect is enabled.
+ * Add a dismissable tags to the ComboBox
+ * input field when multiselect is enabled
+ * and props.type is 'select'. Or, when
+ * props.type is 'taggable select'.
  */
 const multiselectAdd = async () => {
-  if (props.multiselect) {
+  if (props.type === 'taggable select' || props.type === 'select') {
     /* Wait for query.value to be set */
-    await nextTick()
-    if (!filterQuery.value) return
-    if (!selectedOptions.value.includes(filterQuery.value)) {
+    if (!filterQuery.value) return;
+    if (!selectedOptions.value.includes(filterQuery.value) && filterQuery.value !== '') {
       /* Add to selected suggestions if it's not present. */
       selectedOptions.value.push(filterQuery.value)
-      /* Clear the input value */
-      clearQuery()
+      inputField.value.focus()
     } else {
-      inputField.value.classList.add('animate-shake')
-      setTimeout(() => {
-        inputField.value.classList.remove('animate-shake')
-      }, 500)
+      shake()
     }
   }
 }
@@ -764,22 +782,13 @@ const handleDelete = () => {
   }
 }
 
-const handleSuggestionClick = (option: ComboBoxSuggestion) => {
-  preventShowDropdown.value = true
-  if (typeof option === 'string') {
-    query.value = option
-  } else {
-    query.value = props.optionLabel ? option[props.optionLabel] as string : option[defaultOptionLabel.value] as string
-  }
-  emitResult(option)
-  emitEnter()
-  multiselectAdd() // Will select chosen option if props.multiselect
-  closeDropdownAndFocusInput()
+const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
+  handleEnterKeyUp(option)
 }
 
 const getCurrentSuggestion = () => {
   let option
-  suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
+  suggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
         const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x.index === arrowCounter.value)
@@ -798,12 +807,25 @@ const getCurrentSuggestion = () => {
 
 const getCurrentSuggestionValue = () => {
   const option = getCurrentSuggestion()
-  if (!option) return ''
+  if (!option) {
+    if (query.value.length) {
+      return undefined
+    }
+    return ''
+  }
   return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
-const handleFocus = () => {
-  showDropdown.value = true
+const handleFocus = async () => {
+  if (props.multiselect === false && props.type === 'select') {
+    if (selectedOptions.value.length === 1) {
+      showDropdown.value = false
+    } else {
+      showDropdown.value = true
+    }
+  } else {
+    showDropdown.value = true
+  }
   emitFocused()
 }
 
@@ -812,25 +834,88 @@ const handleInput = async () => {
   query.value = filterQuery.value
 }
 
-const handleEnterKeyUp = () => {
+const firstTick = ref()
+
+const handleEnterKeyUp = async (option: ComboBoxSuggestion | null) => {
   if (props.disabled) return;
 
-  if (dropdownIsOpen.value) {
-    const option = getCurrentSuggestion()
-    if (option) {
-      query.value = getCurrentSuggestionValue()
-      multiselectAdd() // Will select chosen option if props.multiselect
-      emitResult(option)
+  firstTick.value = query.value
+  // Determine selected option
+  if (option !== null) {
+    if (option instanceof KeyboardEvent) {
+      // If option is a KeyboardEvent, use the current suggestion value
+      switch (props.type) {
+        case 'taggable select':
+          query.value = getCurrentSuggestionValue() || query.value
+          break;
+        default:
+          query.value = getCurrentSuggestionValue()
+          break;
+        }
+    } else {
+      // Otherwise, set the query value based on the given option ('string' or object)
+      if (typeof option === 'string') {
+        query.value = option
+      } else {
+        query.value = props.optionLabel ? option[props.optionLabel] as string : option[defaultOptionLabel.value] as string
+      }
     }
-    closeDropdownAndFocusInput()
   }
-  preventShowDropdown.value = true
-  emitEnter()
+
+  const sendResult = () => {
+    arrowCounter.value = -1
+    emitEnter()
+    // Emit the selected option (max 1 w/o multiselect)
+    emitResult(selectedOptions.value)
+    // Hide, the dropdown, reset selection to empty, and unfocus the input field
+    showDropdown.value = false // Hide the dropdown
+    selectedOptions.value = []
+    inputField.value.blur()
+  }
+
+  switch (props.type) {
+    case 'text':
+      // For text type, just emit the current query value
+      if (query.value !== '') {
+        emitEnter()
+        emitResult(query.value)
+      }
+      break;
+    case 'select':
+      filterQuery.value = removeHtmlFromString(query.value)
+      await nextTick()
+      await multiselectAdd() // Will select chosen option if props.multiselect
+      if (!props.multiselect) {
+        if (selectedOptions.value.length === 1 && query.value === '' && !firstTick.value.length)
+          sendResult()
+        // Result already exists or is an invalid selection
+        if (firstTick.value.length && !query.value.length)
+          shake()
+      } else {
+        if (selectedOptions.value.length > 0 && query.value === '' && !firstTick.value.length)
+          sendResult()
+        // Result already exists or is an invalid selection
+        if (firstTick.value.length && !query.value.length)
+          shake()
+      }
+      firstTick.value = '' // Reset firstTick after selection
+      query.value = '' // Reset query value after selection
+      break;
+    case 'taggable select':
+      await nextTick()
+      filterQuery.value = removeHtmlFromString(query.value)
+      await multiselectAdd() // Will select chosen option if props.multiselect
+      //if (selectedOptions.value.length === 1 && query.value === '') {
+      if (selectedOptions.value.length > 0 && query.value === '')
+        sendResult()
+      query.value = '' // Reset query value after selection
+      break;
+  }
 }
 
 const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
   // Allow an open state
-  if (!dropdownIsOpen.value && (direction === 'up' || direction === 'down')) {
+  if (!showDropdown.value && (direction === 'up' || direction === 'down')) {
     showDropdown.value = true
   } else {
     switch (direction) {
@@ -838,7 +923,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       // then loop back around starting with original query.
       case "down":
         // if (!this.isOpen && this.metThreshold) this.filterResults();
-        if (arrowCounter.value < dropdownOption.value.length - 1) {
+        if (arrowCounter.value < dropdownOption.value?.length - 1) {
           arrowCounter.value = arrowCounter.value + 1;
         } else {
           arrowCounter.value = -1;
@@ -859,6 +944,11 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
             event.preventDefault()
             arrowCounter.value = -1
             activeGroupKey.value = activeGroupKey.value - 1;
+          } else {
+            // Allow circular navigation
+            event.preventDefault()
+            arrowCounter.value = groups.value.length - 1;
+            activeGroupKey.value = groups.value[groups.value.length-1].key; // Reset to all suggestions
           }
         }
         break;
@@ -868,18 +958,17 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
             event.preventDefault()
             arrowCounter.value = -1
             activeGroupKey.value = activeGroupKey.value + 1;
+          } else {
+            // Allow circular navigation
+            event.preventDefault()
+            arrowCounter.value = -1
+            activeGroupKey.value = -1; // Reset to all suggestions
           }
         }
         break;
     }
     // Set the input boxes text to the value of the result
-    const option = getCurrentSuggestion()
-    if (option) {
-      filterQuery.value = removeHtmlFromString(getCurrentSuggestionValue())
-    } else {
-      filterQuery.value = removeHtmlFromString(query.value)
-    }
-
+    filterQuery.value = removeHtmlFromString(getCurrentSuggestionValue() || query.value)
     // Scroll to selected result
     scrollToChild()
   }
@@ -910,6 +999,6 @@ const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', props.multiselect ? selectedOptions.value : filterQuery.value)
+  emit('enter', ['select', 'taggable select'].includes(props.type) ? selectedOptions.value : filterQuery.value)
 }
 </script>

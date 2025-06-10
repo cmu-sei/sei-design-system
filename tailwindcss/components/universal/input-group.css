@@ -26,31 +26,31 @@
     @apply border-gray-100 dark:border-gray-850;
   }
 
-  & .input-group-addon, & [data-id^='sds-'] .form-control, & > .form-control, & .btn, & .action-btn {
+  & .input-group-addon, & [data-id^='sds-'] .form-control, & .form-control, & .btn, & .action-btn {
     @apply border-0 rounded-none;
   }
 
-  & .input-group-addon, & [data-id^='sds-'] & .form-control, & > .form-control {
+  & .input-group-addon, & [data-id^='sds-'] & .form-control, & .form-control {
     @apply px-1.5;
   }
 
-  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & > .form-control:first-child {
+  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & .form-control:first-child {
     @apply pl-3;
   }
 
-  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & > .form-control:last-child {
+  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & .form-control:last-child {
     @apply pr-3;
   }
 
-  &.btn-group-sm .input-group-addon, &.btn-group-sm [data-id^='sds-'] .form-control, &.btn-group-sm > .form-control, &.input-group-sm .input-group-addon, &.input-group-sm [data-id^='sds-'] .form-control, &.input-group-sm > .form-control {
+  &.btn-group-sm .input-group-addon, &.btn-group-sm [data-id^='sds-'] .form-control, &.btn-group-sm .form-control, &.input-group-sm .input-group-addon, &.input-group-sm [data-id^='sds-'] .form-control, &.input-group-sm .form-control {
     @apply p-1 text-sm;
   }
 
-  &.btn-group-sm .input-group-addon:first-child, &.btn-group-sm [data-id^='sds-']:first-child .form-control, &.btn-group-sm > .form-control:first-child, &.input-group-sm .input-group-addon:first-child, &.input-group-sm [data-id^='sds-']:first-child .form-control, &.input-group-sm > .form-control:first-child {
+  &.btn-group-sm .input-group-addon:first-child, &.btn-group-sm [data-id^='sds-']:first-child .form-control, &.btn-group-sm .form-control:first-child, &.input-group-sm .input-group-addon:first-child, &.input-group-sm [data-id^='sds-']:first-child .form-control, &.input-group-sm .form-control:first-child {
     @apply pl-2;
   }
 
-  &.btn-group-sm .input-group-addon:last-child, &.btn-group-sm [data-id^='sds-']:last-child .form-control, &.btn-group-sm > .form-control:last-child, &.input-group-sm .input-group-addon:last-child, &.input-group-sm [data-id^='sds-']:last-child .form-control, &.input-group-sm > .form-control:last-child {
+  &.btn-group-sm .input-group-addon:last-child, &.btn-group-sm [data-id^='sds-']:last-child .form-control, &.btn-group-sm .form-control:last-child, &.input-group-sm .input-group-addon:last-child, &.input-group-sm [data-id^='sds-']:last-child .form-control, &.input-group-sm .form-control:last-child {
     @apply pr-2;
   }
 
@@ -58,11 +58,11 @@
     @apply pr-5 bg-right;
   }
 
-  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & > .form-control:first-child, & .btn:first-child, & .action-btn:first-child {
+  & .input-group-addon:first-child, & [data-id^='sds-']:first-child .form-control, & .form-control:first-child, & .btn:first-child, & .action-btn:first-child {
     @apply rounded-l-theme-sm;
   }
 
-  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & > .form-control:last-child, & .btn:last-child, & .action-btn:last-child {
+  & .input-group-addon:last-child, & [data-id^='sds-']:last-child .form-control, & .form-control:last-child, & .btn:last-child, & .action-btn:last-child {
     @apply rounded-r-theme-sm;
   }
 
