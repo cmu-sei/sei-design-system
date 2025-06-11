@@ -53,6 +53,10 @@
   }
 }
 
+.tab-group:where(.sds-theme-plaid *) {
+  @apply grid grid-flow-col auto-cols-min;
+}
+
 .tab:not(.tab-pill):where(.sds-theme-plaid *) {
 
   /* Base styles */

@@ -1,9 +1,5 @@
 /* Legacy */
 
-.tab-group {
-  @apply grid grid-flow-col auto-cols-min;
-}
-
 .tab {
   &.tab-pill {
     @apply select-none whitespace-nowrap flex items-center text-sm py-3 px-4 w-full font-semibold cursor-pointer;

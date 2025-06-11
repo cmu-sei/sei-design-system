@@ -50,6 +50,14 @@
   }
 }
 
+.tab-group:where(.sds-theme-forge *) {
+  @apply grid grid-flow-col auto-cols-min;
+  
+  &:has(.tab-block) {
+    @apply py-2;
+  }
+}
+
 .tab:not(.tab-pill):where(.sds-theme-forge *) {
 
   /* Base styles */
