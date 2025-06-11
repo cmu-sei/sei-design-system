@@ -12,22 +12,18 @@ const config: StorybookConfig = {
     // return the customized config
     return config;
   },
+
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-storysource"
-  ],
-  docs: {
-    autodocs: true
-  },
+  addons: ["@storybook/addon-links", '@storybook/addon-docs'],
+
   framework: {
     name: '@storybook/vue3-vite',
     options: {},
   },
+
   core: {
     disableTelemetry: true,
-  },
+  }
 };
 
 export default config;

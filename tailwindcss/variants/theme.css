@@ -5,3 +5,37 @@
 /* matchVariant('sds-theme', (value) => {
   return `&:is(.sds-theme-${value} *)`;
 }) */
+
+.sds-theme-plaid.use-warm-gray-1 {
+  --color-gray-25: #f9f8f8;
+  --color-gray-50: #f2f1f1;
+  --color-gray-100: #e4e3e3;
+  --color-gray-200: #c9c8c7;
+  --color-gray-300: #adacac;
+  --color-gray-400: #929190;
+  --color-gray-500: #777574;
+  --color-gray-600: #625f5d;
+  --color-gray-700: #4c4946;
+  --color-gray-750: #3f3c39;
+  --color-gray-800: #322f2b;
+  --color-gray-850: #2d2a26;
+  --color-gray-900: #1e1d1b;
+  --color-gray-950: #141211;
+}
+
+.sds-theme-plaid.use-warm-gray-2 {
+  --color-gray-25: #f7f5f5;
+  --color-gray-50: #eeedea;
+  --color-gray-100: #dddad4;
+  --color-gray-200: #bcb7ac;
+  --color-gray-300: #a6a196;
+  --color-gray-400: #908a81;
+  --color-gray-500: #7a746b;
+  --color-gray-600: #625c54;
+  --color-gray-700: #49433d;
+  --color-gray-750: #3d3832;
+  --color-gray-800: #322d27;
+  --color-gray-850: #2d2a26;
+  --color-gray-900: #211d19;
+  --color-gray-950: #15100c;
+}

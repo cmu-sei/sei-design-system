@@ -3,7 +3,7 @@ import SdsButton from '../Button/Button.vue';
 import SdsAvatar from '../Avatar/Avatar.vue';
 import SdsTooltip from '../Tooltip/Tooltip.vue';
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Templates/Layouts/Application',
