@@ -54,7 +54,7 @@
     "@storybook/blocks": "^8.6.14",
     "@storybook/vue3-vite": "^9.0.8",
     "@tailwindcss/forms": "^0.5.10",
-    "@tailwindcss/postcss": "^4.1.8",
+    "@tailwindcss/postcss": "^4.1.9",
     "@tailwindcss/typography": "^0.5.16",
     "@types/beautify": "^0.0.3",
     "@unhead/vue": "^2.0.10",
