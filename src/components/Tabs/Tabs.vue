@@ -58,7 +58,7 @@
             <!-- @slot Custom right-icon slot content. -->
             <slot :name="`tabIconRight(${tab.key})`"></slot>
             <span 
-              v-if="tab.count && tab.count >= 0"
+              v-if="typeof tab.count !== 'undefined' && tab.count >= 0"
               class="tab-count"
             >
               {{ tab.count }}
@@ -71,7 +71,10 @@
         <div
           v-if="props.type === 'underline'"
           class="tab-indicator"
-          :class="[tabIndicatorClass]"
+          :class="[
+            tabIndicatorClass,
+            (props.size === 'lg' ? 'tab-indicator-lg' : 'tab-indicator-sm')
+          ]"
           :style="`left: ${pxToRem(activeTabCalcPosition?.left ?? 0, undefined, 4)}rem; width: ${pxToRem(activeTabCalcPosition?.width ?? 0, undefined, 4)}rem;`"
           role="presentation"
         />
@@ -209,6 +212,7 @@ const activeTab = computed(() => {
 
 const activeTabElement = computed(() => {
   if (!root.value) return undefined
+  if (!document || !document?.querySelector) return undefined
   return (
     document.querySelector(`#sds-tabs-${root.value.id}__${activeTab.value.key}__tab`) as HTMLAnchorElement | HTMLButtonElement
   )

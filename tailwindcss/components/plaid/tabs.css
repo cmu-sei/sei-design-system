@@ -28,8 +28,16 @@
   /* Tab indicator */
 
   .tab-indicator {
-    @apply block absolute bottom-0 h-0.5;
+    @apply block absolute bottom-0;
     @apply transition-all delay-50 duration-250;
+
+    &.tab-indicator-sm {
+      @apply h-0.5;
+    }
+
+    &.tab-indicator-lg {
+      @apply h-0.75;
+    }
 
     &.tab-indicator-blue {
       @apply bg-blue-600 dark:bg-blue-400;
