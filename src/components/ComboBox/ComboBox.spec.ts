@@ -88,8 +88,7 @@ describe('ComboBox', () => {
       filterSuggestions: true,
       suggestions
     })
-    await wrapper.find('input[type="text"]').setValue('Apple')
-    await wrapper.find('input[type="text"]').trigger('input')
+    await wrapper.find('input[type="text"]').trigger('focus')
     expect(wrapper.find('[data-id="sds-scroll-area"]').exists()).toBeTruthy()
     expect(wrapper.element).toMatchSnapshot()
   })
@@ -100,8 +99,7 @@ describe('ComboBox', () => {
       suggestions
     })
 
-    await wrapper.find('input[type="text"]').setValue('a')
-    await wrapper.find('input[type="text"]').trigger('input')
+    await wrapper.find('input[type="text"]').trigger('focus')
 
     await wrapper.find('input[type="text"]').trigger('keydown', { key: 'down' })
     expect(wrapper.find('[data-active="true"]').text()).toBe('Apple')

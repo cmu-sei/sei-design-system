@@ -142,14 +142,9 @@
         <SdsComboBox
           v-model="comboBox1.modelValue"
           placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          :debounce-complete="0"
-          size="sm"
-          type="text"
-          option-label="name"
-          option-group-label="section"
-          option-group-children="items"
+          :suggestions="comboBox1.suggestions"
+          filter-suggestions
+          focus-on-key-press
           @complete="comboBox1.onComplete"
           @result="comboBox1.onResult"
           @enter="comboBox1.onEnter"
@@ -406,8 +401,19 @@ const comboBox1 = reactive({
   onResult(option: ComboBoxSuggestion) {
     alert(`Submitted: "${option}"`)
   },
-  //async onComplete(query: string) {
   async onComplete(query:string) {
+    comboBox1.suggestions = [
+      'Apple',
+      'Banana',
+      'Kiwi',
+      'Orange',
+      'Mango',
+      'Pineapple',
+      'Pomegranate',
+      'Raspberry',
+      'Strawberry',
+      'Watermelon'
+    ] as ComboBoxSuggestion[]
     console.log('onComplete', query)
   }
 })

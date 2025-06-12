@@ -50,21 +50,29 @@
             />
           </svg>
         </button>
+        <span
+          v-if="!multiple && type === 'select' && selectedOptions.length"
+          class="input-group-addon"
+        >{{ selectedOptions[0] }}</span>
         <input
           :id="id"
           ref="inputField"
+          v-model.trim="filterQuery"
           type="text"
-          :multiple="type === 'taggable select' || props.multiple"
+          :multiple="type === 'taggable select' || multiple"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
           class="form-control border-none"
-          :class="['select', 'taggable select'].includes(type) ? 'w-full' : ''"
+          :class="{
+            'w-full': ['select', 'taggable select'].includes(type),
+            'opacity-0': !multiple && type === 'select' && selectedOptions.length
+          }"
           :placeholder="placeholder"
           :disabled="disabled"
+          :readonly="!multiple && type === 'select' && selectedOptions.length"
           :maxlength="maxlength"
-          :value="inputField ? inputField.value : ''"
           @input="handleInput"
           @focus.prevent="handleFocus"
           @keydown.delete="handleDelete"
@@ -80,10 +88,10 @@
           v-if="showClearButton"
           tabindex="-1"
           type="button"
-          class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+          class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
           :class="{
-            'btn-sm py-0 my-auto px-2': size === 'sm',
-            'btn-sm py-0 my-auto px-3': size !== 'sm'
+            'px-2': size === 'sm',
+            'px-3': size !== 'sm'
           }"
           @click.prevent="clearQuery"
         >
@@ -123,7 +131,7 @@
     </div>
     <div
       v-if="showDropdown && suggestionOptions?.length"
-      class="duration-1000 absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+      class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
         v-if="!disableGroupTabs && groups.length > 1"
@@ -157,6 +165,9 @@
       <SdsScrollArea
         ref="scrollArea"
         class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
+        :class="{
+          'pt-2 flex flex-col gap-y-1': groups.length < 2
+        }"
       >
         <template
           v-for="s, sindex in suggestionOptions"
@@ -251,7 +262,8 @@
                 class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                 :class="{
                   'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter,
+                  'last:mb-2': groups.length < 2
                 }"
                 :data-active="s.index === arrowCounter"
                 :type="optionType === 'button' ? 'button' : undefined"
@@ -511,7 +523,9 @@ const query = computed({
 })
 
 const filterQuery = ref(model.value)
+// Hide dropdown initially
 const showDropdown = ref(false)
+// Disable dropdown focus initially
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
@@ -535,6 +549,7 @@ watchDebounced(query, () => {
 }, { debounce: props.debounceComplete })
 
 watch(showDropdown, () => {
+  // Move focus out of dropdown when it is closed
   arrowCounter.value = -1
   activeGroupKey.value = -1
 })
@@ -747,22 +762,22 @@ const shake = () => {
  * props.type is 'taggable select'.
  */
 const multiselectAdd = () => {
-  if (props.type === 'taggable select' || props.type === 'select') {
-    /* Wait for query.value to be set */
-    if (!filterQuery.value) return;
-    if (!selectedOptions.value.includes(filterQuery.value) && filterQuery.value !== '') {
-      /* Add to selected suggestions if it's not present. */
-      selectedOptions.value.push(filterQuery.value)
-      inputField.value.focus()
-      if (!props.multiple && props.type === 'select') {
-        showDropdown.value = false // Hide the dropdown
-        inputField.value.value = filterQuery.value
-      }
-      if (props.multiple && props.type === 'select' || props.type === 'taggable select')
-        inputField.value.value = ''
-    } else {
-      shake()
+  /* Wait for query.value to be set */
+  if (!filterQuery.value) return;
+  if (!selectedOptions.value.includes(filterQuery.value) && filterQuery.value !== '') {
+    /* Add to selected suggestions if it's not present. */
+    selectedOptions.value.push(filterQuery.value)
+    inputField.value.focus()
+    if (!props.multiple && props.type === 'select') {
+      showDropdown.value = false // Hide the dropdown
+      inputField.value.value = filterQuery.value
     }
+    if (props.multiple && props.type === 'select' || props.type === 'taggable select')
+      inputField.value.value = ''
+    // Move focus out of the dropdown
+    arrowCounter.value = -1
+  } else {
+    shake()
   }
 }
 
@@ -824,7 +839,7 @@ const handleFocus = () => {
 
 const handleInput = async () => {
   await nextTick()
-  query.value = inputField.value.value
+  query.value = filterQuery.value
 }
 
 const firstTick = ref()
@@ -838,6 +853,7 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
     if (option instanceof KeyboardEvent || option instanceof MouseEvent) {
       // If option is a KeyboardEvent, use the current suggestion value
       switch (props.type) {
+        case 'text':
         case 'taggable select':
           query.value = getCurrentSuggestionValue() || query.value
           break;
@@ -868,12 +884,20 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
 
   switch (props.type) {
     case 'text':
-      // For text type, just emit the current query value
-      if (query.value !== '') {
-        emitEnter()
-        emitResult(query.value)
-        clearQuery() // Clear the query
+      await nextTick()
+      filterQuery.value = removeHtmlFromString(query.value)
+
+      // Toggle selection depending on whether it exists in selectedOptions
+      if (selectedOptions.value.includes(filterQuery.value)) {
+        multiselectRemove(selectedOptions.value.indexOf(filterQuery.value))
+      } else {
+        multiselectAdd() // Will select chosen option if props.multiple
       }
+
+      if (selectedOptions.value.length > 0)
+        sendResult()
+      query.value = '' // Reset query value after selection
+
       break;
     case 'select':
       filterQuery.value = removeHtmlFromString(query.value)
