@@ -53,7 +53,6 @@
         <input
           :id="id"
           ref="inputField"
-          v-model.trim="filterQuery"
           type="text"
           :multiple="type === 'taggable select' || props.multiple"
           autocapitalize="off"
@@ -65,7 +64,7 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :maxlength="maxlength"
-          :value="inputField.value"
+          :value="inputField ? inputField.value : ''"
           @input="handleInput"
           @focus.prevent="handleFocus"
           @keydown.delete="handleDelete"
@@ -496,7 +495,7 @@ const removeHtmlFromString = (value: string) => {
 
 const root = ref()
 const scrollArea = ref()
-const inputField = ref('')
+const inputField = ref()
 const dropdownOption = ref()
 
 const query = computed({
@@ -825,7 +824,7 @@ const handleFocus = () => {
 
 const handleInput = async () => {
   await nextTick()
-  query.value = filterQuery.value
+  query.value = inputField.value.value
 }
 
 const firstTick = ref()
