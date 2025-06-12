@@ -12,15 +12,16 @@
       }"
     >
       <div
-        v-if="(type === 'taggable select' || (type === 'select' && multiselect)) && selectedOptions.length > 0"
+        v-if="(type === 'taggable select' || (type === 'select' && multiple)) && selectedOptions.length > 0"
         class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
       >
         <SdsTag
           v-for="(option, index) in selectedOptions"
           :key="index"
+          :disabled="disabled"
           action="remove"
           class="grow-0"
-          :label="option"
+          :label="option as string"
           @remove="multiselectRemove(index)"
         />
       </div>
@@ -28,7 +29,6 @@
         <button
           class="input-group-addon"
           :disabled="disabled"
-          tabindex="-1"
           type="button"
           @click="handleEnterKeyUp"
         >
@@ -43,26 +43,19 @@
               'w-3.5 h-3.5': size === 'sm',
               'w-4 h-4': size !== 'sm',
             }"
-          ><path
-            fill="currentColor"
-            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          /></svg>
+          >
+            <path
+              fill="currentColor"
+              d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            />
+          </svg>
         </button>
-        <SdsTag
-          v-if="type === 'select' && !multiselect"
-          v-for="(option, index) in selectedOptions"
-          :key="index"
-          action="remove"
-          class="grow-0 my-auto"
-          :label="option"
-          @remove="multiselectRemove(index)"
-        />
         <input
           :id="id"
           ref="inputField"
           v-model.trim="filterQuery"
           type="text"
-          :multiple="type === 'taggable select' || props.multiselect"
+          :multiple="type === 'taggable select' || props.multiple"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
@@ -72,6 +65,7 @@
           :placeholder="placeholder"
           :disabled="disabled"
           :maxlength="maxlength"
+          :value="inputField.value"
           @input="handleInput"
           @focus.prevent="handleFocus"
           @keydown.delete="handleDelete"
@@ -84,15 +78,15 @@
           @keyup.enter.prevent.self="handleEnterKeyUp"
         >
         <button
-          v-if="filterQuery.length > 0 && !disabled"
+          v-if="showClearButton"
           tabindex="-1"
           type="button"
           class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
           :class="{
-            'btn-sm py-1 px-2': size === 'sm',
-            'btn-sm py-2 px-3': size !== 'sm'
+            'btn-sm py-0 my-auto px-2': size === 'sm',
+            'btn-sm py-0 my-auto px-3': size !== 'sm'
           }"
-          @click="clearQuery"
+          @click.prevent="clearQuery"
         >
           <span class="sr-only">Clear query</span>
           <svg
@@ -102,7 +96,6 @@
             stroke-width="2"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            class="mt-0.5"
             :class="{
               'w-4 h-4': size === 'sm',
               'w-5 h-5': size !== 'sm',
@@ -129,148 +122,102 @@
         <slot />
       </div>
     </div>
-    <transition
-      enter-active-class="transition-opacity ease-linear duration-75"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition-opacity ease-linear duration-75"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
+    <div
+      v-if="showDropdown && suggestionOptions?.length"
+      class="duration-1000 absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
-        v-if="showDropdown && suggestionOptions?.length"
-        class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+        v-if="!disableGroupTabs && groups.length > 1"
+        class="overflow-x-auto flex after:w-full after:h-full after:content-[''] after:mt-auto after:border-b-2 after:border-b-gray-100 dark:after:border-b-gray-100"
       >
-        <div
-          v-if="!disableGroupTabs && groups.length > 1"
-          class="overflow-x-auto flex after:w-full after:h-full after:content-[''] after:mt-auto after:border-b-2 after:border-b-gray-100 dark:after:border-b-gray-100"
+        <button
+          v-for="group in groups"
+          :key="group.index"
+          type="button"
+          tabindex="-1"
+          class="text-sm flex flex-row font-semibold p-3 space-x-1.5 whitespace-nowrap"
+          :disabled="group.count < 1"
+          :class="{
+            'text-gray-300 dark:text-gray-600 border-b-2 border-gray-100 dark:border-gray-100': group.count < 1,
+            'border-b-2 border-b-blue-600 text-blue-600 dark:border-b-blue-400 dark:text-blue-400': group.count > 0 && activeGroupKey === group.key,
+            'text-gray-600 dark:text-gray-300 border-b-2 border-gray-100 dark:border-gray-100': group.count > 0 && activeGroupKey !== group.key,
+          }"
+          @click="setActiveGroup(group)"
         >
-          <button
-            v-for="group in groups"
-            :key="group.index"
-            type="button"
-            tabindex="-1"
-            class="text-sm flex flex-row font-semibold p-3 space-x-1.5 whitespace-nowrap"
-            :disabled="group.count < 1"
+          <span>{{ group.label }}</span>
+          <span
+            class="my-auto text-xs px-1 rounded-xl py-0.25 px-1.5"
             :class="{
-              'text-gray-300 dark:text-gray-600 border-b-2 border-gray-100 dark:border-gray-100': group.count < 1,
-              'border-b-2 border-b-blue-600 text-blue-600 dark:border-b-blue-400 dark:text-blue-400': group.count > 0 && activeGroupKey === group.key,
-              'text-gray-600 dark:text-gray-300 border-b-2 border-gray-100 dark:border-gray-100': group.count > 0 && activeGroupKey !== group.key,
+              'text-gray-50 dark:text-gray-400 bg-gray-200 dark:bg-gray-700': group.count < 1,
+              'text-white bg-blue-600 dark:bg-blue-400': group.count > 0 && activeGroupKey === group.key,
+              'text-white bg-gray-500 dark:bg-gray-700': group.count > 0 && activeGroupKey !== group.key,
             }"
-            @click="setActiveGroup(group)"
-          >
-            <span>{{ group.label }}</span>
-            <span
-              class="my-auto text-xs px-1 rounded-xl py-0.25 px-1.5"
-              :class="{
-                'text-gray-50 dark:text-gray-400 bg-gray-200 dark:bg-gray-700': group.count < 1,
-                'text-white bg-blue-600 dark:bg-blue-400': group.count > 0 && activeGroupKey === group.key,
-                'text-white bg-gray-500 dark:bg-gray-700': group.count > 0 && activeGroupKey !== group.key,
-              }"
-            >{{ group.count }}</span>
-          </button>
-        </div>
-        <SdsScrollArea
-          ref="scrollArea"
-          class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
+          >{{ group.count }}</span>
+        </button>
+      </div>
+      <SdsScrollArea
+        ref="scrollArea"
+        class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
+      >
+        <template
+          v-for="s, sindex in suggestionOptions"
+          :key="`${s}_${sindex}`"
         >
-          <template
-            v-for="s, sindex in suggestionOptions"
-            :key="`${s}_${sindex}`"
+          <div
+            v-if="optionGroupChildren && s[optionGroupChildren]"
+            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 py-2"
           >
             <div
-              v-if="optionGroupChildren && s[optionGroupChildren]"
-              class="flex flex-col border-b border-gray-100 dark:border-gray-700 py-2"
+              v-if="activeGroupKey === -1"
+              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
             >
-              <div
-                v-if="activeGroupKey === -1"
-                class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              <!-- @slot Option Group content. Good for customizing the content for each group option -->
+              <slot
+                name="optionGroup"
+                :option="s"
+                :label="optionGroupLabel ? s[optionGroupLabel] : s"
               >
-                <!-- @slot Option Group content. Good for customizing the content for each group option -->
-                <slot
-                  name="optionGroup"
-                  :option="s"
-                  :label="optionGroupLabel ? s[optionGroupLabel] : s"
-                >
-                  {{ optionGroupLabel ? s[optionGroupLabel] : s }}
-                </slot>
-              </div>
-              <template
-                v-for="c, cindex in s[optionGroupChildren]"
-                :key="`${s}_${c}_${cindex}`"
-              >
-                <template v-if="optionType !== 'custom'">
-                  <component
-                    :is="optionType"
-                    ref="dropdownOption"
-                    :href="optionType === 'a' ? c.href : undefined"
-                    class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-                    :class="{
-                      'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                      'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
-                    }"
-                    :data-active="c.index === arrowCounter"
-                    :type="optionType === 'button' ? 'button' : undefined"
-                    tabindex="-1"
-                    @click="handleSuggestionClick(c)"
-                  >
-                    <!-- @slot Option content. Good for customizing the content for each option -->
-                    <slot
-                      name="option"
-                      :option="c"
-                      :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
-                    >
-                      {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
-                    </slot>
-                  </component>
-                </template>
-                <div
-                  v-else
-                  ref="dropdownOption"
-                >
-                  <slot
-                    name="customOption"
-                    :href="c.href"
-                    class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
-                    :class-list="{
-                      'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                      'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
-                    }"
-                    :data-active="c.index === arrowCounter"
-                    tabindex="-1"
-                    :option="c"
-                    :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
-                    @click="handleSuggestionClick(c)"
-                  >
-                    {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
-                  </slot>
-                </div>
-              </template>
+                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+              </slot>
             </div>
-            <template v-else>
+            <template
+              v-for="c, cindex in s[optionGroupChildren]"
+              :key="`${s}_${c}_${cindex}`"
+            >
               <template v-if="optionType !== 'custom'">
                 <component
                   :is="optionType"
                   ref="dropdownOption"
-                  :href="optionType === 'a' ? s.href : undefined"
-                  class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                  :href="optionType === 'a' ? c.href : undefined"
+                  class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                   :class="{
-                    'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                    'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter || selectedOptions.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])
                   }"
-                  :data-active="s.index === arrowCounter"
+                  :data-active="c.index === arrowCounter"
                   :type="optionType === 'button' ? 'button' : undefined"
                   tabindex="-1"
-                  @click="handleSuggestionClick(s)"
+                  @click="handleSuggestionClick(c)"
                 >
                   <!-- @slot Option content. Good for customizing the content for each option -->
                   <slot
                     name="option"
-                    :option="s"
-                    :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                    :option="c"
+                    :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
                   >
-                    {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                    {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                   </slot>
+                  <svg
+                    v-if="selectedOptions.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="11"
+                    height="9"
+                    viewBox="0 0 11 9"
+                    fill="none"
+                    class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+                  >
+                    <path d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z" fill="currentColor" />
+                  </svg>
                 </component>
               </template>
               <div
@@ -279,114 +226,162 @@
               >
                 <slot
                   name="customOption"
+                  :href="c.href"
                   class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                   :class-list="{
-                    'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                    'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter
                   }"
-                  :data-active="s.index === arrowCounter"
-                  :href="s.href"
+                  :data-active="c.index === arrowCounter"
                   tabindex="-1"
-                  :option="s"
-                  :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-                  @click="handleSuggestionClick(s)"
+                  :option="c"
+                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                  @click="handleSuggestionClick(c)"
                 >
-                  {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
               </div>
             </template>
+          </div>
+          <template v-else>
+            <template v-if="optionType !== 'custom'">
+              <component
+                :is="optionType"
+                ref="dropdownOption"
+                :href="optionType === 'a' ? s.href : undefined"
+                class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                :class="{
+                  'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                }"
+                :data-active="s.index === arrowCounter"
+                :type="optionType === 'button' ? 'button' : undefined"
+                tabindex="-1"
+                @click="handleSuggestionClick(s)"
+              >
+                <!-- @slot Option content. Good for customizing the content for each option -->
+                <slot
+                  name="option"
+                  :option="s"
+                  :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                >
+                  {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                </slot>
+              </component>
+            </template>
+            <div
+              v-else
+              ref="dropdownOption"
+            >
+              <slot
+                name="customOption"
+                class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                :class-list="{
+                  'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter
+                }"
+                :data-active="s.index === arrowCounter"
+                :href="s.href"
+                tabindex="-1"
+                :option="s"
+                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                @click="handleSuggestionClick(s)"
+              >
+                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+              </slot>
+            </div>
           </template>
-        </SdsScrollArea>
-        <!-- Footer section -->
+        </template>
+      </SdsScrollArea>
+      <!-- Footer section -->
+      <div
+        class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+      >
+        <div class="ml-auto flex items-center gap-1.5">
+          <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+            >
+              <path
+                fill="currentColor"
+                d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
+              />
+            </svg>
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"
+            >
+              <path
+                fill="currentColor"
+                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+              />
+            </svg>
+          </div>
+          <span class="sr-only">Up, down</span> to navigate
+        </div>
         <div
-          class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+          v-if="groups.length > 1"
+          class="flex items-center gap-1.5"
         >
-          <div class="ml-auto flex items-center gap-1.5">
-            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-                />
-              </svg>
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                />
-              </svg>
-            </div>
-            <span class="sr-only">Up, down</span> to navigate
+          <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
+              />
+            </svg>
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+              />
+            </svg>
           </div>
-          <div
-            v-if="groups.length > 1"
-            class="flex items-center gap-1.5"
-          >
-            <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
-                />
-              </svg>
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
-                />
-              </svg>
-            </div>
-            <span class="sr-only">Left, right</span> to switch tabs
+          <span class="sr-only">Left, right</span> to switch tabs
+        </div>
+        <div class="flex items-center gap-1.5">
+          <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              focusable="false"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
+              />
+            </svg>
           </div>
-          <div class="flex items-center gap-1.5">
-            <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-              <svg
-                class="w-3 h-3"
-                aria-hidden="true"
-                focusable="false"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-                />
-              </svg>
-            </div>
-            <span class="sr-only">Enter</span> to select
-          </div>
+          <span class="sr-only">Enter</span> to select
         </div>
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 
@@ -443,7 +438,7 @@ const props = defineProps({
    * The multiple prop allows the user to select multiple options. If 'type' is set
    * to 'taggable select', this will be set to true.
    */
-  multiselect: { type: Boolean, default: false },
+  multiple: { type: Boolean, default: false },
   /**
    * Use combobox as text "autosuggest", selectable text, or taggable selection.
    */
@@ -501,7 +496,7 @@ const removeHtmlFromString = (value: string) => {
 
 const root = ref()
 const scrollArea = ref()
-const inputField = ref()
+const inputField = ref('')
 const dropdownOption = ref()
 
 const query = computed({
@@ -518,18 +513,22 @@ const query = computed({
 
 const filterQuery = ref(model.value)
 const showDropdown = ref(false)
-const preventShowDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
 watch(query, (value: string) => {
-  activeGroupKey.value = -1
-  arrowCounter.value = -1
   filterQuery.value = removeHtmlFromString(value)
+  /* Show "X" button to clear current selection
+   * Follow query.value to check on keypress */
+  const inputLength = inputField.value ? inputField.value.value.length : 0
+  if (inputLength === 0)
+    showClearButton.value = false
+  if (inputLength > 0 && !props.disabled)
+    showClearButton.value = true
 })
 
 watchDebounced(query, () => {
-  if (props.type === 'select' && !props.multiselect && selectedOptions.value.length === 1) {
+  if (props.type === 'select' && !props.multiple && selectedOptions.value.length === 1) {
     query.value = ''
   } else {
     emitComplete()
@@ -539,16 +538,6 @@ watchDebounced(query, () => {
 watch(showDropdown, () => {
   arrowCounter.value = -1
   activeGroupKey.value = -1
-})
-
-watch(() => props.suggestions, (value) => {
-  if (!preventShowDropdown.value) {
-    showDropdown.value = typeof value !== 'undefined' && value.length > 0
-  }
-})
-
-watch(filterQuery, (value: string) => {
-  preventShowDropdown.value = value === removeHtmlFromString(query.value)
 })
 
 const reduceList = (arr: ComboBoxSuggestion[]) => {
@@ -638,19 +627,19 @@ const activeGroup = computed(() => {
 
 const setActiveGroup = (group: { key: number }) => {
   inputField.value.focus()
-  arrowCounter.value = -1
   activeGroupKey.value = group.key
 }
 
 const allSuggestionOptions = ref()
 const groupSuggestionOptions = ref()
 const suggestionOptions = ref()
+const showClearButton = ref()
 /**
  * For multiselection— if props.type === 'taggable select',
  * selectedOptions will be an array of selected options
  * shown as dismissable tags in the input field.
  */
-const selectedOptions = ref([] as string[])
+const selectedOptions = ref([] as ComboBoxSuggestion[])
 
 watchEffect(() => {
   // All Suggestions
@@ -685,7 +674,6 @@ onMounted(() => {
 
 onKeyStroke('Escape', () => {
   filterQuery.value = removeHtmlFromString(query.value)
-  preventShowDropdown.value = true
   showDropdown.value = false
   inputField.value.blur()
 })
@@ -693,7 +681,6 @@ onKeyStroke('Escape', () => {
 // Close dropdown when clicking outside of ComboBox
 onClickOutside(root, () => {
   filterQuery.value = removeHtmlFromString(query.value)
-  preventShowDropdown.value = true
   showDropdown.value = false
 })
 
@@ -740,6 +727,10 @@ const scrollToChild = async () => {
 const clearQuery = () => {
   query.value = ''
   filterQuery.value = ''
+  inputField.value.value = ''
+  if (!props.multiple && props.type === 'select')
+    selectedOptions.value = []
+  showClearButton.value = false
 }
 
 /* Shake the input field when the value is already selected or bad option */
@@ -752,11 +743,11 @@ const shake = () => {
 
 /**
  * Add a dismissable tags to the ComboBox
- * input field when multiselect is enabled
+ * input field when multiple is enabled
  * and props.type is 'select'. Or, when
  * props.type is 'taggable select'.
  */
-const multiselectAdd = async () => {
+const multiselectAdd = () => {
   if (props.type === 'taggable select' || props.type === 'select') {
     /* Wait for query.value to be set */
     if (!filterQuery.value) return;
@@ -764,25 +755,31 @@ const multiselectAdd = async () => {
       /* Add to selected suggestions if it's not present. */
       selectedOptions.value.push(filterQuery.value)
       inputField.value.focus()
+      if (!props.multiple && props.type === 'select') {
+        showDropdown.value = false // Hide the dropdown
+        inputField.value.value = filterQuery.value
+      }
+      if (props.multiple && props.type === 'select' || props.type === 'taggable select')
+        inputField.value.value = ''
     } else {
       shake()
     }
   }
 }
 
-const multiselectRemove = async (index: number) => {
+const multiselectRemove = (index: number) => {
   selectedOptions.value.splice(index, 1)
 }
 
 const handleDelete = () => {
-  // If multiselect is enabled and the input field is empty,
+  // If multiple is enabled and the input field is empty,
   if (selectedOptions.value.length > 0 && inputField.value.value === '') {
     // Remove the last tag from the end of the list
     multiselectRemove(-1)
   }
 }
 
-const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
+const handleSuggestionClick = (option: ComboBoxSuggestion) => {
   handleEnterKeyUp(option)
 }
 
@@ -808,16 +805,13 @@ const getCurrentSuggestion = () => {
 const getCurrentSuggestionValue = () => {
   const option = getCurrentSuggestion()
   if (!option) {
-    if (query.value.length) {
-      return undefined
-    }
     return ''
   }
   return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
-const handleFocus = async () => {
-  if (props.multiselect === false && props.type === 'select') {
+const handleFocus = () => {
+  if (!props.multiple && props.type === 'select') {
     if (selectedOptions.value.length === 1) {
       showDropdown.value = false
     } else {
@@ -836,13 +830,13 @@ const handleInput = async () => {
 
 const firstTick = ref()
 
-const handleEnterKeyUp = async (option: ComboBoxSuggestion | null) => {
+const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | MouseEvent | null) => {
   if (props.disabled) return;
 
   firstTick.value = query.value
   // Determine selected option
   if (option !== null) {
-    if (option instanceof KeyboardEvent) {
+    if (option instanceof KeyboardEvent || option instanceof MouseEvent) {
       // If option is a KeyboardEvent, use the current suggestion value
       switch (props.type) {
         case 'taggable select':
@@ -863,10 +857,10 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | null) => {
   }
 
   const sendResult = () => {
-    arrowCounter.value = -1
     emitEnter()
-    // Emit the selected option (max 1 w/o multiselect)
+    // Emit the selected option (max 1 w/o multiple)
     emitResult(selectedOptions.value)
+    clearQuery() // Clear the query
     // Hide, the dropdown, reset selection to empty, and unfocus the input field
     showDropdown.value = false // Hide the dropdown
     selectedOptions.value = []
@@ -879,13 +873,21 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | null) => {
       if (query.value !== '') {
         emitEnter()
         emitResult(query.value)
+        clearQuery() // Clear the query
       }
       break;
     case 'select':
       filterQuery.value = removeHtmlFromString(query.value)
       await nextTick()
-      await multiselectAdd() // Will select chosen option if props.multiselect
-      if (!props.multiselect) {
+
+      // Toggle selection depending on whether it exists in selectedOptions
+      if (selectedOptions.value.includes(filterQuery.value)) {
+        multiselectRemove(selectedOptions.value.indexOf(filterQuery.value))
+      } else {
+        multiselectAdd() // Will select chosen option if props.multiple
+      }
+
+      if (!props.multiple) {
         if (selectedOptions.value.length === 1 && query.value === '' && !firstTick.value.length)
           sendResult()
         // Result already exists or is an invalid selection
@@ -904,7 +906,13 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | null) => {
     case 'taggable select':
       await nextTick()
       filterQuery.value = removeHtmlFromString(query.value)
-      await multiselectAdd() // Will select chosen option if props.multiselect
+
+      // Toggle selection depending on whether it exists in selectedOptions
+      if (selectedOptions.value.includes(filterQuery.value)) {
+        multiselectRemove(selectedOptions.value.indexOf(filterQuery.value))
+      } else {
+        multiselectAdd() // Will select chosen option if props.multiple
+      }
       //if (selectedOptions.value.length === 1 && query.value === '') {
       if (selectedOptions.value.length > 0 && query.value === '')
         sendResult()
@@ -981,7 +989,7 @@ const emitFocused = () => {
   emit('focused', true)
 }
 
-const emitResult = (result: ComboBoxSuggestion) => {
+const emitResult = (result: ComboBoxSuggestion | ComboBoxSuggestion[]) => {
   /**
    * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
    */

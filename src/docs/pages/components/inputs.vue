@@ -150,12 +150,11 @@
           option-label="name"
           option-group-label="section"
           option-group-children="items"
-          @focused="comboBox1.onFocused"
           @complete="comboBox1.onComplete"
           @result="comboBox1.onResult"
           @enter="comboBox1.onEnter"
         />
-        <code class="text-xs">type="select" :multiselect="false"</code>
+        <code class="text-xs">type="select" :multiple="false"</code>
         <SdsComboBox
           v-model="comboBox2_1.modelValue"
           placeholder="Search"
@@ -175,7 +174,7 @@
           @result="comboBox2_1.onResult"
           @enter="comboBox2_1.onEnter"
         />
-        <code class="text-xs">type="select" :multiselect="true"</code>
+        <code class="text-xs">type="select" :multiple="true"</code>
         <SdsComboBox
           v-model="comboBox2_2.modelValue"
           placeholder="Search"
@@ -185,7 +184,7 @@
           :debounce-complete="0"
           size="sm"
           type="select"
-          multiselect
+          multiple
           filter-suggestions
           focus-on-key-press
           option-label="name"
