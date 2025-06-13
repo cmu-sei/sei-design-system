@@ -137,80 +137,91 @@
       <h2 class="text-xl">
         Combo Box
       </h2>
-      <div class="space-y-4">
-        <code class="text-xs">type="text"</code>
-        <SdsComboBox
-          v-model="comboBox1.modelValue"
-          placeholder="Search"
-          :suggestions="comboBox1.suggestions"
-          filter-suggestions
-          focus-on-key-press
-          @complete="comboBox1.onComplete"
-          @result="comboBox1.onResult"
-          @enter="comboBox1.onEnter"
-        />
-        <code class="text-xs">type="select" :multiple="false"</code>
-        <SdsComboBox
-          v-model="comboBox2_1.modelValue"
-          placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          :suggestions="comboBox2_1.suggestions"
-          :debounce-complete="0"
-          size="sm"
-          type="select"
-          filter-suggestions
-          focus-on-key-press
-          option-label="name"
-          option-group-label="section"
-          option-group-children="items"
-          @focused="comboBox2_1.onFocused"
-          @complete="comboBox2_1.onComplete"
-          @result="comboBox2_1.onResult"
-          @enter="comboBox2_1.onEnter"
-        />
-        <code class="text-xs">type="select" :multiple="true"</code>
-        <SdsComboBox
-          v-model="comboBox2_2.modelValue"
-          placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          :suggestions="comboBox2_2.suggestions"
-          :debounce-complete="0"
-          size="sm"
-          type="select"
-          multiple
-          filter-suggestions
-          focus-on-key-press
-          option-label="name"
-          option-group-label="section"
-          option-group-children="items"
-          @focused="comboBox2_2.onFocused"
-          @complete="comboBox2_2.onComplete"
-          @result="comboBox2_2.onResult"
-          @enter="comboBox2_2.onEnter"
-        />
-        <code class="text-xs">type="taggable select"</code>
-        <SdsComboBox
-          v-model="comboBox3.modelValue"
-          placeholder="Search"
-          :disabled="false"
-          :autofocus="false"
-          :suggestions="comboBox3.suggestions"
-          :debounce-complete="0"
-          size="sm"
-          type="taggable select"
-          filter-suggestions
-          focus-on-key-press
-          option-label="name"
-          option-group-label="section"
-          option-group-children="items"
-          @focused="comboBox3.onFocused"
-          @complete="comboBox3.onComplete"
-          @result="comboBox3.onResult"
-          @enter="comboBox3.onEnter"
-        />
-      </div>
+      <form
+        @submit.prevent="handleSubmit"
+      >
+        <div class="space-y-4">
+          <code class="text-xs">type="text"</code>
+          <SdsComboBox
+            v-model="comboBox1.modelValue"
+            placeholder="Search"
+            :suggestions="comboBox1.suggestions"
+            filter-suggestions
+            focus-on-key-press
+            @complete="comboBox1.onComplete"
+            @result="comboBox1.onResult"
+            @submit="comboBox1.onSubmit"
+            @enter="comboBox1.onEnter"
+          />
+          <code class="text-xs">type="select" :multiple="false"</code>
+          <SdsComboBox
+            v-model="comboBox2_1.modelValue"
+            placeholder="Search"
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox2_1.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="select"
+            filter-suggestions
+            focus-on-key-press
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @focused="comboBox2_1.onFocused"
+            @complete="comboBox2_1.onComplete"
+            @result="comboBox2_1.onResult"
+            @submit="comboBox2_1.onSubmit"
+            @enter="comboBox2_1.onEnter"
+          />
+          <code class="text-xs">type="select" :multiple="true"</code>
+          <SdsComboBox
+            v-model="comboBox2_2.modelValue"
+            placeholder="Search"
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox2_2.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="select"
+            multiple
+            filter-suggestions
+            focus-on-key-press
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @focused="comboBox2_2.onFocused"
+            @complete="comboBox2_2.onComplete"
+            @result="comboBox2_2.onResult"
+            @submit="comboBox2_2.onSubmit"
+            @enter="comboBox2_2.onEnter"
+          />
+          <code class="text-xs">type="taggable select"</code>
+          <SdsComboBox
+            v-model="comboBox3.modelValue"
+            placeholder="Search"
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox3.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="taggable select"
+            filter-suggestions
+            focus-on-key-press
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @focused="comboBox3.onFocused"
+            @complete="comboBox3.onComplete"
+            @result="comboBox3.onResult"
+            @submit="comboBox3.onSubmit"
+            @enter="comboBox3.onEnter"
+          />
+        </div>
+        <button type="submit" class="sds-button sds-button-primary">
+          Submit
+        </button>
+      </form>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
@@ -398,10 +409,13 @@ const comboBox1 = reactive({
   },
   suggestions: [] as ComboBoxSuggestion[],
   //suggestions: [] as ComboBoxSuggestion[],
-  onResult(option: ComboBoxSuggestion) {
-    alert(`Submitted: "${option}"`)
+  onResult(result: ComboBoxSuggestion) {
+    console.log(`result: "${result}"`)
   },
-  async onComplete(query:string) {
+  onSubmit(value: string) {
+    alert(`onSubmit ${comboBox1.modelValue}`)
+  },
+  async onComplete(query: string) {
     comboBox1.suggestions = [
       'Apple',
       'Banana',
@@ -417,7 +431,6 @@ const comboBox1 = reactive({
     console.log('onComplete', query)
   }
 })
-
 const comboBox2_1 = reactive({
   modelValue: '',
   onEnter(value: string) {
@@ -425,7 +438,7 @@ const comboBox2_1 = reactive({
   },
   suggestions: [] as ComboBoxSuggestion[],
   //suggestions: [] as ComboBoxSuggestion[],
-  onComplete() {
+  onComplete(query: string) {
     comboBox2_1.suggestions = [
       {
         section: 'Fruits',
@@ -453,6 +466,10 @@ const comboBox2_1 = reactive({
         ]
       }
     ] as ComboBoxSuggestion[]
+    console.log('onComplete', query)
+  },
+  onSubmit(value: string) {
+    alert(`onSubmit ${comboBox2_1.modelValue}`)
   },
   onFocused() {
     comboBox2_1.suggestions = [
@@ -483,19 +500,21 @@ const comboBox2_1 = reactive({
       }
     ] as ComboBoxSuggestion[]
   },
-  onResult(option: ComboBoxSuggestion) {
-    alert(`Submitted: "${option}"`)
+  onResult(result: ComboBoxSuggestion) {
+    console.log(`result: "${result}"`)
   },
 })
-
 const comboBox2_2 = reactive({
   modelValue: '',
   onEnter(value: string) {
     console.log(`onEnter ${value}`)
   },
+  onSubmit(value: string) {
+    alert(`onSubmit ${comboBox2_2.modelValue}`)
+  },
   suggestions: [] as ComboBoxSuggestion[],
   //suggestions: [] as ComboBoxSuggestion[],
-  onComplete() {
+  onComplete(query: string) {
     comboBox2_2.suggestions = [
       {
         section: 'Fruits',
@@ -523,6 +542,7 @@ const comboBox2_2 = reactive({
         ]
       }
     ] as ComboBoxSuggestion[]
+    console.log('onComplete', query)
   },
   onFocused() {
     comboBox2_2.suggestions = [
@@ -553,11 +573,10 @@ const comboBox2_2 = reactive({
       }
     ] as ComboBoxSuggestion[]
   },
-  onResult(option: ComboBoxSuggestion) {
-    alert(`Submitted: "${option}"`)
+  onResult(result: ComboBoxSuggestion) {
+    console.log(`result: "${result}"`)
   },
 })
-
 const comboBox3 = reactive({
   modelValue: '',
   onEnter(value: string) {
@@ -565,7 +584,10 @@ const comboBox3 = reactive({
   },
   suggestions: [] as ComboBoxSuggestion[],
   //suggestions: [] as ComboBoxSuggestion[],
-  onComplete() {
+  onSubmit(value: string) {
+    alert(`onSubmit ${comboBox3.modelValue}`)
+  },
+  onComplete(query: string) {
     comboBox3.suggestions = [
       {
         section: 'Fruits',
@@ -593,6 +615,7 @@ const comboBox3 = reactive({
         ]
       }
     ] as ComboBoxSuggestion[]
+    console.log('onComplete', query)
   },
   onFocused() {
     comboBox3.suggestions = [
@@ -623,10 +646,22 @@ const comboBox3 = reactive({
       }
     ] as ComboBoxSuggestion[]
   },
-  onResult(option: ComboBoxSuggestion) {
-    alert(`Submitted: "${option}"`)
+  onResult(result: ComboBoxSuggestion) {
+    console.log(`result: "${result}"`)
   },
 })
+
+const formData = reactive({
+  comboBox2_1: comboBox2_1.modelValue,
+  comboBox2_2: comboBox2_2.modelValue,
+  comboBox3: comboBox3.modelValue
+})
+
+const handleSubmit = () => {
+  console.log('Form submitted')
+  console.log(formData)
+  console.log(comboBox2_1.modelValue)
+}
 
 const select = reactive({
   modelValue: 'option 2',
