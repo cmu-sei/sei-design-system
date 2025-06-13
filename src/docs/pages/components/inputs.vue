@@ -413,6 +413,7 @@ const comboBox1 = reactive({
     console.log(`result: "${result}"`)
   },
   onSubmit(value: string) {
+    console.log(`onSubmit ${value}`)
     alert(`onSubmit ${comboBox1.modelValue}`)
   },
   async onComplete(query: string) {
@@ -469,6 +470,7 @@ const comboBox2_1 = reactive({
     console.log('onComplete', query)
   },
   onSubmit(value: string) {
+    console.log(`onSubmit ${value}`)
     alert(`onSubmit ${comboBox2_1.modelValue}`)
   },
   onFocused() {
@@ -510,6 +512,7 @@ const comboBox2_2 = reactive({
     console.log(`onEnter ${value}`)
   },
   onSubmit(value: string) {
+    console.log(`onSubmit ${value}`)
     alert(`onSubmit ${comboBox2_2.modelValue}`)
   },
   suggestions: [] as ComboBoxSuggestion[],
@@ -585,6 +588,7 @@ const comboBox3 = reactive({
   suggestions: [] as ComboBoxSuggestion[],
   //suggestions: [] as ComboBoxSuggestion[],
   onSubmit(value: string) {
+    console.log(`onSubmit ${value}`)
     alert(`onSubmit ${comboBox3.modelValue}`)
   },
   onComplete(query: string) {
