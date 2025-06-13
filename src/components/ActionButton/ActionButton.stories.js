@@ -1,6 +1,6 @@
 import SdsActionButton from './ActionButton.vue';
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Components/Buttons/Action Button',

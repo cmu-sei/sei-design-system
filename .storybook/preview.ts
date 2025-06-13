@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/vue3'
+import type { Preview } from '@storybook/vue3-vite'
 import "../tailwindcss/tailwind.css"
 
 const preview: Preview = {
@@ -28,10 +28,12 @@ const preview: Preview = {
       },
     },
   },
+
   initialGlobals: {
     colorScheme: 'light',
     theme: 'sds-theme-forge',
   },
+
   decorators: [
     (_, context) => {
       const colorScheme = context.globals.colorScheme || 'light';
@@ -41,6 +43,7 @@ const preview: Preview = {
       }
     },
   ],
+
   parameters: {
     backgrounds: {
       default: 'transparent',
@@ -55,6 +58,7 @@ const preview: Preview = {
         { name: 'blue-500', value: '#007cba' },
       ],
     },
+
     controls: {
       sort: 'alpha',
       expanded: true,
@@ -63,7 +67,13 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
-  }
+
+    docs: {
+      codePanel: true
+    }
+  },
+
+  tags: ['autodocs']
 }
 
 export default preview;

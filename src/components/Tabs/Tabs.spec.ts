@@ -67,6 +67,12 @@ describe('Tabs', () => {
   it('should match its snapshot with assigned `type` prop: "underline"', async () => {
     await wrapper.setProps({ type: 'underline' })
     expect(wrapper.element).toMatchSnapshot()
+
+    await wrapper.setProps({ type: 'underline', variant: 'blue' })
+    expect(wrapper.element).toMatchSnapshot()
+
+    await wrapper.setProps({ type: 'underline', variant: 'gray' })
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('should match its snapshot with assigned `type` prop: "block"', async () => {

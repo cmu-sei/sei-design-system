@@ -2,7 +2,7 @@ import SdsMobileMenu from './MobileMenu.vue';
 import SdsComboBox from '../ComboBox/ComboBox.vue';
 import SdsNavigationItem from '../NavigationItem/NavigationItem.vue';
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Patterns/Navigation/Mobile Menu',

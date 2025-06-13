@@ -1,7 +1,7 @@
 import SdsMegaMenu from './MegaMenu.vue';
 import SdsMegaMenuItem from '../MegaMenuItem/MegaMenuItem.vue';
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Patterns/Navigation/Mega Menu/Mega Menu',

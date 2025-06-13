@@ -3,7 +3,7 @@ import SdsDropdownHeader from '../DropdownHeader';
 import SdsDropdownDivider from '../DropdownDivider';
 import SdsDropdownItem from '../DropdownItem';
 
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Components/Buttons/Dropdowns/Dropdown/Dropdown',
