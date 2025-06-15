@@ -150,17 +150,15 @@
             focus-on-key-press
             @complete="comboBox1.onComplete"
             @result="comboBox1.onResult"
-            @submit="comboBox1.onSubmit"
             @enter="comboBox1.onEnter"
+            @submit="comboBox1.onSubmit"
           />
           <code class="text-xs">type="select" :multiple="false"</code>
           <SdsComboBox
             v-model="comboBox2_1.modelValue"
+            v-model:selected="comboBox2_1.selected"
             placeholder="Search"
-            :disabled="false"
-            :autofocus="false"
             :suggestions="comboBox2_1.suggestions"
-            :debounce-complete="0"
             size="sm"
             type="select"
             filter-suggestions
@@ -168,15 +166,16 @@
             option-label="name"
             option-group-label="section"
             option-group-children="items"
-            @focused="comboBox2_1.onFocused"
             @complete="comboBox2_1.onComplete"
             @result="comboBox2_1.onResult"
-            @submit="comboBox2_1.onSubmit"
             @enter="comboBox2_1.onEnter"
+            @submit="comboBox2_1.onSubmit"
+            @focused="comboBox2_1.onFocused"
           />
           <code class="text-xs">type="select" :multiple="true"</code>
           <SdsComboBox
             v-model="comboBox2_2.modelValue"
+            v-model:selected="comboBox2_2.selected"
             placeholder="Search"
             :disabled="false"
             :autofocus="false"
@@ -190,37 +189,41 @@
             option-label="name"
             option-group-label="section"
             option-group-children="items"
-            @focused="comboBox2_2.onFocused"
             @complete="comboBox2_2.onComplete"
             @result="comboBox2_2.onResult"
-            @submit="comboBox2_2.onSubmit"
             @enter="comboBox2_2.onEnter"
+            @submit="comboBox2_2.onSubmit"
           />
-          <code class="text-xs">type="taggable select"</code>
+          <code class="text-xs">type="taggable-select"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
+            v-model:selected="comboBox3.selected"
             placeholder="Search"
             :disabled="false"
             :autofocus="false"
             :suggestions="comboBox3.suggestions"
             :debounce-complete="0"
             size="sm"
-            type="taggable select"
+            type="taggable-select"
             filter-suggestions
             focus-on-key-press
             option-label="name"
             option-group-label="section"
             option-group-children="items"
-            @focused="comboBox3.onFocused"
             @complete="comboBox3.onComplete"
             @result="comboBox3.onResult"
-            @submit="comboBox3.onSubmit"
             @enter="comboBox3.onEnter"
+            @submit="comboBox3.onSubmit"
           />
         </div>
-        <button type="submit" class="sds-button sds-button-primary">
+        <SdsButton
+          type="submit"
+          kind="primary"
+          size="sm"
+          class="mt-4"
+        >
           Submit
-        </button>
+        </SdsButton>
       </form>
     </div>
     <div class="grid gap-4">
@@ -404,267 +407,172 @@ const radioGroup = reactive({
 
 const comboBox1 = reactive({
   modelValue: '',
-  onEnter(value: string) {
-    console.log(`onEnter ${value}`)
+  suggestions: [
+    'Apple',
+    'Banana',
+    'Kiwi',
+    'Orange',
+    'Mango',
+    'Pineapple',
+    'Pomegranate',
+    'Raspberry',
+    'Strawberry',
+    'Watermelon'
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
   },
-  suggestions: [] as ComboBoxSuggestion[],
-  //suggestions: [] as ComboBoxSuggestion[],
-  onResult(result: ComboBoxSuggestion) {
-    console.log(`result: "${result}"`)
+  onEnter(value: string) {
+    console.info('onEnter:', value)
   },
   onSubmit(value: string) {
-    console.log(`onSubmit ${value}`)
-    alert(`onSubmit ${comboBox1.modelValue}`)
-  },
-  async onComplete(query: string) {
-    comboBox1.suggestions = [
-      'Apple',
-      'Banana',
-      'Kiwi',
-      'Orange',
-      'Mango',
-      'Pineapple',
-      'Pomegranate',
-      'Raspberry',
-      'Strawberry',
-      'Watermelon'
-    ] as ComboBoxSuggestion[]
-    console.log('onComplete', query)
+    console.info('onSubmit:', value)
   }
 })
 const comboBox2_1 = reactive({
   modelValue: '',
-  onEnter(value: string) {
-    console.log(`onEnter ${value}`)
-  },
-  suggestions: [] as ComboBoxSuggestion[],
-  //suggestions: [] as ComboBoxSuggestion[],
-  onComplete(query: string) {
-    comboBox2_1.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
-    console.log('onComplete', query)
-  },
-  onSubmit(value: string) {
-    console.log(`onSubmit ${value}`)
-    alert(`onSubmit ${comboBox2_1.modelValue}`)
-  },
-  onFocused() {
-    comboBox2_1.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
+  suggestions: [
+    {
+      section: 'Fruits',
+      items: [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Blueberry' },
+        { name: 'Cantaloupe' },
+        { name: 'Kiwi' },
+        { name: 'Strawberry' }
+      ]
+    },
+    {
+      section: 'Vegetables',
+      items: [
+        { name: 'Artichoke' },
+        { name: 'Avocado' },
+        { name: 'Beetroot' },
+        { name: 'Celery' },
+        { name: 'Cucumber' },
+        { name: 'Daikon' },
+        { name: 'Eggplant' },
+        { name: 'Kale' },
+        { name: 'Shallot' }
+      ]
+    }
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
   },
   onResult(result: ComboBoxSuggestion) {
-    console.log(`result: "${result}"`)
+    console.info('onResult:', result)
   },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  },
+  onSubmit(value: ComboBoxSuggestion[]) {
+    console.info('onSubmit:', value)
+  },
+  onFocused(value: boolean) {
+    console.info('onFocused')
+  }
 })
 const comboBox2_2 = reactive({
   modelValue: '',
-  onEnter(value: string) {
-    console.log(`onEnter ${value}`)
-  },
-  onSubmit(value: string) {
-    console.log(`onSubmit ${value}`)
-    alert(`onSubmit ${comboBox2_2.modelValue}`)
-  },
-  suggestions: [] as ComboBoxSuggestion[],
-  //suggestions: [] as ComboBoxSuggestion[],
-  onComplete(query: string) {
-    comboBox2_2.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
-    console.log('onComplete', query)
-  },
-  onFocused() {
-    comboBox2_2.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    {
+      section: 'Fruits',
+      items: [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Blueberry' },
+        { name: 'Cantaloupe' },
+        { name: 'Kiwi' },
+        { name: 'Strawberry' }
+      ]
+    },
+    {
+      section: 'Vegetables',
+      items: [
+        { name: 'Artichoke' },
+        { name: 'Avocado' },
+        { name: 'Beetroot' },
+        { name: 'Celery' },
+        { name: 'Cucumber' },
+        { name: 'Daikon' },
+        { name: 'Eggplant' },
+        { name: 'Kale' },
+        { name: 'Shallot' }
+      ]
+    }
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
   },
   onResult(result: ComboBoxSuggestion) {
-    console.log(`result: "${result}"`)
+    console.info('onResult:', result)
   },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  },
+  onSubmit(value: ComboBoxSuggestion[]) {
+    console.info('onSubmit:', value)
+  }
 })
 const comboBox3 = reactive({
   modelValue: '',
-  onEnter(value: string) {
-    console.log(`onEnter ${value}`)
-  },
-  suggestions: [] as ComboBoxSuggestion[],
-  //suggestions: [] as ComboBoxSuggestion[],
-  onSubmit(value: string) {
-    console.log(`onSubmit ${value}`)
-    alert(`onSubmit ${comboBox3.modelValue}`)
-  },
-  onComplete(query: string) {
-    comboBox3.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
-    console.log('onComplete', query)
-  },
-  onFocused() {
-    comboBox3.suggestions = [
-      {
-        section: 'Fruits',
-        items: [
-          { name: 'Apple' },
-          { name: 'Banana' },
-          { name: 'Blueberry' },
-          { name: 'Cantaloupe' },
-          { name: 'Kiwi' },
-          { name: 'Strawberry' }
-        ]
-      },
-      {
-        section: 'Vegetables',
-        items: [
-          { name: 'Artichoke' },
-          { name: 'Avocado' },
-          { name: 'Beetroot' },
-          { name: 'Celery' },
-          { name: 'Cucumber' },
-          { name: 'Daikon' },
-          { name: 'Eggplant' },
-          { name: 'Kale' },
-          { name: 'Shallot' }
-        ]
-      }
-    ] as ComboBoxSuggestion[]
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    {
+      section: 'Fruits',
+      items: [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Blueberry' },
+        { name: 'Cantaloupe' },
+        { name: 'Kiwi' },
+        { name: 'Strawberry' }
+      ]
+    },
+    {
+      section: 'Vegetables',
+      items: [
+        { name: 'Artichoke' },
+        { name: 'Avocado' },
+        { name: 'Beetroot' },
+        { name: 'Celery' },
+        { name: 'Cucumber' },
+        { name: 'Daikon' },
+        { name: 'Eggplant' },
+        { name: 'Kale' },
+        { name: 'Shallot' }
+      ]
+    }
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
   },
   onResult(result: ComboBoxSuggestion) {
-    console.log(`result: "${result}"`)
+    console.info('onResult:', result)
   },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  },
+  onSubmit(value: ComboBoxSuggestion[]) {
+    console.info('onSubmit:', value)
+  }
 })
 
 const formData = reactive({
-  comboBox2_1: comboBox2_1.modelValue,
-  comboBox2_2: comboBox2_2.modelValue,
-  comboBox3: comboBox3.modelValue
+  comboBox2_1: comboBox2_1.selected,
+  comboBox2_2: comboBox2_2.selected,
+  comboBox3: comboBox3.selected
 })
 
 const handleSubmit = () => {
   console.log('Form submitted')
   console.log(formData)
-  console.log(comboBox2_1.modelValue)
+  console.log(comboBox2_1.selected)
+  console.log(comboBox2_2.selected)
+  console.log(comboBox3.selected)
 }
 
 const select = reactive({

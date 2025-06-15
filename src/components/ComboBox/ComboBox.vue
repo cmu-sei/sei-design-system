@@ -12,11 +12,11 @@
       }"
     >
       <div
-        v-if="(type === 'taggable select' || (type === 'select' && multiple)) && selectedOptions.length > 0"
+        v-if="(type === 'taggable-select' || (type === 'select' && multiple)) && selected.length > 0"
         class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
       >
         <SdsTag
-          v-for="(option, index) in selectedOptions"
+          v-for="(option, index) in selected"
           :key="index"
           :disabled="disabled"
           action="remove"
@@ -51,23 +51,23 @@
           </svg>
         </button>
         <span
-          v-if="!multiple && type === 'select' && selectedOptions.length"
+          v-if="!multiple && type === 'select' && selected.length"
           class="input-group-addon"
-        >{{ selectedOptions[0] }}</span>
+        >{{ selected[0] }}</span>
         <input
           :id="id"
           ref="inputField"
           v-model.trim="query"
           type="text"
-          :multiple="type === 'taggable select' || multiple"
+          :multiple="type === 'taggable-select' || multiple"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
           class="form-control border-none"
           :class="{
-            'w-full': ['select', 'taggable select'].includes(type),
-            'opacity-0': !multiple && type === 'select' && selectedOptions.length
+            'w-full': ['select', ':aggable select'].includes(type),
+            'opacity-0': !multiple && type === 'select' && selected.length
           }"
           :placeholder="placeholder"
           :disabled="disabled"
@@ -202,7 +202,7 @@
                   class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
                   :class="{
                     'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter || selectedOptions.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter || selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])
                   }"
                   :data-active="c.index === arrowCounter"
                   :type="optionType === 'button' ? 'button' : undefined"
@@ -218,7 +218,7 @@
                     {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                   </slot>
                   <svg
-                    v-if="selectedOptions.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
+                    v-if="selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
                     xmlns="http://www.w3.org/2000/svg"
                     width="11"
                     height="9"
@@ -410,10 +410,6 @@ defineOptions({
 
 const props = defineProps({
   /**
-   * The model value of the input.
-   */
-  modelValue: { type: String, default: '' },
-  /**
    * Determines the id of the input.
    */
   id: { type: String, default: undefined },
@@ -451,13 +447,13 @@ const props = defineProps({
   suggestions: { type: Array as PropType<ComboBoxSuggestion[]>, default: undefined },
   /**
    * The multiple prop allows the user to select multiple options. If 'type' is set
-   * to 'taggable select', this will be set to true.
+   * to 'taggable-select', this will be set to true.
    */
   multiple: { type: Boolean, default: false },
   /**
-   * Use combobox as text "autosuggest", selectable text, or taggable selection.
+   * Use combobox as text "autosuggest", selectable text, or taggable-selection.
    */
-  type: { type: String as PropType<'text' | 'select' | 'taggable select'>, default: 'text' },
+  type: { type: String as PropType<'text' | 'select' | 'taggable-select'>, default: 'text' },
   /**
    * Determines the type, or tag, use for the option/component
    */
@@ -499,7 +495,7 @@ const props = defineProps({
   disableGroupTabs: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:modelValue', 'focused', 'file-upload', 'complete', 'enter', 'result', 'submit'])
+const emit = defineEmits(['update:modelValue', 'focused', 'complete', 'enter', 'result', 'submit'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -515,10 +511,8 @@ const dropdownOption = ref()
 const isReadonly = ref(false)
 
 /* Setup query to bind to modelValue */
-const query = computed({
-  get: () => props.modelValue,
-  set: (value: string) => emit('update:modelValue', value)
-})
+const query = defineModel({ type: String, default: '' })
+const selected = defineModel('selected', { type: Array as PropType<ComboBoxSuggestion[]>, default: () => [] })
 
 // Hide dropdown initially
 const showDropdown = ref(false)
@@ -527,10 +521,12 @@ const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
 watch(query, (value: string) => {
-  /* always remove HTML from query value */
-  query.value = removeHtmlFromString(value)
+  /* Always remove HTML from query value if found */
+  const htmlRegex = /<[^>]*(>|$)/
+  if (htmlRegex.test(value))
+    query.value = removeHtmlFromString(value)
   /* Show "X" button to clear current selection
-   * Follow query.value to check on keypress */
+   * Follow inputField.value to check on keypress */
   const inputLength = inputField.value ? inputField.value.value.length : 0
   /* Only show clear button if input is set */
   showClearButton.value = inputLength > 0
@@ -548,16 +544,20 @@ watch(showDropdown, () => {
 
 const reduceList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
-  const cleanArray = arr.reduce((acc:ComboBoxSuggestion[], item:ComboBoxSuggestion) => {
+  const cleanArray = arr.reduce((acc: ComboBoxSuggestion[], item: ComboBoxSuggestion) => {
     if (typeof item !== 'string') {
-      const newItem = item
+      const newItem = Object.assign({}, item)
       if (props.optionGroupChildren && item[props.optionGroupChildren]) {
         newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
         if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length > 0) {
           acc.push(newItem)
         }
       } else {
-        if (removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string).toLowerCase().includes(removeHtmlFromString(query.value).toLowerCase())) {
+        if (
+          removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string)
+          .toLowerCase()
+          .includes(query.value.toLowerCase())
+        ) {
           acc.push(newItem)
         }
       }
@@ -589,6 +589,26 @@ const addIndexToList = (arr: ComboBoxSuggestion[]) => {
     return i
   })
 }
+
+const groupSuggestionOptions = ref()
+const showClearButton = ref(false)
+
+const allSuggestions = computed(() => {
+  return props.suggestions?.map(i => {
+    if (typeof i !== 'object') {
+      i = {
+        [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
+      }
+    }
+    return i
+  })
+})
+
+const allSuggestionOptions = computed(() => {
+  return props.filterSuggestions && allSuggestions.value ?
+    reduceList(allSuggestions.value) :
+    allSuggestions.value && addIndexToList(allSuggestions.value)
+})
 
 const allCount = computed(() => {
   let count = 0
@@ -631,48 +651,27 @@ const activeGroup = computed(() => {
   return groups.value.find(i => typeof i !== 'string' && i?.key === activeGroupKey.value)
 })
 
+// Group Suggestions
+const groupSuggestions = computed(() => {
+  return props.suggestions?.filter(i => {
+    return typeof i !== 'string' && props.optionGroupChildren &&
+      i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label
+  })
+})
+
+const suggestionOptions = computed(() => {
+  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions.value ?
+    reduceList(groupSuggestions.value) :
+    groupSuggestions.value && addIndexToList(groupSuggestions.value)
+
+  // Combined Suggestion Options
+  return activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
+})
+
 const setActiveGroup = (group: { key: number }) => {
   inputField.value.focus()
   activeGroupKey.value = group.key
 }
-
-const allSuggestionOptions = ref()
-const groupSuggestionOptions = ref()
-const suggestionOptions = ref()
-const showClearButton = ref(false)
-/**
- * For multiselection— if props.type === 'taggable select',
- * selectedOptions will be an array of selected options
- * shown as dismissable tags in the input field.
- */
-const selectedOptions = ref([] as ComboBoxSuggestion[])
-
-watchEffect(() => {
-  // All Suggestions
-  const allSuggestions = props.suggestions?.map(i => {
-    if (typeof i !== 'object') {
-      i = {
-        [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
-      }
-    }
-    return i
-  })
-  allSuggestionOptions.value = props.filterSuggestions && allSuggestions ?
-    reduceList(allSuggestions) :
-    allSuggestions && addIndexToList(allSuggestions)
-
-  // Group Suggestions
-  const groupSuggestions = props.suggestions?.filter(i => {
-    return typeof i !== 'string' && props.optionGroupChildren &&
-      i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label
-  })
-  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions ?
-    reduceList(groupSuggestions) :
-    groupSuggestions && addIndexToList(groupSuggestions)
-
-  // Combined Suggestion Options
-  suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
-})
 
 onMounted(() => {
   if (props.autofocus) inputField.value.focus();
@@ -732,7 +731,7 @@ const clearQuery = () => {
   query.value = ''
   inputField.value.value = ''
   if (!props.multiple && props.type === 'select')
-    selectedOptions.value = []
+    selected.value = []
     isReadonly.value = false
   showClearButton.value = false
 }
@@ -749,33 +748,33 @@ const shake = () => {
  * Add a dismissable tags to the ComboBox
  * input field when multiple is enabled
  * and props.type is 'select'. Or, when
- * props.type is 'taggable select'.
+ * props.type is 'taggable-select'.
  */
 const multiselectAdd = async () => {
   /* Wait for query.value to be set */
   if (!query.value) return;
-  if (!selectedOptions.value.includes(query.value) && query.value !== '') {
+  if (!selected.value.includes(query.value) && query.value !== '') {
     /* Add to selected suggestions if it's not present. */
-    selectedOptions.value.push(query.value)
+    selected.value.push(query.value)
     /* Refocus the input field */
     inputField.value.focus()
 
     /* Single-select, hdie the dropdown */
     if (!props.multiple && props.type === 'select') {
       showDropdown.value = false // Hide the dropdown
-      query.value = selectedOptions.value[0] as string
-      if (selectedOptions.value ? selectedOptions.value.length > 0 : false)
+      query.value = selected.value[0] as string
+      if (selected.value ? selected.value.length > 0 : false)
         isReadonly.value = true // Set readonly to true if not multiple and type is select
     }
 
     /* Multiple select and taggable, keep the dropdown open */
-    if (props.multiple && props.type === 'select' || props.type === 'taggable select')
-      query.value = selectedOptions.value.join(props.delimiter)
+    if (props.multiple && props.type === 'select' || props.type === 'taggable-select')
+      query.value = selected.value.join(props.delimiter)
 
     await nextTick()
 
     /* Hide the clear all button */
-    if (props.multiple && props.type === 'select' || props.type === 'taggable select')
+    if (props.multiple && props.type === 'select' || props.type === 'taggable-select')
       showClearButton.value = false
 
     /* Move focus out of the dropdown */
@@ -788,12 +787,12 @@ const multiselectAdd = async () => {
 }
 
 const multiselectRemove = (index: number) => {
-  selectedOptions.value.splice(index, 1)
+  selected.value.splice(index, 1)
 }
 
 const handleDelete = () => {
   // If multiple is enabled and the input field is empty,
-  if (selectedOptions.value.length > 0 && inputField.value.value === '') {
+  if (selected.value.length > 0 && inputField.value.value === '') {
     // Remove the last tag from the end of the list
     multiselectRemove(-1)
   }
@@ -832,7 +831,7 @@ const getCurrentSuggestionValue = () => {
 
 const handleFocus = () => {
   if (!props.multiple && props.type === 'select') {
-    if (selectedOptions.value.length === 1) {
+    if (selected.value.length === 1) {
       showDropdown.value = false
     } else {
       showDropdown.value = true
@@ -850,18 +849,15 @@ const handleInput = async () => {
 const firstTick = ref()
 
 const sendResult = async () => {
-  query.value = selectedOptions.value.length > 0
-    ?
-      selectedOptions.value.length === 1 ?
-        selectedOptions.value[0] as string :
-        selectedOptions.value.join(props.delimiter) as string
-    :
-      query.value as string
+  selected.value = selected.value.length > 0 ?
+    selected.value as ComboBoxSuggestion[] :
+    query.value as string
+
   emitSubmit()
   clearQuery() // Clear the query
   // Hide, the dropdown, reset selection to empty, and unfocus the input field
   showDropdown.value = false // Hide the dropdown
-  selectedOptions.value = []
+  selected.value = []
   inputField.value.blur()
 }
 
@@ -875,7 +871,7 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       // If option is a KeyboardEvent, use the current suggestion value
       switch (props.type) {
         case 'text':
-        case 'taggable select':
+        case 'taggable-select':
           query.value = getCurrentSuggestionValue() || query.value
           break;
         default:
@@ -901,29 +897,29 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
     case 'text':
       await nextTick()
 
-      // Toggle selection depending on whether it exists in selectedOptions
-      if (selectedOptions.value.includes(query.value)) {
-        multiselectRemove(selectedOptions.value.indexOf(query.value))
+      // Toggle selection depending on whether it exists in selected
+      if (selected.value.includes(query.value)) {
+        multiselectRemove(selected.value.indexOf(query.value))
       } else {
         multiselectAdd() // Will select chosen option if props.multiple
       }
 
-      if (selectedOptions.value.length > 0)
+      if (selected.value.length > 0)
         sendResult()
 
       break;
     case 'select':
       await nextTick()
 
-      // Toggle selection depending on whether it exists in selectedOptions
-      if (selectedOptions.value.includes(query.value)) {
-        multiselectRemove(selectedOptions.value.indexOf(query.value))
+      // Toggle selection depending on whether it exists in selected
+      if (selected.value.includes(query.value)) {
+        multiselectRemove(selected.value.indexOf(query.value))
       } else {
         multiselectAdd() // Will select chosen option if props.multiple
       }
 
       if (!props.multiple) {
-        if (selectedOptions.value.length === 1 && query.value === '' && !firstTick.value.length)
+        if (selected.value.length === 1 && query.value === '' && !firstTick.value.length)
           sendResult()
         // Result already exists or is an invalid selection
         if (firstTick.value.length && !query.value.length) {
@@ -934,7 +930,7 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       } else {
         // Hide the "clear query" x button
         showClearButton.value = false
-        if (selectedOptions.value.length > 0 && query.value === '' && !firstTick.value.length)
+        if (selected.value.length > 0 && query.value === '' && !firstTick.value.length)
           sendResult()
         // Result already exists or is an invalid selection
         if (firstTick.value.length && !query.value.length)
@@ -944,17 +940,17 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       firstTick.value = '' // Reset firstTick after selection
       query.value = '' // Reset query value after selection
       break;
-    case 'taggable select':
+    case 'taggable-select':
       await nextTick()
 
-      // Toggle selection depending on whether it exists in selectedOptions
-      if (selectedOptions.value.includes(query.value)) {
-        multiselectRemove(selectedOptions.value.indexOf(query.value))
+      // Toggle selection depending on whether it exists in selected
+      if (selected.value.includes(query.value)) {
+        multiselectRemove(selected.value.indexOf(query.value))
       } else {
         multiselectAdd() // Will select chosen option if props.multiple
       }
-      //if (selectedOptions.value.length === 1 && query.value === '') {
-      if (selectedOptions.value.length > 0 && query.value === '')
+      //if (selected.value.length === 1 && query.value === '') {
+      if (selected.value.length > 0 && query.value === '')
         sendResult()
       // Hide the "clear query" x button
       showClearButton.value = false
@@ -1047,13 +1043,13 @@ const emitSubmit = () => {
   /**
    * Emitted when the form is submitted.
    */
-  emit('submit', query.value)
+  emit('submit', props.type === 'text' ? selected.value[0] : selected.value)
 }
 
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', selectedOptions.value.length ? selectedOptions.value : query.value)
+  emit('enter', selected.value.length ? selected.value : query.value)
 }
 </script>
