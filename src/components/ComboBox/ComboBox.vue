@@ -755,7 +755,7 @@ const multiselectAdd = async () => {
   if (!query.value) return;
   if (!selected.value.includes(query.value) && query.value !== '') {
     /* Add to selected suggestions if it's not present. */
-    selected.value.push(query.value)
+    selected.value.push(query.value as ComboBoxSuggestion)
     /* Refocus the input field */
     inputField.value.focus()
 
@@ -850,8 +850,8 @@ const firstTick = ref()
 
 const sendResult = async () => {
   selected.value = selected.value.length > 0 ?
-    selected.value as ComboBoxSuggestion[] :
-    query.value as string
+    selected.value :
+    [query.value] as ComboBoxSuggestion[]
 
   emitSubmit()
   clearQuery() // Clear the query

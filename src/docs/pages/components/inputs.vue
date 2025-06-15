@@ -422,6 +422,9 @@ const comboBox1 = reactive({
   async onComplete(query: string) {
     console.info('onComplete:', query)
   },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
   onEnter(value: string) {
     console.info('onEnter:', value)
   },
@@ -458,6 +461,7 @@ const comboBox2_1 = reactive({
       ]
     }
   ] as ComboBoxSuggestion[],
+  selected: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
   },
@@ -476,7 +480,6 @@ const comboBox2_1 = reactive({
 })
 const comboBox2_2 = reactive({
   modelValue: '',
-  selected: [] as ComboBoxSuggestion[],
   suggestions: [
     {
       section: 'Fruits',
@@ -504,6 +507,7 @@ const comboBox2_2 = reactive({
       ]
     }
   ] as ComboBoxSuggestion[],
+  selected: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
   },
