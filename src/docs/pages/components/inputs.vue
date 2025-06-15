@@ -470,7 +470,7 @@ const comboBox2_1 = reactive({
   onSubmit(value: ComboBoxSuggestion[]) {
     console.info('onSubmit:', value)
   },
-  onFocused(value: boolean) {
+  onFocused() {
     console.info('onFocused')
   }
 })
