@@ -151,7 +151,6 @@
             @complete="comboBox1.onComplete"
             @result="comboBox1.onResult"
             @enter="comboBox1.onEnter"
-            @submit="comboBox1.onSubmit"
           />
           <code class="text-xs">type="select" :multiple="false"</code>
           <SdsComboBox
@@ -169,8 +168,6 @@
             @complete="comboBox2_1.onComplete"
             @result="comboBox2_1.onResult"
             @enter="comboBox2_1.onEnter"
-            @submit="comboBox2_1.onSubmit"
-            @focused="comboBox2_1.onFocused"
           />
           <code class="text-xs">type="select" :multiple="true"</code>
           <SdsComboBox
@@ -192,7 +189,6 @@
             @complete="comboBox2_2.onComplete"
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
-            @submit="comboBox2_2.onSubmit"
           />
           <code class="text-xs">type="taggable-select"</code>
           <SdsComboBox
@@ -213,7 +209,6 @@
             @complete="comboBox3.onComplete"
             @result="comboBox3.onResult"
             @enter="comboBox3.onEnter"
-            @submit="comboBox3.onSubmit"
           />
         </div>
         <SdsButton
@@ -427,9 +422,6 @@ const comboBox1 = reactive({
   },
   onEnter(value: string) {
     console.info('onEnter:', value)
-  },
-  onSubmit(value: string) {
-    console.info('onSubmit:', value)
   }
 })
 const comboBox2_1 = reactive({
@@ -470,12 +462,6 @@ const comboBox2_1 = reactive({
   },
   onEnter(value: string) {
     console.info('onEnter:', value)
-  },
-  onSubmit(value: ComboBoxSuggestion[]) {
-    console.info('onSubmit:', value)
-  },
-  onFocused() {
-    console.info('onFocused')
   }
 })
 const comboBox2_2 = reactive({
@@ -516,9 +502,6 @@ const comboBox2_2 = reactive({
   },
   onEnter(value: string) {
     console.info('onEnter:', value)
-  },
-  onSubmit(value: ComboBoxSuggestion[]) {
-    console.info('onSubmit:', value)
   }
 })
 const comboBox3 = reactive({
@@ -559,9 +542,6 @@ const comboBox3 = reactive({
   },
   onEnter(value: string) {
     console.info('onEnter:', value)
-  },
-  onSubmit(value: ComboBoxSuggestion[]) {
-    console.info('onSubmit:', value)
   }
 })
 

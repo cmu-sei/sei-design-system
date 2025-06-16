@@ -494,7 +494,7 @@ const props = defineProps({
   disableGroupTabs: { type: Boolean, default: false }
 })
 
-const emit = defineEmits(['update:modelValue', 'focused', 'complete', 'enter', 'result', 'submit'])
+const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -838,7 +838,6 @@ const handleFocus = () => {
   } else {
     showDropdown.value = true
   }
-  emitFocused()
 }
 
 const handleInput = async () => {
@@ -852,7 +851,6 @@ const sendResult = async () => {
     selected.value :
     [query.value] as ComboBoxSuggestion[]
 
-  emitSubmit()
   clearQuery() // Clear the query
   // Hide, the dropdown, reset selection to empty, and unfocus the input field
   showDropdown.value = false // Hide the dropdown
@@ -1017,13 +1015,6 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
   }
 }
 
-const emitFocused = () => {
-  /**
-   * Emitted when the input is focused.
-   */
-  emit('focused', true)
-}
-
 const emitResult = (result: ComboBoxSuggestion | ComboBoxSuggestion[]) => {
   /**
    * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
@@ -1036,13 +1027,6 @@ const emitComplete = () => {
    * Emitted when internal query changes.
    */
   emit('complete', query.value)
-}
-
-const emitSubmit = () => {
-  /**
-   * Emitted when the form is submitted.
-   */
-  emit('submit', props.type === 'text' ? selected.value[0] : selected.value)
 }
 
 const emitEnter = () => {
