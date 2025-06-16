@@ -66,7 +66,6 @@
           autocorrect="off"
           class="form-control border-none"
           :class="{
-            'w-full': ['select', ':aggable select'].includes(type),
             'opacity-0': !multiple && type === 'select' && selected.length
           }"
           :placeholder="placeholder"
