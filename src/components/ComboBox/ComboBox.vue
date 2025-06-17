@@ -692,9 +692,11 @@ onMounted(() => {
   if (props.autofocus) inputField.value.focus();
 })
 
-onKeyStroke('Escape', () => {
+onKeyStroke('Escape', (e: KeyboardEvent) => {
+  e.preventDefault()
+  if (!showDropdown.value)
+    inputField.value.blur() // Blur the input field
   showDropdown.value = false
-  inputField.value.blur()
 })
 
 // Close dropdown when clicking outside of ComboBox
@@ -853,7 +855,7 @@ const handleInput = async () => {
 
 const firstTick = ref()
 
-const sendResult = () => {
+const commitSelection = () => {
   selected.value = selected.value.length > 0 ?
     selected.value :
     [query.value] as ComboBoxSuggestion[]
@@ -863,6 +865,7 @@ const sendResult = () => {
   showDropdown.value = false // Hide the dropdown
   selected.value = []
   inputField.value.blur()
+  emitEnter()
 }
 
 const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | MouseEvent | null) => {
@@ -893,7 +896,6 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
   }
 
   await nextTick()
-  emitEnter()
   // Emit the selected option (max 1 w/o multiple)
   emitResult(query.value)
 
@@ -909,7 +911,7 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       }
 
       if (selected.value.length > 0)
-        sendResult()
+        commitSelection()
 
       break;
     case 'select':
@@ -924,14 +926,14 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
 
       if (!props.multiple) {
         if (selected.value.length === 1 && query.value === '' && !firstTick.value.length)
-          sendResult()
+          commitSelection()
         // Result already exists or is an invalid selection
         if (firstTick.value.length && !query.value.length) {
           shake()
         }
       } else {
         if (selected.value.length > 0 && query.value === '' && !firstTick.value.length)
-          sendResult()
+          commitSelection()
         // Result already exists or is an invalid selection
         if (firstTick.value.length && !query.value.length)
           shake()
@@ -951,7 +953,7 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       }
       //if (selected.value.length === 1 && query.value === '') {
       if (selected.value.length > 0 && query.value === '')
-        sendResult()
+        commitSelection()
       query.value = '' // Reset query value after selection
       break;
   }
