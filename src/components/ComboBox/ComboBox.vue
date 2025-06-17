@@ -198,10 +198,11 @@
                   :is="optionType"
                   ref="dropdownOption"
                   :href="optionType === 'a' ? c.href : undefined"
-                  class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                  class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
                   :class="{
                     'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.index === arrowCounter || selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && c.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-25 dark:bg-gray-750': c.index === arrowCounter,
                   }"
                   :data-active="c.index === arrowCounter"
                   :type="optionType === 'button' ? 'button' : undefined"
@@ -258,10 +259,11 @@
                 :is="optionType"
                 ref="dropdownOption"
                 :href="optionType === 'a' ? s.href : undefined"
-                class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+                class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
                 :class="{
                   'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.index === arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && s.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-25 dark:bg-gray-750': s.index === arrowCounter,
                   'last:mb-2': groups.length < 2
                 }"
                 :data-active="s.index === arrowCounter"
@@ -277,6 +279,17 @@
                 >
                   {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
                 </slot>
+                <svg
+                  v-if="selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel])"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="11"
+                  height="9"
+                  viewBox="0 0 11 9"
+                  fill="none"
+                  class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+                >
+                  <path d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z" fill="currentColor" />
+                </svg>
               </component>
             </template>
             <div
@@ -529,6 +542,13 @@ watch(query, (value: string) => {
 
 watchDebounced(query, () => {
   emitComplete()
+  if (props.multiple === false && props.type === 'select') {
+    if (query.value === '' && !selected.value.length)
+      showClearButton.value = false // Hide the clear button
+  } else {
+    if (query.value === '')
+      showClearButton.value = false // Hide the clear button
+  }
 }, { debounce: props.debounceComplete })
 
 watch(showDropdown, () => {
@@ -765,20 +785,14 @@ const multiselectAdd = async () => {
     /* Run nextTick to update DOM and hide the clear button */
     await nextTick()
 
-    /* Hide the clear all button */
-    if (props.multiple && props.type === 'select' || props.type === 'taggable-select')
-      showClearButton.value = false
-
     /* Move focus out of the dropdown */
     arrowCounter.value = -1
   } else {
-    /* Hide the clear all button */
-    showClearButton.value = false
     shake()
   }
 }
 
-const multiselectRemove = (index: number) => {
+const multiselectRemove = async (index: number) => {
   selected.value.splice(index, 1)
 }
 
@@ -913,13 +927,9 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
           sendResult()
         // Result already exists or is an invalid selection
         if (firstTick.value.length && !query.value.length) {
-          /* Hide the clear all button */
-          showClearButton.value = false
           shake()
         }
       } else {
-        // Hide the "clear query" x button
-        showClearButton.value = false
         if (selected.value.length > 0 && query.value === '' && !firstTick.value.length)
           sendResult()
         // Result already exists or is an invalid selection
@@ -942,8 +952,6 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       //if (selected.value.length === 1 && query.value === '') {
       if (selected.value.length > 0 && query.value === '')
         sendResult()
-      // Hide the "clear query" x button
-      showClearButton.value = false
       query.value = '' // Reset query value after selection
       break;
   }
