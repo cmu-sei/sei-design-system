@@ -792,7 +792,7 @@ const multiselectAdd = async () => {
   }
 }
 
-const multiselectRemove = async (index: number) => {
+const multiselectRemove = (index: number) => {
   selected.value.splice(index, 1)
 }
 
