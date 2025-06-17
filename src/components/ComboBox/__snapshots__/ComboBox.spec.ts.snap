@@ -6,306 +6,49 @@ exports[`ComboBox > should handle "Enter" key on "keyup" event 1`] = `
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
-  >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
-  </div>
-  <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 opacity-100 transition-opacity ease-linear duration-75"
+    class="input-group flex flex-col"
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
-      data-id="sds-scroll-area"
+      class="flex flex-row"
     >
-      <!-- @slot Scroll area content. -->
-      
-      
-      
-      
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
+        class="input-group-addon"
         type="button"
       >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Apple
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Banana
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Kiwi
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Orange
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Mango
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pineapple
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pomegranate
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Raspberry
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Strawberry
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Watermelon
-        
-      </button>
-      
-      
-      
-      
-    </div>
-    <!-- Footer section -->
-    <div
-      class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
-    >
-      <div
-        class="ml-auto flex items-center gap-1.5"
-      >
-        <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-              fill="currentColor"
-            />
-          </svg>
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
         <span
           class="sr-only"
         >
-          Up, down
+          Combo box
         </span>
-         to navigate 
-      </div>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
       <!--v-if-->
-      <div
-        class="flex items-center gap-1.5"
-      >
-        <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <span
-          class="sr-only"
-        >
-          Enter
-        </span>
-         to select 
-      </div>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
     </div>
   </div>
   <!--v-if-->
@@ -318,45 +61,50 @@ exports[`ComboBox > should match its default snapshot 1`] = `
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -368,47 +116,52 @@ exports[`ComboBox > should match its snapshot with assigned \`disabled\` prop 1`
   data-id="sds-combo-box"
 >
   <div
-    class="input-group disabled"
+    class="input-group flex flex-col disabled"
   >
-    <button
-      class="input-group-addon"
-      disabled=""
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        disabled=""
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      disabled=""
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        disabled=""
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -420,76 +173,57 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
-  >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
-  </div>
-  <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850 opacity-0 transition-opacity ease-linear duration-75"
+    class="input-group flex flex-col"
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
+      class="flex flex-row"
+    >
+      <button
+        class="input-group-addon"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
+  </div>
+  <div
+    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+  >
+    <!--v-if-->
+    <div
+      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0 pt-2 flex flex-col gap-y-1"
       data-id="sds-scroll-area"
     >
       <!-- @slot Scroll area content. -->
@@ -498,7 +232,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -513,7 +247,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -528,7 +262,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -543,7 +277,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -558,7 +292,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -573,7 +307,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -588,7 +322,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -603,7 +337,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -618,7 +352,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -633,7 +367,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -731,69 +465,50 @@ exports[`ComboBox > should match its snapshot with assigned \`modelValue\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <button
-      class="btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 btn-sm py-2 px-3"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Clear query
-      </span>
-      <svg
-        aria-hidden="true"
-        class="mt-0.5 w-5 h-5"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
     <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+    <div
+      class="flex flex-row"
+    >
+      <button
+        class="input-group-addon"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>
@@ -805,284 +520,52 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
-  >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
-  </div>
-  <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="input-group flex flex-col"
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
-      data-id="sds-scroll-area"
+      class="flex flex-row"
     >
-      <!-- @slot Scroll area content. -->
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/apple"
-        tabindex="-1"
+      <button
+        class="input-group-addon"
+        type="button"
       >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Apple
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/banana"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Banana
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/kiwi"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Kiwi
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/orange"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Orange
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/mango"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Mango
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/pineapple"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pineapple
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/pomegranate"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pomegranate
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/raspberry"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Raspberry
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/strawberry"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Strawberry
-        
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/watermelon"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Watermelon
-        
-      </a>
-      
-      
-      
-      
-    </div>
-    <!-- Footer section -->
-    <div
-      class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
-    >
-      <div
-        class="ml-auto flex items-center gap-1.5"
-      >
-        <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-              fill="currentColor"
-            />
-          </svg>
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
         <span
           class="sr-only"
         >
-          Up, down
+          Combo box
         </span>
-         to navigate 
-      </div>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
       <!--v-if-->
-      <div
-        class="flex items-center gap-1.5"
-      >
-        <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <span
-          class="sr-only"
-        >
-          Enter
-        </span>
-         to select 
-      </div>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
     </div>
   </div>
+  <!--v-if-->
 </div>
 `;
 
@@ -1092,284 +575,52 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
-  >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
-  </div>
-  <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="input-group flex flex-col"
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
-      data-id="sds-scroll-area"
+      class="flex flex-row"
     >
-      <!-- @slot Scroll area content. -->
-      
-      
-      
-      
       <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
+        class="input-group-addon"
         type="button"
       >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Apple
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Banana
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Kiwi
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Orange
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Mango
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pineapple
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Pomegranate
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Raspberry
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Strawberry
-        
-      </button>
-      
-      
-      
-      
-      <button
-        class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        tabindex="-1"
-        type="button"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        
-        Watermelon
-        
-      </button>
-      
-      
-      
-      
-    </div>
-    <!-- Footer section -->
-    <div
-      class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
-    >
-      <div
-        class="ml-auto flex items-center gap-1.5"
-      >
-        <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-              fill="currentColor"
-            />
-          </svg>
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
         <span
           class="sr-only"
         >
-          Up, down
+          Combo box
         </span>
-         to navigate 
-      </div>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
       <!--v-if-->
-      <div
-        class="flex items-center gap-1.5"
-      >
-        <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <span
-          class="sr-only"
-        >
-          Enter
-        </span>
-         to select 
-      </div>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
     </div>
   </div>
+  <!--v-if-->
 </div>
 `;
 
@@ -1379,274 +630,52 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
-  >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
-    >
-      <span
-        class="sr-only"
-      >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
-  </div>
-  <div
-    class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    class="input-group flex flex-col"
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
-      data-id="sds-scroll-area"
+      class="flex flex-row"
     >
-      <!-- @slot Scroll area content. -->
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/apple"
-        >
-          Apple
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/banana"
-        >
-          Banana
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/kiwi"
-        >
-          Kiwi
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/orange"
-        >
-          Orange
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/mango"
-        >
-          Mango
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/pineapple"
-        >
-          Pineapple
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/pomegranate"
-        >
-          Pomegranate
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/raspberry"
-        >
-          Raspberry
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/strawberry"
-        >
-          Strawberry
-        </a>
-        
-      </div>
-      
-      
-      
-      
-      <div>
-        
-        <a
-          class="flex w-full px-4 py-2 text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-          href="/watermelon"
-        >
-          Watermelon
-        </a>
-        
-      </div>
-      
-      
-      
-      
-    </div>
-    <!-- Footer section -->
-    <div
-      class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
-    >
-      <div
-        class="ml-auto flex items-center gap-1.5"
+      <button
+        class="input-group-addon"
+        type="button"
       >
-        <div
-          class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-              fill="currentColor"
-            />
-          </svg>
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 384 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
         <span
           class="sr-only"
         >
-          Up, down
+          Combo box
         </span>
-         to navigate 
-      </div>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
       <!--v-if-->
-      <div
-        class="flex items-center gap-1.5"
-      >
-        <div
-          class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
-        >
-          <svg
-            aria-hidden="true"
-            class="w-3 h-3"
-            focusable="false"
-            role="img"
-            viewBox="0 0 512 512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
-        <span
-          class="sr-only"
-        >
-          Enter
-        </span>
-         to select 
-      </div>
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
     </div>
   </div>
+  <!--v-if-->
 </div>
 `;
 
@@ -1656,46 +685,51 @@ exports[`ComboBox > should match its snapshot with assigned \`placeholder\` prop
   data-id="sds-combo-box"
 >
   <div
-    class="input-group"
+    class="input-group flex flex-col"
   >
-    <button
-      class="input-group-addon"
-      tabindex="-1"
-      type="button"
+    <!--v-if-->
+    <div
+      class="flex flex-row"
     >
-      <span
-        class="sr-only"
+      <button
+        class="input-group-addon"
+        type="button"
       >
-        Combo box
-      </span>
-      <svg
-        aria-hidden="true"
-        class="w-4 h-4"
-        focusable="false"
-        role="img"
-        viewBox="0 0 512 512"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-          fill="currentColor"
-        />
-      </svg>
-    </button>
-    <input
-      autocapitalize="off"
-      autocomplete="off"
-      autocorrect="off"
-      class="form-control"
-      placeholder="Search"
-      spellcheck="false"
-      type="text"
-    />
-    <!--v-if-->
-    <!--v-if-->
-    <!-- @slot Default content. Good for adding content to the end of the input group -->
-    
-    
+        <span
+          class="sr-only"
+        >
+          Combo box
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-4 h-4"
+          focusable="false"
+          role="img"
+          viewBox="0 0 512 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <!--v-if-->
+      <input
+        autocapitalize="off"
+        autocomplete="off"
+        autocorrect="off"
+        class="form-control border-none"
+        placeholder="Search"
+        spellcheck="false"
+        type="text"
+      />
+      <!--v-if-->
+      <!--v-if-->
+      <!-- @slot Default content. Good for adding content to the end of the input group -->
+      
+      
+    </div>
   </div>
   <!--v-if-->
 </div>

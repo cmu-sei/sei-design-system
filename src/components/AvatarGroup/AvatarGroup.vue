@@ -88,37 +88,17 @@
         v-for="(item, index) in srcset.slice(4)"
         :key="index"
       >
-        <a
-          v-if="item.href"
-          :href="item.href"
-          :target="item.target ?? undefined"
-          :rel="item.target === '_blank' ? 'noopener noreferrer' : undefined"
-          class="flex flex-row gap-2"
-        >
-          <img
-            v-if="item.src"
-            :src="item.src"
-            :alt="item.name ?? undefined"
-            class="bg-gray-100 dark:bg-gray-850 object-cover h-5 w-5"
-            :class="{
-              'rounded-full': shape === 'circle',
-              'rounded-xs sds-theme-plaid:rounded-none': shape === 'square',
-            }"
+        <div class="flex flex-row gap-2">
+          <SdsAvatar
+            :shape="shape"
+            size="xs"
+            :variant="item.variant ?? 'gray'"
+            :src="item.src ?? ''"
+            :name="item.name ?? ''"
           />
-          {{ item.name }}
-        </a>
-        <div v-else class="flex flex-row gap-2">
-          <img
-            v-if="item.src"
-            :src="item.src"
-            :alt="item.name ?? undefined"
-            class="bg-gray-100 dark:bg-gray-850 object-cover h-5 w-5"
-            :class="{
-              'rounded-full': shape === 'circle',
-              'rounded-xs sds-theme-plaid:rounded-none': shape === 'square',
-            }"
-          />
-          {{ item.name }}
+          <span class="leading-6">
+            {{ item.name }}
+          </span>
         </div>
       </SdsDropdownItem>
     </SdsDropdown>
