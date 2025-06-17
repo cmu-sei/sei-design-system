@@ -473,10 +473,6 @@ const props = defineProps({
    */
   optionGroupChildren: { type: String, default: undefined },
   /**
-   * The delimiter used to separate selected options in the input field.
-   */
-  delimiter: { type: String, default: ',' },
-  /**
    * Determine whether to use built-in suggestion filter based on modelValue.
    */
   filterSuggestions: { type: Boolean, default: undefined },
@@ -758,7 +754,7 @@ const multiselectAdd = async () => {
     /* Refocus the input field */
     inputField.value.focus()
 
-    /* Single-select, hdie the dropdown */
+    /* Single-select, hide the dropdown */
     if (!props.multiple && props.type === 'select') {
       showDropdown.value = false // Hide the dropdown
       query.value = selected.value[0] as string
@@ -766,10 +762,7 @@ const multiselectAdd = async () => {
         isReadonly.value = true // Set readonly to true if not multiple and type is select
     }
 
-    /* Multiple select and taggable, keep the dropdown open */
-    if (props.multiple && props.type === 'select' || props.type === 'taggable-select')
-      query.value = selected.value.join(props.delimiter)
-
+    /* Run nextTick to update DOM and hide the clear button */
     await nextTick()
 
     /* Hide the clear all button */
@@ -846,7 +839,7 @@ const handleInput = async () => {
 
 const firstTick = ref()
 
-const sendResult = async () => {
+const sendResult = () => {
   selected.value = selected.value.length > 0 ?
     selected.value :
     [query.value] as ComboBoxSuggestion[]
