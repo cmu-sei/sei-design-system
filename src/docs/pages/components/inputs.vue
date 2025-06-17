@@ -184,8 +184,6 @@
             filter-suggestions
             focus-on-key-press
             option-label="name"
-            option-group-label="section"
-            option-group-children="items"
             @complete="comboBox2_2.onComplete"
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
@@ -467,31 +465,21 @@ const comboBox2_1 = reactive({
 const comboBox2_2 = reactive({
   modelValue: '',
   suggestions: [
-    {
-      section: 'Fruits',
-      items: [
-        { name: 'Apple' },
-        { name: 'Banana' },
-        { name: 'Blueberry' },
-        { name: 'Cantaloupe' },
-        { name: 'Kiwi' },
-        { name: 'Strawberry' }
-      ]
-    },
-    {
-      section: 'Vegetables',
-      items: [
-        { name: 'Artichoke' },
-        { name: 'Avocado' },
-        { name: 'Beetroot' },
-        { name: 'Celery' },
-        { name: 'Cucumber' },
-        { name: 'Daikon' },
-        { name: 'Eggplant' },
-        { name: 'Kale' },
-        { name: 'Shallot' }
-      ]
-    }
+    { name: 'Apple' },
+    { name: 'Banana' },
+    { name: 'Blueberry' },
+    { name: 'Cantaloupe' },
+    { name: 'Kiwi' },
+    { name: 'Strawberry' },
+    { name: 'Artichoke' },
+    { name: 'Avocado' },
+    { name: 'Beetroot' },
+    { name: 'Celery' },
+    { name: 'Cucumber' },
+    { name: 'Daikon' },
+    { name: 'Eggplant' },
+    { name: 'Kale' },
+    { name: 'Shallot' }
   ] as ComboBoxSuggestion[],
   selected: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {

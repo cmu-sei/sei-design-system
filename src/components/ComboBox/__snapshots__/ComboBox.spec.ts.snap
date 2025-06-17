@@ -232,7 +232,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -241,13 +241,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Apple
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -256,13 +257,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Banana
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -271,13 +273,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Kiwi
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -286,13 +289,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Orange
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -301,13 +305,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Mango
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -316,13 +321,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Pineapple
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -331,13 +337,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Pomegranate
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -346,13 +353,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Raspberry
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -361,13 +369,14 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Strawberry
         
+        <!--v-if-->
       </button>
       
       
       
       
       <button
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 last:mb-2"
+        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300 last:mb-2"
         data-active="false"
         tabindex="-1"
         type="button"
@@ -376,6 +385,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         
         Watermelon
         
+        <!--v-if-->
       </button>
       
       
