@@ -59,10 +59,6 @@
 
 .tab-group:where(.sds-theme-plaid *) {
   @apply grid grid-flow-col auto-cols-min;
-
-  /* &:has(.tab-block) {
-    @apply -my-0;
-  } */
 }
 
 .tab:not(.tab-pill):where(.sds-theme-plaid *) {
