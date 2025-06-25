@@ -1,6 +1,10 @@
 .tabs:where(.sds-theme-plaid *) {
   [role="tablist"]:has(.tab-block) {
     @apply border border-gray-100 dark:border-gray-800;
+
+    .tab-block {
+      @apply -my-0.25
+    }
   }
 
   [role="tablist"]:has(.tab-folder) {
@@ -55,6 +59,10 @@
 
 .tab-group:where(.sds-theme-plaid *) {
   @apply grid grid-flow-col auto-cols-min;
+
+  /* &:has(.tab-block) {
+    @apply -my-0;
+  } */
 }
 
 .tab:not(.tab-pill):where(.sds-theme-plaid *) {
@@ -86,7 +94,7 @@
 
   &.tab-block {
     @apply border border-gray-100/0 dark:border-gray-800/0;
-    @apply relative -m-0.25 z-1;
+    @apply relative -mx-0.25 z-1;
 
     &:hover:not(.active),
     &:active:not(.active) {
