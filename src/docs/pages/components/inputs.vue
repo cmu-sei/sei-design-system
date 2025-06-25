@@ -139,12 +139,14 @@
       </h2>
       <form
         @submit.prevent="handleSubmit"
+        class="mb-4"
       >
         <div class="space-y-4">
           <code class="text-xs">type="text"</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
             placeholder="Search"
+            disableGroupTabs
             :suggestions="comboBox1.suggestions"
             filter-suggestions
             focus-on-key-press
@@ -174,6 +176,7 @@
             v-model="comboBox2_2.modelValue"
             v-model:selected="comboBox2_2.selected"
             placeholder="Search"
+            disableGroupTabs
             :disabled="false"
             :autofocus="false"
             :suggestions="comboBox2_2.suggestions"
@@ -218,6 +221,25 @@
           Submit
         </SdsButton>
       </form>
+      <div class="border-solid border p-4 bg-white dark:bg-black">
+        <h3>Form Data</h3>
+        <table>
+          <tbody>
+            <tr>
+              <td>(text):</td><td>'{{ formData.comboBox1 }}'</td>
+            </tr>
+            <tr>
+              <td>(select):</td><td>{{ formData.comboBox2_1 }}</td>
+            </tr>
+            <tr>
+              <td>(select, multiple):</td><td>{{ formData.comboBox2_2 }}</td>
+            </tr>
+            <tr>
+              <td>(taggable-select):</td><td>{{ formData.comboBox3 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
@@ -534,17 +556,21 @@ const comboBox3 = reactive({
 })
 
 const formData = reactive({
-  comboBox2_1: comboBox2_1.selected,
-  comboBox2_2: comboBox2_2.selected,
-  comboBox3: comboBox3.selected
+  comboBox1: '',
+  comboBox2_1: [],
+  comboBox2_2: [],
+  comboBox3: []
+})
+
+watchEffect(() => {
+  formData.comboBox1 = comboBox1.modelValue
+  formData.comboBox2_1 = comboBox2_1.selected
+  formData.comboBox2_2 = comboBox2_2.selected
+  formData.comboBox3 = comboBox3.selected
 })
 
 const handleSubmit = () => {
-  console.log('Form submitted')
-  console.log(formData)
-  console.log(comboBox2_1.selected)
-  console.log(comboBox2_2.selected)
-  console.log(comboBox3.selected)
+  alert(`Form submitted with data: ${JSON.stringify(formData)}`)
 }
 
 const select = reactive({
@@ -579,3 +605,9 @@ useHead({
   title: 'Inputs'
 })
 </script>
+
+<style scoped>
+td {
+  padding-right: 1rem;
+}
+</style>
