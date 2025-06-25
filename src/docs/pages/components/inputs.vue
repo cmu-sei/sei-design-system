@@ -138,15 +138,15 @@
         Combo Box
       </h2>
       <form
-        @submit.prevent="handleSubmit"
         class="mb-4"
+        @submit.prevent="handleSubmit"
       >
         <div class="space-y-4">
           <code class="text-xs">type="text"</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
             placeholder="Search"
-            disableGroupTabs
+            disable-group-tabs
             :suggestions="comboBox1.suggestions"
             filter-suggestions
             focus-on-key-press
@@ -176,7 +176,7 @@
             v-model="comboBox2_2.modelValue"
             v-model:selected="comboBox2_2.selected"
             placeholder="Search"
-            disableGroupTabs
+            disable-group-tabs
             :disabled="false"
             :autofocus="false"
             :suggestions="comboBox2_2.suggestions"
