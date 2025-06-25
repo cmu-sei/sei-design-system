@@ -557,9 +557,9 @@ const comboBox3 = reactive({
 
 const formData = reactive({
   comboBox1: '',
-  comboBox2_1: [],
-  comboBox2_2: [],
-  comboBox3: []
+  comboBox2_1: ([] as ComboBoxSuggestion[]),
+  comboBox2_2: ([] as ComboBoxSuggestion[]),
+  comboBox3: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {

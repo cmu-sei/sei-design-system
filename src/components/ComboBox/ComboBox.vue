@@ -595,7 +595,7 @@ const addIndexToList = (arr: ComboBoxSuggestion[]) => {
 
 const updateSuggestions = () => {
   // Convert suggestions to an array of objects if they are not already
-  allSuggestions.value = props.suggestions?.map(i => {
+  allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {
     if (typeof i !== 'object') {
       i = {
         [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
@@ -622,7 +622,7 @@ const updateSuggestions = () => {
   let key = -1
   groups.value = allSuggestionOptions.value ? [
     { index: -1, key, label: 'All', count: allCount.value },
-    ...allSuggestionOptions.value.map((i, index) => {
+    ...allSuggestionOptions.value.map((i: ComboBoxSuggestion, index: number) => {
       const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
       if (count > 0) {
         key = key + 1
@@ -633,10 +633,10 @@ const updateSuggestions = () => {
         label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
         count
       }
-    }).filter(i => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
+    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 
-  activeGroup.value = groups.value?.find((i) => {
+  activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => {
     return typeof i !== 'string' && i?.key === activeGroupKey.value
   })
 
@@ -692,7 +692,7 @@ watch(showDropdown, () => {
 
 const showClearButton = ref(false)
 
-const setActiveGroup = (e, group: { key: number }) => {
+const setActiveGroup = (e: MouseEvent | KeyboardEvent, group: { key: number }) => {
   e.preventDefault()
   inputField.value.focus()
   activeGroupKey.value = group.key
