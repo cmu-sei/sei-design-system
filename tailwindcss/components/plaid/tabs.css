@@ -128,10 +128,12 @@
 
     &.tab-gray {
       &.active {
-        @apply bg-gray-900 dark:bg-gray-300 text-white;
+        @apply bg-gray-900 dark:bg-gray-300;
+        @apply text-white dark:text-black;
         .tab-count {
-          @apply bg-white text-gray-900 dark:text-gray-300;
-        }
+          @apply bg-white dark:bg-black;
+          @apply text-gray-900 dark:text-gray-300
+        } 
       }
     }
 
@@ -154,12 +156,12 @@
 
     &:active,
     &.active {
-      @apply bg-white;
+      @apply bg-white dark:bg-gray-900;
     }
 
     &.active {
       @apply border-gray-100 dark:border-gray-800 border-t-gray-100/0 dark:border-t-gray-800/0;
-      @apply border-b-white;
+      @apply border-b-white dark:border-b-gray-900;
       @apply relative z-2;
     }
 
@@ -175,25 +177,19 @@
 
     &.tab-blue {
       &.active {
-        &:before {
-          @apply bg-blue-600 dark:bg-blue-400;
-        }
+        @apply before:bg-blue-600 dark:before:bg-blue-400;
       }
     }
 
     &.tab-gray {
       &.active {
-        &:before {
-          @apply bg-gray-900 dark:bg-gray-300;
-        }
+        @apply before:bg-gray-900 dark:before:bg-gray-300;
       }
     }
 
     &.tab-red {
       &.active {
-        &:before {
-          @apply bg-red-600 dark:bg-red-300;
-        }
+        @apply before:bg-red-600 dark:before:bg-red-300;
       }
     }
 
@@ -252,9 +248,9 @@
     }
 
     &:active:not(.active) {
-      @apply text-black dark:text-white;
+      @apply text-black dark:text-gray-400;
       .tab-count {
-        @apply bg-black dark:bg-white;
+        @apply bg-black dark:bg-gray-400;
       }
     }
 
@@ -279,9 +275,9 @@
     }
 
     &:active:not(.active) {
-      @apply text-red-700 dark:text-red-800;
+      @apply text-red-700 dark:text-red-400;
       .tab-count {
-        @apply bg-red-700 dark:bg-red-800;
+        @apply bg-red-700 dark:bg-red-400;
       }
     }
 
