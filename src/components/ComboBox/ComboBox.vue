@@ -12,7 +12,7 @@
       }"
     >
       <div
-        v-if="(type === 'taggable-select' || (type === 'select' && multiple)) && selected.length > 0"
+        v-if="(type === 'taggable-select' || (type === 'select' && multiple)) && selected.length"
         class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
       >
         <SdsTag
@@ -133,7 +133,7 @@
       class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
-        v-if="!disableGroupTabs && groups.length > 1"
+        v-if="!disableGroupTabs && groups?.length > 1"
         class="overflow-x-auto flex after:w-full after:h-full after:content-[''] after:mt-auto after:border-b-2 after:border-b-gray-100 dark:after:border-b-gray-100"
       >
         <button
@@ -148,7 +148,7 @@
             'border-b-2 border-b-blue-600 text-blue-600 dark:border-b-blue-400 dark:text-blue-400': group.count > 0 && activeGroupKey === group.key,
             'text-gray-600 dark:text-gray-300 border-b-2 border-gray-100 dark:border-gray-100': group.count > 0 && activeGroupKey !== group.key,
           }"
-          @click="setActiveGroup(group)"
+          @click="(e) => setActiveGroup(e, group)"
         >
           <span>{{ group.label }}</span>
           <span
@@ -165,7 +165,7 @@
         ref="scrollArea"
         class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
         :class="{
-          'pt-2 flex flex-col gap-y-1': groups.length < 2
+          'py-2 flex flex-col gap-y-1': optionType !== 'custom'
         }"
       >
         <template
@@ -174,7 +174,7 @@
         >
           <div
             v-if="optionGroupChildren && s[optionGroupChildren]"
-            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 py-2"
+            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 pb-2 -mb-2"
           >
             <div
               v-if="activeGroupKey === -1"
@@ -201,7 +201,7 @@
                   class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
                   :class="{
                     'text-gray-700 dark:text-gray-300': c.index !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && c.index !== arrowCounter,
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && c.index !== arrowCounter && type !== 'text',
                     'text-black dark:text-white bg-gray-25 dark:bg-gray-750': c.index === arrowCounter,
                   }"
                   :data-active="c.index === arrowCounter"
@@ -218,7 +218,7 @@
                     {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                   </slot>
                   <svg
-                    v-if="selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
+                    v-if="selected.includes(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text'"
                     xmlns="http://www.w3.org/2000/svg"
                     width="11"
                     height="9"
@@ -262,7 +262,7 @@
                 class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
                 :class="{
                   'text-gray-700 dark:text-gray-300': s.index !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && s.index !== arrowCounter,
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && s.index !== arrowCounter && type !== 'text',
                   'text-black dark:text-white bg-gray-25 dark:bg-gray-750': s.index === arrowCounter,
                   'last:mb-2': groups.length < 2
                 }"
@@ -280,7 +280,7 @@
                   {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
                 </slot>
                 <svg
-                  v-if="selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel])"
+                  v-if="selected.includes(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text'"
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
                   height="9"
@@ -528,34 +528,16 @@ const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const defaultOptionLabel = ref('label')
 
-watch(query, (value: string) => {
-  /* Always remove HTML from query value if found */
-  const htmlRegex = /<[^>]*(>|$)/
-  if (htmlRegex.test(value))
-    query.value = removeHtmlFromString(value)
-  /* Show "X" button to clear current selection
-   * Follow inputField.value to check on keypress */
-  const inputLength = inputField.value ? inputField.value.value.length : 0
-  /* Only show clear button if input is set */
-  showClearButton.value = inputLength > 0
-})
+const groups = ref()
+const activeGroup = ref()
+const activeGroupKey = ref(-1)
 
-watchDebounced(query, () => {
-  emitComplete()
-  if (props.multiple === false && props.type === 'select') {
-    if (query.value === '' && !selected.value.length)
-      showClearButton.value = false // Hide the clear button
-  } else {
-    if (query.value === '')
-      showClearButton.value = false // Hide the clear button
-  }
-}, { debounce: props.debounceComplete })
-
-watch(showDropdown, () => {
-  // Move focus out of dropdown when it is closed
-  arrowCounter.value = -1
-  activeGroupKey.value = -1
-})
+const allSuggestions = ref()
+const allSuggestionOptions = ref()
+const allCount = ref(0)
+const groupSuggestions = ref()
+const groupSuggestionOptions = ref()
+const suggestionOptions = ref()
 
 const reduceList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
@@ -564,7 +546,12 @@ const reduceList = (arr: ComboBoxSuggestion[]) => {
       const newItem = Object.assign({}, item)
       if (props.optionGroupChildren && item[props.optionGroupChildren]) {
         newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
-        if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length > 0) {
+        // If "hideEmptyGroups" is configured, don't add empty groups to the reduced list
+        if (props.hideEmptyGroups) {
+          if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length)
+            acc.push(newItem)
+        } else {
+          // Otherwise, just add the disabled group label to the tab button
           acc.push(newItem)
         }
       } else {
@@ -585,6 +572,7 @@ const reduceList = (arr: ComboBoxSuggestion[]) => {
 
 const addIndexToList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
+  // Sort the reduced list of suggestions
   let index = 0
   return arr.map((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
@@ -605,11 +593,9 @@ const addIndexToList = (arr: ComboBoxSuggestion[]) => {
   })
 }
 
-const groupSuggestionOptions = ref()
-const showClearButton = ref(false)
-
-const allSuggestions = computed(() => {
-  return props.suggestions?.map(i => {
+const updateSuggestions = () => {
+  // Convert suggestions to an array of objects if they are not already
+  allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {
     if (typeof i !== 'object') {
       i = {
         [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
@@ -617,15 +603,12 @@ const allSuggestions = computed(() => {
     }
     return i
   })
-})
-
-const allSuggestionOptions = computed(() => {
-  return props.filterSuggestions && allSuggestions.value ?
+  // Reduce the list of suggestions based on the query
+  allSuggestionOptions.value = props.filterSuggestions && allSuggestions.value ?
     reduceList(allSuggestions.value) :
     allSuggestions.value && addIndexToList(allSuggestions.value)
-})
 
-const allCount = computed(() => {
+  // Configure counts for all suggestion groups
   let count = 0
   allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
@@ -634,67 +617,98 @@ const allCount = computed(() => {
       count = count + 1
     }
   })
-  return count
-})
+  allCount.value = count
 
-const groupsWithItems = computed(() => {
-  return props.suggestions?.filter(i => typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren])
-})
-
-const groups = computed(() => {
   let key = -1
-  return groupsWithItems.value ? [
+  groups.value = allSuggestionOptions.value ? [
     { index: -1, key, label: 'All', count: allCount.value },
-    ...groupsWithItems.value.map((i, index) => {
-        const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
-        if (count > 0) {
-          key = key + 1
-        }
-        return {
-          index,
-          key,
-          label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-          count
-        }
-    }).filter(i => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
+    ...allSuggestionOptions.value.map((i: ComboBoxSuggestion, index: number) => {
+      const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
+      if (count > 0) {
+        key = key + 1
+      }
+      return {
+        index,
+        key,
+        label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
+        count
+      }
+    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
-})
 
-const activeGroupKey = ref(-1)
-
-const activeGroup = computed(() => {
-  return groups.value.find(i => typeof i !== 'string' && i?.key === activeGroupKey.value)
-})
-
-// Group Suggestions
-const groupSuggestions = computed(() => {
-  return props.suggestions?.filter(i => {
-    return typeof i !== 'string' && props.optionGroupChildren &&
-      i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label
+  activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => {
+    return typeof i !== 'string' && i?.key === activeGroupKey.value
   })
-})
 
-const suggestionOptions = computed(() => {
+  // Group Suggestions
+  groupSuggestions.value = props.suggestions?.filter(i => {
+    return typeof i !== 'string' && props.optionGroupChildren &&
+      i[props.optionGroupLabel ?
+        props.optionGroupLabel :
+        defaultOptionLabel.value] === activeGroup.value?.label
+  })
+
   groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions.value ?
     reduceList(groupSuggestions.value) :
     groupSuggestions.value && addIndexToList(groupSuggestions.value)
 
   // Combined Suggestion Options
-  return activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
+  suggestionOptions.value = activeGroupKey.value === -1 ?
+    allSuggestionOptions.value :
+    groupSuggestionOptions.value
+}
+
+watch(query, (value: string) => {
+  /* Always remove HTML from query value if found */
+  const htmlRegex = /<[^>]*(>|$)/
+  if (htmlRegex.test(value))
+    query.value = removeHtmlFromString(value)
+
+  updateSuggestions()
+
+  /* Show "X" button to clear current selection
+   * Follow inputField.value to check on keypress */
+  const inputLength = inputField.value ? inputField.value.value.length : 0
+  /* Only show clear button if input is set */
+  showClearButton.value = inputLength > 0
 })
 
-const setActiveGroup = (group: { key: number }) => {
+watchDebounced(query, () => {
+  emitComplete()
+  if ((props.multiple === false && props.type === 'select') || props.type === 'text') {
+    if (query.value === '' && !selected.value.length)
+      showClearButton.value = false // Hide the clear button
+  } else {
+    if (query.value === '')
+      showClearButton.value = false // Hide the clear button
+  }
+}, { debounce: props.debounceComplete })
+
+watch(showDropdown, () => {
+  // Move focus out of dropdown when it is closed
+  arrowCounter.value = -1
+  activeGroupKey.value = -1
+})
+
+const showClearButton = ref(false)
+
+const setActiveGroup = (e: MouseEvent | KeyboardEvent, group: { key: number }) => {
+  e.preventDefault()
   inputField.value.focus()
   activeGroupKey.value = group.key
+  updateSuggestions()
 }
 
 onMounted(() => {
+  updateSuggestions()
   if (props.autofocus) inputField.value.focus();
 })
 
-onKeyStroke('Escape', () => {
+onKeyStroke('Escape', (e: KeyboardEvent) => {
+  e.preventDefault()
+  if (!showDropdown.value)
+    inputField.value.blur() // Blur the input field
   showDropdown.value = false
-  inputField.value.blur()
 })
 
 // Close dropdown when clicking outside of ComboBox
@@ -747,7 +761,7 @@ const clearQuery = () => {
   inputField.value.value = ''
   if (!props.multiple && props.type === 'select')
     selected.value = []
-    isReadonly.value = false
+  isReadonly.value = false
   showClearButton.value = false
 }
 
@@ -775,10 +789,10 @@ const multiselectAdd = async () => {
     inputField.value.focus()
 
     /* Single-select, hide the dropdown */
-    if (!props.multiple && props.type === 'select') {
+    if ((!props.multiple && props.type === 'select') || props.type === 'text') {
       showDropdown.value = false // Hide the dropdown
       query.value = selected.value[0] as string
-      if (selected.value ? selected.value.length > 0 : false)
+      if (selected.value ? (selected.value.length && props.type !== 'text') : false)
         isReadonly.value = true // Set readonly to true if not multiple and type is select
     }
 
@@ -794,18 +808,33 @@ const multiselectAdd = async () => {
 
 const multiselectRemove = (index: number) => {
   selected.value.splice(index, 1)
+  if (selected.value.length === 0) {
+    // If no selected items, reset the input field
+    query.value = ''
+    inputField.value.value = ''
+    isReadonly.value = false // Set readonly to false if no selected items
+    showClearButton.value = false // Hide the clear button
+
+    if (!showDropdown.value)
+      showDropdown.value = true
+  }
 }
 
 const handleDelete = () => {
+  // Special handling for text input type
+  if (selected.value.length && props.type === 'text')
+    selected.value.pop() // Remove the last selected item
+    if (!showDropdown.value)
+      showDropdown.value = true
   // If multiple is enabled and the input field is empty,
-  if (selected.value.length > 0 && inputField.value.value === '') {
+  if (selected.value.length && inputField.value.value === '') {
     // Remove the last tag from the end of the list
     multiselectRemove(-1)
   }
 }
 
 const handleSuggestionClick = (option: ComboBoxSuggestion) => {
-  handleEnterKeyUp(option)
+  handleEnterKeyUp(option, true)
 }
 
 const getCurrentSuggestion = () => {
@@ -813,7 +842,9 @@ const getCurrentSuggestion = () => {
   suggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x.index === arrowCounter.value)
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => {
+          return typeof x !== 'string' && x.index === arrowCounter.value
+        })
         if (tmp) {
           option = tmp
         }
@@ -849,12 +880,16 @@ const handleFocus = () => {
 
 const handleInput = async () => {
   await nextTick()
+  /* When typing, always reset arrowCounter to -1 to use "all"
+   * possible suggestions available. */
+  if (showDropdown.value)
+    arrowCounter.value = -1 // Reset arrow counter on input
 }
 
 const firstTick = ref()
 
-const sendResult = () => {
-  selected.value = selected.value.length > 0 ?
+const commitSelection = () => {
+  selected.value = selected.value.length ?
     selected.value :
     [query.value] as ComboBoxSuggestion[]
 
@@ -863,9 +898,10 @@ const sendResult = () => {
   showDropdown.value = false // Hide the dropdown
   selected.value = []
   inputField.value.blur()
+  emitEnter()
 }
 
-const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | MouseEvent | null) => {
+const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | MouseEvent | null, clicked=false) => {
   if (props.disabled) return;
 
   firstTick.value = query.value
@@ -893,28 +929,34 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
   }
 
   await nextTick()
-  emitEnter()
   // Emit the selected option (max 1 w/o multiple)
   emitResult(query.value)
 
   switch (props.type) {
     case 'text':
-      await nextTick()
-
-      // Toggle selection depending on whether it exists in selected
-      if (selected.value.includes(query.value)) {
-        multiselectRemove(selected.value.indexOf(query.value))
+      /**
+       * 1. selected.value should have a length (this means a click or enter event has already submitted a value)
+       * 2. not "clicked", don't submit when clicking a suggestion
+       * 3. arrowCounter is -1, don't submit when selecting a suggestion with arrows
+       */
+      if (selected.value.length && !clicked && arrowCounter.value === -1) {
+        commitSelection()
       } else {
-        multiselectAdd() // Will select chosen option if props.multiple
+        // Empty selected items (there can be only one) in selected.value
+        multiselectRemove(0)
+        // Populate selected.value with the new query
+        multiselectAdd()
+        showClearButton.value = true
+      }
+      // Result already exists or is an invalid selection
+      if ((firstTick.value.length && !query.value.length) || !query.value.length) {
+        showClearButton.value = false
+        shake()
       }
 
-      if (selected.value.length > 0)
-        sendResult()
-
+      firstTick.value = '' // Reset firstTick after selection
       break;
     case 'select':
-      await nextTick()
-
       // Toggle selection depending on whether it exists in selected
       if (selected.value.includes(query.value)) {
         multiselectRemove(selected.value.indexOf(query.value))
@@ -924,16 +966,15 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
 
       if (!props.multiple) {
         if (selected.value.length === 1 && query.value === '' && !firstTick.value.length)
-          sendResult()
+          commitSelection()
         // Result already exists or is an invalid selection
-        if (firstTick.value.length && !query.value.length) {
+        if ((firstTick.value.length && !query.value.length) || !query.value.length)
           shake()
-        }
       } else {
-        if (selected.value.length > 0 && query.value === '' && !firstTick.value.length)
-          sendResult()
+        if (selected.value.length && query.value === '' && !firstTick.value.length)
+          commitSelection()
         // Result already exists or is an invalid selection
-        if (firstTick.value.length && !query.value.length)
+        if ((firstTick.value.length && !query.value.length) || (!query.value.length && selected.value.length === 0))
           shake()
       }
 
@@ -941,25 +982,41 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
       query.value = '' // Reset query value after selection
       break;
     case 'taggable-select':
-      await nextTick()
-
       // Toggle selection depending on whether it exists in selected
       if (selected.value.includes(query.value)) {
         multiselectRemove(selected.value.indexOf(query.value))
       } else {
         multiselectAdd() // Will select chosen option if props.multiple
       }
-      //if (selected.value.length === 1 && query.value === '') {
-      if (selected.value.length > 0 && query.value === '')
-        sendResult()
+
+      // Result already exists or is an invalid selection
+      if ((firstTick.value.length && !query.value.length) || !query.value.length) {
+        //if (selected.value.length === 1 && query.value === '') {
+        if (selected.value.length && query.value === '') {
+          commitSelection()
+        } else {
+          showClearButton.value = false
+          shake()
+        }
+      }
+
+      firstTick.value = '' // Reset firstTick after selection
       query.value = '' // Reset query value after selection
       break;
   }
 }
 
 const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
-  // Allow an open state
   if (!showDropdown.value && (direction === 'up' || direction === 'down')) {
+    // Lock it down if readonly
+    if ((!props.multiple && props.type === 'select') || props.type === 'text') {
+      if (inputField.value.readOnly === true) {
+        event.preventDefault()
+        showDropdown.value = false // Hide the dropdown if only one item is selected
+        return
+      }
+    }
+    // Otherwise, show open state
     showDropdown.value = true
   } else {
     switch (direction) {
@@ -983,30 +1040,22 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "left":
-        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length && arrowCounter.value > -1) {
           if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
-            event.preventDefault()
-            arrowCounter.value = -1
-            activeGroupKey.value = activeGroupKey.value - 1;
+            setActiveGroup(event, { key: activeGroupKey.value - 1 });
           } else {
             // Allow circular navigation
-            event.preventDefault()
-            arrowCounter.value = groups.value.length - 1;
-            activeGroupKey.value = groups.value[groups.value.length-1].key; // Reset to all suggestions
+            setActiveGroup(event, { key: groups.value[groups.value.length - 1].key }); // Set to first 'all' group
           }
         }
         break;
       case "right":
-        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
+        if (!props.disableGroupTabs && suggestionOptions.value.length && arrowCounter.value > -1) {
           if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
-            event.preventDefault()
-            arrowCounter.value = -1
-            activeGroupKey.value = activeGroupKey.value + 1;
+            setActiveGroup(event, { key: activeGroupKey.value + 1 });
           } else {
-            // Allow circular navigation
-            event.preventDefault()
-            arrowCounter.value = -1
-            activeGroupKey.value = -1; // Reset to all suggestions
+            // Set to first 'all' group
+            setActiveGroup(event, { key: -1 });
           }
         }
         break;
