@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { mount, VueWrapper } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import Component from './ComboBox.vue'
 import { computed } from 'vue'
 
@@ -79,14 +79,25 @@ describe('ComboBox', () => {
   })
 
   it('should set focus to input on "click" event', async () => {
-    await wrapper.find('.input-group-addon').trigger('click')
+    await wrapper.find('input[type="text"]').trigger('click')
     expect(wrapper.find('input[type="text"]').element).toStrictEqual(document.activeElement)
   })
 
   it('should match its snapshot with assigned `filterSuggestions` and `suggestions` props', async () => {
-    await wrapper.setProps({
-      filterSuggestions: true,
-      suggestions
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      global: {
+        stubs: {
+          transition: false
+        },
+        mocks: {
+          allSuggestions: suggestions
+        }
+      },
+      props: {
+        optionType: 'a',
+        suggestions: suggestionsATag
+      }
     })
     await wrapper.find('input[type="text"]').trigger('focus')
     expect(wrapper.find('[data-id="sds-scroll-area"]').exists()).toBeTruthy()
@@ -94,9 +105,19 @@ describe('ComboBox', () => {
   })
 
   it('should handle "down" and "up" arrow keys on "keydown" event', async () => {
-    await wrapper.setProps({
-      filterSuggestions: true,
-      suggestions
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      global: {
+        stubs: {
+          transition: false
+        },
+        mocks: {
+          allSuggestions: suggestions
+        }
+      },
+      props: {
+        suggestions: suggestions
+      }
     })
 
     await wrapper.find('input[type="text"]').trigger('focus')
