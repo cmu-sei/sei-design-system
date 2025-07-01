@@ -36,6 +36,7 @@
         >
           <button 
             class="flex items-center justify-center w-6 h-6"
+            type="button"
             @click="toggleAllDrawers"
           >
             <SdsSvgIcon
@@ -151,6 +152,7 @@
                 :class="{
                   'cursor-default': !field.sortable
                 }"
+                type="button"
                 @click="field.sortable ? handleSortBy(field) : undefined"
               >
                 <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
@@ -225,6 +227,7 @@
           >
             <button 
               v-if="item.enableDrawer"
+              type="button"
               class="flex items-center justify-center w-6 h-6"
               @click="toggleDrawer(item)"
             >
