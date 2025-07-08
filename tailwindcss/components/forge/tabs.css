@@ -1,8 +1,4 @@
 .tabs:where(.sds-theme-forge *) {
-  [role="tablist"]:has(.tab-block) {
-    @apply bg-white;
-  }
-
   [role="tablist"]:has(.tab-folder) {
     @apply gap-x-1;
   }
@@ -118,11 +114,14 @@
     }
 
     &.tab-gray {
+
       &.active {
-        @apply bg-gray-900 dark:bg-gray-300 text-white;
+        @apply bg-gray-900 dark:bg-gray-300;
+        @apply text-white dark:text-black;
         .tab-count {
-          @apply bg-white text-gray-900 dark:text-gray-300;
-        }
+          @apply bg-white dark:bg-black;
+          @apply text-gray-900 dark:text-gray-300
+        } 
       }
     }
 
@@ -146,12 +145,12 @@
 
     &:active,
     &.active {
-      @apply bg-white;
+      @apply bg-white dark:bg-gray-900;
     }
 
     &.active {
       @apply border-gray-100 dark:border-gray-800;
-      @apply border-b-white;
+      @apply border-b-white dark:border-b-gray-900;
       @apply relative z-2;
     }
 
@@ -210,9 +209,9 @@
     }
 
     &:active:not(.active) {
-      @apply text-black dark:text-white;
+      @apply text-black dark:text-gray-400;
       .tab-count {
-        @apply bg-black dark:bg-white;
+        @apply bg-black dark:bg-gray-400;
       }
     }
 
@@ -237,9 +236,9 @@
     }
 
     &:active:not(.active) {
-      @apply text-red-700 dark:text-red-800;
+      @apply text-red-700 dark:text-red-400;
       .tab-count {
-        @apply bg-red-700 dark:bg-red-800;
+        @apply bg-red-700 dark:bg-red-400;
       }
     }
 
