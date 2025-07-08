@@ -146,7 +146,6 @@
           <SdsComboBox
             v-model="comboBox1.modelValue"
             placeholder="Search"
-            disable-group-tabs
             :suggestions="comboBox1.suggestions"
             filter-suggestions
             focus-on-key-press
@@ -163,6 +162,7 @@
             size="sm"
             type="select"
             filter-suggestions
+            disable-group-tabs
             focus-on-key-press
             option-label="name"
             option-group-label="section"
@@ -176,7 +176,6 @@
             v-model="comboBox2_2.modelValue"
             v-model:selected="comboBox2_2.selected"
             placeholder="Search"
-            disable-group-tabs
             :disabled="false"
             :autofocus="false"
             :suggestions="comboBox2_2.suggestions"
