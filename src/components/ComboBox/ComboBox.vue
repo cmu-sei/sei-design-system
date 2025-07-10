@@ -133,7 +133,7 @@
       class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
-        v-if="!disableGroupTabs && groups?.length > 1"
+        v-if="groups?.length && !disableGroupTabs && !isFlatArray"
         class="overflow-x-auto flex after:w-full after:h-full after:content-[''] after:mt-auto after:border-b-2 after:border-b-gray-100 dark:after:border-b-gray-100"
       >
         <button
@@ -592,6 +592,26 @@ const addIndexToList = (arr: ComboBoxSuggestion[]) => {
     return i
   })
 }
+
+const isFlatArray = computed(() => {
+  // If there are no suggestions, return true (hide group tabs)
+  if (!groups.value.length) return true
+  /* For flat groups, 'All' tab with have a count, but
+   * all others will have a count of 0 */
+  let count = 0
+  for (const suggestion of groups.value) {
+    if (suggestion.count > 0) {
+      count++
+    }
+  }
+  /* If there was more than one group with a count,
+   * then this is not a flat array */
+  if (count > 1) {
+    return false
+  }
+  // Otherwise, this is a flat array of suggestions
+  return true
+})
 
 const updateSuggestions = () => {
   // Convert suggestions to an array of objects if they are not already
