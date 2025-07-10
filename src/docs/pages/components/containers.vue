@@ -163,15 +163,13 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="bold"
-              title="This is a title"
+              title="This is a title that spans multiple lines of content to show what happens"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -181,14 +179,12 @@
             </Callout>
           </template>
           <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -202,14 +198,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="white">Primary</ActionButton>
@@ -218,14 +212,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="bold"
@@ -237,7 +229,6 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
@@ -245,7 +236,6 @@
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -255,14 +245,12 @@
             </Callout>
           </template>
           <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -276,14 +264,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="gray">Primary</ActionButton>
@@ -292,14 +278,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="outline"
@@ -311,7 +295,6 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
@@ -319,7 +302,6 @@
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -329,14 +311,12 @@
             </Callout>
           </template>
           <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -350,14 +330,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="gray">Primary</ActionButton>
@@ -366,14 +344,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="md"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="subtle"
@@ -388,7 +364,6 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
@@ -396,7 +371,6 @@
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -405,15 +379,13 @@
               </template>
             </Callout>
           </template>
-          <Callout
-              v-if="!dismiss"
+            <Callout
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','bold')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -427,14 +399,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="white">Primary</ActionButton>
@@ -443,14 +413,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="bold"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="bold"
@@ -462,7 +430,6 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
@@ -470,7 +437,6 @@
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -480,14 +446,12 @@
             </Callout>
           </template>
           <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','outline')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -501,14 +465,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="gray">Primary</ActionButton>
@@ -517,14 +479,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="outline"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="outline"
@@ -536,7 +496,6 @@
         <div class="w-[352px] space-y-4">
           <template v-for="v in calloutVariants" :key="v">
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
@@ -544,7 +503,6 @@
               :timestamp="new Date()"
               :variant="v"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass(v,'subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -554,14 +512,12 @@
             </Callout>
           </template>
           <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #leftIcon>
                 <svg :class="calloutFillClass('gray','subtle')" width="18" height="24" viewBox="0 0 18 24" xmlns="http://www.w3.org/2000/svg">
@@ -575,14 +531,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             >
               <template #buttons>
                 <ActionButton kind="primary" variant="gray">Primary</ActionButton>
@@ -591,14 +545,12 @@
               </template>
             </Callout>
             <Callout
-              v-if="!dismiss"
               type="subtle"
               title="This is a title"
               description="This is an amazing description that spans multiple lines because people love to talk about content."
               size="sm"
               :timestamp="new Date()"
               dismissable
-              @dismiss="dismiss = true"
             />
             <Callout
               type="subtle"
@@ -618,7 +570,6 @@ import Callout from '../../../components/Callout/Callout.vue'
 
 const showModal = ref(false)
 const showPanel = ref(false)
-const dismiss = ref(false)
 const calloutVariants = ref<('gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green')[]>(
   ['gray','orange','red','purple','indigo','blue','teal','green']
 )
@@ -626,23 +577,23 @@ const calloutVariants = ref<('gray' | 'orange' | 'red' | 'purple' | 'indigo' | '
 const calloutFillClass = (variant: string, type: string) => {
   switch(variant) {
     case 'gray':
-      return type === 'bold' ? 'fill-white' :'fill-gray-900'
+      return type === 'bold' ? 'fill-white dark:fill-black' :'fill-gray-900 dark:fill-gray-300'
     case 'orange':
-      return type === 'bold' ? 'fill-black' : 'fill-orange-600'
+      return type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
     case 'red': 
-      return type === 'bold' ? 'fill-white' : 'fill-red-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-red-600 dark:fill-red-300'
     case 'purple': 
-      return type === 'bold' ? 'fill-white' : 'fill-purple-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-purple-600 dark:fill-purple-300'
     case 'indigo': 
-      return type === 'bold' ? 'fill-white' :'fill-indigo-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' :'fill-indigo-600 dark:fill-indigo-300'
     case 'blue': 
-      return type === 'bold' ? 'fill-white' : 'fill-blue-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-blue-600 dark:fill-blue-300'
     case 'teal': 
-      return type === 'bold' ? 'fill-white' : 'fill-teal-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-teal-600 dark:fill-teal-300'
     case 'green': 
-      return type === 'bold' ? 'fill-white' : 'fill-green-600'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-green-600 dark:fill-green-300'
     default:
-      return type === 'bold' ? 'fill-white' : 'fill-gray-900'
+      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-gray-900 dark:fill-gray-300'
   }
 }
 
