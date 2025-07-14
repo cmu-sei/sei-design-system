@@ -860,7 +860,7 @@
           </li>
           <li>
             <SdsTag
-              :counter="400"
+              :counter="4000"
               action="increment"
             >
               <template #label>

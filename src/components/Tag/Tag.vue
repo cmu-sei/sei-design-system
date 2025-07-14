@@ -43,7 +43,7 @@
         v-if="counter"
         class="bg-blue-600 text-white text-center"
         :class="size === 'sm' ? 'min-h-6 min-w-6 px-1.5 leading-6' : 'min-h-8 min-w-8 px-1.5 leading-8'"
-      >{{ counter }}</span>
+      >{{ counter.toLocaleString() }}</span>
       <span 
         v-if="!!$slots.leftSlot"
         class="leading-none"
