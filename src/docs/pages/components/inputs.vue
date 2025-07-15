@@ -145,6 +145,7 @@
           <code class="text-xs">type="text"</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
+            size="sm"
             placeholder="Search"
             :suggestions="comboBox1.suggestions"
             filter-suggestions
@@ -162,7 +163,6 @@
             size="sm"
             type="select"
             filter-suggestions
-            disable-group-tabs
             focus-on-key-press
             option-label="name"
             option-group-label="section"
@@ -421,7 +421,28 @@ const radioGroup = reactive({
 
 const comboBox1 = reactive({
   modelValue: '',
-  suggestions: [
+  suggestions: [],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+    await mockApiRequest()
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    alert(`onEnter: ${value}`)
+  }
+})
+
+const wait = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const mockApiRequest = async () => {
+  console.log("Waiting 5 seconds...");
+  await wait(5000);
+  console.log("5 seconds passed... now return mock API data");
+  comboBox1.suggestions = [
     'Apple',
     'Banana',
     'Kiwi',
@@ -432,17 +453,9 @@ const comboBox1 = reactive({
     'Raspberry',
     'Strawberry',
     'Watermelon'
-  ] as ComboBoxSuggestion[],
-  async onComplete(query: string) {
-    console.info('onComplete:', query)
-  },
-  onResult(result: ComboBoxSuggestion) {
-    console.info('onResult:', result)
-  },
-  onEnter(value: string) {
-    alert(`onEnter: ${value}`)
-  }
-})
+  ] as ComboBoxSuggestion[]
+}
+
 const comboBox2_1 = reactive({
   modelValue: '',
   suggestions: [

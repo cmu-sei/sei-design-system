@@ -34,13 +34,14 @@
         >
           <span class="sr-only">Combo box</span>
           <svg
+            v-if="!loading"
             aria-hidden="true"
             focusable="false"
             role="img"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
             :class="{
-              'w-3.5 h-3.5': size === 'sm',
+              'w-4 h-3.5': size === 'sm',
               'w-4 h-4': size !== 'sm',
             }"
           >
@@ -49,6 +50,10 @@
               d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
             />
           </svg>
+          <SdsLoadingSpinner
+            v-else
+            size="sm"
+          />
         </button>
         <span
           v-if="!multiple && type === 'select' && selected.length"
@@ -517,6 +522,7 @@ const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const isReadonly = ref(false)
+const loading = ref(false)
 
 /* Setup query to bind to modelValue */
 const query = defineModel({ type: String, default: '' })
@@ -684,6 +690,10 @@ watch(query, (value: string) => {
   if (htmlRegex.test(value))
     query.value = removeHtmlFromString(value)
 
+  /* Show loading icon if no suggestions have been set */
+  if (!props.suggestions?.length)
+    loading.value = true // Set loading state
+
   updateSuggestions()
 
   /* Show "X" button to clear current selection
@@ -693,8 +703,16 @@ watch(query, (value: string) => {
   showClearButton.value = inputLength > 0
 })
 
+watch(() => props.suggestions, (newSuggestions: ComboBoxSuggestion[]) => {
+  if (loading.value && newSuggestions?.length) {
+    loading.value = false // Hide loading state if suggestions are set
+    updateSuggestions() // Show dropdown and update suggestions
+  }
+})
+
 watchDebounced(query, () => {
   emitComplete()
+
   if ((props.multiple === false && props.type === 'select') || props.type === 'text') {
     if (query.value === '' && !selected.value.length)
       showClearButton.value = false // Hide the clear button
