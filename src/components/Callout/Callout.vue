@@ -14,12 +14,26 @@
       </div>
       <!-- Title and content -->
       <div 
-        class="flex flex-col space-y-0.5"
+        class="flex flex-col"
       >
-        <span v-if="title" :class="size === 'sm' ? 'text-sm leading-5 font-semibold' : 'leading-6 font-semibold'">{{ title }}</span>
-        <span v-if="description && !hasDescriptionSlot" :class="size === 'sm' ? 'text-xs leading-4' : 'text-sm leading-5'">{{ description }}</span>
+        <span v-if="title" 
+          :class="{
+            'text-sm leading-5 font-semibold': size === 'sm',
+            'leading-5.5 font-semibold': size === 'md',
+            'pb-1': description,
+            'pb-2': !description && timestamp
+          }"
+        >{{ title }}</span>
+        <span v-if="description && !hasDescriptionSlot" 
+          class="opacity-90"
+          :class="{
+            'text-xs': size === 'sm',
+            'text-sm': size === 'md',
+            'pb-2': timestamp
+          }"
+        >{{ description }}</span>
         <slot name="description" />
-        <span v-if="timestamp" class="text-xs leading-4 opacity-80 italic">{{ format(timestamp, `MMM dd, yyyy 'at' hh:mm aaa`) }}</span>
+        <span v-if="timestamp" class="text-xs opacity-90 italic">{{ format(timestamp, `MMM dd, yyyy 'at' hh:mm aaa`) }}</span>
         <!-- Buttons -->
         <div
           v-if="slots.buttons"
@@ -101,7 +115,7 @@ const hasDescriptionSlot = computed(() => {
 const styleClass = computed(() => {
   switch(props.variant) {
     case 'gray':
-      return props.type === 'bold' ? 'bg-gray-900 text-white dark:bg-gray-200 dark:text-black' :
+      return props.type === 'bold' ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white' :
         (props.type === 'outline' ? 'bg-white border border-gray-900 text-gray-900 dark:bg-black dark:border-gray-300 dark:text-gray-300' : 
           'border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300')
     case 'orange':
@@ -143,7 +157,7 @@ const styleClass = computed(() => {
 const fillClass = computed(() => {
   switch(props.variant) {
     case 'gray':
-      return props.type === 'bold' ? 'fill-white dark:fill-black' :'fill-gray-900 dark:fill-gray-300'
+      return props.type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
     case 'orange':
       return props.type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
     case 'red': 

@@ -577,7 +577,7 @@ const calloutVariants = ref<('gray' | 'orange' | 'red' | 'purple' | 'indigo' | '
 const calloutFillClass = (variant: string, type: string) => {
   switch(variant) {
     case 'gray':
-      return type === 'bold' ? 'fill-white dark:fill-black' :'fill-gray-900 dark:fill-gray-300'
+      return type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
     case 'orange':
       return type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
     case 'red': 
