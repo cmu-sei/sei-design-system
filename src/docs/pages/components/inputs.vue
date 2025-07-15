@@ -421,7 +421,7 @@ const radioGroup = reactive({
 
 const comboBox1 = reactive({
   modelValue: '',
-  suggestions: [],
+  suggestions: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
     await mockApiRequest()
@@ -434,7 +434,7 @@ const comboBox1 = reactive({
   }
 })
 
-const wait = (ms) => {
+const wait = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 

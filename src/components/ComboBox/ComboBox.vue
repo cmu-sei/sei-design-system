@@ -703,7 +703,7 @@ watch(query, (value: string) => {
   showClearButton.value = inputLength > 0
 })
 
-watch(() => props.suggestions, (newSuggestions: ComboBoxSuggestion[]) => {
+watch(() => props.suggestions, (newSuggestions: () => ComboBoxSuggestion[] | undefined) => {
   if (loading.value && newSuggestions?.length) {
     loading.value = false // Hide loading state if suggestions are set
     updateSuggestions() // Show dropdown and update suggestions
