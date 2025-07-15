@@ -148,8 +148,9 @@
     &.active {
       @apply bg-white/[0] dark:bg-white/[0];
       @apply border-gray-100 dark:border-gray-800;
-      @apply border-b-white dark:border-b-gray-800/[0];
+      @apply border-b-gray-100/[0] dark:border-b-gray-800/[0];
       @apply relative z-2;
+      @apply backdrop-blur-lg;
     }
 
     /* Sizes */
