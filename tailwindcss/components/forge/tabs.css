@@ -1,4 +1,5 @@
 .tabs:where(.sds-theme-forge *) {
+  [role="tablist"]:has(.tab-block),
   [role="tablist"]:has(.tab-folder) {
     @apply gap-x-1;
   }
