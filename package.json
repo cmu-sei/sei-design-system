@@ -1,6 +1,6 @@
 {
   "name": "@cmu-sei/sei-design-system",
-  "version": "4.1.1-beta.17",
+  "version": "4.1.1-beta.18",
   "scripts": {
     "dev": "npx vite",
     "build": "npx vite build && vue-tsc --noEmit",
