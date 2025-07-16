@@ -158,7 +158,7 @@
 
     &:active,
     &.active {
-      @apply bg-white dark:bg-white/[.02];
+      @apply bg-white/[0] dark:bg-white/[.02];
     }
 
     &.active {
