@@ -503,6 +503,7 @@ const comboBox1 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
+    console.info('onEnter:', value)
     alert(`onEnter: ${value}`)
   }
 })
@@ -570,7 +571,7 @@ const comboBox2_1 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    alert(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 const comboBox2_2 = reactive({

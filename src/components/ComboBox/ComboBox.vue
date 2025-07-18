@@ -115,7 +115,7 @@
           ><path d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <div
-          v-if="focusOnKeyPress && !hideFocusHelperText && !showDropdown"
+          v-if="focusOnKeyPress && !hideFocusHelperText && !isFocused"
           class="input-group-addon"
         >
           <SdsTooltip>
@@ -786,9 +786,10 @@ watch(() => props.suggestions, () => {
   updateSuggestions() // Show dropdown and update suggestions
 })
 
-watchDebounced(query, () => {
+watchDebounced(query, async () => {
+  await nextTick()
   // Only emit complete event if the query is not already selected
-  if (!selected.value.includes(query.value)) {
+  if (!selected.value.includes(query.value) && query.value !== '') {
     emitComplete()
   }
 
@@ -882,6 +883,7 @@ const clearQuery = () => {
     selected.value = []
   isReadonly.value = false
   showClearButton.value = false
+  inputField.value.focus() // Refocus the input field
 }
 
 /* Shake the input field when the value is already selected or bad option */
@@ -985,6 +987,12 @@ const getCurrentSuggestionValue = () => {
   return props.optionLabel ? option[props.optionLabel] : option[defaultOptionLabel.value]
 }
 
+const activeElement = useActiveElement()
+
+const isFocused = computed(() => {
+  return activeElement.value === inputField.value
+})
+
 const handleFocus = () => {
   if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
     if (selected.value.length === 1) {
@@ -1012,10 +1020,8 @@ const commitSelection = () => {
     selected.value :
     [query.value] as ComboBoxSuggestion[]
 
-  if (props.type !== 'text') clearQuery() // Clear the query
-  // Hide, the dropdown, reset selection to empty, and unfocus the input field
+  // Hide, the dropdown, unfocus the input field, and trigger enter event
   showDropdown.value = false // Hide the dropdown
-  selected.value = []
   inputField.value.blur()
   emitEnter()
 }
