@@ -160,7 +160,7 @@
         >
           <span>{{ group.label }}</span>
           <span
-            class="my-auto text-xs px-1 rounded-xl py-0.25 px-1.5"
+            class="my-auto text-xs rounded-xl py-0.25 px-1.5"
             :class="{
               'text-gray-50 dark:text-gray-400 bg-gray-200 dark:bg-gray-700': group.count < 1,
               'text-white bg-blue-600 dark:bg-blue-400': group.count > 0 && activeGroupKey === group.key,
@@ -521,6 +521,11 @@ const props = defineProps({
    */
   multiple: { type: Boolean, default: false },
   /**
+   * The loading prop allows the user to show a loading spinner in the input.
+   * This is useful when fetching suggestions from an API.
+   */
+  loading: { type: Boolean, default: false },
+  /**
    * Use combobox as text "autosuggest", selectable text, or taggable-selection.
    */
   type: { type: String as PropType<'text' | 'select' | 'taggable-select'>, default: 'text' },
@@ -575,7 +580,6 @@ const scrollArea = ref()
 const inputField = ref()
 const dropdownOption = ref()
 const isReadonly = ref(false)
-const loading = ref(false)
 
 /* Setup query to bind to modelValue */
 const query = defineModel({ type: String, default: '' })
@@ -769,10 +773,6 @@ watch(query, (value: string) => {
   if (htmlRegex.test(value))
     query.value = removeHtmlFromString(value)
 
-  /* Show loading icon if no suggestions have been set */
-  if (!props.suggestions?.length)
-    loading.value = true // Set loading state
-
   updateSuggestions()
 
   /* Show "X" button to clear current selection
@@ -782,15 +782,15 @@ watch(query, (value: string) => {
   showClearButton.value = inputLength > 0
 })
 
-watch(() => props.suggestions, (newSuggestions: () => ComboBoxSuggestion[] | undefined) => {
-  if (loading.value && newSuggestions?.length) {
-    loading.value = false // Hide loading state if suggestions are set
-    updateSuggestions() // Show dropdown and update suggestions
-  }
+watch(() => props.suggestions, () => {
+  updateSuggestions() // Show dropdown and update suggestions
 })
 
 watchDebounced(query, () => {
-  emitComplete()
+  // Only emit complete event if the query is not already selected
+  if (!selected.value.includes(query.value)) {
+    emitComplete()
+  }
 
   // Show the clear query button depending on the query value and type
   if (
@@ -1012,7 +1012,7 @@ const commitSelection = () => {
     selected.value :
     [query.value] as ComboBoxSuggestion[]
 
-  clearQuery() // Clear the query
+  if (props.type !== 'text') clearQuery() // Clear the query
   // Hide, the dropdown, reset selection to empty, and unfocus the input field
   showDropdown.value = false // Hide the dropdown
   selected.value = []
@@ -1138,7 +1138,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "left":
-        if (!props.disableGroupTabs && suggestionOptions.value.length && arrowCounter.value > -1) {
+        if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === 0) {
           if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             setActiveGroup(event, { key: activeGroupKey.value - 1 });
           } else {
@@ -1148,7 +1148,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         }
         break;
       case "right":
-        if (!props.disableGroupTabs && suggestionOptions.value.length && arrowCounter.value > -1) {
+        if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === query.value?.length) {
           if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
             setActiveGroup(event, { key: activeGroupKey.value + 1 });
           } else {

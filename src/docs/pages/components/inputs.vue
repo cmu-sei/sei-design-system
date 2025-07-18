@@ -142,13 +142,21 @@
         @submit.prevent="handleSubmit"
       >
         <div class="space-y-4">
+          <code class="text-xs">type="text" no autosuggest</code>
+          <SdsComboBox
+            v-model="comboBox0.modelValue"
+            size="sm"
+            placeholder="Search"
+            focus-on-key-press
+            @enter="comboBox0.onEnter"
+          />
           <code class="text-xs">type="text"</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
             size="sm"
             placeholder="Search"
+            :loading="comboBox1.loading"
             :suggestions="comboBox1.suggestions"
-            filter-suggestions
             focus-on-key-press
             @complete="comboBox1.onComplete"
             @result="comboBox1.onResult"
@@ -476,12 +484,20 @@ const radioGroup = reactive({
   ]
 })
 
+const comboBox0 = reactive({
+  modelValue: '',
+  onEnter(value: string) {
+    alert(`onEnter: ${value}`)
+  }
+})
+
 const comboBox1 = reactive({
   modelValue: '',
+  loading: false,
   suggestions: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
-    await mockApiRequest()
+    await mockApiRequest(query)
   },
   onResult(result: ComboBoxSuggestion) {
     console.info('onResult:', result)
@@ -495,7 +511,10 @@ const wait = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const mockApiRequest = async () => {
+const mockApiRequest = async (query: string) => {
+  comboBox1.suggestions = []
+  if (query === '') return
+  comboBox1.loading = true
   console.log("Waiting 3 seconds...");
   await wait(3000);
   console.log("3 seconds passed... now return mock API data");
@@ -510,7 +529,8 @@ const mockApiRequest = async () => {
     'Raspberry',
     'Strawberry',
     'Watermelon'
-  ] as ComboBoxSuggestion[]
+  ].filter(i => i.toLowerCase().includes(query.toLowerCase())) as ComboBoxSuggestion[]
+  comboBox1.loading = false
 }
 
 const comboBox2_1 = reactive({
