@@ -252,8 +252,8 @@
               :key="`${s}_${c}_${cindex}`"
             >
               <component
-                v-if="optionType !== 'custom'"
                 :is="optionType"
+                v-if="optionType !== 'custom'"
                 ref="dropdownOption"
                 :href="optionType === 'a' ? c.href : undefined"
                 class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
@@ -287,9 +287,8 @@
                   <path d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z" fill="currentColor" />
                 </svg>
               </component>
-              <component
+              <div
                 v-else
-                is="div"
                 ref="dropdownOption"
                 class="first:mt-2 last:mb-2"
               >
@@ -309,13 +308,13 @@
                 >
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
-              </component>
+              </div>
             </template>
           </div>
           <template v-else-if="!optionGroupChildren">
             <component
-              v-if="optionType !== 'custom'"
               :is="optionType"
+              v-if="optionType !== 'custom'"
               ref="dropdownOption"
               :href="optionType === 'a' ? s.href : undefined"
               class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
@@ -350,9 +349,8 @@
                 <path d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z" fill="currentColor" />
               </svg>
             </component>
-            <component
+            <div
               v-else
-              is="div"
               ref="dropdownOption"
               class="first:mt-2 last:mb-2"
             >
@@ -372,7 +370,7 @@
               >
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
-            </component>
+            </div>
           </template>
         </template>
       </SdsScrollArea>
