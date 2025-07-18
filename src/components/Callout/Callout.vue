@@ -16,7 +16,8 @@
       <div 
         class="flex flex-col"
       >
-        <span v-if="title" 
+        <span
+          v-if="title" 
           :class="{
             'text-sm leading-5 font-semibold': size === 'sm',
             'leading-5.5 font-semibold': size === 'md',
@@ -24,7 +25,8 @@
             'pb-2': !description && timestamp
           }"
         >{{ title }}</span>
-        <span v-if="description && !hasDescriptionSlot" 
+        <span
+          v-if="description && !hasDescriptionSlot" 
           class="opacity-90"
           :class="{
             'text-xs': size === 'sm',

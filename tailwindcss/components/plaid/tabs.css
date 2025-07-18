@@ -44,11 +44,11 @@
     }
 
     &.tab-indicator-blue {
-      @apply bg-blue-600 dark:bg-blue-400;
+      @apply bg-blue-600 dark:bg-blue-300;
     }
 
     &.tab-indicator-gray {
-      @apply bg-gray-900 dark:bg-gray-300;
+      @apply bg-gray-900 dark:bg-gray-200;
     }
 
     &.tab-indicator-red {
@@ -89,7 +89,7 @@
   /* Block type */
 
   &.tab-block {
-    @apply border border-gray-100/0 dark:border-gray-800/0;
+    @apply border border-gray-100/[0] dark:border-gray-800/[0];
     @apply relative -mx-0.25 z-1;
 
     &:hover:not(.active),
@@ -98,7 +98,7 @@
     }
 
     &:hover {
-      @apply bg-gray-25 dark:bg-gray-900;
+      @apply bg-gray-25 dark:bg-gray-850;
     }
 
     &:active {
@@ -123,29 +123,27 @@
 
     &.tab-blue {
       &.active {
-        @apply bg-blue-600 dark:bg-blue-400 text-white;
+        @apply bg-blue-600 dark:bg-blue-400 text-white dark:text-black;
         .tab-count {
-          @apply bg-white text-blue-600 dark:text-blue-400;
+          @apply bg-white dark:bg-black text-blue-600 dark:text-blue-300;
         }
       }
     }
 
     &.tab-gray {
       &.active {
-        @apply bg-gray-900 dark:bg-gray-300;
-        @apply text-white dark:text-black;
+        @apply bg-gray-900 dark:bg-gray-300 text-white dark:text-black;
         .tab-count {
-          @apply bg-white dark:bg-black;
-          @apply text-gray-900 dark:text-gray-300
+          @apply bg-white dark:bg-black text-gray-900 dark:text-gray-200;
         } 
       }
     }
 
     &.tab-red {
       &.active {
-        @apply bg-red-600 dark:bg-red-300 text-white;
+        @apply bg-red-600 dark:bg-red-300 text-white dark:text-black;
         .tab-count {
-          @apply bg-white text-red-600 dark:text-red-300;
+          @apply bg-white dark:bg-black text-red-600 dark:text-red-300;
         }
       }
     }
@@ -154,19 +152,21 @@
   /* Folder type (Default) */
 
   &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.02];
-    @apply border-t border-r border-l border-gray-50 dark:border-gray-800;
-    @apply border-b border-b-gray-50/0 dark:border-b-gray-800/0;
+    @apply bg-gray-600/[.02] dark:bg-gray-400/[.04];
+    @apply border-t border-r border-l border-gray-50 dark:border-gray-850;
+    @apply border-b border-b-gray-50/[0] dark:border-b-gray-850/[0];
 
     &:active,
     &.active {
-      @apply bg-white dark:bg-gray-900;
+      @apply bg-white/[0] dark:bg-white/[.02];
     }
 
     &.active {
-      @apply border-gray-100 dark:border-gray-800 border-t-gray-100/0 dark:border-t-gray-800/0;
-      @apply border-b-white dark:border-b-gray-900;
+      @apply bg-white/[0] dark:bg-white/[0];
+      @apply border-gray-100 dark:border-gray-800 border-t-gray-100/[0] dark:border-t-gray-800/[0];
+      @apply border-b-gray-100/[0] dark:border-b-gray-800/[0];
       @apply relative z-2;
+      @apply backdrop-blur-lg;
     }
 
     &.tab-blue,
@@ -181,13 +181,13 @@
 
     &.tab-blue {
       &.active {
-        @apply before:bg-blue-600 dark:before:bg-blue-400;
+        @apply before:bg-blue-600 dark:before:bg-blue-300;
       }
     }
 
     &.tab-gray {
       &.active {
-        @apply before:bg-gray-900 dark:before:bg-gray-300;
+        @apply before:bg-gray-900 dark:before:bg-gray-200;
       }
     }
 
@@ -220,23 +220,23 @@
   &.tab-blue {
     &:hover,
     &.active {
-      @apply text-blue-600 dark:text-blue-400;
+      @apply text-blue-600 dark:text-blue-300;
       .tab-count {
-        @apply bg-blue-600 dark:bg-blue-400;
+        @apply bg-blue-600 dark:bg-blue-300;
       }
     }
 
     &:active:not(.active) {
-      @apply text-blue-700 dark:text-blue-300;
+      @apply text-blue-700 dark:text-blue-200;
       .tab-count {
-        @apply bg-blue-700 dark:bg-blue-300;
+        @apply bg-blue-700 dark:bg-blue-200;
       }
     }
 
     &.active {
       &.tab-underline {
         &:after {
-          @apply bg-blue-600 dark:bg-blue-400;
+          @apply bg-blue-600 dark:bg-blue-300;
         }
       }
     }
@@ -245,23 +245,23 @@
   &.tab-gray {
     &:hover,
     &.active {
-      @apply text-gray-900 dark:text-gray-300;
+      @apply text-gray-900 dark:text-gray-200;
       .tab-count {
-        @apply bg-gray-900 dark:bg-gray-300;
+        @apply bg-gray-900 dark:bg-gray-200;
       }
     }
 
     &:active:not(.active) {
-      @apply text-black dark:text-gray-400;
+      @apply text-black dark:text-gray-100;
       .tab-count {
-        @apply bg-black dark:bg-gray-400;
+        @apply bg-black dark:bg-gray-100;
       }
     }
 
     &.active {
       &.tab-underline {
         &:after {
-          @apply bg-gray-900 dark:bg-gray-300;
+          @apply bg-gray-900 dark:bg-gray-200;
         }
       }
     }
@@ -279,9 +279,9 @@
     }
 
     &:active:not(.active) {
-      @apply text-red-700 dark:text-red-400;
+      @apply text-red-700 dark:text-red-200;
       .tab-count {
-        @apply bg-red-700 dark:bg-red-400;
+        @apply bg-red-700 dark:bg-red-200;
       }
     }
 
@@ -297,7 +297,7 @@
   /* Tab count(er) */
 
   .tab-count {
-    @apply bg-gray-600 dark:bg-gray-400 text-white;
+    @apply bg-gray-600 dark:bg-gray-400 text-white dark:text-black;
     @apply inline-flex items-center justify-center;
     @apply rounded-full py-0.5 px-1.75;
 
