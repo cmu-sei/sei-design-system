@@ -487,7 +487,7 @@ const radioGroup = reactive({
 const comboBox0 = reactive({
   modelValue: '',
   onEnter(value: string) {
-    alert(`onEnter: ${value}`)
+    console.info(`onEnter: ${value}`)
   }
 })
 
@@ -503,8 +503,7 @@ const comboBox1 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    console.info('onEnter:', value)
-    alert(`onEnter: ${value}`)
+    console.info(`onEnter: ${value}`)
   }
 })
 
@@ -520,7 +519,7 @@ const mockApiRequest = async (query: string) => {
   await wait(3000);
   console.log("3 seconds passed... now return mock API data");
   comboBox1.suggestions = [
-    'Apple',
+    { label: 'Apple', test: 'cool' },
     'Banana',
     'Kiwi',
     'Orange',
@@ -530,7 +529,14 @@ const mockApiRequest = async (query: string) => {
     'Raspberry',
     'Strawberry',
     'Watermelon'
-  ].filter(i => i.toLowerCase().includes(query.toLowerCase())) as ComboBoxSuggestion[]
+  ].filter(i => {
+    if (typeof i === 'string') {
+      return i.toLowerCase().includes(query.toLowerCase())
+    } else if (typeof i === 'object' && 'label' in i && typeof i.label === 'string') {
+      return i.label.toLowerCase().includes(query.toLowerCase())
+    }
+    return false
+  }) as ComboBoxSuggestion[]
   comboBox1.loading = false
 }
 
@@ -601,7 +607,7 @@ const comboBox2_2 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    alert(`onEnter: ${value}`)
+    console.info(`onEnter: ${value}`)
   }
 })
 const comboBox3 = reactive({
@@ -641,7 +647,7 @@ const comboBox3 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    alert(`onEnter: ${value}`)
+    console.info(`onEnter: ${value}`)
   }
 })
 const comboBox4 = reactive({
@@ -651,7 +657,7 @@ const comboBox4 = reactive({
     {
       section: 'Fruits',
       items: [
-        { name: 'Apple' },
+        { name: 'Apple', test: 'cool' },
         { name: 'Banana' },
         { name: 'Blueberry' },
         { name: 'Cantaloupe' },
@@ -681,7 +687,7 @@ const comboBox4 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    alert(`onEnter: ${value}`)
+    console.info(`onEnter: ${value}`)
   }
 })
 

@@ -789,7 +789,7 @@ watch(() => props.suggestions, () => {
 watchDebounced(query, async () => {
   await nextTick()
   // Only emit complete event if the query is not already selected
-  if (!selected.value.includes(query.value) && query.value !== '') {
+  if (!selected.value.includes(query.value)) {
     emitComplete()
   }
 
@@ -959,7 +959,7 @@ const handleSuggestionClick = (option: ComboBoxSuggestion) => {
 }
 
 const getCurrentSuggestion = () => {
-  let option
+  let option: ComboBoxSuggestion | undefined = undefined
   suggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
@@ -1020,9 +1020,8 @@ const commitSelection = () => {
     selected.value :
     [query.value] as ComboBoxSuggestion[]
 
-  // Hide, the dropdown, unfocus the input field, and trigger enter event
+  // Hide the dropdown and trigger enter event
   showDropdown.value = false // Hide the dropdown
-  inputField.value.blur()
   emitEnter()
 }
 
@@ -1054,8 +1053,8 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
   }
 
   await nextTick()
-  // Emit the selected option (max 1 w/o multiple)
-  emitResult(query.value)
+  // This will emit either a full object suggestion or a string
+  if (arrowCounter.value !== -1) emitResult(getCurrentSuggestion() || query.value)
 
   switch (props.type) {
     case 'text':
@@ -1127,7 +1126,6 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       // When going down, select next result until end
       // then loop back around starting with original query.
       case "down":
-        // if (!this.isOpen && this.metThreshold) this.filterResults();
         if (arrowCounter.value < dropdownOption.value?.length - 1) {
           arrowCounter.value = arrowCounter.value + 1;
         } else {
@@ -1169,13 +1167,6 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
   }
 }
 
-const emitResult = (result: ComboBoxSuggestion | ComboBoxSuggestion[]) => {
-  /**
-   * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
-   */
-  emit('result', result)
-}
-
 const emitComplete = () => {
   /**
    * Emitted when internal query changes.
@@ -1183,10 +1174,20 @@ const emitComplete = () => {
   emit('complete', query.value)
 }
 
+const emitResult = (result: ComboBoxSuggestion | ComboBoxSuggestion[]) => {
+  /**
+   * Emitted when a result is clicked inside the dropdown. Occurs before the search event.
+   */
+  emit('result', result)
+}
+
 const emitEnter = () => {
   /**
    * Emitted whenever the enter key is pressed.
    */
-  emit('enter', selected.value.length ? selected.value : query.value)
+  if (props.type === 'text')
+    emit('enter', query.value)
+  else
+    emit('enter', selected.value.length ? selected.value : query.value)
 }
 </script>
