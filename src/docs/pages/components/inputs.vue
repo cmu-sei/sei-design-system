@@ -190,7 +190,7 @@
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
           />
-          <code class="text-xs">type="taggable-select"</code>
+          <code class="text-xs">type="taggable-select" :multiple="false"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
             v-model:selected="comboBox3.selected"
@@ -210,6 +210,62 @@
             @result="comboBox3.onResult"
             @enter="comboBox3.onEnter"
           />
+          <code class="text-xs">type="taggable-select" :multiple="true"</code>
+          <SdsComboBox
+            v-model="comboBox4.modelValue"
+            v-model:selected="comboBox4.selected"
+            placeholder="Search"
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox4.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="taggable-select"
+            multiple
+            filter-suggestions
+            focus-on-key-press
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @complete="comboBox4.onComplete"
+            @result="comboBox4.onResult"
+            @enter="comboBox4.onEnter"
+          />
+          <code class="text-xs">type="text" option-type="custom"</code>
+          <SdsComboBox
+            v-model="comboBox5.modelValue"
+            v-model:selected="comboBox5.selected"
+            placeholder="Search"
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox5.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="text"
+            filter-suggestions
+            focus-on-key-press
+            option-label="term"
+            option-type="custom"
+            @complete="comboBox5.onComplete"
+            @enter="comboBox5.onEnter"
+          >
+            <template #customOption="{ label, classList, href, onClick }">
+              <a
+                :class="classList"
+                :href="href"
+                @click="onClick"
+              >
+                 <svg
+                   xmlns="http://www.w3.org/2000/svg"
+                   class="w-4 h-4 pt-1 mr-2"
+                   viewBox="0 0 24 24"
+                 >
+                   <path fill="currentColor" d="M10.73 14.97c.27.11.36.41.24.66s-.41.37-.66.24h-.01c-.46-.21-.89-.51-1.27-.9a4.49 4.49 0 0 1 0-6.36l3.53-3.53a4.49 4.49 0 0 1 6.36 0a4.49 4.49 0 0 1 0 6.36l-1.63 1.63l-.15-1.26l1.08-1.08a3.513 3.513 0 0 0 0-4.95a3.513 3.513 0 0 0-4.95 0L9.73 9.32a3.513 3.513 0 0 0 0 4.95c.3.3.64.53 1 .7m-6.65 4.95a4.49 4.49 0 0 1 0-6.36l1.63-1.63l.15 1.26l-1.08 1.08a3.513 3.513 0 0 0 0 4.95a3.513 3.513 0 0 0 4.95 0l3.54-3.54a3.513 3.513 0 0 0 0-4.95c-.3-.3-.64-.53-1-.7v.01a.49.49 0 0 1-.24-.67c.12-.25.41-.37.66-.24h.01c.46.21.89.51 1.27.9a4.49 4.49 0 0 1 0 6.36l-3.53 3.53a4.49 4.49 0 0 1-6.36 0"/>
+                 </svg>
+                {{ label }}
+              </a>
+            </template>
+          </SdsComboBox>
         </div>
         <SdsButton
           type="submit"
@@ -235,6 +291,9 @@
             </tr>
             <tr>
               <td>(taggable-select):</td><td>{{ formData.comboBox3 }}</td>
+            </tr>
+            <tr>
+              <td>(taggable-select, multiple):</td><td>{{ formData.comboBox4 }}</td>
             </tr>
           </tbody>
         </table>
@@ -417,8 +476,6 @@ const radioGroup = reactive({
   ]
 })
 
-//const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
-
 const comboBox1 = reactive({
   modelValue: '',
   suggestions: [] as ComboBoxSuggestion[],
@@ -439,9 +496,9 @@ const wait = (ms: number) => {
 }
 
 const mockApiRequest = async () => {
-  console.log("Waiting 5 seconds...");
-  await wait(5000);
-  console.log("5 seconds passed... now return mock API data");
+  console.log("Waiting 3 seconds...");
+  await wait(3000);
+  console.log("3 seconds passed... now return mock API data");
   comboBox1.suggestions = [
     'Apple',
     'Banana',
@@ -566,12 +623,81 @@ const comboBox3 = reactive({
     alert(`onEnter: ${value}`)
   }
 })
+const comboBox4 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    {
+      section: 'Fruits',
+      items: [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Blueberry' },
+        { name: 'Cantaloupe' },
+        { name: 'Kiwi' },
+        { name: 'Strawberry' }
+      ]
+    },
+    {
+      section: 'Vegetables',
+      items: [
+        { name: 'Artichoke' },
+        { name: 'Avocado' },
+        { name: 'Beetroot' },
+        { name: 'Celery' },
+        { name: 'Cucumber' },
+        { name: 'Daikon' },
+        { name: 'Eggplant' },
+        { name: 'Kale' },
+        { name: 'Shallot' }
+      ]
+    }
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    alert(`onEnter: ${value}`)
+  }
+})
+
+const customSuggestions = [
+  { term: "Radio Group", href: "/components/radio-group" },
+  { term: "Checkbox Group", href: "/components/checkbox-group" },
+  { term: "Select", href: "/components/select" },
+  { term: "Filter by Dropdown", href: "/components/filter-by-dropdown" },
+  { term: "Multiselect", href: "/components/multiselect" },
+  { term: "Combo Box", href: "/components/combo-box" }
+] as ComboBoxSuggestion[]
+
+
+const comboBox5 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: customSuggestions,
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onEnter(value: ComboBoxSuggestion) {
+    const suggestion = customSuggestions.find(s => (s as { term: string, href: string }).term === value[0])
+    if (suggestion) {
+      const url = (suggestion as { term: string, href: string })?.href as string || ''
+      if (url.length)
+        window.location.href = url
+    }
+  }
+})
 
 const formData = reactive({
   comboBox1: '',
   comboBox2_1: ([] as ComboBoxSuggestion[]),
   comboBox2_2: ([] as ComboBoxSuggestion[]),
-  comboBox3: ([] as ComboBoxSuggestion[])
+  comboBox3: ([] as ComboBoxSuggestion[]),
+  comboBox4: ([] as ComboBoxSuggestion[]),
+  comboBox5: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {
@@ -579,6 +705,8 @@ watchEffect(() => {
   formData.comboBox2_1 = comboBox2_1.selected
   formData.comboBox2_2 = comboBox2_2.selected
   formData.comboBox3 = comboBox3.selected
+  formData.comboBox4 = comboBox4.selected
+  formData.comboBox5 = comboBox5.selected
 })
 
 const handleSubmit = () => {
