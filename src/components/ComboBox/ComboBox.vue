@@ -29,6 +29,7 @@
         <button
           class="input-group-addon"
           :disabled="disabled"
+          tabindex="-1"
           type="button"
           @click="handleEnterKeyUp"
         >
@@ -78,7 +79,7 @@
           :readonly="isReadonly"
           :maxlength="maxlength"
           @input="handleInput"
-          @focus.prevent="handleFocus"
+          @click.prevent="showDropdown = !showDropdown"
           @keydown.delete="handleDelete"
           @keydown.tab="showDropdown = false"
           @keydown.down.prevent="handleArrows('down', $event)"
@@ -134,10 +135,7 @@
       </div>
     </div>
     <div
-      v-if="
-        showDropdown &&
-        (type !== 'taggable-select' ? allCount : true)
-      "
+      v-if="canShowDropdown"
       class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
@@ -678,7 +676,7 @@ const addIndexToList = (arr: ComboBoxSuggestion[]) => {
 
 const isFlatArray = computed(() => {
   // If there are no suggestions, return true (hide group tabs)
-  if (!groups.value.length) return true
+  if (!groups.value?.length) return true
   /* For flat groups, 'All' tab with have a count, but
    * all others will have a count of 0 */
   let count = 0
@@ -702,88 +700,17 @@ const matchesSuggestion = computed(() => {
   return suggestions?.includes(query.value)
 })
 
-const updateSuggestions = () => {
-  // Convert suggestions to an array of objects if they are not already
-  allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'object') {
-      i = {
-        [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
-      }
-    }
-    return i
-  })
-  // Reduce the list of suggestions based on the query
-  allSuggestionOptions.value = props.filterSuggestions && allSuggestions.value ?
-    reduceList(allSuggestions.value) :
-    allSuggestions.value && addIndexToList(allSuggestions.value)
-
-  // Configure counts for all suggestion groups
-  let count = 0
-  allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
-      count = count + (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length
-    } else {
-      count = count + 1
-    }
-  })
-  allCount.value = count
-
-  let key = -1
-  groups.value = allSuggestionOptions.value ? [
-    { index: -1, key, label: 'All', count: allCount.value },
-    ...allSuggestionOptions.value.map((i: ComboBoxSuggestion, index: number) => {
-      const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
-      if (count > 0) {
-        key = key + 1
-      }
-      return {
-        index,
-        key,
-        label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-        count
-      }
-    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
-  ] : []
-
-  activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => {
-    return typeof i !== 'string' && i?.key === activeGroupKey.value
-  })
-
-  // Group Suggestions
-  groupSuggestions.value = props.suggestions?.filter(i => {
-    return typeof i !== 'string' && props.optionGroupChildren &&
-      i[props.optionGroupLabel ?
-        props.optionGroupLabel :
-        defaultOptionLabel.value] === activeGroup.value?.label
-  })
-
-  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions.value ?
-    reduceList(groupSuggestions.value) :
-    groupSuggestions.value && addIndexToList(groupSuggestions.value)
-
-  // Combined Suggestion Options
-  suggestionOptions.value = activeGroupKey.value === -1 ?
-    allSuggestionOptions.value :
-    groupSuggestionOptions.value
-}
-
 watch(query, (value: string) => {
   /* Always remove HTML from query value if found */
   const htmlRegex = /<[^>]*(>|$)/
   if (htmlRegex.test(value))
     query.value = removeHtmlFromString(value)
 
-  updateSuggestions()
-
   /* Show "X" button to clear current selection
    * Follow inputField.value to check on keypress */
   const inputLength = inputField.value ? inputField.value.value.length : 0
   /* Only show clear button if input is set */
   showClearButton.value = inputLength > 0
-})
-
-watch(() => props.suggestions, () => {
-  updateSuggestions() // Show dropdown and update suggestions
 })
 
 watchDebounced(query, async () => {
@@ -806,6 +733,14 @@ watchDebounced(query, async () => {
   }
 }, { debounce: props.debounceComplete })
 
+const canShowDropdown = computed(() => {
+  if (selected.value.length === 1 && !props.multiple) {
+    // If type is text and only one item is selected, don't show dropdown
+    return false
+  }
+  return props.suggestions?.length && !props.disabled && showDropdown.value
+})
+
 watch(showDropdown, () => {
   // Move focus out of dropdown when it is closed
   arrowCounter.value = -1
@@ -816,11 +751,9 @@ const setActiveGroup = (e: MouseEvent | KeyboardEvent, group: { key: number }) =
   e.preventDefault()
   inputField.value.focus()
   activeGroupKey.value = group.key
-  updateSuggestions()
 }
 
 onMounted(() => {
-  updateSuggestions()
   if (props.autofocus) inputField.value.focus();
 })
 
@@ -911,7 +844,7 @@ const multiselectAdd = async () => {
 
     /* Single-select, hide the dropdown */
     if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
-      showDropdown.value = false // Hide the dropdown
+      showDropdown.value = false
       query.value = selected.value[0] as string
       if (selected.value ? (selected.value.length && props.type !== 'text') : false)
         isReadonly.value = true // Set readonly to true if not multiple and type is select
@@ -935,18 +868,14 @@ const multiselectRemove = (index: number) => {
     inputField.value.value = ''
     isReadonly.value = false // Set readonly to false if no selected items
     showClearButton.value = false // Hide the clear button
-
-    if (!showDropdown.value)
-      showDropdown.value = true
   }
+  inputField.value?.focus() // Refocus the input field
 }
 
 const handleDelete = () => {
   // Special handling for text input type
   if (selected.value.length && props.type === 'text')
     selected.value.pop() // Remove the last selected item
-    if (!showDropdown.value)
-      showDropdown.value = true
   // If multiple is enabled and the input field is empty,
   if (selected.value.length && inputField.value.value === '') {
     // Remove the last tag from the end of the list
@@ -993,24 +922,103 @@ const isFocused = computed(() => {
   return activeElement.value === inputField.value
 })
 
-const handleFocus = () => {
-  if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
-    if (selected.value.length === 1) {
-      showDropdown.value = false
-    } else {
-      showDropdown.value = true
+/**
+ * This updates the suggestions and determines whether to show the dropdown.
+ */
+
+watchEffect(() => {
+    // Convert suggestions to an array of objects if they are not already
+  allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'object') {
+      i = {
+        [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i
+      }
     }
+    return i
+  })
+
+  // Reduce the list of suggestions based on the query
+  allSuggestionOptions.value = props.filterSuggestions && allSuggestions.value ?
+    reduceList(allSuggestions.value) :
+    allSuggestions.value && addIndexToList(allSuggestions.value)
+
+  // Configure counts for all suggestion groups
+  let count = 0
+  allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
+    if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
+      count = count + (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length
+    } else {
+      count = count + 1
+    }
+  })
+  allCount.value = count
+
+  let key = -1
+  groups.value = allSuggestionOptions.value ? [
+    { index: -1, key, label: 'All', count: allCount.value },
+    ...allSuggestionOptions.value.map((i: ComboBoxSuggestion, index: number) => {
+      const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
+      if (count > 0) {
+        key = key + 1
+      }
+      return {
+        index,
+        key,
+        label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
+        count
+      }
+    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
+  ] : []
+
+  activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => {
+    return typeof i !== 'string' && i?.key === activeGroupKey.value
+  })
+
+  // Group Suggestions
+  groupSuggestions.value = props.suggestions?.filter(i => {
+    return typeof i !== 'string' && props.optionGroupChildren &&
+      i[props.optionGroupLabel ?
+        props.optionGroupLabel :
+        defaultOptionLabel.value] === activeGroup.value?.label
+  })
+
+  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions.value ?
+    reduceList(groupSuggestions.value) :
+    groupSuggestions.value && addIndexToList(groupSuggestions.value)
+
+  // Combined Suggestion Options
+  suggestionOptions.value = activeGroupKey.value === -1 ?
+    allSuggestionOptions.value :
+    groupSuggestionOptions.value
+
+  // Determine whether to show the dropdown
+
+  if(!props.multiple && props.type !== 'text' && selected.value.length > 0) {
+    showDropdown.value = false
+  } else if (query.value !== '' && allSuggestionOptions.value && allSuggestionOptions.value.length > 0) {
+    showDropdown.value = true
+  } else if (!allSuggestionOptions.value || allSuggestionOptions.value.length < 1) {
+    showDropdown.value = false
+  } else if (query.value !== '' && flatSuggestions.value && flatSuggestions.value.length > 0) {
+    showDropdown.value = true
+  } else if (!flatSuggestions.value || flatSuggestions.value.length < 1) {
+    showDropdown.value = false
+  } else if (query.value.trim() === '') {
+    showDropdown.value = false
+  } else if (!props.suggestions || props.suggestions.length < 1) {
+    showDropdown.value = false
   } else {
     showDropdown.value = true
   }
-}
+})
 
 const handleInput = async () => {
   await nextTick()
   /* When typing, always reset arrowCounter to -1 to use "all"
    * possible suggestions available. */
-  if (showDropdown.value)
+  if (showDropdown.value) {
     arrowCounter.value = -1 // Reset arrow counter on input
+  }
 }
 
 const firstTick = ref()
@@ -1021,7 +1029,7 @@ const commitSelection = () => {
     [query.value] as ComboBoxSuggestion[]
 
   // Hide the dropdown and trigger enter event
-  showDropdown.value = false // Hide the dropdown
+  showDropdown.value = false
   emitEnter()
 }
 
@@ -1140,7 +1148,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
         if (arrowCounter.value > -1) {
           arrowCounter.value = arrowCounter.value - 1;
         } else {
-          arrowCounter.value = dropdownOption.value.length - 1;
+          arrowCounter.value = dropdownOption.value?.length - 1;
         }
         break;
       case "left":
