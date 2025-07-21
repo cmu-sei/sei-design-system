@@ -1054,7 +1054,9 @@ const handleEnterKeyUp = async (option: ComboBoxSuggestion | KeyboardEvent | Mou
 
   await nextTick()
   // This will emit either a full object suggestion or a string
-  if (arrowCounter.value !== -1) emitResult(getCurrentSuggestion() || query.value)
+  if (!(arrowCounter.value === -1 && option instanceof KeyboardEvent)) {
+    emitResult(getCurrentSuggestion() || query.value)
+  }
 
   switch (props.type) {
     case 'text':
