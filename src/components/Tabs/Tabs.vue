@@ -50,13 +50,13 @@
             @click="changeTab(tab)"
           >
             <!-- @slot Custom left-icon slot content. -->
-            <slot :name="`tabIconLeft(${tab.key})`"></slot>
+            <slot :name="`tabIconLeft(${tab.key})`" />
             <!-- @slot Dynamic tab. Used for custom HTML within a tab. -->
             <slot :name="`tab(${tab.key})`">
               {{ tab.title }}
             </slot>
             <!-- @slot Custom right-icon slot content. -->
-            <slot :name="`tabIconRight(${tab.key})`"></slot>
+            <slot :name="`tabIconRight(${tab.key})`" />
             <span 
               v-if="typeof tab.count !== 'undefined' && tab.count >= 0"
               class="tab-count"
@@ -79,7 +79,6 @@
           role="presentation"
         />
       </Transition>
-
     </div>
     <template v-for="tab in tabs">
       <div

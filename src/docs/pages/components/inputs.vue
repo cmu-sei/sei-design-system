@@ -263,13 +263,16 @@
                 :href="href"
                 @click="onClick"
               >
-                 <svg
-                   xmlns="http://www.w3.org/2000/svg"
-                   class="w-4 h-4 pt-1 mr-2"
-                   viewBox="0 0 24 24"
-                 >
-                   <path fill="currentColor" d="M10.73 14.97c.27.11.36.41.24.66s-.41.37-.66.24h-.01c-.46-.21-.89-.51-1.27-.9a4.49 4.49 0 0 1 0-6.36l3.53-3.53a4.49 4.49 0 0 1 6.36 0a4.49 4.49 0 0 1 0 6.36l-1.63 1.63l-.15-1.26l1.08-1.08a3.513 3.513 0 0 0 0-4.95a3.513 3.513 0 0 0-4.95 0L9.73 9.32a3.513 3.513 0 0 0 0 4.95c.3.3.64.53 1 .7m-6.65 4.95a4.49 4.49 0 0 1 0-6.36l1.63-1.63l.15 1.26l-1.08 1.08a3.513 3.513 0 0 0 0 4.95a3.513 3.513 0 0 0 4.95 0l3.54-3.54a3.513 3.513 0 0 0 0-4.95c-.3-.3-.64-.53-1-.7v.01a.49.49 0 0 1-.24-.67c.12-.25.41-.37.66-.24h.01c.46.21.89.51 1.27.9a4.49 4.49 0 0 1 0 6.36l-3.53 3.53a4.49 4.49 0 0 1-6.36 0"/>
-                 </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 pt-1 mr-2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M10.73 14.97c.27.11.36.41.24.66s-.41.37-.66.24h-.01c-.46-.21-.89-.51-1.27-.9a4.49 4.49 0 0 1 0-6.36l3.53-3.53a4.49 4.49 0 0 1 6.36 0a4.49 4.49 0 0 1 0 6.36l-1.63 1.63l-.15-1.26l1.08-1.08a3.513 3.513 0 0 0 0-4.95a3.513 3.513 0 0 0-4.95 0L9.73 9.32a3.513 3.513 0 0 0 0 4.95c.3.3.64.53 1 .7m-6.65 4.95a4.49 4.49 0 0 1 0-6.36l1.63-1.63l.15 1.26l-1.08 1.08a3.513 3.513 0 0 0 0 4.95a3.513 3.513 0 0 0 4.95 0l3.54-3.54a3.513 3.513 0 0 0 0-4.95c-.3-.3-.64-.53-1-.7v.01a.49.49 0 0 1-.24-.67c.12-.25.41-.37.66-.24h.01c.46.21.89.51 1.27.9a4.49 4.49 0 0 1 0 6.36l-3.53 3.53a4.49 4.49 0 0 1-6.36 0"
+                  />
+                </svg>
                 {{ label }}
               </a>
             </template>
@@ -487,7 +490,7 @@ const radioGroup = reactive({
 const comboBox0 = reactive({
   modelValue: '',
   onEnter(value: string) {
-    console.info(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 
@@ -503,7 +506,7 @@ const comboBox1 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    console.info(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 
@@ -515,11 +518,11 @@ const mockApiRequest = async (query: string) => {
   comboBox1.suggestions = []
   if (query === '') return
   comboBox1.loading = true
-  console.log("Waiting 3 seconds...");
-  await wait(3000);
-  console.log("3 seconds passed... now return mock API data");
+  console.log("Waiting 1 seconds...");
+  await wait(1000);
+  console.log("1 seconds passed... now return mock API data");
   comboBox1.suggestions = [
-    { label: 'Apple', test: 'cool' },
+    { label: 'Apple', test: 'cool', index: 'cool2' },
     'Banana',
     'Kiwi',
     'Orange',
@@ -607,7 +610,7 @@ const comboBox2_2 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    console.info(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 const comboBox3 = reactive({
@@ -647,7 +650,7 @@ const comboBox3 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    console.info(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 const comboBox4 = reactive({
@@ -687,7 +690,7 @@ const comboBox4 = reactive({
     console.info('onResult:', result)
   },
   onEnter(value: string) {
-    console.info(`onEnter: ${value}`)
+    console.info('onEnter:', value)
   }
 })
 

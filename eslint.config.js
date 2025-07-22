@@ -2,7 +2,6 @@
 import storybook from "eslint-plugin-storybook";
 
 import eslint from '@eslint/js';
-import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
 import typescriptEslint from 'typescript-eslint';
@@ -32,6 +31,5 @@ export default typescriptEslint.config(
       // 'vue/comment-directive': 'off',
     },
   },
-  eslintConfigPrettier,
   storybook.configs["flat/recommended"]
 );

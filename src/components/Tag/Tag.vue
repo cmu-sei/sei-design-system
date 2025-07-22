@@ -71,7 +71,10 @@
           {{ label }}
         </slot>
       </a>
-      <span v-else :class="counter ? 'pl-1' : ''">
+      <span
+        v-else
+        :class="counter ? 'pl-1' : ''"
+      >
         <!-- @slot Label content. -->
         <slot name="label">
           {{ label }}
