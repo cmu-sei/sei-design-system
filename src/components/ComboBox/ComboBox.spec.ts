@@ -30,6 +30,36 @@ describe('ComboBox', () => {
     { label: 'Watermelon', href: '/watermelon' }
   ]
 
+  it('should not add to selected if query is empty in multiselectAdd', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props: { multiple: true, type: 'select' } })
+    // Set query to empty and try to add
+    await wrapper.setProps({ suggestions: [] })
+    await wrapper.find('input[type="text"]').setValue('')
+    // Try to trigger Enter (which calls multiselectAdd)
+    await wrapper.find('input[type="text"]').trigger('keyup.enter')
+    // selected is a ref, but always array in this test
+    expect((wrapper.vm.selected ?? []).length).toBe(0)
+    wrapper.unmount()
+  })
+
+  it('should clear all state on clearQuery', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props: { multiple: false, type: 'select' } })
+    await wrapper.setProps({ suggestions: ['A'] })
+    await wrapper.find('input[type="text"]').setValue('A')
+    await wrapper.find('input[type="text"]').trigger('keyup.enter')
+    await wrapper.vm.$nextTick()
+    // Click clear button
+    const clearBtn = wrapper.find('button.btn')
+    if (clearBtn.exists()) {
+      await clearBtn.trigger('click')
+      await wrapper.vm.$nextTick()
+      // Cast to HTMLInputElement for .value
+      expect((wrapper.find('input[type="text"]').element as HTMLInputElement).value).toBe('')
+      expect((wrapper.vm.selected ?? []).length).toBe(0)
+    }
+    wrapper.unmount()
+  })
+
 
   it('should match its default snapshot', async () => {
     const wrapper = mount(Component, { attachTo: document.body })
@@ -115,8 +145,6 @@ describe('ComboBox', () => {
     expect(localWrapper.element).toMatchSnapshot()
     localWrapper.unmount()
   })
-
-
 
   it('should handle "down" and "up" arrow keys on "keydown" event', async () => {
     const wrapper = mount(Component, {
@@ -235,7 +263,6 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-
   it('should handle left/right arrow keys for group navigation', async () => {
     const groupSuggestions = [
       { label: 'A', group: 'Fruits', value: 'A' },
@@ -266,9 +293,6 @@ describe('ComboBox', () => {
     localWrapper.unmount()
   })
 
-  // Removed: readonly is not a prop, so this test is not valid
-
-
   it('should emit result event on suggestion click', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
@@ -293,7 +317,6 @@ describe('ComboBox', () => {
     }
     wrapper.unmount()
   })
-
 
   it('should strip transient __cbxIdx property from selected objects', async () => {
     const objSuggestions = [
