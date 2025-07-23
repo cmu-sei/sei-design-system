@@ -681,6 +681,7 @@ watchDebounced(query, async () => {
   await nextTick()
   if (!selected.value.some(sel => typeof sel === 'string' ? sel === query.value : (props.optionLabel ? sel[props.optionLabel] : sel[defaultOptionLabel.value]) === query.value)) {
     emit('complete', query.value)
+    showDropdown.value = true
   }
   if (
     (props.multiple === false && (props.type === 'select' || props.type === 'taggable-select'))
@@ -755,36 +756,39 @@ const shake = () => {
   setTimeout(() => inputField.value.classList.remove('animate-shake'), 500)
 }
 
-const findSuggestionObject = (val: string): ComboBoxSuggestion | undefined => {
-  if (!allSuggestions.value) return undefined
-  return allSuggestions.value.find((s: ComboBoxSuggestion) => {
+// Find the original suggestion from props.suggestions, returning the exact value (string or object)
+const findOriginalSuggestion = (val: string): ComboBoxSuggestion | undefined => {
+  if (!props.suggestions) return undefined
+  return props.suggestions.find((s: ComboBoxSuggestion) => {
     if (typeof s === 'object') {
       return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === val
     }
-    return false
+    return s === val
   })
 }
 
 const multiselectAdd = async () => {
   if (!query.value) return
-  let suggestionObj = findSuggestionObject(query.value)
-  if (!suggestionObj && query.value !== '') {
-    suggestionObj = {
+  let suggestion = findOriginalSuggestion(query.value)
+  if (!suggestion && query.value !== '') {
+    suggestion = props.type === 'text' ? query.value : {
       [props.optionLabel ? props.optionLabel as string : defaultOptionLabel.value]: query.value
     }
   }
-  // Always strip CBX_IDX property if present
-  let normalizedObj: ComboBoxSuggestion = suggestionObj ?? {}
-  if (typeof suggestionObj === 'object' && suggestionObj !== null) {
+  // Always strip CBX_IDX property if present for objects
+  let normalizedObj: ComboBoxSuggestion = suggestion ?? {}
+  if (typeof suggestion === 'object' && suggestion !== null) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [CBX_IDX]: _cbxIdx, ...rest } = suggestionObj as Record<string, unknown>
+    const { [CBX_IDX]: _cbxIdx, ...rest } = suggestion as Record<string, unknown>
     normalizedObj = { ...rest }
+  } else if (typeof suggestion === 'string') {
+    normalizedObj = suggestion
   }
   const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {
     if (typeof s === 'object') {
       return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === query.value
     }
-    return false
+    return s === query.value
   })
   if (idx !== -1) {
     (selected.value as ComboBoxSuggestion[]).splice(idx, 1)
@@ -794,8 +798,10 @@ const multiselectAdd = async () => {
     inputField.value.focus()
     if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
       showDropdown.value = false
-      if (normalizedObj && typeof normalizedObj === 'object') {
+      if (typeof normalizedObj === 'object') {
         query.value = String(props.optionLabel ? normalizedObj[props.optionLabel as string] : normalizedObj[defaultOptionLabel.value] ?? '')
+      } else if (typeof normalizedObj === 'string') {
+        query.value = normalizedObj
       }
       if (selected.value ? (selected.value.length && props.type !== 'text') : false) isReadonly.value = true
     }
@@ -874,26 +880,23 @@ const commitSelection = () => {
   emitEnter()
 }
 
-const handleSuggestionClick = (option: ComboBoxSuggestion) => {
-  // Always strip CBX_IDX property if present for objects, but keep strings as strings
+const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
+  // Find the original suggestion from props.suggestions, if it exists
   let normalizedOption: ComboBoxSuggestion = option
+  let original: ComboBoxSuggestion | undefined = undefined
   if (typeof option === 'object' && option !== null) {
-    // If this is a "new" taggable-select string suggestion, convert to string if possible
-    // If the object only has label/name/value and no other keys, treat as string
-    const keys = Object.keys(option)
-    if (
-      keys.length <= 4 &&
-      typeof option.label === 'string' &&
-      option.label === option.name &&
-      option.label === option.value &&
-      (option.__cbxIdx === 0 || option.__cbxIdx === undefined)
-    ) {
-      normalizedOption = option.label
+    const val = props.optionLabel ? option[props.optionLabel as string] : option[defaultOptionLabel.value]
+    original = findOriginalSuggestion(val as string)
+    if (typeof original === 'string') {
+      normalizedOption = original
     } else {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [CBX_IDX]: _cbxIdx, ...rest } = option as Record<string, unknown>
       normalizedOption = { ...rest }
     }
+  } else {
+    // If it's a string, try to find the original string suggestion
+    original = findOriginalSuggestion(option as string)
   }
   // For type="text", update the query to match the selected suggestion
   if (props.type === 'text') {
@@ -915,8 +918,16 @@ const handleSuggestionClick = (option: ComboBoxSuggestion) => {
   } else {
     (selected.value as ComboBoxSuggestion[]).push(normalizedOption)
   }
-  // Always emit the same type as the suggestion (string stays string)
-  emit('result', normalizedOption)
+  // Always emit the original value from props.suggestions (object or string) for this click
+  let emitValue = original !== undefined ? original : option
+  // Strip __cbxIdx if present
+  if (typeof emitValue === 'object' && emitValue !== null && '__cbxIdx' in emitValue) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { __cbxIdx, ...rest } = emitValue as Record<string, unknown>
+    emitValue = rest
+  }
+  await nextTick()
+  emit('result', emitValue)
   // Close dropdown if not multiple
   if (!props.multiple) {
     showDropdown.value = false
@@ -929,23 +940,38 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   firstTickQuery.value = query.value
   let suggestionObj = getCurrentSuggestion()
   if (!suggestionObj && query.value) {
-    suggestionObj = findSuggestionObject(query.value) || {
+    suggestionObj = findOriginalSuggestion(query.value) || {
       [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: query.value
     }
   }
+  let emitValue: ComboBoxSuggestion | undefined = undefined
   if (suggestionObj && typeof suggestionObj === 'object') {
     const obj = suggestionObj as ComboBoxSuggestionObject
     query.value = (props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]) as string
+    // Try to find the original suggestion (object or string)
+    const val = props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]
+    const original = findOriginalSuggestion(val as string)
+    emitValue = original !== undefined ? original : obj
+  } else if (suggestionObj && typeof suggestionObj === 'string') {
+    const original = findOriginalSuggestion(suggestionObj)
+    emitValue = original !== undefined ? original : suggestionObj
+  } else if (props.type === 'text') {
+    emitValue = query.value
+  }
+  // Strip __cbxIdx if present
+  if (typeof emitValue === 'object' && emitValue !== null && '__cbxIdx' in emitValue) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { __cbxIdx, ...rest } = emitValue as Record<string, unknown>
+    emitValue = rest
   }
   await nextTick()
-  // Always emit normalized object (no CBX_IDX) for onResult
-  let normalizedSuggestion: ComboBoxSuggestion | undefined = suggestionObj
-  if (suggestionObj && typeof suggestionObj === 'object') {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [CBX_IDX]: _cbxIdx, ...rest } = suggestionObj as Record<string, unknown>
-    normalizedSuggestion = { ...rest }
+  // Always emit the original value from props.suggestions (object or string), unless nothing is selected
+  if (!(arrowCounter.value === -1 && event instanceof KeyboardEvent)) {
+    await nextTick()
+    if (emitValue !== undefined) {
+      emit('result', emitValue)
+    }
   }
-  if (!(arrowCounter.value === -1 && event instanceof KeyboardEvent)) emit('result', normalizedSuggestion)
   // Close dropdown if not multiple
   if (!props.multiple) {
     showDropdown.value = false
