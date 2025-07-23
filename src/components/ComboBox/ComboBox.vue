@@ -681,6 +681,7 @@ watchDebounced(query, async () => {
   await nextTick()
   if (!selected.value.some(sel => typeof sel === 'string' ? sel === query.value : (props.optionLabel ? sel[props.optionLabel] : sel[defaultOptionLabel.value]) === query.value)) {
     emit('complete', query.value)
+    showDropdown.value = true
   }
   if (
     (props.multiple === false && (props.type === 'select' || props.type === 'taggable-select'))
