@@ -65,7 +65,7 @@
         <input
           :id="id"
           ref="inputField"
-          v-model.trim="query"
+          :value="inputDisplayValue"
           type="text"
           :multiple="multiple"
           autocapitalize="off"
@@ -80,7 +80,7 @@
           :disabled="disabled"
           :readonly="isReadonly"
           :maxlength="maxlength"
-          @input="handleInput"
+          @input="onInputFieldInput"
           @click.prevent="showDropdown = !showDropdown"
           @keydown.delete="handleDelete"
           @keydown.tab="showDropdown = false"
@@ -903,6 +903,40 @@ const emitEnter = () => {
   // Reset suppression so 'complete' can fire on next query change
   suppressCompleteDueToSelection = false
   suppressCompleteDueToLabelUpdate = false
+}
+
+// Computed property for input display value
+const inputDisplayValue = computed(() => {
+  // If a suggestion is highlighted, show its label
+  if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
+    // Find the suggestion with the current arrowCounter
+    let found: ComboBoxSuggestion | undefined
+    suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
+      if (typeof i !== 'string') {
+        if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+          const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x[CBX_IDX] === arrowCounter.value)
+          if (tmp) found = tmp
+        } else {
+          if (i[CBX_IDX] === arrowCounter.value) found = i
+        }
+      }
+    })
+    if (found) {
+      if (typeof found === 'object') {
+        return String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
+      }
+      return String(found)
+    }
+  }
+  // Otherwise, show the query
+  return query.value
+})
+
+// Input handler for the input field (replaces v-model)
+const onInputFieldInput = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  query.value = target.value
+  handleInput()
 }
 
 const handleInput = async () => {
