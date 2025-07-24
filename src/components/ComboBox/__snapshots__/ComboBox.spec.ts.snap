@@ -44,6 +44,7 @@ exports[`ComboBox > should match its default snapshot 1`] = `
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -102,6 +103,7 @@ exports[`ComboBox > should match its snapshot with assigned \`disabled\` prop 1`
         disabled=""
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -158,6 +160,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -481,6 +484,7 @@ exports[`ComboBox > should match its snapshot with assigned \`modelValue\` prop 
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value="Apple"
       />
       <!--v-if-->
       <!--v-if-->
@@ -537,6 +541,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -593,6 +598,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -649,6 +655,7 @@ exports[`ComboBox > should match its snapshot with assigned \`optionType\` prop 
         class="form-control border-none"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
@@ -706,6 +713,7 @@ exports[`ComboBox > should match its snapshot with assigned \`placeholder\` prop
         placeholder="Search"
         spellcheck="false"
         type="text"
+        value=""
       />
       <!--v-if-->
       <!--v-if-->
