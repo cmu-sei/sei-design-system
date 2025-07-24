@@ -930,6 +930,7 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   emit('result', emitValue)
   // Close dropdown
   showDropdown.value = false
+  query.value = ''
   inputField.value.focus()
 }
 
