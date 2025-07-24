@@ -1144,9 +1144,14 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       }
       break
   }
-  // Only scroll for up/down
-  if (direction === 'up' || direction === 'down') scrollToChild()
 }
+
+// Watch arrowCounter and scroll to the active suggestion when it changes
+watch(arrowCounter, (val, oldVal) => {
+  if (val !== oldVal && showDropdown.value) {
+    scrollToChild()
+  }
+})
 
 watchEffect(() => {
   allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {

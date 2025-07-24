@@ -531,7 +531,14 @@ const mockApiRequest = async (query: string) => {
     'Pomegranate',
     'Raspberry',
     'Strawberry',
-    'Watermelon'
+    'Watermelon',
+    'Cool',
+    'Awesome',
+    'Neato',
+    'Wow',
+    'OMG',
+    'That is amazing',
+    'Holy cow'
   ].filter(i => {
     if (typeof i === 'string') {
       return i.toLowerCase().includes(query.toLowerCase())
