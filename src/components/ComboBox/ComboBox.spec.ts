@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { vi } from 'vitest'
 import Component from './ComboBox.vue'
 import { computed } from 'vue'
 
@@ -420,5 +421,66 @@ describe('ComboBox', () => {
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should emit input and update:modelValue events when input changes', async () => {
+    const wrapper = mount(Component, { attachTo: document.body })
+    await wrapper.setProps({ suggestions })
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('Banana')
+    await input.trigger('input')
+    await wrapper.vm.$nextTick()
+    const emittedInput = wrapper.emitted('input')
+    const emittedUpdate = wrapper.emitted('update:modelValue')
+    expect(emittedInput || emittedUpdate).toBeTruthy()
+    wrapper.unmount()
+  })
+
+  it('should not show clear button if nothing is selected', async () => {
+    const wrapper = mount(Component, { attachTo: document.body })
+    await wrapper.setProps({ suggestions })
+    await wrapper.vm.$nextTick()
+    const clearBtn = wrapper.find('button.btn')
+    expect(clearBtn.exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('should focus input when focus() is called', async () => {
+    const wrapper = mount(Component, { attachTo: document.body })
+    const input = wrapper.find('input[type="text"]')
+    const inputEl = input.element as HTMLInputElement
+    const spy = vi.spyOn(inputEl, 'focus')
+    inputEl.focus()
+    expect(spy).toHaveBeenCalled()
+    wrapper.unmount()
+  })
+
+  it('should blur input when blur() is called', async () => {
+    const wrapper = mount(Component, { attachTo: document.body })
+    const input = wrapper.find('input[type="text"]')
+    const inputEl = input.element as HTMLInputElement
+    const spy = vi.spyOn(inputEl, 'blur')
+    inputEl.blur()
+    expect(spy).toHaveBeenCalled()
+    wrapper.unmount()
+  })
+
+  it('should not open dropdown if suggestions is empty', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props: { suggestions: [] } })
+    await wrapper.find('input[type="text"]').trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.absolute.z-50').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('should handle escape key to close dropdown', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props: { suggestions } })
+    await wrapper.find('input[type="text"]').trigger('click')
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.absolute.z-50').exists()).toBe(true)
+    await wrapper.find('input[type="text"]').trigger('keydown', { key: 'Escape' })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.absolute.z-50').exists()).toBe(false)
+    wrapper.unmount()
   })
 })

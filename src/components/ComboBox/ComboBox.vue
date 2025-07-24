@@ -1137,7 +1137,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       }
       break
     case 'right':
-      if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === query.value?.length && groups.value?.length > 0) {
+      if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === inputDisplayValue.value?.length && groups.value?.length > 0) {
         const idx = groups.value.findIndex((g: { key: number }) => g.key === activeGroupKey.value)
         const newIdx = idx < groups.value.length - 1 && idx !== -1 ? idx + 1 : 0
         setActiveGroup(event, groups.value[newIdx])
