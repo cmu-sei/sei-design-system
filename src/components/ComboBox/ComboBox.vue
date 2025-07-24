@@ -928,10 +928,8 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   }
   await nextTick()
   emit('result', emitValue)
-  // Close dropdown if not multiple
-  if (!props.multiple) {
-    showDropdown.value = false
-  }
+  // Close dropdown
+  showDropdown.value = false
   inputField.value.focus()
 }
 
@@ -972,10 +970,8 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
       emit('result', emitValue)
     }
   }
-  // Close dropdown if not multiple
-  if (!props.multiple) {
-    showDropdown.value = false
-  }
+  // Close dropdown
+  showDropdown.value = false
   switch (props.type) {
     case 'text': {
       if (arrowCounter.value === -1) {
