@@ -257,10 +257,11 @@
             @complete="comboBox5.onComplete"
             @enter="comboBox5.onEnter"
           >
-            <template #customOption="{ label, classList, href, onClick }">
+            <template #customOption="{ label, classList, dataActive, href, onClick }">
               <a
                 :class="classList"
                 :href="href"
+                :data-active="dataActive"
                 @click="onClick"
               >
                 <svg
@@ -707,7 +708,19 @@ const customSuggestions = [
   { term: "Select", href: "/components/select" },
   { term: "Filter by Dropdown", href: "/components/filter-by-dropdown" },
   { term: "Multiselect", href: "/components/multiselect" },
-  { term: "Combo Box", href: "/components/combo-box" }
+  { term: "Combo Box", href: "/components/combo-box" },
+  { term: "Radio 2 Group", href: "/components/radio-group" },
+  { term: "Checkbox 2 Group", href: "/components/checkbox-group" },
+  { term: "Select 2", href: "/components/select" },
+  { term: "Filter by Dropdown 2", href: "/components/filter-by-dropdown" },
+  { term: "Multiselect 2", href: "/components/multiselect" },
+  { term: "Combo Box 2", href: "/components/combo-box" },
+  { term: "Radio Group 3", href: "/components/radio-group" },
+  { term: "Checkbox Group 3", href: "/components/checkbox-group" },
+  { term: "Select 3", href: "/components/select" },
+  { term: "Filter by Dropdown 3", href: "/components/filter-by-dropdown" },
+  { term: "Multiselect 3", href: "/components/multiselect" },
+  { term: "Combo Box 3", href: "/components/combo-box" }
 ] as ComboBoxSuggestion[]
 
 
