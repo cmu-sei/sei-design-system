@@ -671,6 +671,10 @@ const isFlatArray = computed(() => {
 
 const matchesSuggestion = computed(() => flatSuggestions.value.includes(query.value))
 
+// Dedicated suppression flags for robust event suppression
+let suppressCompleteDueToSelection = false
+let suppressCompleteDueToLabelUpdate = false
+let suppressShowDropdownNext = false // Boolean: suppress dropdown for the next query change only
 watch(query, (value: string) => {
   const htmlRegex = /<[^>]*(>|$)/
   if (htmlRegex.test(value)) query.value = removeHtmlFromString(value)
@@ -679,10 +683,22 @@ watch(query, (value: string) => {
 
 watchDebounced(query, async () => {
   await nextTick()
-  if (!selected.value.some(sel => typeof sel === 'string' ? sel === query.value : (props.optionLabel ? sel[props.optionLabel] : sel[defaultOptionLabel.value]) === query.value)) {
-    emit('complete', query.value)
+  // Show dropdown on query change, unless query is empty or suppressed due to selection (for type='text')
+  let skipDropdown = false
+  if (suppressShowDropdownNext && props.type === 'text') {
+    skipDropdown = true
+    suppressShowDropdownNext = false // Only suppress for one cycle
+  }
+  if (query.value !== '' && !skipDropdown) {
     showDropdown.value = true
   }
+  if (!suppressCompleteDueToSelection && !suppressCompleteDueToLabelUpdate) {
+    if (!selected.value.some(sel => typeof sel === 'string' ? sel === query.value : (props.optionLabel ? sel[props.optionLabel] : sel[defaultOptionLabel.value]) === query.value)) {
+      emit('complete', query.value)
+    }
+  }
+  suppressCompleteDueToSelection = false;
+  suppressCompleteDueToLabelUpdate = false;
   if (
     (props.multiple === false && (props.type === 'select' || props.type === 'taggable-select'))
     || props.type === 'text'
@@ -743,6 +759,7 @@ const scrollToChild = async () => {
 }
 
 const clearQuery = () => {
+  suppressCompleteDueToSelection = true
   query.value = ''
   inputField.value.value = ''
   if (!props.multiple && (props.type === 'select'|| props.type === 'taggable-select')) selected.value = []
@@ -798,9 +815,14 @@ const multiselectAdd = async () => {
     inputField.value.focus()
     if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
       showDropdown.value = false
+      if (props.type === 'text' && query.value !== (typeof normalizedObj === 'object' ? String(props.optionLabel ? normalizedObj[props.optionLabel as string] : normalizedObj[defaultOptionLabel.value] ?? '') : normalizedObj)) {
+        suppressShowDropdownNext = true // Only suppress if query is actually changing
+      }
       if (typeof normalizedObj === 'object') {
+        suppressCompleteDueToLabelUpdate = true
         query.value = String(props.optionLabel ? normalizedObj[props.optionLabel as string] : normalizedObj[defaultOptionLabel.value] ?? '')
       } else if (typeof normalizedObj === 'string') {
+        suppressCompleteDueToLabelUpdate = true
         query.value = normalizedObj
       }
       if (selected.value ? (selected.value.length && props.type !== 'text') : false) isReadonly.value = true
@@ -811,14 +833,22 @@ const multiselectAdd = async () => {
 }
 
 const multiselectRemove = (index: number) => {
-  (selected.value as ComboBoxSuggestion[]).splice(index, 1)
+  if (!selected.value.length) return
+  if (index < 0) {
+    // Remove last item
+    selected.value.splice(selected.value.length - 1, 1)
+  } else if (index >= 0 && index < selected.value.length) {
+    selected.value.splice(index, 1)
+  }
+  // Reset input and state if no items left
   if (selected.value.length === 0) {
     query.value = ''
-    inputField.value.value = ''
+    if (inputField.value) inputField.value.value = ''
     isReadonly.value = false
     showClearButton.value = false
   }
-  inputField.value?.focus()
+  // Always update input field focus
+  if (inputField.value) inputField.value.focus()
 }
 
 const handleDelete = () => {
@@ -870,6 +900,8 @@ const emitEnter = () => {
 }
 
 const handleInput = async () => {
+  // If user input occurs, always reset dropdown suppression
+  suppressShowDropdownNext = false
   await nextTick()
   if (showDropdown.value) arrowCounter.value = -1
 }
@@ -900,6 +932,8 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   }
   // For type="text", update the query to match the selected suggestion
   if (props.type === 'text') {
+    // Only suppress if query is actually changing (handled elsewhere)
+    suppressCompleteDueToLabelUpdate = true
     if (typeof normalizedOption === 'object' && normalizedOption !== null) {
       query.value = String(props.optionLabel ? normalizedOption[props.optionLabel as string] : normalizedOption[defaultOptionLabel.value] ?? '')
     } else if (typeof normalizedOption === 'string') {
@@ -930,6 +964,7 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   emit('result', emitValue)
   // Close dropdown
   showDropdown.value = false
+  suppressCompleteDueToSelection = true
   query.value = ''
   inputField.value.focus()
 }
@@ -946,6 +981,10 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   let emitValue: ComboBoxSuggestion | undefined = undefined
   if (suggestionObj && typeof suggestionObj === 'object') {
     const obj = suggestionObj as ComboBoxSuggestionObject
+    if (props.type === 'text' && query.value !== (props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value])) {
+      suppressShowDropdownNext = true // Only suppress if query is actually changing
+    }
+    suppressCompleteDueToLabelUpdate = true
     query.value = (props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]) as string
     // Try to find the original suggestion (object or string)
     const val = props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]
@@ -953,6 +992,11 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     emitValue = original !== undefined ? original : obj
   } else if (suggestionObj && typeof suggestionObj === 'string') {
     const original = findOriginalSuggestion(suggestionObj)
+    if (props.type === 'text' && query.value !== suggestionObj) {
+      suppressShowDropdownNext = true // Only suppress if query is actually changing
+    }
+    suppressCompleteDueToLabelUpdate = true
+    query.value = suggestionObj
     emitValue = original !== undefined ? original : suggestionObj
   } else if (props.type === 'text') {
     emitValue = query.value
@@ -1009,6 +1053,8 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
         if ((firstTickQuery.value.length && !query.value.length) || (!query.value.length && selected.value.length === 0)) shake()
       }
       firstTickQuery.value = ''
+      // Suppress 'complete' emission when clearing query due to selection
+      suppressCompleteDueToSelection = true
       query.value = ''
       break
     }
