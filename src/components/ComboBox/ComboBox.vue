@@ -12,7 +12,7 @@
       }"
     >
       <div
-        v-if="((type === 'taggable-select' || type === 'select') && multiple) && selected.length"
+        v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
         class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
       >
         <SdsTag
@@ -784,6 +784,25 @@ const findOriginalSuggestion = (val: string): ComboBoxSuggestion | undefined => 
   })
 }
 
+// Utility: Get label from suggestion (object or string)
+const getLabel = (item: ComboBoxSuggestion) => {
+  if (typeof item === 'object' && item !== null) {
+    return String(props.optionLabel ? item[props.optionLabel as string] : item[defaultOptionLabel.value] ?? '')
+  }
+  return String(item)
+}
+
+// Utility: Remove __cbxIdx from object
+const stripIdx = (obj: ComboBoxSuggestion) => {
+  if (typeof obj === 'object' && obj !== null) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { [CBX_IDX]: _cbxIdx, ...rest } = obj as Record<string, unknown>
+    return { ...rest }
+  }
+  return obj
+}
+
+// Add or remove selection based on query
 const multiselectAdd = async () => {
   if (!query.value) return
   let suggestion = findOriginalSuggestion(query.value)
@@ -792,44 +811,28 @@ const multiselectAdd = async () => {
       [props.optionLabel ? props.optionLabel as string : defaultOptionLabel.value]: query.value
     }
   }
-  // Always strip CBX_IDX property if present for objects
-  let normalizedObj: ComboBoxSuggestion = suggestion ?? {}
-  if (typeof suggestion === 'object' && suggestion !== null) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [CBX_IDX]: _cbxIdx, ...rest } = suggestion as Record<string, unknown>
-    normalizedObj = { ...rest }
-  } else if (typeof suggestion === 'string') {
-    normalizedObj = suggestion
-  }
-  const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {
-    if (typeof s === 'object') {
-      return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === query.value
-    }
-    return s === query.value
-  })
+  const normalizedObj = stripIdx(suggestion ?? {})
+  const idx = selected.value.findIndex(s => getLabel(s) === query.value)
   if (idx !== -1) {
-    (selected.value as ComboBoxSuggestion[]).splice(idx, 1)
+    selected.value.splice(idx, 1)
     shake()
-  } else {
-    selected.value.push(normalizedObj as ComboBoxSuggestion)
-    inputField.value.focus()
-    if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
-      showDropdown.value = false
-      if (props.type === 'text' && query.value !== (typeof normalizedObj === 'object' ? String(props.optionLabel ? normalizedObj[props.optionLabel as string] : normalizedObj[defaultOptionLabel.value] ?? '') : normalizedObj)) {
-        suppressShowDropdownNext = true // Only suppress if query is actually changing
-      }
-      if (typeof normalizedObj === 'object') {
-        suppressCompleteDueToLabelUpdate = true
-        query.value = String(props.optionLabel ? normalizedObj[props.optionLabel as string] : normalizedObj[defaultOptionLabel.value] ?? '')
-      } else if (typeof normalizedObj === 'string') {
-        suppressCompleteDueToLabelUpdate = true
-        query.value = normalizedObj
-      }
-      if (selected.value ? (selected.value.length && props.type !== 'text') : false) isReadonly.value = true
-    }
-    await nextTick()
-    arrowCounter.value = -1
+    return
   }
+  selected.value.push(normalizedObj as ComboBoxSuggestion)
+  inputField.value.focus()
+  // Handle dropdown and query update for single select/text
+  if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
+    showDropdown.value = false
+    const normalizedLabel = getLabel(normalizedObj)
+    if (props.type === 'text' && query.value !== normalizedLabel) {
+      suppressShowDropdownNext = true
+    }
+    suppressCompleteDueToLabelUpdate = true
+    query.value = normalizedLabel
+    if (selected.value.length && props.type !== 'text') isReadonly.value = true
+  }
+  await nextTick()
+  arrowCounter.value = -1
 }
 
 const multiselectRemove = (index: number) => {
@@ -897,6 +900,9 @@ watch(forceShowDropdown, (val) => {
 const emitEnter = () => {
   if (props.type === 'text') emit('enter', query.value)
   else emit('enter', selected.value.length ? selected.value : query.value)
+  // Reset suppression so 'complete' can fire on next query change
+  suppressCompleteDueToSelection = false
+  suppressCompleteDueToLabelUpdate = false
 }
 
 const handleInput = async () => {
@@ -1075,11 +1081,6 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       return
     }
   }
-  // For left/right, always keep dropdown open
-  if ((direction === 'left' || direction === 'right') && !showDropdown.value) {
-    forceShowDropdown.value = true
-    showDropdown.value = true
-  }
   switch (direction) {
     case 'down':
       if (arrowCounter.value < dropdownOption.value?.length - 1) arrowCounter.value++
@@ -1106,7 +1107,8 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       }
       break
   }
-  scrollToChild()
+  // Only scroll for up/down
+  if (direction === 'up' || direction === 'down') scrollToChild()
 }
 
 watchEffect(() => {
