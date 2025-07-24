@@ -922,14 +922,17 @@ const inputDisplayValue = computed(() => {
       }
     })
     if (found) {
+      let label = ''
       if (typeof found === 'object') {
-        return String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
+        label = String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
+      } else {
+        label = String(found)
       }
-      return String(found)
+      return removeHtmlFromString(label)
     }
   }
   // Otherwise, show the query
-  return query.value
+  return removeHtmlFromString(query.value)
 })
 
 // Input handler for the input field (replaces v-model)
