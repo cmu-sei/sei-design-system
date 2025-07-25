@@ -100,7 +100,7 @@
             'px-2': size === 'sm',
             'px-3': size !== 'sm'
           }"
-          @click.prevent="clearQuery"
+          @mousedown.prevent="clearQuery"
         >
           <span class="sr-only">Clear query</span>
           <svg
@@ -197,7 +197,7 @@
               :data-active="arrowCounter === 0"
               type="button"
               tabindex="-1"
-              @click="handleSuggestionClick({
+              @mousedown.prevent="handleSuggestionClick({
                 label: query,
                 name: query,
                 value: query,
@@ -582,8 +582,20 @@ const defaultOptionLabel = ref('label')
 const groups = ref(), activeGroup = ref(), activeGroupKey = ref(-1)
 const allSuggestions = ref(), allSuggestionOptions = ref(), allCount = ref(0)
 const groupSuggestions = ref(), groupSuggestionOptions = ref(), suggestionOptions = ref()
-const showClearButton = ref(false)
 const firstTickQuery = ref()
+
+const showClearButton = computed(() => {
+  if (inputDisplayValue.value !== '') {
+    return true
+  }
+  if (props.type !== 'text' && selected.value.length > 0) {
+    return true
+  }
+  if (props.disabled) {
+    return false
+  }
+  return false
+})
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -671,15 +683,40 @@ const isFlatArray = computed(() => {
 
 const matchesSuggestion = computed(() => flatSuggestions.value.includes(query.value))
 
+// Computed property for input display value
+const inputDisplayValue = computed(() => {
+  // If a suggestion is highlighted, show its label
+  if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
+    // Find the suggestion with the current arrowCounter
+    let found: ComboBoxSuggestion | undefined
+    suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
+      if (typeof i !== 'string') {
+        if (props.optionGroupChildren && i[props.optionGroupChildren]) {
+          const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x[CBX_IDX] === arrowCounter.value)
+          if (tmp) found = tmp
+        } else {
+          if (i[CBX_IDX] === arrowCounter.value) found = i
+        }
+      }
+    })
+    if (found) {
+      let label = ''
+      if (typeof found === 'object') {
+        label = String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
+      } else {
+        label = String(found)
+      }
+      return removeHtmlFromString(label)
+    }
+  }
+  // Otherwise, show the query
+  return removeHtmlFromString(query.value)
+})
+
 // Dedicated suppression flags for robust event suppression
 let suppressCompleteDueToSelection = false
 let suppressCompleteDueToLabelUpdate = false
 let suppressShowDropdownNext = false // Boolean: suppress dropdown for the next query change only
-watch(query, (value: string) => {
-  const htmlRegex = /<[^>]*(>|$)/
-  if (htmlRegex.test(value)) query.value = removeHtmlFromString(value)
-  showClearButton.value = inputField.value ? inputField.value.value.length > 0 : false
-})
 
 watchDebounced(query, async () => {
   await nextTick()
@@ -699,14 +736,6 @@ watchDebounced(query, async () => {
   }
   suppressCompleteDueToSelection = false;
   suppressCompleteDueToLabelUpdate = false;
-  if (
-    (props.multiple === false && (props.type === 'select' || props.type === 'taggable-select'))
-    || props.type === 'text'
-  ) {
-    if (query.value === '' && !selected.value.length) showClearButton.value = false
-  } else {
-    if (query.value === '') showClearButton.value = false
-  }
 }, { debounce: props.debounceComplete })
 
 watch(showDropdown, (val) => {
@@ -760,11 +789,14 @@ const scrollToChild = async () => {
 
 const clearQuery = () => {
   suppressCompleteDueToSelection = true
-  query.value = ''
-  inputField.value.value = ''
-  if (!props.multiple && (props.type === 'select'|| props.type === 'taggable-select')) selected.value = []
+  if (inputDisplayValue.value !== '') {
+    query.value = ''
+    inputField.value.value = ''
+  } else if (props.type === 'select' || props.type === 'taggable-select') {
+    selected.value = []
+  }
   isReadonly.value = false
-  showClearButton.value = false
+  showDropdown.value = false
   inputField.value.focus()
 }
 
@@ -848,7 +880,6 @@ const multiselectRemove = (index: number) => {
     query.value = ''
     if (inputField.value) inputField.value.value = ''
     isReadonly.value = false
-    showClearButton.value = false
   }
   // Always update input field focus
   if (inputField.value) inputField.value.focus()
@@ -905,34 +936,10 @@ const emitEnter = () => {
   suppressCompleteDueToLabelUpdate = false
 }
 
-// Computed property for input display value
-const inputDisplayValue = computed(() => {
-  // If a suggestion is highlighted, show its label
-  if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
-    // Find the suggestion with the current arrowCounter
-    let found: ComboBoxSuggestion | undefined
-    suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
-      if (typeof i !== 'string') {
-        if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-          const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x[CBX_IDX] === arrowCounter.value)
-          if (tmp) found = tmp
-        } else {
-          if (i[CBX_IDX] === arrowCounter.value) found = i
-        }
-      }
-    })
-    if (found) {
-      let label = ''
-      if (typeof found === 'object') {
-        label = String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
-      } else {
-        label = String(found)
-      }
-      return removeHtmlFromString(label)
-    }
-  }
-  // Otherwise, show the query
-  return removeHtmlFromString(query.value)
+// Show clear button based on inputDisplayValue, not query
+watch([query, inputDisplayValue, () => selected.value.length, () => props.multiple, () => props.disabled, () => props.type], () => {
+  const htmlRegex = /<[^>]*(>|$)/
+  if (htmlRegex.test(query.value)) query.value = removeHtmlFromString(query.value)
 })
 
 // Input handler for the input field (replaces v-model)
@@ -1014,6 +1021,19 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
 
 const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   if (props.disabled) return
+  // Prevent adding to selected if type is 'select' and there are no suggestions
+  if (
+    props.type === 'select' &&
+    inputDisplayValue.value !== '' &&
+    !getCurrentSuggestion()
+  ) {
+    shake()
+    return
+  }
+  if (props.type !== 'text' && arrowCounter.value === -1 && inputDisplayValue.value !== '') {
+    shake()
+    return
+  }
   firstTickQuery.value = query.value
   let suggestionObj = getCurrentSuggestion()
   if (!suggestionObj && query.value) {
@@ -1067,10 +1087,6 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
       } else {
         multiselectRemove(0)
         multiselectAdd()
-        showClearButton.value = true
-      }
-      if ((firstTickQuery.value.length && !query.value.length) || !query.value.length) {
-        showClearButton.value = false
       }
       firstTickQuery.value = ''
       break
@@ -1195,10 +1211,47 @@ watchEffect(() => {
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
 })
 
+// Helper to deeply count all visible options in the current suggestionOptions
+function countVisibleOptions(options: ComboBoxSuggestion[] | undefined): number {
+  if (!options || !Array.isArray(options)) return 0;
+  let count = 0;
+  for (const opt of options) {
+    if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
+      count += countVisibleOptions(opt[props.optionGroupChildren] as ComboBoxSuggestion[]);
+    } else {
+      count++;
+    }
+  }
+  return count;
+}
+
+// Computed property to check if the dropdown will have suggestions listed
+const hasDropdownSuggestion = computed(() => {
+  // Use the currently active suggestionOptions (grouped or all)
+  const options = suggestionOptions.value;
+  const visibleCount = countVisibleOptions(options);
+
+  // For type="select" (any multiple), only show dropdown if there is at least one visible option
+  if (props.type === 'select') {
+    return visibleCount > 0;
+  }
+
+  // For taggable-select, always show dropdown if query is non-empty and not a match
+  if (props.type === 'taggable-select') {
+    if (query.value && !matchesSuggestion.value) {
+      return true;
+    }
+    return visibleCount > 0;
+  }
+
+  // For all other cases, only show dropdown if there are visible options
+  return visibleCount > 0;
+})
+
 const shouldShowDropdown = computed(() => {
   if (props.disabled) return false
-  if ((props.suggestions?.length ?? 0) === 0) return false
   if (!showDropdown.value) return false
+  if (!hasDropdownSuggestion.value) return false
   if (props.type !== 'text' && selected.value.length === 1 && !props.multiple) return false
   return true
 })

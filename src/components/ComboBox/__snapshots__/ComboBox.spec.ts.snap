@@ -486,7 +486,31 @@ exports[`ComboBox > should match its snapshot with assigned \`modelValue\` prop 
         type="text"
         value="Apple"
       />
-      <!--v-if-->
+      <button
+        class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Clear query
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
       <!--v-if-->
       <!-- @slot Default content. Good for adding content to the end of the input group -->
       
