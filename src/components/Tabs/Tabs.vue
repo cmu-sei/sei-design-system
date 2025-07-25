@@ -313,7 +313,29 @@ const changeTab = async (tab: TabItem) => {
   }
 }
 
-const onTabKeydown = async (event: KeyboardEvent, tab: TabItem) => {
+/**
+ * Handles keyboard navigation for tab items.
+ *
+ * Supports navigation using ArrowLeft, ArrowRight, Home, and End keys.
+ * - ArrowLeft: Moves focus to the previous enabled tab (wraps to last if at first).
+ * - ArrowRight: Moves focus to the next enabled tab (wraps to first if at last).
+ * - Home: Moves focus to the first enabled tab.
+ * - End: Moves focus to the last enabled tab.
+ *
+ * Disabled tabs are skipped during navigation.
+ * After changing the tab, focuses the corresponding tab element in the DOM.
+ *
+ * @param {KeyboardEvent} event - The keyboard event triggered by user interaction.
+ * @param {TabItem} tab - The currently focused tab item.
+ * @returns {Promise<void>}
+ *
+ * @remarks
+ * - Assumes `tabs` is a reactive array of tab items.
+ * - Assumes `changeTab` updates the active tab.
+ * - Assumes tab elements have IDs in the format: `sds-tabs-{root.id}__{tab.key}__tab`.
+ * - Uses Vue's `nextTick` to ensure DOM updates before focusing.
+ */
+const onTabKeydown = async (event: KeyboardEvent, tab: TabItem): Promise<void> => {
   const key = event.key as typeof TAB_KEYBOARD_NAV_KEYS[number]
   if (!TAB_KEYBOARD_NAV_KEYS.includes(key)) return
 
@@ -324,14 +346,19 @@ const onTabKeydown = async (event: KeyboardEvent, tab: TabItem) => {
   if (currentIndex === -1) return
 
   let nextIndex: number = currentIndex
-  if (key === 'ArrowLeft') {
-    nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length
-  } else if (key === 'ArrowRight') {
-    nextIndex = (currentIndex + 1) % enabledTabs.length
-  } else if (key === 'Home') {
-    nextIndex = 0
-  } else if (key === 'End') {
-    nextIndex = enabledTabs.length - 1
+  switch (key) {
+    case 'ArrowLeft':
+      nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length
+      break
+    case 'ArrowRight':
+      nextIndex = (currentIndex + 1) % enabledTabs.length
+      break
+    case 'Home':
+      nextIndex = 0
+      break
+    case 'End':
+      nextIndex = enabledTabs.length - 1
+      break
   }
 
   const nextTab = enabledTabs[nextIndex]
