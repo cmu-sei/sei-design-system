@@ -179,10 +179,10 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
     >
       <!-- @slot Scroll area content. -->
       
-      
-      
       <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
       <!--v-if-->
+      
+      
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -199,8 +199,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -217,8 +215,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -235,8 +231,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -253,8 +247,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -271,8 +263,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -289,8 +279,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -307,8 +295,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -325,8 +311,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
@@ -343,8 +327,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
-      <!--v-if-->
       
       <a
         class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"

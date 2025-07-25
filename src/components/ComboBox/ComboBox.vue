@@ -176,63 +176,63 @@
           'py-2 flex flex-col gap-y-1': optionType !== 'custom'
         }"
       >
+        <!-- Show <query> (new) for taggable-select when no suggestions match -->
+        <template
+          v-if="
+            query?.length && type === 'taggable-select' && !matchesSuggestion
+          "
+        >
+          <div
+            ref="dropdownOption"
+            class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+            :class="{
+              'text-gray-700 dark:text-gray-300': arrowCounter !== 0,
+              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && arrowCounter !== 0,
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0,
+            }"
+            :data-active="arrowCounter === 0"
+            type="button"
+            tabindex="-1"
+            @mousedown.prevent="handleSuggestionClick({
+              label: query,
+              name: query,
+              value: query,
+              __cbxIdx: 0
+            })"
+          >
+            <!-- @slot Option content. Good for customizing the content for each option -->
+            <slot
+              name="option"
+              :option="{
+                label: query,
+                name: query,
+                value: query,
+                index: 0
+              }"
+              :label="query"
+            >
+              {{ query }} (new)
+            </slot>
+            <svg
+              v-if="isSelected(query)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="9"
+              viewBox="0 0 11 9"
+              fill="none"
+              class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+            >
+              <path
+                d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+        </template>
         <template
           v-for="s, sindex in suggestionOptions"
           :key="`${s}_${sindex}`"
         >
-          <!-- Show <query> (new) for taggable-select when no suggestions match -->
-          <template
-            v-if="
-              query?.length && sindex === 0 && type === 'taggable-select' && !matchesSuggestion
-            "
-          >
-            <div
-              ref="dropdownOption"
-              class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-              :class="{
-                'text-gray-700 dark:text-gray-300': arrowCounter !== 0,
-                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && arrowCounter !== 0,
-                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0,
-              }"
-              :data-active="arrowCounter === 0"
-              type="button"
-              tabindex="-1"
-              @mousedown.prevent="handleSuggestionClick({
-                label: query,
-                name: query,
-                value: query,
-                __cbxIdx: 0
-              })"
-            >
-              <!-- @slot Option content. Good for customizing the content for each option -->
-              <slot
-                name="option"
-                :option="{
-                  label: query,
-                  name: query,
-                  value: query,
-                  index: 0
-                }"
-                :label="query"
-              >
-                {{ query }} (new)
-              </slot>
-              <svg
-                v-if="isSelected(query)"
-                xmlns="http://www.w3.org/2000/svg"
-                width="11"
-                height="9"
-                viewBox="0 0 11 9"
-                fill="none"
-                class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-              >
-                <path
-                  d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-          </template>
           <div
             v-if="optionGroupChildren && s[optionGroupChildren]?.length"
             class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 pb-2 -mb-2"
@@ -730,9 +730,7 @@ watchDebounced(query, async () => {
     showDropdown.value = true
   }
   if (!suppressCompleteDueToSelection && !suppressCompleteDueToLabelUpdate) {
-    if (!selected.value.some(sel => typeof sel === 'string' ? sel === query.value : (props.optionLabel ? sel[props.optionLabel] : sel[defaultOptionLabel.value]) === query.value)) {
-      emit('complete', query.value)
-    }
+    emit('complete', query.value)
   }
   suppressCompleteDueToSelection = false;
   suppressCompleteDueToLabelUpdate = false;
@@ -1134,14 +1132,16 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
       return
     }
   }
+  // compensate for the (new) option for taggable-select
+  const lastDropdownItemIndex = props.type === 'taggable-select' ? dropdownOption.value?.length || 0 : dropdownOption.value?.length - 1 || 0
   switch (direction) {
     case 'down':
-      if (arrowCounter.value < dropdownOption.value?.length - 1) arrowCounter.value++
+      if (arrowCounter.value < lastDropdownItemIndex) arrowCounter.value++
       else arrowCounter.value = -1
       break
     case 'up':
       if (arrowCounter.value > -1) arrowCounter.value--
-      else arrowCounter.value = dropdownOption.value?.length - 1
+      else arrowCounter.value = lastDropdownItemIndex
       break
     case 'left':
       if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === 0 && groups.value?.length > 0) {

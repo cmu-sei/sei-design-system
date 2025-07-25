@@ -153,6 +153,8 @@
           <code class="text-xs">type="text"</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
+            v-model:selected="comboBox1.selected"
+            type="text"
             size="sm"
             placeholder="Search"
             :loading="comboBox1.loading"
@@ -497,6 +499,7 @@ const comboBox0 = reactive({
 
 const comboBox1 = reactive({
   modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
   loading: false,
   suggestions: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
