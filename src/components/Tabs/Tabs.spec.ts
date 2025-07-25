@@ -1,4 +1,5 @@
 import type { TabItem } from './Tabs.vue'
+import { nextTick } from 'vue'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, VueWrapper } from '@vue/test-utils'
 import Component from './Tabs.vue'
@@ -162,5 +163,47 @@ describe('Tabs', () => {
     expect(willChangeTab).toHaveBeenCalled()
     expect(props.modelValue[1].active).toBeTruthy()
     expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should activate next tab on "ArrowRight" key', async () => {
+    await wrapper.findAll('button[role="tab"]')[0].trigger('keydown', { key: 'ArrowRight' })
+    await nextTick()
+    expect(props.modelValue[1].active).toBeTruthy()
+  })
+
+  it('should activate previous tab on "ArrowLeft" key', async () => {
+    // Activate second tab first
+    await wrapper.findAll('button[role="tab"]')[1].trigger('click')
+    await nextTick()
+    // Now test ArrowLeft
+    await wrapper.findAll('button[role="tab"]')[1].trigger('keydown', { key: 'ArrowLeft' })
+    await nextTick()
+    expect(props.modelValue[0].active).toBeTruthy()
+  })
+
+  it('should activate first tab on "Home" key', async () => {
+    await wrapper.findAll('button[role="tab"]')[2].trigger('keydown', { key: 'Home' })
+    await nextTick()
+    expect(props.modelValue[0].active).toBeTruthy()
+  })
+
+  it('should activate last tab on "End" key', async () => {
+    await wrapper.findAll('button[role="tab"]')[0].trigger('keydown', { key: 'End' })
+    await nextTick()
+    expect(props.modelValue[2].active).toBeTruthy()
+  })
+
+  it('should skip disabled tabs during navigation', async () => {
+    await wrapper.setProps({
+      modelValue: [
+        { key: 'tab-1', title: 'Tab label 1', disabled: true },
+        { key: 'tab-2', title: 'Tab label 2', active: true },
+        { key: 'tab-3', title: 'Tab label 3' }
+      ]
+    })
+    await wrapper.findAll('button[role="tab"]')[1].trigger('keydown', { key: 'ArrowLeft' })
+    await nextTick()
+    // Should wrap to tab-3, not tab-1 (which is disabled)
+    expect(props.modelValue[2].active).toBeTruthy()
   })
 })
