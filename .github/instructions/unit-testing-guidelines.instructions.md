@@ -1,5 +1,5 @@
 ---
-applyTo: "src/components/**/*.spec.ts"
+applyTo: "src/components/**/*.{.spec.js,.spec.ts}"
 ---
 
 # Context & Purpose:
@@ -106,8 +106,8 @@ it('updates DOM after reactive value change', async () => {
 Use `nextTick` when you directly mutate reactive state or expect DOM changes that are not immediately reflected after an action. For Composition API components, you may need to access refs or reactive state exposed via `expose()`.
 
 ## Code Coverage and Test Organization
-- Place test files alongside components using `.spec.ts` suffix.
-- Name the test file to match the component name, e.g., `MyComponent.spec.ts` for `MyComponent.vue`.
+- Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.
+- Name the test file to match the component name, e.g., `MyComponent.{spec.js,spec.ts}` for `MyComponent.vue`.
 - Keep composables and pure logic separated and tested independently.
 - Run test scripts using the commands defined in your `package.json` file, such as `npm test`, `npm run test:clean`, or `npm run test:watch`.
 - Run a coverage report using `npm run coverage` as defined in your `package.json`.
@@ -137,6 +137,6 @@ describe('HelloWorld.vue', () => {
 - Encourage separation of logic into composables for easier unit testing.
 - Use Vue Test Utils' `find` and `findComponent` for precise querying.
 - Prefer testing emitted events over internal component state.
-- Use Vitest's global APIs (`describe`, `it`, `expect`) without imports thanks to `globals: true` config.
+- Use Vitest's global APIs (`describe`, `it`, `expect`) without imports thanks to `globals:true` config.
 - Mock external dependencies and asynchronous calls to isolate unit tests.
 - Consider snapshot testing for components to ensure UI consistency.
