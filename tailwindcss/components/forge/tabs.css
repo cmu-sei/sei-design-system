@@ -59,7 +59,7 @@
 
   /* Base styles */
 
-  @apply inline-flex items-center justify-center gap-x-2;
+  @apply inline-flex items-center gap-x-2;
   @apply text-gray-600 dark:text-gray-400;
   @apply font-semibold cursor-pointer select-none whitespace-nowrap;
 
