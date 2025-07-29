@@ -150,16 +150,17 @@
             focus-on-key-press
             @enter="comboBox0.onEnter"
           />
-          <code class="text-xs">type="text"</code>
+          <code class="text-xs">type="taggable-select" multiple simulated request</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
             v-model:selected="comboBox1.selected"
-            type="text"
+            type="taggable-select"
             size="sm"
             placeholder="Search"
             :loading="comboBox1.loading"
             :suggestions="comboBox1.suggestions"
             focus-on-key-press
+            multiple
             @complete="comboBox1.onComplete"
             @result="comboBox1.onResult"
             @enter="comboBox1.onEnter"
