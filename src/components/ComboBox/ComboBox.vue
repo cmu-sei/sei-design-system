@@ -268,7 +268,7 @@
                 :data-active="c.__cbxIdx === arrowCounter"
                 :type="optionType === 'button' ? 'button' : undefined"
                 tabindex="-1"
-                @click="handleSuggestionClick(c)"
+                @click.prevent="handleSuggestionClick(c)"
               >
                 <!-- @slot Option content. Good for customizing the content for each option -->
                 <slot
@@ -310,7 +310,7 @@
                   tabindex="-1"
                   :option="c"
                   :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
-                  @click="handleSuggestionClick(c)"
+                  @click.prevent="handleSuggestionClick(c)"
                 >
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
@@ -333,7 +333,7 @@
               :data-active="s.__cbxIdx === arrowCounter"
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
-              @click="handleSuggestionClick(s)"
+              @click.prevent="handleSuggestionClick(s)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
               <slot
@@ -375,7 +375,7 @@
                 tabindex="-1"
                 :option="s"
                 :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-                @click="handleSuggestionClick(s)"
+                @click.prevent="handleSuggestionClick(s)"
               >
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
@@ -978,15 +978,17 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
     // If it's a string, try to find the original string suggestion
     original = findOriginalSuggestion(option as string)
   }
-  // For type="text", update the query to match the selected suggestion
+  // For type="text", update the query to the suggestion's label
   if (props.type === 'text') {
-    // Only suppress if query is actually changing (handled elsewhere)
-    suppressCompleteDueToLabelUpdate = true
+    suppressCompleteDueToLabelUpdate = true;
+    suppressShowDropdownNext = true;
+    let label = '';
     if (typeof normalizedOption === 'object' && normalizedOption !== null) {
-      query.value = String(props.optionLabel ? normalizedOption[props.optionLabel as string] : normalizedOption[defaultOptionLabel.value] ?? '')
+      label = String(props.optionLabel ? normalizedOption[props.optionLabel as string] : normalizedOption[defaultOptionLabel.value] ?? '');
     } else if (typeof normalizedOption === 'string') {
-      query.value = normalizedOption
+      label = normalizedOption;
     }
+    query.value = label;
   }
   // Check for duplicate
   const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {
@@ -1013,7 +1015,9 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   // Close dropdown
   showDropdown.value = false
   suppressCompleteDueToSelection = true
-  query.value = ''
+  if (props.type !== 'text') {
+    query.value = ''
+  }
   inputField.value.focus()
 }
 
