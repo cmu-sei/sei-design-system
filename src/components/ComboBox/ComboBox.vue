@@ -558,7 +558,7 @@ const props = defineProps({
   /**
    * The debounce period before complete event is emitted.
    */
-  debounceComplete: { type: Number, default: 350 },
+  debounceComplete: { type: Number, default: 250 },
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
@@ -681,7 +681,22 @@ const isFlatArray = computed(() => {
   return count <= 1
 })
 
-const matchesSuggestion = computed(() => flatSuggestions.value.includes(query.value))
+const matchesSuggestion = computed(() => {
+  if (props.type === 'taggable-select') {
+    const q = query.value.trim().toLowerCase();
+    // Use the same label logic as the display: optionLabel or defaultOptionLabel
+    return (props.suggestions as ComboBoxSuggestion[]).some(s => {
+      let label = '';
+      if (typeof s === 'object' && s !== null) {
+        label = String(props.optionLabel ? s[props.optionLabel] : s[defaultOptionLabel.value] ?? '');
+      } else if (typeof s === 'string') {
+        label = s;
+      }
+      return label.trim().toLowerCase() === q;
+    });
+  }
+  return flatSuggestions.value.includes(query.value);
+});
 
 // Computed property for input display value
 const inputDisplayValue = computed(() => {
@@ -718,6 +733,12 @@ let suppressCompleteDueToSelection = false
 let suppressCompleteDueToLabelUpdate = false
 let suppressShowDropdownNext = false // Boolean: suppress dropdown for the next query change only
 
+const pendingQueryDebounce = ref(false)
+
+watch(query, () => {
+  pendingQueryDebounce.value = true;
+})
+
 watchDebounced(query, async () => {
   await nextTick()
   // Show dropdown on query change, unless query is empty or suppressed due to selection (for type='text')
@@ -734,6 +755,7 @@ watchDebounced(query, async () => {
   }
   suppressCompleteDueToSelection = false;
   suppressCompleteDueToLabelUpdate = false;
+  pendingQueryDebounce.value = false;
 }, { debounce: props.debounceComplete })
 
 watch(showDropdown, (val) => {
@@ -1137,7 +1159,7 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     }
   }
   // compensate for the (new) option for taggable-select
-  const lastDropdownItemIndex = props.type === 'taggable-select' ? dropdownOption.value?.length || 0 : dropdownOption.value?.length - 1 || 0
+  const lastDropdownItemIndex = props.type === 'taggable-select' ? dropdownOption.value?.length || -1 : dropdownOption.value?.length - 1 || 0
   switch (direction) {
     case 'down':
       if (arrowCounter.value < lastDropdownItemIndex) arrowCounter.value++
@@ -1254,6 +1276,8 @@ const hasDropdownSuggestion = computed(() => {
 
 const shouldShowDropdown = computed(() => {
   if (props.disabled) return false
+  if (props.loading) return false
+  if (pendingQueryDebounce.value) return false
   if (!showDropdown.value) return false
   if (!hasDropdownSuggestion.value) return false
   if (props.type !== 'text' && selected.value.length === 1 && !props.multiple) return false
