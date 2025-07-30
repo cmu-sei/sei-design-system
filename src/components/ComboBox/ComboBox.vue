@@ -177,58 +177,53 @@
         }"
       >
         <!-- Show <query> (new) for taggable-select when no suggestions match -->
-        <template
-          v-if="
-            query?.length && type === 'taggable-select' && !matchesSuggestion
-          "
+        <div
+          v-if="shouldShowNewSuggestion"
+          ref="dropdownOption"
+          class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+          :class="{
+            'text-gray-700 dark:text-gray-300': arrowCounter !== 0,
+            'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && arrowCounter !== 0,
+            'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0,
+          }"
+          :data-active="arrowCounter === 0"
+          type="button"
+          tabindex="-1"
+          @mousedown.prevent="handleSuggestionClick({
+            label: query,
+            name: query,
+            value: query,
+            __cbxIdx: 0
+          })"
         >
-          <div
-            ref="dropdownOption"
-            class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-            :class="{
-              'text-gray-700 dark:text-gray-300': arrowCounter !== 0,
-              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && arrowCounter !== 0,
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0,
-            }"
-            :data-active="arrowCounter === 0"
-            type="button"
-            tabindex="-1"
-            @mousedown.prevent="handleSuggestionClick({
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <slot
+            name="option"
+            :option="{
               label: query,
               name: query,
               value: query,
-              __cbxIdx: 0
-            })"
+              index: 0
+            }"
+            :label="query"
           >
-            <!-- @slot Option content. Good for customizing the content for each option -->
-            <slot
-              name="option"
-              :option="{
-                label: query,
-                name: query,
-                value: query,
-                index: 0
-              }"
-              :label="query"
-            >
-              {{ query }} (new)
-            </slot>
-            <svg
-              v-if="isSelected(query)"
-              xmlns="http://www.w3.org/2000/svg"
-              width="11"
-              height="9"
-              viewBox="0 0 11 9"
-              fill="none"
-              class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-            >
-              <path
-                d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-                fill="currentColor"
-              />
-            </svg>
-          </div>
-        </template>
+            {{ query }} (new)
+          </slot>
+          <svg
+            v-if="isSelected(query)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="11"
+            height="9"
+            viewBox="0 0 11 9"
+            fill="none"
+            class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+          >
+            <path
+              d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
         <template
           v-for="s, sindex in suggestionOptions"
           :key="`${s}_${sindex}`"
@@ -261,11 +256,11 @@
                 :href="optionType === 'a' ? c.href : undefined"
                 class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
                 :class="{
-                  'text-gray-700 dark:text-gray-300': c.__cbxIdx !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && c.__cbxIdx !== arrowCounter && type !== 'text',
-                  'text-black dark:text-white bg-gray-25 dark:bg-gray-750': c.__cbxIdx === arrowCounter,
+                  'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && !isDropdownItemActive(c) && type !== 'text',
+                  'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(c),
                 }"
-                :data-active="c.__cbxIdx === arrowCounter"
+                :data-active="isDropdownItemActive(c)"
                 :type="optionType === 'button' ? 'button' : undefined"
                 tabindex="-1"
                 @click.prevent="handleSuggestionClick(c)"
@@ -303,10 +298,10 @@
                   :href="c.href"
                   :class-list="{
                     'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
-                    'text-gray-700 dark:text-gray-300': c.__cbxIdx !== arrowCounter,
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': c.__cbxIdx === arrowCounter
+                    'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
+                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(c)
                   }"
-                  :data-active="c.__cbxIdx === arrowCounter"
+                  :data-active="isDropdownItemActive(c)"
                   tabindex="-1"
                   :option="c"
                   :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
@@ -325,12 +320,12 @@
               :href="optionType === 'a' ? s.href : undefined"
               class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
               :class="{
-                'text-gray-700 dark:text-gray-300': s.__cbxIdx !== arrowCounter,
-                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && s.__cbxIdx !== arrowCounter && type !== 'text',
-                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': s.__cbxIdx === arrowCounter,
+                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
+                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && !isDropdownItemActive(s) && type !== 'text',
+                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(s),
                 'last:mb-2': groups.length < 2
               }"
-              :data-active="s.__cbxIdx === arrowCounter"
+              :data-active="isDropdownItemActive(s)"
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
               @click.prevent="handleSuggestionClick(s)"
@@ -367,10 +362,10 @@
                 name="customOption"
                 :class-list="{
                   'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
-                  'text-gray-700 dark:text-gray-300': s.__cbxIdx !== arrowCounter,
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': s.__cbxIdx === arrowCounter
+                  'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
+                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(s)
                 }"
-                :data-active="s.__cbxIdx === arrowCounter"
+                :data-active="isDropdownItemActive(s)"
                 :href="s.href"
                 tabindex="-1"
                 :option="s"
@@ -604,6 +599,11 @@ const removeHtmlFromString = (value: string) => {
   return div.textContent || div.innerText || ''
 }
 
+// Helper: normalize string for case-insensitive, trimmed comparison
+const normalizeString = (val: string | undefined | null): string => {
+  return (val ?? '').toString().trim().toLowerCase();
+}
+
 const flatSuggestions = computed<string[]>(() => {
   return (props.suggestions as ComboBoxSuggestion[]).flatMap((s) => {
     if (s && props.optionGroupChildren && typeof s === 'object')
@@ -613,7 +613,7 @@ const flatSuggestions = computed<string[]>(() => {
     return []
   }).map((s) => {
     if (s && typeof s === 'object')
-      return String(s[props.optionLabel ? props.optionLabel : defaultOptionLabel.value])
+      return String(props.optionLabel ? s[props.optionLabel] : s[defaultOptionLabel.value])
     else if (typeof s === 'string')
       return s
     return ''
@@ -623,8 +623,8 @@ const flatSuggestions = computed<string[]>(() => {
 const CBX_IDX = '__cbxIdx'
 const addIndexToList = (arr: ComboBoxSuggestion[]) => {
   if (!Array.isArray(arr)) return []
-  const suggestions = flatSuggestions.value
-  let cbxIdx = (query.value?.length && props.type === 'taggable-select' && !suggestions?.includes(query.value)) ? 1 : 0
+  const suggestions = flatSuggestions.value.map(normalizeString)
+  let cbxIdx = (normalizeString(query.value).length && props.type === 'taggable-select' && !suggestions.includes(normalizeString(query.value))) ? 1 : 0
   return arr.map((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
@@ -681,21 +681,60 @@ const isFlatArray = computed(() => {
   return count <= 1
 })
 
+// Helper to get the dropdown index of an item as rendered, including (new) suggestion if present
+const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
+  // For type='taggable-select' with (new) suggestion, (new) is index 0, others start at 1
+  let current = 0;
+  // If (new) suggestion is present, it is always first
+  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value) {
+    // (new) suggestion is not in suggestionOptions, so skip idx 0 for all others
+    current = 1;
+  }
+  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
+  if (!options) return null;
+  // Flatten options for group/ungrouped
+  for (const opt of options) {
+    if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
+      for (const child of opt[props.optionGroupChildren] as ComboBoxSuggestion[]) {
+        if (child === item) return current;
+        current++;
+      }
+    } else {
+      if (opt === item) return current;
+      current++;
+    }
+  }
+  return null;
+}
+
+const isDropdownItemActive = (item: ComboBoxSuggestion) => {
+  if (typeof item !== 'object' || item === null) return false;
+  const idx = getDropdownIndex(item);
+  if (idx === null) return false;
+  return arrowCounter.value === idx;
+}
+
+// Helper to recursively check for a match in groups or flat suggestions
+function suggestionMatchesQuery(suggestion: ComboBoxSuggestion, q: string): boolean {
+  if (typeof suggestion === 'object' && suggestion !== null && props.optionGroupChildren && Array.isArray(suggestion[props.optionGroupChildren])) {
+    // Recursively check children
+    return (suggestion[props.optionGroupChildren] as ComboBoxSuggestion[]).some(child => suggestionMatchesQuery(child, q));
+  }
+  let label = '';
+  if (typeof suggestion === 'object' && suggestion !== null) {
+    label = String(props.optionLabel ? suggestion[props.optionLabel] : suggestion[defaultOptionLabel.value] ?? '');
+  } else if (typeof suggestion === 'string') {
+    label = suggestion;
+  }
+  return normalizeString(label) === normalizeString(q);
+}
+
 const matchesSuggestion = computed(() => {
   if (props.type === 'taggable-select') {
-    const q = query.value.trim().toLowerCase();
-    // Use the same label logic as the display: optionLabel or defaultOptionLabel
-    return (props.suggestions as ComboBoxSuggestion[]).some(s => {
-      let label = '';
-      if (typeof s === 'object' && s !== null) {
-        label = String(props.optionLabel ? s[props.optionLabel] : s[defaultOptionLabel.value] ?? '');
-      } else if (typeof s === 'string') {
-        label = s;
-      }
-      return label.trim().toLowerCase() === q;
-    });
+    return (props.suggestions as ComboBoxSuggestion[]).some(s => suggestionMatchesQuery(s, query.value));
   }
-  return flatSuggestions.value.includes(query.value);
+  const normQuery = normalizeString(query.value);
+  return flatSuggestions.value.map(normalizeString).includes(normQuery);
 });
 
 // Computed property for input display value
@@ -703,17 +742,7 @@ const inputDisplayValue = computed(() => {
   // If a suggestion is highlighted, show its label
   if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
     // Find the suggestion with the current arrowCounter
-    let found: ComboBoxSuggestion | undefined
-    suggestionOptions.value.forEach((i: ComboBoxSuggestion) => {
-      if (typeof i !== 'string') {
-        if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-          const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x[CBX_IDX] === arrowCounter.value)
-          if (tmp) found = tmp
-        } else {
-          if (i[CBX_IDX] === arrowCounter.value) found = i
-        }
-      }
-    })
+    const found: ComboBoxSuggestion | undefined = getCurrentSuggestion()
     if (found) {
       let label = ''
       if (typeof found === 'object') {
@@ -757,13 +786,6 @@ watchDebounced(query, async () => {
   suppressCompleteDueToLabelUpdate = false;
   pendingQueryDebounce.value = false;
 }, { debounce: props.debounceComplete })
-
-watch(showDropdown, (val) => {
-  if (val === false) {
-    arrowCounter.value = -1
-    activeGroupKey.value = -1
-  }
-})
 
 const setActiveGroup = (e: MouseEvent | KeyboardEvent, group: { key: number }) => {
   e.preventDefault()
@@ -917,10 +939,10 @@ const getCurrentSuggestion = (): ComboBoxSuggestion | undefined => {
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && x[CBX_IDX] === arrowCounter.value)
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && isDropdownItemActive(x))
         if (tmp) option = tmp
       } else {
-        if (i[CBX_IDX] === arrowCounter.value) option = i
+        if (isDropdownItemActive(i)) option = i
       }
     }
   })
@@ -1054,6 +1076,18 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     shake()
     return
   }
+  // Prevent adding to selected if type is 'taggable-select' and dropdown is not open
+  if (
+    props.type === 'taggable-select' &&
+    !showDropdown.value
+  ) {
+    if (selected.value.length > 0) {
+      emitEnter()
+    } else {
+      shake()
+    }
+    return
+  }
   if (props.type !== 'text' && arrowCounter.value === -1 && inputDisplayValue.value !== '') {
     shake()
     return
@@ -1144,22 +1178,26 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   }
 }
 
+const shouldShowNewSuggestion = computed(() => {
+  return query.value !== '' && props.type === 'taggable-select' && !matchesSuggestion.value
+})
+
 const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
   if (direction === 'up' || direction === 'down') {
-    if (!showDropdown.value) {
-      if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
-        if (inputField.value.readOnly === true) {
-          event.preventDefault()
-          showDropdown.value = false
-          return
-        }
+    if (!showDropdown.value && hasDropdownSuggestion.value) {
+      if (!inputField.value.readOnly) {
+        event.preventDefault()
+        showDropdown.value = true
       }
-      showDropdown.value = true
+      arrowCounter.value = -1;
       return
     }
   }
-  // compensate for the (new) option for taggable-select
-  const lastDropdownItemIndex = props.type === 'taggable-select' ? dropdownOption.value?.length || -1 : dropdownOption.value?.length - 1 || 0
+  if (!showDropdown.value) {
+    arrowCounter.value = -1;
+    return;
+  }
+  const lastDropdownItemIndex = dropdownOption.value?.length - (shouldShowNewSuggestion.value ? 0 : 1) || 0
   switch (direction) {
     case 'down':
       if (arrowCounter.value < lastDropdownItemIndex) arrowCounter.value++
@@ -1264,7 +1302,7 @@ const hasDropdownSuggestion = computed(() => {
 
   // For taggable-select, always show dropdown if query is non-empty and not a match
   if (props.type === 'taggable-select') {
-    if (query.value && !matchesSuggestion.value) {
+    if (shouldShowNewSuggestion.value) {
       return true;
     }
     return visibleCount > 0;
@@ -1282,5 +1320,15 @@ const shouldShowDropdown = computed(() => {
   if (!hasDropdownSuggestion.value) return false
   if (props.type !== 'text' && selected.value.length === 1 && !props.multiple) return false
   return true
+})
+
+watch(shouldShowDropdown, async () => {
+  await nextTick()
+  arrowCounter.value = -1
+  activeGroupKey.value = -1
+})
+
+watch(activeGroupKey, () => {
+  arrowCounter.value = -1
 })
 </script>
