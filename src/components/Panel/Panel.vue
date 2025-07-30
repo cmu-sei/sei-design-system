@@ -98,13 +98,13 @@
               </svg>
             </button>
           </header>
-          <main class="p-6 flex grow flex-col">
+          <main class="p-6 flex grow flex-col z-1">
             <!-- @slot Panel content. -->
             <slot />
           </main>
           <footer
             v-if="hasFooterSlot"
-            class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
+            class="flex shrink-0 sticky z-10 w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
           >
             <!-- @slot Panel footer content. -->
             <slot name="footer" />
