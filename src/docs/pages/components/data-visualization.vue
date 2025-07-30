@@ -1025,6 +1025,7 @@
               :counter="4"
               action="increment"
               size="md"
+              disabled
             >
               <template #leftSlot>
                 <svg
