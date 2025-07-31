@@ -30,7 +30,7 @@
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
-    :class="[textSizeClass, sizeClass, paddingClass]"
+    :class="[textSizeClass, sizeClass, paddingClass, disabledClass]"
   >
     <div 
       class="flex flex-row flex-nowrap items-center"
@@ -208,6 +208,10 @@ const props = defineProps({
    * Determines the size of the tag.
    */
   size: { type: String as PropType<TagIconSize>, default: 'sm' },
+    /**
+   * Determines if the tag is disabled.
+   */
+  disabled: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
@@ -311,6 +315,8 @@ const buttonSizeClass = computed(() => {
       return ''
   }
 })
+
+const disabledClass = computed(() => props.disabled ? 'opacity-50 pointer-events-none' : '')
 
 const increment = () => {
   count.value += 1
