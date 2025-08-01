@@ -165,7 +165,7 @@ describe('Callout', () => {
         timestamp: new Date('December 4, 2012 03:20:00')
       },
       slots: {
-        description: 'This is an overridden description'
+        default: 'This is an overridden description'
       }
     })
     expect(wrapper.element).toMatchSnapshot()
@@ -183,6 +183,23 @@ describe('Callout', () => {
       },
       slots: {
         leftIcon: 'Left Icon Here'
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+  it('should have button in button slot', () => {
+    const wrapper = mount(Component, {
+      props: {
+        type: 'subtle',
+        variant: 'gray',
+        size: 'md',
+        title: 'This is a title',
+        description: 'This is a description',
+        timestamp: new Date('December 4, 2012 03:20:00')
+      },
+      slots: {
+        buttons: '<button>This is a button</button>'
       }
     })
     expect(wrapper.element).toMatchSnapshot()

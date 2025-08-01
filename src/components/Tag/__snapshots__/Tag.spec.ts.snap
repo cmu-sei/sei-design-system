@@ -274,3 +274,27 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = 
   </div>
 </div>
 `;
+
+exports[`Tag > should match its snapshot(s) with assigned \`disabled\` prop 1`] = `
+<div
+  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2 opacity-50 pointer-events-none"
+  data-id="sds-tag"
+  data-readonly="false"
+>
+  <div
+    class="flex flex-row flex-nowrap items-center gap-x-0.5"
+  >
+    <!--v-if-->
+    <!--v-if-->
+    <span
+      class=""
+    >
+      <!-- @slot Label content. -->
+      
+      Tag
+      
+    </span>
+    <!--v-if-->
+  </div>
+</div>
+`;
