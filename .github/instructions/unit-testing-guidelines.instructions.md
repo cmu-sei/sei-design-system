@@ -5,9 +5,69 @@ applyTo: "src/components/**/*.{.spec.js,.spec.ts}"
 # Context & Purpose:
 You are assisting with writing unit tests for Vue 3 applications using the Vitest testing framework and Vue Test Utils. The code will typically run in a Vite-powered Vue environment, targeting components, composables, and related utilities. Tests should aim to be clear, maintainable, and leverage best practices for Vue component testing and mocking.
 
-**Note:** All components in this design system use the Vue 3 Composition API, not the Options API. Code samples below reflect the usage of the Composition API.
+---
+
+## Writing Tests and Test Descriptions
+
+This section outlines best practices and key points for writing unit tests and their descriptions, specially tailored for Vue, Vue Test Utils.
+
+### Clarity and Precision in Test Descriptions
+- Write test descriptions that are clear, concise, and understandable.
+- Avoid technical jargon unless necessary.
+- Each test description should communicate the test's purpose and expected outcome specifically.
+
+### Focus on End-User Requirements and Behavior
+- Document tests based on business logic or user scenarios.
+- Cover both positive (expected) and negative (edge/error) cases.
+- Ensure comprehensive coverage of real use cases.
+
+### Descriptive and Specific Test Titles
+- Use test titles that briefly but specifically describe what the test verifies.
+- Titles should quickly convey the feature or condition under test with no ambiguity.
+
+### Consistency
+- Maintain consistent formatting, naming conventions, terminology, and structure.
+- Consistency helps readability and maintainability for team members and tools like Copilot.
+
+### Structure and Organization
+- Organize test cases logically:
+  - Start with a clear objective.
+  - Define any preconditions.
+  - Outline inputs and actions.
+  - Specify expected outcomes.
+- Keep test steps concise.
+
+### Adapt to Testing Frameworks and Tools
+- For Vue, use Vue Test Utils best practices including shallow mounting, stubbing, and interaction testing.
+- Document the reactive model considerations for Vue component testing.
+
+### Writing Tests with Maintainability in Mind
+- Avoid overly complex or brittle tests.
+- Strive for tests to be:
+  - Self-contained
+  - Idempotent (no side effects)
+  - Easy to update with evolving requirements
+
+### Test Description Styles
+- Unit test descriptions often follow formats like:
+  - `should [expected behavior] when [condition]`
+  - `renders [component/element] correctly with [props/state]`
+- Behavioral tests can use BDD style:
+  - **Given** (setup),
+  - **When** (action),
+  - **Then** (assertion)
+- This style improves readability and aligns with automation.
+
+### Updating and Maintaining Documentation
+- Keep test documentation synchronized with code changes.
+- Note the status of tests.
+- Maintain traceability to requirements or user stories when possible.
+
+---
 
 ## Writing Tests with Vitest and Vue Test Utils
+
+**Note:** All components use the Vue 3 Composition API, not the Options API. Code samples below reflect the usage of the Composition API.
 
 ### Import Common Utilities
 
@@ -105,13 +165,6 @@ it('updates DOM after reactive value change', async () => {
 
 Use `nextTick` when you directly mutate reactive state or expect DOM changes that are not immediately reflected after an action. For Composition API components, you may need to access refs or reactive state exposed via `expose()`.
 
-## Code Coverage and Test Organization
-- Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.
-- Name the test file to match the component name, e.g., `MyComponent.{spec.js,spec.ts}` for `MyComponent.vue`.
-- Keep composables and pure logic separated and tested independently.
-- Run test scripts using the commands defined in your `package.json` file, such as `npm test`, `npm run test:clean`, or `npm run test:watch`.
-- Run a coverage report using `npm run coverage` as defined in your `package.json`.
-
 ## Example Simple Test for a Vue Component
 
 ```typescript
@@ -132,6 +185,13 @@ describe('HelloWorld.vue', () => {
   })
 })
 ```
+
+## Code Coverage and Test Organization
+- Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.
+- Name the test file to match the component name, e.g., `MyComponent.{spec.js,spec.ts}` for `MyComponent.vue`.
+- Keep composables and pure logic separated and tested independently.
+- Run test scripts using the commands defined in your `package.json` file, such as `npm test`, `npm run test:clean`, or `npm run test:watch`.
+- Run a coverage report using `npm run coverage` as defined in your `package.json`.
 
 ## Best Practices & Tips
 - Encourage separation of logic into composables for easier unit testing.
