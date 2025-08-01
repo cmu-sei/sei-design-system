@@ -7,14 +7,6 @@ import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsDropdown from '../Dropdown/Dropdown.vue'
 import SdsDropdownItem from '../DropdownItem/DropdownItem.vue'
 
-
-const makeAvatars = (count: number) =>
-  Array.from({ length: count }, (_, i) => ({
-    name: `User ${i + 1}`,
-    src: null,
-    variant: 'gray',
-  }))
-
 describe('AvatarGroup', () => {
   const srcset = [
     {
@@ -97,7 +89,6 @@ describe('AvatarGroup', () => {
   })
 
   it('renders avatar and name in each SdsDropdownItem', async () => {
-    const srcset = makeAvatars(6)
     const wrapper = mount(Component, { props: { srcset } })
     wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
@@ -106,7 +97,7 @@ describe('AvatarGroup', () => {
     items.forEach((item, idx) => {
       const avatar = item.findComponent(SdsAvatar)
       expect(avatar.exists()).toBe(true)
-      expect(item.text()).toContain(`User ${idx + 5}`)
+      expect(item.text()).toContain(`Avatar Name${idx + 5}`)
     })
   })
 
@@ -133,7 +124,6 @@ describe('AvatarGroup', () => {
   })
 
   it('SdsAvatar in dropdown is always size xs', async () => {
-    const srcset = makeAvatars(6)
     const wrapper = mount(Component, { props: { srcset } })
     wrapper.find('button').trigger('click')
     await wrapper.vm.$nextTick()
