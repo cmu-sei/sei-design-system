@@ -113,29 +113,30 @@ it('emits custom event with proper payload', () => {
 })
 ```
 
-### Mocking and Spying
+### Mocking Best Practices
 
-Use `vi.fn()` to create mocks or spies on functions:
+Mocking is a fundamental technique in unit testing to isolate the component or function under test by replacing dependencies with controlled substitutes. Proper mocking ensures tests are reliable, focused, and maintainable.
 
-```typescript
-const mockFn = vi.fn()
-```
+#### Key Practices
 
-Mock external services or APIs by spying and returning mock values:
+- **Mock only what is necessary:** Avoid over-mocking which can lead to brittle tests or missing integration issues. Mock external services, complex dependencies, or reactive injections that are not the direct focus of the test.
 
-```typescript
-vi.spyOn(apiModule, 'fetchData').mockResolvedValue(mockData)
-```
+- **Use Vue Test Utils' `mocks` option** for mocking Vue instance properties (e.g., `$route`, `$store`, etc.) when mounting components.
 
-```typescript
-const mockFn = vi.fn()
-```
+- **Leverage Vitest's mocking utilities**:
+  - `vi.fn()` to create mock functions.
+  - `vi.spyOn()` to spy on and optionally override existing function implementations.
+  - `vi.mock()` for mocking entire modules or dependencies.
+  
+- **Reset or restore mocks between tests** to prevent state leakage using `vi.restoreAllMocks()` or `vi.resetAllMocks()`.
 
-Mock external services or APIs by spying and returning mock values:
+- **Avoid mocking internal module calls that are tightly coupled;** prefer refactoring for better testability.
 
-```typescript
-vi.spyOn(apiModule, 'fetchData').mockResolvedValue(mockData)
-```
+---
+
+For more detailed information, refer to the official documentation:  
+- Vue Test Utils: https://test-utils.vuejs.org/
+- Vitest mocking guide: https://vitest.dev/guide/mocking
 
 ### Asynchronous Testing
 
