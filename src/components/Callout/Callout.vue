@@ -34,7 +34,7 @@
             'pb-2': timestamp
           }"
         >{{ description }}</span>
-        <slot name="description" />
+        <slot name="default" />
         <span
           v-if="timestamp"
           class="text-xs opacity-90 italic"
@@ -115,13 +115,13 @@ const props = defineProps({
 const dismiss = defineModel<boolean>({ type: Boolean, default: false })
 
 const slots = defineSlots<{
-  description: () => unknown,
+  default: () => unknown,
   buttons: () => unknown,
   leftIcon: () => unknown
 }>()
 
 const hasDescriptionSlot = computed(() => {
-  return !!slots.description
+  return !!slots.default
 })
 
 // Class for style of callout

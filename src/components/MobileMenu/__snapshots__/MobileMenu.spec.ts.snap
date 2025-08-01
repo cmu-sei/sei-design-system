@@ -24,7 +24,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 </svg>
             </button>
         </header>
-        <main class="p-6 flex grow flex-col">
+        <main class="p-6 flex grow flex-col z-1">
             <!-- @slot Panel content. -->
             <!--v-if-->
             <div>
@@ -33,7 +33,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 <div id="customDefault">Custom Default</div>
             </div>
         </main>
-        <footer class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+        <footer class="flex shrink-0 sticky z-10 w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
             <!-- @slot Panel footer content. -->
             <!-- @slot The "footer" slot used to supply custom links or text that
             will display in at the top of every panel. I.e.: \`<template #footer>...</template>\` -->
@@ -60,7 +60,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 </svg>
             </button>
         </header>
-        <main class="p-6 flex grow flex-col">
+        <main class="p-6 flex grow flex-col z-1">
             <!-- @slot Panel content. -->
             <!--v-if-->
             <div>
@@ -68,7 +68,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 will display in "root" panel. I.e.: \`<template #default>...</template>\` -->
             </div>
         </main>
-        <footer class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
+        <footer class="flex shrink-0 sticky z-10 w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
             <!-- @slot Panel footer content. -->
         </footer>
     </div>
@@ -114,7 +114,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
     </button>
   </header>
   <main
-    class="p-6 flex grow flex-col"
+    class="p-6 flex grow flex-col z-1"
   >
     <!-- @slot Panel content. -->
     
@@ -127,7 +127,7 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
     
   </main>
   <footer
-    class="flex shrink-0 sticky w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
+    class="flex shrink-0 sticky z-10 w-full bottom-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
   >
     <!-- @slot Panel footer content. -->
     

@@ -65,6 +65,17 @@ describe('Tag', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should match its snapshot(s) with assigned `disabled` prop', async () => {
+    const wrapper = mount(Component, {
+      props: {
+        label: 'Tag',
+        disabled: true
+      }
+    })
+    expect(wrapper.element).toMatchSnapshot()
+  })
+
+
   it.todo('emits count on increment event')
 
   it.todo('emits counts on decrement event')
