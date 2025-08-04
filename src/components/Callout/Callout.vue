@@ -33,8 +33,7 @@
             'pb-2': timestamp
           }"
         >
-          <span v-if="description && !hasDescriptionSlot">{{ description }}</span>
-          <slot name="default" />
+          <slot>{{ description }}</slot>
         </div>
         <span
           v-if="timestamp"
@@ -120,10 +119,6 @@ const slots = defineSlots<{
   buttons: () => unknown,
   leftIcon: () => unknown
 }>()
-
-const hasDescriptionSlot = computed(() => {
-  return !!slots.default
-})
 
 // Class for style of callout
 const styleClass = computed(() => {

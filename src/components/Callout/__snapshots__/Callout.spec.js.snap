@@ -21,10 +21,8 @@ exports[`Callout > should have a bold gray variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -63,10 +61,8 @@ exports[`Callout > should have a bold orange variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -105,10 +101,8 @@ exports[`Callout > should have a bold red variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -147,10 +141,8 @@ exports[`Callout > should have a subtle green variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -189,10 +181,8 @@ exports[`Callout > should have a subtle teal variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -231,10 +221,8 @@ exports[`Callout > should have a title, description, timestamp, and be size md 1
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -273,10 +261,8 @@ exports[`Callout > should have a title, description, timestamp, and be size sm 1
       <div
         class="opacity-90 text-xs pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -315,10 +301,8 @@ exports[`Callout > should have an outline blue variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -357,10 +341,8 @@ exports[`Callout > should have an outline indigo variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -399,10 +381,8 @@ exports[`Callout > should have an outline purple variant 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -441,10 +421,8 @@ exports[`Callout > should have button in button slot 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -491,10 +469,8 @@ exports[`Callout > should have dismissable icon 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -554,10 +530,8 @@ exports[`Callout > should have icon in leftSlot 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -596,10 +570,8 @@ exports[`Callout > should have inset 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <span>
-          This is a description
-        </span>
         
+        This is a description
         
       </div>
       <span
@@ -651,7 +623,7 @@ exports[`Callout > should match its default snapshot 1`] = `
       <div
         class="opacity-90"
       >
-        <!--v-if-->
+        
         
         
       </div>
@@ -687,7 +659,6 @@ exports[`Callout > should override description with slot 1`] = `
       <div
         class="opacity-90 text-sm pb-2"
       >
-        <!--v-if-->
         
         This is an overridden description
         
