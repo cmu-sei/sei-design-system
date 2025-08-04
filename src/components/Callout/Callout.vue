@@ -25,16 +25,17 @@
             'pb-2': !description && timestamp
           }"
         >{{ title }}</span>
-        <span
-          v-if="description && !hasDescriptionSlot" 
+        <div
           class="opacity-90"
           :class="{
             'text-xs': size === 'sm',
             'text-sm': size === 'md',
             'pb-2': timestamp
           }"
-        >{{ description }}</span>
-        <slot name="default" />
+        >
+          <span v-if="description && !hasDescriptionSlot">{{ description }}</span>
+          <slot name="default" />
+        </div>
         <span
           v-if="timestamp"
           class="text-xs opacity-90 italic"
