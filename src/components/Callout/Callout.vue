@@ -25,16 +25,16 @@
             'pb-2': !description && timestamp
           }"
         >{{ title }}</span>
-        <span
-          v-if="description && !hasDescriptionSlot" 
+        <div
           class="opacity-90"
           :class="{
             'text-xs': size === 'sm',
             'text-sm': size === 'md',
             'pb-2': timestamp
           }"
-        >{{ description }}</span>
-        <slot name="default" />
+        >
+          <slot>{{ description }}</slot>
+        </div>
         <span
           v-if="timestamp"
           class="text-xs opacity-90 italic"
@@ -119,10 +119,6 @@ const slots = defineSlots<{
   buttons: () => unknown,
   leftIcon: () => unknown
 }>()
-
-const hasDescriptionSlot = computed(() => {
-  return !!slots.default
-})
 
 // Class for style of callout
 const styleClass = computed(() => {
