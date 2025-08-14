@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import Component from './FloatingUi.vue'
 
@@ -30,7 +30,12 @@ describe('FloatingUi', () => {
   afterEach(() => {
     // Clean up teleported elements between tests
     document.body.innerHTML = ''
+    vi.resetAllMocks()
     vi.useRealTimers()
+  })
+
+  afterAll(() => {
+    vi.restoreAllMocks()
   })
 
   it('opens and teleports content', async () => {
@@ -39,7 +44,6 @@ describe('FloatingUi', () => {
       props,
       slots
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
@@ -60,12 +64,10 @@ describe('FloatingUi', () => {
         `
       }
     })
-    
     await wrapper.findAll('button')[0].trigger('click')
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).toContain('Teleported content')
-
     await wrapper.findAll('button')[1].trigger('click')
     vi.runAllTimers()
     await flushPromises()
@@ -85,12 +87,10 @@ describe('FloatingUi', () => {
         `
       }
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).toContain('Teleported content')
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
@@ -103,16 +103,13 @@ describe('FloatingUi', () => {
       props,
       slots
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).toContain('Teleported content')
-
     // Simulate Escape key
     const event = new KeyboardEvent('keydown', { key: 'Escape' })
     window.dispatchEvent(event)
-
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('Teleported content')
@@ -127,7 +124,6 @@ describe('FloatingUi', () => {
       },
       slots
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
@@ -140,7 +136,6 @@ describe('FloatingUi', () => {
       props,
       slots
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
@@ -156,10 +151,155 @@ describe('FloatingUi', () => {
       },
       slots
     })
-
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('arrow-class')
+  })
+
+  it('applies custom `popperClass`', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        popperClass: 'custom-popper-class'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).toContain('custom-popper-class')
+  })
+
+  it('applies custom `arrowPadding` and `overflowPadding`', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        arrowPadding: 20,
+        overflowPadding: 15
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props('arrowPadding')).toBe(20)
+    expect(wrapper.props('overflowPadding')).toBe(15)
+  })
+
+  it('applies `offset`, `inline`, and `shift` props', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        offset: 30,
+        inline: true,
+        shift: true
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props('offset')).toBe(30)
+    expect(wrapper.props('inline')).toBe(true)
+    expect(wrapper.props('shift')).toBe(true)
+  })
+
+  it('applies custom animation classes', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        animationEnterActiveClass: 'custom-enter-active',
+        animationEnterFromClass: 'custom-enter-from',
+        animationEnterToClass: 'custom-enter-to',
+        animationLeaveActiveClass: 'custom-leave-active',
+        animationLeaveFromClass: 'custom-leave-from',
+        animationLeaveToClass: 'custom-leave-to'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props('animationEnterActiveClass')).toBe('custom-enter-active')
+    expect(wrapper.props('animationLeaveToClass')).toBe('custom-leave-to')
+  })
+
+  it('applies `strategy` prop', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        strategy: 'fixed'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props('strategy')).toBe('fixed')
+  })
+
+  it('applies `placement*ArrowClass` props for all placement values', async () => {
+    const placements = [
+      { value: 'top', arrowClass: 'top-arrow', prop: 'placementTopArrowClass' },
+      { value: 'right', arrowClass: 'right-arrow', prop: 'placementRightArrowClass' },
+      { value: 'bottom', arrowClass: 'bottom-arrow', prop: 'placementBottomArrowClass' },
+      { value: 'left', arrowClass: 'left-arrow', prop: 'placementLeftArrowClass' },
+    ]
+    for (const { value, arrowClass, prop } of placements) {
+      const wrapper = mount(Component, {
+        attachTo: document.body,
+        props: {
+          ...props,
+          placement: value,
+          placementTopArrowClass: 'top-arrow',
+          placementRightArrowClass: 'right-arrow',
+          placementBottomArrowClass: 'bottom-arrow',
+          placementLeftArrowClass: 'left-arrow'
+        },
+        slots
+      })
+      await wrapper.find('button').trigger('click')
+      vi.runAllTimers()
+      await flushPromises()
+      expect(wrapper.props()[prop]).toBe(arrowClass)
+      // Check that the arrow class is present in the DOM
+      expect(document.body.innerHTML).toContain(arrowClass)
+    }
+  })
+
+  it('calls `willOpen` and `willClose` functions', async () => {
+    const willOpen = vi.fn()
+    const willClose = vi.fn()
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        willOpen,
+        willClose
+      },
+      slots: {
+        default: slots.default,
+        trigger: `
+          <template #trigger="{ open, close }">
+            <button @click="open">Open</button>
+            <button @click="close">Close</button>
+          </template>
+        `
+      }
+    })
+    await wrapper.findAll('button')[0].trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(willOpen).toHaveBeenCalled()
+    await wrapper.findAll('button')[1].trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(willClose).toHaveBeenCalled()
   })
 })
