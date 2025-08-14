@@ -2,7 +2,7 @@
   <button
     data-id="sds-button"
     :data-pending="pending || undefined"
-    :type="type"
+    :type="typeAttribute"
     :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass]"
     :disabled="disabled"
     :aria-disabled="disabled"
@@ -52,7 +52,7 @@
       <!-- @slot Button content. -->
       <slot />
       <svg
-        v-if="props.kind === 'primary' || props.kind === 'secondary'"
+        v-if="props.type === 'cta'"
         data-id="arrow"
         class="hidden sds-theme-plaid:!flex w-[13px]"
         xmlns="http://www.w3.org/2000/svg"
@@ -79,9 +79,9 @@ const props = defineProps({
    */
   variant: { type: String as PropType<'gray' | 'blue' | 'red' | 'white'>, default: '' },
   /**
-   * Determines the HTML type attribute for the button.
+   * Determines both the HTML type attribute and "theme" for the button.
    */
-  type: { type: String as PropType<'button' | 'submit'>, default: 'button' },
+  type: { type: String as PropType<'button' | 'cta' | 'submit'>, default: 'button' },
   /**
    * Determines the size.
    */
@@ -105,6 +105,17 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['click'])
+
+const typeAttribute = computed(() => {
+  switch (props.type) {
+    case 'submit':
+      return 'submit'
+    case 'button':
+    case 'cta':
+    default:
+      return 'button'
+  }
+})
 
 const btnClass = computed(() => {
   return props.kind ? 'btn' : ''
