@@ -97,6 +97,26 @@ describe('FloatingUi', () => {
     expect(document.body.innerHTML).not.toContain('Teleported content')
   })
 
+  it('responds to emitter events to open and close the floating Ui', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props,
+      slots
+    })
+    // @ts-expect-error: Accessing internal Vue instance provides for testing emitter
+    const emitter = wrapper.vm.$.provides.emitter
+    // Open via emitter event
+    emitter.emit('floating-ui-toggle', true)
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).toContain('Teleported content')
+    // Close via emitter event
+    emitter.emit('floating-ui-toggle', false)
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).not.toContain('Teleported content')
+  })
+
   it('closes when Escape key is pressed', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
