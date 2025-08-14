@@ -117,6 +117,7 @@ it('emits custom event with proper payload', () => {
 
 Mocking is a fundamental technique in unit testing to isolate the component or function under test by replacing dependencies with controlled substitutes. Proper mocking ensures tests are reliable, focused, and maintainable.
 
+
 #### Key Practices
 
 - **Mock only what is necessary:** Avoid over-mocking which can lead to brittle tests or missing integration issues. Mock external services, complex dependencies, or reactive injections that are not the direct focus of the test.
@@ -127,7 +128,7 @@ Mocking is a fundamental technique in unit testing to isolate the component or f
   - `vi.fn()` to create mock functions.
   - `vi.spyOn()` to spy on and optionally override existing function implementations.
   - `vi.mock()` for mocking entire modules or dependencies.
-  
+
 - **Reset or restore mocks between tests** to prevent state leakage using `vi.restoreAllMocks()` or `vi.resetAllMocks()`.
 
 - **Avoid mocking internal module calls that are tightly coupled;** prefer refactoring for better testability.
@@ -137,6 +138,61 @@ Mocking is a fundamental technique in unit testing to isolate the component or f
 For more detailed information, refer to the official documentation:  
 - Vue Test Utils: https://test-utils.vuejs.org/
 - Vitest mocking guide: https://vitest.dev/guide/mocking
+
+### Using Fake Timers (`useFakeTimers` / `runFakeTimers`)
+
+Fake timers are useful for testing code that relies on timeouts, intervals, or other timer-based APIs. They allow you to control and advance time programmatically, making tests faster and more predictable.
+
+#### When to Use Fake Timers
+- When your component or composable uses `setTimeout`, `setInterval`, or similar APIs.
+- When you need to simulate the passage of time without waiting for real time to elapse.
+- For testing debounce, throttle, animation, or delayed logic.
+
+#### How to Use Fake Timers in Vitest
+- Use `vi.useFakeTimers()` to enable fake timers before your test logic.
+- Use `vi.runAllTimers()`, `vi.advanceTimersByTime(ms)`, or `vi.runOnlyPendingTimers()` to control timer execution.
+- Always restore real timers after your test using `vi.useRealTimers()` or in a cleanup hook.
+
+#### Example: Testing a Debounced Function
+
+```typescript
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi } from 'vitest'
+import ComponentToTest from './ComponentToTest.vue'
+
+describe('ComponentToTest', () => {
+  it('calls debounced method after timeout', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(ComponentToTest)
+    wrapper.vm.triggerDebounce()
+    vi.advanceTimersByTime(300)
+    expect(wrapper.vm.debouncedCalled).toBe(true)
+    vi.useRealTimers()
+  })
+})
+```
+
+#### Example: Using Fake Timers with `nextTick`
+
+```typescript
+import { nextTick } from 'vue'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi } from 'vitest'
+import TimerComponent from './TimerComponent.vue'
+
+describe('TimerComponent', () => {
+  it('updates after interval', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(TimerComponent)
+    vi.advanceTimersByTime(1000)
+    await nextTick()
+    expect(wrapper.text()).toContain('Timer fired!')
+    vi.useRealTimers()
+  })
+})
+```
+
+**Tip:** Always clean up by restoring real timers after your test to avoid affecting other tests.
 
 ### Asynchronous Testing
 
@@ -173,7 +229,7 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import HelloWorld from './HelloWorld.vue'
 
-describe('HelloWorld.vue', () => {
+describe('HelloWorld', () => {
   it('renders initial message', () => {
     const wrapper = mount(HelloWorld)
     expect(wrapper.text()).toContain('Hello, Vue!')
@@ -195,6 +251,7 @@ describe('HelloWorld.vue', () => {
 - Run a coverage report using `npm run coverage` as defined in your `package.json`.
 
 ## Best Practices & Tips
+- Use single-quotes (`'`) for test case and scenario descriptions; avoid double quotes for consistency.
 - Encourage separation of logic into composables for easier unit testing.
 - Use Vue Test Utils' `find` and `findComponent` for precise querying.
 - Prefer testing emitted events over internal component state.
