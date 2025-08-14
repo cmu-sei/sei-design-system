@@ -244,6 +244,18 @@ describe('FloatingUi', () => {
     expect(wrapper.props('strategy')).toBe('fixed')
   })
 
+  it('uses "auto" as the default placement when no placement prop is provided', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).toContain('Teleported content')
+    expect(wrapper.props('placement')).toBe('auto')
+  })
+
   it('applies `placement*ArrowClass` props for all placement values', async () => {
     const placements = [
       { value: 'top', arrowClass: 'top-arrow', prop: 'placementTopArrowClass' },
