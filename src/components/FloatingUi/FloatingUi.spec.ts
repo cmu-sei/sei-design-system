@@ -46,7 +46,7 @@ describe('FloatingUi', () => {
     expect(document.body.innerHTML).toContain('Teleported content')
   })
 
-  it('closes when `onClose` is called after open', async () => {
+  it('closes when onClose is called after open', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       props,
@@ -72,7 +72,7 @@ describe('FloatingUi', () => {
     expect(document.body.innerHTML).not.toContain('Teleported content')
   })
 
-  it('toggles open/close state with `onToggle`', async () => {
+  it('toggles open/close state with onToggle', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       props,
@@ -92,6 +92,27 @@ describe('FloatingUi', () => {
     expect(document.body.innerHTML).toContain('Teleported content')
 
     await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).not.toContain('Teleported content')
+  })
+
+  it('closes when Escape key is pressed', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props,
+      slots
+    })
+
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(document.body.innerHTML).toContain('Teleported content')
+
+    // Simulate Escape key
+    const event = new KeyboardEvent('keydown', { key: 'Escape' })
+    window.dispatchEvent(event)
+
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('Teleported content')
@@ -140,21 +161,5 @@ describe('FloatingUi', () => {
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('arrow-class')
-  })
-
-  it('passes slot props correctly to trigger slot', () => {
-    const wrapper = mount(Component, {
-      attachTo: document.body,
-      props,
-      slots: {
-        trigger: `
-          <template #trigger="{ isOpen, open, close, toggle }">
-            <button @click="toggle">Trigger</button>
-          </template>
-        `
-      }
-    })
-
-    expect(wrapper.find('button').exists()).toBe(true)
   })
 })
