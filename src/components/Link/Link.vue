@@ -30,6 +30,10 @@ const props = defineProps({
    */
   variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: 'blue' },
   /**
+   * Determines the color of the CTA arrow component.
+   */
+  theme: { type: String as PropType<'blue' | 'gray' | 'red' | 'white'>, default: 'blue' },
+  /**
    * Determines whether to display a decorated underline.
    */
   decoration: { type: String as PropType<'underline'>, default: undefined },
