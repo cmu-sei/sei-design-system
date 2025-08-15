@@ -6,16 +6,16 @@
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
   @apply text-base;
 
-  & svg[data-id="arrow"] {
+  & svg[data-id="sds-cta-icon"] {
     @apply transition-transform;
   }
 
-  &:hover svg[data-id="arrow"] {
+  &:hover svg[data-id="sds-cta-icon"] {
     @apply translate-x-1;
   }
 
   & svg {
-    @apply flex flex-col self-center fill-current;
+    @apply flex flex-col self-center;
   }
 
   &.btn-xl {
