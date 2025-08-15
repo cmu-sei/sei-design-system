@@ -8,5 +8,6 @@ exports[`Link > should match its default snapshot 1`] = `
   <!-- @slot Link content. -->
   
   
+  <!--v-if-->
 </a>
 `;

@@ -8,6 +8,12 @@
   >
     <!-- @slot Link content. -->
     <slot />
+    <SdsCtaIcon
+      v-if="props.type === 'cta'"
+      symbol="arrow"
+      :theme="props.theme"
+      class="hidden sds-theme-plaid:!flex h-[15px] w-[13px]"
+    />
   </a>
 </template>
 
