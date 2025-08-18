@@ -1,7 +1,7 @@
 <template>
   <svg
     v-if="!!props.symbol"
-    data-id="sds-cta-icon"
+    data-id="sds-cta-arrow"
     xmlns="http://www.w3.org/2000/svg"
     :class="themeClass"
   >
