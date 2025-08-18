@@ -178,17 +178,6 @@ const blockClass = computed(() => {
   return props.block ? 'btn-block sds-theme-plaid:flex sds-theme-plaid:justify-center' : ''
 })
 
-// const theme = computed(() => {
-//   if (props.kind === 'primary') {
-//     return 'white'
-//   }
-
-//   switch (props.variant) {
-//     case 'gray':
-//       return 'gray'
-//   }
-// })
-
 const onClick = () => {
   if (props.pending) return
   /**
