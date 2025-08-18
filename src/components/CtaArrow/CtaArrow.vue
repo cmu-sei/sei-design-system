@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 defineOptions({
-  name: 'SdsCtaIcon'
+  name: 'SdsCtaArrow'
 })
 
 const props = defineProps({

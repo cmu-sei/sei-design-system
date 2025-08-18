@@ -8,16 +8,18 @@
   >
     <!-- @slot Link content. -->
     <slot />
-    <SdsCtaIcon
+    <SdsCtaArrow
       v-if="props.type === 'cta'"
       symbol="arrow"
       :theme="props.theme"
-      class="hidden sds-theme-plaid:!flex h-[15px] w-[13px]"
+      class="hidden sds-theme-plaid:!flex h-[0.9375rem] w-[0.8125rem]"
     />
   </a>
 </template>
 
 <script setup lang="ts">
+import SdsCtaArrow from '../CtaArrow'
+
 defineOptions({
   name: 'SdsLink'
 })

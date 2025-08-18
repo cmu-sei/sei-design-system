@@ -54,21 +54,21 @@
   @apply inline-flex flex-row items-center gap-2 text-sm font-semibold;
   @apply transition-all duration-100 ease-linear;
 
-  & svg[data-id="sds-cta-icon"] {
+  & svg[data-id="sds-cta-arrow"] {
     @apply transition-transform;
   }
 
-  &:hover svg[data-id="sds-cta-icon"] {
+  &:hover svg[data-id="sds-cta-arrow"] {
     @apply translate-x-1;
   }
 }
 
 .link-cta-down {
-  & svg[data-id="sds-cta-icon"] {
+  & svg[data-id="sds-cta-arrow"] {
     @apply rotate-90;
   }
 
-  &:hover svg[data-id="sds-cta-icon"] {
+  &:hover svg[data-id="sds-cta-arrow"] {
     @apply translate-x-0 translate-y-1;
   }
 }
@@ -76,21 +76,21 @@
 .link-cta-left {
   @apply flex-row-reverse;
 
-  & svg[data-id="sds-cta-icon"] {
+  & svg[data-id="sds-cta-arrow"] {
     @apply rotate-180;
   }
 
-  &:hover svg[data-id="sds-cta-icon"] {
+  &:hover svg[data-id="sds-cta-arrow"] {
     @apply -translate-x-1;
   }
 }
 
 .link-cta-up {
-  & svg[data-id="sds-cta-icon"] {
+  & svg[data-id="sds-cta-arrow"] {
     @apply -rotate-90;
   }
 
-  &:hover svg[data-id="sds-cta-icon"] {
+  &:hover svg[data-id="sds-cta-arrow"] {
     @apply translate-x-0 -translate-y-1;
   }
 }

@@ -1,5 +1,5 @@
 import { App } from "vue";
-import Component from "./CtaIcon.vue";
+import Component from "./CtaArrow.vue";
 
 Component.install = (Vue: App) => {
   Vue.component(Component.name!, Component);

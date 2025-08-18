@@ -6,11 +6,11 @@
   @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
   @apply text-base;
 
-  & svg[data-id="sds-cta-icon"] {
+  & svg[data-id="sds-cta-arrow"] {
     @apply transition-transform;
   }
 
-  &:hover svg[data-id="sds-cta-icon"] {
+  &:hover svg[data-id="sds-cta-arrow"] {
     @apply translate-x-1;
   }
 
