@@ -32,6 +32,7 @@
             :class="[
               textSizeClass,
               typeClass,
+              (props.type === 'underline' ? 'tab-underline-no-rule' : ''),
               variantClass,
               (!!tab.active ? 'active' : ''),
               (!!tab.disabled ? 'disabled': '')

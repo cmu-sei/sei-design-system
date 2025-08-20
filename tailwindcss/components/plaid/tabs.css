@@ -211,8 +211,30 @@
   /* Underline type */
 
   &.tab-underline {
-    @apply bg-white/0;
-    @apply py-3.5 px-4;
+    @apply bg-white/0 py-3.5 px-4 relative;
+
+    &:after {
+      @apply content-[''] block absolute bottom-0 left-0 w-full rounded-md;
+    }
+
+    &.tab-sm {
+      &:after {
+        @apply h-0.5;
+      }
+    }
+
+    &.tab-lg {
+      &:after {
+        @apply h-0.75;
+      }
+    }
+  }
+
+  &.tab-underline-no-rule {
+    @apply static;
+    &:after {
+      @apply content-none hidden static w-0 h-0;
+    }
   }
 
   /* Variants */
