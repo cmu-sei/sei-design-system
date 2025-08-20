@@ -999,6 +999,7 @@
         <div class="flex flex-row space-x-2 sds-theme-plaid">
           <SdsButton
             kind="primary"
+            type="cta"
           >
             Button label
           </SdsButton>

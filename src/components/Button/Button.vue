@@ -3,7 +3,7 @@
     data-id="sds-button"
     :data-pending="pending || undefined"
     :type="typeAttribute"
-    :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass]"
+    :class="[btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass, ctaClass]"
     :disabled="disabled"
     :aria-disabled="disabled"
     :aria-busy="pending"
@@ -51,17 +51,17 @@
     <template v-else>
       <!-- @slot Button content. -->
       <slot />
-      <SdsCtaArrow
+      <!-- <SdsCtaArrow
         v-if="props.type === 'cta' && (props.kind === 'primary' || props.kind === 'secondary')"
         symbol="arrow"
         class="hidden sds-theme-plaid:!flex h-[0.9375rem] w-[0.8125rem]"
-      />
+      /> -->
     </template>
   </button>
 </template>
 
 <script setup lang="ts">
-import SdsCtaArrow from '../CtaArrow'
+// import SdsCtaArrow from '../CtaArrow'
 
 defineOptions({
   name: 'SdsButton'
@@ -176,6 +176,10 @@ const pendingClass = computed(() => {
 
 const blockClass = computed(() => {
   return props.block ? 'btn-block sds-theme-plaid:flex sds-theme-plaid:justify-center' : ''
+})
+
+const ctaClass = computed(() => {
+  return props.type === 'cta' ? 'btn-cta' : ''
 })
 
 const onClick = () => {
