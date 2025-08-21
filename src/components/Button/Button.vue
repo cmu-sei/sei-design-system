@@ -51,18 +51,11 @@
     <template v-else>
       <!-- @slot Button content. -->
       <slot />
-      <!-- <SdsCtaArrow
-        v-if="props.type === 'cta' && (props.kind === 'primary' || props.kind === 'secondary')"
-        symbol="arrow"
-        class="hidden sds-theme-plaid:!flex h-[0.9375rem] w-[0.8125rem]"
-      /> -->
     </template>
   </button>
 </template>
 
 <script setup lang="ts">
-// import SdsCtaArrow from '../CtaArrow'
-
 defineOptions({
   name: 'SdsButton'
 })
