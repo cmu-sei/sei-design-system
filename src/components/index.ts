@@ -72,7 +72,6 @@ import SdsCallout from "./Callout";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
-import SdsCtaIcon from "./CtaArrow";
 import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
 import SdsDropdown from "./Dropdown";
@@ -142,7 +141,6 @@ const Components: ComponentList = {
   SdsCheckboxGroup,
   SdsClientOnly,
   SdsComboBox,
-  SdsCtaIcon,
   SdsDatapoint,
   SdsDatepicker,
   SdsDropdown,
@@ -216,7 +214,6 @@ export { default as SdsCallout } from "./Callout";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
-export { default as SdsCtaIcon } from "./CtaArrow";
 export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDropdown } from "./Dropdown";
