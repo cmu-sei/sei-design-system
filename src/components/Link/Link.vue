@@ -8,18 +8,10 @@
   >
     <!-- @slot Link content. -->
     <slot />
-    <SdsCtaArrow
-      v-if="props.type === 'cta'"
-      symbol="arrow"
-      :theme="props.theme"
-      class="hidden sds-theme-plaid:!flex h-[0.9375rem] w-[0.8125rem]"
-    />
   </a>
 </template>
 
 <script setup lang="ts">
-import SdsCtaArrow from '../CtaArrow'
-
 defineOptions({
   name: 'SdsLink'
 })
@@ -37,10 +29,6 @@ const props = defineProps({
    * Determines the color variant of the component.
    */
   variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: 'blue' },
-  /**
-   * Determines the color of the CTA arrow component.
-   */
-  theme: { type: String as PropType<'blue' | 'gray' | 'red' | 'white'>, default: 'blue' },
   /**
    * Determines whether to display a decorated underline.
    */

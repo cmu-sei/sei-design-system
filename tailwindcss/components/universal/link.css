@@ -54,43 +54,76 @@
   @apply inline-flex flex-row items-center gap-2 text-sm font-semibold;
   @apply transition-all duration-100 ease-linear;
 
-  & svg[data-id="sds-cta-arrow"] {
-    @apply transition-transform;
+  &:after {
+    @apply content-[''] inline-flex h-[11.27px] w-[0.8125rem] bg-center bg-cover transition-transform;
   }
 
-  &:hover svg[data-id="sds-cta-arrow"] {
-    @apply translate-x-1;
+  &:hover {
+    &:after {
+      @apply translate-x-1;
+    }
+  }
+
+  &.link-primary:not(.link-white) {
+    @apply text-gray-900 dark:text-gray-100;
+    &:hover {
+      @apply text-gray-700 dark:text-gray-200;
+    }
+  }
+
+  &.link-blue {
+    &:after {
+      background-image: var(--arrow-blue-600);
+    }
+  }
+
+  &.link-red {
+    &:after {
+      background-image: var(--arrow-red-600);
+    }
+  }
+
+  &.link-white {
+    &:after {
+      background-image: var(--arrow-white);
+    }
   }
 }
 
 .link-cta-down {
-  & svg[data-id="sds-cta-arrow"] {
+  &:after {
     @apply rotate-90;
   }
 
-  &:hover svg[data-id="sds-cta-arrow"] {
-    @apply translate-x-0 translate-y-1;
+  &:hover {
+    &:after {
+      @apply translate-x-0 translate-y-1;
+    }
   }
 }
 
 .link-cta-left {
   @apply flex-row-reverse;
 
-  & svg[data-id="sds-cta-arrow"] {
+  &:after {
     @apply rotate-180;
   }
 
-  &:hover svg[data-id="sds-cta-arrow"] {
-    @apply -translate-x-1;
+  &:hover {
+    &:after {
+      @apply -translate-x-1;
+    }
   }
 }
 
 .link-cta-up {
-  & svg[data-id="sds-cta-arrow"] {
+  &:after {
     @apply -rotate-90;
   }
 
-  &:hover svg[data-id="sds-cta-arrow"] {
-    @apply translate-x-0 -translate-y-1;
+  &:hover {
+    &:after {
+      @apply translate-x-0 -translate-y-1;
+    }
   }
 }

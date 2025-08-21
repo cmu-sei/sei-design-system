@@ -454,7 +454,6 @@ exports[`Application > should match its default snapshot 1`] = `
                 Software Engineering Institute
               </span>
               
-              <!--v-if-->
             </a>
           </div>
           <!--v-if-->
