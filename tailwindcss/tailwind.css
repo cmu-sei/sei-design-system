@@ -2,6 +2,7 @@
 
 /* Overall theme */
 @import './theme/animation';
+@import './theme/arrow';
 @import './theme/breakpoints';
 @import './theme/colors';
 @import './theme/fonts';
