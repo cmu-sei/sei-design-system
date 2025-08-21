@@ -1033,6 +1033,29 @@
               </template>
             </sds-tabs>
           </div>
+          <div>
+            Tab underline (CSS-only)
+            <nav class="p-4">
+              <a 
+                href="#tab-1"
+                class="tab tab-underline tab-sm tab-red active"
+              >
+                Tab 1
+              </a>
+              <a 
+                href="#tab-2"
+                class="tab tab-underline tab-sm tab-red"
+              >
+                Tab 2
+              </a>
+              <a 
+                href="#tab-3"
+                class="tab tab-underline tab-sm tab-red"
+              >
+                Tab 3
+              </a>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
