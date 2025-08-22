@@ -16,17 +16,18 @@
 @import './components/universal/action-btn';
 @import './components/universal/form-control';
 @import './components/universal/input-group';
-@import './components/universal/link';
 @import './components/universal/scroll-area';
 @import './components/universal/tab';
 @import './components/universal/table-prose';
 
 /* Forge components */
 @import './components/forge/btn';
+@import './components/forge/link';
 @import './components/forge/tabs';
 
 /* Plaid components */
 @import './components/plaid/btn';
+@import './components/plaid/link';
 @import './components/plaid/tabs';
 
 /* Plugins */
