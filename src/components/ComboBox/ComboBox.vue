@@ -8,17 +8,24 @@
       class="input-group flex flex-col"
       :class="{
         disabled,
-        'input-group-sm': size === 'sm'
+        'input-group-sm': size === 'sm',
+        'bg-gray-50 dark:bg-gray-950': readonly
       }"
     >
       <div
         v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
-        class="flex flex-row flex-wrap bg-gray-25 dark:bg-gray-950 rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
+        class="flex flex-row flex-wrap rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
+        :class="{
+          'bg-gray-50': readonly,
+          'bg-gray-25 dark:bg-gray-950': !disabled,
+          'bg-gray-100 dark:bg-gray-850': disabled
+        }"
       >
         <SdsTag
           v-for="(option, index) in selected"
           :key="index"
           :disabled="disabled"
+          :readonly="readonly || disabled"
           action="remove"
           class="grow-0"
           :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
@@ -81,7 +88,7 @@
           :readonly="isReadonly"
           :maxlength="maxlength"
           @input="onInputFieldInput"
-          @click.prevent="showDropdown = !showDropdown"
+          @click.prevent="showDropdown = (readonly || disabled) ? false : !showDropdown"
           @keydown.delete="handleDelete"
           @keydown.tab="showDropdown = false"
           @keydown.down.prevent="handleArrows('down', $event)"
@@ -176,61 +183,14 @@
           'py-2 flex flex-col gap-y-1': optionType !== 'custom'
         }"
       >
-        <!-- Show <query> (new) for taggable-select when no suggestions match -->
-        <div
-          v-if="shouldShowNewSuggestion"
-          ref="dropdownOption"
-          class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-          :class="{
-            'text-gray-700 dark:text-gray-300': arrowCounter !== 0,
-            'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && arrowCounter !== 0,
-            'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0,
-          }"
-          :data-active="arrowCounter === 0"
-          type="button"
-          tabindex="-1"
-          @mousedown.prevent="handleSuggestionClick({
-            label: query,
-            name: query,
-            value: query,
-            __cbxIdx: 0
-          })"
-        >
-          <!-- @slot Option content. Good for customizing the content for each option -->
-          <slot
-            name="option"
-            :option="{
-              label: query,
-              name: query,
-              value: query,
-              index: 0
-            }"
-            :label="query"
-          >
-            {{ query }} (new)
-          </slot>
-          <svg
-            v-if="isSelected(query)"
-            xmlns="http://www.w3.org/2000/svg"
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-          >
-            <path
-              d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-              fill="currentColor"
-            />
-          </svg>
-        </div>
         <template
           v-for="s, sindex in suggestionOptions"
           :key="`${s}_${sindex}`"
         >
           <div
             v-if="optionGroupChildren && s[optionGroupChildren]?.length"
-            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 pb-2 -mb-2"
+            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 pb-2"
+            :class="shouldShowNewSuggestion ? 'mb-1' : '-mb-2'"
           >
             <div
               v-if="activeGroupKey === -1"
@@ -377,6 +337,63 @@
             </div>
           </template>
         </template>
+<!-- Show <query> (new) for taggable-select when no suggestions match -->
+<div
+  v-if="shouldShowNewSuggestion"
+  ref="dropdownOption"
+  class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+  :class="{
+    'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
+    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
+    'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
+  }"
+  :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
+  type="button"
+  tabindex="-1"
+  @mousedown.prevent="handleSuggestionClick({
+    label: query,
+    name: query,
+    value: query,
+    __cbxIdx: 'add'
+  })"
+>
+  <!-- @slot Option content. Good for customizing the content for each option -->
+  <slot
+    name="option"
+    :option="{
+      label: query,
+      name: query,
+      value: query,
+      index: 'add'
+    }"
+    :label="query"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28" height="32"
+      class="w-3 h-3 my-auto ml-1 mr-2"
+      viewBox="0 0 448 512"
+    >
+      <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
+      <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
+    </svg>
+    Add "{{ query }}"
+  </slot>
+  <svg
+    v-if="isSelected(query)"
+    xmlns="http://www.w3.org/2000/svg"
+    width="11"
+    height="9"
+    viewBox="0 0 11 9"
+    fill="none"
+    class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+  >
+    <path
+      d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
+      fill="currentColor"
+    />
+  </svg>
+</div>
       </SdsScrollArea>
       <!-- Footer section -->
       <div
@@ -493,6 +510,10 @@ const props = defineProps({
    */
   disabled: { type: Boolean, default: false },
   /**
+   * Makes the input read-only, preventing user input but still allowing focus and selection.
+   */
+  readonly: { type: Boolean, default: false },
+  /**
    * The max amount of characters that can be entered into the input.
    */
   maxlength: { type: Number, default: undefined },
@@ -567,7 +588,7 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const root = ref(), scrollArea = ref(), inputField = ref(), dropdownOption = ref()
-const isReadonly = ref(false)
+const isReadonly = ref(props.readonly)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)
@@ -580,15 +601,9 @@ const groupSuggestions = ref(), groupSuggestionOptions = ref(), suggestionOption
 const firstTickQuery = ref()
 
 const showClearButton = computed(() => {
-  if (inputDisplayValue.value !== '') {
-    return true
-  }
-  if (props.type !== 'text' && selected.value.length > 0) {
-    return true
-  }
-  if (props.disabled) {
-    return false
-  }
+  if (props.disabled || props.readonly) return false
+  if (inputDisplayValue.value !== '') return true
+  if (props.type !== 'text' && selected.value.length > 0) return true
   return false
 })
 
@@ -683,13 +698,8 @@ const isFlatArray = computed(() => {
 
 // Helper to get the dropdown index of an item as rendered, including (new) suggestion if present
 const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
-  // For type='taggable-select' with (new) suggestion, (new) is index 0, others start at 1
+  // For type='taggable-select' with (new) suggestion, (new) is now last
   let current = 0;
-  // If (new) suggestion is present, it is always first
-  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value) {
-    // (new) suggestion is not in suggestionOptions, so skip idx 0 for all others
-    current = 1;
-  }
   const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
   if (!options) return null;
   // Flatten options for group/ungrouped
@@ -704,11 +714,29 @@ const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
       current++;
     }
   }
+  // If shouldShowNewSuggestion and item is the "Add" option, return current (last)
+  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value && item && typeof item === 'object' && item.__cbxIdx === 'add') {
+    return current;
+  }
   return null;
 }
 
 const isDropdownItemActive = (item: ComboBoxSuggestion) => {
-  if (typeof item !== 'object' || item === null) return false;
+  // For "Add" option, check if arrowCounter matches last index
+  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value && item && typeof item === 'object' && item.__cbxIdx === 'add') {
+    const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
+    let lastIdx = 0;
+    if (options) {
+      for (const opt of options) {
+        if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
+          lastIdx += (opt[props.optionGroupChildren] as ComboBoxSuggestion[]).length;
+        } else {
+          lastIdx++;
+        }
+      }
+    }
+    return arrowCounter.value === lastIdx;
+  }
   const idx = getDropdownIndex(item);
   if (idx === null) return false;
   return arrowCounter.value === idx;
@@ -837,7 +865,7 @@ const clearQuery = () => {
   } else if (props.type === 'select' || props.type === 'taggable-select') {
     selected.value = []
   }
-  isReadonly.value = false
+  isReadonly.value = props.readonly || false
   showDropdown.value = false
   inputField.value.focus()
 }
@@ -903,7 +931,7 @@ const multiselectAdd = async () => {
     }
     suppressCompleteDueToLabelUpdate = true
     query.value = normalizedLabel
-    if (selected.value.length && props.type !== 'text') isReadonly.value = true
+    if (selected.value.length && props.type !== 'text') isReadonly.value = props.readonly || true
   }
   await nextTick()
   arrowCounter.value = -1
@@ -921,7 +949,7 @@ const multiselectRemove = (index: number) => {
   if (selected.value.length === 0) {
     query.value = ''
     if (inputField.value) inputField.value.value = ''
-    isReadonly.value = false
+    isReadonly.value = props.readonly || false
   }
   // Always update input field focus
   if (inputField.value) inputField.value.focus()
@@ -1197,15 +1225,29 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     arrowCounter.value = -1;
     return;
   }
-  const lastDropdownItemIndex = dropdownOption.value?.length - (shouldShowNewSuggestion.value ? 0 : 1) || 0
+  // Calculate total items: suggestions + "Add" option if present
+  let totalItems = 0;
+  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
+  if (options) {
+    for (const opt of options) {
+      if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
+        totalItems += (opt[props.optionGroupChildren] as ComboBoxSuggestion[]).length;
+      } else {
+        totalItems++;
+      }
+    }
+  }
+  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value) {
+    totalItems += 1; // Add option is last
+  }
   switch (direction) {
     case 'down':
-      if (arrowCounter.value < lastDropdownItemIndex) arrowCounter.value++
-      else arrowCounter.value = -1
+      if (arrowCounter.value < totalItems - 1) arrowCounter.value++
+      else arrowCounter.value = 0
       break
     case 'up':
-      if (arrowCounter.value > -1) arrowCounter.value--
-      else arrowCounter.value = lastDropdownItemIndex
+      if (arrowCounter.value > 0) arrowCounter.value--
+      else arrowCounter.value = totalItems - 1
       break
     case 'left':
       if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === 0 && groups.value?.length > 0) {
