@@ -337,63 +337,63 @@
             </div>
           </template>
         </template>
-<!-- Show <query> (new) for taggable-select when no suggestions match -->
-<div
-  v-if="shouldShowNewSuggestion"
-  ref="dropdownOption"
-  class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-  :class="{
-    'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
-    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
-    'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
-  }"
-  :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
-  type="button"
-  tabindex="-1"
-  @mousedown.prevent="handleSuggestionClick({
-    label: query,
-    name: query,
-    value: query,
-    __cbxIdx: 'add'
-  })"
->
-  <!-- @slot Option content. Good for customizing the content for each option -->
-  <slot
-    name="option"
-    :option="{
-      label: query,
-      name: query,
-      value: query,
-      index: 'add'
-    }"
-    :label="query"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28" height="32"
-      class="w-3 h-3 my-auto ml-1 mr-2"
-      viewBox="0 0 448 512"
-    >
-      <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
-      <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
-    </svg>
-    Add "{{ query }}"
-  </slot>
-  <svg
-    v-if="isSelected(query)"
-    xmlns="http://www.w3.org/2000/svg"
-    width="11"
-    height="9"
-    viewBox="0 0 11 9"
-    fill="none"
-    class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-  >
-    <path
-      d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-      fill="currentColor"
-    />
-  </svg>
-</div>
+        <!-- Show <query> (new) for taggable-select when no suggestions match -->
+        <div
+          v-if="shouldShowNewSuggestion"
+          ref="dropdownOption"
+          class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+          :class="{
+            'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
+            'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
+            'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
+          }"
+          :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
+          type="button"
+          tabindex="-1"
+          @mousedown.prevent="handleSuggestionClick({
+            label: query,
+            name: query,
+            value: query,
+            __cbxIdx: 'add'
+          })"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <slot
+            name="option"
+            :option="{
+              label: query,
+              name: query,
+              value: query,
+              index: 'add'
+            }"
+            :label="query"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28" height="32"
+              class="w-3 h-3 my-auto ml-1 mr-2"
+              viewBox="0 0 448 512"
+            >
+              <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
+              <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
+            </svg>
+            Add "{{ query }}"
+          </slot>
+          <svg
+            v-if="isSelected(query)"
+            xmlns="http://www.w3.org/2000/svg"
+            width="11"
+            height="9"
+            viewBox="0 0 11 9"
+            fill="none"
+            class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+          >
+            <path
+              d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
       </SdsScrollArea>
       <!-- Footer section -->
       <div
@@ -696,9 +696,9 @@ const isFlatArray = computed(() => {
   return count <= 1
 })
 
-// Helper to get the dropdown index of an item as rendered, including (new) suggestion if present
+// Helper to get the dropdown index of an item as rendered, including new suggestion if present
 const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
-  // For type='taggable-select' with (new) suggestion, (new) is now last
+  // For type='taggable-select' with new suggestion (new is now last)
   let current = 0;
   const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
   if (!options) return null;
@@ -715,15 +715,22 @@ const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
     }
   }
   // If shouldShowNewSuggestion and item is the "Add" option, return current (last)
-  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value && item && typeof item === 'object' && item.__cbxIdx === 'add') {
+  if (
+    props.type === 'taggable-select' && shouldShowNewSuggestion.value &&
+    item && typeof item === 'object' && item.__cbxIdx === 'add'
+  ) {
     return current;
   }
   return null;
 }
 
 const isDropdownItemActive = (item: ComboBoxSuggestion) => {
+  if (typeof item !== 'object' || item === null) return false;
   // For "Add" option, check if arrowCounter matches last index
-  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value && item && typeof item === 'object' && item.__cbxIdx === 'add') {
+  if (
+    props.type === 'taggable-select' && shouldShowNewSuggestion.value &&
+    item && typeof item === 'object' && item.__cbxIdx === 'add'
+  ) {
     const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
     let lastIdx = 0;
     if (options) {
