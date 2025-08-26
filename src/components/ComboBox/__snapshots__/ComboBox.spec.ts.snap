@@ -174,185 +174,203 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0 py-2 flex flex-col gap-y-1"
+      class="scroll-area max-h-72 py-0 flex flex-col"
       data-id="sds-scroll-area"
     >
       <!-- @slot Scroll area content. -->
       
+      <!-- Select all option for multiselect -->
       <!--v-if-->
       
       
+      <!--v-if-->
       
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/apple"
-        tabindex="-1"
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <!--v-if-->
+      
+      
+      <div
+        class="flex flex-col gap-y-1 py-2"
       >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
         
-        Apple
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/banana"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/apple"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Apple
+          
+          <!--v-if-->
+        </a>
         
-        Banana
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/kiwi"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/banana"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Banana
+          
+          <!--v-if-->
+        </a>
         
-        Kiwi
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/orange"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/kiwi"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Kiwi
+          
+          <!--v-if-->
+        </a>
         
-        Orange
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/mango"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/orange"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Orange
+          
+          <!--v-if-->
+        </a>
         
-        Mango
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/pineapple"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/mango"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Mango
+          
+          <!--v-if-->
+        </a>
         
-        Pineapple
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/pomegranate"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/pineapple"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Pineapple
+          
+          <!--v-if-->
+        </a>
         
-        Pomegranate
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/raspberry"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/pomegranate"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Pomegranate
+          
+          <!--v-if-->
+        </a>
         
-        Raspberry
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/strawberry"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/raspberry"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Raspberry
+          
+          <!--v-if-->
+        </a>
         
-        Strawberry
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      
-      <a
-        class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
-        data-active="false"
-        href="/watermelon"
-        tabindex="-1"
-      >
-        <!-- @slot Option content. Good for customizing the content for each option -->
-        <!--v-if-->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/strawberry"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Strawberry
+          
+          <!--v-if-->
+        </a>
         
-        Watermelon
         
-        <!--v-if-->
-      </a>
-      
-      
-      
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
+        <a
+          class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 text-gray-700 dark:text-gray-300"
+          data-active="false"
+          href="/watermelon"
+          tabindex="-1"
+        >
+          <!-- @slot Option content. Good for customizing the content for each option -->
+          <!--v-if-->
+          
+          Watermelon
+          
+          <!--v-if-->
+        </a>
+        
+        
+      </div>
+      <!-- Show '+ Add "query"' for taggable-select when no suggestions match -->
+      <!--v-if-->
       <!--v-if-->
       
     </div>
