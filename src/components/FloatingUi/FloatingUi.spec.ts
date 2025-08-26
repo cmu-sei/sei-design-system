@@ -276,33 +276,109 @@ describe('FloatingUi', () => {
     expect(wrapper.props('placement')).toBe('auto')
   })
 
-  it('applies `placement*ArrowClass` props for all placement values', async () => {
-    const placements = [
-      { value: 'top', arrowClass: 'top-arrow', prop: 'placementTopArrowClass' },
-      { value: 'right', arrowClass: 'right-arrow', prop: 'placementRightArrowClass' },
-      { value: 'bottom', arrowClass: 'bottom-arrow', prop: 'placementBottomArrowClass' },
-      { value: 'left', arrowClass: 'left-arrow', prop: 'placementLeftArrowClass' },
-    ]
-    for (const { value, arrowClass, prop } of placements) {
-      const wrapper = mount(Component, {
-        attachTo: document.body,
-        props: {
-          ...props,
-          placement: value,
-          placementTopArrowClass: 'top-arrow',
-          placementRightArrowClass: 'right-arrow',
-          placementBottomArrowClass: 'bottom-arrow',
-          placementLeftArrowClass: 'left-arrow'
-        },
-        slots
-      })
-      await wrapper.find('button').trigger('click')
-      vi.runAllTimers()
-      await flushPromises()
-      expect(wrapper.props()[prop]).toBe(arrowClass)
-      // Check that the arrow class is present in the DOM
-      expect(document.body.innerHTML).toContain(arrowClass)
+  it('applies `placementTopArrowClass` props for top placement values', async () => {
+    const { value, arrowClass, prop} = {
+      value: 'top',
+      arrowClass: 'top-arrow',
+      prop: 'placementTopArrowClass'
     }
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        placement: value,
+        placementTopArrowClass: 'top-arrow',
+        placementRightArrowClass: 'right-arrow',
+        placementBottomArrowClass: 'bottom-arrow',
+        placementLeftArrowClass: 'left-arrow'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props()[prop]).toBe(arrowClass)
+    // Check that the arrow class is present in the DOM
+    expect(document.body.innerHTML).toContain(arrowClass)
+  })
+
+  it('applies `placementBottomArrowClass` props for bottom placement values', async () => {
+    const { value, arrowClass, prop} = {
+      value: 'bottom',
+      arrowClass: 'bottom-arrow',
+      prop: 'placementBottomArrowClass'
+    }
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        placement: value,
+        placementTopArrowClass: 'top-arrow',
+        placementRightArrowClass: 'right-arrow',
+        placementBottomArrowClass: 'bottom-arrow',
+        placementLeftArrowClass: 'left-arrow'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props()[prop]).toBe(arrowClass)
+    // Check that the arrow class is present in the DOM
+    expect(document.body.innerHTML).toContain(arrowClass)
+  })
+
+  it('applies `placementLeftArrowClass` props for left placement values', async () => {
+    const { value, arrowClass, prop} = {
+      value: 'left',
+      arrowClass: 'left-arrow',
+      prop: 'placementLeftArrowClass'
+    }
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        placement: value,
+        placementTopArrowClass: 'top-arrow',
+        placementRightArrowClass: 'right-arrow',
+        placementBottomArrowClass: 'bottom-arrow',
+        placementLeftArrowClass: 'left-arrow'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props()[prop]).toBe(arrowClass)
+    // Check that the arrow class is present in the DOM
+    expect(document.body.innerHTML).toContain(arrowClass)
+  })
+
+  it('applies `placementRightArrowClass` props for right placement values', async () => {
+    const { value, arrowClass, prop} = {
+      value: 'right',
+      arrowClass: 'right-arrow',
+      prop: 'placementRightArrowClass'
+    }
+    document.body.innerHTML = ''
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        ...props,
+        placement: value,
+        placementTopArrowClass: 'top-arrow',
+        placementRightArrowClass: 'right-arrow',
+        placementBottomArrowClass: 'bottom-arrow',
+        placementLeftArrowClass: 'left-arrow'
+      },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    expect(wrapper.props()[prop]).toBe(arrowClass)
+    // Check that the arrow class is present in the DOM
+    expect(document.body.innerHTML).toContain(arrowClass)
   })
 
   it('calls `willOpen` and `willClose` functions', async () => {
