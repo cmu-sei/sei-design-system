@@ -4,6 +4,7 @@
     data-id="sds-combo-box"
     class="relative"
   >
+    {{ arrowCounter }}
     <div
       class="input-group flex flex-col"
       :class="{
@@ -178,23 +179,81 @@
       </div>
       <SdsScrollArea
         ref="scrollArea"
-        class="max-h-72 [&>button+div]:border-t last:[&>div]:border-b-0 last:[&>button]:border-b-0"
+        class="max-h-72"
         :class="{
-          'py-2 flex flex-col gap-y-1': optionType !== 'custom'
+          'py-0 flex flex-col': optionType !== 'custom',
+          'pt-2': optionType !== 'custom' && (type === 'taggable-select' || type === 'select') && allCount
         }"
       >
+        <!-- Select all option for multiselect -->
+        <template v-if="(type === 'taggable-select' || type === 'select') && multiple && allCount > 1">
+          <button
+            ref="selectAllRef"
+            type="button"
+            class="
+              flex items-center
+              py-2
+              px-2
+              text-sm
+              text-gray-600 dark:text-gray-300
+              mb-2
+              sds-theme-forge:mx-2
+              sds-theme-plaid:px-4
+              sds-theme-forge:max-w-[calc(100%-1rem)]
+              sds-theme-forge:rounded
+              w-auto text-left cursor-pointer
+              hover:bg-gray-25 dark:hover:bg-gray-750
+            "
+            :class="{
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0
+            }"
+            :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
+            :data-active="arrowCounter === 0 ? 'true' : 'false'"
+            tabindex="-1"
+            @click="toggleSelectAll"
+            @keydown.enter.prevent="toggleSelectAll"
+            @keydown.down.prevent="handleArrows('down', $event)"
+            @keydown.up.prevent="handleArrows('up', $event)"
+            @keydown.left="handleArrows('left', $event)"
+            @keydown.right="handleArrows('right', $event)"
+            role="option"
+          >
+            <input
+              id="select-all"
+              type="checkbox"
+              :checked="selectAllChecked"
+              :indeterminate="selectAllIndeterminate"
+              aria-label="Select all"
+              class="mr-2 pointer-events-none"
+              tabindex="-1"
+            />
+            <label for="select-all" class="cursor-pointer select-none pointer-events-none">
+              <span>Select all</span>
+            </label>
+          </button>
+          <hr
+            v-if="(type === 'taggable-select' || type === 'select') && multiple && isFlatArray"
+            class="border-gray-100 dark:border-gray-700"
+          >
+        </template>
         <template
           v-for="s, sindex in suggestionOptions"
           :key="`${s}_${sindex}`"
         >
           <div
             v-if="optionGroupChildren && s[optionGroupChildren]?.length"
-            class="flex flex-col gap-y-1 border-b border-gray-100 dark:border-gray-700 pb-2"
-            :class="shouldShowNewSuggestion ? 'mb-1' : '-mb-2'"
+            class="flex flex-col gap-y-1 pb-1 mb-0"
+            :class="{
+              'first:[&>div]:border-t-0': !multiple,
+              'border-t border-gray-100 dark:border-gray-700 pt-2': activeGroup.label !== 'All' && multiple
+            }"
           >
             <div
               v-if="activeGroupKey === -1"
               class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              :class="{
+                'border-t border-gray-100 dark:border-gray-700': activeGroup.label === 'All'
+              }"
             >
               <!-- @slot Option Group content. Good for customizing the content for each group option -->
               <slot
@@ -214,11 +273,21 @@
                 v-if="optionType !== 'custom'"
                 ref="dropdownOption"
                 :href="optionType === 'a' ? c.href : undefined"
-                class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+                class="
+                  flex flex-row
+                  w-full p-2
+                  sds-theme-forge:mx-2
+                  sds-theme-plaid:px-4
+                  sds-theme-forge:max-w-[calc(100%-1rem)]
+                  sds-theme-forge:rounded
+                  text-sm text-left list-none cursor-pointer
+                  hover:text-black dark:hover:text-white
+                  hover:bg-gray-25 dark:hover:bg-gray-750
+                "
                 :class="{
                   'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && !isDropdownItemActive(c) && type !== 'text',
                   'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(c),
+                  'text-black dark:text-white font-semibold': isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text'
                 }"
                 :data-active="isDropdownItemActive(c)"
                 :type="optionType === 'button' ? 'button' : undefined"
@@ -226,7 +295,17 @@
                 @click.prevent="handleSuggestionClick(c)"
               >
                 <!-- @slot Option content. Good for customizing the content for each option -->
-                <slot
+                <template v-if="(type === 'taggable-select' || type === 'select') && multiple">
+                  <input
+                    type="checkbox"
+                    class="mr-2 my-auto"
+                    :checked="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
+                    @change.stop="handleSuggestionClick(c)"
+                    tabindex="-1"
+                    aria-label="Select option"
+                  />
+                 </template>
+                 <slot
                   name="option"
                   :option="c"
                   :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
@@ -234,7 +313,7 @@
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
                 <svg
-                  v-if="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text'"
+                  v-if="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text' && !multiple"
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
                   height="9"
@@ -272,7 +351,18 @@
               </div>
             </template>
           </div>
-          <template v-else-if="!optionGroupChildren">
+        </template>
+        <div
+          v-if="!optionGroupChildren && suggestionOptions.length"
+          class="flex flex-col gap-y-1"
+          :class="{
+            'py-2': optionType !== 'custom'
+          }"
+        >
+          <template
+            v-for="s, sindex in suggestionOptions"
+            :key="`${s}_${sindex}`"
+          >
             <component
               :is="optionType"
               v-if="optionType !== 'custom'"
@@ -281,7 +371,7 @@
               class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
               :class="{
                 'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
-                'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && !isDropdownItemActive(s) && type !== 'text',
+                'text-black dark:text-white font-semibold': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text',
                 'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(s),
                 'last:mb-2': groups.length < 2
               }"
@@ -291,6 +381,16 @@
               @click.prevent="handleSuggestionClick(s)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
+              <template v-if="(type === 'taggable-select' || type === 'select') && multiple">
+                <input
+                  type="checkbox"
+                  class="mr-2 my-auto"
+                  :checked="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel])"
+                  @change.stop="handleSuggestionClick(s)"
+                  tabindex="-1"
+                  aria-label="Select option"
+                />
+              </template>
               <slot
                 name="option"
                 :option="s"
@@ -299,7 +399,7 @@
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
               <svg
-                v-if="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text'"
+                v-if="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text' && !multiple"
                 xmlns="http://www.w3.org/2000/svg"
                 width="11"
                 height="9"
@@ -336,63 +436,96 @@
               </slot>
             </div>
           </template>
-        </template>
-        <!-- Show <query> (new) for taggable-select when no suggestions match -->
+        </div>
+        <!-- Show '+ Add "query"' for taggable-select when no suggestions match -->
+        <hr
+          v-if="shouldShowNewSuggestion && type === 'taggable-select' && allCount"
+          class="border-gray-100 dark:border-gray-700"
+        >
         <div
           v-if="shouldShowNewSuggestion"
-          ref="dropdownOption"
-          class="flex flex-row w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-          :class="{
-            'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
-            'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
-            'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
-          }"
-          :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
-          type="button"
-          tabindex="-1"
-          @mousedown.prevent="handleSuggestionClick({
-            label: query,
-            name: query,
-            value: query,
-            __cbxIdx: 'add'
-          })"
+          class="py-2"
         >
-          <!-- @slot Option content. Good for customizing the content for each option -->
-          <slot
-            name="option"
-            :option="{
+          <button
+            ref="dropdownOption"
+            class="
+              flex flex-row
+              w-full
+              sds-theme-forge:mx-2
+              sds-theme-plaid:px-4
+              p-2
+              sds-theme-forge:max-w-[calc(100%-1rem)]
+              sds-theme-forge:rounded
+              text-sm text-left list-none
+              cursor-pointer
+              hover:text-black dark:hover:text-white
+              hover:bg-gray-25 dark:hover:bg-gray-750
+            "
+            :class="{
+              'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
+              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === allCount
+            }"
+            :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
+            :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
+            tabindex="-1"
+            @input="onInputFieldInput"
+            @click.prevent="showDropdown = (readonly || disabled) ? false : !showDropdown"
+            @keydown.delete="handleDelete"
+            @keydown.tab="showDropdown = false"
+            @keydown.left="handleArrows('left', $event)"
+            @keydown.right="handleArrows('right', $event)"
+            @keydown.enter.prevent="handleSuggestionClick({
               label: query,
               name: query,
               value: query,
-              index: 'add'
-            }"
-            :label="query"
+              __cbxIdx: 'add'
+            })"
+            @mousedown.prevent="handleSuggestionClick({
+              label: query,
+              name: query,
+              value: query,
+              __cbxIdx: 'add'
+            })"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28" height="32"
-              class="w-3 h-3 my-auto ml-1 mr-2"
-              viewBox="0 0 448 512"
+            <!-- @slot Option content. Good for customizing the content for each option -->
+            <slot
+              name="option"
+              :option="{
+                label: query,
+                name: query,
+                value: query,
+                index: 'add'
+              }"
+              :label="query"
             >
-              <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
-              <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28" height="32"
+                class="w-3 h-3 my-auto ml-1 mr-2"
+                viewBox="0 0 448 512"
+              >
+                <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
+                <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
+              </svg>
+              Add "{{ query }}"
+            </slot>
+            <svg
+              v-if="isSelected(query)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="11"
+              height="9"
+              viewBox="0 0 11 9"
+              fill="none"
+              class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
+            >
+              <path
+                d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
+                fill="currentColor"
+              />
             </svg>
-            Add "{{ query }}"
-          </slot>
-          <svg
-            v-if="isSelected(query)"
-            xmlns="http://www.w3.org/2000/svg"
-            width="11"
-            height="9"
-            viewBox="0 0 11 9"
-            fill="none"
-            class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-          >
-            <path
-              d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-              fill="currentColor"
-            />
-          </svg>
+          </button>
         </div>
       </SdsScrollArea>
       <!-- Footer section -->
@@ -599,6 +732,7 @@ const groups = ref(), activeGroup = ref(), activeGroupKey = ref(-1)
 const allSuggestions = ref(), allSuggestionOptions = ref(), allCount = ref(0)
 const groupSuggestions = ref(), groupSuggestionOptions = ref(), suggestionOptions = ref()
 const firstTickQuery = ref()
+const selectAllRef = ref()
 
 const showClearButton = computed(() => {
   if (props.disabled || props.readonly) return false
@@ -606,6 +740,76 @@ const showClearButton = computed(() => {
   if (props.type !== 'text' && selected.value.length > 0) return true
   return false
 })
+
+// Select All logic
+const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
+  // If grouped and on a specific tab, return only that group's options
+  if (groups.value && !isFlatArray.value && activeGroupKey.value !== -1 && groupSuggestionOptions.value) {
+    // Flatten groupSuggestionOptions
+    return groupSuggestionOptions.value.flatMap((g: ComboBoxSuggestion) => {
+      if (typeof g === 'object' && props.optionGroupChildren && Array.isArray(g[props.optionGroupChildren])) {
+        return g[props.optionGroupChildren] as ComboBoxSuggestion[]
+      }
+      return [g]
+    })
+  }
+  // If grouped and on "All" tab, or ungrouped, use allSuggestionOptions
+  if (allSuggestionOptions.value) {
+    return allSuggestionOptions.value.flatMap((g: ComboBoxSuggestion) => {
+      if (typeof g === 'object' && props.optionGroupChildren && Array.isArray(g[props.optionGroupChildren])) {
+        return g[props.optionGroupChildren] as ComboBoxSuggestion[]
+      }
+      return [g]
+    })
+  }
+  return []
+}
+
+const selectAllChecked = computed(() => {
+  const options = getCurrentGroupOptions()
+  if (!options.length) return false
+  return options.every((opt: ComboBoxSuggestion) => {
+    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
+    return isSelected(label)
+  })
+})
+
+const selectAllIndeterminate = computed(() => {
+  const options = getCurrentGroupOptions()
+  if (!options.length) return false
+  const selectedCount = options.filter((opt: ComboBoxSuggestion) => {
+    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
+    return isSelected(label)
+  }).length
+  return selectedCount > 0 && selectedCount < options.length
+})
+
+const toggleSelectAll = () => {
+  const options = getCurrentGroupOptions()
+  if (!options.length) return
+  const allSelected = options.every((opt: ComboBoxSuggestion) => {
+    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
+    return isSelected(label)
+  })
+  if (allSelected) {
+    // Deselect all in scope
+    options.forEach((opt: ComboBoxSuggestion) => {
+      const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
+      const idx = selected.value.findIndex(s => getLabel(s) === label)
+      if (idx !== -1) selected.value.splice(idx, 1)
+    })
+  } else {
+    // Select all in scope
+    options.forEach((opt: ComboBoxSuggestion) => {
+      const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
+      if (!isSelected(label)) {
+        // Use original suggestion if possible
+        const suggestion = findOriginalSuggestion(label) ?? opt
+        if (suggestion) selected.value.push(stripIdx(suggestion))
+      }
+    })
+  }
+}
 
 const removeHtmlFromString = (value: string) => {
   if (typeof document === 'undefined') return value
@@ -698,20 +902,20 @@ const isFlatArray = computed(() => {
 
 // Helper to get the dropdown index of an item as rendered, including new suggestion if present
 const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
-  // For type='taggable-select' with new suggestion (new is now last)
-  let current = 0;
-  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
-  if (!options) return null;
+  // For type='taggable-select' with "Select all" present, offset by 1
+  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple) ? 1 : 0
+  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined
+  if (!options) return null
   // Flatten options for group/ungrouped
   for (const opt of options) {
     if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
       for (const child of opt[props.optionGroupChildren] as ComboBoxSuggestion[]) {
-        if (child === item) return current;
-        current++;
+        if (child === item) return current
+        current++
       }
     } else {
-      if (opt === item) return current;
-      current++;
+      if (opt === item) return current
+      current++
     }
   }
   // If shouldShowNewSuggestion and item is the "Add" option, return current (last)
@@ -719,12 +923,14 @@ const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
     props.type === 'taggable-select' && shouldShowNewSuggestion.value &&
     item && typeof item === 'object' && item.__cbxIdx === 'add'
   ) {
-    return current;
+    return current
   }
-  return null;
+  console.log(current)
+  return null
 }
 
 const isDropdownItemActive = (item: ComboBoxSuggestion) => {
+  // "Select all" is handled separately in the template (arrowCounter === 0)
   if (typeof item !== 'object' || item === null) return false;
   // For "Add" option, check if arrowCounter matches last index
   if (
@@ -732,7 +938,7 @@ const isDropdownItemActive = (item: ComboBoxSuggestion) => {
     item && typeof item === 'object' && item.__cbxIdx === 'add'
   ) {
     const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
-    let lastIdx = 0;
+    let lastIdx = (props.type === 'taggable-select' && props.multiple) ? 1 : 0;
     if (options) {
       for (const opt of options) {
         if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
@@ -967,17 +1173,24 @@ const handleDelete = () => {
   if (selected.value.length && inputField.value.value === '') multiselectRemove(-1)
 }
 
-const getCurrentSuggestion = (): ComboBoxSuggestion | undefined => {
+const getCurrentSuggestion = (): ComboBoxSuggestion | 'selectAll' | undefined => {
+  // If "Select all" is focused, return special value
+  if (props.type === 'taggable-select' && props.multiple && arrowCounter.value === 0) {
+    return '';
+  }
   let option: ComboBoxSuggestion | undefined = undefined
   const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined
   if (!opts) return undefined
+  let startIdx = (props.type === 'taggable-select' && props.multiple) ? 1 : 0;
+  let idx = startIdx;
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && isDropdownItemActive(x))
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && arrowCounter.value === idx++)
         if (tmp) option = tmp
       } else {
-        if (isDropdownItemActive(i)) option = i
+        if (arrowCounter.value === idx) option = i
+        idx++
       }
     }
   })
@@ -1129,6 +1342,11 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   }
   firstTickQuery.value = query.value
   let suggestionObj = getCurrentSuggestion()
+  // If "Select all" is focused, trigger select all
+  if (suggestionObj === '') {
+    toggleSelectAll();
+    return;
+  }
   if (!suggestionObj && query.value) {
     suggestionObj = findOriginalSuggestion(query.value) || {
       [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: query.value
@@ -1217,6 +1435,14 @@ const shouldShowNewSuggestion = computed(() => {
   return query.value !== '' && props.type === 'taggable-select' && !matchesSuggestion.value
 })
 
+const lastDropdownItemIndex = () => {
+  let index = dropdownOption.value?.length - (shouldShowNewSuggestion.value ? 0 : 1) || 0
+  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value) {
+    index++
+  }
+  return index
+}
+
 const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
   if (direction === 'up' || direction === 'down') {
     if (!showDropdown.value && hasDropdownSuggestion.value) {
@@ -1232,29 +1458,14 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     arrowCounter.value = -1;
     return;
   }
-  // Calculate total items: suggestions + "Add" option if present
-  let totalItems = 0;
-  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
-  if (options) {
-    for (const opt of options) {
-      if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
-        totalItems += (opt[props.optionGroupChildren] as ComboBoxSuggestion[]).length;
-      } else {
-        totalItems++;
-      }
-    }
-  }
-  if (props.type === 'taggable-select' && shouldShowNewSuggestion.value) {
-    totalItems += 1; // Add option is last
-  }
   switch (direction) {
     case 'down':
-      if (arrowCounter.value < totalItems - 1) arrowCounter.value++
-      else arrowCounter.value = 0
+      if (arrowCounter.value < lastDropdownItemIndex()) arrowCounter.value++
+      else arrowCounter.value = -1
       break
     case 'up':
-      if (arrowCounter.value > 0) arrowCounter.value--
-      else arrowCounter.value = totalItems - 1
+      if (arrowCounter.value > -1) arrowCounter.value--
+      else arrowCounter.value = lastDropdownItemIndex()
       break
     case 'left':
       if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === 0 && groups.value?.length > 0) {

@@ -179,7 +179,6 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
     >
       <!-- @slot Scroll area content. -->
       
-      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
       <!--v-if-->
       
       
@@ -191,6 +190,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Apple
         
@@ -207,6 +207,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Banana
         
@@ -223,6 +224,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Kiwi
         
@@ -239,6 +241,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Orange
         
@@ -255,6 +258,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Mango
         
@@ -271,6 +275,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Pineapple
         
@@ -287,6 +292,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Pomegranate
         
@@ -303,6 +309,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Raspberry
         
@@ -319,6 +326,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Strawberry
         
@@ -335,6 +343,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
         tabindex="-1"
       >
         <!-- @slot Option content. Good for customizing the content for each option -->
+        <!--v-if-->
         
         Watermelon
         
@@ -343,6 +352,8 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
       
       
       
+      <!-- Show &lt;query&gt; (new) for taggable-select when no suggestions match -->
+      <!--v-if-->
       
     </div>
     <!-- Footer section -->
