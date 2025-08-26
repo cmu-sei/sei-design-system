@@ -462,39 +462,25 @@
       <h2 class="text-xl">
         Badge
       </h2>
-      <div class="flex gap-4">
-        <SdsBadge
-          type="medium"
-          variant="red"
+      <div class="flex flex-row gap-4 flex-wrap">
+        <div
+          v-for="variant in badgeVariants" 
+          :key="variant" 
+          class="flex flex-col gap-4"
         >
-          Badge
-        </SdsBadge>
-        <SdsBadge
-          type="medium"
-          variant="blue"
-          class="w-48"
-        >
-          Badge
-        </SdsBadge>
-        <SdsBadge
-          type="light-border"
-          class="w-48"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="32"
-            viewBox="0 0 448 512"
-            aria-hidden="true"
-            class="w-3 h-3 inline-block"
+          <div 
+            v-for="type in badgeTypes" 
+            :key="type" 
+            class="flex flex-row gap-4"
           >
-            <path
-              fill="currentColor"
-              d="M413.8 447.1L256 448v31.99c0 17.71-14.2 32.01-31.9 32.01c-17.67 0-32.1-14.32-32.1-31.99v-31.99l-158.9-.01c-28.5 0-43.69-34.49-24.69-56.4l68.98-79.59H62.22c-25.41 0-39.15-29.8-22.67-49.13l60.41-70.85H89.21c-21.28 0-32.87-22.5-19.28-37.31l134.8-146.5c10.4-11.3 28.22-11.3 38.62-.003l134.9 146.5c13.62 14.81 2.001 37.31-19.28 37.31H348.2l60.35 70.86c16.46 19.34 2.716 49.12-22.68 49.12h-15.2l68.98 79.59C458.7 413.7 443.1 447.1 413.8 447.1z"
-            />
-          </svg>
-          <span>Tree</span>
-        </SdsBadge>
+            <SdsBadge 
+              :type="type" 
+              :variant="variant"
+            >
+              Badge
+            </SdsBadge>
+          </div>
+        </div>
       </div>
     </div>
     <div class="grid gap-4">
@@ -1055,7 +1041,6 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 
@@ -1063,6 +1048,10 @@ const datapointModelValue = ref(1451)
 
 const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
 const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
+const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green' | undefined)[]>(
+  ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
+)
+const badgeTypes = ref<('light-border' | 'light' | 'medium' | 'dark' | undefined)[]>(['light-border', 'light', 'medium', 'dark'])
 
 const fields = ref<TableField[]>([
   {

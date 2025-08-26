@@ -1,19 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Badge > should match its default snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400 border border-gray-500 dark:border-blue-400">
   <!-- @slot Badge content.  -->Badge
 </div>"
 `;
 
 exports[`Badge > should match its type (dark) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-gray-50 bg-gray-700">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-gray-50 bg-gray-700 border border-gray-700">
   <!-- @slot Badge content.  -->Badge dark
 </div>"
 `;
 
 exports[`Badge > should match its type (light) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900 border border-gray-100 dark:border-gray-900">
   <!-- @slot Badge content.  -->Badge light
 </div>"
 `;
@@ -25,67 +25,67 @@ exports[`Badge > should match its type (light-border) snapshot 1`] = `
 `;
 
 exports[`Badge > should match its type (medium) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400 border border-gray-500 dark:border-blue-400">
   <!-- @slot Badge content.  -->Badge medium
 </div>"
 `;
 
 exports[`Badge > should match its variant (blue) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-blue-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-blue-500 border border-blue-500">
   <!-- @slot Badge content.  -->Badge blue
 </div>"
 `;
 
 exports[`Badge > should match its variant (gray) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-gray-500 dark:bg-gray-400 border border-gray-500 dark:border-blue-400">
   <!-- @slot Badge content.  -->Badge gray
 </div>"
 `;
 
 exports[`Badge > should match its variant (green) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-green-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-green-500 border border-green-500">
   <!-- @slot Badge content.  -->Badge green
 </div>"
 `;
 
 exports[`Badge > should match its variant (indigo) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-indigo-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-indigo-500 border border-indigo-500">
   <!-- @slot Badge content.  -->Badge indigo
 </div>"
 `;
 
 exports[`Badge > should match its variant (orange) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-orange-800 dark:text-black bg-orange-200">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-orange-800 dark:text-black bg-orange-200 border border-orange-200">
   <!-- @slot Badge content.  -->Badge orange
 </div>"
 `;
 
 exports[`Badge > should match its variant (purple) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-purple-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-purple-500 border border-purple-500">
   <!-- @slot Badge content.  -->Badge purple
 </div>"
 `;
 
 exports[`Badge > should match its variant (red) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-red-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-red-500 border border-red-500">
   <!-- @slot Badge content.  -->Badge red
 </div>"
 `;
 
 exports[`Badge > should match its variant (tan) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-tan-900 dark:text-black bg-tan-200">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-tan-900 dark:text-black bg-tan-200 border border-tan-200">
   <!-- @slot Badge content.  -->Badge tan
 </div>"
 `;
 
 exports[`Badge > should match its variant (teal) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-teal-500">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-white dark:text-black bg-teal-500 border border-teal-500">
   <!-- @slot Badge content.  -->Badge teal
 </div>"
 `;
 
 exports[`Badge > should match its variant (yellow) snapshot 1`] = `
-"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-yellow-800 dark:text-black bg-yellow-100 dark:bg-yellow-200">
+"<div data-id="sds-badge" role="status" class="inline-flex items-center justify-center gap-1 tracking-wide max-w-full uppercase px-2 py-1 text-xs font-bold text-center text-ellipsis whitespace-nowrap overflow-hidden align-baseline rounded-theme-sm text-yellow-800 dark:text-black bg-yellow-100 dark:bg-yellow-200 border border-yellow-100 dark:border-yellow-200">
   <!-- @slot Badge content.  -->Badge yellow
 </div>"
 `;
