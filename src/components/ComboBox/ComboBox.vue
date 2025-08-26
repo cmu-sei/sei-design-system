@@ -303,8 +303,8 @@
                     tabindex="-1"
                     aria-label="Select option"
                   />
-                 </template>
-                 <slot
+                </template>
+                <slot
                   name="option"
                   :option="c"
                   :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
@@ -474,12 +474,12 @@
             @keydown.tab="showDropdown = false"
             @keydown.left="handleArrows('left', $event)"
             @keydown.right="handleArrows('right', $event)"
-@keydown.enter.prevent="handleSuggestionClick({
-  label: query,
-  name: query,
-  value: query,
-  __cbxIdx: 'add'
-})"
+            @keydown.enter.prevent="handleSuggestionClick({
+              label: query,
+              name: query,
+              value: query,
+              __cbxIdx: 'add'
+            })"
             @mousedown.prevent="handleSuggestionClick({
               label: query,
               name: query,
