@@ -4,7 +4,6 @@
     data-id="sds-combo-box"
     class="relative"
   >
-    {{ arrowCounter }}
     <div
       class="input-group flex flex-col"
       :class="{
@@ -182,7 +181,7 @@
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
-          'pt-2': optionType !== 'custom' && (type === 'taggable-select' || type === 'select') && allCount
+          'pt-2': optionType !== 'custom' && (type === 'taggable-select' || type === 'select') && allCount > 1
         }"
       >
         <!-- Select all option for multiselect -->
@@ -465,7 +464,7 @@
               'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
               'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
               'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === allCount
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === lastDropdownItemIndex()
             }"
             :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
             :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
@@ -476,12 +475,12 @@
             @keydown.tab="showDropdown = false"
             @keydown.left="handleArrows('left', $event)"
             @keydown.right="handleArrows('right', $event)"
-            @keydown.enter.prevent="handleSuggestionClick({
-              label: query,
-              name: query,
-              value: query,
-              __cbxIdx: 'add'
-            })"
+@keydown.enter.prevent="handleSuggestionClick({
+  label: query,
+  name: query,
+  value: query,
+  __cbxIdx: 'add'
+})"
             @mousedown.prevent="handleSuggestionClick({
               label: query,
               name: query,
@@ -902,8 +901,8 @@ const isFlatArray = computed(() => {
 
 // Helper to get the dropdown index of an item as rendered, including new suggestion if present
 const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
-  // For type='taggable-select' with "Select all" present, offset by 1
-  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple) ? 1 : 0
+  // For type='taggable-select' with "Select all" present, offset by 1 only if Select all is rendered
+  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0
   const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined
   if (!options) return null
   // Flatten options for group/ungrouped
@@ -925,7 +924,7 @@ const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
   ) {
     return current
   }
-  console.log(current)
+
   return null
 }
 
@@ -948,9 +947,11 @@ const isDropdownItemActive = (item: ComboBoxSuggestion) => {
         }
       }
     }
+
     return arrowCounter.value === lastIdx;
   }
   const idx = getDropdownIndex(item);
+
   if (idx === null) return false;
   return arrowCounter.value === idx;
 }
@@ -1173,29 +1174,59 @@ const handleDelete = () => {
   if (selected.value.length && inputField.value.value === '') multiselectRemove(-1)
 }
 
-const getCurrentSuggestion = (): ComboBoxSuggestion | 'selectAll' | undefined => {
-  // If "Select all" is focused, return special value
-  if (props.type === 'taggable-select' && props.multiple && arrowCounter.value === 0) {
-    return '';
+const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
+  // If "Add" option is focused and is the only option, return custom sentinel
+  if (
+    props.type === 'taggable-select' &&
+    props.multiple &&
+    shouldShowNewSuggestion.value &&
+    arrowCounter.value === 0 &&
+    (!suggestionOptions.value || suggestionOptions.value.length === 0)
+  ) {
+
+    return {
+      label: query.value,
+      name: query.value,
+      value: query.value,
+      __cbxIdx: 'add'
+    };
   }
-  let option: ComboBoxSuggestion | undefined = undefined
-  const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined
-  if (!opts) return undefined
-  let startIdx = (props.type === 'taggable-select' && props.multiple) ? 1 : 0;
+  // If "Select all" is focused, return sentinel value (only if rendered)
+  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && arrowCounter.value === 0 && allCount.value > 1) {
+    return null;
+  }
+  // If "Add" option is focused, return custom sentinel
+  if (
+    props.type === 'taggable-select' &&
+    shouldShowNewSuggestion.value &&
+    arrowCounter.value === lastDropdownItemIndex()
+  ) {
+
+    return {
+      label: query.value,
+      name: query.value,
+      value: query.value,
+      __cbxIdx: 'add'
+    };
+  }
+  let option: ComboBoxSuggestion | undefined = undefined;
+  const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
+  if (!opts) return undefined;
+  let startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple) ? 1 : 0;
   let idx = startIdx;
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && arrowCounter.value === idx++)
-        if (tmp) option = tmp
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && arrowCounter.value === idx++);
+        if (tmp) option = tmp;
       } else {
-        if (arrowCounter.value === idx) option = i
-        idx++
+        if (arrowCounter.value === idx) option = i;
+        idx++;
       }
     }
-  })
-  return option
-}
+  });
+  return option;
+};
 
 // Helper to check if a value is selected (works for both string and object)
 const isSelected = (val: string) => {
@@ -1272,6 +1303,7 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   }
   // For type="text", update the query to the suggestion's label
   if (props.type === 'text') {
+
     suppressCompleteDueToLabelUpdate = true;
     suppressShowDropdownNext = true;
     let label = '';
@@ -1281,6 +1313,9 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
       label = normalizedOption;
     }
     query.value = label;
+  }
+  if (normalizedOption && typeof normalizedOption === 'object' && normalizedOption.__cbxIdx === 'add') {
+
   }
   // Check for duplicate
   const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {
@@ -1342,10 +1377,18 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   }
   firstTickQuery.value = query.value
   let suggestionObj = getCurrentSuggestion()
-  // If "Select all" is focused, trigger select all
-  if (suggestionObj === '') {
-    toggleSelectAll();
-    return;
+   // If "Select all" is focused, trigger select all
+   if (suggestionObj === null) {
+     toggleSelectAll();
+     return;
+   }
+  // If "Add" option is focused, handle custom add
+  if (
+    suggestionObj && typeof suggestionObj === 'object' && suggestionObj.__cbxIdx === 'add'
+  ) {
+
+    await handleSuggestionClick(suggestionObj)
+    return
   }
   if (!suggestionObj && query.value) {
     suggestionObj = findOriginalSuggestion(query.value) || {
@@ -1436,11 +1479,21 @@ const shouldShowNewSuggestion = computed(() => {
 })
 
 const lastDropdownItemIndex = () => {
-  let index = dropdownOption.value?.length - (shouldShowNewSuggestion.value ? 0 : 1) || 0
-  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value) {
-    index++
+  // Start with 0
+  let count = 0;
+  // If "Select all" is present (multiple), add 1
+  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) {
+    count += 1;
   }
-  return index
+  // Add number of visible suggestions
+  const options = suggestionOptions.value;
+  count += countVisibleOptions(options);
+  // If "Add <custom_query>" is present, add 1
+  if (shouldShowNewSuggestion.value) {
+    count += 1;
+  }
+  // Return last index (zero-based)
+  return count - 1;
 }
 
 const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
@@ -1459,14 +1512,26 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     return;
   }
   switch (direction) {
-    case 'down':
-      if (arrowCounter.value < lastDropdownItemIndex()) arrowCounter.value++
-      else arrowCounter.value = -1
-      break
-    case 'up':
-      if (arrowCounter.value > -1) arrowCounter.value--
-      else arrowCounter.value = lastDropdownItemIndex()
-      break
+    case 'down': {
+      const lastIdx = lastDropdownItemIndex();
+      if (arrowCounter.value < lastIdx) {
+        arrowCounter.value++;
+      } else {
+        arrowCounter.value = -1;
+      }
+
+      break;
+    }
+    case 'up': {
+      const lastIdx = lastDropdownItemIndex();
+      if (arrowCounter.value > -1) {
+        arrowCounter.value--;
+      } else {
+        arrowCounter.value = lastIdx;
+      }
+
+      break;
+    }
     case 'left':
       if (!props.disableGroupTabs && suggestionOptions.value?.length && inputField.value?.selectionStart === 0 && groups.value?.length > 0) {
         const idx = groups.value.findIndex((g: { key: number }) => g.key === activeGroupKey.value)
