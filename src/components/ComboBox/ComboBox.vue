@@ -463,8 +463,7 @@
             :class="{
               'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
               'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }),
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === lastDropdownItemIndex()
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }) || arrowCounter === lastDropdownItemIndex(),
             }"
             :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
             :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
@@ -984,7 +983,7 @@ const inputDisplayValue = computed(() => {
   // If a suggestion is highlighted, show its label
   if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
     // Find the suggestion with the current arrowCounter
-    const found: ComboBoxSuggestion | undefined = getCurrentSuggestion()
+    const found: ComboBoxSuggestion | null | undefined = getCurrentSuggestion()
     if (found) {
       let label = ''
       if (typeof found === 'object') {
@@ -1212,13 +1211,15 @@ const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
   let option: ComboBoxSuggestion | undefined = undefined;
   const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
   if (!opts) return undefined;
-  let startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple) ? 1 : 0;
+  let startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0;
   let idx = startIdx;
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
       if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => typeof x !== 'string' && arrowCounter.value === idx++);
-        if (tmp) option = tmp;
+        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => {
+          return typeof x !== 'string' && arrowCounter.value === idx++
+        })
+        if (tmp) option = tmp
       } else {
         if (arrowCounter.value === idx) option = i;
         idx++;
