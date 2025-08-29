@@ -70,19 +70,19 @@
               v-focus
               aria-label="close"
               class="
-            inline-block
-            p-0
-            ml-auto
-            text-3xl text-gray-500
-            bg-transparent
-            border-0
-            cursor-pointer
-            hover:text-gray-700 hover:outline-hidden
-            focus:text-gray-700 focus:outline-hidden
-            dark:hover:text-gray-300 dark:focus:text-gray-300
-            active:text-gray-500
-            dark:active:text-gray-600
-          "
+                inline-block
+                p-0
+                ml-auto
+                text-3xl text-gray-500
+                bg-transparent
+                border-0
+                cursor-pointer
+                hover:text-gray-700 hover:outline-hidden
+                focus:text-gray-700 focus:outline-hidden
+                dark:hover:text-gray-300 dark:focus:text-gray-300
+                active:text-gray-500
+                dark:active:text-gray-600
+              "
               @click="close"
             >
               <svg
@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Directive } from "vue";
+import { type Directive } from 'vue';
 import ClientOnly from '../ClientOnly/ClientOnly.vue';
 
 const id = useId()
@@ -138,14 +138,14 @@ const props = defineProps({
    */
   size: {
     type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-    default: "md",
+      default: 'md',
   },
   /**
    * Determines the location of the panel.
    */
   side: {
     type: String as PropType<'left' | 'right' | ''>,
-    default: "right",
+      default: 'right',
   },
   /**
    * The z-index for the popover.
@@ -185,7 +185,7 @@ const showPanel = computed({
     /**
      * Emmitted when modelValue changes.
      */
-    emit("update:modelValue", value);
+    emit('update:modelValue', value);
   },
 })
 
@@ -215,17 +215,17 @@ onUnmounted(() => {
 })
 
 const makeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.add("panel-prevent-scroll");
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.add('panel-prevent-scroll');
   setTimeout(() => {
-    document.addEventListener("keyup", handleEscKey);
+    document.addEventListener('keyup', handleEscKey);
   }, 0);
 }
 
 const removeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.remove("panel-prevent-scroll");
-  document.removeEventListener("keyup", handleEscKey);
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.remove('panel-prevent-scroll');
+  document.removeEventListener('keyup', handleEscKey);
 }
 
 const close = () => {
@@ -233,7 +233,7 @@ const close = () => {
 }
 
 const handleEscKey = (e: KeyboardEvent) => {
-  if (e.key === "Escape") {
+    if (e.key === 'Escape') {
     close();
   }
 }
@@ -242,16 +242,17 @@ const checkKeyEvent = (event: KeyboardEvent) => {
   if (panelContainer.value === null) return;
 
   // close panel and return early if escape
-  if (event.key === "Escape") {
+    if (event.key === 'Escape') {
     close();
     return;
   }
+
   const focusableList: NodeListOf<HTMLElement> = (panelContainer.value as unknown as HTMLElement).querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
   );
 
   // escape early if only 1 or no elements to focus
-  if (focusableList.length < 2 && event.key === "Tab") {
+  if (focusableList.length < 2 && event.key === 'Tab') {
     event.preventDefault();
     return;
   }
@@ -259,14 +260,14 @@ const checkKeyEvent = (event: KeyboardEvent) => {
   const last = focusableList.length - 1;
 
   if (
-    event.key === "Tab" &&
+      event.key === 'Tab' &&
     event.shiftKey === false &&
     event.target === focusableList[last]
   ) {
     event.preventDefault();
     focusableList[0].focus();
   } else if (
-    event.key === "Tab" &&
+      event.key === 'Tab' &&
     event.shiftKey === true &&
     event.target === focusableList[0]
   ) {
@@ -276,8 +277,7 @@ const checkKeyEvent = (event: KeyboardEvent) => {
 }
 
 watch(showPanel, (value) => {
-  showPanel.value = (value as boolean);
-  if (typeof document === "undefined") return;
+  showPanel.value = value;
   if (value) {
     makeDomChanges();
   } else {
