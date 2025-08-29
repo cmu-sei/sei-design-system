@@ -49,7 +49,7 @@ describe('Panel', () => {
     expect(document.querySelector('[data-id="sds-panel"]')).toBeNull()
   })
 
-  it('renders slot content in main area', async () => {
+  it('renders default slot content', async () => {
     const model = ref(true)
     const wrapper = mount(Panel, {
       attachTo: document.body,
