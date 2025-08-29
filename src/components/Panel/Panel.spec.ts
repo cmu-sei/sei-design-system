@@ -119,7 +119,7 @@ describe('Panel', () => {
     expect(document.querySelector('[data-id="sds-panel"]')?.classList).toContain('left-0')
   })
 
-  it('applies correct zIndex class for all valid zIndex prop values', () => {
+  it('applies correct zIndex class for all valid `zIndex` prop values', () => {
     const zIndexes = ['0', '10', '20', '30', '40', '50', 'auto', '']
     const expectedClasses = {
       '0': 'z-0',
@@ -153,5 +153,61 @@ describe('Panel', () => {
       }
       wrapper.unmount()
     })
+  })
+
+  it('closes panel when Escape key is pressed', async () => {
+    const model = ref(true)
+    const wrapper = mount(Panel, {
+      attachTo: document.body,
+      props: {
+        modelValue: true
+      },
+      attrs: {
+        'onUpdate:modelValue': (val: boolean) => {
+          model.value = val
+        }
+      },
+      slots: { default: '', title: '', footer: '' }
+    })
+    await wrapper.vm.$nextTick()
+    document.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape' }))
+    await wrapper.vm.$nextTick()
+    expect(model.value).toBe(false)
+  })
+  
+  it('traps focus within panel when Tab/Shift+Tab is pressed', async () => {
+    const model = ref(true)
+    const wrapper = mount(Panel, {
+      attachTo: document.body,
+      props: {
+        modelValue: model.value
+      },
+      slots: {
+        default: `
+          <button id="first">First</button>
+          <button id="second">Second</button>
+        `,
+        title: '',
+        footer: ''
+      }
+    })
+    await wrapper.vm.$nextTick()
+    const panel = document.querySelector('[data-id="sds-panel"]') as HTMLElement
+    const focusableList = panel.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstFocusable = (focusableList[0] as HTMLElement)
+    const lastFocusable = (focusableList[focusableList.length - 1] as HTMLElement)
+    firstFocusable.focus()
+    // Simulate Tab from last element
+    const tabEvent = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true })
+    Object.defineProperty(tabEvent, 'target', { value: lastFocusable })
+    panel.dispatchEvent(tabEvent)
+    expect(document.activeElement).toBe(firstFocusable)
+    // Simulate Shift+Tab from first element
+    const shiftTabEvent = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true })
+    Object.defineProperty(shiftTabEvent, 'target', { value: firstFocusable })
+    panel.dispatchEvent(shiftTabEvent)
+    expect(document.activeElement).toBe(lastFocusable)
   })
 })

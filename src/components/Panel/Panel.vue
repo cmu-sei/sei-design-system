@@ -116,8 +116,8 @@
 </template>
 
 <script setup lang="ts">
-import { type Directive } from 'vue';
-import ClientOnly from '../ClientOnly/ClientOnly.vue';
+import { type Directive } from 'vue'
+import ClientOnly from '../ClientOnly/ClientOnly.vue'
 
 const id = useId()
 
@@ -126,7 +126,7 @@ defineOptions({
   directives: {
     focus: {
       mounted(el: HTMLElement) {
-        el.focus();
+        el.focus()
       },
     } as Directive,
   }
@@ -179,13 +179,13 @@ const hasFooterSlot = computed(() => {
 
 const showPanel = computed({
   get() {
-    return model.value;
+    return model.value
   },
   set(value) {
     /**
      * Emmitted when modelValue changes.
      */
-    emit('update:modelValue', value);
+    emit('update:modelValue', value)
   },
 })
 
@@ -210,79 +210,61 @@ const zIndexClass = computed(() => {
   }
 })
 
-onUnmounted(() => {
-  removeDomChanges();
+onMounted(() => {
+  if (typeof document === 'undefined') return
+  document.addEventListener('keyup', handleEscKey, false)
 })
 
-const makeDomChanges = () => {
-  if (typeof document === 'undefined') return;
-  document.documentElement.classList.add('panel-prevent-scroll');
-  setTimeout(() => {
-    document.addEventListener('keyup', handleEscKey);
-  }, 0);
-}
-
-const removeDomChanges = () => {
-  if (typeof document === 'undefined') return;
-  document.documentElement.classList.remove('panel-prevent-scroll');
-  document.removeEventListener('keyup', handleEscKey);
-}
+onUnmounted(() => {
+  if (typeof document === 'undefined') return
+  document.removeEventListener('keyup', handleEscKey, false)
+})
 
 const close = () => {
-  showPanel.value = false;
+  showPanel.value = false
 }
 
 const handleEscKey = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-    close();
+  if (e.key === 'Escape') {
+    close()
   }
 }
 
 const checkKeyEvent = (event: KeyboardEvent) => {
-  if (panelContainer.value === null) return;
-
-  // close panel and return early if escape
-    if (event.key === 'Escape') {
-    close();
-    return;
-  }
+  if (panelContainer.value === null) return
 
   const focusableList: NodeListOf<HTMLElement> = (panelContainer.value as unknown as HTMLElement).querySelectorAll(
     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
+  )
 
   // escape early if only 1 or no elements to focus
   if (focusableList.length < 2 && event.key === 'Tab') {
-    event.preventDefault();
-    return;
+    event.preventDefault()
+    return
   }
 
-  const last = focusableList.length - 1;
+  const last = focusableList.length - 1
 
   if (
-      event.key === 'Tab' &&
+    event.key === 'Tab' &&
     event.shiftKey === false &&
     event.target === focusableList[last]
   ) {
-    event.preventDefault();
-    focusableList[0].focus();
+    event.preventDefault()
+    focusableList[0].focus()
   } else if (
-      event.key === 'Tab' &&
+    event.key === 'Tab' &&
     event.shiftKey === true &&
     event.target === focusableList[0]
   ) {
-    event.preventDefault();
-    focusableList[last].focus();
+    event.preventDefault()
+    focusableList[last].focus()
   }
 }
 
 watch(showPanel, (value) => {
-  showPanel.value = value;
-  if (value) {
-    makeDomChanges();
-  } else {
-    removeDomChanges();
-  }
+  if (typeof document === 'undefined') return
+  document.documentElement.classList[(value ? 'add' : 'remove')]('panel-prevent-scroll')
 }, { immediate: true })
 </script>
 
