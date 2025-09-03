@@ -195,7 +195,7 @@ defineProps({
   /**
    * Determines whether to hide the action bar slot.
    */
-   hideActionBar: { type: Boolean, default: false },
+  hideActionBar: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['navigate'])

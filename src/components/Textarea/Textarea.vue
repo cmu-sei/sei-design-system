@@ -83,7 +83,7 @@ defineProps({
    * Gives the component an invalid/danger styling.
    */
   invalid: { type: Boolean, default: false },
- /**
+  /**
    * Determines whether or not the component can be resized
    */
   resize: { type: Boolean, default: false}

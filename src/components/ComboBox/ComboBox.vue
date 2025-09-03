@@ -573,16 +573,16 @@ const groups = computed(() => {
   return groupsWithItems.value ? [
     { index: -1, key, label: 'All', count: allCount.value },
     ...groupsWithItems.value.map((i, index) => {
-        const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
-        if (count > 0) {
-          key = key + 1
-        }
-        return {
-          index,
-          key,
-          label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-          count
-        }
+      const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
+      if (count > 0) {
+        key = key + 1
+      }
+      return {
+        index,
+        key,
+        label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
+        count
+      }
     }).filter(i => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
   ] : []
 })
@@ -762,43 +762,43 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right', event: Keyboa
     showDropdown.value = true
   } else {
     switch (direction) {
-      // When going down, select next result until end
-      // then loop back around starting with original query.
-      case "down":
-        // if (!this.isOpen && this.metThreshold) this.filterResults();
-        if (arrowCounter.value < dropdownOption.value.length - 1) {
-          arrowCounter.value = arrowCounter.value + 1;
-        } else {
-          arrowCounter.value = -1;
-        }
-        break;
+    // When going down, select next result until end
+    // then loop back around starting with original query.
+    case "down":
+      // if (!this.isOpen && this.metThreshold) this.filterResults();
+      if (arrowCounter.value < dropdownOption.value.length - 1) {
+        arrowCounter.value = arrowCounter.value + 1;
+      } else {
+        arrowCounter.value = -1;
+      }
+      break;
       // When going up, select prev result until at original query
       // then loop back around starting at the end of the results.
-      case "up":
-        if (arrowCounter.value > -1) {
-          arrowCounter.value = arrowCounter.value - 1;
-        } else {
-          arrowCounter.value = dropdownOption.value.length - 1;
+    case "up":
+      if (arrowCounter.value > -1) {
+        arrowCounter.value = arrowCounter.value - 1;
+      } else {
+        arrowCounter.value = dropdownOption.value.length - 1;
+      }
+      break;
+    case "left":
+      if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
+        if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
+          event.preventDefault()
+          arrowCounter.value = -1
+          activeGroupKey.value = activeGroupKey.value - 1;
         }
-        break;
-      case "left":
-        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
-          if (activeGroupKey.value > -1 && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
-            event.preventDefault()
-            arrowCounter.value = -1
-            activeGroupKey.value = activeGroupKey.value - 1;
-          }
+      }
+      break;
+    case "right":
+      if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
+        if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
+          event.preventDefault()
+          arrowCounter.value = -1
+          activeGroupKey.value = activeGroupKey.value + 1;
         }
-        break;
-      case "right":
-        if (!props.disableGroupTabs && suggestionOptions.value.length > 0) {
-          if (activeGroupKey.value < groups.value[groups.value.length - 1].key && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
-            event.preventDefault()
-            arrowCounter.value = -1
-            activeGroupKey.value = activeGroupKey.value + 1;
-          }
-        }
-        break;
+      }
+      break;
     }
     // Set the input boxes text to the value of the result
     const option = getCurrentSuggestion()

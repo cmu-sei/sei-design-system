@@ -8,7 +8,7 @@ describe('Avatar', () => {
     const wrapper = mount(Component, {
       props: {
         variant: 'blue'
-    }
+      }
     })
     expect(wrapper.element).toMatchSnapshot()
   })

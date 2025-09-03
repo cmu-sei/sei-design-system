@@ -138,14 +138,14 @@ const props = defineProps({
    */
   size: {
     type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-      default: 'md',
+    default: 'md',
   },
   /**
    * Determines the location of the panel.
    */
   side: {
     type: String as PropType<'left' | 'right' | ''>,
-      default: 'right',
+    default: 'right',
   },
   /**
    * The z-index for the popover.
@@ -191,22 +191,22 @@ const showPanel = computed({
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+  case '0':
+    return 'z-0'
+  case '10':
+    return 'z-10'
+  case '20':
+    return 'z-20'
+  case '30':
+    return 'z-30'
+  case '40':
+    return 'z-40'
+  case '50':
+    return 'z-50'
+  case 'auto':
+    return 'z-auto'
+  default:
+    return ''
   }
 })
 

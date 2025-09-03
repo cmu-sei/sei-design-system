@@ -628,53 +628,53 @@ const updateTimeSelects = () => {
 
 const changeTime = (interval: 'hour' | 'minutes' | 'meridian', value: string, isEndOfRange = false) => {
   switch (interval) {
-    case 'hour':
-      if (isRange.value) {
-        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
-          const currentHour = getHours(date.value.start)
-          const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
-          date.value.start = setHours(date.value.start, hours)
-        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
-          const currentHour = getHours(date.value.end)
-          const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
-          date.value.end = setHours(date.value.end, hours)
-        }
-      } else if (date.value instanceof Date) {
-        const currentHour = getHours(date.value)
+  case 'hour':
+    if (isRange.value) {
+      if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+        const currentHour = getHours(date.value.start)
         const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
-        date.value = setHours(date.value, hours)
+        date.value.start = setHours(date.value.start, hours)
+      } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+        const currentHour = getHours(date.value.end)
+        const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
+        date.value.end = setHours(date.value.end, hours)
       }
-      break
-    case 'minutes':
-      if (isRange.value) {
-        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
-          date.value.start = setMinutes(date.value.start, parseInt(value))
-        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
-          date.value.end = setMinutes(date.value.end, parseInt(value))
-        }
-      } else if (date.value instanceof Date) {
-        date.value = setMinutes(date.value, parseInt(value))
+    } else if (date.value instanceof Date) {
+      const currentHour = getHours(date.value)
+      const hours = currentHour > 12 ? parseInt(value) + 12 : parseInt(value)
+      date.value = setHours(date.value, hours)
+    }
+    break
+  case 'minutes':
+    if (isRange.value) {
+      if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+        date.value.start = setMinutes(date.value.start, parseInt(value))
+      } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+        date.value.end = setMinutes(date.value.end, parseInt(value))
       }
-      break
-    case 'meridian':
-      if (isRange.value) {
-        if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
-          const currentHour = getHours(date.value.start)
-          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
-          date.value.start = setHours(date.value.start, hours)
-        } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
-          const currentHour = getHours(date.value.end)
-          const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
-          date.value.end = setHours(date.value.end, hours)
-        }
-      } else if (date.value instanceof Date) {
-        const currentHour = getHours(date.value)
+    } else if (date.value instanceof Date) {
+      date.value = setMinutes(date.value, parseInt(value))
+    }
+    break
+  case 'meridian':
+    if (isRange.value) {
+      if (!isEndOfRange && date.value && !(date.value instanceof Date) && date.value.start instanceof Date) {
+        const currentHour = getHours(date.value.start)
         const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
-        date.value = setHours(date.value, hours)
+        date.value.start = setHours(date.value.start, hours)
+      } else if (isEndOfRange && date.value && !(date.value instanceof Date) && date.value.end instanceof Date) {
+        const currentHour = getHours(date.value.end)
+        const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+        date.value.end = setHours(date.value.end, hours)
       }
-      break
-    default:
-      break
+    } else if (date.value instanceof Date) {
+      const currentHour = getHours(date.value)
+      const hours = value === 'am' && currentHour >= 12 ? currentHour - 12 : value === 'pm' && currentHour < 12 ? currentHour + 12 : currentHour
+      date.value = setHours(date.value, hours)
+    }
+    break
+  default:
+    break
   }
 
   if (isRange.value && date.value && !(date.value instanceof Date) && date.value.start instanceof Date && date.value.end instanceof Date) {

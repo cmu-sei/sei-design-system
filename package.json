@@ -5,7 +5,7 @@
     "dev": "npx vite",
     "build": "npx vite build && vue-tsc --noEmit",
     "serve": "npx vite preview",
-    "lint": "NODE_OPTIONS='--trace-warnings' npx eslint .",
+    "lint": "NODE_OPTIONS='--trace-warnings' npx eslint . --fix",
     "test": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vitest run -c vite-library.config.js",
     "test:watch": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vitest -c vite-library.config.js",
     "test:clean": "npx vitest run -u",
