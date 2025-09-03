@@ -8,16 +8,15 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
 ---
 
 ## General Component Structure
- - Always use the `<script setup>` syntax inside the .vue file for concise code and better developer experience.
+ - Always use the `<script setup lang="ts">` syntax inside the .vue file for concise code and better developer experience.
  - Use `<template>`, `<script setup lang="ts">`, and `<style scoped>` sections.
- - Include a name attribute for component identification (use PascalCase).
  - Use Composition API with reactive `ref`, `reactive`, and `computed` as appropriate.
  - Use `defineOptions` to specify component-level options, such as the `name` property. This helps with debugging, global registration, and tooling support. The `name` should follow the convention: **SdsMyComponent** (PascalCase, prefixed with "Sds").
  - Define props with proper validation and types using `defineProps`. Always type props using TypeScript for improved type safety and developer experience.
  - Define emits using `defineEmits` and document the emitted events.
  - Use slots with clear naming and default slots where applicable.
  - Style with `<style scoped>` or module for isolated component styling.
- - Add suitable accessibility attributes (e.g., aria-*) when relevant.
+ - Add suitable accessibility attributes (e.g., `aria-*`) when relevant.
  - All Vue objects are imported dynamically and/or globally; explicit imports are not needed.
 
 ## Component and File Naming Conventions
@@ -27,7 +26,7 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
 
 ## Directory Structure Guidelines
 - Place components in the `src/components/**/*.vue` directory.
-- Store helpers, or utilities, in `src/helpers/` and Vue composables in a dedicated `src/composables/` directory.
+- Store helpers, or utilities, in `src/helpers/*.ts` and Vue composables in a dedicated `src/composables/*.ts` directory.
 - Place styles, if applicable, for components within the same `.vue` file using `<style scoped>`, or in a dedicated style file if shared.
 
 ## Props and Emits
@@ -88,9 +87,9 @@ const textInput = computed({
 - Use `v-if`/`v-show` and `v-for` thoughtfully, always with key attributes in lists.
 - Add accessibility (a11y) considerations inside templates, such as `role`, `aria-label`.
 - Use slots for extra flexibility and user customization.
-- Add a `data-id` attribute with the component name to the template for easier testing and identification.
+- Add a `data-id` attribute with the component name to the template for easier testing and identification (e.g., `data-id="sds-my-component"`).
 
-## Documentation Comments
+## Documentation
 - Use JSDoc-style comments for props, emits, functions, and composables to improve code readability and maintainability.
 - Document each prop and event with a comment describing its purpose, type, and default value (if any).
 - Document each slot with a comment describing its purpose and content.
