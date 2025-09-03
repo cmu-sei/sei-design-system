@@ -15,7 +15,7 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
  - Define props with proper validation and types using `defineProps`. Always type props using TypeScript for improved type safety and developer experience.
  - Define emits using `defineEmits` and document the emitted events.
  - Use slots with clear naming and default slots where applicable.
- - Style with `<style scoped>` or module for isolated component styling.
+- Prefer styling components using Tailwind CSS utility classes within the `<template>`. If dedicated styles are needed, add them to a file in the Tailwind CSS directory located in the parent directory. Use `<style scoped>` inside the `.vue` file only for styles that cannot be achieved with Tailwind as a fallback or last resort.
  - Add suitable accessibility attributes (e.g., `aria-*`) when relevant.
  - All Vue objects are imported dynamically and/or globally; explicit imports are not needed.
 
@@ -27,7 +27,6 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
 ## Directory Structure Guidelines
 - Place components in the `src/components/**/*.vue` directory.
 - Store helpers, or utilities, in `src/helpers/*.ts` and Vue composables in a dedicated `src/composables/*.ts` directory.
-- Place styles, if applicable, for components within the same `.vue` file using `<style scoped>`, or in a dedicated style file if shared.
 
 ## Props and Emits
 - Use `defineProps<{ propName: type }>()` syntax with TypeScript typings for props.
