@@ -111,7 +111,9 @@
                       form-control-sm
                       max-w-[2.125rem]
                       min-w-[2.125rem]
+                      [-moz-appearance:textfield]
                       [&::-webkit-inner-spin-button]:appearance-none
+                      [&::-webkit-outer-spin-button]:appearance-none
                     "
                     :class="{
                       'invalid animate-shake': isPageNumberInvalid
