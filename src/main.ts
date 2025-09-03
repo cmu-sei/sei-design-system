@@ -12,6 +12,7 @@ const head = createHead()
 
 // SEI Design System
 import '../open-sans/index.css'
+import '../source-serif/index.css'
 import '../tailwindcss/tailwind.css'
 import SdsComponents from './components'
 

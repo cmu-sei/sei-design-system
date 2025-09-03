@@ -1,5 +1,5 @@
 <template>
-  <div class="prose dark:prose-invert prose-blue prose-code:before:content-none prose-code:after:content-none prose-sm sm:prose-base mx-auto">
+  <div class="prose prose-blue max-w-4xl mx-auto">
     <h1>Hello world this is a really long header that should wrap at some point but I don't know when</h1>
     <h1><a href="#">Hello world</a></h1>
     <h2>Hello world this is a really long header that should wrap at some point but I don't know when</h2>

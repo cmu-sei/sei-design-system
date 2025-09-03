@@ -1,15 +1,16 @@
 @import 'tailwindcss';
 
+/* Variants */
+@import './variants/dark-mode';
+@import './variants/theme';
+
 /* Overall theme */
 @import './theme/animation';
 @import './theme/breakpoints';
 @import './theme/colors';
 @import './theme/fonts';
 @import './theme/radius';
-
-/* Variants */
-@import './variants/dark-mode';
-@import './variants/theme';
+@import './theme/prose';
 
 /* Universal theme components */
 @import './components/universal/action-btn';
@@ -30,10 +31,6 @@
 
 /* Plugins */
 @plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
-
-/* Additional JavaScript-based config */
-@config './tailwind.config.js';
 
 /**
  * The default border color has changed to `currentColor` in Tailwind CSS v4,
