@@ -12,6 +12,7 @@ TypeScript enhances JavaScript development by adding static typing, improved too
 - Use `const` and `let` for variable declarations; avoid `var` to enhance block scoping and prevent accidental variable redeclarations.
 - Prefer strict equality operators (`===` and `!==`) over loose equality (`==` and `!=`) for type-safe comparisons.
 - Favor template literals over string concatenation for readability, especially when embedding expressions or multiline strings.
+- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../../eslint.config.js) for linting rules and configuration.
 
 ## TypeScript-Specific Guidelines
 - Emphasize strong typing by avoiding the `any` or `unknown` type; always provide explicit types to variables, parameters, and function return values where relevant to leverage TypeScript's static analysis. Look for type definitions in the codebase first to avoid unnecessary type definitions and redundancy.
