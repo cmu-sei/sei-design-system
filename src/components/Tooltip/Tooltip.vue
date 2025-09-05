@@ -139,59 +139,59 @@ const props = defineProps({
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+  case '0':
+    return 'z-0'
+  case '10':
+    return 'z-10'
+  case '20':
+    return 'z-20'
+  case '30':
+    return 'z-30'
+  case '40':
+    return 'z-40'
+  case '50':
+    return 'z-50'
+  case 'auto':
+    return 'z-auto'
+  default:
+    return ''
   }
 })
 
 const variantClass = computed(() => {
   switch (props.type) {
-    case 'light':
-      return 'bg-gray-25 text-gray-900 border-gray-200'
-    case 'dark':
-    default:
-      return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
+  case 'light':
+    return 'bg-gray-25 text-gray-900 border-gray-200'
+  case 'dark':
+  default:
+    return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
   }
 })
 
 const variantArrowClass = computed(() => {
   switch (props.type) {
-    case 'light':
-      return 'bg-gray-25 border-gray-200'
-    case 'dark':
-    default:
-      return 'bg-black border-gray-800'
+  case 'light':
+    return 'bg-gray-25 border-gray-200'
+  case 'dark':
+  default:
+    return 'bg-black border-gray-800'
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'w-32'
-    case 'md':
-      return 'w-48'
-    case 'lg':
-      return 'w-56'
-    case 'xl':
-      return 'w-72'
-    case 'auto':
-      return 'w-auto'
-    default:
-      return 'w-32'
+  case 'sm':
+    return 'w-32'
+  case 'md':
+    return 'w-48'
+  case 'lg':
+    return 'w-56'
+  case 'xl':
+    return 'w-72'
+  case 'auto':
+    return 'w-auto'
+  default:
+    return 'w-32'
   }
 })
 </script>

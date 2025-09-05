@@ -208,7 +208,7 @@ const props = defineProps({
    * Determines the size of the tag.
    */
   size: { type: String as PropType<TagIconSize>, default: 'sm' },
-    /**
+  /**
    * Determines if the tag is disabled.
    */
   disabled: { type: Boolean, default: false }
@@ -268,51 +268,51 @@ const renderLeftSlot = computed(() => !!slots.leftSlot)
 const paddingClass = computed(() => {
   const { action, readonly, size } = props
   switch (size) {
-    case 'sm':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
-    case 'md':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2.5'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
-    default:
-      return ''
+  case 'sm':
+    if(props.counter) {
+      return isAction(action) && !readonly ? '' : 'pr-2'
+    }
+    return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
+  case 'md':
+    if(props.counter) {
+      return isAction(action) && !readonly ? '' : 'pr-2.5'
+    }
+    return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
+  default:
+    return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'h-6'
-    case 'md':
-      return 'h-8'
-    default:
-      return ''
+  case 'sm':
+    return 'h-6'
+  case 'md':
+    return 'h-8'
+  default:
+    return ''
   }
 })
 
 const textSizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'text-xs leading-4'
-    case 'md':
-      return 'text-base leading-6'
-    default:
-      return ''
+  case 'sm':
+    return 'text-xs leading-4'
+  case 'md':
+    return 'text-base leading-6'
+  default:
+    return ''
   }
 })
 
 const buttonSizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'h-[1.375rem] w-6'
-    case 'md':
-      return 'h-[1.875rem] w-8'
-    default:
-      return ''
+  case 'sm':
+    return 'h-[1.375rem] w-6'
+  case 'md':
+    return 'h-[1.875rem] w-8'
+  default:
+    return ''
   }
 })
 

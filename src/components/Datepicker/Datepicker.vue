@@ -297,22 +297,22 @@ const endDateInput = ref()
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+  case '0':
+    return 'z-0'
+  case '10':
+    return 'z-10'
+  case '20':
+    return 'z-20'
+  case '30':
+    return 'z-30'
+  case '40':
+    return 'z-40'
+  case '50':
+    return 'z-50'
+  case 'auto':
+    return 'z-auto'
+  default:
+    return ''
   }
 })
 
@@ -322,40 +322,40 @@ const isRange = computed(() => {
 
 const placeholder = computed(() => {
   switch (props.mode) {
-    case 'date':
-      return 'mm/dd/yyyy'
-    case 'time':
-      return 'hh:mm am/pm'
-    case 'dateTime':
-      return 'mm/dd/yyyy hh:mm am/pm'
-    default:
-      return 'mm/dd/yyyy'
+  case 'date':
+    return 'mm/dd/yyyy'
+  case 'time':
+    return 'hh:mm am/pm'
+  case 'dateTime':
+    return 'mm/dd/yyyy hh:mm am/pm'
+  default:
+    return 'mm/dd/yyyy'
   }
 })
 
 const inputFormat = computed(() => {
   switch (props.mode) {
-    case 'date':
-      return 'MM/dd/yyyy'
-    case 'time':
-      return 'hh:mm aaa'
-    case 'dateTime':
-      return 'MM/dd/yyyy hh:mm aaa'
-    default:
-      return 'MM/dd/yyyy'
+  case 'date':
+    return 'MM/dd/yyyy'
+  case 'time':
+    return 'hh:mm aaa'
+  case 'dateTime':
+    return 'MM/dd/yyyy hh:mm aaa'
+  default:
+    return 'MM/dd/yyyy'
   }
 })
 
 const inputPattern = computed(() => {
   switch (props.mode) {
-    case 'date':
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
-    case 'time':
-      return '[0-9]{2}:[0-9]{2} [am|pm]'
-    case 'dateTime':
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [am|pm]'
-    default:
-      return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
+  case 'date':
+    return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
+  case 'time':
+    return '[0-9]{2}:[0-9]{2} [am|pm]'
+  case 'dateTime':
+    return '[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2} [am|pm]'
+  default:
+    return '[0-9]{2}/[0-9]{2}/[0-9]{4}'
   }
 })
 
