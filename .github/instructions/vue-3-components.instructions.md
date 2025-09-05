@@ -19,6 +19,10 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
  - Add suitable accessibility attributes (e.g., `aria-*`) when relevant.
  - All Vue objects are imported dynamically and/or globally; explicit imports are not needed.
 
+ ## JavaScript with TypeScript Best Practices
+- Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](./typescript.instructions.md) for type safety, code style, and best practices.
+- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../eslint.config.js) for linting rules and configuration.
+
 ## Component and File Naming Conventions
 - Name Vue components using PascalCase (e.g., `MyComponent`).
 - Name `.vue` files using PascalCase to match the component name (e.g., `MyComponent.vue`).

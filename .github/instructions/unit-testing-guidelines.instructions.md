@@ -258,3 +258,7 @@ describe('HelloWorld', () => {
 - Use Vitest's global APIs (`describe`, `it`, `expect`) without imports thanks to `globals:true` config.
 - Mock external dependencies and asynchronous calls to isolate unit tests.
 - Consider snapshot testing for components to ensure UI consistency.
+
+ ## JavaScript with TypeScript Best Practices
+- Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](./typescript.instructions.md) for type safety, code style, and best practices.
+- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../eslint.config.js) for linting rules and configuration.
