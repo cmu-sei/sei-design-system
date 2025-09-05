@@ -282,15 +282,15 @@ const handleDown = (e: MouseEvent | TouchEvent, direction: 'bottom' | 'right') =
    * based on direction.
    */
   switch (direction) {
-    case 'bottom':
-      handleDownBottom(e)
-      break
-    case 'right':
-      handleDownRight(e)
-      break
-    default:
-      handleDownBottom(e)
-      break
+  case 'bottom':
+    handleDownBottom(e)
+    break
+  case 'right':
+    handleDownRight(e)
+    break
+  default:
+    handleDownBottom(e)
+    break
   }
 }
 
@@ -323,8 +323,8 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       }
       // Set the new width of the scroll area
       const newWidth = (xDist + scrollAreaOuter.value.offsetWidth) < 1
-                        ? '0px !important'
-                        : `${(scrollAreaOuter.value.offsetWidth + xDist)}px !important`
+        ? '0px !important'
+        : `${(scrollAreaOuter.value.offsetWidth + xDist)}px !important`
       // If "clamp" property is set, limit the width to the original width
       if (props.clamp) {
         const nextValue = originalWidth.value ? (scrollAreaOuter.value.offsetWidth + xDist) > (props.direction === 'right' ? originalWidth.value : originalWidth.value) ? dynamicWidth.value : newWidth : newWidth
@@ -352,8 +352,8 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       }
       // Set the new height of the scroll area
       const newHeight = (yDist + scrollAreaOuter.value.offsetHeight) < 1
-                        ? '0px !important'
-                        : `${(scrollAreaOuter.value.offsetHeight + yDist)}px !important`
+        ? '0px !important'
+        : `${(scrollAreaOuter.value.offsetHeight + yDist)}px !important`
       // If "clamp" property is set, limit the height to the original height
       if (props.clamp) {
         const nextValue = originalHeight.value ? (scrollAreaOuter.value.offsetHeight + yDist) > originalHeight.value ? dynamicHeight.value : newHeight : newHeight
@@ -384,9 +384,9 @@ const slotOuterHeight = () => {
   if (props.direction === 'bottom') {
     if (dynamicHeight.value) {
       if (dynamicHeight.value > originalHeight.value) {
-          return 'fit-content'
+        return 'fit-content'
       } else {
-          return dynamicHeight.value
+        return dynamicHeight.value
       }
     }
   } else if (props.direction === 'right') {

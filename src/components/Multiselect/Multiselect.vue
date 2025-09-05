@@ -498,10 +498,10 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-    /**
+  /**
    * Determines if the multiselect shows an invalid state
    */
-   invalid: {
+  invalid: {
     type: Boolean,
     default: false
   }
@@ -836,29 +836,29 @@ const handleArrows = (direction: string) => {
   if (!showDropdown.value) return;
   const min = 0;
   switch (direction) {
-    // When going down, select next result until end
-    // then loop back around starting with original query.
-    case "down":
-      if (arrowCounter.value < filteredOptions.value.length - 1) {
-        arrowCounter.value = arrowCounter.value + 1;
-        handleDropdownScroll();
-      } else {
-        if (props.canLoopOptions) arrowCounter.value = min;
-        if (props.canLoopOptions) handleDropdownScroll();
-      }
-      break;
+  // When going down, select next result until end
+  // then loop back around starting with original query.
+  case "down":
+    if (arrowCounter.value < filteredOptions.value.length - 1) {
+      arrowCounter.value = arrowCounter.value + 1;
+      handleDropdownScroll();
+    } else {
+      if (props.canLoopOptions) arrowCounter.value = min;
+      if (props.canLoopOptions) handleDropdownScroll();
+    }
+    break;
     // When going up, select prev result until at original query
     // then loop back around starting at the end of the results.
-    case "up":
-      if (arrowCounter.value > min) {
-        arrowCounter.value = arrowCounter.value - 1;
-        handleDropdownScroll();
-      } else {
-        if (props.canLoopOptions)
-          arrowCounter.value = filteredOptions.value.length - 1;
-        if (props.canLoopOptions) handleDropdownScroll(true);
-      }
-      break;
+  case "up":
+    if (arrowCounter.value > min) {
+      arrowCounter.value = arrowCounter.value - 1;
+      handleDropdownScroll();
+    } else {
+      if (props.canLoopOptions)
+        arrowCounter.value = filteredOptions.value.length - 1;
+      if (props.canLoopOptions) handleDropdownScroll(true);
+    }
+    break;
   }
 }
 

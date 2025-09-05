@@ -37,7 +37,7 @@ const props = defineProps({
     type: String,
     default: "a",
   },
-//  type prop
+  //  type prop
   /**
    * Determines whether to close the parent dropdown when this component is clicked.
    */
@@ -67,29 +67,29 @@ const variantClass = computed(() => {
   if(props.disabled) return 'pointer-events-none text-sm bg-white text-gray-500 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-500 dark:bg-gray-950 dark:text-gray-500'
 
   switch(props.variant) {
-    case 'gray':
-      if(props.active) {
-        return 'text-sm border-l-4 border-solid border-blue-600 bg-gray-25 text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' + 
+  case 'gray':
+    if(props.active) {
+      return 'text-sm border-l-4 border-solid border-blue-600 bg-gray-25 text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' + 
           '[.dropdown-dark_&]:border-blue-300 [.dropdown-dark_&]:bg-gray-900 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' + 
           'dark:border-blue-300 dark:bg-gray-900 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100' 
-      } 
-      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
+    } 
+    return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
         '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' +
         'dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100'
-    case 'red':
-      if(props.active) {
-        return 'text-sm border-l-4 border-solid border-red-600 bg-gray-25 text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' + 
+  case 'red':
+    if(props.active) {
+      return 'text-sm border-l-4 border-solid border-red-600 bg-gray-25 text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' + 
           '[.dropdown-dark_&]:border-red-300 [.dropdown-dark_&]:bg-gray-900 [.dropdown-dark_&]:text-red-300 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-red-300 [.dropdown-dark_&]:active:bg-red-900 [.dropdown-dark_&]:active:text-red-300 ' + 
           'dark:border-red-300 dark:bg-gray-900 dark:text-red-300 dark:hover:bg-gray-850 dark:hover:text-red-300 dark:active:bg-red-900 dark:active:text-red-300'
-      } 
-        return 'text-sm bg-white text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' +
+    } 
+    return 'text-sm bg-white text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 ' +
           '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-red-300 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-red-300 [.dropdown-dark_&]:active:bg-red-900 [.dropdown-dark_&]:active:text-red-300 ' +
           'dark:bg-gray-950 dark:text-red-300 dark:hover:bg-gray-850 dark:hover:text-red-300 dark:active:bg-red-900 dark:active:text-red-300'
-    default:
-      // Default is the same as the regular gray variant
-      return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
+  default:
+    // Default is the same as the regular gray variant
+    return 'text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 ' +
         '[.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 ' +
         'dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100'
-    }
+  }
 })
 </script>

@@ -75,55 +75,55 @@ const props = defineProps({
 
 const positionClass = computed(() => {
   switch(props.position) {
-    case 'bottom':
-      return 'bg-bottom'
-    case 'left':
-      return 'bg-left'
-    case 'right':
-      return 'bg-right'
-    case 'top':
-      return 'bg-top'
-    case 'center':
-    default:
-      return 'bg-center'
+  case 'bottom':
+    return 'bg-bottom'
+  case 'left':
+    return 'bg-left'
+  case 'right':
+    return 'bg-right'
+  case 'top':
+    return 'bg-top'
+  case 'center':
+  default:
+    return 'bg-center'
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case '2xl':
-      return 'w-44'
-    case 'xl':
-      return 'w-[88px]'
-    case 'md':
-      return 'w-12'
-    case 'sm':
-      return 'w-8'
-    case 'xs':
-      return 'w-6'
-    case 'auto':
-      return 'w-full'
-    case 'lg':
-    default:
-      return 'w-16'
+  case '2xl':
+    return 'w-44'
+  case 'xl':
+    return 'w-[88px]'
+  case 'md':
+    return 'w-12'
+  case 'sm':
+    return 'w-8'
+  case 'xs':
+    return 'w-6'
+  case 'auto':
+    return 'w-full'
+  case 'lg':
+  default:
+    return 'w-16'
   }
 })
 
 const textClass = computed(() => {
   switch (props.size) {
-    case '2xl':
-      return 'text-6xl font-light'
-    case 'xl':
-      return 'text-3xl font-regular'
-    case 'md':
-      return 'text-xl font-regular'
-    case 'sm':
-      return 'text-sm font-semibold'
-    case 'xs':
-      return 'text-xs font-semibold'
-    default:
-    case 'lg':
-      return 'text-2xl font-regular'
+  case '2xl':
+    return 'text-6xl font-light'
+  case 'xl':
+    return 'text-3xl font-regular'
+  case 'md':
+    return 'text-xl font-regular'
+  case 'sm':
+    return 'text-sm font-semibold'
+  case 'xs':
+    return 'text-xs font-semibold'
+  default:
+  case 'lg':
+    return 'text-2xl font-regular'
   }
 })
 

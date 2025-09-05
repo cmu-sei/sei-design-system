@@ -211,37 +211,37 @@ const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericF
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+  case '0':
+    return 'z-0'
+  case '10':
+    return 'z-10'
+  case '20':
+    return 'z-20'
+  case '30':
+    return 'z-30'
+  case '40':
+    return 'z-40'
+  case '50':
+    return 'z-50'
+  case 'auto':
+    return 'z-auto'
+  default:
+    return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'lg':
-      return 'action-btn-lg'
-    case 'md':
-      return 'action-btn-md'
-    case 'sm':
-      return 'action-btn-sm'
-    case 'xs':
-      return 'action-btn-xs'
-    default:
-      return ''
+  case 'lg':
+    return 'action-btn-lg'
+  case 'md':
+    return 'action-btn-md'
+  case 'sm':
+    return 'action-btn-sm'
+  case 'xs':
+    return 'action-btn-xs'
+  default:
+    return ''
   }
 })
 
@@ -251,29 +251,29 @@ const btnClass = computed(() => {
 
 const kindClass = computed(() => {
   switch (props.kind) {
-    case 'primary':
-      return 'action-btn-primary'
-    case 'secondary':
-      return 'action-btn-secondary'
-    case 'ghost':
-      return 'action-btn-ghost'
-    default:
-      return ''
+  case 'primary':
+    return 'action-btn-primary'
+  case 'secondary':
+    return 'action-btn-secondary'
+  case 'ghost':
+    return 'action-btn-ghost'
+  default:
+    return ''
   }
 })
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'gray':
-      return 'action-btn-gray'
-    case 'red':
-      return 'action-btn-red'
-    case 'blue':
-      return 'action-btn-blue'
-    case 'white':
-        return 'action-btn-white'
-    default:
-      return ''
+  case 'gray':
+    return 'action-btn-gray'
+  case 'red':
+    return 'action-btn-red'
+  case 'blue':
+    return 'action-btn-blue'
+  case 'white':
+    return 'action-btn-white'
+  default:
+    return ''
   }
 })
 

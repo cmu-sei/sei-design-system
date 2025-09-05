@@ -299,7 +299,7 @@ const props = defineProps({
   /**
    * Determines the maximum allowed size for all uploaded files in megabytes.
    */
-   maxFilesSize: { type: Number, default: undefined },
+  maxFilesSize: { type: Number, default: undefined },
   /**
    * Determines the helper text used to describe the upload field.
    */
@@ -528,18 +528,18 @@ const byteToSize = (bytes: number): string => {
 
 const isFileType = (fileType: string): FileTypes | 'generic' => {
   switch (fileType) {
-    case 'application/msword':
-    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-    case 'text/plain':
-      return 'doc'
-    case 'application/pdf':
-      return 'pdf'
-    case 'text/csv':
-    case 'application/vnd.ms-excel':
-    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-      return 'csv'
-    default:
-      return 'generic'
+  case 'application/msword':
+  case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+  case 'text/plain':
+    return 'doc'
+  case 'application/pdf':
+    return 'pdf'
+  case 'text/csv':
+  case 'application/vnd.ms-excel':
+  case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+    return 'csv'
+  default:
+    return 'generic'
   }
 }
 
