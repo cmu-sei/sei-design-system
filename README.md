@@ -13,6 +13,9 @@ This project uses Copilot instructions files to guide code generation and modifi
 - **Vue 3 Components Guidelines:**  
   See `.github/instructions/vue-3-components.instructions.md` for standards on developing and maintaining Vue 3 components in `src/components/**/*.vue`.
 
+- **TypeScript Guidelines:**
+  See `.github/instructions/typescript-guidelines.instructions.md` for standards and recommendations on writing and maintaining TypeScript code in `src/components/**/*.{ts,tsx}`.
+
 - **Unit Testing Guidelines:**  
   See `.github/instructions/unit-testing-guidelines.instructions.md` for best practices and requirements for writing and updating unit tests in `src/components/**/*.{spec.js,spec.ts}`.
 
