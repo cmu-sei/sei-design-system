@@ -1,5 +1,5 @@
 ---
-applyTo: "src/components/**/*.{.spec.js,.spec.ts}"
+applyTo: "src/components/**/*.{spec.js,spec.ts}"
 ---
 
 # Context & Purpose:
