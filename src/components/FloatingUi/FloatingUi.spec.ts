@@ -24,6 +24,11 @@ describe('FloatingUi', () => {
   enableAutoUnmount(afterEach)
 
   beforeEach(() => {
+    /**
+     * Mocking `document.body.clientWidth` ensures consistent layout calculations for FloatingUi tests.
+     * This prevents flaky results due to varying viewport sizes, especially when verifying arrow positioning for placements like "right".
+     */
+    vi.spyOn(document.body, 'clientWidth', 'get').mockReturnValue(1440)
     vi.useFakeTimers()
   })
 
@@ -277,7 +282,7 @@ describe('FloatingUi', () => {
   })
 
   it('applies `placementTopArrowClass` props for top placement values', async () => {
-    const { value, arrowClass, prop} = {
+    const { value, arrowClass, prop } = {
       value: 'top',
       arrowClass: 'top-arrow',
       prop: 'placementTopArrowClass'
@@ -303,7 +308,7 @@ describe('FloatingUi', () => {
   })
 
   it('applies `placementBottomArrowClass` props for bottom placement values', async () => {
-    const { value, arrowClass, prop} = {
+    const { value, arrowClass, prop } = {
       value: 'bottom',
       arrowClass: 'bottom-arrow',
       prop: 'placementBottomArrowClass'
@@ -329,7 +334,7 @@ describe('FloatingUi', () => {
   })
 
   it('applies `placementLeftArrowClass` props for left placement values', async () => {
-    const { value, arrowClass, prop} = {
+    const { value, arrowClass, prop } = {
       value: 'left',
       arrowClass: 'left-arrow',
       prop: 'placementLeftArrowClass'
@@ -355,12 +360,11 @@ describe('FloatingUi', () => {
   })
 
   it('applies `placementRightArrowClass` props for right placement values', async () => {
-    const { value, arrowClass, prop} = {
+    const { value, arrowClass, prop } = {
       value: 'right',
       arrowClass: 'right-arrow',
       prop: 'placementRightArrowClass'
     }
-    document.body.innerHTML = ''
     const wrapper = mount(Component, {
       attachTo: document.body,
       props: {
