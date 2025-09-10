@@ -143,17 +143,17 @@ const openStateTimeout = ref<null | ReturnType<typeof setTimeout>>(null)
 const shouldOpen = ref(false)
 
 const arrowPlacementClass = computed(() => {
-  if (!currentPlacement.value) return ''
   if (currentPlacement.value.includes('top')) {
     return props.placementTopArrowClass
   } else if (currentPlacement.value.includes('right')) {
     return props.placementRightArrowClass
-  } if (currentPlacement.value.includes('bottom')) {
+  } else if (currentPlacement.value.includes('bottom')) {
     return props.placementBottomArrowClass
-  } if (currentPlacement.value.includes('left')) {
+  } else if (currentPlacement.value.includes('left')) {
     return props.placementLeftArrowClass
+  } else {
+    return ''
   }
-  return ''
 })
 
 /**
