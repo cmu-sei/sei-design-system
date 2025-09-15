@@ -22,6 +22,7 @@
     "storybook-static",
     "tailwindcss",
     "open-sans",
+    "source-serif",
     "dist",
     "src",
     "volar.d.ts"
@@ -37,6 +38,7 @@
     },
     "./tailwindcss/*": "./tailwindcss/*",
     "./open-sans/*": "./open-sans/*",
+    "./source-serif/*": "./source-serif/*",
     "./dist/*": "./dist/*",
     "./src/*": "./src/*",
     "./volar": "./volar.d.ts"
