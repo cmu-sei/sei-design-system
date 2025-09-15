@@ -32,6 +32,7 @@
             :class="[
               textSizeClass,
               typeClass,
+              (props.type === 'underline' ? 'tab-underline-no-rule' : ''),
               variantClass,
               (!!tab.active ? 'active' : ''),
               (!!tab.disabled ? 'disabled': '')
@@ -42,12 +43,13 @@
             :type="tab.tag === 'button' ? 'button' : undefined"
             :disabled="tab.disabled"
             :aria-disabled="tab.disabled"
-            :tabindex="tab.disabled ? -1 : undefined"
+            :tabindex="tab.disabled || !tab.active ? -1 : 0"
             :aria-selected="tab.active ? 'true' : 'false'"
             :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
             :data-active="tab.active ? true : undefined"
             role="tab"
             @click="changeTab(tab)"
+            @keydown="onTabKeydown($event, tab)"
           >
             <!-- @slot Custom left-icon slot content. -->
             <slot :name="`tabIconLeft(${tab.key})`" />
@@ -57,7 +59,7 @@
             </slot>
             <!-- @slot Custom right-icon slot content. -->
             <slot :name="`tabIconRight(${tab.key})`" />
-            <span 
+            <span
               v-if="typeof tab.count !== 'undefined' && tab.count >= 0"
               class="tab-count"
             >
@@ -119,8 +121,6 @@ export interface TabItem {
   active?: boolean
   disabled?: boolean
 }
-
-const id = useId()
 
 defineOptions({
   name: 'SdsTabs'
@@ -191,6 +191,21 @@ const model = defineModel<TabItem[]>({ type: Array as PropType<TabItem[]>, defau
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
+/**
+ * Defines the set of keyboard keys used for navigating between tabs.
+ * These keys are limited to 'ArrowLeft', 'ArrowRight', 'Home', and 'End'
+ * to ensure accessibility and consistency with common tab navigation patterns.
+ * Documenting these keys clarifies which keyboard interactions are supported
+ * for users and developers, and helps maintain predictable tab behavior.
+ */
+const TAB_KEYBOARD_NAV_KEYS = ['ArrowLeft', 'ArrowRight', 'Home', 'End'] as const
+
+const id = useId()
+
+/**
+ * Reference to the root HTML element of the Tabs component.
+ * Useful for direct DOM manipulation or accessing component-level attributes.
+ */
 const root = ref<HTMLElement>()
 
 const tabs = computed({
@@ -226,47 +241,47 @@ const activeTabCalcPosition = computed(() => {
 
 const tabIndicatorClass = computed(() => {
   switch (props.variant) {
-    case 'blue':
-      return 'tab-indicator-blue'
-    case 'gray':
-      return 'tab-indicator-gray'
-    case 'red':
-    default:
-      return 'tab-indicator-red'
+  case 'blue':
+    return 'tab-indicator-blue'
+  case 'gray':
+    return 'tab-indicator-gray'
+  case 'red':
+  default:
+    return 'tab-indicator-red'
   }
 })
 
 const textSizeClass = computed(() => {
   switch (props.size) {
-    case 'lg':
-      return 'tab-lg'
-    case 'sm':
-    default:
-      return 'tab-sm'
+  case 'lg':
+    return 'tab-lg'
+  case 'sm':
+  default:
+    return 'tab-sm'
   }
 })
 
 const typeClass = computed(() => {
   switch (props.type) {
-    case 'block':
-      return 'tab-block'
-    case 'underline':
-      return 'tab-underline'
-    case 'folder':
-    default:
-      return 'tab-folder'
+  case 'block':
+    return 'tab-block'
+  case 'underline':
+    return 'tab-underline'
+  case 'folder':
+  default:
+    return 'tab-folder'
   }
 })
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'blue':
-      return 'tab-blue'
-    case 'gray':
-      return 'tab-gray'
-    case 'red':
-    default:
-      return 'tab-red'
+  case 'blue':
+    return 'tab-blue'
+  case 'gray':
+    return 'tab-gray'
+  case 'red':
+  default:
+    return 'tab-red'
   }
 })
 
@@ -297,5 +312,63 @@ const changeTab = async (tab: TabItem) => {
      */
     emit('change', tab)
   }
+}
+
+/**
+ * Handles keyboard navigation for tab items.
+ *
+ * Supports navigation using ArrowLeft, ArrowRight, Home, and End keys.
+ * - ArrowLeft: Moves focus to the previous enabled tab (wraps to last if at first).
+ * - ArrowRight: Moves focus to the next enabled tab (wraps to first if at last).
+ * - Home: Moves focus to the first enabled tab.
+ * - End: Moves focus to the last enabled tab.
+ *
+ * Disabled tabs are skipped during navigation.
+ * After changing the tab, focuses the corresponding tab element in the DOM.
+ *
+ * @param {KeyboardEvent} event - The keyboard event triggered by user interaction.
+ * @param {TabItem} tab - The currently focused tab item.
+ * @returns {Promise<void>}
+ *
+ * @remarks
+ * - Assumes `tabs` is a reactive array of tab items.
+ * - Assumes `changeTab` updates the active tab.
+ * - Assumes tab elements have IDs in the format: `sds-tabs-{root.id}__{tab.key}__tab`.
+ * - Uses Vue's `nextTick` to ensure DOM updates before focusing.
+ */
+const onTabKeydown = async (event: KeyboardEvent, tab: TabItem): Promise<void> => {
+  const key = event.key as typeof TAB_KEYBOARD_NAV_KEYS[number]
+  if (!TAB_KEYBOARD_NAV_KEYS.includes(key)) return
+
+  event.preventDefault()
+
+  const enabledTabs = tabs.value.filter((t) => !t.disabled)
+  const currentIndex = enabledTabs.findIndex((t) => t.key === tab.key)
+  if (currentIndex === -1) return
+
+  let nextIndex: number = currentIndex
+  switch (key) {
+  case 'ArrowLeft':
+    nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length
+    break
+  case 'ArrowRight':
+    nextIndex = (currentIndex + 1) % enabledTabs.length
+    break
+  case 'Home':
+    nextIndex = 0
+    break
+  case 'End':
+    nextIndex = enabledTabs.length - 1
+    break
+  }
+
+  const nextTab = enabledTabs[nextIndex]
+  changeTab(nextTab)
+
+  // Focus the next tab element
+  await nextTick(() => {
+    const nextTabElement = document.querySelector(`#sds-tabs-${root.value?.id}__${nextTab.key}__tab`) as HTMLButtonElement | HTMLAnchorElement | null
+    if (nextTabElement) nextTabElement.focus()
+  })
 }
 </script>
