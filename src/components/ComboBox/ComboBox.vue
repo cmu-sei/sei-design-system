@@ -157,8 +157,8 @@
         "
       >
         <SdsTabs
-          ref="tabs"
           v-if="hasCategories"
+          ref="tabs"
           v-model="comboBoxTabs"
           type="underline"
           variant="blue"
@@ -179,10 +179,7 @@
       >
         <!-- Select all option for multiselect -->
         <template
-          v-if="
-            (type === 'taggable-select' || type === 'select') && multiple &&
-            allCount > 1 && countVisibleOptions(suggestionOptions) > 1
-          "
+          v-if="(type === 'taggable-select' || type === 'select') && multiple && allCount > 1 && countVisibleOptions(suggestionOptions) > 1"
         >
           <button
             ref="selectAllRef"
@@ -209,9 +206,9 @@
             :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
             :data-active="arrowCounter === 0 ? 'true' : 'false'"
             tabindex="-1"
+            role="option"
             @click="toggleSelectAll"
             @keydown.enter.prevent="toggleSelectAll"
-            role="option"
           >
             <input
               id="select-all"
@@ -221,8 +218,11 @@
               aria-label="Select all"
               class="mr-2 pointer-events-none"
               tabindex="-1"
-            />
-            <label for="select-all" class="cursor-pointer select-none pointer-events-none">
+            >
+            <label
+              for="select-all"
+              class="cursor-pointer select-none pointer-events-none"
+            >
               <span>Select all</span>
             </label>
           </button>
@@ -267,6 +267,7 @@
                 :is="optionType"
                 v-if="optionType !== 'custom'"
                 ref="dropdownOption"
+                tabindex="-1"
                 :href="optionType === 'a' ? c.href : undefined"
                 class="
                   flex flex-row
@@ -286,7 +287,6 @@
                 }"
                 :data-active="isDropdownItemActive(c)"
                 :type="optionType === 'button' ? 'button' : undefined"
-                tabindex="-1"
                 @click.prevent="handleSuggestionClick(c)"
               >
                 <!-- @slot Option content. Good for customizing the content for each option -->
@@ -294,11 +294,11 @@
                   <input
                     type="checkbox"
                     class="mr-2 my-auto"
-                    :checked="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
-                    @change.stop="handleSuggestionClick(c)"
                     tabindex="-1"
                     aria-label="Select option"
-                  />
+                    :checked="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
+                    @change.stop="handleSuggestionClick(c)"
+                  >
                 </template>
                 <slot
                   name="option"
@@ -380,11 +380,11 @@
                 <input
                   type="checkbox"
                   class="mr-2 my-auto"
+                  aria-label="Select option"
+                  :tabindex="arrowCounter === 0 ? 0 : -1"
                   :checked="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel])"
                   @change.stop="handleSuggestionClick(s)"
-                  :tabindex="arrowCounter === 0 ? 0 : -1"
-                  aria-label="Select option"
-                />
+                >
               </template>
               <slot
                 name="option"
@@ -496,12 +496,16 @@
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="28" height="32"
+                width="28"
+                height="32"
                 class="w-3 h-3 my-auto ml-1 mr-2"
                 viewBox="0 0 448 512"
               >
                 <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
-                <path fill="currentColor" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"/>
+                <path
+                  fill="currentColor"
+                  d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"
+                />
               </svg>
               Add "{{ query }}"
             </slot>
@@ -1236,7 +1240,7 @@ const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
   let option: ComboBoxSuggestion | undefined = undefined;
   const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
   if (!opts) return undefined;
-  let startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0;
+  const startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0;
   let idx = startIdx;
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
@@ -1338,9 +1342,6 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
       label = normalizedOption;
     }
     query.value = label;
-  }
-  if (normalizedOption && typeof normalizedOption === 'object' && normalizedOption.__cbxIdx === 'add') {
-
   }
   // Check for duplicate
   const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {

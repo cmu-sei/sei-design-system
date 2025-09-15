@@ -174,7 +174,7 @@ exports[`ComboBox > should match its snapshot with assigned \`filterSuggestions\
   >
     <!--v-if-->
     <div
-      class="scroll-area max-h-72 py-0 flex flex-col"
+      class="scroll-area max-h-72 py-0 flex flex-col pt-2"
       data-id="sds-scroll-area"
     >
       <!-- @slot Scroll area content. -->
