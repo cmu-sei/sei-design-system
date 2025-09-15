@@ -1,15 +1,17 @@
 <template>
-  <div class="prose dark:prose-invert prose-blue prose-code:before:content-none prose-code:after:content-none prose-sm sm:prose-base mx-auto">
-    <h1>Hello world this is a really long header that should wrap at some point but I don't know when</h1>
-    <h1><a href="#">Hello world</a></h1>
-    <h2>Hello world this is a really long header that should wrap at some point but I don't know when</h2>
-    <h2><a href="#">Hello world</a></h2>
-    <h3>Hello world this is a really long header that should wrap at some point but I don't know when</h3>
-    <h3><a href="#">Hello world</a></h3>
-    <h4>Hello world this is a really long header that should wrap at some point but I don't know when</h4>
-    <h4><a href="#">Hello world</a></h4>
-    <h5>Hello world this is a really long header that should wrap at some point but I don't know when</h5>
-    <h5><a href="#">Hello world</a></h5>
+  <div class="prose prose-blue prose-sm lg:prose-md dark:prose-invert text-fluid-md mx-auto">
+    <h1>H1 Hello world this is a really long header that should wrap at some point but I don't know when</h1>
+    <h1><a href="#">H1 Hello world</a></h1>
+    <h2>H2 Hello world this is a really long header that should wrap at some point but I don't know when</h2>
+    <h2><a href="#">H2 Hello world</a></h2>
+    <h3>H3 Hello world this is a really long header that should wrap at some point but I don't know when</h3>
+    <h3><a href="#">H3 Hello world</a></h3>
+    <h4>H4 Hello world this is a really long header that should wrap at some point but I don't know when</h4>
+    <h4><a href="#">H4 Hello world</a></h4>
+    <h5>H5 Hello world this is a really long header that should wrap at some point but I don't know when</h5>
+    <h5><a href="#">H5 Hello world</a></h5>
+    <h6>H6 Hello world this is a really long header that should wrap at some point but I don't know when</h6>
+    <h6><a href="#">H6 Hello world</a></h6>
     <table>
       <thead>
         <tr>

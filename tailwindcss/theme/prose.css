@@ -1,0 +1,677 @@
+/* Override variants */
+@custom-variant prose-headings (h1, h2, h3, h4, h5, h6);
+@custom-variant prose-lead ([class~="lead"]);
+@custom-variant prose-h1 (h1);
+@custom-variant prose-h2 (h2);
+@custom-variant prose-h3 (h3);
+@custom-variant prose-h4 (h4);
+@custom-variant prose-p (p);
+@custom-variant prose-a (a);
+@custom-variant prose-blockquote (blockquote);
+@custom-variant prose-figure (figure);
+@custom-variant prose-figcaption (figcaption);
+@custom-variant prose-strong (strong);
+@custom-variant prose-em (em);
+@custom-variant prose-kbd (kbd);
+@custom-variant prose-code (code);
+@custom-variant prose-pre (pre);
+@custom-variant prose-ol (ol);
+@custom-variant prose-ul (ul);
+@custom-variant prose-li (li);
+@custom-variant prose-table (table);
+@custom-variant prose-thead (thead);
+@custom-variant prose-tr (tr);
+@custom-variant prose-th (th);
+@custom-variant prose-td (td);
+@custom-variant prose-img (img);
+@custom-variant prose-svg (svg);
+@custom-variant prose-video (video);
+@custom-variant prose-hr (hr);
+
+@utility prose {
+  &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    max-width: 95ch;
+    text-wrap: pretty;
+    color: var(--color-black);
+    font-size: var(--text-base);
+
+    & :where(h1),
+    & :where(h2),
+    & :where(h3),
+    & :where(h4),
+    & :where(h5),
+    & :where(h6) {
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
+      &:where(:not(:first-child)) {
+        margin-top: --spacing(6);
+      }
+    }
+
+    & :where(h1) {
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-source);
+      }
+      font-size: var(--text-6xl);
+      line-height: 60px;
+      font-weight: bold;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(8);
+      }
+    }
+
+    & :where(h2) {
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-source);
+      }
+      font-size: var(--text-3xl);
+      line-height: 36px;
+      font-weight: bold;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(6);
+      }
+    }
+
+    & :where(h3) {
+      font-size: var(--text-2xl);
+      line-height: 32px;
+      font-weight: bold;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(5);
+      }
+    }
+
+    & :where(h4) {
+      font-size: var(--text-xl);
+      line-height: 28px;
+      font-weight: var(--font-weight-semibold);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(4);
+      }
+    }
+
+    & :where(h5) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+      :where(.sds-theme-forge &) {
+        text-transform: uppercase;
+      }
+      :where(.sds-theme-plaid &) {
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
+    & :where(h6) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+    }
+
+    & :where(h1 + h2),
+    & :where(h2 + h3),
+    & :where(h3 + h4),
+    & :where(h5 + h6) {
+      margin-top: 0;
+    }
+
+    & :where(img),
+    & :where(svg) {
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
+    }
+
+    & :where([class~="lead"]) {
+      font-size: var(--text-2xl);
+      line-height: 32px;
+      font-weight: var(--font-weight-semibold);
+      margin-block: --spacing(5);
+    }
+
+    & :where(blockquote) {
+      border-left: 4px solid var(--color-gray-200);
+      margin-inline: --spacing(4);
+      padding-left: --spacing(4);
+      padding-block: --spacing(2);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      font-style: italic;
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
+    }
+
+    & :where(p:where(:not(:last-child))) {
+      margin-bottom: --spacing(2);
+    }
+
+    & :where(code) {
+      font-family: var(--font-mono);
+      font-weight: bold;
+    }
+
+    & :where(pre) {
+      font-size: var(--text-base);
+      overflow: auto;
+      padding: --spacing(4);
+      background-color: var(--color-gray-50);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-md);
+      :where(.sds-theme-plaid &) {
+        border-radius: var(--radius-none);
+      }
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
+      & :where(code) {
+        font-weight: initial;
+      }
+    }
+
+    & :where(ol) {
+      list-style-type: decimal;
+      padding-left: --spacing(4);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(2);
+      }
+    }
+
+    & :where(ul) {
+      list-style-type: disc;
+      padding-left: --spacing(4);
+      :where(.sds-theme-plaid &) {
+        list-style-type: square;
+      }
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(2);
+      }
+    }
+
+    & :where(ul li) {
+      &::marker {
+        color: var(--color-gray-600);
+        font-size: var(--text-sm);
+      }
+    }
+
+    & :where(li) {
+      padding-left: --spacing(0);
+      margin-left: --spacing(4);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(2);
+      }
+      & :where(p) {
+        &:where(:not(:last-child)) {
+          margin-bottom: --spacing(2);
+        }
+      }
+    }
+
+    & :where(figure) {
+      :where(& *) {
+        &:where(:not(:last-child)) {
+          margin-bottom: --spacing(1);
+        }
+      }
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
+    }
+
+    & :where(figcaption) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+      font-style: italic;
+      color: var(--color-gray-600);
+    }
+
+    & :where(hr) {
+      border-color: var(--color-gray-200);
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(6);
+      }
+    }
+
+    & :where(table) {
+      width: 100%;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(4);
+      }
+    }
+
+    & :where(thead) {
+      &:where(:not(:last-child)) {
+        border-bottom: 1px solid var(--color-gray-300);
+      }
+    }
+
+    & :where(tbody tr) {
+      &:where(:not(:last-child)) {
+        border-bottom: 1px solid var(--color-gray-200);
+      }
+    }
+
+    & :where(th, td) {
+      padding: --spacing(3);
+      text-align: left;
+    }
+
+    & :where(a) {
+      text-decoration: underline;
+    }
+
+    :where(&.prose-blue) {
+      & :where(a) {
+        color: var(--color-blue-600);
+        &:where(:hover) {
+          color: var(--color-blue-500);
+        }
+      }
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-blue-600);
+        }
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-blue-600);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-green) {
+      & :where(a) {
+        color: var(--color-green-600);
+        &:where(:hover) {
+          color: var(--color-green-500);
+        }
+      }
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-green-600);
+        }
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-green-600);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-teal) {
+      & :where(a) {
+        color: var(--color-teal-600);
+        &:where(:hover) {
+          color: var(--color-teal-500);
+        }
+      }
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-teal-600);
+        }
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-teal-600);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-orange) {
+      & :where(a) {
+        color: var(--color-orange-600);
+        &:where(:hover) {
+          color: var(--color-orange-500);
+        }
+      }
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-orange-600);
+        }
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-orange-600);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-red) {
+      & :where(a) {
+        color: var(--color-red-600);
+        &:where(:hover) {
+          color: var(--color-red-500);
+        }
+      }
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-red-600);
+        }
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-red-600);
+          }
+        }
+      }
+    }
+  }
+}
+
+@utility prose-sm {
+  &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    max-width: 75ch;
+    font-size: var(--text-sm);
+
+    & :where(h1),
+    & :where(h2),
+    & :where(h3),
+    & :where(h4),
+    & :where(h5),
+    & :where(h6) {
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
+
+      &:where(:not(:first-child)) {
+        margin-top: --spacing(6);
+      }
+    }
+
+    & :where(h1) {
+      font-size: var(--text-4xl);
+      line-height: 40px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(8);
+      }
+    }
+
+    & :where(h2) {
+      font-size: var(--text-2xl);
+      line-height: 28px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(6);
+      }
+    }
+
+    & :where(h3) {
+      font-size: var(--text-xl);
+      line-height: 26px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(5);
+      }
+    }
+
+    & :where(h4) {
+      font-size: var(--text-lg);
+      line-height: 20px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(4);
+      }
+    }
+
+    & :where(h5) {
+      font-size: var(--text-xs);
+      line-height: 20px;
+    }
+
+    & :where(h6) {
+      font-size: var(--text-xs);
+      line-height: 20px;
+    }
+
+    & :where([class~="lead"]) {
+      font-size: var(--text-xl);
+      line-height: 32px;
+      margin-block: --spacing(5);
+    }
+
+    & :where(blockquote) {
+      font-size: var(--text-xl);
+      line-height: 32px;
+    }
+
+    & :where(pre) {
+      font-size: var(--text-xs);
+    }
+
+    & :where(figcaption) {
+      font-size: var(--text-xs);
+      line-height: 20px;
+    }
+  }
+}
+
+@utility prose-md {
+  &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    max-width: 95ch;
+    font-size: var(--text-base);
+
+    & :where(h1),
+    & :where(h2),
+    & :where(h3),
+    & :where(h4),
+    & :where(h5),
+    & :where(h6) {
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
+
+      &:where(:not(:first-child)) {
+        margin-top: --spacing(6);
+      }
+    }
+
+    & :where(h1) {
+      font-size: var(--text-6xl);
+      line-height: 60px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(8);
+      }
+    }
+
+    & :where(h2) {
+      font-size: var(--text-3xl);
+      line-height: 36px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(6);
+      }
+    }
+
+    & :where(h3) {
+      font-size: var(--text-2xl);
+      line-height: 32px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(5);
+      }
+    }
+
+    & :where(h4) {
+      font-size: var(--text-xl);
+      line-height: 26px;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(4);
+      }
+    }
+
+    & :where(h5) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+    }
+
+    & :where(h6) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+    }
+
+    & :where([class~="lead"]) {
+      font-size: var(--text-2xl);
+      line-height: 32px;
+      margin-block: --spacing(5);
+    }
+
+    & :where(blockquote) {
+      font-size: var(--text-2xl);
+      line-height: 32px;
+    }
+
+    & :where(pre) {
+      font-size: var(--text-base);
+    }
+
+    & :where(figcaption) {
+      font-size: var(--text-sm);
+      line-height: 20px;
+    }
+  }
+}
+
+@utility prose-invert {
+  &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    color: var(--color-white);
+
+    & :where(blockquote) {
+      border-left-color: var(--color-gray-700);
+    }
+
+    & :where(pre) {
+      background-color: var(--color-gray-900);
+      border-color: var(--color-gray-800);
+    }
+
+    & :where(figcaption) {
+      color: var(--color-gray-400);
+    }
+
+    :where(hr) {
+      border-color: var(--color-gray-800);
+    }
+
+    & :where(thead) {
+      &:where(:not(:last-child)) {
+        border-bottom-color: var(--color-gray-700);
+      }
+    }
+
+    & :where(tbody tr) {
+      &:where(:not(:last-child)) {
+        border-bottom-color: var(--color-gray-800);
+      }
+    }
+
+    & :where(ul li) {
+      &::marker {
+        color: var(--color-gray-400);
+      }
+    }
+
+    :where(&.prose-blue) {
+      & :where(a) {
+        color: var(--color-blue-400);
+
+        &:where(:hover) {
+          color: var(--color-blue-300);
+        }
+      }
+
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-blue-400);
+        }
+
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-blue-400);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-green) {
+      & :where(a) {
+        color: var(--color-green-400);
+
+        &:where(:hover) {
+          color: var(--color-green-300);
+        }
+      }
+
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-green-400);
+        }
+
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-green-400);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-teal) {
+      & :where(a) {
+        color: var(--color-teal-400);
+
+        &:where(:hover) {
+          color: var(--color-teal-300);
+        }
+      }
+
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-teal-400);
+        }
+
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-teal-400);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-orange) {
+      & :where(a) {
+        color: var(--color-orange-400);
+
+        &:where(:hover) {
+          color: var(--color-orange-300);
+        }
+      }
+
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-orange-400);
+        }
+
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-orange-400);
+          }
+        }
+      }
+    }
+
+    :where(&.prose-red) {
+      & :where(a) {
+        color: var(--color-red-400);
+
+        &:where(:hover) {
+          color: var(--color-red-300);
+        }
+      }
+
+      :where(.sds-theme-plaid &) {
+        & :where(blockquote) {
+          border-left-color: var(--color-red-400);
+        }
+
+        & :where(ul li) {
+          &::marker {
+            color: var(--color-red-400);
+          }
+        }
+      }
+    }
+  }
+}
