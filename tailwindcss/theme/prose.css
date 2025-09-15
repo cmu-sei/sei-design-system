@@ -267,6 +267,15 @@
           color: var(--color-blue-500);
         }
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-blue-500);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-blue-600);
@@ -286,6 +295,15 @@
           color: var(--color-green-500);
         }
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-green-500);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-green-600);
@@ -305,6 +323,15 @@
           color: var(--color-teal-500);
         }
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-teal-500);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-teal-600);
@@ -324,6 +351,15 @@
           color: var(--color-orange-500);
         }
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-orange-500);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-orange-600);
@@ -343,6 +379,15 @@
           color: var(--color-red-500);
         }
       }
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-red-500);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-red-600);
@@ -572,7 +617,15 @@
           color: var(--color-blue-300);
         }
       }
-
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-blue-300);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-blue-400);
@@ -594,7 +647,15 @@
           color: var(--color-green-300);
         }
       }
-
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-green-300);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-green-400);
@@ -616,7 +677,15 @@
           color: var(--color-teal-300);
         }
       }
-
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-teal-300);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-teal-400);
@@ -638,7 +707,15 @@
           color: var(--color-orange-300);
         }
       }
-
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-orange-300);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-orange-400);
@@ -660,7 +737,15 @@
           color: var(--color-red-300);
         }
       }
-
+      & :where(h1, h2, h3, h4, h5, h6) {
+        & :where(a) {
+          color: inherit;
+          text-decoration: none !important;
+          &:where(:hover) {
+            color: var(--color-red-300);
+          }
+        }
+      },
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-red-400);
