@@ -4,6 +4,7 @@
     data-id="sds-combo-box"
     class="relative"
   >
+    {{ activeGroupKey }}
     <div
       class="input-group flex flex-col"
       :class="{
@@ -174,7 +175,7 @@
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
-          'pt-2': allCount > 1 && countVisibleOptions(suggestionOptions) > 1,
+          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 1,
         }"
       >
         <!-- Select all option for multiselect -->
@@ -1567,7 +1568,7 @@ const hasDropdownSuggestion = computed(() => {
   return visibleCount > 0;
 })
 
-const handleArrows = (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
+const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
   const activeTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
   if (direction === 'tabsUp' || direction === 'tabsDown') {
     if (direction === 'tabsUp') {
@@ -1648,9 +1649,35 @@ const handleArrows = (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | '
       }
       break
     }
+    // Allow left/right arrow navigation only if categories are shown and input is not focused
     case 'left':
+      if (arrowCounter.value > -1) {
+        console.log(comboBoxTabs.value, activeGroupKey.value)
+        if (activeGroupKey.value === -1) {
+          activeGroupKey.value = comboBoxTabs.value ? comboBoxTabs.value.length - 2 : -1
+        } else {
+          activeGroupKey.value--
+        }
+        await nextTick()
+        const newActiveTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+        newActiveTab?.focus()
+        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        arrowCounter.value = -1
+      }
       break
     case 'right':
+      if (arrowCounter.value > -1) {
+        if (activeGroupKey.value === comboBoxTabs.value.length - 2) {
+          activeGroupKey.value = -1
+        } else {
+          activeGroupKey.value++
+        }
+        await nextTick()
+        const newActiveTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+        newActiveTab?.focus()
+        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        arrowCounter.value = -1
+      }
       break
   }
 }
