@@ -51,7 +51,7 @@
 
     & :where(h1) {
       &:where(.sds-theme-plaid &) {
-        font-family: var(--font-source);
+        font-family: var(--font-serif);
       }
       font-size: var(--text-6xl);
       line-height: 60px;
@@ -63,7 +63,7 @@
 
     & :where(h2) {
       &:where(.sds-theme-plaid &) {
-        font-family: var(--font-source);
+        font-family: var(--font-serif);
       }
       font-size: var(--text-3xl);
       line-height: 36px;
