@@ -4,7 +4,6 @@
     data-id="sds-combo-box"
     class="relative"
   >
-    {{ activeGroupKey }}
     <div
       class="input-group flex flex-col"
       :class="{
