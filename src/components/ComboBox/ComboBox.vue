@@ -146,7 +146,10 @@
     <div
       v-if="shouldShowDropdown"
       data-id="sds-combo-box-dropdown"
-      class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+      class="
+        absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg
+        dark:border-gray-700 dark:bg-gray-850
+      "
     >
       <div
         v-if="groups?.length && !disableGroupTabs && !isFlatArray"
@@ -163,6 +166,17 @@
           v-model="comboBoxTabs"
           type="underline"
           variant="blue"
+          class="
+            [&>div:first-of-type]:flex [&>div:first-of-type]:flex-row
+            [&>div:first-of-type:before]:block
+            [&>div:first-of-type:before]:content-['']
+            [&>div:first-of-type:before]:w-4
+            [&>div:first-of-type:before]:h-12
+            [&>div:first-of-type:after]:block
+            [&>div:first-of-type:after]:content-['']
+            [&>div:first-of-type:after]:w-4
+            [&>div:first-of-type:after]:h-12
+          "
           @click.prevent.self="handleEnterKeyUp"
           @keydown.enter.prevent.self
           @keyup.enter.prevent.self="handleEnterKeyUp"
