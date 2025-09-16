@@ -85,7 +85,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-within:bg-blue-50"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
@@ -106,7 +106,7 @@
           <button 
             ref="button" 
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-within:bg-blue-50"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
