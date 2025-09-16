@@ -225,7 +225,7 @@ describe('ComboBox', () => {
     const wrapper = mount(Component, {
       props: { suggestions: objectSuggestions, optionType: 'custom', optionLabel: 'label' },
       slots: {
-        customOption: (props: { option: any }) => h('div', { class: 'custom-option' }, `Custom: ${props.option.label}`)
+        customOption: (props: { option: ComboBoxSuggestion }) => h('div', { class: 'custom-option' }, `Custom: ${props.option.label}`)
       }
     })
     expect(wrapper.html()).toMatchSnapshot()
@@ -255,7 +255,7 @@ describe('ComboBox', () => {
   })
 
   it('should select highlighted option on Enter', async () => {
-    let selected = []
+    const selected = []
     const wrapper = mount(Component, {
       props: {
         suggestions,
@@ -339,7 +339,7 @@ describe('ComboBox', () => {
   })
 
   it('clears input and selections when clicking clear button', async () => {
-    let selected = ['Apple', 'Banana']
+    const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {
       props: {
         suggestions,
@@ -390,7 +390,7 @@ describe('ComboBox', () => {
 
   // --- MULTISELECT & TAGGABLE-SELECT TESTS ---
   it('should allow selecting multiple options in multiselect mode (click)', async () => {
-    let selected = []
+    const selected = []
     const wrapper = mount(Component, {
       props: {
         suggestions,
@@ -530,7 +530,7 @@ describe('ComboBox', () => {
   })
 
   it('removes a tag when clicking its remove button', async () => {
-    let selected = ['Apple', 'Banana']
+    const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {
       props: {
         suggestions,
@@ -556,7 +556,7 @@ describe('ComboBox', () => {
   })
 
   it('selects all options when clicking "Select all", and deselects all when clicked again', async () => {
-    let selected: ComboBoxSuggestion[] = []
+    const selected: ComboBoxSuggestion[] = []
     const wrapper = mount(Component, {
       props: {
         suggestions,
@@ -589,7 +589,7 @@ describe('ComboBox', () => {
   })
 
   it('adds a suggestion to selected when clicked, and commits selection on Enter', async () => {
-    let selected: ComboBoxSuggestion[] = []
+    const selected: ComboBoxSuggestion[] = []
     const wrapper = mount(Component, {
       props: {
         suggestions,
