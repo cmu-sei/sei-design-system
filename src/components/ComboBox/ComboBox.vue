@@ -1658,9 +1658,9 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
         newActiveTab?.focus()
-        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
       }
       break
@@ -1672,7 +1672,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value++
         }
         await nextTick()
-        const newActiveTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
         arrowCounter.value = -1

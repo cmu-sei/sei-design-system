@@ -702,6 +702,14 @@ const comboBox4 = reactive({
       ]
     },
     {
+      section: 'Bread',
+      items: [
+        { name: 'White' },
+        { name: 'Wheat' },
+        { name: 'Rye' }
+      ]
+    },
+    {
       section: 'Insects',
       items: [
         { name: 'Ant' },

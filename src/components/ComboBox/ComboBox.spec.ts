@@ -17,12 +17,116 @@ const suggestions = [
   'Watermelon'
 ]
 
+const groupedSuggestions = [
+  {
+    section: 'Fruits',
+    items: [
+      { name: 'Apple' },
+      { name: 'Banana' },
+      { name: 'Blueberry' },
+      { name: 'Cantaloupe' },
+      { name: 'Kiwi' },
+      { name: 'Strawberry' }
+    ]
+  },
+  {
+    section: 'Vegetables',
+    items: [
+      { name: 'Artichoke' },
+      { name: 'Avocado' },
+      { name: 'Beetroot' },
+      { name: 'Celery' },
+      { name: 'Cucumber' },
+      { name: 'Daikon' },
+      { name: 'Eggplant' },
+      { name: 'Kale' },
+      { name: 'Shallot' }
+    ]
+  }
+]
+
 describe('ComboBox', () => {
   it('should match its default snapshot', () => {
     const wrapper = mount(Component, {
       props: { suggestions },
     })
     expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('should render tabs (and labels) when optionGroupLabel is provided', async () => {
+    const wrapper = mount(Component, {
+      props: {
+        suggestions: groupedSuggestions,
+        type: 'select',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name',
+        debounceComplete: 0
+      },
+      attachTo: document.body
+    })
+    /* Stub scrollIntoView since jsdom doesn't implement it,
+     * will throw an error otherwise when navigating options */
+    window.HTMLElement.prototype.scrollIntoView = () => {}
+    // Open dropdown
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await nextTick()
+    // Tabs should be rendered
+    const tabs = wrapper.findAll('button.tab')
+    expect(tabs.length).toBeGreaterThan(1)
+    expect(tabs[0].text().toLowerCase()).toContain('all')
+    expect(tabs[1].text().toLowerCase()).toContain('fruits')
+    expect(tabs[2].text().toLowerCase()).toContain('vegetables')
+    wrapper.unmount()
+  })
+
+  it('should switch tabs with ArrowLeft/ArrowRight, should update suggestions when switching tabs', async () => {
+    const wrapper = mount(Component, {
+      props: {
+        suggestions: groupedSuggestions,
+        type: 'select',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name',
+        debounceComplete: 0
+      },
+      attachTo: document.body
+    })
+    /* Stub scrollIntoView since jsdom doesn't implement it,
+     * will throw an error otherwise when navigating options */
+    window.HTMLElement.prototype.scrollIntoView = () => {}
+    const input = wrapper.find('input[type="text"]')
+    /* Click the input and navigate down to an arbitrary suggestion,
+     * then right from "All" to "Fruits" */
+    await input.trigger('click')
+    await input.trigger('keydown.down')
+    await input.trigger('keydown.down')
+    await input.trigger('keydown.right')
+    await nextTick()
+    // Expect only Fruits to be visible
+    const scrollAreaFruit = wrapper.find('[data-id="sds-scroll-area"]')
+    const optionsFruit = scrollAreaFruit.findAll('button')
+    const optionFruitTexts = optionsFruit.map(o => o.text())
+    expect(optionFruitTexts).toContain('Apple')
+    expect(optionFruitTexts).toContain('Banana')
+    expect(optionFruitTexts).not.toContain('Carrot')
+    expect(optionFruitTexts).not.toContain('Daikon')
+    /* Again navigate down to an arbitrary suggestion,
+     * then right from "Fruits" to "Vegetables" */
+    await input.trigger('keydown.down')
+    await input.trigger('keydown.down')
+    await input.trigger('keydown.right')
+    await nextTick()
+    // Expect only Vegetables to be visible
+    const scrollAreaVeg = wrapper.find('[data-id="sds-scroll-area"]')
+    const optionsVeg = scrollAreaVeg.findAll('button')
+    const optionVegTexts = optionsVeg.map(o => o.text())
+    expect(optionVegTexts).toContain('Beetroot')
+    expect(optionVegTexts).toContain('Daikon')
+    expect(optionVegTexts).not.toContain('Apple')
+    expect(optionVegTexts).not.toContain('Banana')
+    wrapper.unmount()
   })
 
   it('should match snapshot for type="select" (single)', () => {
