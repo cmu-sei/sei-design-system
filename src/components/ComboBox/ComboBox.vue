@@ -107,7 +107,7 @@
             'px-2': size === 'sm',
             'px-3': size !== 'sm'
           }"
-          @mousedown.prevent="clearQuery"
+          @click.prevent="clearQuery"
         >
           <span class="sr-only">Clear query</span>
           <svg

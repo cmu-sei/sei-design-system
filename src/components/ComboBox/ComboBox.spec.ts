@@ -338,6 +338,56 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('clears input and selections when clicking clear button', async () => {
+    let selected = ['Apple', 'Banana']
+    const wrapper = mount(Component, {
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected,
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    // Simulate input value to trigger clear button
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('Apple')
+    await nextTick()
+    // Find clear button
+    const clearBtn = wrapper.find('button[type="button"]')
+    expect(clearBtn.exists()).toBe(true)
+    await clearBtn.trigger('click')
+    await nextTick()
+    const inputText = input.text()
+    // Input should be empty
+    expect(inputText).toBe('')
+    // Click again to clear selections
+    await clearBtn.trigger('click')
+    await nextTick()
+    // Selections should be cleared
+    expect(wrapper.props('selected')).toEqual([])
+    wrapper.unmount()
+  })
+
+  it('shakes input on invalid submit (type="select" and value not in suggestions)', async () => {
+    const wrapper = mount(Component, {
+      props: { suggestions, type: 'select', multiple: false },
+      attachTo: document.body
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('NotInList')
+    await input.trigger('keyup.enter')
+    await nextTick()
+    // Should have shake animation class
+    expect(input.classes()).toContain('animate-shake')
+    // Wait for animation to clear
+    await new Promise(r => setTimeout(r, 600))
+    expect(input.classes()).not.toContain('animate-shake')
+    wrapper.unmount()
+  })
+
   // --- MULTISELECT & TAGGABLE-SELECT TESTS ---
   it('should allow selecting multiple options in multiselect mode (click)', async () => {
     let selected = []
@@ -476,6 +526,133 @@ describe('ComboBox', () => {
     const tagText = tag.map(t => t.text())[0]
     // Should emit result event with removed tag value
     expect(tagText).toBe('Apple')
+    wrapper.unmount()
+  })
+
+  it('removes a tag when clicking its remove button', async () => {
+    let selected = ['Apple', 'Banana']
+    const wrapper = mount(Component, {
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected,
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    // Find the remove button for the first tag (should be Apple)
+    const removeButtons = wrapper.findAll('[data-id="sds-tag"] button')
+    expect(removeButtons.length).toBeGreaterThan(0)
+    await removeButtons[0].trigger('click')
+    await nextTick()
+    // The tag should be removed from selected
+    expect(wrapper.props('selected')).toEqual(['Banana'])
+    // Should emit result event with only Banana
+    const selectedTags = wrapper.findAll('[data-id="sds-tag"]>div>span').map(t => t.text())
+    expect(selectedTags).toContain('Banana')
+    wrapper.unmount()
+  })
+
+  it('selects all options when clicking "Select all", and deselects all when clicked again', async () => {
+    let selected: ComboBoxSuggestion[] = []
+    const wrapper = mount(Component, {
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected,
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      },
+      attachTo: document.body
+    })
+    // Open dropdown
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await nextTick()
+    // Find "Select all" button
+    const selectAllBtn = wrapper.find('button[role="option"]')
+    expect(selectAllBtn.text()).toContain('Select all')
+    // Click to select all
+    await selectAllBtn.trigger('click')
+    await nextTick()
+    // All options should be selected
+    expect(wrapper.props('selected')?.length).toBe(suggestions.length)
+    // Click again to deselect all
+    await selectAllBtn.trigger('click')
+    await nextTick()
+    expect(wrapper.props('selected')?.length).toBe(0)
+    wrapper.unmount()
+  })
+
+  it('adds a suggestion to selected when clicked, and commits selection on Enter', async () => {
+    let selected: ComboBoxSuggestion[] = []
+    const wrapper = mount(Component, {
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected,
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      },
+      attachTo: document.body
+    })
+    // Open dropdown
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await nextTick()
+    // Find the first suggestion button (should be "Select all", so skip to next)
+    const buttons = wrapper.findAll('button')
+    const appleBtn = buttons.find(btn => btn.text() === 'Apple')
+    expect(appleBtn).toBeDefined()
+    await appleBtn!.trigger('click')
+    await nextTick()
+    // "Apple" should be in selected
+    expect(wrapper.props('selected')).toContain('Apple')
+    // Now, simulate pressing Enter to commit selection
+    await input.trigger('keyup.enter')
+    await nextTick()
+    const selectedTags = wrapper.findAll('[data-id="sds-tag"]>div>span').map(t => t.text())
+    expect(selectedTags).toContain('Apple')
+    wrapper.unmount()
+  })
+
+  it('navigates from tab to first suggestion with ArrowDown, and from first suggestion to tab with ArrowUp', async () => {
+    const wrapper = mount(Component, {
+      props: {
+        suggestions: groupedSuggestions,
+        type: 'select',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name',
+        debounceComplete: 0
+      },
+      attachTo: document.body
+    })
+    window.HTMLElement.prototype.scrollIntoView = () => {}
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await nextTick()
+    // Focus should be on input, now ArrowDown to move to tab
+    await input.trigger('keydown.down')
+    await nextTick()
+    // ArrowDown again to move to first suggestion
+    await input.trigger('keydown.down')
+    await nextTick()
+    // The first suggestion should be active
+    const active = wrapper.find('button[data-active="true"]')
+    expect(active.exists()).toBe(true)
+    // ArrowUp should move focus back to tab (no suggestion active)
+    await input.trigger('keydown.up')
+    await nextTick()
+    const activeAfterUp = wrapper.find('button:not(.tab)[data-active="true"]')
+    // Should not find an active suggestion (focus is on tab)
+    expect(activeAfterUp.exists()).toBe(false)
     wrapper.unmount()
   })
 })
