@@ -145,6 +145,7 @@
     </div>
     <div
       v-if="shouldShowDropdown"
+      data-id="sds-combo-box-dropdown"
       class="absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
     >
       <div
@@ -1412,7 +1413,6 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   if (
     suggestionObj && typeof suggestionObj === 'object' && suggestionObj.__cbxIdx === 'add'
   ) {
-
     await handleSuggestionClick(suggestionObj)
     return
   }
