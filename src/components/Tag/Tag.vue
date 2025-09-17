@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     :id="id"
     data-id="sds-tag"
     class="
@@ -30,9 +30,9 @@
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
-    :class="[textSizeClass, sizeClass, paddingClass]"
+    :class="[textSizeClass, sizeClass, paddingClass, disabledClass]"
   >
-    <div 
+    <div
       class="flex flex-row flex-nowrap items-center"
       :class="{
         'gap-x-0.5': size === 'sm',
@@ -44,7 +44,7 @@
         class="bg-blue-600 text-white text-center"
         :class="size === 'sm' ? 'min-h-6 min-w-6 px-1.5 leading-6' : 'min-h-8 min-w-8 px-1.5 leading-8'"
       >{{ counter.toLocaleString() }}</span>
-      <span 
+      <span
         v-if="!!$slots.leftSlot"
         class="leading-none"
       >
@@ -82,10 +82,10 @@
       </span>
       <template v-if="isAction(action) && !readonly">
         <template v-if="action === 'increment'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-within:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
@@ -103,10 +103,10 @@
           </button>
         </template>
         <template v-else-if="action === 'decrement'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900"
+            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-within:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
@@ -124,10 +124,10 @@
           </button>
         </template>
         <template v-else-if="action === 'remove'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900"
+            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50"
             :class="[buttonSizeClass]"
             @click.stop="remove"
           >
@@ -208,6 +208,10 @@ const props = defineProps({
    * Determines the size of the tag.
    */
   size: { type: String as PropType<TagIconSize>, default: 'sm' },
+  /**
+   * Determines if the tag is disabled.
+   */
+  disabled: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
@@ -264,53 +268,55 @@ const renderLeftSlot = computed(() => !!slots.leftSlot)
 const paddingClass = computed(() => {
   const { action, readonly, size } = props
   switch (size) {
-    case 'sm':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
-    case 'md':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2.5'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
-    default:
-      return ''
+  case 'sm':
+    if(props.counter) {
+      return isAction(action) && !readonly ? '' : 'pr-2'
+    }
+    return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
+  case 'md':
+    if(props.counter) {
+      return isAction(action) && !readonly ? '' : 'pr-2.5'
+    }
+    return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
+  default:
+    return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'h-6'
-    case 'md':
-      return 'h-8'
-    default:
-      return ''
+  case 'sm':
+    return 'h-6'
+  case 'md':
+    return 'h-8'
+  default:
+    return ''
   }
 })
 
 const textSizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'text-xs leading-4'
-    case 'md':
-      return 'text-base leading-6'
-    default:
-      return ''
+  case 'sm':
+    return 'text-xs leading-4'
+  case 'md':
+    return 'text-base leading-6'
+  default:
+    return ''
   }
 })
 
 const buttonSizeClass = computed(() => {
   switch (props.size) {
-    case 'sm':
-      return 'h-[1.375rem] w-6'
-    case 'md':
-      return 'h-[1.875rem] w-8'
-    default:
-      return ''
+  case 'sm':
+    return 'h-[1.375rem] w-6'
+  case 'md':
+    return 'h-[1.875rem] w-8'
+  default:
+    return ''
   }
 })
+
+const disabledClass = computed(() => props.disabled ? 'opacity-50 pointer-events-none' : '')
 
 const increment = () => {
   count.value += 1

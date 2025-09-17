@@ -693,7 +693,29 @@ const comboBox4 = reactive({
         { name: 'Kale' },
         { name: 'Shallot' }
       ]
-    }
+    },
+    {
+      section: 'Monkeys',
+      items: [
+        { name: 'Baboon' },
+        { name: 'Gorilla' }
+      ]
+    },
+    {
+      section: 'Bread',
+      items: [
+        { name: 'White' },
+        { name: 'Wheat' },
+        { name: 'Rye' }
+      ]
+    },
+    {
+      section: 'Insects',
+      items: [
+        { name: 'Ant' },
+        { name: 'Butterfly' }
+      ]
+    },
   ] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
