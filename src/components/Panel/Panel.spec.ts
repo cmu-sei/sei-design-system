@@ -120,7 +120,7 @@ describe('Panel', () => {
   })
 
   it('applies correct zIndex class for all valid `zIndex` prop values', () => {
-    const zIndexes = ['0', '10', '20', '30', '40', '50', 'auto', '']
+    const zIndexes = ['0', '10', '20', '30', '40', '50', 'auto', ''] as const
     const expectedClasses = {
       '0': 'z-0',
       '10': 'z-10',

@@ -3,6 +3,40 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import Component from './FloatingUi.vue'
 
 describe('FloatingUi', () => {
+  // Define a type-safe interface for all FloatingUi props
+  interface FloatingUiProps {
+    disabled?: boolean
+    placement?: string
+    strategy?: string
+    overflowPadding?: number
+    arrowPadding?: number
+    offset?: number
+    inline?: boolean
+    shift?: boolean
+    disableAnimation?: boolean
+    animationEnterActiveClass?: string
+    animationEnterFromClass?: string
+    animationEnterToClass?: string
+    animationLeaveActiveClass?: string
+    animationLeaveFromClass?: string
+    animationLeaveToClass?: string
+    popperClass?: string
+    hideArrow?: boolean
+    arrowClass?: string
+    placementTopArrowClass?: string
+    placementRightArrowClass?: string
+    placementBottomArrowClass?: string
+    placementLeftArrowClass?: string
+    willOpen?: () => void
+    willClose?: () => void
+  }
+
+  // Type-safe prop getter for wrapper.props()
+  function getProp<K extends keyof FloatingUiProps>(wrapper: ReturnType<typeof mount>, key: K): FloatingUiProps[K] {
+    const prop = key as keyof typeof wrapper.props
+    return wrapper.props(prop)
+  }
+
   const props = {
     disableAnimation: true,
     'arrow-class': 'arrow-class absolute w-2 h-2 rotate-45',
@@ -282,7 +316,7 @@ describe('FloatingUi', () => {
   })
 
   it('applies `placementTopArrowClass` props for top placement values', async () => {
-    const { value, arrowClass, prop } = {
+    const { value, arrowClass, prop }: { value: string; arrowClass: string; prop: keyof FloatingUiProps } = {
       value: 'top',
       arrowClass: 'top-arrow',
       prop: 'placementTopArrowClass'
@@ -302,13 +336,13 @@ describe('FloatingUi', () => {
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
-    expect(wrapper.props()[prop]).toBe(arrowClass)
+    expect(getProp(wrapper, prop)).toBe(arrowClass)
     // Check that the arrow class is present in the DOM
     expect(document.body.innerHTML).toContain(arrowClass)
   })
 
   it('applies `placementBottomArrowClass` props for bottom placement values', async () => {
-    const { value, arrowClass, prop } = {
+    const { value, arrowClass, prop }: { value: string; arrowClass: string; prop: keyof FloatingUiProps } = {
       value: 'bottom',
       arrowClass: 'bottom-arrow',
       prop: 'placementBottomArrowClass'
@@ -328,13 +362,13 @@ describe('FloatingUi', () => {
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
-    expect(wrapper.props()[prop]).toBe(arrowClass)
+    expect(getProp(wrapper, prop)).toBe(arrowClass)
     // Check that the arrow class is present in the DOM
     expect(document.body.innerHTML).toContain(arrowClass)
   })
 
   it('applies `placementLeftArrowClass` props for left placement values', async () => {
-    const { value, arrowClass, prop } = {
+    const { value, arrowClass, prop }: { value: string; arrowClass: string; prop: keyof FloatingUiProps } = {
       value: 'left',
       arrowClass: 'left-arrow',
       prop: 'placementLeftArrowClass'
@@ -354,13 +388,13 @@ describe('FloatingUi', () => {
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
-    expect(wrapper.props()[prop]).toBe(arrowClass)
+    expect(getProp(wrapper, prop)).toBe(arrowClass)
     // Check that the arrow class is present in the DOM
     expect(document.body.innerHTML).toContain(arrowClass)
   })
 
   it('applies `placementRightArrowClass` props for right placement values', async () => {
-    const { value, arrowClass, prop } = {
+    const { value, arrowClass, prop }: { value: string; arrowClass: string; prop: keyof FloatingUiProps } = {
       value: 'right',
       arrowClass: 'right-arrow',
       prop: 'placementRightArrowClass'
@@ -380,7 +414,7 @@ describe('FloatingUi', () => {
     await wrapper.find('button').trigger('click')
     vi.runAllTimers()
     await flushPromises()
-    expect(wrapper.props()[prop]).toBe(arrowClass)
+    expect(getProp(wrapper, prop)).toBe(arrowClass)
     // Check that the arrow class is present in the DOM
     expect(document.body.innerHTML).toContain(arrowClass)
   })
