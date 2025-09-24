@@ -17,7 +17,7 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
  - Use slots with clear naming and default slots where applicable.
  - Prefer styling components using Tailwind CSS utility classes within the `<template>`. If dedicated styles are needed, add them to a file in the `tailwindcss` directory located in the parent directory. Use `<style scoped>` inside the `.vue` file only for styles that cannot be achieved with Tailwind as a fallback or last resort.
  - Add suitable accessibility attributes (e.g., `aria-*`) when relevant.
- - All Vue objects are imported dynamically and/or globally; explicit imports are not needed.
+ - All Vue objects are imported globally; explicit imports are not needed.
 
  ## JavaScript with TypeScript Best Practices
 - Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](./typescript.instructions.md) for type safety, code style, and best practices.
