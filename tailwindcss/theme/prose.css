@@ -32,8 +32,10 @@
   &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
     max-width: 95ch;
     text-wrap: pretty;
-    color: var(--color-black);
+    color: var(--color-gray-900);
     font-size: var(--text-base);
+    /* font-size-adjust: 0.5; */
+    text-rendering: optimizeLegibility;
 
     & :where(h1),
     & :where(h2),
@@ -45,31 +47,36 @@
         margin-bottom: --spacing(3);
       }
       &:where(:not(:first-child)) {
-        margin-top: --spacing(6);
+        margin-top: --spacing(12);
       }
     }
 
     & :where(h1) {
-      &:where(.sds-theme-plaid &) {
-        font-family: var(--font-serif);
-      }
       font-size: var(--text-6xl);
-      line-height: 60px;
+      line-height: 64px;
       font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
         margin-bottom: --spacing(8);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-weight: 300;
       }
     }
 
     & :where(h2) {
-      &:where(.sds-theme-plaid &) {
-        font-family: var(--font-serif);
-      }
       font-size: var(--text-3xl);
       line-height: 36px;
       font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(6);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-size: var(--text-4xl);
+        font-weight: 400;
       }
     }
 
@@ -77,8 +84,14 @@
       font-size: var(--text-2xl);
       line-height: 32px;
       font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(5);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-size: var(--text-3xl);
+        font-weight: 400;
       }
     }
 
@@ -86,32 +99,63 @@
       font-size: var(--text-xl);
       line-height: 28px;
       font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(4);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        letter-spacing: 0.03px;
+        font-weight: 400;
       }
     }
 
     & :where(h5) {
       font-size: var(--text-sm);
       line-height: 20px;
-      :where(.sds-theme-forge &) {
-        text-transform: uppercase;
-      }
-      :where(.sds-theme-plaid &) {
-        font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
       }
     }
 
     & :where(h6) {
       font-size: var(--text-sm);
       line-height: 20px;
+      font-weight: var(--font-weight-semibold);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
     }
 
     & :where(h1 + h2),
     & :where(h2 + h3),
     & :where(h3 + h4),
+    & :where(h4 + h5),
     & :where(h5 + h6) {
       margin-top: 0;
+    }
+
+    /* H1 Eyebrow rules */
+    & :where(h2 + h1),
+    & :where(h3 + h1),
+    & :where(h4 + h1),
+    & :where(h5 + h1),
+    & :where(h6 + h1) {
+      margin-top: --spacing(3);
+    }
+
+    /* H2 Eyebrow rules */
+    & :where(h3 + h2),
+    & :where(h4 + h2),
+    & :where(h5 + h2),
+    & :where(h6 + h2) {
+      margin-top: --spacing(3);
+    }
+
+    & :where(p:where(:not(:last-child))) {
+      margin-bottom: --spacing(2);
     }
 
     & :where(img),
@@ -124,8 +168,10 @@
     & :where([class~="lead"]) {
       font-size: var(--text-2xl);
       line-height: 32px;
-      font-weight: var(--font-weight-semibold);
       margin-block: --spacing(5);
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+      }
     }
 
     & :where(blockquote) {
@@ -133,7 +179,7 @@
       margin-inline: --spacing(4);
       padding-left: --spacing(4);
       padding-block: --spacing(2);
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
       font-weight: var(--font-weight-medium);
       font-style: italic;
       &:where(:not(:last-child)) {
@@ -141,13 +187,10 @@
       }
     }
 
-    & :where(p:where(:not(:last-child))) {
-      margin-bottom: --spacing(2);
-    }
-
     & :where(code) {
       font-family: var(--font-mono);
-      font-weight: bold;
+      letter-spacing: var(--tracking-wide);
+      margin-inline: --spacing(0.5);
     }
 
     & :where(pre) {
@@ -161,10 +204,12 @@
         border-radius: var(--radius-none);
       }
       &:where(:not(:last-child)) {
-        margin-block: --spacing(4);
+        margin-block: --spacing(6);
       }
       & :where(code) {
         font-weight: initial;
+        letter-spacing: normal;
+        margin-inline: inherit;
       }
     }
 
@@ -198,10 +243,13 @@
       padding-left: --spacing(0);
       margin-left: --spacing(4);
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(2);
+        margin-bottom: --spacing(0);
       }
       & :where(p) {
         &:where(:not(:last-child)) {
+          margin-bottom: --spacing(0);
+        }
+        &:where(:last-child) {
           margin-bottom: --spacing(2);
         }
       }
@@ -228,7 +276,7 @@
     & :where(hr) {
       border-color: var(--color-gray-200);
       &:where(:not(:last-child)) {
-        margin-block: --spacing(6);
+        margin-block: --spacing(12);
       }
     }
 
@@ -252,8 +300,17 @@
     }
 
     & :where(th, td) {
+      font-size: var(--text-sm);
       padding: --spacing(3);
       text-align: left;
+    }
+
+    & :where(th:first-of-type, td:first-of-type) {
+      padding-left: --spacing(0);
+    }
+
+    & :where(th:last-child, td:last-child) {
+      padding-right: --spacing(0);
     }
 
     & :where(a) {
@@ -424,7 +481,7 @@
 
     & :where(h1) {
       font-size: var(--text-4xl);
-      line-height: 40px;
+      line-height: 36px;
       &:where(:not(:last-child)) {
         margin-bottom: --spacing(8);
       }
@@ -466,13 +523,13 @@
 
     & :where([class~="lead"]) {
       font-size: var(--text-xl);
-      line-height: 32px;
+      line-height: 24px;
       margin-block: --spacing(5);
     }
 
     & :where(blockquote) {
-      font-size: var(--text-xl);
-      line-height: 32px;
+      font-size: var(--text-lg);
+      line-height: 24px;
     }
 
     & :where(pre) {
@@ -483,13 +540,21 @@
       font-size: var(--text-xs);
       line-height: 20px;
     }
+
+    & :where(li) {
+      margin-left: --spacing(3);
+    }
   }
 }
 
 @utility prose-md {
   &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
     max-width: 95ch;
+    text-wrap: pretty;
+    color: var(--color-gray-900);
     font-size: var(--text-base);
+    /* font-size-adjust: 0.5; */
+    text-rendering: optimizeLegibility;
 
     & :where(h1),
     & :where(h2),
@@ -500,72 +565,275 @@
       &:where(:not(:last-child)) {
         margin-bottom: --spacing(3);
       }
-
       &:where(:not(:first-child)) {
-        margin-top: --spacing(6);
+        margin-top: --spacing(12);
       }
     }
 
     & :where(h1) {
       font-size: var(--text-6xl);
-      line-height: 60px;
+      line-height: 64px;
+      font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
         margin-bottom: --spacing(8);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-weight: 300;
       }
     }
 
     & :where(h2) {
       font-size: var(--text-3xl);
       line-height: 36px;
+      font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(6);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-size: var(--text-4xl);
+        font-weight: 400;
       }
     }
 
     & :where(h3) {
       font-size: var(--text-2xl);
       line-height: 32px;
+      font-weight: bold;
+      letter-spacing: -0.02em;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(5);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        font-size: var(--text-3xl);
+        font-weight: 400;
       }
     }
 
     & :where(h4) {
       font-size: var(--text-xl);
-      line-height: 26px;
+      line-height: 28px;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
       &:where(:not(:last-child)) {
-        margin-bottom: --spacing(4);
+        margin-bottom: --spacing(3);
+      }
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+        letter-spacing: 0.03px;
+        font-weight: 400;
       }
     }
 
     & :where(h5) {
       font-size: var(--text-sm);
       line-height: 20px;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
     }
 
     & :where(h6) {
       font-size: var(--text-sm);
       line-height: 20px;
+      font-weight: var(--font-weight-semibold);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(3);
+      }
+    }
+
+    & :where(h1 + h2),
+    & :where(h2 + h3),
+    & :where(h3 + h4),
+    & :where(h4 + h5),
+    & :where(h5 + h6) {
+      margin-top: 0;
+    }
+
+    /* H1 Eyebrow rules */
+    & :where(h2 + h1),
+    & :where(h3 + h1),
+    & :where(h4 + h1),
+    & :where(h5 + h1),
+    & :where(h6 + h1) {
+      margin-top: --spacing(3);
+    }
+
+    /* H2 Eyebrow rules */
+    & :where(h3 + h2),
+    & :where(h4 + h2),
+    & :where(h5 + h2),
+    & :where(h6 + h2) {
+      margin-top: --spacing(3);
+    }
+
+    & :where(p:where(:not(:last-child))) {
+      margin-bottom: --spacing(2);
+    }
+
+    & :where(img),
+    & :where(svg) {
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
     }
 
     & :where([class~="lead"]) {
       font-size: var(--text-2xl);
       line-height: 32px;
       margin-block: --spacing(5);
+      &:where(.sds-theme-plaid &) {
+        font-family: var(--font-serif);
+      }
     }
 
     & :where(blockquote) {
-      font-size: var(--text-2xl);
-      line-height: 32px;
+      border-left: 4px solid var(--color-gray-200);
+      margin-inline: --spacing(4);
+      padding-left: --spacing(4);
+      padding-block: --spacing(2);
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      font-style: italic;
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
+    }
+
+    & :where(code) {
+      font-family: var(--font-mono);
+      letter-spacing: var(--tracking-wide);
+      margin-inline: --spacing(0.5);
     }
 
     & :where(pre) {
       font-size: var(--text-base);
+      overflow: auto;
+      padding: --spacing(4);
+      background-color: var(--color-gray-50);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-md);
+      :where(.sds-theme-plaid &) {
+        border-radius: var(--radius-none);
+      }
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(6);
+      }
+      & :where(code) {
+        font-weight: initial;
+        letter-spacing: normal;
+        margin-inline: inherit;
+      }
+    }
+
+    & :where(ol) {
+      list-style-type: decimal;
+      padding-left: --spacing(4);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(2);
+      }
+    }
+
+    & :where(ul) {
+      list-style-type: disc;
+      padding-left: --spacing(4);
+      :where(.sds-theme-plaid &) {
+        list-style-type: square;
+      }
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(2);
+      }
+    }
+
+    & :where(ul li) {
+      &::marker {
+        color: var(--color-gray-600);
+        font-size: var(--text-sm);
+      }
+    }
+
+    & :where(li) {
+      padding-left: --spacing(0);
+      margin-left: --spacing(4);
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(0);
+      }
+      & :where(p) {
+        &:where(:not(:last-child)) {
+          margin-bottom: --spacing(0);
+        }
+        &:where(:last-child) {
+          margin-bottom: --spacing(2);
+        }
+      }
+    }
+
+    & :where(figure) {
+      :where(& *) {
+        &:where(:not(:last-child)) {
+          margin-bottom: --spacing(1);
+        }
+      }
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(4);
+      }
     }
 
     & :where(figcaption) {
       font-size: var(--text-sm);
       line-height: 20px;
+      font-style: italic;
+      color: var(--color-gray-600);
+    }
+
+    & :where(hr) {
+      border-color: var(--color-gray-200);
+      &:where(:not(:last-child)) {
+        margin-block: --spacing(12);
+      }
+    }
+
+    & :where(table) {
+      width: 100%;
+      &:where(:not(:last-child)) {
+        margin-bottom: --spacing(4);
+      }
+    }
+
+    & :where(thead) {
+      &:where(:not(:last-child)) {
+        border-bottom: 1px solid var(--color-gray-300);
+      }
+    }
+
+    & :where(tbody tr) {
+      &:where(:not(:last-child)) {
+        border-bottom: 1px solid var(--color-gray-200);
+      }
+    }
+
+    & :where(th, td) {
+      font-size: var(--text-sm);
+      padding: --spacing(3);
+      text-align: left;
+    }
+
+    & :where(th:first-of-type, td:first-of-type) {
+      padding-left: --spacing(0);
+    }
+
+    & :where(th:last-child, td:last-child) {
+      padding-right: --spacing(0);
+    }
+
+    & :where(a) {
+      text-decoration: underline;
     }
   }
 }

@@ -3,9 +3,10 @@
   src: url('./SourceSerif4Variable-Roman.ttf.woff2') format('woff2-variations'),
        url('./SourceSerif4Variable-Roman.ttf.woff') format('woff-variations');
   font-weight: 100 900; /* full weight range */
-  font-stretch: 75% 125%; /* if width axis exists */
+  font-stretch: 100%; /* if width axis exists */
   font-style: normal;
   font-display: swap;
+  font-variation-settings: 'opsz' 16;
 }
 
 @font-face {
@@ -13,7 +14,8 @@
   src: url('./SourceSerif4Variable-Italic.ttf.woff2') format('woff2-variations'),
        url('./SourceSerif4Variable-Italic.ttf.woff') format('woff-variations');
   font-weight: 100 900; /* full weight range */
-  font-stretch: 75% 125%; /* if width axis exists */
+  font-stretch: 100%; /* if width axis exists */
   font-style: italic;
   font-display: swap;
+  font-variation-settings: 'opsz' 16;
 }
