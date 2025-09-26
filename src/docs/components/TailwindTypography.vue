@@ -72,7 +72,9 @@
       </tbody>
     </table>
     <div class="not-prose">
-      <h1>Not Prose</h1>
+      <h1 class="bg-green-500">
+        Not Prose
+      </h1>
       <p>This is not prose. <a href="#">This link</a> should look like a normal link.</p>
     </div>
     <p>This has a <a href="#"><b>bold tag inside a link</b></a></p>
