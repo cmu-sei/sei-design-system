@@ -49,6 +49,13 @@
       &:where(:not(:first-child)) {
         margin-top: --spacing(12);
       }
+      & :where(a) {
+        color: inherit;
+        text-decoration: none !important;
+        &:where(:hover) {
+          color: var(--color-gray-600);
+        }
+      }
     }
 
     & :where(h1) {
@@ -207,6 +214,7 @@
         margin-block: --spacing(6);
       }
       & :where(code) {
+        font-size: var(--text-sm);
         font-weight: initial;
         letter-spacing: normal;
         margin-inline: inherit;
@@ -327,12 +335,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-blue-500);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-blue-600);
@@ -355,12 +362,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-green-500);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-green-600);
@@ -383,12 +389,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-teal-500);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-teal-600);
@@ -411,12 +416,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-orange-500);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-orange-600);
@@ -439,12 +443,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-red-500);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-red-600);
@@ -726,6 +729,7 @@
         margin-block: --spacing(6);
       }
       & :where(code) {
+        font-size: var(--text-sm);
         font-weight: initial;
         letter-spacing: normal;
         margin-inline: inherit;
@@ -842,6 +846,15 @@
   &:where(:not(:where([class~="not-prose"], [class~="not-prose"] *))) {
     color: var(--color-white);
 
+    & :where(h1, h2, h3, h4, h5, h6) {
+      & :where(a) {
+        color: inherit;
+        &:where(:hover) {
+          color: var(--color-gray-400);
+        }
+      }
+    }
+
     & :where(blockquote) {
       border-left-color: var(--color-gray-700);
     }
@@ -888,12 +901,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-blue-300);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-blue-400);
@@ -918,12 +930,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-green-300);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-green-400);
@@ -948,12 +959,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-teal-300);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-teal-400);
@@ -978,12 +988,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-orange-300);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-orange-400);
@@ -1008,12 +1017,11 @@
       & :where(h1, h2, h3, h4, h5, h6) {
         & :where(a) {
           color: inherit;
-          text-decoration: none !important;
           &:where(:hover) {
             color: var(--color-red-300);
           }
         }
-      },
+      }
       :where(.sds-theme-plaid &) {
         & :where(blockquote) {
           border-left-color: var(--color-red-400);
@@ -1026,5 +1034,108 @@
         }
       }
     }
+  }
+}
+
+.not-prose {
+  :where(&, & *) {
+    /* Roll back prose overrides */
+    all: revert;
+
+    /* Preflight baseline */
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--border-color-default, currentColor);
+
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: inherit;
+
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    text-decoration: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    vertical-align: baseline;
+    list-style: none;
+  }
+
+  /* Headings */
+  :where(& h1, & h2, & h3, & h4, & h5, & h6) {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  /* Links */
+  :where(& a) {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  /* Images, video, canvas, svg */
+  :where(& img, & video, & canvas, & svg) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Tables */
+  :where(& table) {
+    border-collapse: collapse;
+    text-indent: 0;
+  }
+
+  /* Lists */
+  :where(& ol, & ul, & menu) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Blockquotes */
+  :where(& blockquote) {
+    quotes: none;
+  }
+
+  /* Form controls */
+  :where(& button, & input, & select, & textarea) {
+    font: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    line-height: inherit;
+    text-transform: none;
+    appearance: none;
+  }
+
+  :where(& textarea) {
+    resize: vertical;
+  }
+
+  :where(& button, & [type="button"], & [type="reset"], & [type="submit"]) {
+    -webkit-appearance: button;
+    background: none;
+  }
+
+  /* Inputs */
+  :where(& [type="search"]) {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+
+  :where(& ::-webkit-search-decoration) {
+    -webkit-appearance: none;
+  }
+
+  /* File upload button */
+  :where(& ::file-selector-button) {
+    font: inherit;
+    -webkit-appearance: button;
   }
 }
