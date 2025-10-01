@@ -2,7 +2,6 @@
 
 /* Variants */
 @import './variants/dark-mode';
-@import './variants/theme';
 
 /* Overall theme */
 @import './theme/animation';
@@ -11,6 +10,7 @@
 @import './theme/fonts';
 @import './theme/radius';
 @import './theme/prose';
+@import './variants/theme';
 
 /* Universal theme components */
 @import './components/universal/action-btn';
