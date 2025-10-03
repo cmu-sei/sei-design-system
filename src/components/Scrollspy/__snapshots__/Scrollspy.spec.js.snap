@@ -1,8 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Scrollspy > should match its default snapshot 1`] = `
-<nav>
-  
-  
-</nav>
-`;
