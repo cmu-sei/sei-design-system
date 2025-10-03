@@ -1,7 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Scrollspy from './Scrollspy.vue'
-import { nextTick } from 'vue'
 
 const items = [
   { id: 'scrollspy-test', text: 'Heading 1' },
