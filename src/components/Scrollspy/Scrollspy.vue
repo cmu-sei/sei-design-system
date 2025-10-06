@@ -103,7 +103,8 @@ const isItemActive = (
 }
 
 const isInViewport = (item: { id: string, text: string }) => {
-  const anchor = document.getElementById(item.id) as HTMLAnchorElement
+  const anchor = document.getElementById(item.id) as HTMLAnchorElement | null
+  if (!anchor) return false;
   const rect = anchor.getBoundingClientRect();
   if (parentEl.value) {
     const parentRect = parentEl.value.getBoundingClientRect()
