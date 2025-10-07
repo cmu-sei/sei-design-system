@@ -456,7 +456,13 @@
           v-if="shouldShowNewSuggestion"
           class="py-2"
         >
+          <template v-if="isSelected(query)">
+            <p class="px-3 text-sm">
+              <i class="text-gray-600">Already added</i> "{{ query }}"
+            </p>
+          </template>
           <button
+            v-else
             ref="dropdownOption"
             class="
               flex flex-row
@@ -509,6 +515,7 @@
               }"
               :label="query"
             >
+              <!-- Font Awesome Solid (plus) -->
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="28"
@@ -516,7 +523,6 @@
                 class="w-3 h-3 my-auto ml-1 mr-2"
                 viewBox="0 0 448 512"
               >
-                <!-- Icon from Font Awesome Solid by Dave Gandy - https://creativecommons.org/licenses/by/4.0/ -->
                 <path
                   fill="currentColor"
                   d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"
@@ -524,25 +530,12 @@
               </svg>
               Add "{{ query }}"
             </slot>
-            <svg
-              v-if="isSelected(query)"
-              xmlns="http://www.w3.org/2000/svg"
-              width="11"
-              height="9"
-              viewBox="0 0 11 9"
-              fill="none"
-              class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-            >
-              <path
-                d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-                fill="currentColor"
-              />
-            </svg>
           </button>
         </div>
       </SdsScrollArea>
       <!-- Footer section -->
       <div
+        v-if="!isSelected(query)"
         class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
       >
         <div class="ml-auto flex items-center gap-1.5">
