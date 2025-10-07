@@ -170,6 +170,12 @@ exports[`Button > should match its type (button) snapshot 1`] = `
 </button>"
 `;
 
+exports[`Button > should match its type (cta) snapshot 1`] = `
+"<button data-id="sds-button" type="button" class="btn-cta" aria-disabled="false" aria-busy="false">
+  <!-- @slot Button content. -->Button cta
+</button>"
+`;
+
 exports[`Button > should match its type (submit) snapshot 1`] = `
 "<button data-id="sds-button" type="submit" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button submit

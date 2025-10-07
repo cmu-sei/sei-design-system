@@ -16,7 +16,7 @@ describe('Button', () => {
   /* All props */
   const kinds = ['primary', 'secondary', 'tertiary', 'ghost']
   const variants = ['gray', 'blue', 'red', 'white']
-  const types = ['button', 'submit']
+  const types = ['button', 'submit', 'cta']
   const sizes = ['lg', 'md', 'sm', 'xs']
 
   /* Loop through options and test against each one */
@@ -55,7 +55,12 @@ describe('Button', () => {
       expect(wrapper.html()).toMatchSnapshot()
       expect(wrapper.text()).toEqual(`Button ${type}`)
       /* Check that the button element has type="button" or type="submit". */
-      expect(wrapper.element.getAttribute('type')).toBe(type)
+      const expectedTypeAttr = type === 'cta' ? 'button' : type
+      expect(wrapper.element.getAttribute('type')).toBe(expectedTypeAttr)
+      /* Check that the button element has .btn-cta class when type is 'cta'. */
+      if (type === 'cta') {
+        expect(wrapper.classes()).toContain('btn-cta')
+      }
     })
   })
 

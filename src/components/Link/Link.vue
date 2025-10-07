@@ -50,14 +50,13 @@ const props = defineProps({
 const kindClass = computed(() => {
   const kind = (props.kind as 'primary' | 'secondary' | 'tertiary')
   switch (kind) {
-    case 'primary':
-      return 'link-primary'
     case 'secondary':
       return 'link-secondary'
     case 'tertiary':
       return 'link-tertiary'
+    case 'primary':
     default:
-      return ''
+      return 'link-primary'
   }
 })
 
