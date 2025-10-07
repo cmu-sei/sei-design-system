@@ -210,43 +210,44 @@
     &.btn-primary,
     &.btn-secondary {
       &:after {
-        @apply content-[''] inline-flex h-[11.27px] w-[0.8125rem] bg-center bg-cover transition-transform;
+        @apply content-[''] inline-flex h-[13px] w-[15px] transition-transform;
+        mask-image: var(--arrow-right-alt);
       }
     }
 
     &.btn-primary:not(.btn-white) {
       &:after {
-        background-image: var(--arrow-white);
+        @apply bg-white;
       }
     }
 
     &.btn-primary.btn-white {
       &::after {
-        background-image: var(--arrow-gray-950);
+        @apply bg-gray-950;
       }
     }
 
     &.btn-secondary.btn-blue {
       &:after {
-        background-image: var(--arrow-blue-800);
+        @apply bg-blue-800;
       }
     }
 
     &.btn-secondary.btn-gray {
       &:after {
-        background-image: var(--arrow-gray-800);
+        @apply bg-gray-800;
       }
     }
 
     &.btn-secondary.btn-red {
       &:after {
-        background-image: var(--arrow-red-800);
+        @apply bg-red-800;
       }
     }
 
     &.btn-secondary.btn-white {
       &:after {
-        background-image: var(--arrow-white);
+        @apply bg-white;
       }
     }
 

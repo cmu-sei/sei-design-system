@@ -52,11 +52,12 @@
   }
 
   &.link-cta {
-    @apply inline-flex flex-row items-center gap-2 text-sm font-semibold;
+    @apply inline-flex flex-row items-center gap-2 font-semibold;
     @apply transition-all duration-100 ease-linear;
 
     &:after {
-      @apply content-[''] inline-flex h-[11.27px] w-[0.8125rem] bg-center bg-cover transition-transform;
+      @apply content-[''] inline-flex h-[15px] w-[19px] top-px relative transition-transform;
+      mask-image: var(--arrow-right);
     }
 
     &:hover {
@@ -75,32 +76,32 @@
     &.link-primary {
       &.link-blue {
         &:after {
-          background-image: var(--arrow-blue-600);
+          @apply bg-blue-600;
         }
       }
 
       &.link-red {
         &:after {
-          background-image: var(--arrow-red-600);
+          @apply bg-red-600;
         }
       }
 
       &.link-white {
         &:after {
-          background-image: var(--arrow-white);
+          @apply bg-white;
         }
       }
     }
 
     &.link-secondary {
       &:after {
-        background-image: var(--arrow-gray-900);
+        @apply bg-gray-900;
       }
 
       &.link-blue {
         &:hover {
           &:after {
-            background-image: var(--arrow-blue-500);
+            @apply bg-blue-500;
           }
         }
       }
@@ -108,7 +109,7 @@
       &.link-red {
         &:hover {
           &:after {
-            background-image: var(--arrow-red-500);
+            @apply bg-red-500;
           }
         }
       }
@@ -116,7 +117,7 @@
       &.link-white {
         &:hover {
           &:after {
-            background-image: var(--arrow-white);
+            @apply bg-white;
           }
         }      
       }
@@ -124,12 +125,12 @@
 
     &.link-tertiary {
       &:after {
-        background-image: var(--arrow-gray-600);
+        @apply bg-gray-600;
       }
 
       &:hover {
         &:after {
-          background-image: var(--arrow-gray-900);
+          @apply bg-gray-900;
         }
       }
     }
