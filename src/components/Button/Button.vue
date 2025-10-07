@@ -114,44 +114,44 @@ const btnClass = computed(() => {
 
 const kindClass = computed(() => {
   switch (props.kind) {
-    case 'primary':
-      return 'btn-primary'
-    case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
-    case 'ghost':
-      return 'btn-ghost'
-    default:
-      return ''
+  case 'primary':
+    return 'btn-primary'
+  case 'secondary':
+    return 'btn-secondary'
+  case 'tertiary':
+    return 'btn-tertiary'
+  case 'ghost':
+    return 'btn-ghost'
+  default:
+    return ''
   }
 })
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'gray':
-      return 'btn-gray'
-    case 'blue':
-      return 'btn-blue'
-    case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
-    default:
-      return ''
+  case 'gray':
+    return 'btn-gray'
+  case 'blue':
+    return 'btn-blue'
+  case 'red':
+    return 'btn-red'
+  case 'white':
+    return 'btn-white'
+  default:
+    return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'lg':
-      return 'btn-lg'
-    case 'sm':
-      return 'btn-sm'
-    case 'xs':
-      return 'btn-xs'
-    default:
-      return ''
+  case 'lg':
+    return 'btn-lg'
+  case 'sm':
+    return 'btn-sm'
+  case 'xs':
+    return 'btn-xs'
+  default:
+    return ''
   }
 })
 

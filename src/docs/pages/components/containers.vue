@@ -846,24 +846,24 @@ const calloutVariants = ref<('gray' | 'orange' | 'red' | 'purple' | 'indigo' | '
 
 const calloutFillClass = (variant: string, type: string) => {
   switch(variant) {
-    case 'gray':
-      return type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
-    case 'orange':
-      return type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
-    case 'red': 
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-red-600 dark:fill-red-300'
-    case 'purple': 
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-purple-600 dark:fill-purple-300'
-    case 'indigo': 
-      return type === 'bold' ? 'fill-white dark:fill-black' :'fill-indigo-600 dark:fill-indigo-300'
-    case 'blue': 
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-blue-600 dark:fill-blue-300'
-    case 'teal': 
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-teal-600 dark:fill-teal-300'
-    case 'green': 
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-green-600 dark:fill-green-300'
-    default:
-      return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-gray-900 dark:fill-gray-300'
+  case 'gray':
+    return type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
+  case 'orange':
+    return type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
+  case 'red': 
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-red-600 dark:fill-red-300'
+  case 'purple': 
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-purple-600 dark:fill-purple-300'
+  case 'indigo': 
+    return type === 'bold' ? 'fill-white dark:fill-black' :'fill-indigo-600 dark:fill-indigo-300'
+  case 'blue': 
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-blue-600 dark:fill-blue-300'
+  case 'teal': 
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-teal-600 dark:fill-teal-300'
+  case 'green': 
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-green-600 dark:fill-green-300'
+  default:
+    return type === 'bold' ? 'fill-white dark:fill-black' : 'fill-gray-900 dark:fill-gray-300'
   }
 }
 

@@ -222,33 +222,33 @@ const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericF
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+  case '0':
+    return 'z-0'
+  case '10':
+    return 'z-10'
+  case '20':
+    return 'z-20'
+  case '30':
+    return 'z-30'
+  case '40':
+    return 'z-40'
+  case '50':
+    return 'z-50'
+  case 'auto':
+    return 'z-auto'
+  default:
+    return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-    case 'md':
-      return ''
-    case 'sm':
-      return 'btn-sm'
-    default:
-      return ''
+  case 'md':
+    return ''
+  case 'sm':
+    return 'btn-sm'
+  default:
+    return ''
   }
 })
 
@@ -258,29 +258,29 @@ const btnClass = computed(() => {
 
 const kindClass = computed(() => {
   switch (props.kind) {
-    case 'primary':
-      return 'btn-primary'
-    case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
-    case 'ghost':
-      return 'btn-ghost'
-    default:
-      return ''
+  case 'primary':
+    return 'btn-primary'
+  case 'secondary':
+    return 'btn-secondary'
+  case 'tertiary':
+    return 'btn-tertiary'
+  case 'ghost':
+    return 'btn-ghost'
+  default:
+    return ''
   }
 })
 
 const variantClass = computed(() => {
   switch (props.variant) {
-    case 'blue':
-      return 'btn-blue'
-    case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
-    default:
-      return ''
+  case 'blue':
+    return 'btn-blue'
+  case 'red':
+    return 'btn-red'
+  case 'white':
+    return 'btn-white'
+  default:
+    return ''
   }
 })
 

@@ -214,137 +214,137 @@ const resultClick = (result: TopFiveChartResult) => {
 
 const getProgressColor = (index: number) => {
   switch (props.variant) {
-    case "teal":
-      if (index === 0) {
-        return "bg-teal-800 dark:bg-teal-600"
-      } else if (index === 1) {
-        return "bg-teal-700 dark:bg-teal-500"
-      } else if (index === 2) {
-        return "bg-teal-600 dark:bg-teal-400"
-      } else if (index === 3) {
-        return "bg-teal-500 dark:bg-teal-300"
-      } else if (index === 4) {
-        return "bg-teal-400 dark:bg-teal-200"
-      }
-      break;
-    case "red":
-      if (index === 0) {
-        return "bg-red-800 dark:bg-red-600"
-      } else if (index === 1) {
-        return "bg-red-700 dark:bg-red-500"
-      } else if (index === 2) {
-        return "bg-red-600 dark:bg-red-400"
-      } else if (index === 3) {
-        return "bg-red-500 dark:bg-red-300"
-      } else if (index === 4) {
-        return "bg-red-400 dark:bg-red-200"
-      }
-      break;
-    case "gray":
-      if (index === 0) {
-        return "bg-gray-800 dark:bg-gray-600"
-      } else if (index === 1) {
-        return "bg-gray-700 dark:bg-gray-500"
-      } else if (index === 2) {
-        return "bg-gray-600 dark:bg-gray-400"
-      } else if (index === 3) {
-        return "bg-gray-500 dark:bg-gray-300"
-      } else if (index === 4) {
-        return "bg-gray-400 dark:bg-gray-200"
-      }
-      break;
-    case "tan":
-      if (index === 0) {
-        return "bg-tan-800 dark:bg-tan-600"
-      } else if (index === 1) {
-        return "bg-tan-700 dark:bg-tan-500"
-      } else if (index === 2) {
-        return "bg-tan-600 dark:bg-tan-400"
-      } else if (index === 3) {
-        return "bg-tan-500 dark:bg-tan-300"
-      } else if (index === 4) {
-        return "bg-tan-400 dark:bg-tan-200"
-      }
-      break;
-    case "green":
-      if (index === 0) {
-        return "bg-green-800 dark:bg-green-600"
-      } else if (index === 1) {
-        return "bg-green-700 dark:bg-green-500"
-      } else if (index === 2) {
-        return "bg-green-600 dark:bg-green-400"
-      } else if (index === 3) {
-        return "bg-green-500 dark:bg-green-300"
-      } else if (index === 4) {
-        return "bg-green-400 dark:bg-green-200"
-      }
-      break;
-    case "yellow":
-      if (index === 0) {
-        return "bg-yellow-800 dark:bg-yellow-600"
-      } else if (index === 1) {
-        return "bg-yellow-700 dark:bg-yellow-500"
-      } else if (index === 2) {
-        return "bg-yellow-600 dark:bg-yellow-400"
-      } else if (index === 3) {
-        return "bg-yellow-500 dark:bg-yellow-300"
-      } else if (index === 4) {
-        return "bg-yellow-400 dark:bg-yellow-200"
-      }
-      break;
-    case "orange":
-      if (index === 0) {
-        return "bg-orange-800 dark:bg-orange-600"
-      } else if (index === 1) {
-        return "bg-orange-700 dark:bg-orange-500"
-      } else if (index === 2) {
-        return "bg-orange-600 dark:bg-orange-400"
-      } else if (index === 3) {
-        return "bg-orange-500 dark:bg-orange-300"
-      } else if (index === 4) {
-        return "bg-orange-400 dark:bg-orange-200"
-      }
-      break;
-    case "indigo":
-      if (index === 0) {
-        return "bg-indigo-800 dark:bg-indigo-600"
-      } else if (index === 1) {
-        return "bg-indigo-700 dark:bg-indigo-500"
-      } else if (index === 2) {
-        return "bg-indigo-600 dark:bg-indigo-400"
-      } else if (index === 3) {
-        return "bg-indigo-500 dark:bg-indigo-300"
-      } else if (index === 4) {
-        return "bg-indigo-400 dark:bg-indigo-200"
-      }
-      break;
-    case "purple":
-      if (index === 0) {
-        return "bg-purple-800 dark:bg-purple-600"
-      } else if (index === 1) {
-        return "bg-purple-700 dark:bg-purple-500"
-      } else if (index === 2) {
-        return "bg-purple-600 dark:bg-purple-400"
-      } else if (index === 3) {
-        return "bg-purple-500 dark:bg-purple-300"
-      } else if (index === 4) {
-        return "bg-purple-400 dark:bg-purple-200"
-      }
-      break;
-    case "blue":
-    default:
-      if (index === 0) {
-        return "bg-blue-800 dark:bg-blue-600"
-      } else if (index === 1) {
-        return "bg-blue-700 dark:bg-blue-500"
-      } else if (index === 2) {
-        return "bg-blue-600 dark:bg-blue-400"
-      } else if (index === 3) {
-        return "bg-blue-500 dark:bg-blue-300"
-      } else if (index === 4) {
-        return "bg-blue-400 dark:bg-blue-200"
-      }
-      break;
+  case "teal":
+    if (index === 0) {
+      return "bg-teal-800 dark:bg-teal-600"
+    } else if (index === 1) {
+      return "bg-teal-700 dark:bg-teal-500"
+    } else if (index === 2) {
+      return "bg-teal-600 dark:bg-teal-400"
+    } else if (index === 3) {
+      return "bg-teal-500 dark:bg-teal-300"
+    } else if (index === 4) {
+      return "bg-teal-400 dark:bg-teal-200"
+    }
+    break;
+  case "red":
+    if (index === 0) {
+      return "bg-red-800 dark:bg-red-600"
+    } else if (index === 1) {
+      return "bg-red-700 dark:bg-red-500"
+    } else if (index === 2) {
+      return "bg-red-600 dark:bg-red-400"
+    } else if (index === 3) {
+      return "bg-red-500 dark:bg-red-300"
+    } else if (index === 4) {
+      return "bg-red-400 dark:bg-red-200"
+    }
+    break;
+  case "gray":
+    if (index === 0) {
+      return "bg-gray-800 dark:bg-gray-600"
+    } else if (index === 1) {
+      return "bg-gray-700 dark:bg-gray-500"
+    } else if (index === 2) {
+      return "bg-gray-600 dark:bg-gray-400"
+    } else if (index === 3) {
+      return "bg-gray-500 dark:bg-gray-300"
+    } else if (index === 4) {
+      return "bg-gray-400 dark:bg-gray-200"
+    }
+    break;
+  case "tan":
+    if (index === 0) {
+      return "bg-tan-800 dark:bg-tan-600"
+    } else if (index === 1) {
+      return "bg-tan-700 dark:bg-tan-500"
+    } else if (index === 2) {
+      return "bg-tan-600 dark:bg-tan-400"
+    } else if (index === 3) {
+      return "bg-tan-500 dark:bg-tan-300"
+    } else if (index === 4) {
+      return "bg-tan-400 dark:bg-tan-200"
+    }
+    break;
+  case "green":
+    if (index === 0) {
+      return "bg-green-800 dark:bg-green-600"
+    } else if (index === 1) {
+      return "bg-green-700 dark:bg-green-500"
+    } else if (index === 2) {
+      return "bg-green-600 dark:bg-green-400"
+    } else if (index === 3) {
+      return "bg-green-500 dark:bg-green-300"
+    } else if (index === 4) {
+      return "bg-green-400 dark:bg-green-200"
+    }
+    break;
+  case "yellow":
+    if (index === 0) {
+      return "bg-yellow-800 dark:bg-yellow-600"
+    } else if (index === 1) {
+      return "bg-yellow-700 dark:bg-yellow-500"
+    } else if (index === 2) {
+      return "bg-yellow-600 dark:bg-yellow-400"
+    } else if (index === 3) {
+      return "bg-yellow-500 dark:bg-yellow-300"
+    } else if (index === 4) {
+      return "bg-yellow-400 dark:bg-yellow-200"
+    }
+    break;
+  case "orange":
+    if (index === 0) {
+      return "bg-orange-800 dark:bg-orange-600"
+    } else if (index === 1) {
+      return "bg-orange-700 dark:bg-orange-500"
+    } else if (index === 2) {
+      return "bg-orange-600 dark:bg-orange-400"
+    } else if (index === 3) {
+      return "bg-orange-500 dark:bg-orange-300"
+    } else if (index === 4) {
+      return "bg-orange-400 dark:bg-orange-200"
+    }
+    break;
+  case "indigo":
+    if (index === 0) {
+      return "bg-indigo-800 dark:bg-indigo-600"
+    } else if (index === 1) {
+      return "bg-indigo-700 dark:bg-indigo-500"
+    } else if (index === 2) {
+      return "bg-indigo-600 dark:bg-indigo-400"
+    } else if (index === 3) {
+      return "bg-indigo-500 dark:bg-indigo-300"
+    } else if (index === 4) {
+      return "bg-indigo-400 dark:bg-indigo-200"
+    }
+    break;
+  case "purple":
+    if (index === 0) {
+      return "bg-purple-800 dark:bg-purple-600"
+    } else if (index === 1) {
+      return "bg-purple-700 dark:bg-purple-500"
+    } else if (index === 2) {
+      return "bg-purple-600 dark:bg-purple-400"
+    } else if (index === 3) {
+      return "bg-purple-500 dark:bg-purple-300"
+    } else if (index === 4) {
+      return "bg-purple-400 dark:bg-purple-200"
+    }
+    break;
+  case "blue":
+  default:
+    if (index === 0) {
+      return "bg-blue-800 dark:bg-blue-600"
+    } else if (index === 1) {
+      return "bg-blue-700 dark:bg-blue-500"
+    } else if (index === 2) {
+      return "bg-blue-600 dark:bg-blue-400"
+    } else if (index === 3) {
+      return "bg-blue-500 dark:bg-blue-300"
+    } else if (index === 4) {
+      return "bg-blue-400 dark:bg-blue-200"
+    }
+    break;
   }
 }
 </script>

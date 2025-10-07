@@ -543,12 +543,12 @@ const displayedFieldKeys = computed(() => {
 const paddingClass = computed(() => {
   const { density } = props
   switch (density) {
-    case densityTypes[0]: // comfortable
-      return 'table-prose-lg'
-    case densityTypes[1]: // condensed
-      return 'table-prose-sm'
-    default:
-      return ''
+  case densityTypes[0]: // comfortable
+    return 'table-prose-lg'
+  case densityTypes[1]: // condensed
+    return 'table-prose-sm'
+  default:
+    return ''
   }
 })
 

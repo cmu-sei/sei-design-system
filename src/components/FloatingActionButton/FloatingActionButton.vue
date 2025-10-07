@@ -184,13 +184,13 @@ const props = defineProps({
   /**
    * Determines whether to display the indicator or not.
    */
-   showIndicator: {
+  showIndicator: {
     type: Boolean, default: false
   },
   /**
    * Determines the color of the trigger button's indictor.
    */
-   indicatorVariant: {
+  indicatorVariant: {
     type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,
     default: 'blue'
   },

@@ -885,7 +885,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab tab-sm tab-underline tab-red active"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-red active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -911,7 +911,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-red"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-red"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
@@ -936,7 +936,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-red"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-red"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
@@ -1014,7 +1014,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab tab-sm tab-underline tab-blue active"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-blue active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -1040,7 +1040,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-blue"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-blue"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
@@ -1065,7 +1065,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-blue"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-blue"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
@@ -1143,7 +1143,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-1__tab-content"
           aria-selected="true"
-          class="tab tab-sm tab-underline tab-gray active"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-gray active"
           data-active="true"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
@@ -1169,7 +1169,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-2__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-gray"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-gray"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
@@ -1194,7 +1194,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
         <button
           aria-controls="sds-tabs-v-0__tab-3__tab-content"
           aria-selected="false"
-          class="tab tab-sm tab-underline tab-gray"
+          class="tab tab-sm tab-underline tab-underline-no-rule tab-gray"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
