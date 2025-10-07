@@ -195,6 +195,58 @@
     }
   }
 
+  &.btn-cta {
+    &.btn-primary,
+    &.btn-secondary {
+      &:after {
+        @apply content-[''] inline-flex h-[11px] w-[12px] transition-transform;
+        mask-image: var(--chevrons-right);
+      }
+    }
+
+    &.btn-primary:not(.btn-white) {
+      &:after {
+        @apply bg-white;
+      }
+    }
+
+    &.btn-primary.btn-white {
+      &::after {
+        @apply bg-gray-950;
+      }
+    }
+
+    &.btn-secondary.btn-blue {
+      &:after {
+        @apply bg-blue-600;
+      }
+    }
+
+    &.btn-secondary.btn-gray {
+      &:after {
+        @apply bg-gray-800;
+      }
+    }
+
+    &.btn-secondary.btn-red {
+      &:after {
+        @apply bg-red-600;
+      }
+    }
+
+    &.btn-secondary.btn-white {
+      &:after {
+        @apply bg-white;
+      }
+    }
+
+    &:hover {
+      &:after {
+        @apply translate-x-1;
+      }
+    }
+  }
+
   /* Block variant */
 
   &.btn-block {
