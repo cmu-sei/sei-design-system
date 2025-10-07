@@ -762,7 +762,7 @@ const comboBoxTabs = computed({
       key: String(group.key),
       title: group.label,
       count: group.count,
-      active: String(group.key) === String(activeGroupKey.value),
+      active: String(group.key) === String(activeGroupKey.value) && group.count > 0,
       disabled: group.count < 1
     }))
   },
