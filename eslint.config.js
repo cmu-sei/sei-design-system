@@ -26,7 +26,7 @@ export default typescriptEslint.config(
     rules: {
       'vue/no-v-html': 'off',
       '@typescript-eslint/prefer-for-of': 'off',
-      'indent': ['error', 2],
+      'indent': ['error', 2, { 'SwitchCase': 1 }],
       // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       // 'vue/comment-directive': 'off',

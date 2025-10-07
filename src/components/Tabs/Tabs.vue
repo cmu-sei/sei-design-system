@@ -241,47 +241,47 @@ const activeTabCalcPosition = computed(() => {
 
 const tabIndicatorClass = computed(() => {
   switch (props.variant) {
-  case 'blue':
-    return 'tab-indicator-blue'
-  case 'gray':
-    return 'tab-indicator-gray'
-  case 'red':
-  default:
-    return 'tab-indicator-red'
+    case 'blue':
+      return 'tab-indicator-blue'
+    case 'gray':
+      return 'tab-indicator-gray'
+    case 'red':
+    default:
+      return 'tab-indicator-red'
   }
 })
 
 const textSizeClass = computed(() => {
   switch (props.size) {
-  case 'lg':
-    return 'tab-lg'
-  case 'sm':
-  default:
-    return 'tab-sm'
+    case 'lg':
+      return 'tab-lg'
+    case 'sm':
+    default:
+      return 'tab-sm'
   }
 })
 
 const typeClass = computed(() => {
   switch (props.type) {
-  case 'block':
-    return 'tab-block'
-  case 'underline':
-    return 'tab-underline'
-  case 'folder':
-  default:
-    return 'tab-folder'
+    case 'block':
+      return 'tab-block'
+    case 'underline':
+      return 'tab-underline'
+    case 'folder':
+    default:
+      return 'tab-folder'
   }
 })
 
 const variantClass = computed(() => {
   switch (props.variant) {
-  case 'blue':
-    return 'tab-blue'
-  case 'gray':
-    return 'tab-gray'
-  case 'red':
-  default:
-    return 'tab-red'
+    case 'blue':
+      return 'tab-blue'
+    case 'gray':
+      return 'tab-gray'
+    case 'red':
+    default:
+      return 'tab-red'
   }
 })
 
@@ -348,18 +348,18 @@ const onTabKeydown = async (event: KeyboardEvent, tab: TabItem): Promise<void> =
 
   let nextIndex: number = currentIndex
   switch (key) {
-  case 'ArrowLeft':
-    nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length
-    break
-  case 'ArrowRight':
-    nextIndex = (currentIndex + 1) % enabledTabs.length
-    break
-  case 'Home':
-    nextIndex = 0
-    break
-  case 'End':
-    nextIndex = enabledTabs.length - 1
-    break
+    case 'ArrowLeft':
+      nextIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length
+      break
+    case 'ArrowRight':
+      nextIndex = (currentIndex + 1) % enabledTabs.length
+      break
+    case 'Home':
+      nextIndex = 0
+      break
+    case 'End':
+      nextIndex = enabledTabs.length - 1
+      break
   }
 
   const nextTab = enabledTabs[nextIndex]
