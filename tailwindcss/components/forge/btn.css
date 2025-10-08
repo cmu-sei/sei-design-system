@@ -213,37 +213,68 @@
     @apply dark:shadow-inner dark:text-white dark:bg-white/10;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary:after, .sds-theme-forge .btn.btn-cta.btn-secondary:after) {
-    @apply content-[''] inline-flex h-[11px] w-[12px] transition-transform;
-    mask-image: var(--chevrons-right);
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary, .sds-theme-forge .btn.btn-cta.btn-secondary) {
+    &:after {
+      content: '';
+      display: inline-flex;
+      height: 11px;
+      width: 12px;
+      margin-left: calc(var(--spacing) * 2);
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      mask-image: var(--chevrons-right);
+      mask-size: contain;
+      mask-repeat: no-repeat;
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white):after) {
-    @apply bg-white;
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white)) {
+    &:after {
+      background-color: white;
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-white::after) {
-    @apply bg-gray-950;
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-white) {
+    &:after {
+      background-color: var(--color-gray-950);
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-blue:after) {
-    @apply bg-blue-600;
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary) {
+    &:after {
+      background-color: var(--color-blue-600);
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-gray:after) {
-    @apply bg-gray-800;
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-blue) {
+    &:after {
+      background-color: var(--color-blue-600);
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-red:after) {
-    @apply bg-red-600;
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-gray) {
+    &:after {
+      background-color: var(--color-gray-800);
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-white:after) {
-    @apply bg-white;
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-red) {
+    &:after {
+      background-color: var(--color-red-600);
+    }
   }
 
-  :where(.sds-theme-forge .btn.btn-cta:hover:after) {
-    @apply translate-x-1;
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-white) {
+    &:after {
+      background-color: white;
+    }
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta:hover) {
+    &:after {
+      transform: translateX(0.25rem);
+    }
   }
 
   /* Block variant */

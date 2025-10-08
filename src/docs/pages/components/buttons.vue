@@ -503,8 +503,10 @@
         </SdsButton>
         <SdsButton
           kind="secondary"
+          type="cta"
+          variant="blue"
         >
-          Button
+          Button CTA
         </SdsButton>
         <SdsButton
           kind="secondary"
