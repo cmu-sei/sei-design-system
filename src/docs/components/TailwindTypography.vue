@@ -253,8 +253,8 @@
         Test 7: prose-code and prose-pre Variants
       </div>
       <span class="variant-label">prose-code:text-pink-600 prose-pre:bg-gray-900</span>
-      <div class="prose prose-code:text-pink-600 prose-pre:bg-gray-900">
-        <p>Inline <code>code snippet</code> should be pink.</p>
+      <div class="prose prose-code:text-purple-200 prose-pre:bg-gray-900">
+        <p>Inline <code>code snippet</code> should be purple 200.</p>
         <pre><code>// Code block should have dark background
   function test() {
     return true;
