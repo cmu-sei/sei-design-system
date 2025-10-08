@@ -26,7 +26,7 @@
                 :aria-expanded="open"
                 @click="open = !open"
               >
-                <div class="w-6 h-6">
+                <span class="block w-6 h-6">
                   <svg
                     v-if="open"
                     class="inline-block h-6 w-6"
@@ -58,7 +58,7 @@
                       />
                     </svg>
                   </slot>
-                </div>
+                </span>
                 <span class="sr-only">{{ open ? 'close' : 'open' }}</span>
               </button>
             </SdsIndicator>
