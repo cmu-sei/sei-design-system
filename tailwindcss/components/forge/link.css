@@ -71,11 +71,21 @@
         &:after {
           @apply bg-blue-600;
         }
+        &:hover {
+          &:after {
+            @apply bg-blue-500;
+          }
+        }
       }
 
       &.link-red {
         &:after {
           @apply bg-red-600;
+        }
+        &:hover {
+          &:after {
+            @apply bg-red-500;
+          }
         }
       }
 
@@ -166,45 +176,4 @@
       }
     }
   }
-
-  /* &.link-cta {
-    @apply text-sm font-semibold;
-
-    &:after {
-      @apply inline-block text-lg leading-4 relative ml-1;
-      content: '\00BB';
-    }
-
-    &:hover:after {
-      @apply no-underline;
-    }
-  }
-
-  &.link-cta-right {
-    &:after {
-      @apply rotate-0;
-    }
-  }
-
-  &.link-cta-left {
-    &:after {
-      @apply hidden;
-    }
-    &:before {
-      @apply inline-block text-lg leading-4 relative mr-1 rotate-180 pb-1;
-      content: '\00BB';
-    }
-  }
-
-  &.link-cta-down {
-    &:after {
-      @apply rotate-90 pb-1;
-    }
-  }
-
-  &.link-cta-up {
-    &:after {
-      @apply -rotate-90 pb-1.5;
-    }
-  } */
 }
