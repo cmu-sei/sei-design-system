@@ -1,282 +1,280 @@
-.btn:where(.sds-theme-plaid *) {
-  /* Base styles */
+@layer components {
+  :where(.sds-theme-plaid .btn) {
 
-  @apply transition-all duration-100 ease-linear select-none whitespace-nowrap inline-flex flex-row items-center gap-2 cursor-pointer;
-  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
-  @apply text-base;
+    /* Base styles */
 
-  & svg,
-  &:after {
+    @apply transition-all duration-100 ease-linear select-none whitespace-nowrap inline-flex flex-row items-center gap-2 cursor-pointer;
+    @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
+    @apply text-base;
+  }
+
+  :where(.sds-theme-plaid .btn svg, .sds-theme-plaid .btn:after) {
     @apply flex flex-col self-center;
   }
 
-  &.btn-xl {
+  :where(.sds-theme-plaid .btn.btn-xl) {
     @apply py-4 px-16 text-xl;
   }
 
-  &.btn-lg {
+  :where(.sds-theme-plaid .btn.btn-lg) {
     @apply py-3 px-12 text-lg;
   }
 
-  &.btn-sm {
+  :where(.sds-theme-plaid .btn.btn-sm) {
     @apply py-1 px-4 text-sm;
   }
 
-  &.btn-xs {
+  :where(.sds-theme-plaid .btn.btn-xs) {
     @apply py-0.5 px-2 text-xs;
   }
 
   /* Kind */
 
-  &.btn-primary {
+  :where(.sds-theme-plaid .btn.btn-primary) {
     @apply py-2.5 px-[calc(1rem+2px)] text-white bg-gray-800;
     @apply hover:bg-gray-700;
-
-    &:active, &.active {
-      @apply bg-gray-900;
-    }
   }
 
-  &.btn-primary.btn-blue {
+  :where(.sds-theme-plaid .btn.btn-primary:active, .sds-theme-plaid .btn.btn-primary.active) {
+    @apply bg-gray-900;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-primary.btn-blue) {
     @apply bg-blue-800;
     @apply hover:bg-blue-700;
-
-    &:active, &.active {
-      @apply bg-blue-900;
-    }
   }
 
-  &.btn-primary.btn-red {
+  :where(.sds-theme-plaid .btn.btn-primary.btn-blue:active, .sds-theme-plaid .btn.btn-primary.btn-blue.active) {
+    @apply bg-blue-900;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-primary.btn-red) {
     @apply bg-red-600;
     @apply hover:bg-red-500;
-
-    &:active, &.active {
-      @apply bg-red-800;
-    }
   }
 
-  &.btn-primary.btn-white {
+  :where(.sds-theme-plaid .btn.btn-primary.btn-red:active, .sds-theme-plaid .btn.btn-primary.btn-red.active) {
+    @apply bg-red-800;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-primary.btn-white) {
     @apply bg-gray-25 text-gray-950;
     @apply hover:bg-white hover:text-black;
-
-    &:active, &.active {
-      @apply text-gray-900 bg-white/90 shadow-inner;
-    }
   }
 
-  &.btn-secondary {
+  :where(.sds-theme-plaid .btn.btn-primary.btn-white:active, .sds-theme-plaid .btn.btn-primary.btn-white.active) {
+    @apply text-gray-900 bg-white/90 shadow-inner;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-secondary) {
     @apply border-2 py-2 px-4 text-gray-800 bg-gray-25 border-gray-800;
     @apply hover:bg-white;
-
-    &:active, &.active {
-      @apply bg-gray-100;
-    }
   }
 
-  &.btn-secondary.btn-blue {
+  :where(.sds-theme-plaid .btn.btn-secondary:active, .sds-theme-plaid .btn.btn-secondary.active) {
+    @apply bg-gray-100;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-blue) {
     @apply border-2 py-2 px-4 text-blue-800 bg-gray-25 border-blue-800;
     @apply hover:bg-white;
-
-    &:active, &.active {
-      @apply bg-gray-100;
-    }
   }
 
-  &.btn-secondary.btn-red {
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-blue:active, .sds-theme-plaid .btn.btn-secondary.btn-blue.active) {
+    @apply bg-gray-100;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-red) {
     @apply text-red-800 border-red-800;
-
-    &:active, &.active {
-      @apply bg-gray-100;
-    }
   }
 
-  &.btn-secondary.btn-white {
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-red:active, .sds-theme-plaid .btn.btn-secondary.btn-red.active) {
+    @apply bg-gray-100;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-white) {
     @apply text-white bg-gray-25/5 border-white;
     @apply hover:bg-gray-25/10 border-white;
-
-    &:active, &.active {
-      @apply bg-gray-25/15;
-    }
   }
 
-  &.btn-tertiary {
+  :where(.sds-theme-plaid .btn.btn-secondary.btn-white:active, .sds-theme-plaid .btn.btn-secondary.btn-white.active) {
+    @apply bg-gray-25/15;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary) {
     @apply pt-2.5 pb-1.5 px-[calc(1rem+2px)] border-b-4 border-gray-600 text-gray-800 font-semibold;
     @apply !shadow-gray-100 shadow-[inset_0_0_0_0] hover:shadow-[inset_0_-2.5rem_0_0];
-
-    &:active, &.active {
-      @apply !shadow-gray-200/50 shadow-[inset_0_-2.5rem_0_0];
-    }
-
-    &.btn-xl {
-      @apply hover:shadow-[inset_0_-10rem_0_0];
-
-      &:active, &.active {
-        @apply shadow-[inset_0_-10rem_0_0];
-      }
-    }
-    &.btn-lg {
-      @apply hover:shadow-[inset_0_-8rem_0_0];
-
-      &:active, &.active {
-        @apply shadow-[inset_0_-8rem_0_0];
-      }
-    }
-    &.btn-sm {
-      @apply hover:shadow-[inset_0_-5rem_0_0];
-
-      &:active, &.active {
-        @apply shadow-[inset_0_-5rem_0_0];
-      }
-    }
-    &.btn-sm {
-      @apply hover:shadow-[inset_0_-5rem_0_0];
-
-      &:active, &.active {
-        @apply shadow-[inset_0_-5rem_0_0];
-      }
-    }
   }
 
-  &.btn-tertiary.btn-blue {
+  :where(.sds-theme-plaid .btn.btn-tertiary:active, .sds-theme-plaid .btn.btn-tertiary.active) {
+    @apply !shadow-gray-200/50 shadow-[inset_0_-2.5rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-xl) {
+    @apply hover:shadow-[inset_0_-10rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-xl:active, .sds-theme-plaid .btn.btn-tertiary.btn-xl.active) {
+    @apply shadow-[inset_0_-10rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-lg) {
+    @apply hover:shadow-[inset_0_-8rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-lg:active, .sds-theme-plaid .btn.btn-tertiary.btn-lg.active) {
+    @apply shadow-[inset_0_-8rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-sm) {
+    @apply hover:shadow-[inset_0_-5rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-sm:active, .sds-theme-plaid .btn.btn-tertiary.btn-sm.active) {
+    @apply shadow-[inset_0_-5rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-blue) {
     @apply pt-2.5 pb-1.5 px-[calc(1rem+2px)] border-b-4 border-blue-600 text-gray-800 font-semibold;
     @apply !shadow-gray-100 shadow-[inset_0_0_0_0] hover:shadow-[inset_0_-2.5rem_0_0];
-
-    &:active, &.active {
-      @apply !shadow-gray-200/50 shadow-[inset_0_-2.5rem_0_0];
-
-      & svg[data-id="spinner"] {
-        @apply !text-blue-600;
-      }
-    }
   }
 
-  &.btn-tertiary.btn-red {
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-blue:active, .sds-theme-plaid .btn.btn-tertiary.btn-blue.active) {
+    @apply !shadow-gray-200/50 shadow-[inset_0_-2.5rem_0_0];
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-blue:active svg[data-id="spinner"], .sds-theme-plaid .btn.btn-tertiary.btn-blue.active svg[data-id="spinner"]) {
+    @apply !text-blue-600;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-red) {
     @apply text-gray-800 border-red-600;
     @apply !shadow-red-800/5;
-
-    &:active, &.active {
-      @apply !shadow-red-900/10;
-
-      & svg[data-id="spinner"] {
-        @apply !text-red-600;
-      }
-    }
   }
 
-  &.btn-tertiary.btn-white {
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-red:active, .sds-theme-plaid .btn.btn-tertiary.btn-red.active) {
+    @apply !shadow-red-900/10;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-red:active svg[data-id="spinner"], .sds-theme-plaid .btn.btn-tertiary.btn-red.active svg[data-id="spinner"]) {
+    @apply !text-red-600;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
     @apply hover:!shadow-gray-25/10;
-    &:active, &.active {
-      @apply !shadow-gray-25/15;
-    }
   }
 
-  &.btn-ghost {
+  :where(.sds-theme-plaid .btn.btn-tertiary.btn-white:active, .sds-theme-plaid .btn.btn-tertiary.btn-white.active) {
+    @apply !shadow-gray-25/15;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-ghost) {
     @apply text-gray-800 border-2 border-transparent py-2 px-4;
     @apply hover:bg-gray-25;
-
-    &:active, &.active {
-      @apply bg-gray-50;
-    }
   }
 
-  &.btn-ghost.btn-blue {
+  :where(.sds-theme-plaid .btn.btn-ghost:active, .sds-theme-plaid .btn.btn-ghost.active) {
+    @apply bg-gray-50;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-blue) {
     @apply text-blue-800 border-2 border-transparent py-2 px-4;
     @apply hover:bg-gray-25;
-
-    &:active, &.active {
-      @apply bg-gray-50;
-    }
   }
 
-  &.btn-ghost.btn-red {
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-blue:active, .sds-theme-plaid .btn.btn-ghost.btn-blue.active) {
+    @apply bg-gray-50;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-red) {
     @apply text-red-800;
-
-    &:active, &.active {
-      @apply bg-gray-50;
-    }
   }
 
-  &.btn-ghost.btn-white {
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-red:active, .sds-theme-plaid .btn.btn-ghost.btn-red.active) {
+    @apply bg-gray-50;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-white) {
     @apply text-white;
     @apply hover:bg-gray-25/10;
-    &:active, &.active {
-      @apply bg-gray-25/15;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-ghost.btn-white:active, .sds-theme-plaid .btn.btn-ghost.btn-white.active) {
+    @apply bg-gray-25/15;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-cta.btn-primary, .sds-theme-plaid .btn.btn-cta.btn-secondary) {
+    &:after {
+      @apply content-[''] inline-flex h-[13px] w-[15px] transition-transform;
+      mask-image: var(--arrow-right-alt);
     }
   }
 
-  &.btn-cta {
-
-    &.btn-primary,
-    &.btn-secondary {
-      &:after {
-        @apply content-[''] inline-flex h-[13px] w-[15px] transition-transform;
-        mask-image: var(--arrow-right-alt);
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-primary:not(.btn-white)) {
+    &:after {
+      background-color: white;
     }
+  }
 
-    &.btn-primary:not(.btn-white) {
-      &:after {
-        @apply bg-white;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-primary.btn-white) {
+    &:after {
+      background-color: var(--color-gray-950);
     }
+  }
 
-    &.btn-primary.btn-white {
-      &::after {
-        @apply bg-gray-950;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-secondary.btn-blue) {
+    &:after {
+      background-color: var(--color-blue-800);
     }
+  }
 
-    &.btn-secondary.btn-blue {
-      &:after {
-        @apply bg-blue-800;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-secondary.btn-gray) {
+    &:after {
+      background-color: var(--color-gray-800);
     }
+  }
 
-    &.btn-secondary.btn-gray {
-      &:after {
-        @apply bg-gray-800;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-secondary.btn-red) {
+    &:after {
+      background-color: var(--color-red-800);
     }
+  }
 
-    &.btn-secondary.btn-red {
-      &:after {
-        @apply bg-red-800;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta.btn-secondary.btn-white) {
+    &:after {
+      background-color: white;
     }
+  }
 
-    &.btn-secondary.btn-white {
-      &:after {
-        @apply bg-white;
-      }
-    }
-
-    &:hover {
-      &:after {
-        @apply translate-x-1;
-      }
+  :where(.sds-theme-plaid .btn.btn-cta:hover) {
+    &:after {
+      transform: translateX(0.25rem);
     }
   }
 
   /* Block variant */
 
-  &.btn-block {
+  :where(.sds-theme-plaid .btn.btn-block) {
     @apply block w-full;
   }
 
   /* Action states */
 
-  &.disabled, &[disabled] {
+  :where(.sds-theme-plaid .btn.disabled, .sds-theme-plaid .btn[disabled]) {
     /* Default buttons */
     @apply pointer-events-none;
-    &.btn-primary {
-      @apply opacity-90 border-transparent text-gray-25;
-      &.btn-white {
-        @apply text-gray-900;
-      }
-    }
-    &.btn-secondary, &.btn-tertiary, &.btn-ghost {
-      @apply opacity-60;
-    }
+  }
+
+  :where(.sds-theme-plaid .btn.disabled.btn-primary, .sds-theme-plaid .btn[disabled].btn-primary) {
+    @apply opacity-90 border-transparent text-gray-25;
+  }
+
+  :where(.sds-theme-plaid .btn.disabled.btn-primary.btn-white, .sds-theme-plaid .btn[disabled].btn-primary.btn-white) {
+    @apply text-gray-900;
+  }
+
+  :where(.sds-theme-plaid .btn.disabled.btn-secondary, .sds-theme-plaid .btn.disabled.btn-tertiary, .sds-theme-plaid .btn.disabled.btn-ghost, .sds-theme-plaid .btn[disabled].btn-secondary, .sds-theme-plaid .btn[disabled].btn-tertiary, .sds-theme-plaid .btn[disabled].btn-ghost) {
+    @apply opacity-60;
   }
 }
