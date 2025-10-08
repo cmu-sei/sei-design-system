@@ -213,13 +213,13 @@ const maxWidthClass = (index: number, length: number) => {
   if (index === length)
     return 'max-w-fit'
   switch (props.size) {
-  default:
-  case 'md':
-    return props.density === 'condensed' ? 'max-w-6' : 'max-w-9'
-  case 'sm':
-    return props.density === 'condensed' ? 'max-w-5' : 'max-w-7'
-  case 'xs':
-    return props.density === 'condensed' ? 'max-w-3' : 'max-w-5'
+    default:
+    case 'md':
+      return props.density === 'condensed' ? 'max-w-6' : 'max-w-9'
+    case 'sm':
+      return props.density === 'condensed' ? 'max-w-5' : 'max-w-7'
+    case 'xs':
+      return props.density === 'condensed' ? 'max-w-3' : 'max-w-5'
   }
 }
 
@@ -240,49 +240,49 @@ const maskSpec = (theme='forge') => {
 
 
   switch (props.shape) {
-  case 'circle':
-    switch (props.size) {
-    case 'xs':
-      maskRadius = 1
-      maskSize = 13.5
-      offset = props.density === 'condensed' ? -11 : -4
+    case 'circle':
+      switch (props.size) {
+        case 'xs':
+          maskRadius = 1
+          maskSize = 13.5
+          offset = props.density === 'condensed' ? -11 : -4
+          break
+        case 'sm':
+          maskRadius = 1
+          maskSize = 17
+          offset = props.density === 'condensed' ? -8 : 0
+          break
+        case 'md':
+          maskRadius = 1
+          maskSize = 26
+          offset = props.density === 'condensed' ? -12 : 0
+          break
+      }
+      maskX = vbWidth + offset
+      maskY = vbHeight/2
       break
-    case 'sm':
-      maskRadius = 1
-      maskSize = 17
-      offset = props.density === 'condensed' ? -8 : 0
+    case 'square':
+      switch (props.size) {
+        case 'xs':
+          maskRadius = theme === 'plaid' ? 0 : 4
+          maskSize = 26
+          maskX = props.density === 'condensed' ? 976 : 983
+          maskY = 487
+          break
+        case 'sm':
+          maskRadius = theme === 'plaid' ? 0 : 4
+          maskSize = 34
+          maskX = props.density === 'condensed' ? 975 : 983
+          maskY = 483
+          break
+        case 'md':
+          maskRadius = theme === 'plaid' ? 0 : 6
+          maskSize = 50
+          maskX = props.density === 'condensed' ? 963 : 975
+          maskY = 475
+          break
+      }
       break
-    case 'md':
-      maskRadius = 1
-      maskSize = 26
-      offset = props.density === 'condensed' ? -12 : 0
-      break
-    }
-    maskX = vbWidth + offset
-    maskY = vbHeight/2
-    break
-  case 'square':
-    switch (props.size) {
-    case 'xs':
-      maskRadius = theme === 'plaid' ? 0 : 4
-      maskSize = 26
-      maskX = props.density === 'condensed' ? 976 : 983
-      maskY = 487
-      break
-    case 'sm':
-      maskRadius = theme === 'plaid' ? 0 : 4
-      maskSize = 34
-      maskX = props.density === 'condensed' ? 975 : 983
-      maskY = 483
-      break
-    case 'md':
-      maskRadius = theme === 'plaid' ? 0 : 6
-      maskSize = 50
-      maskX = props.density === 'condensed' ? 963 : 975
-      maskY = 475
-      break
-    }
-    break
   }
 
   const circleMask = `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskSize}" /></svg>'), linear-gradient(#fff, #fff)`

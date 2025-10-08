@@ -282,15 +282,15 @@ const handleDown = (e: MouseEvent | TouchEvent, direction: 'bottom' | 'right') =
    * based on direction.
    */
   switch (direction) {
-  case 'bottom':
-    handleDownBottom(e)
-    break
-  case 'right':
-    handleDownRight(e)
-    break
-  default:
-    handleDownBottom(e)
-    break
+    case 'bottom':
+      handleDownBottom(e)
+      break
+    case 'right':
+      handleDownRight(e)
+      break
+    default:
+      handleDownBottom(e)
+      break
   }
 }
 

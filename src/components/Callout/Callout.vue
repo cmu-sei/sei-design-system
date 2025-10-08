@@ -123,66 +123,66 @@ const slots = defineSlots<{
 // Class for style of callout
 const styleClass = computed(() => {
   switch(props.variant) {
-  case 'gray':
-    return props.type === 'bold' ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white' :
-      (props.type === 'outline' ? 'bg-white border border-gray-900 text-gray-900 dark:bg-black dark:border-gray-300 dark:text-gray-300' : 
-        'border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300')
-  case 'orange':
-    return props.type === 'bold' ? 'bg-orange-200 text-black dark:bg-orange-200 dark:text-black' :
-      (props.type === 'outline' ? 'bg-white border border-orange-300 text-orange-600 dark:bg-black dark:border-orange-300 dark:text-orange-300' : 
-        'border border-orange-300 bg-orange-25/40 text-orange-600 dark:border-orange-300 dark:bg-orange-900 dark:text-orange-300')
-  case 'red': 
-    return props.type === 'bold' ? 'bg-red-600 text-white dark:bg-red-500 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-red-600 text-red-600 dark:bg-black dark:border-red-300 dark:text-red-300' : 
-        'border border-red-600 bg-red-25 text-red-600 dark:border-red-300 dark:bg-red-950 dark:text-red-300')
-  case 'purple': 
-    return props.type === 'bold' ? 'bg-purple-600 text-white dark:bg-purple-500 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-purple-600 text-purple-600 dark:bg-black dark:border-purple-300 dark:text-purple-300' : 
-        'border border-purple-600 bg-purple-25/60 text-purple-600 dark:border-purple-300 dark:bg-purple-950 dark:text-purple-300')
-  case 'indigo': 
-    return props.type === 'bold' ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-indigo-600 text-indigo-600 dark:bg-black dark:border-indigo-300 dark:text-indigo-300' : 
-        'border border-indigo-600 bg-indigo-25/60 text-indigo-600 dark:border-indigo-300 dark:bg-indigo-950 dark:text-indigo-300')
-  case 'blue': 
-    return props.type === 'bold' ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-blue-600 text-blue-600 dark:bg-black dark:border-blue-300 dark:text-blue-300' : 
-        'border border-blue-600 bg-blue-25 text-blue-600 dark:border-blue-300 dark:bg-blue-950 dark:text-blue-300')
-  case 'teal': 
-    return props.type === 'bold' ? 'bg-teal-600 text-white dark:bg-teal-500 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-teal-600 text-teal-600 dark:bg-black dark:border-teal-300 dark:text-teal-300' : 
-        'border border-teal-600 bg-teal-25/60 text-teal-600 dark:border-teal-300 dark:bg-teal-900 dark:text-teal-300')
-  case 'green': 
-    return props.type === 'bold' ? 'bg-green-600 text-white dark:bg-green-500 dark:text-black' : (
-      props.type === 'outline' ? 'bg-white border border-green-600 text-green-600 dark:bg-black dark:border-green-300 dark:text-green-300' : 
-        'border border-green-600 bg-green-25/60 text-green-600 dark:border-green-300 dark:bg-green-900 dark:text-green-300')
-  default:
-    return props.type === 'bold' ? 'bg-gray-900 text-white dark:bg-gray-200 dark:text-black' : 
-      (props.type === 'outline' ? 'bg-white border border-gray-900 text-gray-900 dark:bg-black dark:border-gray-300 dark:text-gray-300' : 
-        'border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300')
+    case 'gray':
+      return props.type === 'bold' ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white' :
+        (props.type === 'outline' ? 'bg-white border border-gray-900 text-gray-900 dark:bg-black dark:border-gray-300 dark:text-gray-300' : 
+          'border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300')
+    case 'orange':
+      return props.type === 'bold' ? 'bg-orange-200 text-black dark:bg-orange-200 dark:text-black' :
+        (props.type === 'outline' ? 'bg-white border border-orange-300 text-orange-600 dark:bg-black dark:border-orange-300 dark:text-orange-300' : 
+          'border border-orange-300 bg-orange-25/40 text-orange-600 dark:border-orange-300 dark:bg-orange-900 dark:text-orange-300')
+    case 'red': 
+      return props.type === 'bold' ? 'bg-red-600 text-white dark:bg-red-500 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-red-600 text-red-600 dark:bg-black dark:border-red-300 dark:text-red-300' : 
+          'border border-red-600 bg-red-25 text-red-600 dark:border-red-300 dark:bg-red-950 dark:text-red-300')
+    case 'purple': 
+      return props.type === 'bold' ? 'bg-purple-600 text-white dark:bg-purple-500 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-purple-600 text-purple-600 dark:bg-black dark:border-purple-300 dark:text-purple-300' : 
+          'border border-purple-600 bg-purple-25/60 text-purple-600 dark:border-purple-300 dark:bg-purple-950 dark:text-purple-300')
+    case 'indigo': 
+      return props.type === 'bold' ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-indigo-600 text-indigo-600 dark:bg-black dark:border-indigo-300 dark:text-indigo-300' : 
+          'border border-indigo-600 bg-indigo-25/60 text-indigo-600 dark:border-indigo-300 dark:bg-indigo-950 dark:text-indigo-300')
+    case 'blue': 
+      return props.type === 'bold' ? 'bg-blue-600 text-white dark:bg-blue-500 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-blue-600 text-blue-600 dark:bg-black dark:border-blue-300 dark:text-blue-300' : 
+          'border border-blue-600 bg-blue-25 text-blue-600 dark:border-blue-300 dark:bg-blue-950 dark:text-blue-300')
+    case 'teal': 
+      return props.type === 'bold' ? 'bg-teal-600 text-white dark:bg-teal-500 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-teal-600 text-teal-600 dark:bg-black dark:border-teal-300 dark:text-teal-300' : 
+          'border border-teal-600 bg-teal-25/60 text-teal-600 dark:border-teal-300 dark:bg-teal-900 dark:text-teal-300')
+    case 'green': 
+      return props.type === 'bold' ? 'bg-green-600 text-white dark:bg-green-500 dark:text-black' : (
+        props.type === 'outline' ? 'bg-white border border-green-600 text-green-600 dark:bg-black dark:border-green-300 dark:text-green-300' : 
+          'border border-green-600 bg-green-25/60 text-green-600 dark:border-green-300 dark:bg-green-900 dark:text-green-300')
+    default:
+      return props.type === 'bold' ? 'bg-gray-900 text-white dark:bg-gray-200 dark:text-black' : 
+        (props.type === 'outline' ? 'bg-white border border-gray-900 text-gray-900 dark:bg-black dark:border-gray-300 dark:text-gray-300' : 
+          'border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300')
   }
 })
 
 // Class for close button fill
 const fillClass = computed(() => {
   switch(props.variant) {
-  case 'gray':
-    return props.type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
-  case 'orange':
-    return props.type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
-  case 'red': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-red-600 dark:fill-red-300'
-  case 'purple': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-purple-600 dark:fill-purple-300'
-  case 'indigo': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' :'fill-indigo-600 dark:fill-indigo-300'
-  case 'blue': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-blue-600 dark:fill-blue-300'
-  case 'teal': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-teal-600 dark:fill-teal-300'
-  case 'green': 
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-green-600 dark:fill-green-300'
-  default:
-    return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-gray-900 dark:fill-gray-300'
+    case 'gray':
+      return props.type === 'bold' ? 'fill-gray-900 dark:fill-white' :'fill-gray-900 dark:fill-gray-300'
+    case 'orange':
+      return props.type === 'bold' ? 'fill-black dark:fill-black' : 'fill-orange-600 dark:fill-orange-300'
+    case 'red': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-red-600 dark:fill-red-300'
+    case 'purple': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-purple-600 dark:fill-purple-300'
+    case 'indigo': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' :'fill-indigo-600 dark:fill-indigo-300'
+    case 'blue': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-blue-600 dark:fill-blue-300'
+    case 'teal': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-teal-600 dark:fill-teal-300'
+    case 'green': 
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-green-600 dark:fill-green-300'
+    default:
+      return props.type === 'bold' ? 'fill-white dark:fill-black' : 'fill-gray-900 dark:fill-gray-300'
   }
 })
 </script>

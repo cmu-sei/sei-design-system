@@ -50,40 +50,39 @@ const props = defineProps({
 const kindClass = computed(() => {
   const kind = (props.kind as 'primary' | 'secondary' | 'tertiary')
   switch (kind) {
-  case 'primary':
-    return 'link-primary'
-  case 'secondary':
-    return 'link-secondary'
-  case 'tertiary':
-    return 'link-tertiary'
-  default:
-    return ''
+    case 'secondary':
+      return 'link-secondary'
+    case 'tertiary':
+      return 'link-tertiary'
+    case 'primary':
+    default:
+      return 'link-primary'
   }
 })
 
 const typeClass = computed(() => {
   const type = (props.type as 'standalone' | 'inline' | 'cta')
   switch (type) {
-  case 'inline':
-    return 'link-inline'
-  case 'cta':
-    return 'link-cta'
-  case 'standalone':
-  default:
-    return ''
+    case 'inline':
+      return 'link-inline'
+    case 'cta':
+      return 'link-cta'
+    case 'standalone':
+    default:
+      return ''
   }
 })
 
 const variantClass = computed(() => {
   const variant = props.variant
   switch (variant) {
-  case 'red':
-    return 'link-red'
-  case 'white':
-    return 'link-white'
-  case 'blue':
-  default:
-    return 'link-blue'
+    case 'red':
+      return 'link-red'
+    case 'white':
+      return 'link-white'
+    case 'blue':
+    default:
+      return 'link-blue'
   }
 })
 
@@ -92,13 +91,13 @@ const decorationClass = computed(() => {
   const variant = props.variant
   if (decoration) {
     switch (variant) {
-    case 'red':
-      return 'underline underline-offset-2 decoration-red-500'
-    case 'white':
-      return 'underline underline-offset-2 decoration-white'
-    case 'blue':
-    default:
-      return 'underline underline-offset-2 decoration-blue-500'
+      case 'red':
+        return 'underline underline-offset-2 decoration-red-500'
+      case 'white':
+        return 'underline underline-offset-2 decoration-white'
+      case 'blue':
+      default:
+        return 'underline underline-offset-2 decoration-blue-500'
     }
   }
   return ''
@@ -108,17 +107,17 @@ const sizeClass = computed(() => {
   const size = (props.size as 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined)
   if (size) {
     switch (size) {
-    case 'xs':
-      return 'text-xs'
-    case 'sm':
-      return 'text-sm'
-    case 'lg':
-      return 'text-lg'
-    case 'xl':
-      return 'text-xl'
-    case 'md':
-    default:
-      return 'text-base'
+      case 'xs':
+        return 'text-xs'
+      case 'sm':
+        return 'text-sm'
+      case 'lg':
+        return 'text-lg'
+      case 'xl':
+        return 'text-xl'
+      case 'md':
+      default:
+        return 'text-base'
     }
   }
   return ''

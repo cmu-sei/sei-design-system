@@ -134,37 +134,37 @@ const props = defineProps({
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
-  case '0':
-    return 'z-0'
-  case '10':
-    return 'z-10'
-  case '20':
-    return 'z-20'
-  case '30':
-    return 'z-30'
-  case '40':
-    return 'z-40'
-  case '50':
-    return 'z-50'
-  case 'auto':
-    return 'z-auto'
-  default:
-    return ''
+    case '0':
+      return 'z-0'
+    case '10':
+      return 'z-10'
+    case '20':
+      return 'z-20'
+    case '30':
+      return 'z-30'
+    case '40':
+      return 'z-40'
+    case '50':
+      return 'z-50'
+    case 'auto':
+      return 'z-auto'
+    default:
+      return ''
   }
 })
 
 const sizeClass = computed(() => {
   switch (props.size) {
-  case 'sm':
-    return 'w-64'
-  case 'md':
-    return 'w-80'
-  case 'lg':
-    return 'w-96'
-  case 'auto':
-    return 'min-w-96 w-auto'
-  default:
-    return 'w-64'
+    case 'sm':
+      return 'w-64'
+    case 'md':
+      return 'w-80'
+    case 'lg':
+      return 'w-96'
+    case 'auto':
+      return 'min-w-96 w-auto'
+    default:
+      return 'w-64'
   }
 })
 </script>

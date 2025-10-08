@@ -528,18 +528,18 @@ const byteToSize = (bytes: number): string => {
 
 const isFileType = (fileType: string): FileTypes | 'generic' => {
   switch (fileType) {
-  case 'application/msword':
-  case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-  case 'text/plain':
-    return 'doc'
-  case 'application/pdf':
-    return 'pdf'
-  case 'text/csv':
-  case 'application/vnd.ms-excel':
-  case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-    return 'csv'
-  default:
-    return 'generic'
+    case 'application/msword':
+    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+    case 'text/plain':
+      return 'doc'
+    case 'application/pdf':
+      return 'pdf'
+    case 'text/csv':
+    case 'application/vnd.ms-excel':
+    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+      return 'csv'
+    default:
+      return 'generic'
   }
 }
 

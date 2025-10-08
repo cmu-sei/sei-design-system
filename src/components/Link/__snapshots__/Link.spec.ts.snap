@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Link > matches snapshot with default props 1`] = `
+<a
+  class="link link-primary link-blue"
+  data-id="sds-link"
+>
+  <!-- @slot Link content. -->
+  
+  Click me
+  
+</a>
+`;

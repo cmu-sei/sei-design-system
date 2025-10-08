@@ -3,7 +3,6 @@
 exports[`Button > should click 1`] = `
 "<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->0
-  <!--v-if-->
 </button>"
 `;
 
@@ -20,7 +19,6 @@ exports[`Button > should match its active snapshot 1`] = `
   
   Button active
   
-  <!--v-if-->
   
 </button>
 `;
@@ -38,7 +36,6 @@ exports[`Button > should match its block snapshot 1`] = `
   
   Button block
   
-  <!--v-if-->
   
 </button>
 `;
@@ -46,7 +43,6 @@ exports[`Button > should match its block snapshot 1`] = `
 exports[`Button > should match its default snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button
-  <!--v-if-->
 </button>"
 `;
 
@@ -64,7 +60,6 @@ exports[`Button > should match its disabled snapshot 1`] = `
   
   Button disabled
   
-  <!--v-if-->
   
 </button>
 `;
@@ -72,30 +67,24 @@ exports[`Button > should match its disabled snapshot 1`] = `
 exports[`Button > should match its kind (ghost) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn btn-ghost" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button ghost
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its kind (primary) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn btn-primary" aria-disabled="false" aria-busy="false">
-  <!-- @slot Button content. -->Button primary<svg data-id="arrow" class="hidden sds-theme-plaid:!flex w-[13px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 13">
-    <path d="M13.6875 7.71875L8.6875 12.7188C8.5 12.9062 8.25 13 8 13C7.71875 13 7.46875 12.9062 7.28125 12.7188C6.875 12.3438 6.875 11.6875 7.28125 11.3125L10.5625 8H1C0.4375 8 0 7.5625 0 7C0 6.46875 0.4375 6 1 6H10.5625L7.28125 2.71875C6.875 2.34375 6.875 1.6875 7.28125 1.3125C7.65625 0.90625 8.3125 0.90625 8.6875 1.3125L13.6875 6.3125C14.0938 6.6875 14.0938 7.34375 13.6875 7.71875Z"></path>
-  </svg>
+  <!-- @slot Button content. -->Button primary
 </button>"
 `;
 
 exports[`Button > should match its kind (secondary) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn btn-secondary" aria-disabled="false" aria-busy="false">
-  <!-- @slot Button content. -->Button secondary<svg data-id="arrow" class="hidden sds-theme-plaid:!flex w-[13px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 13">
-    <path d="M13.6875 7.71875L8.6875 12.7188C8.5 12.9062 8.25 13 8 13C7.71875 13 7.46875 12.9062 7.28125 12.7188C6.875 12.3438 6.875 11.6875 7.28125 11.3125L10.5625 8H1C0.4375 8 0 7.5625 0 7C0 6.46875 0.4375 6 1 6H10.5625L7.28125 2.71875C6.875 2.34375 6.875 1.6875 7.28125 1.3125C7.65625 0.90625 8.3125 0.90625 8.6875 1.3125L13.6875 6.3125C14.0938 6.6875 14.0938 7.34375 13.6875 7.71875Z"></path>
-  </svg>
+  <!-- @slot Button content. -->Button secondary
 </button>"
 `;
 
 exports[`Button > should match its kind (tertiary) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn btn-tertiary" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button tertiary
-  <!--v-if-->
 </button>"
 `;
 
@@ -154,69 +143,65 @@ exports[`Button > should match its pending snapshot 1`] = `
 exports[`Button > should match its size (lg) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-lg" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button lg
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its size (md) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button md
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its size (sm) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-sm" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button sm
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its size (xs) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-xs" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button xs
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its type (button) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button button
-  <!--v-if-->
+</button>"
+`;
+
+exports[`Button > should match its type (cta) snapshot 1`] = `
+"<button data-id="sds-button" type="button" class="btn-cta" aria-disabled="false" aria-busy="false">
+  <!-- @slot Button content. -->Button cta
 </button>"
 `;
 
 exports[`Button > should match its type (submit) snapshot 1`] = `
 "<button data-id="sds-button" type="submit" class="" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button submit
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its variant (blue) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-blue" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button blue
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its variant (gray) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-gray" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button gray
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its variant (red) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-red" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button red
-  <!--v-if-->
 </button>"
 `;
 
 exports[`Button > should match its variant (white) snapshot 1`] = `
 "<button data-id="sds-button" type="button" class="btn-white" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button white
-  <!--v-if-->
 </button>"
 `;
