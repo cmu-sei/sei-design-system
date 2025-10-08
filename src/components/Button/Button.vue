@@ -131,13 +131,14 @@ const variantClass = computed(() => {
   switch (props.variant) {
     case 'gray':
       return 'btn-gray'
+    case 'blue':
+      return 'btn-blue'
     case 'red':
       return 'btn-red'
     case 'white':
       return 'btn-white'
-    case 'blue':
     default:
-      return 'btn-blue'
+      return ''
   }
 })
 
