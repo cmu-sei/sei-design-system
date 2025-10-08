@@ -237,6 +237,10 @@
   }
 }
 
+/**
+ * Base Prose Styles
+ */
+
 @utility prose {
   max-width: 95ch;
   text-wrap: pretty;
@@ -270,7 +274,12 @@
 
   /* General link styles - MUST come BEFORE heading link overrides for proper cascade */
   & :where(a:not(.not-prose, .not-prose *)) {
+    color: var(--tw-prose-links, currentColor);
     text-decoration: underline;
+
+    &:hover {
+      color: var(--tw-prose-links-hover, var(--tw-prose-links, currentColor));
+    }
   }
 
   /* Heading link overrides - remove underline from heading links */
@@ -296,7 +305,7 @@
       h5:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
       h6:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover
     ) {
-    color: var(--color-gray-600);
+    color: var(--tw-prose-links-hover, var(--tw-prose-links, var(--color-gray-600)));
   }
 
   & :where(h1:not(.not-prose, .not-prose *)) {
@@ -308,6 +317,7 @@
     .sds-theme-plaid & {
       font-family: var(--font-serif);
       font-weight: 300;
+      letter-spacing: 0;
     }
   }
 
@@ -325,6 +335,7 @@
       font-family: var(--font-serif);
       font-size: var(--text-4xl);
       font-weight: 400;
+      letter-spacing: 0;
     }
   }
 
@@ -342,6 +353,7 @@
       font-family: var(--font-serif);
       font-size: var(--text-3xl);
       font-weight: 400;
+      letter-spacing: 0;
     }
   }
 
@@ -354,11 +366,12 @@
     line-height: 28px;
     font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
+    letter-spacing: -0.03px;
 
     .sds-theme-plaid & {
       font-family: var(--font-serif);
-      letter-spacing: 0.03px;
       font-weight: 400;
+      letter-spacing: 0;
     }
   }
 
@@ -416,10 +429,6 @@
     margin-bottom: --spacing(2);
   }
 
-  & :where(img:not(.not-prose, .not-prose *), svg:not(.not-prose, .not-prose *)) {
-    /* Image and SVG styles */
-  }
-
   & :where(h1:not(:last-child):not(.not-prose, .not-prose *)) {
     margin-block: --spacing(4);
   }
@@ -435,8 +444,8 @@
   }
 
   & :where(blockquote:not(.not-prose, .not-prose *)) {
-    border-left: 4px solid var(--color-gray-200);
-    margin-inline: --spacing(4);
+    border-left: 4px solid var(--tw-prose-quote-borders, var(--color-gray-200));
+    margin: --spacing(4);
     padding-left: --spacing(4);
     padding-block: --spacing(2);
     font-size: var(--text-xl);
@@ -455,6 +464,7 @@
   }
 
   & :where(pre:not(.not-prose, .not-prose *)) {
+    margin-block: --spacing(4);
     font-size: var(--text-base);
     overflow: auto;
     padding: --spacing(4);
@@ -501,7 +511,7 @@
 
   & :where(ul li:not(.not-prose, .not-prose *)) {
     &::marker {
-      color: var(--color-gray-600);
+      color: var(--tw-prose-bullets, var(--color-gray-600));
       font-size: var(--text-sm);
     }
   }
@@ -526,9 +536,6 @@
   }
 
   & :where(figure:not(.not-prose, .not-prose *)) {
-    & * {
-    }
-
     & :where(figure:not(:last-child):not(.not-prose, .not-prose *)) {
       margin-bottom: --spacing(1);
     }
@@ -583,182 +590,11 @@
   & :where(th:last-child:not(.not-prose, .not-prose *), td:last-child:not(.not-prose, .not-prose *)) {
     padding-right: --spacing(0);
   }
-
-  & :where(&.prose-blue:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-blue-600);
-      &:hover {
-        color: var(--color-blue-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-blue-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-blue-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-blue-600);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-green:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-green-600);
-      &:hover {
-        color: var(--color-green-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-green-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-green-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-green-600);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-teal:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-teal-600);
-      &:hover {
-        color: var(--color-teal-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-teal-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-teal-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-teal-600);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-orange:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-orange-600);
-      &:hover {
-        color: var(--color-orange-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-orange-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-orange-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-orange-600);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-red:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-red-600);
-      &:hover {
-        color: var(--color-red-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-red-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-red-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-red-600);
-        }
-      }
-    }
-  }
 }
+
+/**
+ * Responsive Size Variants
+ */
 
 @utility prose-sm {
   max-width: 75ch;
@@ -860,7 +696,7 @@
       h5:not(:last-child):not(.not-prose, .not-prose *),
       h6:not(:last-child):not(.not-prose, .not-prose *)
     ) {
-    margin-bottom: --spacing(3);
+      margin-bottom: --spacing(3);
   }
 
   &
@@ -875,36 +711,6 @@
     margin-top: --spacing(12);
   }
 
-  /* General link style - must come BEFORE heading link overrides due to CSS cascade */
-  & :where(a:not(.not-prose, .not-prose *)) {
-    text-decoration: underline;
-  }
-
-  &
-    :where(
-      h1:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *),
-      h2:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *),
-      h3:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *),
-      h4:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *),
-      h5:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *),
-      h6:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *)
-    ) {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &
-    :where(
-      h1:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
-      h2:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
-      h3:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
-      h4:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
-      h5:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover,
-      h6:not(.not-prose, .not-prose *) a:not(.not-prose, .not-prose *):hover
-    ) {
-    color: var(--color-gray-600);
-  }
-
   & :where(h1:not(.not-prose, .not-prose *)) {
     font-size: var(--text-6xl);
     line-height: 64px;
@@ -913,8 +719,8 @@
 
     .sds-theme-plaid & {
       font-family: var(--font-serif);
-      letter-spacing: 0;
       font-weight: 300;
+      letter-spacing: 0;
     }
 
     & :where(h1:not(:last-child):not(.not-prose, .not-prose *)) {
@@ -931,8 +737,8 @@
     .sds-theme-plaid & {
       font-family: var(--font-serif);
       font-size: var(--text-4xl);
-      letter-spacing: 0;
       font-weight: 400;
+      letter-spacing: 0;
     }
 
     & :where(h2:not(:last-child):not(.not-prose, .not-prose *)) {
@@ -949,8 +755,8 @@
     .sds-theme-plaid & {
       font-family: var(--font-serif);
       font-size: var(--text-3xl);
-      letter-spacing: 0;
       font-weight: 400;
+      letter-spacing: 0;
     }
 
     & :where(h3:not(:last-child):not(.not-prose, .not-prose *)) {
@@ -963,12 +769,12 @@
     line-height: 28px;
     font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
+    letter-spacing: -0.03px;
 
     .sds-theme-plaid & {
       font-family: var(--font-serif);
-      letter-spacing: 0.03px;
-      letter-spacing: 0;
       font-weight: 400;
+      letter-spacing: 0;
     }
 
     & :where(h4:not(:last-child):not(.not-prose, .not-prose *)) {
@@ -1026,9 +832,6 @@
     margin-bottom: --spacing(2);
   }
 
-  & :where(img:not(.not-prose, .not-prose *), svg:not(.not-prose, .not-prose *)) {
-  }
-
   & :where(th:not(:last-child):not(.not-prose, .not-prose *)) {
     margin-block: --spacing(4);
   }
@@ -1043,7 +846,6 @@
   }
 
   & :where(blockquote:not(.not-prose, .not-prose *)) {
-    border-left: 4px solid var(--color-gray-200);
     margin-inline: --spacing(4);
     padding-left: --spacing(4);
     padding-block: --spacing(2);
@@ -1066,8 +868,6 @@
     font-size: var(--text-base);
     overflow: auto;
     padding: --spacing(4);
-    background-color: var(--color-gray-50);
-    border: 1px solid var(--color-gray-200);
     border-radius: var(--radius-md);
     .sds-theme-plaid & {
       border-radius: var(--radius-none);
@@ -1107,7 +907,6 @@
 
   & :where(ul li:not(.not-prose, .not-prose *)) {
     &::marker {
-      color: var(--color-gray-600);
       font-size: var(--text-sm);
     }
   }
@@ -1130,9 +929,6 @@
   }
 
   & :where(figure:not(.not-prose, .not-prose *)) {
-    & * {
-    }
-
     & :where(figure:not(:last-child):not(.not-prose, .not-prose *)) {
       margin-bottom: --spacing(1);
     }
@@ -1145,11 +941,6 @@
     font-size: var(--text-sm);
     line-height: 20px;
     font-style: italic;
-    color: var(--color-gray-600);
-  }
-
-  & :where(hr:not(.not-prose, .not-prose *)) {
-    border-color: var(--color-gray-200);
   }
 
   & :where(figcaption:not(:last-child):not(.not-prose, .not-prose *)) {
@@ -1162,16 +953,6 @@
 
   & :where(table:not(:last-child):not(.not-prose, .not-prose *)) {
     margin-bottom: --spacing(4);
-  }
-
-  & :where(thead:not(.not-prose, .not-prose *)) {
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--color-gray-300);
-    }
-  }
-
-  & :where(tbody tr:not(:last-child):not(.not-prose, .not-prose *)) {
-    border-bottom: 1px solid var(--color-gray-200);
   }
 
   & :where(th:not(.not-prose, .not-prose *), td:not(.not-prose, .not-prose *)) {
@@ -1187,184 +968,123 @@
   & :where(th:last-child:not(.not-prose, .not-prose *), td:last-child:not(.not-prose, .not-prose *)) {
     padding-right: --spacing(0);
   }
+}
 
-  & :where(&.prose-blue:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-blue-600);
-      &:hover {
-        color: var(--color-blue-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-blue-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-blue-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-blue-600);
-        }
-      }
-    }
-  }
+/**
+ * Color Theme Utilities - Set CSS custom properties for theming
+ */
 
-  & :where(&.prose-green:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-green-600);
-      &:hover {
-        color: var(--color-green-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-green-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-green-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-green-600);
-        }
-      }
-    }
-  }
+@utility prose-blue {
+  --tw-prose-links: var(--color-blue-600);
+  --tw-prose-links-hover: var(--color-blue-500);
+  --tw-prose-quote-borders: var(--color-gray-200);
+  --tw-prose-bullets: var(--color-gray-600);
 
-  & :where(&.prose-teal:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-teal-600);
-      &:hover {
-        color: var(--color-teal-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-teal-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-teal-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-teal-600);
-        }
-      }
-    }
-  }
+  --tw-prose-invert-links: var(--color-blue-400);
+  --tw-prose-invert-links-hover: var(--color-blue-300);
+  --tw-prose-invert-quote-borders: var(--color-gray-700);
+  --tw-prose-invert-bullets: var(--color-gray-400);
 
-  & :where(&.prose-orange:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-orange-600);
-      &:hover {
-        color: var(--color-orange-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-orange-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-orange-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-orange-600);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-red:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-red-600);
-      &:hover {
-        color: var(--color-red-500);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-red-500);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-red-600);
-      }
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-red-600);
-        }
-      }
-    }
+  /* Plaid theme: bullets/quotes ARE colored */
+  .sds-theme-plaid & {
+    --tw-prose-quote-borders: var(--color-blue-600);
+    /* --tw-prose-bullets: var(--color-blue-600); */
+    --tw-prose-invert-quote-borders: var(--color-blue-400);
+    /* --tw-prose-invert-bullets: var(--color-blue-400); */
   }
 }
 
+@utility prose-green {
+  --tw-prose-links: var(--color-green-600);
+  --tw-prose-links-hover: var(--color-green-500);
+  --tw-prose-quote-borders: var(--color-gray-200);
+  --tw-prose-bullets: var(--color-gray-600);
+
+  --tw-prose-invert-links: var(--color-green-400);
+  --tw-prose-invert-links-hover: var(--color-green-300);
+  --tw-prose-invert-quote-borders: var(--color-gray-700);
+  --tw-prose-invert-bullets: var(--color-gray-400);
+
+  /* Plaid theme: bullets/quotes ARE colored */
+  .sds-theme-plaid & {
+    --tw-prose-quote-borders: var(--color-green-600);
+    /* --tw-prose-bullets: var(--color-green-600); */
+    --tw-prose-invert-quote-borders: var(--color-green-400);
+    /* --tw-prose-invert-bullets: var(--color-green-400); */
+  }
+}
+
+@utility prose-teal {
+  --tw-prose-links: var(--color-teal-600);
+  --tw-prose-links-hover: var(--color-teal-500);
+  --tw-prose-quote-borders: var(--color-gray-200);
+  --tw-prose-bullets: var(--color-gray-600);
+
+  --tw-prose-invert-links: var(--color-teal-400);
+  --tw-prose-invert-links-hover: var(--color-teal-300);
+  --tw-prose-invert-quote-borders: var(--color-gray-700);
+  --tw-prose-invert-bullets: var(--color-gray-400);
+
+  /* Plaid theme: bullets/quotes ARE colored */
+  .sds-theme-plaid & {
+    --tw-prose-quote-borders: var(--color-teal-600);
+    /* --tw-prose-bullets: var(--color-teal-600); */
+    --tw-prose-invert-quote-borders: var(--color-teal-400);
+    /* --tw-prose-invert-bullets: var(--color-teal-400); */
+  }
+}
+
+@utility prose-orange {
+  --tw-prose-links: var(--color-orange-600);
+  --tw-prose-links-hover: var(--color-orange-500);
+  --tw-prose-quote-borders: var(--color-gray-200);
+  --tw-prose-bullets: var(--color-gray-600);
+
+  --tw-prose-invert-links: var(--color-orange-400);
+  --tw-prose-invert-links-hover: var(--color-orange-300);
+  --tw-prose-invert-quote-borders: var(--color-gray-700);
+  --tw-prose-invert-bullets: var(--color-gray-400);
+
+  /* Plaid theme: bullets/quotes ARE colored */
+  .sds-theme-plaid & {
+    --tw-prose-quote-borders: var(--color-orange-600);
+    /* --tw-prose-bullets: var(--color-orange-600); */
+    --tw-prose-invert-quote-borders: var(--color-orange-400);
+    /* --tw-prose-invert-bullets: var(--color-orange-400); */
+  }
+}
+
+@utility prose-red {
+  --tw-prose-links: var(--color-red-600);
+  --tw-prose-links-hover: var(--color-red-500);
+  --tw-prose-quote-borders: var(--color-gray-200);
+  --tw-prose-bullets: var(--color-gray-600);
+
+  --tw-prose-invert-links: var(--color-red-400);
+  --tw-prose-invert-links-hover: var(--color-red-300);
+  --tw-prose-invert-quote-borders: var(--color-gray-700);
+  --tw-prose-invert-bullets: var(--color-gray-400);
+
+  /* Plaid theme: bullets/quotes ARE colored */
+  .sds-theme-plaid & {
+    --tw-prose-quote-borders: var(--color-red-600);
+    /* --tw-prose-bullets: var(--color-red-600); */
+    --tw-prose-invert-quote-borders: var(--color-red-400);
+    /* --tw-prose-invert-bullets: var(--color-red-400); */
+  }
+}
+
+/**
+ * Invert utility for dark mode or dark backgrounds
+ * Sets text color to white and adjusts other elements for better contrast
+ */
+
 @utility prose-invert {
+  --tw-prose-links: var(--tw-prose-invert-links, var(--color-white)) !important;
+  --tw-prose-links-hover: var(--tw-prose-invert-links-hover, var(--color-gray-400)) !important;
+  --tw-prose-quote-borders: var(--tw-prose-invert-quote-borders, var(--color-gray-700)) !important;
+  --tw-prose-bullets: var(--tw-prose-invert-bullets, var(--color-gray-400)) !important;
+  
   color: var(--color-white);
 
   &
@@ -1379,13 +1099,9 @@
     & :where(a:not(.not-prose, .not-prose *)) {
       color: inherit;
       &:hover {
-        color: var(--color-gray-400);
+        color: var(--tw-prose-links-hover);
       }
     }
-  }
-
-  & :where(blockquote:not(.not-prose, .not-prose *)) {
-    border-left-color: var(--color-gray-700);
   }
 
   & :where(pre:not(.not-prose, .not-prose *)) {
@@ -1409,196 +1125,5 @@
 
   & :where(tbody tr:not(:last-child):not(.not-prose, .not-prose *)) {
     border-bottom-color: var(--color-gray-800);
-  }
-
-  & :where(ul li:not(.not-prose, .not-prose *)) {
-    &::marker {
-      color: var(--color-gray-400);
-    }
-  }
-
-  & :where(&.prose-blue:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-blue-400);
-
-      &:hover {
-        color: var(--color-blue-300);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-blue-300);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-blue-400);
-      }
-
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-blue-400);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-green:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-green-400);
-
-      &:hover {
-        color: var(--color-green-300);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-green-300);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-green-400);
-      }
-
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-green-400);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-teal:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-teal-400);
-
-      &:hover {
-        color: var(--color-teal-300);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-teal-300);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-teal-400);
-      }
-
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-teal-400);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-orange:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-orange-400);
-
-      &:hover {
-        color: var(--color-orange-300);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-orange-300);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-orange-400);
-      }
-
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-orange-400);
-        }
-      }
-    }
-  }
-
-  & :where(&.prose-red:not(.not-prose, .not-prose *)) {
-    & :where(a:not(.not-prose, .not-prose *)) {
-      color: var(--color-red-400);
-
-      &:hover {
-        color: var(--color-red-300);
-      }
-    }
-    &
-      :where(
-        h1:not(.not-prose, .not-prose *),
-        h2:not(.not-prose, .not-prose *),
-        h3:not(.not-prose, .not-prose *),
-        h4:not(.not-prose, .not-prose *),
-        h5:not(.not-prose, .not-prose *),
-        h6:not(.not-prose, .not-prose *)
-      ) {
-      & :where(a:not(.not-prose, .not-prose *)) {
-        color: inherit;
-        &:hover {
-          color: var(--color-red-300);
-        }
-      }
-    }
-    .sds-theme-plaid & {
-      & :where(blockquote:not(.not-prose, .not-prose *)) {
-        border-left-color: var(--color-red-400);
-      }
-
-      & :where(ul li:not(.not-prose, .not-prose *)) {
-        &::marker {
-          color: var(--color-red-400);
-        }
-      }
-    }
   }
 }
