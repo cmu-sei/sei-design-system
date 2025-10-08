@@ -215,17 +215,8 @@
 
   :where(.sds-theme-forge .btn.btn-cta.btn-primary, .sds-theme-forge .btn.btn-cta.btn-secondary) {
     &:after {
-      content: '';
-      display: inline-flex;
-      height: 11px;
-      width: 12px;
-      margin-left: calc(var(--spacing) * 2);
-      transition-property: transform;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      transition-duration: 150ms;
+      @apply content-[''] inline-flex h-[11px] w-[12px] transition-transform;
       mask-image: var(--chevrons-right);
-      mask-size: contain;
-      mask-repeat: no-repeat;
     }
   }
 
