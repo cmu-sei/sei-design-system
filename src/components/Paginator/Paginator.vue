@@ -164,7 +164,7 @@
         <div class="flex flew-nowrap items-center gap-x-2 m-auto">
           <label 
             :for="pageSelectNumberId" 
-            class="text-sm text-gray-600 dark:text-gray-400 font-semibold"
+            class="sr-only"
           >Page</label>
           <SdsSelect
             :id="pageSelectNumberId"
