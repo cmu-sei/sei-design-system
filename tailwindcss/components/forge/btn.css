@@ -226,6 +226,18 @@
     }
   }
 
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white):not(.btn-blue):not(.btn-red)) {
+    &:after {
+      background-color: white;
+    }
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary:not(.btn-white):not(.btn-blue):not(.btn-red)) {
+    &:after {
+      background-color: var(--color-blue-800);
+    }
+  } 
+
   :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-white) {
     &:after {
       background-color: var(--color-gray-950);
