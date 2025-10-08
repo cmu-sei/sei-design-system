@@ -371,7 +371,7 @@
     .sds-theme-plaid & {
       font-family: var(--font-serif);
       font-weight: 400;
-      letter-spacing: 0;
+      letter-spacing: 0.05em;
     }
   }
 
@@ -774,7 +774,7 @@
     .sds-theme-plaid & {
       font-family: var(--font-serif);
       font-weight: 400;
-      letter-spacing: 0;
+      letter-spacing: 0.05em;
     }
 
     & :where(h4:not(:last-child):not(.not-prose, .not-prose *)) {
