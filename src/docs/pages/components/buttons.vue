@@ -623,6 +623,7 @@
           <SdsButton
             kind="primary"
             variant="gray"
+            type="cta"
           >
             Button label
           </SdsButton>
@@ -1001,6 +1002,8 @@
         <div class="flex flex-row space-x-2 sds-theme-plaid">
           <SdsButton
             kind="primary"
+            variant="gray"
+            type="cta"
           >
             Button label
           </SdsButton>
