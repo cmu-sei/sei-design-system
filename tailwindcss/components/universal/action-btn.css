@@ -1,178 +1,338 @@
-/* Base btn class */
+@layer components {
+  /* Base btn class */
 
-.action-btn {
-  @apply border border-transparent py-1.5 px-1.5 rounded-theme-sm select-none whitespace-nowrap cursor-pointer;
-  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
-  @apply dark:focus-visible:ring-blue-700;
-  @apply inline-flex gap-2 items-center text-left;
-  @apply [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
+  :where(.action-btn) {
+    @apply border border-transparent py-1.5 px-1.5 rounded-theme-sm select-none whitespace-nowrap cursor-pointer;
+    @apply inline-flex gap-2 items-center text-left;
+  }
 
-  &.action-btn-lg {
+  :where(.action-btn:focus) {
+    @apply outline-none;
+  }
+
+  :where(.action-btn:focus-visible) {
+    @apply outline-none ring-2 ring-blue-300;
+  }
+
+  :where(.dark .action-btn:focus-visible) {
+    @apply ring-blue-700;
+  }
+
+  :where(.action-btn:not(:has(svg)), .action-btn:not(:has(img)), .action-btn:not(:has([data-id='sds-avatar']))) {
+    @apply py-1;
+  }
+
+  :where(.action-btn.action-btn-lg) {
     @apply py-2 px-2;
-    @apply [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
   }
 
-  &.action-btn-sm {
+  :where(.action-btn.action-btn-lg:not(:has(svg)), .action-btn.action-btn-lg:not(:has(img)), .action-btn.action-btn-lg:not(:has([data-id='sds-avatar']))) {
+    @apply px-1.5;
+  }
+
+  :where(.action-btn.action-btn-sm) {
     @apply py-1.5 px-1.5 text-sm;
-    @apply [&:not(:has(svg))]:px-2 [&:not(:has(img))]:px-2 [&:not(:has([data-id='sds-avatar']))]:px-2 [&:not(:has(svg))]:py-1 [&:not(:has(img))]:py-1 [&:not(:has([data-id='sds-avatar']))]:py-1;
   }
 
-  &.action-btn-xs {
+  :where(.action-btn.action-btn-sm:not(:has(svg)), .action-btn.action-btn-sm:not(:has(img)), .action-btn.action-btn-sm:not(:has([data-id='sds-avatar']))) {
+    @apply px-2 py-1;
+  }
+
+  :where(.action-btn.action-btn-xs) {
     @apply py-1 px-1 text-sm gap-1;
-    @apply [&:not(:has(svg))]:py-0.5 [&:not(:has(img))]:py-0.5 [&:not(:has([data-id='sds-avatar']))]:py-0.5 [&:not(:has(svg))]:px-1.5 [&:not(:has(img))]:px-1.5 [&:not(:has([data-id='sds-avatar']))]:px-1.5;
   }
-}
 
-/* Kind */
+  :where(.action-btn.action-btn-xs:not(:has(svg)), .action-btn.action-btn-xs:not(:has(img)), .action-btn.action-btn-xs:not(:has([data-id='sds-avatar']))) {
+    @apply py-0.5 px-1.5;
+  }
 
-.action-btn-primary {
-  @apply text-gray-50 bg-gray-800;
-  @apply dark:text-gray-900 dark:bg-gray-400;
-  @apply hover:text-white hover:bg-gray-500;
-  @apply dark:hover:text-black dark:hover:bg-gray-500;
-  &:active, &.active {
+  /* Kind */
+
+  :where(.action-btn-primary) {
+    @apply text-gray-50 bg-gray-800;
+  }
+
+  :where(.action-btn-primary:hover) {
+    @apply text-white bg-gray-500;
+  }
+
+  :where(.action-btn-primary:active, .action-btn-primary.active) {
     @apply text-white bg-gray-700;
-    @apply dark:text-black dark:bg-gray-300;
   }
-}
 
-.action-btn-primary.action-btn-red {
-  @apply text-red-50 bg-red-600;
-  @apply dark:text-red-900 dark:bg-red-400;
-  @apply hover:text-white hover:bg-red-500;
-  @apply dark:hover:text-black dark:hover:bg-red-500;
-  &:active, &.active {
+  :where(.dark .action-btn-primary) {
+    @apply text-gray-900 bg-gray-400;
+  }
+
+  :where(.dark .action-btn-primary:hover) {
+    @apply text-black bg-gray-500;
+  }
+
+  :where(.dark .action-btn-primary:active, .dark .action-btn-primary.active) {
+    @apply text-black bg-gray-300;
+  }
+
+  :where(.action-btn-primary.action-btn-red) {
+    @apply text-red-50 bg-red-600;
+  }
+
+  :where(.action-btn-primary.action-btn-red:hover) {
+    @apply text-white bg-red-500;
+  }
+
+  :where(.action-btn-primary.action-btn-red:active, .action-btn-primary.action-btn-red.active) {
     @apply text-white bg-red-700;
-    @apply dark:text-black dark:bg-red-300;
   }
-}
 
-.action-btn-primary.action-btn-blue {
-  @apply text-blue-50 bg-blue-600;
-  @apply dark:text-blue-900 dark:bg-blue-400;
-  @apply hover:text-white hover:bg-blue-500;
-  @apply dark:hover:text-black dark:hover:bg-blue-500;
-  &:active, &.active {
+  :where(.dark .action-btn-primary.action-btn-red) {
+    @apply text-red-900 bg-red-400;
+  }
+
+  :where(.dark .action-btn-primary.action-btn-red:hover) {
+    @apply text-black bg-red-500;
+  }
+
+  :where(.dark .action-btn-primary.action-btn-red:active, .dark .action-btn-primary.action-btn-red.active) {
+    @apply text-black bg-red-300;
+  }
+
+  :where(.action-btn-primary.action-btn-blue) {
+    @apply text-blue-50 bg-blue-600;
+  }
+
+  :where(.action-btn-primary.action-btn-blue:hover) {
+    @apply text-white bg-blue-500;
+  }
+
+  :where(.action-btn-primary.action-btn-blue:active, .action-btn-primary.action-btn-blue.active) {
     @apply text-white bg-blue-700;
-    @apply dark:text-black dark:bg-blue-300;
   }
-}
 
-.action-btn-primary.action-btn-white {
-  @apply text-gray-800 bg-gray-50;
-  @apply hover:text-black hover:bg-white;
-  &:active, &.active {
+  :where(.dark .action-btn-primary.action-btn-blue) {
+    @apply text-blue-900 bg-blue-400;
+  }
+
+  :where(.dark .action-btn-primary.action-btn-blue:hover) {
+    @apply text-black bg-blue-500;
+  }
+
+  :where(.dark .action-btn-primary.action-btn-blue:active, .dark .action-btn-primary.action-btn-blue.active) {
+    @apply text-black bg-blue-300;
+  }
+
+  :where(.action-btn-primary.action-btn-white) {
+    @apply text-gray-800 bg-gray-50;
+  }
+
+  :where(.action-btn-primary.action-btn-white:hover) {
+    @apply text-black bg-white;
+  }
+
+  :where(.action-btn-primary.action-btn-white:active, .action-btn-primary.action-btn-white.active) {
     @apply text-black bg-gray-100;
   }
-}
 
-.action-btn-secondary {
-  @apply text-gray-600 bg-gray-600/0;
-  @apply dark:text-gray-400 dark:bg-gray-400/0;
-  @apply border-gray-600/20;
-  @apply dark:border-gray-400/20;
-  @apply hover:text-gray-700 hover:bg-gray-600/10;
-  @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
-  &:active, &.active {
+  :where(.action-btn-secondary) {
+    @apply text-gray-600 bg-gray-600/0 border-gray-600/20;
+  }
+
+  :where(.action-btn-secondary:hover) {
+    @apply text-gray-700 bg-gray-600/10;
+  }
+
+  :where(.action-btn-secondary:active, .action-btn-secondary.active) {
     @apply text-gray-600 bg-gray-600/20;
-    @apply dark:text-gray-400 dark:bg-gray-400/20;
   }
-}
 
-.action-btn-secondary.action-btn-red {
-  @apply text-red-600 bg-red-600/0;
-  @apply dark:text-red-300 dark:bg-red-400/0;
-  @apply border-red-600/20;
-  @apply dark:border-red-400/20;
-  @apply hover:text-red-700 hover:bg-red-600/10;
-  @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
-  &:active, &.active {
+  :where(.dark .action-btn-secondary) {
+    @apply text-gray-400 bg-gray-400/0 border-gray-400/20;
+  }
+
+  :where(.dark .action-btn-secondary:hover) {
+    @apply text-gray-300 bg-gray-400/10;
+  }
+
+  :where(.dark .action-btn-secondary:active, .dark .action-btn-secondary.active) {
+    @apply text-gray-400 bg-gray-400/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-red) {
+    @apply text-red-600 bg-red-600/0 border-red-600/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-red:hover) {
+    @apply text-red-700 bg-red-600/10;
+  }
+
+  :where(.action-btn-secondary.action-btn-red:active, .action-btn-secondary.action-btn-red.active) {
     @apply text-red-600 bg-red-600/20;
-    @apply dark:text-red-400 dark:bg-red-400/20;
   }
-}
 
-.action-btn-secondary.action-btn-blue {
-  @apply text-blue-600 bg-blue-600/0;
-  @apply dark:text-blue-300 dark:bg-blue-400/0;
-  @apply border-blue-600/20;
-  @apply dark:border-blue-400/20;
-  @apply hover:text-blue-700 hover:bg-blue-600/10;
-  @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
-  &:active, &.active {
+  :where(.dark .action-btn-secondary.action-btn-red) {
+    @apply text-red-300 bg-red-400/0 border-red-400/20;
+  }
+
+  :where(.dark .action-btn-secondary.action-btn-red:hover) {
+    @apply text-red-300 bg-red-400/10;
+  }
+
+  :where(.dark .action-btn-secondary.action-btn-red:active, .dark .action-btn-secondary.action-btn-red.active) {
+    @apply text-red-400 bg-red-400/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-blue) {
+    @apply text-blue-600 bg-blue-600/0 border-blue-600/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-blue:hover) {
+    @apply text-blue-700 bg-blue-600/10;
+  }
+
+  :where(.action-btn-secondary.action-btn-blue:active, .action-btn-secondary.action-btn-blue.active) {
     @apply text-blue-600 bg-blue-600/20;
-    @apply dark:text-blue-400 dark:bg-blue-400/20;
   }
-}
 
-.action-btn-secondary.action-btn-white {
-  @apply text-gray-100 bg-gray-50/0;
-  @apply border-white/20;
-  @apply hover:text-white hover:bg-gray-50/10;
-  &:active, &.active {
+  :where(.dark .action-btn-secondary.action-btn-blue) {
+    @apply text-blue-300 bg-blue-400/0 border-blue-400/20;
+  }
+
+  :where(.dark .action-btn-secondary.action-btn-blue:hover) {
+    @apply text-blue-300 bg-blue-400/10;
+  }
+
+  :where(.dark .action-btn-secondary.action-btn-blue:active, .dark .action-btn-secondary.action-btn-blue.active) {
+    @apply text-blue-400 bg-blue-400/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-white) {
+    @apply text-gray-100 bg-gray-50/0 border-white/20;
+  }
+
+  :where(.action-btn-secondary.action-btn-white:hover) {
+    @apply text-white bg-gray-50/10;
+  }
+
+  :where(.action-btn-secondary.action-btn-white:active, .action-btn-secondary.action-btn-white.active) {
     @apply text-white bg-gray-50/20;
   }
-}
 
-.action-btn-ghost {
-  @apply text-gray-600 bg-gray-600/0;
-  @apply dark:text-gray-400 dark:bg-gray-400/0;
-  @apply hover:text-gray-700 hover:bg-gray-600/10;
-  @apply dark:hover:text-gray-300 dark:hover:bg-gray-400/10;
-  &:active, &.active {
+  :where(.action-btn-ghost) {
+    @apply text-gray-600 bg-gray-600/0;
+  }
+
+  :where(.action-btn-ghost:hover) {
+    @apply text-gray-700 bg-gray-600/10;
+  }
+
+  :where(.action-btn-ghost:active, .action-btn-ghost.active) {
     @apply text-gray-600 bg-gray-600/20;
-    @apply dark:text-gray-400 dark:bg-transparent;
   }
-}
 
-.action-btn-ghost.action-btn-red {
-  @apply text-red-600 bg-red-600/0;
-  @apply dark:text-red-300 dark:bg-red-400/0;
-  @apply hover:text-red-700 hover:bg-red-600/10;
-  @apply dark:hover:text-red-300 dark:hover:bg-red-400/10;
-  &:active, &.active {
+  :where(.dark .action-btn-ghost) {
+    @apply text-gray-400 bg-gray-400/0;
+  }
+
+  :where(.dark .action-btn-ghost:hover) {
+    @apply text-gray-300 bg-gray-400/10;
+  }
+
+  :where(.dark .action-btn-ghost:active, .dark .action-btn-ghost.active) {
+    @apply text-gray-400 bg-transparent;
+  }
+
+  :where(.action-btn-ghost.action-btn-red) {
+    @apply text-red-600 bg-red-600/0;
+  }
+
+  :where(.action-btn-ghost.action-btn-red:hover) {
+    @apply text-red-700 bg-red-600/10;
+  }
+
+  :where(.action-btn-ghost.action-btn-red:active, .action-btn-ghost.action-btn-red.active) {
     @apply text-red-600 bg-red-600/20;
-    @apply dark:text-red-400 dark:bg-transparent;
   }
-}
 
-.action-btn-ghost.action-btn-blue {
-  @apply text-blue-600 bg-blue-600/0;
-  @apply dark:text-blue-300 dark:bg-blue-400/0;
-  @apply hover:text-blue-700 hover:bg-blue-600/10;
-  @apply dark:hover:text-blue-300 dark:hover:bg-blue-400/10;
-  &:active, &.active {
+  :where(.dark .action-btn-ghost.action-btn-red) {
+    @apply text-red-300 bg-red-400/0;
+  }
+
+  :where(.dark .action-btn-ghost.action-btn-red:hover) {
+    @apply text-red-300 bg-red-400/10;
+  }
+
+  :where(.dark .action-btn-ghost.action-btn-red:active, .dark .action-btn-ghost.action-btn-red.active) {
+    @apply text-red-400 bg-transparent;
+  }
+
+  :where(.action-btn-ghost.action-btn-blue) {
+    @apply text-blue-600 bg-blue-600/0;
+  }
+
+  :where(.action-btn-ghost.action-btn-blue:hover) {
+    @apply text-blue-700 bg-blue-600/10;
+  }
+
+  :where(.action-btn-ghost.action-btn-blue:active, .action-btn-ghost.action-btn-blue.active) {
     @apply text-blue-600 bg-blue-600/20;
-    @apply dark:text-blue-400 dark:bg-transparent;
   }
-}
 
-.action-btn-ghost.action-btn-white {
-  @apply text-gray-100 bg-gray-50/0;
-  @apply hover:text-white hover:bg-gray-50/10;
-  &:active, &.active {
+  :where(.dark .action-btn-ghost.action-btn-blue) {
+    @apply text-blue-300 bg-blue-400/0;
+  }
+
+  :where(.dark .action-btn-ghost.action-btn-blue:hover) {
+    @apply text-blue-300 bg-blue-400/10;
+  }
+
+  :where(.dark .action-btn-ghost.action-btn-blue:active, .dark .action-btn-ghost.action-btn-blue.active) {
+    @apply text-blue-400 bg-transparent;
+  }
+
+  :where(.action-btn-ghost.action-btn-white) {
+    @apply text-gray-100 bg-gray-50/0;
+  }
+
+  :where(.action-btn-ghost.action-btn-white:hover) {
+    @apply text-white bg-gray-50/10;
+  }
+
+  :where(.action-btn-ghost.action-btn-white:active, .action-btn-ghost.action-btn-white.active) {
     @apply text-white bg-gray-50/20;
   }
-}
 
-/* Block variant */
+  /* Block variant */
 
-.action-btn-block {
-  @apply w-full;
-}
-
-/* Action states */
-
-.action-btn.disabled, .action-btn[disabled] {
-  @apply pointer-events-none opacity-50;
-  &.action-btn-primary {
-    @apply text-gray-100/50 dark:text-gray-900/50;
-    @apply bg-gray-600/50 dark:bg-gray-400/50;
+  :where(.action-btn-block) {
+    @apply w-full;
   }
-  &.action-btn-secondary, &.action-btn-ghost {
-    @apply text-gray-600/50 dark:text-gray-400/50;
+
+  /* Action states */
+
+  :where(.action-btn.disabled, .action-btn[disabled]) {
+    @apply pointer-events-none opacity-50;
   }
-  &.action-btn-secondary {
-    @apply border-gray-600/10 dark:border-gray-400/10;
+
+  :where(.action-btn.disabled.action-btn-primary, .action-btn[disabled].action-btn-primary) {
+    @apply text-gray-100/50 bg-gray-600/50;
+  }
+
+  :where(.dark .action-btn.disabled.action-btn-primary, .dark .action-btn[disabled].action-btn-primary) {
+    @apply text-gray-900/50 bg-gray-400/50;
+  }
+
+  :where(.action-btn.disabled.action-btn-secondary, .action-btn[disabled].action-btn-secondary, .action-btn.disabled.action-btn-ghost, .action-btn[disabled].action-btn-ghost) {
+    @apply text-gray-600/50;
+  }
+
+  :where(.dark .action-btn.disabled.action-btn-secondary, .dark .action-btn[disabled].action-btn-secondary, .dark .action-btn.disabled.action-btn-ghost, .dark .action-btn[disabled].action-btn-ghost) {
+    @apply text-gray-400/50;
+  }
+
+  :where(.action-btn.disabled.action-btn-secondary, .action-btn[disabled].action-btn-secondary) {
+    @apply border-gray-600/10;
+  }
+
+  :where(.dark .action-btn.disabled.action-btn-secondary, .dark .action-btn[disabled].action-btn-secondary) {
+    @apply border-gray-400/10;
   }
 }

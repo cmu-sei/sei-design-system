@@ -1,29 +1,36 @@
-/* Legacy */
+@layer components {
+  /* Legacy */
 
-.tab {
-  &.tab-pill {
+  :where(.tab.tab-pill) {
     @apply select-none whitespace-nowrap flex items-center text-sm py-3 px-4 w-full font-semibold cursor-pointer;
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-gray-600;
+  }
 
-    &.disabled,
-    &[disabled] {
-      @apply opacity-50 pointer-events-none;
-    }
+  :where(.dark .tab.tab-pill) {
+    @apply text-gray-400;
+  }
 
-    &:hover:not(.active) {
-      @apply rounded text-black dark:text-white bg-gray-100 dark:bg-gray-800;
-    }
+  :where(.tab.tab-pill.disabled, .tab.tab-pill[disabled]) {
+    @apply opacity-50 pointer-events-none;
+  }
 
-    &.active {
-      filter: brightness(95%);
+  :where(.tab.tab-pill:hover:not(.active)) {
+    @apply rounded text-black bg-gray-100;
+  }
 
-      &.tab-blue {
-        @apply rounded-sm text-white bg-blue-600;
-      }
-      
-      &.tab-red {
-        @apply rounded-sm text-white bg-red-600;
-      }
-    }
+  :where(.dark .tab.tab-pill:hover:not(.active)) {
+    @apply text-white bg-gray-800;
+  }
+
+  :where(.tab.tab-pill.active) {
+    filter: brightness(95%);
+  }
+
+  :where(.tab.tab-pill.active.tab-blue) {
+    @apply rounded-sm text-white bg-blue-600;
+  }
+  
+  :where(.tab.tab-pill.active.tab-red) {
+    @apply rounded-sm text-white bg-red-600;
   }
 }

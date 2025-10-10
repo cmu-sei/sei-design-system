@@ -59,7 +59,7 @@
             </slot>
             <!-- @slot Custom right-icon slot content. -->
             <slot :name="`tabIconRight(${tab.key})`" />
-            <span 
+            <span
               v-if="typeof tab.count !== 'undefined' && tab.count >= 0"
               class="tab-count"
             >

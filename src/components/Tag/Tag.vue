@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     :id="id"
     data-id="sds-tag"
     class="
@@ -32,7 +32,7 @@
     :data-readonly="readonly"
     :class="[textSizeClass, sizeClass, paddingClass, disabledClass]"
   >
-    <div 
+    <div
       class="flex flex-row flex-nowrap items-center"
       :class="{
         'gap-x-0.5': size === 'sm',
@@ -44,7 +44,7 @@
         class="bg-blue-600 text-white text-center"
         :class="size === 'sm' ? 'min-h-6 min-w-6 px-1.5 leading-6' : 'min-h-8 min-w-8 px-1.5 leading-8'"
       >{{ counter.toLocaleString() }}</span>
-      <span 
+      <span
         v-if="!!$slots.leftSlot"
         class="leading-none"
       >
@@ -82,8 +82,8 @@
       </span>
       <template v-if="isAction(action) && !readonly">
         <template v-if="action === 'increment'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
             class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
@@ -103,8 +103,8 @@
           </button>
         </template>
         <template v-else-if="action === 'decrement'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
             class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
@@ -124,8 +124,8 @@
           </button>
         </template>
         <template v-else-if="action === 'remove'">
-          <button 
-            ref="button" 
+          <button
+            ref="button"
             type="button"
             class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50"
             :class="[buttonSizeClass]"

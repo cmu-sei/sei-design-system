@@ -26,7 +26,7 @@
         Scroll Area
       </h2>
       <div>
-        <SdsScrollArea class="h-full">
+        <SdsScrollArea class="h-48">
           <p
             v-for="index in 20"
             :key="index"

@@ -1,19 +1,37 @@
-.table-prose {
-  @apply w-full table-auto text-left;
+@layer components {
+  :where(.table-prose) {
+    @apply w-full table-auto text-left;
+  }
 
-  & thead {
-    @apply border-y border-gray-100 dark:border-gray-700;
+  :where(.table-prose thead) {
+    @apply border-y border-gray-100;
+  }
+
+  :where(.dark .table-prose thead) {
+    @apply border-gray-700;
   }
   
-  & thead th {
-    @apply text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-950 font-bold text-sm align-middle p-2 relative select-none;
+  :where(.table-prose thead th) {
+    @apply text-gray-600 bg-gray-50 font-bold text-sm align-middle p-2 relative select-none;
+  }
+
+  :where(.dark .table-prose thead th) {
+    @apply text-gray-400 bg-gray-950;
   }
   
-  & tbody tr {
-    @apply bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 last:border-none;
+  :where(.table-prose tbody tr) {
+    @apply bg-white border-b border-gray-100;
+  }
+
+  :where(.table-prose tbody tr:last-child) {
+    @apply border-none;
+  }
+
+  :where(.dark .table-prose tbody tr) {
+    @apply bg-gray-900 border-gray-800;
   }
   
-  & tbody td {
+  :where(.table-prose tbody td) {
     @apply align-top p-2 relative;
   }
 }
