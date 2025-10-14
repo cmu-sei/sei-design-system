@@ -27,7 +27,12 @@
       @apply border-gray-100 dark:border-gray-850;
     }
 
-    & :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control, .btn, .action-btn) {
+    & :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control) {
+      @apply border-0 rounded-none;
+    }
+
+    & .btn,
+    & .action-btn {
       @apply border-0 rounded-none;
     }
 
@@ -59,11 +64,21 @@
       @apply pr-5 bg-right;
     }
 
-    & :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child, .btn:first-child, .action-btn:first-child) {
+    & :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child) {
       @apply rounded-l-theme-sm;
     }
 
-    & :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child, .btn:last-child, .action-btn:last-child) {
+    & .btn:first-child,
+    & .action-btn:first-child {
+      @apply rounded-l-theme-sm;
+    }
+
+    & :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child) {
+      @apply rounded-r-theme-sm;
+    }
+
+    & .btn:last-child,
+    & .action-btn:last-child {
       @apply rounded-r-theme-sm;
     }
 
