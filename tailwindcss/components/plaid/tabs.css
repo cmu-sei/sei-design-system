@@ -1,340 +1,436 @@
-.tabs:where(.sds-theme-plaid *) {
-  [role="tablist"]:has(.tab-block) {
-    @apply border border-gray-100 dark:border-gray-800;
-
-    .tab-block {
-      @apply -my-0.25
-    }
+@layer components {
+  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-block)) {
+    @apply border border-gray-100;
   }
 
-  [role="tablist"]:has(.tab-folder) {
-    > li {
-      &:not(:first-of-type) {
-        @apply -ml-0.25;
-      }
-    }
-  } 
-
-  &:has(.tab-folder),
-  &:has(.tab-underline) {
-    [role="tabpanel"] {
-      @apply border-t border-gray-100 dark:border-gray-800;
-      @apply -mt-0.25;
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs [role="tablist"]:has(.tab-block)) {
+    @apply border-gray-800;
   }
 
-  &:has(.tab-folder) {
-    [role="tabpanel"] {
-      @apply relative z-1;
-    }
+  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-block) .tab-block) {
+    @apply -my-0.25;
+  }
+
+  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-folder) > li:not(:first-of-type)) {
+    @apply -ml-0.25;
+  }
+
+  :where(.sds-theme-plaid .tabs:has(.tab-folder) [role="tabpanel"], .sds-theme-plaid .tabs:has(.tab-underline) [role="tabpanel"]) {
+    @apply border-t border-gray-100 -mt-0.25;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs:has(.tab-folder) [role="tabpanel"], :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs:has(.tab-underline) [role="tabpanel"]) {
+    @apply border-gray-800;
+  }
+
+  :where(.sds-theme-plaid .tabs:has(.tab-folder) [role="tabpanel"]) {
+    @apply relative z-1;
   }
 
   /* Tab indicator */
 
-  .tab-indicator {
-    @apply block absolute bottom-0;
-    @apply transition-all delay-50 duration-250;
-
-    &.tab-indicator-sm {
-      @apply h-0.5;
-    }
-
-    &.tab-indicator-lg {
-      @apply h-0.75;
-    }
-
-    &.tab-indicator-blue {
-      @apply bg-blue-600 dark:bg-blue-300;
-    }
-
-    &.tab-indicator-gray {
-      @apply bg-gray-900 dark:bg-gray-200;
-    }
-
-    &.tab-indicator-red {
-      @apply bg-red-600 dark:bg-red-300;
-    }
+  :where(.sds-theme-plaid .tabs .tab-indicator) {
+    @apply block absolute bottom-0 transition-all delay-50 duration-250;
   }
-}
 
-.tab-group:where(.sds-theme-plaid *) {
-  @apply grid grid-flow-col auto-cols-min;
-}
+  :where(.sds-theme-plaid .tabs .tab-indicator.tab-indicator-sm) {
+    @apply h-0.5;
+  }
 
-.tab:not(.tab-pill):where(.sds-theme-plaid *) {
+  :where(.sds-theme-plaid .tabs .tab-indicator.tab-indicator-lg) {
+    @apply h-0.75;
+  }
 
-  /* Base styles */
+  :where(.sds-theme-plaid .tabs .tab-indicator.tab-indicator-blue) {
+    @apply bg-blue-600;
+  }
 
-  @apply inline-flex items-center gap-x-2;
-  @apply text-gray-600 dark:text-gray-400;
-  @apply font-semibold cursor-pointer select-none whitespace-nowrap;
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs .tab-indicator.tab-indicator-blue) {
+    @apply bg-blue-300;
+  }
 
-  &.disabled,
-  &[disabled] {
+  :where(.sds-theme-plaid .tabs .tab-indicator.tab-indicator-gray) {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs .tab-indicator.tab-indicator-gray) {
+    @apply bg-gray-200;
+  }
+
+  :where(.sds-theme-plaid .tabs .tab-indicator.tab-indicator-red) {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tabs .tab-indicator.tab-indicator-red) {
+    @apply bg-red-300;
+  }
+
+  :where(.sds-theme-plaid .tab-group) {
+    @apply grid grid-flow-col auto-cols-min;
+  }
+
+  /* Base tab styles */
+
+  :where(.sds-theme-plaid .tab.tab-block, .sds-theme-plaid .tab.tab-folder, .sds-theme-plaid .tab.tab-underline) {
+    @apply inline-flex items-center gap-x-2 text-gray-600 font-semibold cursor-pointer select-none whitespace-nowrap;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline) {
+    @apply text-gray-400;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.disabled, .sds-theme-plaid .tab.tab-block[disabled], .sds-theme-plaid .tab.tab-folder.disabled, .sds-theme-plaid .tab.tab-folder[disabled], .sds-theme-plaid .tab.tab-underline.disabled, .sds-theme-plaid .tab.tab-underline[disabled]) {
     @apply opacity-50 pointer-events-none;
   }
 
   /* Sizes */
 
-  &:not(.tab-lg) {
+  :where(.sds-theme-plaid .tab.tab-block:not(.tab-lg), .sds-theme-plaid .tab.tab-folder:not(.tab-lg), .sds-theme-plaid .tab.tab-underline:not(.tab-lg)) {
     @apply text-sm;
   }
 
-  &.tab-lg {
+  :where(.sds-theme-plaid .tab.tab-block.tab-lg, .sds-theme-plaid .tab.tab-folder.tab-lg, .sds-theme-plaid .tab.tab-underline.tab-lg) {
     @apply text-lg;
   }
 
-  /* Types */
-
   /* Block type */
 
-  &.tab-block {
-    @apply border border-gray-100/[0] dark:border-gray-800/[0];
-    @apply relative -mx-0.25 z-1;
-
-    &:hover:not(.active),
-    &:active:not(.active) {
-      @apply border-gray-100 dark:border-gray-800;
-    }
-
-    &:hover {
-      @apply bg-gray-25 dark:bg-gray-850;
-    }
-
-    &:active {
-      @apply bg-gray-50 dark:bg-gray-800;
-    }
-
-    &.active {
-      @apply relative z-10;
-    }
-
-    /* Sizes */
-
-    &:not(.tab-lg) {
-      @apply py-2.5 px-4;
-    }
-
-    &.tab-lg {
-      @apply py-3 px-4;
-    }
-
-    /* Variants */
-
-    &.tab-blue {
-      &.active {
-        @apply bg-blue-600 dark:bg-blue-400 text-white dark:text-black;
-        .tab-count {
-          @apply bg-white dark:bg-black text-blue-600 dark:text-blue-300;
-        }
-      }
-    }
-
-    &.tab-gray {
-      &.active {
-        @apply bg-gray-900 dark:bg-gray-300 text-white dark:text-black;
-        .tab-count {
-          @apply bg-white dark:bg-black text-gray-900 dark:text-gray-200;
-        } 
-      }
-    }
-
-    &.tab-red {
-      &.active {
-        @apply bg-red-600 dark:bg-red-300 text-white dark:text-black;
-        .tab-count {
-          @apply bg-white dark:bg-black text-red-600 dark:text-red-300;
-        }
-      }
-    }
+  :where(.sds-theme-plaid .tab.tab-block) {
+    @apply border border-gray-100/[0] relative -mx-0.25 z-1;
   }
 
-  /* Folder type (Default) */
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block) {
+    @apply border-gray-800/[0];
+  }
 
-  &.tab-folder {
-    @apply bg-gray-600/[.02] dark:bg-gray-400/[.04];
-    @apply border-t border-r border-l border-gray-50 dark:border-gray-850;
-    @apply border-b border-b-gray-50/[0] dark:border-b-gray-850/[0];
+  :where(.sds-theme-plaid .tab.tab-block:hover:not(.active), .sds-theme-plaid .tab.tab-block:active:not(.active)) {
+    @apply border-gray-100;
+  }
 
-    &:active,
-    &.active {
-      @apply bg-white/[0] dark:bg-white/[.02];
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block:hover:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block:active:not(.active)) {
+    @apply border-gray-800;
+  }
 
-    &.active {
-      @apply bg-white/[0] dark:bg-white/[0];
-      @apply border-gray-100 dark:border-gray-800 border-t-gray-100/[0] dark:border-t-gray-800/[0];
-      @apply border-b-gray-100/[0] dark:border-b-gray-800/[0];
-      @apply relative z-2;
-      @apply backdrop-blur-lg;
-    }
+  :where(.sds-theme-plaid .tab.tab-block:hover) {
+    @apply bg-gray-25;
+  }
 
-    &.tab-blue,
-    &.tab-gray,
-    &.tab-red {
-      &.active {
-        &:before {
-          @apply content-[''] block absolute -top-0.25 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
-        }
-      }
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block:hover) {
+    @apply bg-gray-850;
+  }
 
-    &.tab-blue {
-      &.active {
-        @apply before:bg-blue-600 dark:before:bg-blue-300;
-      }
-    }
+  :where(.sds-theme-plaid .tab.tab-block:active) {
+    @apply bg-gray-50;
+  }
 
-    &.tab-gray {
-      &.active {
-        @apply before:bg-gray-900 dark:before:bg-gray-200;
-      }
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block:active) {
+    @apply bg-gray-800;
+  }
 
-    &.tab-red {
-      &.active {
-        @apply before:bg-red-600 dark:before:bg-red-300;
-      }
-    }
+  :where(.sds-theme-plaid .tab.tab-block.active) {
+    @apply relative z-10;
+  }
 
-    /* Sizes */
+  /* Block sizes */
 
-    &:not(.tab-lg) {
-      @apply py-2.25 px-4;
-    }
+  :where(.sds-theme-plaid .tab.tab-block:not(.tab-lg)) {
+    @apply py-2.5 px-4;
+  }
 
-    &.tab-lg {
-      @apply py-3.25 px-4;
-    }
+  :where(.sds-theme-plaid .tab.tab-block.tab-lg) {
+    @apply py-3.25 px-4;
+  }
+
+  /* Blue variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue:hover, .sds-theme-plaid .tab.tab-block.tab-blue.active, .sds-theme-plaid .tab.tab-folder.tab-blue:hover, .sds-theme-plaid .tab.tab-folder.tab-blue.active, .sds-theme-plaid .tab.tab-underline.tab-blue:hover, .sds-theme-plaid .tab.tab-underline.tab-blue.active) {
+    @apply text-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue.active) {
+    @apply text-blue-300;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue:hover .tab-count, .sds-theme-plaid .tab.tab-block.tab-blue.active .tab-count, .sds-theme-plaid .tab.tab-folder.tab-blue:hover .tab-count, .sds-theme-plaid .tab.tab-folder.tab-blue.active .tab-count, .sds-theme-plaid .tab.tab-underline.tab-blue:hover .tab-count, .sds-theme-plaid .tab.tab-underline.tab-blue.active .tab-count) {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue.active .tab-count) {
+    @apply bg-blue-300;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue:active:not(.active), .sds-theme-plaid .tab.tab-folder.tab-blue:active:not(.active), .sds-theme-plaid .tab.tab-underline.tab-blue:active:not(.active)) {
+    @apply text-blue-700;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue:active:not(.active)) {
+    @apply text-blue-200;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-folder.tab-blue:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-underline.tab-blue:active:not(.active) .tab-count) {
+    @apply bg-blue-700;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-blue:active:not(.active) .tab-count) {
+    @apply bg-blue-200;
+  }
+
+  /* Gray variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray:hover, .sds-theme-plaid .tab.tab-block.tab-gray.active, .sds-theme-plaid .tab.tab-folder.tab-gray:hover, .sds-theme-plaid .tab.tab-folder.tab-gray.active, .sds-theme-plaid .tab.tab-underline.tab-gray:hover, .sds-theme-plaid .tab.tab-underline.tab-gray.active) {
+    @apply text-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray.active) {
+    @apply text-gray-200;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray:hover .tab-count, .sds-theme-plaid .tab.tab-block.tab-gray.active .tab-count, .sds-theme-plaid .tab.tab-folder.tab-gray:hover .tab-count, .sds-theme-plaid .tab.tab-folder.tab-gray.active .tab-count, .sds-theme-plaid .tab.tab-underline.tab-gray:hover .tab-count, .sds-theme-plaid .tab.tab-underline.tab-gray.active .tab-count) {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray.active .tab-count) {
+    @apply bg-gray-200;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray:active:not(.active), .sds-theme-plaid .tab.tab-folder.tab-gray:active:not(.active), .sds-theme-plaid .tab.tab-underline.tab-gray:active:not(.active)) {
+    @apply text-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray:active:not(.active)) {
+    @apply text-gray-100;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-folder.tab-gray:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-underline.tab-gray:active:not(.active) .tab-count) {
+    @apply bg-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-gray:active:not(.active) .tab-count) {
+    @apply bg-gray-100;
+  }
+
+  /* Red variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red:hover, .sds-theme-plaid .tab.tab-block.tab-red.active, .sds-theme-plaid .tab.tab-folder.tab-red:hover, .sds-theme-plaid .tab.tab-folder.tab-red.active, .sds-theme-plaid .tab.tab-underline.tab-red:hover, .sds-theme-plaid .tab.tab-underline.tab-red.active) {
+    @apply text-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red.active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red:hover, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red.active) {
+    @apply text-red-300;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red:hover .tab-count, .sds-theme-plaid .tab.tab-block.tab-red.active .tab-count, .sds-theme-plaid .tab.tab-folder.tab-red:hover .tab-count, .sds-theme-plaid .tab.tab-folder.tab-red.active .tab-count, .sds-theme-plaid .tab.tab-underline.tab-red:hover .tab-count, .sds-theme-plaid .tab.tab-underline.tab-red.active .tab-count) {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red.active .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red:hover .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red.active .tab-count) {
+    @apply bg-red-300;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red:active:not(.active), .sds-theme-plaid .tab.tab-folder.tab-red:active:not(.active), .sds-theme-plaid .tab.tab-underline.tab-red:active:not(.active)) {
+    @apply text-red-700;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red:active:not(.active), :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red:active:not(.active)) {
+    @apply text-red-200;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-folder.tab-red:active:not(.active) .tab-count, .sds-theme-plaid .tab.tab-underline.tab-red:active:not(.active) .tab-count) {
+    @apply bg-red-700;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red:active:not(.active) .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline.tab-red:active:not(.active) .tab-count) {
+    @apply bg-red-200;
+  }
+
+  /* Block blue variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue.active) {
+    @apply bg-blue-600 text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue.active) {
+    @apply bg-blue-400 text-black;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-blue.active .tab-count) {
+    @apply bg-white text-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-blue.active .tab-count) {
+    @apply bg-black text-blue-300;
+  }
+
+  /* Block gray variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray.active) {
+    @apply bg-gray-900 text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray.active) {
+    @apply bg-gray-300 text-black;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-gray.active .tab-count) {
+    @apply bg-white text-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-gray.active .tab-count) {
+    @apply bg-black text-gray-200;
+  }
+
+  /* Block red variant */
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red.active) {
+    @apply bg-red-600 text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red.active) {
+    @apply bg-red-300 text-black;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-block.tab-red.active .tab-count) {
+    @apply bg-white text-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block.tab-red.active .tab-count) {
+    @apply bg-black text-red-300;
+  }
+
+  /* Folder type */
+
+  :where(.sds-theme-plaid .tab.tab-folder) {
+    @apply bg-gray-600/[.02] border-t border-r border-l border-gray-50 border-b border-b-gray-50/[0];
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder) {
+    @apply bg-gray-400/[.04] border-gray-850 border-b-gray-850/[0];
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder:active, .sds-theme-plaid .tab.tab-folder.active) {
+    @apply bg-white/[0];
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder:active, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.active) {
+    @apply bg-white/[.02];
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.active) {
+    @apply bg-white/[0] border-gray-100 border-t-gray-100/[0] border-b-gray-100/[0] relative z-2 backdrop-blur-lg;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.active) {
+    @apply bg-white/[0] border-gray-800 border-t-gray-800/[0] border-b-gray-800/[0];
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.tab-blue.active)::before,
+  :where(.sds-theme-plaid .tab.tab-folder.tab-gray.active)::before,
+  :where(.sds-theme-plaid .tab.tab-folder.tab-red.active)::before {
+    @apply content-[''] block absolute -top-0.25 -left-0.25 w-[calc(100%+0.125rem)] h-0.5 z-1;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.tab-blue.active) {
+    @apply before:bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-blue.active) {
+    @apply before:bg-blue-300;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.tab-gray.active) {
+    @apply before:bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-gray.active) {
+    @apply before:bg-gray-200;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.tab-red.active) {
+    @apply before:bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder.tab-red.active) {
+    @apply before:bg-red-300;
+  }
+
+  /* Folder sizes */
+
+  :where(.sds-theme-plaid .tab.tab-folder:not(.tab-lg)) {
+    @apply py-2.25 px-4;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-folder.tab-lg) {
+    @apply py-3.25 px-4;
   }
 
   /* Underline type */
 
-  &.tab-underline {
+  :where(.sds-theme-plaid .tab.tab-underline) {
     @apply bg-white/0 py-3.5 px-4 relative;
-
-    &:after {
-      @apply content-[''] block absolute bottom-0 left-0 w-full rounded-md;
-    }
-
-    /* Default height */
-    &,
-    &.tab-sm {
-      &:after {
-        @apply h-0.5;
-      }
-    }
-
-    &.tab-lg {
-      &:after {
-        @apply h-0.75;
-      }
-    }
   }
 
-  &.tab-underline-no-rule {
+  :where(.sds-theme-plaid .tab.tab-underline)::after {
+    @apply content-[''] block absolute bottom-0 left-0 w-full rounded-md;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-underline)::after,
+  :where(.sds-theme-plaid .tab.tab-underline.tab-sm)::after {
+    @apply h-0.5;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-underline.tab-lg)::after {
+    @apply h-0.75;
+  }
+
+  :where(.sds-theme-plaid .tab.tab-underline-no-rule) {
     @apply static;
-    &:after {
-      @apply content-none hidden static w-0 h-0;
-    }
   }
 
-  /* Variants */
-
-  &.tab-blue {
-    &:hover,
-    &.active {
-      @apply text-blue-600 dark:text-blue-300;
-      .tab-count {
-        @apply bg-blue-600 dark:bg-blue-300;
-      }
-    }
-
-    &:active:not(.active) {
-      @apply text-blue-700 dark:text-blue-200;
-      .tab-count {
-        @apply bg-blue-700 dark:bg-blue-200;
-      }
-    }
-
-    &.active {
-      &.tab-underline {
-        &:after {
-          @apply bg-blue-600 dark:bg-blue-300;
-        }
-      }
-    }
+  :where(.sds-theme-plaid .tab.tab-underline-no-rule)::after {
+    @apply content-none hidden static w-0 h-0;
   }
 
-  &.tab-gray {
-    &:hover,
-    &.active {
-      @apply text-gray-900 dark:text-gray-200;
-      .tab-count {
-        @apply bg-gray-900 dark:bg-gray-200;
-      }
-    }
+  /* Underline color variants */
 
-    &:active:not(.active) {
-      @apply text-black dark:text-gray-100;
-      .tab-count {
-        @apply bg-black dark:bg-gray-100;
-      }
-    }
-
-    &.active {
-      &.tab-underline {
-        &:after {
-          @apply bg-gray-900 dark:bg-gray-200;
-        }
-      }
-    }
+  :where(.sds-theme-plaid .tab.tab-blue.active.tab-underline)::after {
+    @apply bg-blue-600;
   }
 
-  /* Default */
-
-  &.tab-red {
-    &:hover,
-    &.active {
-      @apply text-red-600 dark:text-red-300;
-      .tab-count {
-        @apply bg-red-600 dark:bg-red-300;
-      }
-    }
-
-    &:active:not(.active) {
-      @apply text-red-700 dark:text-red-200;
-      .tab-count {
-        @apply bg-red-700 dark:bg-red-200;
-      }
-    }
-
-    &.active {
-      &.tab-underline {
-        &:after {
-          @apply bg-red-600 dark:bg-red-300;
-        }
-      }
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-blue.active.tab-underline)::after {
+    @apply bg-blue-300;
   }
 
-  /* Tab count(er) */
+  :where(.sds-theme-plaid .tab.tab-gray.active.tab-underline)::after {
+    @apply bg-gray-900;
+  }
 
-  .tab-count {
-    @apply bg-gray-600 dark:bg-gray-400 text-white dark:text-black;
-    @apply inline-flex items-center justify-center;
-    @apply rounded-full py-0.5 px-1.75;
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-gray.active.tab-underline)::after {
+    @apply bg-gray-200;
+  }
 
-    /* Sizes */
+  :where(.sds-theme-plaid .tab.tab-red.active.tab-underline)::after {
+    @apply bg-red-600;
+  }
 
-    .tab-sm & {
-      @apply text-xs;
-      @apply min-h-5 min-w-5;
-    }
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-red.active.tab-underline)::after {
+    @apply bg-red-300;
+  }
 
-    .tab-lg & {
-      @apply text-sm;
-      @apply min-h-6 min-w-6;
-    }
+  /* Tab count */
+
+  :where(.sds-theme-plaid .tab.tab-block .tab-count, .sds-theme-plaid .tab.tab-folder .tab-count, .sds-theme-plaid .tab.tab-underline .tab-count) {
+    @apply bg-gray-600 text-white inline-flex items-center justify-center rounded-full py-0.5 px-1.75;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-block .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-folder .tab-count, :is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .tab.tab-underline .tab-count) {
+    @apply bg-gray-400 text-black;
+  }
+
+  :where(.sds-theme-plaid .tab-sm .tab-count) {
+    @apply text-xs min-h-5 min-w-5;
+  }
+
+  :where(.sds-theme-plaid .tab-lg .tab-count) {
+    @apply text-sm min-h-6 min-w-6;
   }
 }
