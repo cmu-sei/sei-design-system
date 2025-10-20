@@ -297,6 +297,11 @@ const maskAlign = computed(() => {
       return null
   }
 })
+
+defineExpose({
+  maskSpec,
+  maskAlign
+})
 </script>
 
 <style scoped>
