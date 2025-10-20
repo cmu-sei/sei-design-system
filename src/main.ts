@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './docs/App.vue';
-import { createRouter, createWebHistory } from 'vue-router/auto'
+import { createRouter, createWebHistory } from 'vue-router'
 import { createHead } from '@unhead/vue/client'
 import { routes } from 'vue-router/auto-routes'
 

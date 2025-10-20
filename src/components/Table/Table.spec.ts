@@ -66,16 +66,18 @@ describe('Table', () => {
 
   it('sorts table by field (column)', async () => {
     await wrapper.setProps({ ...props, sortBy: 'name' })
-    const button = wrapper.find('table thead tr th:nth-child(2) button') // Fruit
-    await button.trigger('click')
+    // Find all header buttons and get the Fruit column button (index 1, after Title)
+    const headerButtons = wrapper.findAll('thead th button')
+    await headerButtons[1].trigger('click') // Fruit
     expect(wrapper.html()).toMatchSnapshot()
   })
 
   it('sorts table using an external source as its sorting behavior', async () => {
     const sortTableItems = vi.fn()
     await wrapper.setProps({ ...props, sortBy: 'name', sortDesc: true, onSort: sortTableItems })
-    const button = wrapper.find('table thead tr th:nth-child(3) button') // Vegetable
-    await button.trigger('click')
+    // Find all header buttons and get the Vegetable column button (index 2)
+    const headerButtons = wrapper.findAll('thead th button')
+    await headerButtons[2].trigger('click') // Vegetable
     expect(sortTableItems).toHaveBeenCalledWith({
       field: { ...fields[2] },
       sortBy: 'vegetable',
@@ -123,14 +125,12 @@ describe('Table', () => {
       ]
     }
     await wrapper.setProps({ ...props })
-    await wrapper
-      .find('table thead tr th:nth-child(2) button:nth-child(1)')
-      .trigger('click') // Fruit
+    // Find all buttons in the multisort column (second th element)
+    const allButtons = wrapper.findAll('thead button')
+    await allButtons[1].trigger('click') // Fruit (first button in multisort column)
     await wrapper.vm.$nextTick()
     expect(wrapper.html()).toMatchSnapshot()
-    await wrapper
-      .find('table thead tr th:nth-child(2) button:nth-child(2)')
-      .trigger('click') // Vegetable
+    await allButtons[2].trigger('click') // Vegetable (second button in multisort column)
     await wrapper.vm.$nextTick()
     expect(wrapper.html()).toMatchSnapshot()
   })
@@ -191,8 +191,9 @@ describe('Table', () => {
       fields: [...fields]
     }
     const wrapper = mount(Component, { props, slots })
-    const button = wrapper.find('table tbody tr:nth-child(1) td:nth-child(1) button')
-    await button.trigger('click')
+    // Find all tbody buttons and get the first row's drawer toggle button
+    const tbodyButtons = wrapper.findAll('tbody button')
+    await tbodyButtons[0].trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
     expect(wrapper.html()).toMatchSnapshot()
   })
@@ -211,8 +212,9 @@ describe('Table', () => {
       fields: [...fields]
     }
     const wrapper = mount(Component, { props, slots })
-    const button = wrapper.find('table thead tr th:nth-child(1) button')
-    await button.trigger('click')
+    // Find all header buttons and get the first one (toggle all drawers button)
+    const headerButtons = wrapper.findAll('thead button')
+    await headerButtons[0].trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
     expect(wrapper.html()).toMatchSnapshot()
   })
