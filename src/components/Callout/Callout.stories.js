@@ -4,7 +4,7 @@ import SdsCallout from './Callout.vue';
 import { action } from 'storybook/actions';
 
 export default {
-  title: 'Components/Containers/Callout',
+  title: 'Components/Data Visualization/Callout',
   parameters: {
     docs: {
       description: {
