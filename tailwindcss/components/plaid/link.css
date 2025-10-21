@@ -311,11 +311,11 @@
   /* ===== DIRECTIONAL CTA VARIANTS ===== */
   /* CTA Down */
   :where(.sds-theme-plaid .link.link-cta-down)::after {
-    @apply rotate-90;
+    @apply rotate-90 -top-0.75;
   }
 
   :where(.sds-theme-plaid .link.link-cta-down:hover)::after {
-    @apply translate-x-0 translate-y-1;
+    @apply translate-x-0 translate-y-0.75;
   }
 
   /* CTA Left */
@@ -333,10 +333,10 @@
 
   /* CTA Up */
   :where(.sds-theme-plaid .link.link-cta-up)::after {
-    @apply -rotate-90;
+    @apply -rotate-90 -top-0.75;
   }
 
   :where(.sds-theme-plaid .link.link-cta-up:hover)::after {
-    @apply translate-x-0 -translate-y-1;
+    @apply translate-x-0 -translate-y-0.75;
   }
 }
