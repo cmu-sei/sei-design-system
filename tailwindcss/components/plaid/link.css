@@ -179,12 +179,63 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-plaid .link.link-cta) {
-    @apply inline-flex flex-row items-center gap-2 font-semibold;
+    @apply inline-block font-semibold;
     @apply transition-all duration-100 ease-linear;
   }
 
+  /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
+  :where(.sds-theme-plaid .link.link-cta.link-primary:not(.link-red):not(.link-white))::after {
+    @apply bg-blue-600;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-blue-500;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary:not(.link-red):not(.link-white))::after {
+    @apply bg-blue-300;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-blue-200;
+  }
+
+  /* Default CTA Arrow Colors - Secondary (applies if no color variant is present) */
+  :where(.sds-theme-plaid .link.link-cta.link-secondary:not(.link-red):not(.link-white))::after {
+    @apply bg-gray-900;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-secondary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-blue-500;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary:not(.link-red):not(.link-white))::after {
+    @apply bg-gray-100;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-blue-200;
+  }
+
+  /* Default CTA Arrow Colors - Tertiary (applies if no color variant is present) */
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary:not(.link-red):not(.link-white))::after {
+    @apply bg-gray-600;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary:not(.link-red):not(.link-white))::after {
+    @apply bg-gray-400;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary:not(.link-red):not(.link-white):hover)::after {
+    @apply bg-gray-100;
+  }
+
   :where(.sds-theme-plaid .link.link-cta)::after {
-    @apply content-[''] inline-flex h-[15px] w-[19px] top-px relative transition-transform;
+    @apply content-[''] inline-block h-[15px] w-[19px] ml-1 top-0.75 relative transition-transform;
     mask-image: var(--arrow-right);
   }
 
