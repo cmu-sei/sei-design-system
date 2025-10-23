@@ -1,7 +1,7 @@
 @layer components {
   /* ===== BASE LINK STYLES ===== */
   :where(.sds-theme-forge .link) {
-    @apply inline-block break-words cursor-pointer;
+    @apply inline-block break-words font-semibold text-sm cursor-pointer;
   }
 
   :where(.sds-theme-forge .link:hover) {
@@ -179,7 +179,7 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-forge .link.link-cta) {
-    @apply inline-block font-semibold;
+    /* @apply inline-block font-semibold; */
     @apply transition-all duration-100 ease-linear;
   }
 
@@ -235,8 +235,33 @@
   }
 
   :where(.sds-theme-forge .link.link-cta)::after {
-    @apply content-[''] inline-block h-[13px] w-[14px] ml-1 top-px relative transition-transform;
-    mask-image: var(--chevrons-right-alt);
+    @apply content-[''] inline-block h-[13px] w-3.5 ml-1 top-0.5 relative transition-transform;
+    mask-image: var(--chevrons-right-alt-md);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-xs)::after {
+    @apply h-[9px] w-2.5 top-px;
+    mask-image: var(--chevrons-right-alt-xs);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-sm)::after {
+    @apply h-[11px] w-3 top-px;
+    mask-image: var(--chevrons-right-alt-sm);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-base)::after {
+    @apply h-[13px] w-3.5 top-px;
+    mask-image: var(--chevrons-right-alt-md);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-lg)::after {
+    @apply h-[15px] w-4 top-px;
+    mask-image: var(--chevrons-right-alt-lg);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-xl)::after {
+    @apply h-[17px] w-4.5 top-px;
+    mask-image: var(--chevrons-right-alt-xl);
   }
 
   :where(.sds-theme-forge .link.link-cta:hover)::after {
