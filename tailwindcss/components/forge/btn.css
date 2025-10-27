@@ -1,12 +1,15 @@
 @layer components {
+  /* ===== BASE BUTTON STYLES ===== */
   :where(.sds-theme-forge .btn) {
-
-    /* Base styles */
-
     @apply border-2 border-transparent inline-block py-2 px-8 rounded-sm select-none whitespace-nowrap font-semibold cursor-pointer;
     @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
-    @apply dark:focus-visible:ring-blue-700;
   }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn) {
+    @apply focus-visible:ring-blue-700;
+  }
+
+  /* ===== BUTTON SIZES ===== */
 
   :where(.sds-theme-forge .btn.btn-xl) {
     @apply py-4 px-16 text-xl;
@@ -16,6 +19,8 @@
     @apply py-3 px-12 text-lg;
   }
 
+  /* Default size (md) - no additional classes needed */
+
   :where(.sds-theme-forge .btn.btn-sm) {
     @apply py-1 px-4 text-sm;
   }
@@ -24,303 +29,623 @@
     @apply py-0.5 px-2 text-xs;
   }
 
-  /* Kind */
-
+  /* ===== BUTTON KINDS (PRIMARY, SECONDARY, TERTIARY, GHOST) ===== */
+  /* Primary Buttons - Default Blue */
   :where(.sds-theme-forge .btn.btn-primary) {
     @apply text-white bg-blue-600;
-    @apply dark:bg-blue-400 dark:text-black;
     @apply hover:bg-blue-500;
-    @apply dark:hover:bg-blue-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary) {
+    @apply bg-blue-400 text-black;
+    @apply hover:bg-blue-300;
   }
 
   :where(.sds-theme-forge .btn.btn-primary:active, .sds-theme-forge .btn.btn-primary.active) {
     @apply bg-blue-600 shadow-inner;
-    @apply dark:bg-blue-400 dark:shadow-inner;
   }
 
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.active) {
+    @apply bg-blue-400 shadow-inner;
+  }
+
+  /* Primary - Default Type - Gray Variant */
   :where(.sds-theme-forge .btn.btn-primary.btn-gray) {
     @apply bg-gray-800;
     @apply hover:bg-gray-700;
-    @apply dark:bg-gray-400;
-    @apply dark:hover:bg-gray-300;
+  }
+
+  /* Primary - Default Type - Gray Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-gray) {
+    @apply bg-gray-400;
+    @apply hover:bg-gray-300;
   }
 
   :where(.sds-theme-forge .btn.btn-primary.btn-gray:active, .sds-theme-forge .btn.btn-primary.btn-gray.active) {
     @apply bg-gray-800;
-    @apply dark:bg-gray-400;
   }
 
+  /* Primary - Default Type - Gray Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-gray:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-gray.active) {
+    @apply bg-gray-400;
+  }
+
+  /* Primary - Default Type - Red Variant */
   :where(.sds-theme-forge .btn.btn-primary.btn-red) {
     @apply bg-red-600;
-    @apply dark:bg-red-400;
     @apply hover:bg-red-500;
-    @apply dark:hover:bg-red-300;
+  }
+
+  /* Primary - Default Type - Red Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-red) {
+    @apply bg-red-400;
+    @apply hover:bg-red-300;
   }
 
   :where(.sds-theme-forge .btn.btn-primary.btn-red:active, .sds-theme-forge .btn.btn-primary.btn-red.active) {
     @apply bg-red-600;
-    @apply dark:bg-red-400;
   }
 
+  /* Primary - Default Type - Red Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-red:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-red.active) {
+    @apply bg-red-400;
+  }
+
+  /* Primary - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-primary.btn-white) {
     @apply bg-white/90 text-gray-900;
-    @apply dark:bg-white/90 text-gray-900;
-    @apply hover:text-gray-900 hover:bg-white/100;
-    @apply dark:hover:text-gray-900 dark:hover:bg-white/100;
+    @apply hover:text-gray-900 hover:bg-white;
+  }
+
+  /* Primary - Default Type - White Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-white) {
+    @apply bg-white/90 text-gray-900;
+    @apply hover:text-gray-900 hover:bg-white;
   }
 
   :where(.sds-theme-forge .btn.btn-primary.btn-white:active, .sds-theme-forge .btn.btn-primary.btn-white.active) {
     @apply text-gray-900 bg-white/90 shadow-inner;
-    @apply dark:text-gray-900 dark:bg-white/90 shadow-inner;
   }
 
+  /* Primary - Default Type - White Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-white:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-primary.btn-white.active) {
+    @apply text-gray-900 bg-white/90 shadow-inner;
+  }
+
+  /* Secondary Buttons */
+
+  /* Secondary - Default Type - Default Variant (Blue) */
   :where(.sds-theme-forge .btn.btn-secondary) {
     @apply text-blue-600 bg-white border-gray-500;
-    @apply dark:border-gray-500 dark:text-blue-300 dark:bg-gray-900;
     @apply hover:bg-gray-50;
-    @apply dark:hover:text-blue-200 dark:hover:bg-gray-850;
+  }
+
+  /* Secondary - Default Type - Default Variant (Blue) - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary) {
+    @apply border-gray-500 text-blue-300 bg-gray-900;
+    @apply hover:text-blue-200 hover:bg-gray-850;
   }
 
   :where(.sds-theme-forge .btn.btn-secondary:active, .sds-theme-forge .btn.btn-secondary.active) {
     @apply shadow-inner text-blue-600 bg-gray-100;
-    @apply dark:shadow-inner dark:text-blue-300 dark:bg-gray-900;
   }
 
+  /* Secondary - Default Type - Default Variant (Blue) - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.active) {
+    @apply shadow-inner text-blue-300 bg-gray-900;
+  }
+
+  /* Secondary - Default Type - Gray Variant */
   :where(.sds-theme-forge .btn.btn-secondary.btn-gray) {
     @apply text-gray-800;
-    @apply dark:text-gray-300 dark:hover:text-gray-200;
+  }
+
+  /* Secondary - Default Type - Gray Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-gray) {
+    @apply text-gray-300;
+    @apply hover:text-gray-200;
   }
 
   :where(.sds-theme-forge .btn.btn-secondary.btn-gray:active, .sds-theme-forge .btn.btn-secondary.btn-gray.active) {
     @apply text-gray-800;
-    @apply dark:text-gray-300;
   }
 
+  /* Secondary - Default Type - Gray Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-gray:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-gray.active) {
+    @apply text-gray-300;
+  }
+
+  /* Secondary - Default Type - Red Variant */
   :where(.sds-theme-forge .btn.btn-secondary.btn-red) {
     @apply text-red-600;
-    @apply dark:text-red-300 dark:hover:text-red-200;
+  }
+
+  /* Secondary - Default Type - Red Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-red) {
+    @apply text-red-300;
+    @apply hover:text-red-200;
   }
 
   :where(.sds-theme-forge .btn.btn-secondary.btn-red:active, .sds-theme-forge .btn.btn-secondary.btn-red.active) {
     @apply text-red-600;
-    @apply dark:text-red-300;
   }
 
+  /* Secondary - Default Type - Red Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-red:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-red.active) {
+    @apply text-red-300;
+  }
+
+  /* Secondary - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-secondary.btn-white) {
     @apply text-gray-900 bg-white/55 border-white;
-    @apply dark:text-gray-900 dark:bg-white/55 dark:border-white;
-    @apply dark:hover:text-gray-900 dark:hover:bg-white/65 hover:border-white dark:hover:border-white;
+    @apply hover:border-white;
+  }
+
+  /* Secondary - Default Type - White Variant - CTA No Background Change */
+  :where(.sds-theme-forge .btn.btn-secondary.btn-white.btn-cta) {
+    @apply hover:bg-white/55;
+  }
+
+  /* Secondary - Default Type - White Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white) {
+    @apply text-gray-900 bg-white/55 border-white;
+    @apply hover:text-gray-900 hover:bg-white/65 hover:border-white;
+  }
+
+  /* Secondary - Default Type - White Variant - CTA No Background Change - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white.btn-cta) {
+    @apply hover:bg-white/65;
   }
 
   :where(.sds-theme-forge .btn.btn-secondary.btn-white:active, .sds-theme-forge .btn.btn-secondary.btn-white.active) {
     @apply text-gray-900 bg-white/55 border-white shadow-inner;
-    @apply dark:text-gray-900 dark:bg-white/55 dark:border-white dark:shadow-inner;
   }
 
+  /* Secondary - Default Type - White Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white.active) {
+    @apply text-gray-900 bg-white/55 border-white shadow-inner;
+  }
+
+  /* Tertiary Buttons */
+
+  /* Tertiary - Default Type - Default Variant (Blue) */
   :where(.sds-theme-forge .btn.btn-tertiary) {
     @apply text-blue-600 border-blue-600 hover:text-white hover:bg-blue-500 hover:border-blue-500;
-    @apply dark:text-blue-300 dark:border-blue-300;
-    @apply hover:text-white hover:bg-blue-500 hover:border-blue-500;
-    @apply dark:hover:text-black dark:hover:border-blue-300 dark:hover:bg-blue-300;
+  }
+
+  /* Tertiary - Default Type - Default Variant (Blue) - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary) {
+    @apply text-blue-300 border-blue-300;
+    @apply hover:text-black hover:border-blue-300 hover:bg-blue-300;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary:active, .sds-theme-forge .btn.btn-tertiary.active) {
     @apply shadow-inner text-white bg-blue-600 border-blue-600;
-    @apply dark:text-black dark:bg-blue-400 dark:border-blue-400;
   }
 
+  /* Tertiary - Default Type - Default Variant (Blue) - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.active) {
+    @apply text-black bg-blue-400 border-blue-400;
+  }
+
+  /* Tertiary - Default Type - Gray Variant */
   :where(.sds-theme-forge .btn.btn-tertiary.btn-gray) {
     @apply text-gray-800 border-gray-800;
-    @apply dark:text-gray-300 dark:border-gray-300;
     @apply hover:text-white hover:bg-gray-700 hover:border-gray-700;
-    @apply dark:hover:text-black dark:hover:border-gray-300 dark:hover:bg-gray-300;
+  }
+
+  /* Tertiary - Default Type - Gray Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-gray) {
+    @apply text-gray-300 border-gray-300;
+    @apply hover:text-black hover:border-gray-300 hover:bg-gray-300;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-gray:active, .sds-theme-forge .btn.btn-tertiary.btn-gray.active) {
     @apply text-white bg-gray-800 border-gray-800;
-    @apply dark:text-black dark:bg-gray-400 dark:border-gray-400;
   }
 
+  /* Tertiary - Default Type - Gray Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-gray:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-gray.active) {
+    @apply text-black bg-gray-400 border-gray-400;
+  }
+
+  /* Tertiary - Default Type - Red Variant */
   :where(.sds-theme-forge .btn.btn-tertiary.btn-red) {
     @apply text-red-600 border-red-600;
-    @apply dark:text-red-300 dark:border-red-300;
     @apply hover:text-white hover:bg-red-500 hover:border-red-500;
-    @apply dark:hover:text-black dark:hover:border-red-300 dark:hover:bg-red-300;
+  }
+
+  /* Tertiary - Default Type - Red Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-red) {
+    @apply text-red-300 border-red-300;
+    @apply hover:text-black hover:border-red-300 hover:bg-red-300;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-red:active, .sds-theme-forge .btn.btn-tertiary.btn-red.active) {
     @apply text-white bg-red-600 border-red-600;
-    @apply dark:text-black dark:bg-red-400 dark:border-red-400;
   }
 
+  /* Tertiary - Default Type - Red Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-red:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-red.active) {
+    @apply text-black bg-red-400 border-red-400;
+  }
+
+  /* Tertiary - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
-    @apply dark:text-white dark:border-white;
     @apply hover:text-gray-900 hover:bg-white;
-    @apply dark:hover:text-gray-900 dark:hover:bg-white;
+  }
+
+  /* Tertiary - Default Type - White Variant - CTA No Border */
+  :where(.sds-theme-forge .btn.btn-tertiary.btn-white.btn-cta) {
+    @apply border-transparent;
+    @apply hover:border-transparent;
+  }
+
+  /* Tertiary - Default Type - White Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white) {
+    @apply text-white border-white;
+    @apply hover:text-gray-900 hover:bg-white;
+  }
+
+  /* Tertiary - Default Type - White Variant - CTA No Border - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white.btn-cta) {
+    @apply border-transparent;
+    @apply hover:border-transparent;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white:active, .sds-theme-forge .btn.btn-tertiary.btn-white.active) {
     @apply text-gray-900 bg-white shadow-inner;
-    @apply dark:text-gray-900 dark:bg-white dark:shadow-inner;
   }
 
+  /* Tertiary - Default Type - White Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white.active) {
+    @apply text-gray-900 bg-white shadow-inner;
+  }
+
+  /* Ghost Buttons */
+
+  /* Ghost - Default Type - Default Variant (Blue) */
   :where(.sds-theme-forge .btn.btn-ghost) {
     @apply text-blue-600;
-    @apply dark:text-blue-300;
     @apply hover:bg-gray-50;
-    @apply dark:hover:text-blue-200 dark:hover:bg-gray-700/40;
+  }
+
+  /* Ghost - Default Type - Default Variant (Blue) - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost) {
+    @apply text-blue-300;
+    @apply hover:text-blue-200 hover:bg-gray-700/40;
   }
 
   :where(.sds-theme-forge .btn.btn-ghost:active, .sds-theme-forge .btn.btn-ghost.active) {
     @apply shadow-inner text-blue-600 bg-gray-100;
-    @apply dark:shadow-inner dark:text-blue-200 dark:bg-gray-800/40;
   }
 
+  /* Ghost - Default Type - Default Variant (Blue) - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.active) {
+    @apply shadow-inner text-blue-200 bg-gray-800/40;
+  }
+
+  /* Ghost - Default Type - Gray Variant */
   :where(.sds-theme-forge .btn.btn-ghost.btn-gray) {
     @apply text-gray-800;
-    @apply dark:text-gray-300;
     @apply hover:bg-gray-100;
-    @apply dark:hover:text-gray-200 dark:hover:bg-gray-700/40;
+  }
+
+  /* Ghost - Default Type - Gray Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-gray) {
+    @apply text-gray-300;
+    @apply hover:text-gray-200 hover:bg-gray-700/40;
   }
 
   :where(.sds-theme-forge .btn.btn-ghost.btn-gray:active, .sds-theme-forge .btn.btn-ghost.btn-gray.active) {
     @apply text-gray-800 bg-gray-100;
-    @apply dark:shadow-inner dark:text-gray-200 dark:bg-gray-800/40;
   }
 
+  /* Ghost - Default Type - Gray Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-gray:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-gray.active) {
+    @apply shadow-inner text-gray-200 bg-gray-800/40;
+  }
+
+  /* Ghost - Default Type - Red Variant */
   :where(.sds-theme-forge .btn.btn-ghost.btn-red) {
     @apply text-red-600;
-    @apply dark:text-red-300;
     @apply hover:bg-gray-50;
-    @apply dark:hover:text-red-200 dark:hover:bg-gray-700/40;
+  }
+
+  /* Ghost - Default Type - Red Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-red) {
+    @apply text-red-300;
+    @apply hover:text-red-200 hover:bg-gray-700/40;
   }
 
   :where(.sds-theme-forge .btn.btn-ghost.btn-red:active, .sds-theme-forge .btn.btn-ghost.btn-red.active) {
     @apply text-red-600 bg-gray-100;
-    @apply dark:shadow-inner dark:text-red-200 dark:bg-gray-800/40;
   }
 
+  /* Ghost - Default Type - Red Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-red:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-red.active) {
+    @apply shadow-inner text-red-200 bg-gray-800/40;
+  }
+
+  /* Ghost - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-ghost.btn-white) {
     @apply text-white;
-    @apply dark:text-white;
-    @apply hover:text-white hover:bg-white/10;
-    @apply dark:hover:text-white dark:hover:bg-white/10;
+    @apply hover:bg-white/10;
+  }
+
+  /* Ghost - Default Type - White Variant - Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-white) {
+    @apply text-white;
+    @apply hover:text-white hover:bg-white/20;
   }
 
   :where(.sds-theme-forge .btn.btn-ghost.btn-white:active, .sds-theme-forge .btn.btn-ghost.btn-white.active) {
-    @apply text-white bg-white/10 shadow-inner;
-    @apply dark:shadow-inner dark:text-white dark:bg-white/10;
+    @apply text-white bg-white/20;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary, .sds-theme-forge .btn.btn-cta.btn-secondary) {
-    &:after {
-      @apply content-[''] inline-flex h-[11px] w-[12px] transition-transform ml-2;
-      mask-image: var(--chevrons-right);
-    }
+  /* Ghost - Default Type - White Variant - Active Dark Mode */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-white:active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-ghost.btn-white.active) {
+    @apply shadow-inner text-white bg-white/20;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white)) {
-    &:after {
-      background-color: white;
-    }
+  /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
+  /* Base CTA styles */
+  :where(.sds-theme-forge .btn.btn-cta)::after {
+    @apply content-[''] inline-flex h-[11px] w-3 transition-transform ml-2;
+    mask-image: var(--chevrons-right-md);
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white):not(.btn-blue):not(.btn-red)) {
-    &:after {
-      background-color: white;
-    }
+  :where(.sds-theme-forge .btn.btn-cta:hover)::after {
+    @apply translate-x-1;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary:not(.btn-white):not(.btn-blue):not(.btn-red)) {
-    &:after {
-      background-color: var(--color-blue-800);
-    }
-  } 
-
-  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-white) {
-    &:after {
-      background-color: var(--color-gray-950);
-    }
+  /* Default CTA Arrow Colors - Primary Buttons */
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary:not(.btn-white):not(.btn-gray):not(.btn-red))::after {
+    @apply bg-white;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary) {
-    &:after {
-      background-color: var(--color-blue-600);
-    }
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-primary:not(.btn-white):not(.btn-gray):not(.btn-red))::after {
+    @apply bg-black;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-blue) {
-    &:after {
-      background-color: var(--color-blue-600);
-    }
+  /* CTA Arrow Colors - Primary Red */
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-red)::after {
+    @apply bg-white;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-gray) {
-    &:after {
-      background-color: var(--color-gray-800);
-    }
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-primary.btn-red)::after {
+    @apply bg-black;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-red) {
-    &:after {
-      background-color: var(--color-red-600);
-    }
+  /* CTA Arrow Colors - Primary Gray */
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-gray)::after {
+    @apply bg-white;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-white) {
-    &:after {
-      background-color: white;
-    }
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-primary.btn-gray)::after {
+    @apply bg-black;
   }
 
-  :where(.sds-theme-forge .btn.btn-cta:hover) {
-    &:after {
-      transform: translateX(0.25rem);
-    }
+  /* CTA Arrow Colors - Primary White */
+  :where(.sds-theme-forge .btn.btn-cta.btn-primary.btn-white)::after {
+    @apply bg-gray-950;
   }
 
-  /* Block variant */
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-primary.btn-white)::after {
+    @apply bg-gray-950;
+  }
 
+  /* Default CTA Arrow Colors - Secondary Buttons */
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary:not(.btn-white):not(.btn-blue):not(.btn-red):not(.btn-gray))::after {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary:not(.btn-white):not(.btn-blue):not(.btn-red):not(.btn-gray))::after {
+    @apply bg-blue-300;
+  }
+
+  /* CTA Arrow Colors - Secondary Blue */
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-blue)::after {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-blue)::after {
+    @apply bg-blue-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-blue:hover)::after {
+    @apply bg-blue-200;
+  }
+
+  /* CTA Arrow Colors - Secondary Gray */
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-gray)::after {
+    @apply bg-gray-800;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-gray)::after {
+    @apply bg-gray-300;
+  }
+
+  /* CTA Arrow Colors - Secondary Red */
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-red)::after {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-red)::after {
+    @apply bg-red-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-red:hover)::after {
+    @apply bg-red-200;
+  }
+
+  /* CTA Arrow Colors - Secondary White */
+  :where(.sds-theme-forge .btn.btn-cta.btn-secondary.btn-white)::after {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-secondary.btn-white)::after {
+    @apply bg-gray-900;
+  }
+
+  /* Default CTA Arrow Colors - Tertiary Buttons */
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
+    @apply bg-blue-300;
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary:not(.btn-gray):not(.btn-red):not(.btn-white):hover)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary:not(.btn-gray):not(.btn-red):not(.btn-white):hover)::after {
+    @apply bg-black;
+  }
+
+  /* CTA Arrow Colors - Tertiary Gray */
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-gray)::after {
+    @apply bg-gray-800;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-gray)::after {
+    @apply bg-gray-300;
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-gray:hover)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-gray:hover)::after {
+    @apply bg-black;
+  }
+
+  /* CTA Arrow Colors - Tertiary Red */
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-red)::after {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-red)::after {
+    @apply bg-red-300;
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-red:hover)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-red:hover)::after {
+    @apply bg-black;
+  }
+
+  /* CTA Arrow Colors - Tertiary White */
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-white)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-white)::after {
+    @apply bg-white;
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-tertiary.btn-white:hover)::after {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-white:hover)::after {
+    @apply bg-gray-900;
+  }
+
+  /* Default CTA Arrow Colors - Ghost Buttons */
+  :where(.sds-theme-forge .btn.btn-cta.btn-ghost:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
+    @apply bg-blue-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost:not(.btn-gray):not(.btn-red):not(.btn-white):hover)::after {
+    @apply bg-blue-200;
+  }
+
+  /* CTA Arrow Colors - Ghost Gray */
+  :where(.sds-theme-forge .btn.btn-cta.btn-ghost.btn-gray)::after {
+    @apply bg-gray-800;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost.btn-gray)::after {
+    @apply bg-gray-300;
+  }
+
+  /* CTA Arrow Colors - Ghost Red */
+  :where(.sds-theme-forge .btn.btn-cta.btn-ghost.btn-red)::after {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost.btn-red)::after {
+    @apply bg-red-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost.btn-red:hover)::after {
+    @apply bg-red-200;
+  }
+
+  /* CTA Arrow Colors - Ghost White */
+  :where(.sds-theme-forge .btn.btn-cta.btn-ghost.btn-white)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-ghost.btn-white)::after {
+    @apply bg-white;
+  }
+
+  /* ===== BLOCK VARIANT ===== */
   :where(.sds-theme-forge .btn.btn-block) {
     @apply block w-full;
   }
 
-  /* Action states */
-
+  /* ===== DISABLED STATE ===== */
+  /* Default Disabled Styles */
   :where(.sds-theme-forge .btn.disabled, .sds-theme-forge .btn[disabled]) {
-    /* Default buttons */
     @apply pointer-events-none opacity-50 text-gray-500 dark:text-gray-500;
   }
 
+  /* Disabled - Primary, Secondary, Tertiary Kinds */
   :where(.sds-theme-forge .btn.disabled.btn-primary, .sds-theme-forge .btn.disabled.btn-secondary, .sds-theme-forge .btn.disabled.btn-tertiary, .sds-theme-forge .btn[disabled].btn-primary, .sds-theme-forge .btn[disabled].btn-secondary, .sds-theme-forge .btn[disabled].btn-tertiary) {
     @apply border-gray-500 dark:border-gray-500;
   }
 
+  /* Disabled - Primary Kind */
   :where(.sds-theme-forge .btn.disabled.btn-primary, .sds-theme-forge .btn[disabled].btn-primary) {
     @apply text-gray-100 dark:text-gray-100 bg-gray-500 dark:bg-gray-500;
   }
 
-  /* White button */
+  /* Disabled - White Variant */
   :where(.sds-theme-forge .btn.disabled.btn-white, .sds-theme-forge .btn[disabled].btn-white) {
     @apply opacity-100 border-transparent;
   }
 
+  /* Disabled - White Variant - Primary Kind */
   :where(.sds-theme-forge .btn.disabled.btn-white.btn-primary, .sds-theme-forge .btn[disabled].btn-white.btn-primary) {
     @apply bg-gray-50/75 text-gray-900/60;
     @apply dark:bg-gray-50/75 dark:text-gray-900/60;
   }
 
+  /* Disabled - White Variant - Secondary Kind */
   :where(.sds-theme-forge .btn.disabled.btn-white.btn-secondary, .sds-theme-forge .btn[disabled].btn-white.btn-secondary) {
     @apply bg-white/45 text-gray-900/50 border-white/55;
     @apply dark:bg-white/45 dark:text-gray-900/50 dark:border-white/55;
   }
 
+  /* Disabled - White Variant - Tertiary Kind */
   :where(.sds-theme-forge .btn.disabled.btn-white.btn-tertiary, .sds-theme-forge .btn[disabled].btn-white.btn-tertiary) {
     @apply text-white/75 border-white/75;
     @apply dark:text-white/75 dark:border-white/75;
   }
 
+  /* Disabled - White Variant - Ghost Kind */
   :where(.sds-theme-forge .btn.disabled.btn-white.btn-ghost, .sds-theme-forge .btn[disabled].btn-white.btn-ghost) {
     @apply text-white/75;
     @apply dark:text-white/75;
