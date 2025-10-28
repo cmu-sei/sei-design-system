@@ -181,20 +181,10 @@
     @apply hover:border-white;
   }
 
-  /* Secondary - Default Type - White Variant - CTA No Background Change */
-  :where(.sds-theme-forge .btn.btn-secondary.btn-white.btn-cta) {
-    @apply hover:bg-white/55;
-  }
-
   /* Secondary - Default Type - White Variant - Dark Mode */
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white) {
     @apply text-gray-900 bg-white/55 border-white;
     @apply hover:text-gray-900 hover:bg-white/65 hover:border-white;
-  }
-
-  /* Secondary - Default Type - White Variant - CTA No Background Change - Dark Mode */
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white.btn-cta) {
-    @apply hover:bg-white/65;
   }
 
   :where(.sds-theme-forge .btn.btn-secondary.btn-white:active, .sds-theme-forge .btn.btn-secondary.btn-white.active) {
@@ -276,22 +266,10 @@
     @apply hover:text-gray-900 hover:bg-white;
   }
 
-  /* Tertiary - Default Type - White Variant - CTA No Border */
-  :where(.sds-theme-forge .btn.btn-tertiary.btn-white.btn-cta) {
-    @apply border-transparent;
-    @apply hover:border-transparent;
-  }
-
   /* Tertiary - Default Type - White Variant - Dark Mode */
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
     @apply hover:text-gray-900 hover:bg-white;
-  }
-
-  /* Tertiary - Default Type - White Variant - CTA No Border - Dark Mode */
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white.btn-cta) {
-    @apply border-transparent;
-    @apply hover:border-transparent;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white:active, .sds-theme-forge .btn.btn-tertiary.btn-white.active) {
@@ -396,6 +374,16 @@
     mask-image: var(--chevrons-right-md);
   }
 
+  :where(.sds-theme-forge .btn.btn-cta.btn-sm)::after {
+    @apply h-[9px] w-2.5;
+    mask-image: var(--chevrons-right-sm);
+  }
+
+  :where(.sds-theme-forge .btn.btn-cta.btn-lg)::after {
+    @apply h-[13px] w-3.5;
+    mask-image: var(--chevrons-right-lg);
+  }
+
   :where(.sds-theme-forge .btn.btn-cta:hover)::after {
     @apply translate-x-1;
   }
@@ -489,6 +477,15 @@
     @apply bg-gray-900;
   }
 
+  /* CTA Overrides - Secondary White - No Background Change */
+  :where(.sds-theme-forge .btn.btn-secondary.btn-white.btn-cta) {
+    @apply hover:bg-white/55;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-secondary.btn-white.btn-cta) {
+    @apply hover:bg-white/65;
+  }
+
   /* Default CTA Arrow Colors - Tertiary Buttons */
   :where(.sds-theme-forge .btn.btn-cta.btn-tertiary:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
     @apply bg-blue-600;
@@ -555,6 +552,17 @@
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-cta.btn-tertiary.btn-white:hover)::after {
     @apply bg-gray-900;
+  }
+
+  /* CTA Overrides - Tertiary White - No Border */
+  :where(.sds-theme-forge .btn.btn-tertiary.btn-white.btn-cta) {
+    @apply border-transparent;
+    @apply hover:border-transparent;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white.btn-cta) {
+    @apply border-transparent;
+    @apply hover:border-transparent;
   }
 
   /* Default CTA Arrow Colors - Ghost Buttons */
