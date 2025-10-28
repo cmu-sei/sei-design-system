@@ -215,8 +215,8 @@
 
   :where(.sds-theme-forge .btn.btn-cta.btn-primary, .sds-theme-forge .btn.btn-cta.btn-secondary) {
     &:after {
-      @apply content-[''] inline-flex h-[11px] w-[12px] transition-transform ml-2;
-      mask-image: var(--chevrons-right);
+      @apply content-[''] inline-flex h-[13px] w-3.5 transition-transform ml-2;
+      mask-image: var(--chevrons-right-md);
     }
   }
 
