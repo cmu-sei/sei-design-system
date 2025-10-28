@@ -179,7 +179,6 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-plaid .link.link-cta) {
-    /* @apply inline-block font-semibold; */
     @apply transition-all duration-100 ease-linear;
   }
 
