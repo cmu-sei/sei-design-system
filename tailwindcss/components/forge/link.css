@@ -1,7 +1,7 @@
 @layer components {
   /* ===== BASE LINK STYLES ===== */
   :where(.sds-theme-forge .link) {
-    @apply inline-block break-words font-semibold text-sm cursor-pointer;
+    @apply inline-block break-words text-sm cursor-pointer;
   }
 
   :where(.sds-theme-forge .link:hover) {
@@ -179,7 +179,7 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-forge .link.link-cta) {
-    @apply transition-all duration-100 ease-linear;
+    @apply font-semibold transition-all duration-100 ease-linear;
   }
 
   /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
