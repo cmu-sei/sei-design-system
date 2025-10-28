@@ -371,17 +371,17 @@
   /* Base CTA styles */
   :where(.sds-theme-plaid .btn.btn-cta)::after {
     @apply content-[''] inline-flex h-[13px] w-[17px] relative top-px transition-transform ml-2;
-    mask-image: var(--arrow-right-alt-md);
+    mask-image: var(--arrow-right-md);
   }
 
   :where(.sds-theme-plaid .btn.btn-cta.btn-sm)::after {
     @apply h-[11px] w-[15px];
-    mask-image: var(--arrow-right-alt-sm);
+    mask-image: var(--arrow-right-sm);
   }
 
   :where(.sds-theme-plaid .btn.btn-cta.btn-lg)::after {
     @apply h-[15px] w-[19px];
-    mask-image: var(--arrow-right-alt-lg);
+    mask-image: var(--arrow-right-lg);
   }
 
   :where(.sds-theme-plaid .btn.btn-cta:hover)::after {
