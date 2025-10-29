@@ -28,19 +28,19 @@
   /* ===== LINK KIND (PRIMARY, SECONDARY, TERTIARY) ===== */
   /* Primary Links - Default Blue */
   :where(.sds-theme-plaid .link.link-primary) {
-    @apply text-blue-600;
+    @apply text-black;
   }
 
   :where(.sds-theme-plaid .link.link-primary:hover) {
-    @apply text-blue-500;
+    @apply text-black;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary) {
-    @apply text-blue-300;
+    @apply text-white;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary:hover) {
-    @apply text-blue-200;
+    @apply text-white;
   }
 
   /* Secondary Links */
@@ -80,19 +80,19 @@
   /* ===== COLOR VARIANTS ===== */
   /* Red Color Variant */
   :where(.sds-theme-plaid .link.link-primary.link-red) {
-    @apply text-red-600;
+    @apply text-black;
   }
 
   :where(.sds-theme-plaid .link.link-primary.link-red:hover) {
-    @apply text-red-500;
+    @apply text-black;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-red) {
-    @apply text-red-300;
+    @apply text-white;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-red:hover) {
-    @apply text-red-200;
+    @apply text-white;
   }
 
   :where(.sds-theme-plaid .link.link-secondary.link-red) {
@@ -234,7 +234,7 @@
   }
 
   :where(.sds-theme-plaid .link.link-cta)::after {
-    @apply content-[''] inline-block h-[11px] w-[15px] top-px ml-1 relative transition-transform;
+    @apply content-[''] inline-block h-[11px] w-[15px] top-px ml-2 relative transition-transform;
     mask-image: var(--arrow-right-sm);
   }
 
@@ -268,6 +268,22 @@
   }
 
   /* CTA Arrow Colors - Blue (Default) */
+  :where(.sds-theme-plaid .link.link-primary.link-blue) {
+    @apply text-black;
+  }
+
+  :where(.sds-theme-plaid .link.link-primary.link-blue:hover) {
+    @apply text-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-blue) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-blue:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)::after {
     @apply bg-blue-600;
   }
@@ -390,7 +406,7 @@
   }
 
   :where(.sds-theme-plaid .link.link-cta-down:hover)::after {
-    @apply translate-x-0 translate-y-0.5;
+    @apply translate-x-0 translate-y-1;
   }
 
   /* CTA Left */
@@ -412,6 +428,6 @@
   }
 
   :where(.sds-theme-plaid .link.link-cta-up:hover)::after {
-    @apply translate-x-0 -translate-y-0.5;
+    @apply translate-x-0 -translate-y-1;
   }
 }

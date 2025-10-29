@@ -234,7 +234,7 @@
   }
 
   :where(.sds-theme-forge .link.link-cta)::after {
-    @apply content-[''] inline-block h-[11px] w-3 top-px ml-1 relative transition-transform;
+    @apply content-[''] inline-block h-[11px] w-3 top-px ml-2 relative transition-transform;
     mask-image: var(--chevrons-right-sm);
   }
 
@@ -386,7 +386,7 @@
   /* ===== DIRECTIONAL CTA VARIANTS ===== */
   /* CTA Down */
   :where(.sds-theme-forge .link.link-cta-down)::after {
-    @apply rotate-90 -top-px;
+    @apply rotate-90 top-0;
   }
 
   :where(.sds-theme-forge .link.link-cta-down:hover)::after {
@@ -408,7 +408,7 @@
 
   /* CTA Up */
   :where(.sds-theme-forge .link.link-cta-up)::after {
-    @apply -rotate-90 -top-px;
+    @apply -rotate-90 top-0;
   }
 
   :where(.sds-theme-forge .link.link-cta-up:hover)::after {
