@@ -27,7 +27,7 @@ exports[`Button > should match its block snapshot 1`] = `
 <button
   aria-busy="false"
   aria-disabled="false"
-  class="btn-block sds-theme-plaid:flex sds-theme-plaid:justify-center"
+  class="btn-block flex items-center justify-center"
   data-id="sds-button"
   type="button"
 >
@@ -104,7 +104,7 @@ exports[`Button > should match its pending snapshot 1`] = `
       class="absolute inset-0 flex items-center justify-center"
     >
       <svg
-        class="animate-spin text-current h-4 w-4 sds-theme-plaid:size-6"
+        class="animate-spin text-current h-4 w-4"
         data-id="spinner"
         fill="none"
         role="graphics-symbol"
