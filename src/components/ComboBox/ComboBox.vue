@@ -189,7 +189,7 @@
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
-          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 1,
+          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 0,
         }"
       >
         <!-- Select all option for multiselect -->
@@ -255,7 +255,7 @@
             class="flex flex-col gap-y-1 pb-2 mb-0"
             :class="{
               'first:[&>div]:border-t-0': !multiple,
-              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple
+              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1
             }"
           >
             <div
@@ -1587,7 +1587,9 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       event.preventDefault()
       // focus first suggestion
       inputField.value.focus()
-      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1)
+      /* Increment arrowCounter +1 to step over the "Select all" option.
+       * It won't be visible when only one option is available and props.multiple === true */
+      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.multiple)
         arrowCounter.value++
       arrowCounter.value++
       return
