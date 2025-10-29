@@ -206,8 +206,8 @@
 
   :where(.sds-theme-plaid .btn.btn-cta.btn-primary, .sds-theme-plaid .btn.btn-cta.btn-secondary) {
     &:after {
-      @apply content-[''] inline-flex h-[13px] w-[15px] transition-transform ml-2;
-      mask-image: var(--arrow-right-alt);
+      @apply content-[''] inline-flex h-[13px] w-[17px] transition-transform ml-2;
+      mask-image: var(--arrow-right-md);
     }
   }
 

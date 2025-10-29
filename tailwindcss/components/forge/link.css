@@ -179,8 +179,7 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-forge .link.link-cta) {
-    @apply inline-block font-semibold;
-    @apply transition-all duration-100 ease-linear;
+    @apply font-semibold text-sm transition-all duration-100 ease-linear;
   }
 
   /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
@@ -235,8 +234,33 @@
   }
 
   :where(.sds-theme-forge .link.link-cta)::after {
-    @apply content-[''] inline-block h-[13px] w-[14px] ml-1 top-px relative transition-transform;
-    mask-image: var(--chevrons-right-alt);
+    @apply content-[''] inline-block h-[13px] w-3.5 ml-1 top-0.5 relative transition-transform;
+    mask-image: var(--chevrons-right-md);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-xs)::after {
+    @apply h-[9px] w-2.5 top-px;
+    mask-image: var(--chevrons-right-xs);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-sm)::after {
+    @apply h-[11px] w-3 top-px;
+    mask-image: var(--chevrons-right-sm);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-base)::after {
+    @apply h-[13px] w-3.5 top-px;
+    mask-image: var(--chevrons-right-md);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-lg)::after {
+    @apply h-[15px] w-4 top-px;
+    mask-image: var(--chevrons-right-lg);
+  }
+
+  :where(.sds-theme-forge .link.link-cta.text-xl)::after {
+    @apply h-[17px] w-4.5 top-px;
+    mask-image: var(--chevrons-right-xl);
   }
 
   :where(.sds-theme-forge .link.link-cta:hover)::after {
