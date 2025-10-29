@@ -572,14 +572,6 @@ const comboBox2_1 = reactive({
       section: 'Vegetables',
       items: [
         { name: 'Artichoke' },
-        { name: 'Avocado' },
-        { name: 'Beetroot' },
-        { name: 'Celery' },
-        { name: 'Cucumber' },
-        { name: 'Daikon' },
-        { name: 'Eggplant' },
-        { name: 'Kale' },
-        { name: 'Shallot' }
       ]
     }
   ] as ComboBoxSuggestion[],
@@ -697,7 +689,6 @@ const comboBox4 = reactive({
       section: 'Monkeys',
       items: [
         { name: 'Baboon' },
-        { name: 'Gorilla' }
       ]
     },
     {
