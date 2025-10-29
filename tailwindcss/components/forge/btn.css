@@ -370,7 +370,7 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-forge .btn.btn-cta)::after {
-    @apply content-[''] inline-flex h-[13px] w-3.5 transition-transform ml-2;
+    @apply content-[''] inline-flex h-[13px] relative top-px w-3.5 transition-transform ml-2;
     mask-image: var(--chevrons-right-md);
   }
 
