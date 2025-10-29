@@ -19,7 +19,7 @@
           class="animate-spin text-current"
           :class="{
             'h-5 w-5': size === 'lg',
-            'h-4 w-4 sds-theme-plaid:size-6': size !== 'lg' && size !== 'xs',
+            'h-4 w-4': size !== 'lg' && size !== 'xs',
             'h-3 w-3': size === 'xs'
           }"
           xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +168,7 @@ const pendingClass = computed(() => {
 })
 
 const blockClass = computed(() => {
-  return props.block ? 'btn-block sds-theme-plaid:flex sds-theme-plaid:justify-center' : ''
+  return props.block ? 'btn-block flex items-center justify-center' : ''
 })
 
 const ctaClass = computed(() => {
