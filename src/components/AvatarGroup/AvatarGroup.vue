@@ -118,7 +118,7 @@ defineOptions({
 export interface AvatarGroupItem {
   name: string | null,
   src?: string | null,
-  variant?: 'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
+  variant?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | null,
   href?: string | null,
   target?: string | null
 }

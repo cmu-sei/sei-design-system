@@ -20,7 +20,7 @@ export default {
       control: {type: 'select'}
     },
     variant: {
-      options: ['random', 'gray', 'red', 'yellow', 'green', 'blue', 'purple'],
+      options: ['gray', 'red', 'yellow', 'green', 'blue', 'purple'],
       control: {type: 'select'}
     },
     shape: {
