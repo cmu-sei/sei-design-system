@@ -1575,7 +1575,7 @@ const hasDropdownSuggestion = computed(() => {
 })
 
 const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
-  const activeTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+  const activeTab = (root.value.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
   if (direction === 'tabsUp' || direction === 'tabsDown') {
     if (direction === 'tabsUp') {
       event.preventDefault()
@@ -1665,7 +1665,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
+        const newActiveTab = root.value.document.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
@@ -1679,7 +1679,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value++
         }
         await nextTick()
-        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
+        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
         arrowCounter.value = -1
