@@ -235,7 +235,7 @@
 
   :where(.sds-theme-plaid .link.link-cta)::after {
     @apply content-[''] inline-block h-[13px] w-[17px] ml-1 top-0.5 relative transition-transform;
-    mask-image: var(--arrow-right-md);
+    mask-image: var(--arrow-right-sm);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-xs)::after {

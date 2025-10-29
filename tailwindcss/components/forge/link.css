@@ -235,7 +235,7 @@
 
   :where(.sds-theme-forge .link.link-cta)::after {
     @apply content-[''] inline-block h-[13px] w-3.5 ml-1 top-0.5 relative transition-transform;
-    mask-image: var(--chevrons-right-md);
+    mask-image: var(--chevrons-right-sm);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-xs)::after {
