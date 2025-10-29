@@ -31,7 +31,7 @@ const props = defineProps({
    * Determines the background color of the avatar when no image is present.
    */
   variant: {
-    type: String as PropType<'random' | 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
+    type: String as PropType<'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
     default: 'gray'
   },
   /**
@@ -158,11 +158,8 @@ const variantOuterClass = computed(() => {
     'bg-blue-50 dark:bg-blue-900',
     'bg-purple-100 dark:bg-purple-900'
   ]
-  if (props.variant && props.variant !== 'random') {
+  if (props.variant) {
     return shapeVariants.filter((color) => color.includes(props.variant))[0]
-  } else {
-    const randomNumber = Math.floor(Math.random() * shapeVariants.length)
-    return shapeVariants[randomNumber]
   }
 })
 
@@ -175,11 +172,8 @@ const variantInnerClass = computed(() => {
     'dark:text-blue-400',
     'dark:text-purple-400'
   ]
-  if (props.variant && props.variant !== 'random') {
+  if (props.variant) {
     return textVariants.filter((color) => color.includes(props.variant))[0]
-  } else {
-    const randomNumber = Math.floor(Math.random() * textVariants.length)
-    return textVariants[randomNumber]
   }
 })
 

@@ -1,13 +1,22 @@
 @layer components {
-  :where(.sds-theme-forge .tabs [role="tablist"]:has(.tab-block), .sds-theme-forge .tabs [role="tablist"]:has(.tab-folder)) {
+  :where(
+    .sds-theme-forge .tabs [role="tablist"]:has(.tab-block),
+    .sds-theme-forge .tabs [role="tablist"]:has(.tab-folder)
+  ) {
     @apply gap-x-1;
   }
 
-  :where(.sds-theme-forge .tabs:has(.tab-folder) [role="tabpanel"], .sds-theme-forge .tabs:has(.tab-underline) [role="tabpanel"]) {
+  :where(
+    .sds-theme-forge .tabs:has(.tab-folder) [role="tabpanel"],
+    .sds-theme-forge .tabs:has(.tab-underline) [role="tabpanel"]
+  ) {
     @apply border-t border-gray-100 -mt-0.25;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tabs:has(.tab-folder) [role="tabpanel"], :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tabs:has(.tab-underline) [role="tabpanel"]) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tabs:has(.tab-folder) [role="tabpanel"],
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tabs:has(.tab-underline) [role="tabpanel"]
+  ) {
     @apply border-gray-800;
   }
 
@@ -63,25 +72,48 @@
 
   /* Base tab styles */
 
-  :where(.sds-theme-forge .tab.tab-block, .sds-theme-forge .tab.tab-folder, .sds-theme-forge .tab.tab-underline) {
+  :where(
+    .sds-theme-forge .tab.tab-block,
+    .sds-theme-forge .tab.tab-folder,
+    .sds-theme-forge .tab.tab-underline
+  ) {
     @apply inline-flex items-center gap-x-2 text-gray-600 font-semibold cursor-pointer select-none whitespace-nowrap;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline
+  ) {
     @apply text-gray-400;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.disabled, .sds-theme-forge .tab.tab-block[disabled], .sds-theme-forge .tab.tab-folder.disabled, .sds-theme-forge .tab.tab-folder[disabled], .sds-theme-forge .tab.tab-underline.disabled, .sds-theme-forge .tab.tab-underline[disabled]) {
+  :where(
+    .sds-theme-forge .tab.tab-block.disabled,
+    .sds-theme-forge .tab.tab-block[disabled],
+    .sds-theme-forge .tab.tab-folder.disabled,
+    .sds-theme-forge .tab.tab-folder[disabled],
+    .sds-theme-forge .tab.tab-underline.disabled,
+    .sds-theme-forge .tab.tab-underline[disabled]
+  ) {
     @apply opacity-50 pointer-events-none;
   }
 
   /* Sizes */
 
-  :where(.sds-theme-forge .tab.tab-block:not(.tab-lg), .sds-theme-forge .tab.tab-folder:not(.tab-lg), .sds-theme-forge .tab.tab-underline:not(.tab-lg)) {
+  :where(
+    .sds-theme-forge .tab.tab-block:not(.tab-lg),
+    .sds-theme-forge .tab.tab-folder:not(.tab-lg),
+    .sds-theme-forge .tab.tab-underline:not(.tab-lg)
+  ) {
     @apply text-sm;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-lg, .sds-theme-forge .tab.tab-folder.tab-lg, .sds-theme-forge .tab.tab-underline.tab-lg) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-lg,
+    .sds-theme-forge .tab.tab-folder.tab-lg,
+    .sds-theme-forge .tab.tab-underline.tab-lg
+  ) {
     @apply text-lg;
   }
 
@@ -117,105 +149,263 @@
     @apply py-3 px-4;
   }
 
+  /* Tab count */
+
+  :where(
+    .sds-theme-forge .tab.tab-block .tab-count,
+    .sds-theme-forge .tab.tab-folder .tab-count,
+    .sds-theme-forge .tab.tab-underline .tab-count
+  ) {
+    @apply bg-gray-600 text-white inline-flex items-center justify-center rounded-full py-0.5 px-1.75;
+  }
+
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline .tab-count
+  ) {
+    @apply bg-gray-400 text-black;
+  }
+
+  :where(.sds-theme-forge .tab-sm .tab-count) {
+    @apply text-xs min-h-5 min-w-5;
+  }
+
+  :where(.sds-theme-forge .tab-lg .tab-count) {
+    @apply text-sm min-h-6 min-w-6;
+  }
+
   /* Blue variant */
 
-  :where(.sds-theme-forge .tab.tab-block.tab-blue:hover, .sds-theme-forge .tab.tab-block.tab-blue.active, .sds-theme-forge .tab.tab-folder.tab-blue:hover, .sds-theme-forge .tab.tab-folder.tab-blue.active, .sds-theme-forge .tab.tab-underline.tab-blue:hover, .sds-theme-forge .tab.tab-underline.tab-blue.active) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-blue:hover,
+    .sds-theme-forge .tab.tab-block.tab-blue.active,
+    .sds-theme-forge .tab.tab-folder.tab-blue:hover,
+    .sds-theme-forge .tab.tab-folder.tab-blue.active,
+    .sds-theme-forge .tab.tab-underline.tab-blue:hover,
+    .sds-theme-forge .tab.tab-underline.tab-blue.active
+  ) {
     @apply text-blue-600;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue.active) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue.active
+  ) {
     @apply text-blue-300;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-blue:hover .tab-count, .sds-theme-forge .tab.tab-block.tab-blue.active .tab-count, .sds-theme-forge .tab.tab-folder.tab-blue:hover .tab-count, .sds-theme-forge .tab.tab-folder.tab-blue.active .tab-count, .sds-theme-forge .tab.tab-underline.tab-blue:hover .tab-count, .sds-theme-forge .tab.tab-underline.tab-blue.active .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-blue:hover .tab-count,
+    .sds-theme-forge .tab.tab-block.tab-blue.active .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-blue:hover .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-blue.active .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-blue:hover .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-blue.active .tab-count
+  ) {
     @apply bg-blue-600;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue.active .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue.active .tab-count
+  ) {
     @apply bg-blue-300;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-blue:active:not(.active), .sds-theme-forge .tab.tab-folder.tab-blue:active:not(.active), .sds-theme-forge .tab.tab-underline.tab-blue:active:not(.active)) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-blue:active:not(.active),
+    .sds-theme-forge .tab.tab-folder.tab-blue:active:not(.active),
+    .sds-theme-forge .tab.tab-underline.tab-blue:active:not(.active)
+  ) {
     @apply text-blue-700;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:active:not(.active)) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:active:not(.active)
+  ) {
     @apply text-blue-200;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-blue:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-folder.tab-blue:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-underline.tab-blue:active:not(.active) .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-blue:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-blue:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-blue:active:not(.active) .tab-count
+  ) {
     @apply bg-blue-700;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:active:not(.active) .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-blue:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-blue:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-blue:active:not(.active) .tab-count
+  ) {
     @apply bg-blue-200;
   }
 
   /* Gray variant */
 
-  :where(.sds-theme-forge .tab.tab-block.tab-gray:hover, .sds-theme-forge .tab.tab-block.tab-gray.active, .sds-theme-forge .tab.tab-folder.tab-gray:hover, .sds-theme-forge .tab.tab-folder.tab-gray.active, .sds-theme-forge .tab.tab-underline.tab-gray:hover, .sds-theme-forge .tab.tab-underline.tab-gray.active) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-gray:hover,
+    .sds-theme-forge .tab.tab-block.tab-gray.active,
+    .sds-theme-forge .tab.tab-folder.tab-gray:hover,
+    .sds-theme-forge .tab.tab-folder.tab-gray.active,
+    .sds-theme-forge .tab.tab-underline.tab-gray:hover,
+    .sds-theme-forge .tab.tab-underline.tab-gray.active
+  ) {
     @apply text-gray-900;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray.active) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray.active
+  ) {
     @apply text-gray-200;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-gray:hover .tab-count, .sds-theme-forge .tab.tab-block.tab-gray.active .tab-count, .sds-theme-forge .tab.tab-folder.tab-gray:hover .tab-count, .sds-theme-forge .tab.tab-folder.tab-gray.active .tab-count, .sds-theme-forge .tab.tab-underline.tab-gray:hover .tab-count, .sds-theme-forge .tab.tab-underline.tab-gray.active .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-gray:hover .tab-count,
+    .sds-theme-forge .tab.tab-block.tab-gray.active .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-gray:hover .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-gray.active .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-gray:hover .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-gray.active .tab-count
+  ) {
     @apply bg-gray-900;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray.active .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray.active .tab-count
+  ) {
     @apply bg-gray-200;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-gray:active:not(.active), .sds-theme-forge .tab.tab-folder.tab-gray:active:not(.active), .sds-theme-forge .tab.tab-underline.tab-gray:active:not(.active)) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-gray:active:not(.active),
+    .sds-theme-forge .tab.tab-folder.tab-gray:active:not(.active),
+    .sds-theme-forge .tab.tab-underline.tab-gray:active:not(.active)
+  ) {
     @apply text-black;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:active:not(.active)) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:active:not(.active)
+  ) {
     @apply text-gray-100;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-gray:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-folder.tab-gray:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-underline.tab-gray:active:not(.active) .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-gray:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-gray:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-gray:active:not(.active) .tab-count
+  ) {
     @apply bg-black;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:active:not(.active) .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-gray:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-gray:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-gray:active:not(.active) .tab-count
+  ) {
     @apply bg-gray-100;
   }
 
   /* Red variant */
 
-  :where(.sds-theme-forge .tab.tab-block.tab-red:hover, .sds-theme-forge .tab.tab-block.tab-red.active, .sds-theme-forge .tab.tab-folder.tab-red:hover, .sds-theme-forge .tab.tab-folder.tab-red.active, .sds-theme-forge .tab.tab-underline.tab-red:hover, .sds-theme-forge .tab.tab-underline.tab-red.active) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-red:hover,
+    .sds-theme-forge .tab.tab-block.tab-red.active,
+    .sds-theme-forge .tab.tab-folder.tab-red:hover,
+    .sds-theme-forge .tab.tab-folder.tab-red.active,
+    .sds-theme-forge .tab.tab-underline.tab-red:hover,
+    .sds-theme-forge .tab.tab-underline.tab-red.active
+  ) {
     @apply text-red-600;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red.active, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:hover, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red.active) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red.active,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:hover,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red.active
+  ) {
     @apply text-red-300;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-red:hover .tab-count, .sds-theme-forge .tab.tab-block.tab-red.active .tab-count, .sds-theme-forge .tab.tab-folder.tab-red:hover .tab-count, .sds-theme-forge .tab.tab-folder.tab-red.active .tab-count, .sds-theme-forge .tab.tab-underline.tab-red:hover .tab-count, .sds-theme-forge .tab.tab-underline.tab-red.active .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-red:hover .tab-count,
+    .sds-theme-forge .tab.tab-block.tab-red.active .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-red:hover .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-red.active .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-red:hover .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-red.active .tab-count
+  ) {
     @apply bg-red-600;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red.active .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:hover .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red.active .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red.active .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:hover .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red.active .tab-count
+  ) {
     @apply bg-red-300;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-red:active:not(.active), .sds-theme-forge .tab.tab-folder.tab-red:active:not(.active), .sds-theme-forge .tab.tab-underline.tab-red:active:not(.active)) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-red:active:not(.active),
+    .sds-theme-forge .tab.tab-folder.tab-red:active:not(.active),
+    .sds-theme-forge .tab.tab-underline.tab-red:active:not(.active)
+  ) {
     @apply text-red-700;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:active:not(.active), :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:active:not(.active)) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:active:not(.active),
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:active:not(.active)
+  ) {
     @apply text-red-200;
   }
 
-  :where(.sds-theme-forge .tab.tab-block.tab-red:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-folder.tab-red:active:not(.active) .tab-count, .sds-theme-forge .tab.tab-underline.tab-red:active:not(.active) .tab-count) {
+  :where(
+    .sds-theme-forge .tab.tab-block.tab-red:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-folder.tab-red:active:not(.active) .tab-count,
+    .sds-theme-forge .tab.tab-underline.tab-red:active:not(.active) .tab-count
+  ) {
     @apply bg-red-700;
   }
 
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:active:not(.active) .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:active:not(.active) .tab-count) {
+  :where(
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block.tab-red:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder.tab-red:active:not(.active) .tab-count,
+    :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline.tab-red:active:not(.active) .tab-count
+  ) {
     @apply bg-red-200;
   }
 
@@ -360,23 +550,5 @@
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-red.active.tab-underline)::after {
     @apply bg-red-300;
-  }
-
-  /* Tab count */
-
-  :where(.sds-theme-forge .tab.tab-block .tab-count, .sds-theme-forge .tab.tab-folder .tab-count, .sds-theme-forge .tab.tab-underline .tab-count) {
-    @apply bg-gray-600 text-white inline-flex items-center justify-center rounded-full py-0.5 px-1.75;
-  }
-
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-block .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-folder .tab-count, :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .tab.tab-underline .tab-count) {
-    @apply bg-gray-400 text-black;
-  }
-
-  :where(.sds-theme-forge .tab-sm .tab-count) {
-    @apply text-xs min-h-5 min-w-5;
-  }
-
-  :where(.sds-theme-forge .tab-lg .tab-count) {
-    @apply text-sm min-h-6 min-w-6;
   }
 }
