@@ -28,19 +28,19 @@
   /* ===== LINK KIND (PRIMARY, SECONDARY, TERTIARY) ===== */
   /* Primary Links - Default Blue */
   :where(.sds-theme-plaid .link.link-primary) {
-    @apply text-black;
+    @apply text-blue-600;
   }
 
   :where(.sds-theme-plaid .link.link-primary:hover) {
-    @apply text-black;
+    @apply text-blue-500;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary) {
-    @apply text-white;
+    @apply text-blue-300;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary:hover) {
-    @apply text-white;
+    @apply text-blue-200;
   }
 
   /* Secondary Links */
@@ -80,19 +80,19 @@
   /* ===== COLOR VARIANTS ===== */
   /* Red Color Variant */
   :where(.sds-theme-plaid .link.link-primary.link-red) {
-    @apply text-black;
+    @apply text-red-600;
   }
 
   :where(.sds-theme-plaid .link.link-primary.link-red:hover) {
-    @apply text-black;
+    @apply text-red-500;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-red) {
-    @apply text-white;
+    @apply text-red-300;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-red:hover) {
-    @apply text-white;
+    @apply text-red-200;
   }
 
   :where(.sds-theme-plaid .link.link-secondary.link-red) {
@@ -268,19 +268,19 @@
   }
 
   /* CTA Arrow Colors - Blue (Default) */
-  :where(.sds-theme-plaid .link.link-primary.link-blue) {
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue) {
     @apply text-black;
   }
 
-  :where(.sds-theme-plaid .link.link-primary.link-blue:hover) {
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue:hover) {
     @apply text-black;
   }
 
-  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-blue) {
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue) {
     @apply text-white;
   }
 
-  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-primary.link-blue:hover) {
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover) {
     @apply text-white;
   }
 
@@ -317,6 +317,22 @@
   }
 
   /* CTA Arrow Colors - Red */
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-red) {
+    @apply text-black;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-red:hover) {
+    @apply text-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red)::after {
     @apply bg-red-600;
   }
@@ -350,6 +366,22 @@
   }
 
   /* CTA Arrow Colors - White */
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-white) {
+    @apply text-white;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-white:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-white) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-white:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-white)::after {
     @apply bg-white;
   }
