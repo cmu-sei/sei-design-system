@@ -554,6 +554,27 @@
     @apply bg-gray-900;
   }
 
+  /* CTA Arrow Colors - Tertiary Active States */
+  :where(.sds-theme-plaid .btn.btn-cta.btn-tertiary:not(.btn-white):active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-tertiary:not(.btn-white).active)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-tertiary:not(.btn-white):active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-tertiary:not(.btn-white).active)::after {
+    @apply bg-black;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-cta.btn-tertiary.btn-white:active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-tertiary.btn-white.active)::after {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-tertiary.btn-white:active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-tertiary.btn-white.active)::after {
+    @apply bg-gray-900;
+  }
+
   /* CTA Overrides - Tertiary White - No Border */
   :where(.sds-theme-plaid .btn.btn-tertiary.btn-white.btn-cta) {
     @apply border-transparent;
@@ -609,6 +630,47 @@
     @apply bg-white;
   }
 
+  /* CTA Arrow Colors - Ghost Active States */
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost:not(.btn-white):active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost:not(.btn-white).active)::after {
+    @apply bg-blue-600;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-gray:active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-gray.active)::after {
+    @apply bg-gray-800;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-red:active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-red.active)::after {
+    @apply bg-red-600;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost:not(.btn-white):active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost:not(.btn-white).active)::after {
+    @apply bg-blue-200;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-gray:active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-gray.active)::after {
+    @apply bg-gray-200;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-red:active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-red.active)::after {
+    @apply bg-red-200;
+  }
+
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-white:active)::after,
+  :where(.sds-theme-plaid .btn.btn-cta.btn-ghost.btn-white.active)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-white:active)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .btn.btn-cta.btn-ghost.btn-white.active)::after {
+    @apply bg-white;
+  }
+
   /* ===== BLOCK VARIANT ===== */
   :where(.sds-theme-plaid .btn.btn-block) {
     @apply block w-full;
@@ -657,5 +719,83 @@
   :where(.sds-theme-plaid .btn.disabled.btn-white.btn-ghost, .sds-theme-plaid .btn[disabled].btn-white.btn-ghost) {
     @apply text-white/75;
     @apply dark:text-white/75;
+  }
+
+  /* Disabled - CTA Arrow Colors - Primary Buttons (excluding white) */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-primary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-primary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-primary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-primary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-primary.btn-red)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-primary.btn-red)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-primary.btn-gray)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-primary.btn-gray)::after {
+    @apply bg-gray-100;
+  }
+
+  /* Disabled - CTA Arrow Colors - Primary White */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-primary.btn-white)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-primary.btn-white)::after {
+    @apply bg-gray-900/60;
+  }
+
+  /* Disabled - CTA Arrow Colors - Secondary Buttons */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-secondary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-secondary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-secondary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-secondary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-secondary.btn-red)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-secondary.btn-red)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-secondary.btn-gray)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-secondary.btn-gray)::after {
+    @apply bg-gray-500;
+  }
+
+  /* Disabled - CTA Arrow Colors - Secondary White */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-secondary.btn-white)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-secondary.btn-white)::after {
+    @apply bg-gray-900/50;
+  }
+
+  /* Disabled - CTA Arrow Colors - Tertiary Buttons */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-tertiary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-tertiary:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-tertiary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-tertiary.btn-blue)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-tertiary.btn-red)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-tertiary.btn-red)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-tertiary.btn-gray)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-tertiary.btn-gray)::after {
+    @apply bg-gray-500;
+  }
+
+  /* Disabled - CTA Arrow Colors - Tertiary White */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-tertiary.btn-white)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-tertiary.btn-white)::after {
+    @apply bg-white/75;
+  }
+
+  /* Disabled - CTA Arrow Colors - Ghost Buttons */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-ghost:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-ghost:not(.btn-white))::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-ghost.btn-blue)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-ghost.btn-blue)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-ghost.btn-red)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-ghost.btn-red)::after,
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-ghost.btn-gray)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-ghost.btn-gray)::after {
+    @apply bg-gray-500;
+  }
+
+  /* Disabled - CTA Arrow Colors - Ghost White */
+  :where(.sds-theme-plaid .btn.disabled.btn-cta.btn-ghost.btn-white)::after,
+  :where(.sds-theme-plaid .btn[disabled].btn-cta.btn-ghost.btn-white)::after {
+    @apply bg-white/75;
+  }
+
+  /* ===== PENDING STATE ===== */
+  /* Pending - Hide CTA Arrow */
+  :where(.sds-theme-plaid .btn[data-pending="true"].btn-cta)::after {
+    @apply hidden;
   }
 }
