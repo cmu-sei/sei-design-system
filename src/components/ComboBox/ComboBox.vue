@@ -1667,7 +1667,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = root.value.document.querySelector('button.tab[data-active="true"]')
+        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
