@@ -243,12 +243,24 @@ describe('HelloWorld', () => {
 })
 ```
 
-## Code Coverage and Test Organization
+## Test Organization
 - Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.
 - Name the test file to match the component name, e.g., `MyComponent.{spec.js,spec.ts}` for `MyComponent.vue`.
 - Keep composables and pure logic separated and tested independently.
-- Run test scripts using the commands defined in your `package.json` file, such as `npm test`, `npm run test:clean`, or `npm run test:watch`.
-- Run a coverage report using `npm run coverage` as defined in your `package.json`.
+
+## Running Tests and Code Coverage
+After writing error-free tests, follow these steps to validate and measure test coverage:
+
+1. **Run the test suite:**
+   - Use `npm run test` for a standard test run.
+   - Use `npm run test:clean` if snapshots are present to ensure a clean test environment.
+   - Use `npm run test:watch` for continuous testing during development.
+
+2. **Generate a coverage report:**
+   - After tests pass successfully, run `npm run coverage` to generate a comprehensive code coverage report.
+   - Review the coverage report to identify untested code paths and ensure adequate test coverage.
+
+All test and coverage scripts are defined in your `package.json` file.
 
 ## Best Practices & Tips
 - Use single-quotes (`'`) for test case and scenario descriptions; avoid double quotes for consistency.

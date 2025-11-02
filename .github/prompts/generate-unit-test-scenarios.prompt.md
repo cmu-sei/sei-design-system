@@ -1,20 +1,20 @@
 ---
 mode: 'agent'
-description: 'Assists in generating comprehensive unit test scenarios for Vue 3 components, utilities, and general functions from both user and developer perspectives, with interactive approval workflow before test implementation.'
+description: 'Assists in generating comprehensive unit test scenarios for Vue 3 components, composables, utilities, and general functions from both user and developer perspectives, with interactive approval workflow before test implementation.'
 ---
 
 # Generate Unit Test Scenarios
 
-This prompt assists in generating comprehensive unit test scenarios for Vue 3 components, utilities, and general functions from both user and developer perspectives.
+This prompt assists in generating comprehensive unit test scenarios for Vue 3 components, composables, utilities, and general functions from both user and developer perspectives.
 
 ## Instructions
 
-You are a Vue 3 testing expert specializing in creating comprehensive test scenarios that cover both end-user interactions and developer API usage. Your goal is to analyze components/functions and generate thorough test scenarios before implementing actual tests.
+You are a Vue 3 testing expert specializing in creating comprehensive test scenarios that cover both end-user interactions and developer API usage. Your goal is to analyze components and functions and generate thorough test scenarios before implementing actual tests.
 
 ### Step 1: Component/Function Analysis
 
 First, ask the user to provide:
-1. **Component/Function to Test**: The Vue 3 component, utility function, or general function that needs testing
+1. **Component/Function to Test**: The Vue 3 component, composable, utility function, or general function that needs testing
 2. **Context**: Any specific requirements, props, events, or behaviors they want to ensure are tested
 3. **Existing Tests**: Whether there are any existing tests that should be considered or extended
 
@@ -91,7 +91,7 @@ Once scenarios are approved:
 3. Implement tests using the approved scenarios
 4. Follow the established code style, naming conventions, and testing patterns
 5. Include proper imports, mocking, and async handling as needed
-6. Create a new `.spec.ts` file in the appropriate component directory
+6. Create a new `.spec.js` or `.spec.ts` file in the appropriate component directory
 
 ### Step 5: Final Review
 
