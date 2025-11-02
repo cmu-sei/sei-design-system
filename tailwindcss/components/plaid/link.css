@@ -179,8 +179,7 @@
   /* ===== CTA (CALL-TO-ACTION) STYLES ===== */
   /* Base CTA styles */
   :where(.sds-theme-plaid .link.link-cta) {
-    @apply inline-block font-semibold;
-    @apply transition-all duration-100 ease-linear;
+    @apply font-semibold text-sm transition-all duration-100 ease-linear;
   }
 
   /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
@@ -235,8 +234,33 @@
   }
 
   :where(.sds-theme-plaid .link.link-cta)::after {
-    @apply content-[''] inline-block h-[15px] w-[19px] ml-1 top-0.75 relative transition-transform;
-    mask-image: var(--arrow-right);
+    @apply content-[''] inline-block h-[11px] w-[15px] top-px ml-2 relative transition-transform;
+    mask-image: var(--arrow-right-sm);
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.text-xs)::after {
+    @apply h-[9px] w-[13px] top-px;
+    mask-image: var(--arrow-right-xs);
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.text-sm)::after {
+    @apply h-[11px] w-[15px] top-px;
+    mask-image: var(--arrow-right-sm);
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.text-base)::after {
+    @apply h-[13px] w-[17px] top-0;
+    mask-image: var(--arrow-right-md);
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.text-lg)::after {
+    @apply h-[15px] w-[19px] top-0.5;
+    mask-image: var(--arrow-right-lg);
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.text-xl)::after {
+    @apply h-[17px] w-[21px] top-0.75;
+    mask-image: var(--arrow-right-xl);
   }
 
   :where(.sds-theme-plaid .link.link-cta:hover)::after {
@@ -244,6 +268,22 @@
   }
 
   /* CTA Arrow Colors - Blue (Default) */
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue) {
+    @apply text-black;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue:hover) {
+    @apply text-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)::after {
     @apply bg-blue-600;
   }
@@ -277,6 +317,22 @@
   }
 
   /* CTA Arrow Colors - Red */
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-red) {
+    @apply text-black;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-red:hover) {
+    @apply text-black;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red)::after {
     @apply bg-red-600;
   }
@@ -310,6 +366,22 @@
   }
 
   /* CTA Arrow Colors - White */
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-white) {
+    @apply text-white;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-primary.link-white:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-white) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-white:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-white)::after {
     @apply bg-white;
   }
@@ -362,11 +434,11 @@
   /* ===== DIRECTIONAL CTA VARIANTS ===== */
   /* CTA Down */
   :where(.sds-theme-plaid .link.link-cta-down)::after {
-    @apply rotate-90 -top-0.75;
+    @apply rotate-90 -top-0.5;
   }
 
   :where(.sds-theme-plaid .link.link-cta-down:hover)::after {
-    @apply translate-x-0 translate-y-0.75;
+    @apply translate-x-0 translate-y-1;
   }
 
   /* CTA Left */
@@ -384,10 +456,10 @@
 
   /* CTA Up */
   :where(.sds-theme-plaid .link.link-cta-up)::after {
-    @apply -rotate-90 -top-0.75;
+    @apply -rotate-90 -top-0.5;
   }
 
   :where(.sds-theme-plaid .link.link-cta-up:hover)::after {
-    @apply translate-x-0 -translate-y-0.75;
+    @apply translate-x-0 -translate-y-1;
   }
 }

@@ -189,7 +189,7 @@
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
-          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 1,
+          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 0,
         }"
       >
         <!-- Select all option for multiselect -->
@@ -255,7 +255,7 @@
             class="flex flex-col gap-y-1 pb-2 mb-0"
             :class="{
               'first:[&>div]:border-t-0': !multiple,
-              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple
+              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1
             }"
           >
             <div
@@ -1575,7 +1575,7 @@ const hasDropdownSuggestion = computed(() => {
 })
 
 const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
-  const activeTab = (document.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+  const activeTab = (root.value.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
   if (direction === 'tabsUp' || direction === 'tabsDown') {
     if (direction === 'tabsUp') {
       event.preventDefault()
@@ -1587,7 +1587,9 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       event.preventDefault()
       // focus first suggestion
       inputField.value.focus()
-      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1)
+      /* Increment arrowCounter +1 to step over the "Select all" option.
+       * It won't be visible when only one option is available and props.multiple === true */
+      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.multiple)
         arrowCounter.value++
       arrowCounter.value++
       return
@@ -1665,7 +1667,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
+        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
@@ -1679,7 +1681,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value++
         }
         await nextTick()
-        const newActiveTab = document.querySelector<HTMLElement>('button.tab[data-active="true"]')
+        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
         arrowCounter.value = -1
