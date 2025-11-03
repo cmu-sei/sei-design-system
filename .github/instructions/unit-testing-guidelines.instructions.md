@@ -317,6 +317,218 @@ Use `nextTick` when you directly mutate reactive state or expect DOM changes tha
 
 ---
 
+### Testing Components with `defineModel()` (Vue 3.4+)
+
+Starting with Vue 3.4, `defineModel()` is the definitive way to implement two-way data binding in components, replacing the legacy `v-model` pattern with manual `modelValue` props and `update:modelValue` emits. When testing components that use `defineModel()`, you need to understand how Vue Test Utils interacts with this pattern.
+
+#### Key Concepts
+
+- **`defineModel()` creates a writable computed ref** that automatically syncs with the parent's `v-model` binding.
+- **When testing, you must pass `modelValue` as a prop** to simulate the parent's binding.
+- **Updates to the model automatically emit `update:modelValue`** events that you can assert on.
+- **You can directly modify the model value** in tests by updating the wrapper's props.
+
+#### Testing Pattern: Reading and Writing Model Values
+
+When testing a component that uses `defineModel()`, follow these patterns:
+
+**Example Component:**
+```typescript
+<script setup lang="ts">
+const model = defineModel<string>({ default: '' })
+</script>
+
+<template>
+  <input v-model="model" type="text" />
+</template>
+```
+
+**Test: Initial Model Value**
+```typescript
+it('renders with initial modelValue prop', () => {
+  // Arrange: Pass modelValue as a prop
+  const wrapper = mount(InputComponent, {
+    props: { modelValue: 'initial value' }
+  })
+
+  // Assert: Verify the input displays the value
+  expect(wrapper.find('input').element.value).toBe('initial value')
+})
+```
+
+**Test: Model Updates Emit Events**
+```typescript
+it('emits update:modelValue when input changes', async () => {
+  // Arrange: Mount with initial value
+  const wrapper = mount(InputComponent, {
+    props: { modelValue: '' }
+  })
+
+  // Act: Simulate user input
+  await wrapper.find('input').setValue('new value')
+
+  // Assert: Verify the event was emitted with correct payload
+  expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+  expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['new value'])
+})
+```
+
+**Test: Updating Model Value from Parent**
+```typescript
+it('updates input when modelValue prop changes', async () => {
+  // Arrange: Mount with initial value
+  const wrapper = mount(InputComponent, {
+    props: { modelValue: 'initial' }
+  })
+
+  // Act: Simulate parent updating the prop
+  await wrapper.setProps({ modelValue: 'updated value' })
+
+  // Assert: Verify the input reflects the new value
+  expect(wrapper.find('input').element.value).toBe('updated value')
+})
+```
+
+#### Testing Named Models
+
+Components can define multiple models using named `defineModel()`:
+
+**Example Component:**
+```vue
+<script setup lang="ts">
+const title = defineModel<string>('title')
+const content = defineModel<string>('content')
+</script>
+```
+
+**Test: Named Models**
+```typescript
+it('handles multiple named models correctly', async () => {
+  // Arrange: Pass named model values as props
+  const wrapper = mount(MultiModelComponent, {
+    props: {
+      title: 'My Title',
+      content: 'My Content'
+    }
+  })
+
+  // Act: Trigger changes
+  await wrapper.find('[data-testid="title-input"]').setValue('New Title')
+
+  // Assert: Verify named event emission
+  expect(wrapper.emitted('update:title')?.[0]).toEqual(['New Title'])
+  expect(wrapper.emitted('update:content')).toBeFalsy() // Other model unchanged
+})
+```
+
+#### Testing Model Options and Transformers
+
+`defineModel()` supports options like `get` and `set` transformers:
+
+**Example Component with Transformer:**
+```vue
+<script setup lang="ts">
+const model = defineModel({
+  get: (value: string) => value?.toUpperCase() || '',
+  set: (value: string) => value?.toLowerCase() || ''
+})
+</script>
+```
+
+**Test: Model Transformations**
+```typescript
+it('applies transformers when reading and writing model', async () => {
+  // Arrange: Mount with lowercase value
+  const wrapper = mount(TransformerComponent, {
+    props: { modelValue: 'hello' }
+  })
+
+  // Assert: Getter transforms to uppercase for display
+  expect(wrapper.find('input').element.value).toBe('HELLO')
+
+  // Act: User types uppercase
+  await wrapper.find('input').setValue('WORLD')
+
+  // Assert: Setter emits lowercase value
+  expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['world'])
+})
+```
+
+#### Common Pitfalls and Solutions
+
+**Pitfall 1: Forgetting to Pass `modelValue` Prop**
+```typescript
+// ❌ Wrong - model will use default value, not your test value
+const wrapper = mount(InputComponent)
+
+// ✅ Correct - explicitly pass modelValue
+const wrapper = mount(InputComponent, {
+  props: { modelValue: 'test value' }
+})
+```
+
+**Pitfall 2: Not Using `await` with setValue or setProps**
+```typescript
+// ❌ Wrong - assertion runs before DOM updates
+wrapper.find('input').setValue('new value')
+expect(wrapper.emitted('update:modelValue')).toBeTruthy() // May fail
+
+// ✅ Correct - wait for updates
+await wrapper.find('input').setValue('new value')
+expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+```
+
+**Pitfall 3: Assuming Direct Model Access in Tests**
+```typescript
+// ❌ Wrong - you cannot directly access the model ref from tests
+wrapper.vm.model = 'new value'
+
+// ✅ Correct - update via props to simulate parent binding
+await wrapper.setProps({ modelValue: 'new value' })
+```
+
+#### Best Practices
+
+- **Always pass `modelValue` (or named model props)** when mounting components that use `defineModel()`.
+- **Test both directions**: verify the component receives prop updates AND emits update events.
+- **Use `data-testid` attributes** to reliably select elements in complex components.
+- **Test edge cases**: empty values, `null`/`undefined`, type coercion, and validation.
+- **Verify emitted event payloads** using `wrapper.emitted()` to ensure correct values.
+- **Consider testing the component in a parent wrapper** that actually uses `v-model` for integration testing.
+
+#### Integration Testing with `v-model`
+
+For more realistic integration tests, wrap your component in a parent that uses `v-model`:
+
+```typescript
+it('works with actual v-model binding', async () => {
+  // Arrange: Create a parent component that uses v-model
+  const ParentComponent = {
+    components: { InputComponent },
+    template: `
+      <div>
+        <InputComponent v-model="value" />
+        <span data-testid="output">{{ value }}</span>
+      </div>
+    `,
+    setup() {
+      const value = ref('initial')
+      return { value }
+    }
+  }
+
+  const wrapper = mount(ParentComponent)
+
+  // Act: Change the input
+  await wrapper.find('input').setValue('changed')
+
+  // Assert: Parent's reactive value updates
+  expect(wrapper.find('[data-testid="output"]').text()).toBe('changed')
+})
+```
+
+---
+
 ## Test Organization
 - Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.
 - Name the test file to match the component name, e.g., `MyComponent.{spec.js,spec.ts}` for `MyComponent.vue`.
