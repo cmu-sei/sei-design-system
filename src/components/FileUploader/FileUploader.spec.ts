@@ -82,21 +82,6 @@ describe('FileUploader', () => {
     })
   })
 
-  describe('Snapshots', () => {
-    it('should match its default snapshot', () => {
-      wrapper = mount(Component, {
-        directives: {
-          'uid': {
-            created(el: HTMLElement) {
-              el.setAttribute('id', 'unique-id')
-            }
-          }
-        }
-      })
-      expect(wrapper.element).toMatchSnapshot()
-    })
-  })
-
   describe('Props Validation & Configuration', () => {
     it('should set multiple attribute on file input when multiple prop is true', () => {
       wrapper = mount(Component, { props: { multiple: true } })

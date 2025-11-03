@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import Component from './Input.vue'
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
 
-describe('Input', () => {
+describe('Input.vue', () => {
   /* Rendering & Default State */
   it('should match its default snapshot', () => {
     const wrapper = mount(Component, {})
