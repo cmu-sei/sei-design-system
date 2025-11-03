@@ -3,7 +3,7 @@ applyTo: "src/components/**/*.{spec.js,spec.ts}"
 ---
 
 # Context & Purpose:
-You are assisting with writing unit tests for Vue 3 applications using the Vitest testing framework and Vue Test Utils. The code will typically run in a Vite-powered Vue environment, targeting components, composables, and related utilities. Tests should aim to be clear, maintainable, and leverage best practices for Vue component testing and mocking.
+You are assisting with writing unit tests for Vue 3 applications using the Vitest testing framework and the Vue Test Utils library. The code will typically run in a Vite-powered Vue environment, targeting components, composables, and related utilities. Tests should aim to be clear, maintainable, and leverage best practices for Vue component testing and mocking.
 
 ---
 
@@ -30,12 +30,11 @@ This section outlines best practices and key points for writing unit tests and t
 - Consistency helps readability and maintainability for team members and tools like Copilot.
 
 ### Structure and Organization
-- Organize test cases logically:
-  - Start with a clear objective.
-  - Define any preconditions.
-  - Outline inputs and actions.
-  - Specify expected outcomes.
-- Keep test steps concise.
+- Organize test files and suites logically by feature or component
+- Group related tests using `describe` blocks
+- Order tests from simple to complex scenarios
+- Use `beforeEach` and `afterEach` or `beforeAll` and `afterAll` for common setup and teardown
+- Keep individual tests focused on a single behavior (see AAA Pattern below)
 
 ### Adapt to Testing Frameworks and Tools
 - For Vue, use Vue Test Utils best practices including shallow mounting, stubbing, and interaction testing.
@@ -52,16 +51,140 @@ This section outlines best practices and key points for writing unit tests and t
 - Unit test descriptions often follow formats like:
   - `should [expected behavior] when [condition]`
   - `renders [component/element] correctly with [props/state]`
-- Behavioral tests can use BDD style:
-  - **Given** (setup),
-  - **When** (action),
-  - **Then** (assertion)
-- This style improves readability and aligns with automation.
+  - `emits [event name] when [condition]`
+  - `calls [method/function] with [parameters] when [condition]`
+- Keep descriptions concise but specific enough to understand the test without reading the code
 
 ### Updating and Maintaining Documentation
 - Keep test documentation synchronized with code changes.
 - Note the status of tests.
 - Maintain traceability to requirements or user stories when possible.
+
+### The AAA Pattern (Arrange-Act-Assert)
+
+The **AAA pattern** is a fundamental structure for organizing unit tests that makes them clear, consistent, and maintainable. Each test should be divided into three distinct phases:
+
+#### 1. Arrange
+Set up the test conditions, including:
+- Creating component instances or test data
+- Configuring props, mocks, or dependencies
+- Establishing the initial state
+
+#### 2. Act
+Execute the behavior being tested:
+- Trigger user interactions (clicks, inputs, etc.)
+- Call methods or functions
+- Simulate events or state changes
+
+#### 3. Assert
+Verify the expected outcome:
+- Check component output or state
+- Validate emitted events
+- Confirm expected behavior occurred
+
+#### Relationship to BDD (Given-When-Then)
+
+The AAA pattern aligns closely with BDD's Given-When-Then style:
+- **Arrange** = **Given** (setup/preconditions)
+- **Act** = **When** (action/trigger)
+- **Assert** = **Then** (expected outcome)
+
+Both patterns achieve the same goal: clear, readable tests that follow a logical flow.
+
+#### Vue-Specific AAA Examples
+
+**Example 1: Testing Component Rendering**
+
+```typescript
+it('displays user name when provided as prop', () => {
+  // Arrange: Set up the component with test data
+  const userName = 'Jane Doe'
+  const wrapper = mount(UserProfile, {
+    props: { name: userName }
+  })
+
+  // Act: (No action needed for initial render test)
+
+  // Assert: Verify the expected output
+  expect(wrapper.text()).toContain(userName)
+})
+```
+
+**Example 2: Testing User Interaction**
+
+```typescript
+it('increments counter when button is clicked', async () => {
+  // Arrange: Mount component and locate the button
+  const wrapper = mount(Counter)
+  const button = wrapper.find('button[data-testid="increment"]')
+
+  // Act: Trigger the user interaction
+  await button.trigger('click')
+
+  // Assert: Verify the state change
+  expect(wrapper.find('[data-testid="count"]').text()).toBe('1')
+})
+```
+
+**Example 3: Testing Event Emission**
+
+```typescript
+it('emits selected event with correct payload when item clicked', async () => {
+  // Arrange: Mount component with props and locate element
+  const testItem = { id: 1, name: 'Test Item' }
+  const wrapper = mount(ItemList, {
+    props: { items: [testItem] }
+  })
+  const item = wrapper.find('[data-testid="item-1"]')
+
+  // Act: Trigger the interaction
+  await item.trigger('click')
+
+  // Assert: Verify event emission and payload
+  expect(wrapper.emitted('selected')).toBeTruthy()
+  expect(wrapper.emitted('selected')?.[0]).toEqual([testItem])
+})
+```
+
+**Example 4: Testing with Mocks**
+
+```typescript
+it('calls API service when form is submitted', async () => {
+  // Arrange: Set up mocks and mount component
+  const mockApiCall = vi.fn().mockResolvedValue({ success: true })
+  const wrapper = mount(SubmitForm, {
+    global: {
+      mocks: {
+        $api: { submit: mockApiCall }
+      }
+    }
+  })
+
+  // Act: Fill form and submit
+  await wrapper.find('input').setValue('test data')
+  await wrapper.find('form').trigger('submit')
+
+  // Assert: Verify the API was called correctly
+  expect(mockApiCall).toHaveBeenCalledOnce()
+  expect(mockApiCall).toHaveBeenCalledWith({ data: 'test data' })
+})
+```
+
+#### Best Practices for AAA Pattern
+
+- **Use comments or blank lines** to visually separate the three phases in complex tests
+- **Keep each phase focused**: Arrange should only set up, Act should only execute, Assert should only verify
+- **Single Act per test**: Each test should typically have one action being tested
+- **Multiple Asserts are OK**: You can verify multiple aspects of the outcome in the Assert phase
+- **Arrange can be extracted**: Use `beforeEach` for common setup, but ensure tests remain readable
+- **Be explicit**: Even in simple tests, the AAA structure should be apparent
+
+#### When to Deviate
+
+While AAA is the recommended default, some tests may not need all three phases:
+- **Render-only tests** may only need Arrange + Assert (no Act)
+- **Very simple tests** may combine phases for brevity when clarity isn't compromised
+- Always prioritize **readability and maintainability** over strict adherence to patterns
 
 ---
 
@@ -79,39 +202,9 @@ import ComponentToTest from './ComponentToTest.vue'
 
 ### Mount Components
 
-- Use `mount` from Vue Test Utils to fully render components.
-- Use `shallowMount` if you want to stub child components for unit isolation.
-
-### Assertions and Testing Behavior
-
-Test component rendering and initial state:
-
-```typescript
-it('renders initial message', () => {
-  const wrapper = mount(ComponentToTest)
-  expect(wrapper.text()).toContain('expected text')
-})
-```
-
-Test user interaction with events and DOM updates:
-
-```typescript
-it('updates message when button clicked', async () => {
-  const wrapper = mount(ComponentToTest)
-  await wrapper.find('button').trigger('click')
-  expect(wrapper.text()).toContain('updated text')
-})
-```
-
-Test props and emitted events:
-
-```typescript
-it('emits custom event with proper payload', () => {
-  const wrapper = mount(ComponentToTest, { props: { someProp: true } })
-  wrapper.vm.$emit('custom-event', 'payload')
-  expect(wrapper.emitted('custom-event')).toBeTruthy()
-})
-```
+- Use `mount` from Vue Test Utils to fully render components with all child components
+- Use `shallowMount` if you want to stub child components for unit isolation
+- Pass props, slots, and global configuration through the mounting options object
 
 ### Mocking Best Practices
 
@@ -222,26 +315,7 @@ it('updates DOM after reactive value change', async () => {
 
 Use `nextTick` when you directly mutate reactive state or expect DOM changes that are not immediately reflected after an action. For Composition API components, you may need to access refs or reactive state exposed via `expose()`.
 
-## Example Simple Test for a Vue Component
-
-```typescript
-import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
-import HelloWorld from './HelloWorld.vue'
-
-describe('HelloWorld', () => {
-  it('renders initial message', () => {
-    const wrapper = mount(HelloWorld)
-    expect(wrapper.text()).toContain('Hello, Vue!')
-  })
-
-  it('updates message when button clicked', async () => {
-    const wrapper = mount(HelloWorld)
-    await wrapper.find('button').trigger('click')
-    expect(wrapper.text()).toContain('You clicked the button!')
-  })
-})
-```
+---
 
 ## Test Organization
 - Place test files alongside components using `.spec.js` or `.spec.ts` suffixes.

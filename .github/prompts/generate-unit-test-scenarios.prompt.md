@@ -57,18 +57,21 @@ Analyze the provided component/function and generate test scenarios covering:
 When generating scenarios, prioritize in this order:
 
 **Critical (Must Have):**
+
 1. Core functionality - the main purpose of the component/function
 2. Props/inputs that change behavior significantly
 3. User interactions that trigger important actions
 4. Error states that affect user experience
 
 **Important (Should Have):**
+
 5. Edge cases with common invalid inputs
 6. Loading and async states
 7. Accessibility features (ARIA, keyboard navigation)
 8. Responsive behavior changes
 
 **Nice to Have (Could Have):**
+
 9. Exhaustive prop combinations
 10. Performance-related scenarios
 11. Visual appearance details
@@ -79,16 +82,26 @@ When generating scenarios, prioritize in this order:
 - Use **Given/When/Then** format for complex scenarios or user workflows
 - Mix formats based on scenario complexity and clarity
 
+**Note:** All scenarios will be implemented using the **AAA (Arrange-Act-Assert) pattern**:
+- **Given** (scenario setup) → **Arrange** (test setup)
+- **When** (action/trigger) → **Act** (execute behavior)
+- **Then** (expected outcome) → **Assert** (verify result)
+
+This ensures consistent, maintainable test structure regardless of scenario complexity.
+
 #### Scenario Complexity Levels:
 
 **Simple (Bullet Point):**
 - Should render with default props
+  - *Maps to AAA: Arrange component → (no Act needed) → Assert rendered output*
 
 **Medium (Descriptive):**
 - Should display error message when email validation fails and clear it when valid input is provided
+  - *Maps to AAA: Arrange component with input → Act by typing invalid/valid email → Assert error visibility*
 
 **Complex (Given/When/Then):**
 - **Given** a form with validation rules, **When** user submits with invalid data, **Then** should show field-specific errors, prevent submission, and focus the first invalid field
+  - *Maps to AAA: Arrange (Given) → Act (When) → Assert (Then)*
 
 **Integration (Multi-step):**
 - **Scenario**: Complete user registration flow
@@ -219,11 +232,13 @@ Once you receive confirmation (user says "yes", "go ahead", "proceed", or simila
 
 1. Reference the unit testing guidelines from `#file:unit-testing-guidelines.instructions.md`
 2. Generate the complete test file following Vue 3 + Vitest + Vue Test Utils best practices
-3. Implement tests using the approved scenarios
-4. Follow the established code style, naming conventions, and testing patterns
-5. Include proper imports, mocking, and async handling as needed
-6. Create a new `.spec.js` or `.spec.ts` file in the appropriate component directory
-7. For any scenarios that cannot be tested in jsdom, add them as `.skip()` tests with comments explaining why
+3. **Implement all tests using the AAA (Arrange-Act-Assert) pattern** as defined in the guidelines
+4. Structure each test with clear separation between Arrange, Act, and Assert phases
+5. Use comments or blank lines to visually separate AAA phases in complex tests
+6. Follow the established code style, naming conventions, and testing patterns
+7. Include proper imports, mocking, and async handling as needed
+8. Create a new `.spec.js` or `.spec.ts` file in the appropriate component directory
+9. For any scenarios that cannot be tested in jsdom, add them as `.skip()` tests with comments explaining why
 
 ### Step 5: Post-Implementation Review
 
@@ -264,6 +279,7 @@ After presenting the generated test file, ask specific questions:
 ## Key Principles
 
 - **Scenario-First**: Always generate and get approval for scenarios before writing tests
+- **AAA Pattern**: Implement all tests using the Arrange-Act-Assert pattern for consistency and maintainability
 - **User-Centric**: Frame tests from the perspective of how the component/function is actually used
 - **Comprehensive**: Cover happy paths, edge cases, and error conditions
 - **Maintainable**: Write clear, readable tests that are easy to update
@@ -274,6 +290,8 @@ After presenting the generated test file, ask specific questions:
 ## Notes
 
 - Not all tests can be framed as "As a user..." scenarios - adapt language to fit the context
+- All test implementations follow the AAA (Arrange-Act-Assert) pattern as documented in the unit testing guidelines
+- Given-When-Then scenario descriptions naturally map to AAA test structure (Given→Arrange, When→Act, Then→Assert)
 - Prioritize functional behavior while remaining open to additional testing types
 - Consider both immediate component behavior and broader application impact
 - Balance thoroughness with maintainability and test execution speed
