@@ -3,9 +3,11 @@
 </template>
 
 <script lang="ts" setup>
-export interface SoryByDropdown {
+export interface SortByDropdownOption {
   id: number | string;
 }
+
+export type SortByDropdownPlacement = 'auto' | 'top' | 'right' | 'bottom-start'
 
 defineOptions({
   name: "SdsSortByDropdown"

@@ -15,6 +15,7 @@ import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselec
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
+import type { SortByDropdownOption, SortByDropdownPlacement } from './SortByDropdown/SortByDropdown.vue'
 import type { TableField, TableItem } from './Table/Table.vue'
 import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
@@ -50,6 +51,8 @@ export type {
   RadioGroupOptionValue,
   SelectOption,
   SelectOptionValue,
+  SortByDropdownOption,
+  SortByDropdownPlacement,
   SvgIcons,
   SvgIconTypes,
   TableField,
@@ -114,6 +117,7 @@ import SdsScrollspy from "./Scrollspy";
 import SdsSection from "./Section";
 import SdsSeiWordmark from "./SeiWordmark";
 import SdsSelect from "./Select";
+import SdsSortByDropdown from './SortByDropdown/SortByDropdown.vue';
 import SdsSvgIcon from './SvgIcon'
 import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
@@ -183,6 +187,7 @@ const Components: ComponentList = {
   SdsSection,
   SdsSeiWordmark,
   SdsSelect,
+  SdsSortByDropdown,
   SdsSvgIcon,
   SdsTabs,
   SdsTable,
@@ -256,6 +261,7 @@ export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSection } from "./Section";
 export { default as SdsSeiWordmark } from "./SeiWordmark";
 export { default as SdsSelect } from "./Select";
+export { default as SdsSortByDropdown } from "./SortByDropdown";
 export { default as SdsSvgIcon } from "./SvgIcon";
 export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
