@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DropdownItem > should match its default snapshot 1`] = `
+exports[`DropdownItem > Snapshots > should match its default snapshot 1`] = `
 <a
   class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline text-sm bg-white text-gray-900 hover:bg-gray-50 hover:text-gray-900 active:bg-blue-25 active:text-gray-900 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-gray-100 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-gray-100 [.dropdown-dark_&]:active:bg-blue-900 [.dropdown-dark_&]:active:text-gray-100 dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-850 dark:hover:text-gray-100 dark:active:bg-blue-900 dark:active:text-gray-100"
   data-id="sds-dropdown-item"
@@ -17,7 +17,7 @@ exports[`DropdownItem > should match its default snapshot 1`] = `
 </a>
 `;
 
-exports[`DropdownItem > should match its variant primary snapshot 1`] = `
+exports[`DropdownItem > Snapshots > should match its variant red snapshot 1`] = `
 <a
   class="block w-full select-none px-4 text-sm leading-5 text-left hover:no-underline text-sm bg-white text-red-600 hover:bg-gray-50 hover:text-red-600 active:bg-red-25 active:text-red-600 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:text-red-300 [.dropdown-dark_&]:hover:bg-gray-850 [.dropdown-dark_&]:hover:text-red-300 [.dropdown-dark_&]:active:bg-red-900 [.dropdown-dark_&]:active:text-red-300 dark:bg-gray-950 dark:text-red-300 dark:hover:bg-gray-850 dark:hover:text-red-300 dark:active:bg-red-900 dark:active:text-red-300"
   data-id="sds-dropdown-item"
