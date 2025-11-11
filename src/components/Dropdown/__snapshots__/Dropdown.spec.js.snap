@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Dropdown > should match its default snapshot 1`] = `
+exports[`Dropdown > Snapshots > should match its default snapshot 1`] = `
 <div
   class="inline-block"
   data-id="sds-dropdown"
