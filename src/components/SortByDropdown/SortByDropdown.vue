@@ -87,8 +87,8 @@
           </span>
           <ul class="flex flex-col gap-2">
             <li
-              v-for="filter in directionFilters"
-              :key="filter.value"
+              v-for="(filter, index) in directionFilters"
+              :key="index"
               class="flex flex-row gap-2 items-start"
             >
               <input
@@ -96,7 +96,7 @@
                 v-model="selectedDirection"
                 type="radio"
                 class="relative top-1"
-                :value="filter.direction"
+                :value="filter.value"
                 :name="name ? name : `${id}__direction__option`"
                 :disabled="disabled"
                 @click.stop
@@ -119,29 +119,29 @@
 </template>
 
 <script lang="ts" setup>
-import type { PropType } from 'vue'
 import type { RadioGroupOptionValue } from '../RadioGroup/RadioGroup.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 
-// TypeScript interfaces for component typing
+export type SortByDropdownPlacement = 'auto' | 'top' | 'right' | 'bottom-start';
+
+type OrderByType = 'alpha' | 'chronological' | 'numerical' | 'custom';
+type OrderByDirection = 'ascending' | 'descending';
+export type SortByDropdownType = `${OrderByType}:${OrderByDirection}`;
+
 export interface SortByDropdownOption {
-  id: string
-  value: RadioGroupOptionValue
-  label: string
-  type: string
+  id: number | string;
+  value: RadioGroupOptionValue;
+  label: string;
+  type: OrderByType;
 }
 
-/** Interface for the sort by dropdown value structure */
-export interface SortByDropdownValue {
-  sortBy: SortByDropdownOption | null
-  orderBy: RadioGroupOptionValue | null
+export interface SortByDropdownModel {
+  sortBy: SortByDropdownOption['value'] | null;
+  orderBy: SortByDropdownType | null;
 }
 
-export type SortByDropdownPlacement = 'auto' | 'top' | 'right' | 'bottom-start'
-export type SortByOptionType = 'alpha' | 'chronological' | 'numerical' | 'custom'
-
-const SORT_BY_OPTION_TYPES = Object.freeze({
+const SORT_BY_TYPES = Object.freeze({
   'ALPHA': {
     'ASCENDING': 'A-Z',
     'DESCENDING': 'Z-A'
@@ -210,15 +210,15 @@ const props = defineProps({
 /**
  * The v-model of the radio group.
  */
-const model = defineModel<SortByDropdownValue | null>({
-  type: Object as PropType<SortByDropdownValue | null>,
+const model = defineModel<SortByDropdownModel | null>({
+  type: Object as PropType<SortByDropdownModel | null>,
   default: null
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: SortByDropdownValue | null]
-  'sortByChange': [value: SortByDropdownValue | null]
-  'orderByChange': [value: SortByDropdownValue | null]
+  'update:modelValue': [value: SortByDropdownModel | null]
+  'sortByChange': [value: SortByDropdownModel | null]
+  'orderByChange': [value: SortByDropdownModel | null]
 }>()
 
 const id = useId()
@@ -226,7 +226,10 @@ const button = ref<HTMLButtonElement | undefined>()
 
 // Track selected option and direction separately
 const selectedOption = ref<SortByDropdownOption | null>(null)
-const selectedDirection = ref<'ascending' | 'descending' | null>(null)
+const selectedDirection = ref<SortByDropdownType | null>(null)
+
+// Flag to prevent duplicate emissions during internal state updates
+const isInternalUpdate = ref(false)
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
@@ -254,28 +257,37 @@ const localModelValue = computed({
     return selectedOption.value?.value || null
   },
   set(value: RadioGroupOptionValue) {
+    // Set flag to indicate this is an internal update
+    isInternalUpdate.value = true
+    
     // Find the option that matches this value
     selectedOption.value = props.options.find(opt => opt.value === value) || null
     // Default direction to ascending when changing the main option
-    selectedDirection.value = 'ascending'
+    selectedDirection.value = selectedOption.value && selectedOption.value.type ? `${selectedOption.value.type}:ascending` : null
     
     // Emit sortByChange with the complete object when the sort by option changes
     if (selectedOption.value) {
       const newValue = {
-        sortBy: selectedOption.value,
+        sortBy: selectedOption.value.value,
         orderBy: selectedDirection.value
       }
       emit('sortByChange', newValue)
+      
+      // Update the model value
+      model.value = newValue
     }
+    
+    // Reset the flag after a tick to allow other operations
+    nextTick(() => {
+      isInternalUpdate.value = false
+    })
   }
 })
 
 /**
  * Computes the current order by filter based on the selected option.
  */
-const orderBy = computed(() => {
-  return selectedOption.value
-})
+const orderBy = computed(() => selectedOption.value)
 
 /**
  * Generates direction filters based on the currently selected option's type.
@@ -283,28 +295,31 @@ const orderBy = computed(() => {
 const directionFilters = computed(() => {
   if (!orderBy.value) return []
   
-  const filters: Array<{ id: string; value: string; label: string; direction: 'ascending' | 'descending' }> = []
-  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof SORT_BY_OPTION_TYPES
+  const filters: Array<{ 
+    id: `${SortByDropdownOption['id']}`;
+    label: SortByDropdownOption['label'];
+    value: SortByDropdownType;
+  }> = []
+  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof SORT_BY_TYPES
   
-  if (SORT_BY_OPTION_TYPES[typeKey]) {
-    const directions = SORT_BY_OPTION_TYPES[typeKey]
+  if (SORT_BY_TYPES[typeKey]) {
+    const directions = SORT_BY_TYPES[typeKey]
     Object.entries(directions).forEach(([directionKey, directionLabel]) => {
-      const direction = directionKey.toLowerCase() as 'ascending' | 'descending'
+      const direction = `${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType
       const filterId = `${id}__${orderBy.value?.type}__${direction}`
       
       let label: string
       if (typeof directionLabel === 'function') {
         const customValue = orderBy.value?.label || ''
-        label = directionLabel(String(customValue))
+        label = directionLabel(customValue)
       } else {
         label = directionLabel
       }
       
       filters.push({
         id: filterId,
-        value: `${orderBy.value?.type}:${direction}`,
         label,
-        direction
+        value: direction,
       })
     })
   }
@@ -314,40 +329,64 @@ const directionFilters = computed(() => {
 
 // Watch for direction changes and emit the complete object
 watch(selectedDirection, (newDirection) => {
-  if (newDirection !== null && selectedOption.value) {
+  // Only emit if this is not an internal update and we have a valid state
+  if (!isInternalUpdate.value && newDirection !== null && selectedOption.value) {
+    // Set flag to prevent model watcher from emitting
+    isInternalUpdate.value = true
+    
     const newValue = {
-      sortBy: selectedOption.value,
+      sortBy: selectedOption.value.value,
       orderBy: newDirection
     }
     emit('orderByChange', newValue)
+    
+    // Update the model value
+    model.value = newValue
+    
+    // Reset flag after the update
+    nextTick(() => {
+      isInternalUpdate.value = false
+    })
   }
 })
 
-// Emit model update when either sort by or order by changes
+// Emit model update when model changes (but prevent duplicate emissions)
 watch(model, (newValue) => {
-  if (newValue) {
+  if (!isInternalUpdate.value && newValue) {
     emit('update:modelValue', newValue)
   }
 })
 
 // Set default direction when selectedOption changes
 watch(selectedOption, (newOption) => {
-  if (newOption && !selectedDirection.value) {
-    // Auto-select the first direction (ascending) by default
-    selectedDirection.value = 'ascending'
+  // Only auto-set direction if this is not an internal update and no direction is set
+  if (!isInternalUpdate.value && newOption && !selectedDirection.value) {
+    selectedDirection.value = `${newOption.type}:ascending`
   }
 }, { immediate: true })
 
 // Initialize with first option if no model value is set and sync with existing model value
 onMounted(() => {
+  isInternalUpdate.value = true
+  
   if (model.value && model.value.sortBy && model.value.orderBy) {
     // If there's already a model value, extract sortBy and orderBy
-    selectedOption.value = model.value.sortBy
-    selectedDirection.value = model.value.orderBy as 'ascending' | 'descending'
+    selectedOption.value = props.options.find(opt => opt.value === model.value?.sortBy) || null
+    selectedDirection.value = model.value.orderBy
   } else if (props.options.length > 0) {
     // Select first option by default and set ascending as default direction
     selectedOption.value = props.options[0]
-    selectedDirection.value = 'ascending'
+    selectedDirection.value = `${selectedOption.value.type}:ascending`
+    
+    // Set the initial model value
+    model.value = {
+      sortBy: selectedOption.value.value,
+      orderBy: selectedDirection.value
+    }
   }
+  
+  nextTick(() => {
+    isInternalUpdate.value = false
+  })
 })
 </script>

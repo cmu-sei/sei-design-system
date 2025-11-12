@@ -1864,7 +1864,7 @@
 </template>
 
 <script setup lang="ts">
-import { SdsSortByDropdown, type SortByDropdownOption, type SortByDropdownValue } from '../../../components';
+import { SdsSortByDropdown, SortByDropdownModel, type SortByDropdownOption } from '../../../components';
 import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
 
 const expandCollapseModel = ref(false)
@@ -1915,10 +1915,12 @@ const filtered = (options: FilterByDropdownOption[]) => {
 }
 
 const sortBy = reactive({
-  value: null as SortByDropdownValue | null,
+  value: null as SortByDropdownModel | null,
   options: ([
     { id: '1', label: 'Author', value: 'Author', type: 'alpha' },
-    { id: '2', label: 'Date published', value: 'Date published', type: 'numerical' }
+    { id: '2', label: 'Date published', value: 'Date published', type: 'chronological' },
+    { id: '3', label: 'Price', value: 'Price', type: 'numerical' },
+    { id: '4', label: 'Relevance', value: 'Relevance', type: 'custom' }
   ] as SortByDropdownOption[]),
 })
 

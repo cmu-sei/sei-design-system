@@ -15,7 +15,7 @@ import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselec
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
-import type { SortByDropdownOption, SortByDropdownPlacement, SortByDropdownValue } from './SortByDropdown/SortByDropdown.vue'
+import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownPlacement, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
 import type { TableField, TableItem } from './Table/Table.vue'
 import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
@@ -52,8 +52,9 @@ export type {
   SelectOption,
   SelectOptionValue,
   SortByDropdownOption,
+  SortByDropdownModel,
   SortByDropdownPlacement,
-  SortByDropdownValue,
+  SortByDropdownType,
   SvgIcons,
   SvgIconTypes,
   TableField,
