@@ -49,26 +49,26 @@
       </SdsTooltip>
     </template>
     <template #default>
-      <div class="px-2 py-4">
+      <div class="flex flex-col">
         <!-- First group: Original options (what to sort by) -->
-        <div class="mb-4 px-2">
-          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+        <div class="px-2 pt-4 pb-2">
+          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2">
             Sort by
           </span>
           <ul
             v-if="options.length"
-            class="flex flex-col gap-2"
+            class="flex flex-col"
           >
             <li
               v-for="(option, index) in options"
               :key="`${id}__sortBy__option_${index}`"
-              class="flex flex-row gap-2 items-start"
+              class="group flex flex-row gap-2 items-center px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750 cursor-pointer"
             >
               <input
                 :id="`${id}__sortBy__option_${index}`"
                 v-model="localModelValue"
                 type="radio"
-                class="relative top-1"
+                class="cursor-pointer relative top-px"
                 :value="option.value"
                 :name="name ? name : `${id}__sortBy__option`"
                 :disabled="disabled"
@@ -78,6 +78,7 @@
                 :class="{
                   'opacity-50 pointer-events-none select-none': disabled
                 }"
+                class="cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
               >
                 <span>{{ option.label }}</span>
               </label>
@@ -87,22 +88,22 @@
         <!-- Second group: Direction filters (how to sort) based on selected option -->
         <div
           v-if="orderBy"
-          class="px-2"
+          class="border-t border-gray-100 dark:border-gray-700 px-2 pt-4 pb-2"
         >
-          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2">
             Order by
           </span>
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col">
             <li
               v-for="(filter, index) in directionFilters"
               :key="index"
-              class="flex flex-row gap-2 items-start"
+              class="group flex flex-row gap-2 items-center px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750 cursor-pointer"
             >
               <input
                 :id="filter.id"
                 v-model="selectedDirection"
                 type="radio"
-                class="relative top-1"
+                class="cursor-pointer relative top-px"
                 :value="filter.value"
                 :name="name ? name : `${id}__direction__option`"
                 :disabled="disabled"
@@ -113,6 +114,7 @@
                 :class="{
                   'opacity-50 pointer-events-none select-none': disabled
                 }"
+                class="cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
                 @click.stop
               >
                 <span>{{ filter.label }}</span>
@@ -141,6 +143,7 @@ export interface SortByDropdownOption {
   value: RadioGroupOptionValue;
   label: RadioGroupOptionValue;
   type: OrderByType;
+  customAttribute?: string;
 }
 
 export interface SortByDropdownModel {
@@ -148,6 +151,10 @@ export interface SortByDropdownModel {
   orderBy: SortByDropdownType | null;
 }
 
+/**
+ * A mapping of order by types and their corresponding direction labels.
+ * Used to generate appropriate labels for sorting directions based on the selected sort type.
+ */
 const ORDER_BY_TYPES = Object.freeze({
   'ALPHA': {
     'ASCENDING': 'A-Z',
@@ -336,8 +343,8 @@ const directionFilters = computed(() => {
       let label: string
       // Handle dynamic labels for custom sort types
       if (typeof directionLabel === 'function') {
-        // For custom types, pass the selected option's label to generate contextual text
-        const customValue = orderBy.value?.label || ''
+        // For custom types, pass the selected option's customAttribute prop if available, otherwise use the label to generate contextual text
+        const customValue = (orderBy.value?.customAttribute || orderBy.value?.label || '').toString().toLowerCase()
         label = directionLabel(customValue)
       } else {
         // For static types (alpha, chronological, numerical), use predefined labels

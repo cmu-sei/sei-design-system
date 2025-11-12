@@ -1920,7 +1920,7 @@ const sortBy = reactive({
     { id: '1', label: 'Author', value: 'Author', type: 'alpha' },
     { id: '2', label: 'Date published', value: 'Date published', type: 'chronological' },
     { id: '3', label: 'Price', value: 'Price', type: 'numerical' },
-    { id: '4', label: 'Relevance', value: 'Relevance', type: 'custom' }
+    { id: '4', label: 'Relevance', value: 'Relevance', type: 'custom', customAttribute: 'relevant' }
   ] as SortByDropdownOption[]),
 })
 
