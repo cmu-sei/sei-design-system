@@ -130,7 +130,7 @@
                 @click.stop
               >
                 <svg 
-                  v-if="filter.direction === 'ascending'"
+                  v-if="filter.direction.includes('ascending')"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 640 640"
                   fill="currentColor"
@@ -368,32 +368,34 @@ const directionFilters = computed(() => {
     const directions = ORDER_BY_TYPES[typeKey]
     
     // Create a filter option for each direction/type (ascending/descending)
-    Object.entries(directions).forEach(([directionKey, directionLabel]) => {
-      // Construct the direction/type value in the format "type:direction"
-      const type = `${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType
-      
-      // Create unique ID for the radio input
-      const filterId = `${id}__${orderBy.value?.type}__${type}`
-      
-      let label: string
-      // Handle dynamic labels for custom sort types
-      if (typeof directionLabel === 'function') {
-        // For custom types, pass the selected option's customAttribute prop if available, otherwise use the label to generate contextual text
-        const customValue = (orderBy.value?.customAttribute || orderBy.value?.label || '').toString().toLowerCase()
-        label = directionLabel(customValue)
-      } else {
-        // For static types (alpha, chronological, numerical), use predefined labels
-        label = directionLabel
+    Object.entries(directions).forEach(
+      ([directionKey, directionLabel]: [string, string | ((value: string) => string)]) => {
+        // Construct the direction/type value in the format "type:direction"
+        const type = `${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType
+        
+        // Create unique ID for the radio input
+        const filterId = `${id}__${orderBy.value?.type}__${type}`
+        
+        let label: string
+        // Handle dynamic labels for custom sort types
+        if (typeof directionLabel === 'function') {
+          // For custom types, pass the selected option's customAttribute prop if available, otherwise use the label to generate contextual text
+          const customValue = (orderBy.value?.customAttribute || orderBy.value?.label || '').toString().toLowerCase()
+          label = directionLabel(customValue)
+        } else {
+          // For static types (alpha, chronological, numerical), use predefined labels
+          label = directionLabel
+        }
+        
+        // Add the filter option to the array
+        filters.push({
+          id: filterId,
+          label,
+          value: type,
+          direction: (directionKey.toLowerCase() as OrderByDirection)
+        })
       }
-      
-      // Add the filter option to the array
-      filters.push({
-        id: filterId,
-        label,
-        value: type,
-        direction: directionKey.toLowerCase() as OrderByDirection
-      })
-    })
+    )
   }
   
   return filters
