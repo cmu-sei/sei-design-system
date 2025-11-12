@@ -11,35 +11,42 @@
     shift
   >
     <template #trigger="{ isOpen, toggle }">
-      <SdsActionButton 
-        :id="id"
-        ref="button"
-        :kind="kind"
-        :variant="variant"
-        :size="size" 
-        :active="isOpen"
-        :disabled="disabled"
-        aria-haspopup="true"
-        :aria-expanded="isOpen"
-        @click="toggle()"
+      <SdsTooltip
+        size="auto"
+        type="dark"
       >
-        <!-- @slot Title content of trigger button. -->
-        <slot name="title">
-          <span>{{ title }}</span>
-        </slot>
-        <svg
-          class="inline-block self-center w-5 h-5 -mr-1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </SdsActionButton>
+        <template #trigger>
+          <SdsActionButton 
+            :id="id"
+            ref="button"
+            :kind="kind"
+            :variant="variant"
+            :size="size" 
+            :active="isOpen"
+            aria-haspopup="true"
+            :aria-expanded="isOpen"
+            @click="toggle()"
+          >
+            <!-- @slot Title content of trigger button. -->
+            <slot name="title">
+              <span>{{ title }}</span>
+            </slot>
+            <svg
+              class="inline-block self-center w-5 h-5 -mr-1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </SdsActionButton>
+        </template>
+        <p>{{ tooltip }}</p>
+      </SdsTooltip>
     </template>
     <template #default>
       <div class="px-2 py-4">
@@ -132,7 +139,7 @@ export type SortByDropdownType = `${OrderByType}:${OrderByDirection}`;
 export interface SortByDropdownOption {
   id: number | string;
   value: RadioGroupOptionValue;
-  label: string;
+  label: RadioGroupOptionValue;
   type: OrderByType;
 }
 
@@ -141,7 +148,7 @@ export interface SortByDropdownModel {
   orderBy: SortByDropdownType | null;
 }
 
-const SORT_BY_TYPES = Object.freeze({
+const ORDER_BY_TYPES = Object.freeze({
   'ALPHA': {
     'ASCENDING': 'A-Z',
     'DESCENDING': 'Z-A'
@@ -204,7 +211,11 @@ const props = defineProps({
   /**
    * An array of options for the dropdown.
    */
-  options: { type: Array as PropType<SortByDropdownOption[]>, default: () => [] }
+  options: { type: Array as PropType<SortByDropdownOption[]>, default: () => [] },
+  /**
+   * The tooltip text for the sort button.
+   */
+  tooltip: { type: String, default: 'Sort' }
 })
 
 /**
@@ -263,7 +274,9 @@ const localModelValue = computed({
     // Find the option that matches this value
     selectedOption.value = props.options.find(opt => opt.value === value) || null
     // Default direction to ascending when changing the main option
-    selectedDirection.value = selectedOption.value && selectedOption.value.type ? `${selectedOption.value.type}:ascending` : null
+    selectedDirection.value = selectedOption.value && selectedOption.value.type 
+      ? `${selectedOption.value.type}:ascending` 
+      : null
     
     // Emit sortByChange with the complete object when the sort by option changes
     if (selectedOption.value) {
@@ -291,31 +304,47 @@ const orderBy = computed(() => selectedOption.value)
 
 /**
  * Generates direction filters based on the currently selected option's type.
+ * Creates radio button options for sorting direction (ascending/descending) 
+ * with appropriate labels based on the selected sort type.
  */
 const directionFilters = computed(() => {
+  // Return empty array if no option is selected
   if (!orderBy.value) return []
   
+  // Array to hold the generated filter options
   const filters: Array<{ 
     id: `${SortByDropdownOption['id']}`;
     label: SortByDropdownOption['label'];
     value: SortByDropdownType;
   }> = []
-  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof SORT_BY_TYPES
   
-  if (SORT_BY_TYPES[typeKey]) {
-    const directions = SORT_BY_TYPES[typeKey]
+  // Convert the selected option type to uppercase for ORDER_BY_TYPES lookup
+  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof ORDER_BY_TYPES
+  
+  // Generate direction options if the type exists in our configuration
+  if (ORDER_BY_TYPES[typeKey]) {
+    const directions = ORDER_BY_TYPES[typeKey]
+    
+    // Create a filter option for each direction (ascending/descending)
     Object.entries(directions).forEach(([directionKey, directionLabel]) => {
+      // Construct the direction value in the format "type:direction"
       const direction = `${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType
+      
+      // Create unique ID for the radio input
       const filterId = `${id}__${orderBy.value?.type}__${direction}`
       
       let label: string
+      // Handle dynamic labels for custom sort types
       if (typeof directionLabel === 'function') {
+        // For custom types, pass the selected option's label to generate contextual text
         const customValue = orderBy.value?.label || ''
         label = directionLabel(customValue)
       } else {
+        // For static types (alpha, chronological, numerical), use predefined labels
         label = directionLabel
       }
       
+      // Add the filter option to the array
       filters.push({
         id: filterId,
         label,
@@ -385,6 +414,7 @@ onMounted(() => {
     }
   }
   
+  // Reset the internal update flag
   nextTick(() => {
     isInternalUpdate.value = false
   })
