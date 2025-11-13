@@ -18,10 +18,6 @@ describe('SortByDropdown.vue', () => {
     document.body.innerHTML = ''
   })
 
-  // Note: Helper functions for testing defineModel() components were removed
-  // as simplified tests now focus on props, component structure, and behavior
-  // rather than internal state or complex interactions that require full DOM rendering
-
   const createWrapper = (props = {}, modelValue: SortByDropdownModel | null = null) => {
     const div = document.createElement('div')
     document.body.appendChild(div)
