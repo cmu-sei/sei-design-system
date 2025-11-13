@@ -36,6 +36,7 @@ describe('SortByDropdown.vue', () => {
       global: {
         stubs: {
           SdsFloatingUi: {
+            props: ['placement', 'popperClass'],
             template: `
               <div data-floating-ui>
                 <div @click="handleClick">
@@ -46,6 +47,7 @@ describe('SortByDropdown.vue', () => {
                 </div>
               </div>
             `,
+            name: 'SdsFloatingUi',
             data() {
               return { isOpen: false }
             },
@@ -59,10 +61,12 @@ describe('SortByDropdown.vue', () => {
             }
           },
           SdsActionButton: {
+            name: 'SdsActionButton',
             template: '<button v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>',
             props: ['id', 'kind', 'variant', 'size', 'active']
           },
           SdsTooltip: {
+            name: 'SdsTooltip',
             template: '<div class="tooltip-wrapper"><slot name="trigger" /><p><slot /></p></div>'
           }
         }
@@ -457,7 +461,7 @@ describe('SortByDropdown.vue', () => {
       // Assert - Component behavior: direction filters should not render without a selected option
       // This tests the component's internal logic for conditional rendering
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.props('modelValue').sortBy).toBeNull()
+      expect(wrapper.props('modelValue')?.sortBy).toBeNull()
     })
 
     it('should update direction filters when switching between options', async () => {
@@ -703,7 +707,7 @@ describe('SortByDropdown.vue', () => {
       await nextTick()
 
       // Act
-      const newModel = {
+      const newModel: SortByDropdownModel = {
         sortBy: 'date',
         orderBy: 'chronological:descending'
       }
@@ -868,7 +872,7 @@ describe('SortByDropdown.vue', () => {
       // Arrange
       const invalidOptions = [
         { id: 1, value: 'test', label: 'Test' }
-      ] as SortByDropdownOption[]
+      ] as unknown as SortByDropdownOption[]
 
       // Act & Assert
       expect(() => {
@@ -881,7 +885,7 @@ describe('SortByDropdown.vue', () => {
       // Arrange
       const invalidOptions = [
         { id: 1, value: 'test', label: 'Test', type: 'invalid' }
-      ] as SortByDropdownOption[]
+      ] as unknown as SortByDropdownOption[]
 
       // Act
       const wrapper = createWrapper({ options: invalidOptions })
@@ -896,7 +900,7 @@ describe('SortByDropdown.vue', () => {
       // Arrange
       const invalidOptions = [
         { id: 1, value: 'test', label: 'Test', type: 'unknown' }
-      ] as SortByDropdownOption[]
+      ] as unknown as SortByDropdownOption[]
 
       // Act & Assert
       expect(() => {
@@ -922,10 +926,10 @@ describe('SortByDropdown.vue', () => {
 
     it('should handle model value with invalid orderBy format', async () => {
       // Arrange
-      const invalidModel = {
+      const invalidModel = ({
         sortBy: 'name',
         orderBy: 'invalid-format'
-      } as SortByDropdownModel
+      } as unknown) as SortByDropdownModel
 
       // Act & Assert
       expect(() => {

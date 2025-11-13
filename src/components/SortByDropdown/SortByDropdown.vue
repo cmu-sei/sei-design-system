@@ -352,6 +352,9 @@ const directionFilters = computed(() => {
   // Return empty array if no option is selected
   if (!orderBy.value) return []
   
+  // Return empty array if the option has no type property
+  if (!orderBy.value.type) return []
+  
   // Array to hold the generated filter options
   const filters: Array<{ 
     id: `${SortByDropdownOption['id']}`;
@@ -443,12 +446,19 @@ watch(selectedOption, (newOption) => {
 onMounted(() => {
   isInternalUpdate.value = true
   
-  if (model.value && model.value.sortBy && model.value.orderBy) {
-    // If there's already a model value, extract sortBy and orderBy
-    selectedOption.value = props.options.find(opt => opt.value === model.value?.sortBy) || null
-    selectedDirection.value = model.value.orderBy
+  if (model.value !== null) {
+    // Model value was explicitly provided (even if properties are null)
+    if (model.value.sortBy && model.value.orderBy) {
+      // If there's a valid model value, extract sortBy and orderBy
+      selectedOption.value = props.options.find(opt => opt.value === model.value?.sortBy) || null
+      selectedDirection.value = model.value.orderBy
+    } else {
+      // Model value explicitly set but with null properties - don't auto-select
+      selectedOption.value = null
+      selectedDirection.value = null
+    }
   } else if (props.options.length > 0) {
-    // Select first option by default and set ascending as default direction
+    // No model value provided - select first option by default
     selectedOption.value = props.options[0]
     selectedDirection.value = `${selectedOption.value.type}:ascending`
     
