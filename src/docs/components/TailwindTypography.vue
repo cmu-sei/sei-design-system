@@ -1,5 +1,5 @@
 <template>
-  <div class="prose prose-blue prose-sm lg:prose-md dark:prose-invert mx-auto prose-tr:border-none">
+  <div class="prose prose-blue prose-sm lg:prose-md dark:prose-invert mx-auto">
     <h1>H1 Hello world this is a really long header that should wrap at some point but I don't know when</h1>
     <h1><a href="#">H1 Hello world</a></h1>
     <h2>H2 Hello world this is a really long header that should wrap at some point but I don't know when</h2>
@@ -534,5 +534,267 @@
         ✓ Expected: Headings purple, all text large and light (prose variants + utilities work together)
       </div>
     </div>
+  </div>
+  <div class="prose prose-blue prose-sm lg:prose-md dark:prose-invert mx-auto">
+    <h1 id="how-this-coding-standard-is-organized">
+      How this Coding Standard is Organized
+    </h1><div class="toc-macro rbtoc1741016823371">
+      <ul><li><a href="#HowthisCodingStandardisOrganized-Identifiers">Identifiers</a></li><li><a href="#HowthisCodingStandardisOrganized-NoncompliantCodeExamplesandCompliantSolutions">Noncompliant Code Examples and Compliant Solutions</a></li><li><a href="#HowthisCodingStandardisOrganized-CodingConventions">Coding Conventions</a></li><li><a href="#HowthisCodingStandardisOrganized-Exceptions">Exceptions</a></li><li><a href="#HowthisCodingStandardisOrganized-RiskAssessment">Risk Assessment</a></li><li><a href="#HowthisCodingStandardisOrganized-AutomatedDetection">Automated Detection</a></li><li><a href="#HowthisCodingStandardisOrganized-RelatedVulnerabilities">Related Vulnerabilities</a></li><li><a href="#HowthisCodingStandardisOrganized-RelatedGuidelines">Related Guidelines</a></li><li><a href="#HowthisCodingStandardisOrganized-CERT-CWEMappingNotes">CERT-CWE Mapping Notes</a></li><li><a href="#HowthisCodingStandardisOrganized-Bibliography">Bibliography</a></li></ul>
+    </div><p>
+      This coding standard is organized into 15 chapters containing rules in specific topic areas followed by four appendices. Appendix A contains the bibliography. Appendix B lists the definitions of terms used throughout the standard. Appendix C lists the undefined behaviors from the C Standard, Annex J, J.2 [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IEC9899-2011"
+        class=""
+      >ISO/IEC 9899:2011</a> ], numbered and classified for easy reference. These numbered undefined behaviors are referenced frequently from the rules. Appendix D lists unspecified behaviors from the C Standard, Annex J, J.2 [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IEC9899-2011"
+        class=""
+      >ISO/IEC 9899:2011</a> ]. These unspecified behaviors are occasionally referenced from the rules as well.
+    </p><p>Most rules have a consistent structure. Each rule in this standard has a unique identifier, which is included in the title. The title and the introductory paragraphs define the rule and are typically followed by one or more pairs of noncompliant code examples and compliant solutions. Each rule also includes a risk assessment, related guidelines, and a bibliography (where applicable). Rules may also include a table of related vulnerabilities. The recommendations in this wiki are organized in a similar fashion.</p><h2 id="identifiers">
+      <a href="#identifiers">Identifiers</a>
+    </h2><p>Each rule and recommendation is given a unique identifier. These identifiers consist of three parts:</p><ul>
+      <li>A three-letter mnemonic representing the section of the standard</li><li>A two-digit numeric value in the range of 00 to 99</li><li>
+        A suffix that represents the associated language or platform.
+        <ul>
+          <li>
+            "-C" for the <a
+              href="https://securecoding.cert.org/confluence/display/c"
+              rel="nofollow"
+            >SEI CERT C Coding Standard</a>
+          </li><li>
+            "-CPP" for the <a
+              href="https://securecoding.cert.org/confluence/display/cplusplus"
+              rel="nofollow"
+            >SEI CERT C++ Coding Standard</a>
+          </li><li>
+            "-J" for the <a
+              href="https://securecoding.cert.org/confluence/display/java"
+              rel="nofollow"
+            >SEI CERT Oracle Coding Standard for Java</a>
+          </li><li>
+            "-PL" for the <a
+              href="https://securecoding.cert.org/confluence/display/perl"
+              rel="nofollow"
+            >SEI CERT Perl Coding Standard</a>
+          </li>
+        </ul>
+      </li>
+    </ul><p>The three-letter mnemonic can be used to group similar coding practices and to indicate which category a coding practice belongs to.</p><p>
+      The numeric value is used to give each coding practice a unique identifier. Numeric values in the range of 00 to 29 are reserved for recommendations, and values in the range of 30 to 99 are reserved for rules. (The values used for the <a
+        href="/sei-cert-c++-coding-standard/"
+        class=""
+      >SEI CERT C++ Coding Standard</a> are different.)&nbsp;Rules and recommendations are frequently referenced from the guidelines in this standard by their identifier and title.
+    </p><p>Here are some example identifiers with an explanation of each:</p><ul>
+      <li>
+        INT50-CPP Do not cast to an out-of-range enumeration value
+        <ul><li>This identifier indicates a rule</li><li>“INT” stands for the Integer category</li><li>“50” is the unique identifier</li><li>“-CPP” stands for the C++ language</li></ul>
+      </li><li>
+        EXP00-J Do not ignore values returned by methods
+        <ul><li>This identifier indicates a rule</li><li>“EXP” stands for the Expressions category</li><li>“00” is the unique identifier</li><li>“-J” stands for the Java language</li></ul>
+      </li><li>
+        FLP00-C. Understand the limitations of floating-point numbers
+        <ul><li>This identifier indicates a recommendation</li><li>“FLP” stands for the Floating Point category</li><li>“00” is the unique identifier</li><li>“-C” stands for the C programming language</li></ul>
+      </li>
+    </ul><h2 id="noncompliant-code-examples-and-compliant-solutions">
+      <a href="#noncompliant-code-examples-and-compliant-solutions">Noncompliant Code Examples and Compliant Solutions</a>
+    </h2><p>Noncompliant code examples illustrate code that violates the guideline under discussion. It is important to note that these are only examples, and eliminating all occurrences of the example does not necessarily mean that the code being analyzed is now compliant with the guideline.</p><p>Noncompliant code examples are typically followed by compliant solutions, which show how the noncompliant code example can be recoded in a secure, compliant manner. Except where noted, noncompliant code examples should contain violations only of the guideline under discussion. Compliant solutions should comply with all of the secure coding rules but may on occasion fail to comply with a recommendation.</p><h2 id="coding-conventions">
+      <a href="#coding-conventions">Coding Conventions</a>
+    </h2><p>Unless otherwise specified, all code should compile on a reasonably modern compiler, when it is following compliance with the standard. For example, you can require GCC to conform to the C11 standard with the parameter <code>--std=c11</code> .</p><p>Code that is only expected to run on a particular subset of platforms should have those platforms mentioned in the code's section header, e.g.: <em>Compliant Solution (POSIX)</em> . Likewise, code that is only expected to run on more modern versions of C should indicate the oldest standard that supports them, e.g.: <em>Compliant Solution (C99)</em> .</p><p>In order to compile the code, you will need to include appropriate header files. For example, if the code invokes <code>malloc()</code> , you may need to include the <code>stdlib.h</code> header.</p><p>
+      Many coding examples must lead with some variables initialized to valid values. If any code example (compliant or non-compliant) requires a local variable to be initialized with an unspecified but valid value, then that code should be wrapped inside a function that takes the variable as a function argument. Consequently, unless otherwise noted, function arguments should be assumed to point to valid values. For example, character pointers should not be NULL, but rather point to valid null-terminated byte strings. &nbsp;Checking that function arguments are valid is important, and is described in detail in recommendation <a
+        href="/sei-cert-c-coding-standard/3-recommendations/rec.-13.-application-programming-interfaces-api/api00-c.-functions-should-validate-their-parameters"
+        class=""
+      >API00-C. Functions should validate their parameters</a> . However, the code involved with checking argument validity would be redundant across all code examples, and so function arguments in these code examples are not validated.
+    </p><p>Many code examples will contain ellipsis in comments. This indicates that the comment may be replaced by arbitrary code that satisfies the comment. A comment with only ellipsis suggests that the code may do anything.</p><p>
+      Proper error handling is a controversial subject, and many applications and libraries provide their own idiosyncratic error handling mechanisms. See <a
+        href="/sei-cert-c-coding-standard/2-rules/rule-12.-error-handling-err/"
+        class=""
+      >Rule 12. Error Handling (ERR)</a> and <a
+        href="/sei-cert-c-coding-standard/3-recommendations/rec.-12.-error-handling-err/"
+        class=""
+      >Rec. 12. Error Handling (ERR)</a> for our guidelines on handling errors. When our code detects that an error condition might have occurred, and handling that error condition is not endemic to the guideline itself, we will use the comment: <code>  /* Handle Error */ </code> . This comment implies that the error is somehow addressed, so that the code does not fall through. The code may abort, or fix the error somehow. For example:
+    </p><div class="border-blue-200 dark:border-blue-800 prose-pre:bg-opacity-0 dark:prose-pre:bg-opacity-0 prose-pre:border-none dark:prose-pre:border-none relative max-w-none border rounded-sm bg-white dark:bg-black">
+      <!----><div class="absolute right-2 top-2 flex gap-1">
+        <div
+          class="inline-block"
+          data-id="sds-tooltip"
+        >
+          <div class="inline-block w-full">
+            <div>
+              <div
+                class="mx-auto text-sm p-2 rounded-sm flex items-center mr-1 bg-blue-100 text-blue-700 dark:bg-blue-800 dark:text-blue-200"
+                title="Compliant code"
+              >
+                <!----><span
+                  class="iconify i-material-symbols:check-circle-outline w-4 h-4"
+                  aria-hidden="true"
+                  alt="Good quality icon"
+                /><span class="sr-only">Compliant code</span>
+              </div>
+            </div>
+          </div>
+        </div><!----><div
+          class="inline-block"
+          data-id="sds-tooltip"
+        >
+          <div class="inline-block w-full">
+            <div>
+              <button
+                data-id="sds-action-button"
+                type="button"
+                class="action-btn action-btn-ghost action-btn-gray action-btn-sm p-2"
+                aria-disabled="false"
+                title="Copy to clipboard"
+              >
+                <span
+                  class="iconify i-material-symbols:file-copy w-4 h-4"
+                  aria-hidden="true"
+                  alt="Copy code icon"
+                /><span class="sr-only">Copy to clipboard</span>
+              </button>
+            </div>
+          </div>
+        </div><div
+          class="inline-block"
+          data-id="sds-tooltip"
+        >
+          <div class="inline-block w-full">
+            <div>
+              <button
+                data-id="sds-action-button"
+                type="button"
+                class="action-btn action-btn-ghost action-btn-gray action-btn-sm p-2"
+                aria-disabled="false"
+                title="Toggle fullscreen"
+              >
+                <span
+                  class="iconify i-material-symbols:open-in-full w-4 h-4"
+                  aria-hidden="true"
+                  alt="Open fullscreen icon"
+                /><span class="sr-only">Toggle fullscreen</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div><div
+        data-id="content"
+        class="prose prose-blue dark:prose-invert"
+      >
+        <pre class="language-c shiki shiki-themes github-light github-dark monokai"><code><span
+          class="line"
+          line="1"
+        ><span class="sq6CD">char</span><span class="sC2Qs"> *</span><span class="sMOD_">str </span><span class="sC2Qs">=</span><span class="srTi1"> malloc</span><span class="sMOD_">(</span><span class="s7F3e">10</span><span class="sMOD_">);
+</span></span><span
+          class="line"
+          line="2"
+        ><span class="sC2Qs">if</span><span class="sMOD_"> (str </span><span class="sC2Qs">==</span><span class="s7F3e"> NULL</span><span class="sMOD_">) {
+</span></span><span
+          class="line"
+          line="3"
+        ><span class="s8-w5">  /* Handle Error */
+</span></span><span
+          class="line"
+          line="4"
+        ><span class="sMOD_">}
+</span></span><span
+          class="line"
+          line="5"
+        ><span emptylineplaceholder="true" /></span><span
+          class="line"
+          line="6"
+        ><span class="s8-w5">/* ... str can not be NULL here. Work with str... */
+</span></span></code></pre>
+      </div>
+    </div><h2 id="exceptions">
+      <a href="#exceptions">Exceptions</a>
+    </h2><p>Any rule or recommendation may specify a small set of exceptions detailing the circumstances under which the guideline is not necessary to ensure the safety, reliability, or security of software. Exceptions are informative only and are not required to be followed. Exceptions</p><h2 id="risk-assessment">
+      <a href="#risk-assessment">Risk Assessment</a>
+    </h2><p>Each guideline in the CERT C Coding Standard contains a risk assessment section that attempts to provide software developers with an indication of the potential consequences of not addressing a particular rule or recommendation in their code (along with some indication of expected remediation costs). This information may be used to prioritize the repair of rule violations by a development team. The metric is designed primarily for remediation projects. It is generally assumed that new code will be developed to be compliant with the entire coding standard and applicable recommendations.</p><p>
+      Each rule and recommendation has an assigned <em>priority</em> . Priorities are assigned using a metric based on Failure Mode, Effects, and Criticality Analysis (FMECA) [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-IEC608122006"
+        class=""
+      >IEC 60812</a> ]. Three values are assigned for each rule on a scale of 1 to 3 for severity, likelihood, and remediation cost.
+    </p><p><strong>Severity</strong> —How serious are the consequences of the rule being ignored?</p><table><thead><tr><th /><th /><th /></tr></thead><tbody><tr><td>Value</td><td>Meaning</td><td>Examples of Vulnerability</td></tr><tr><td>1</td><td>Low</td><td>Denial-of-service attack, abnormal termination</td></tr><tr><td>2</td><td>Medium</td><td>Data integrity violation, unintentional information disclosure</td></tr><tr><td>3</td><td>High</td><td>Run arbitrary code</td></tr></tbody></table><p>
+      <strong>Likelihood</strong> —How likely is it that a <a
+        href="/sei-cert-c-coding-standard/4-back-matter/bb.-definitions#BB.Definitions-securityflaw"
+        class=""
+      >flaw</a> introduced by violating the rule can lead to an exploitable vulnerability?
+    </p><table><thead><tr><th /><th /></tr></thead><tbody><tr><td>Value</td><td>Meaning</td></tr><tr><td>1</td><td>Unlikely</td></tr><tr><td>2</td><td>Probable</td></tr><tr><td>3</td><td>Likely</td></tr></tbody></table><p><strong>Remediation Cost</strong> —How expensive is it to comply with the rule?</p><table><thead><tr><th /><th /><th /><th /></tr></thead><tbody><tr><td>Value</td><td>Meaning</td><td>Detection</td><td>Correction</td></tr><tr><td>1</td><td>High</td><td>Manual</td><td>Manual</td></tr><tr><td>2</td><td>Medium</td><td>Automatic</td><td>Manual</td></tr><tr><td>3</td><td>Low</td><td>Automatic</td><td>Automatic</td></tr></tbody></table><p>The three values are then multiplied together for each rule. This product provides a measure that can be used in prioritizing the application of the rules. The products range from 1 to 27, although only the following 10 distinct values are possible: 1, 2, 3, 4, 6, 8, 9, 12, 18, and 27. Rules and recommendations with a priority in the range of 1 to 4 are <strong>Level 3</strong> rules, 6 to 9 are <strong>Level 2</strong> , and 12 to 27 are <strong>Level 1</strong> . The following are possible interpretations of the priorities and levels.</p><p><strong>Priorities</strong> and <strong>Levels</strong></p><table><thead><tr><th /><th /><th /></tr></thead><tbody><tr><td>Level</td><td>Priorities</td><td>Possible Interpretation</td></tr><tr><td><strong>L1</strong></td><td><strong>12</strong> , <strong>18</strong> , <strong>27</strong></td><td>High severity, likely, inexpensive to repair</td></tr><tr><td><strong>L2</strong></td><td><strong>6</strong> , <strong>8</strong> , <strong>9</strong></td><td>Medium severity, probable, medium cost to repair</td></tr><tr><td><strong>L3</strong></td><td><strong>1</strong> , <strong>2</strong> , <strong>3</strong> , <strong>4</strong></td><td>Low severity, unlikely, expensive to repair</td></tr></tbody></table><p>Specific projects may begin remediation by implementing all rules at a particular level before proceeding to the lower priority rules, as shown in the following illustration:</p><p /><p>Recommendations are not compulsory and are provided for information purposes only.</p><h2 id="automated-detection">
+      <a href="#automated-detection">Automated Detection</a>
+    </h2><p>
+      Both rules and recommendations frequently have sections that describe automated detection. These sections provide additional information on analyzers that can automatically diagnose violations of coding guidelines. Most automated analyses for the C programming language are neither sound nor complete, so the inclusion of a tool in this section typically means that the tool can diagnose some violations of this particular rule. The <a
+        href="https://github.com/SEI-CERT/scvs"
+        rel="nofollow"
+      >Secure Coding Validation Suite</a> can be used to test the ability of analyzers to diagnose violations of rules from <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IECTS17961-2013"
+        class=""
+      >ISO/IEC TS 17961:2013</a> , which is related to the rules in this standard.
+    </p><p>The information in the automated detection sections on this wiki may be</p><ul><li>provided by the vendors</li><li>determined by CERT by informally evaluating the analyzer</li><li>determined by CERT by reviewing the vendor documentation</li></ul><p>Where possible, we try to reference the exact version of the tool for which the results were obtained. Because these tools evolve continuously, this information can rapidly become dated and obsolete.</p><h2 id="related-vulnerabilities">
+      <a href="#related-vulnerabilities">Related Vulnerabilities</a>
+    </h2><p>
+      The risk assessment sections on the wiki also contain a link to search for related vulnerabilities on the CERT website. Whenever possible, CERT Vulnerability Notes are tagged with a keyword corresponding to the unique ID of the coding guideline. This search provides you with an up-to-date list of real-world vulnerabilities that have been determined to be at least partially caused by a violation of this specific guideline. These vulnerabilities are labeled as such only when the <a
+        href="http://www.cert.org/vuls/"
+        rel="nofollow"
+      >vulnerability analysis team</a> at the CERT/CC is able to evaluate the source code and precisely determine the cause of the vulnerability. Because many vulnerability notes refer to vulnerabilities in closed-source software systems, it is not always possible to provide this additional analysis. Consequently, the related vulnerabilities field tends to be somewhat sparsely populated.
+    </p><p>Related vulnerability sections are included only for specific rules in this standard, when the information is both relevant and interesting.</p><h2 id="related-guidelines">
+      <a href="#related-guidelines">Related Guidelines</a>
+    </h2><p>For each entry in a Related Guidelines table, CERT has determined that there is some code flaw for which there is both a violation of some condition of the CERT guideline and a condition of the external-to-CERT guideline, where that condition is violated or that condition is described as a flaw.</p><p><strong>Related Guidelines Table headings <u>definitions</u></strong></p><ul>
+      <li>
+        <strong>Taxonomy</strong> : A named set of coding rules, weaknesses, standards, or guidelines such as <em>Information Technology—Programming Languages, Their Environments and System Software Interfaces—C Secure Coding Rules</em> [ <a
+          href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IECTS17961-2013"
+          class=""
+        ><u>ISO/IEC TS 17961:2013</u></a> ]; <em>Information Technology—Programming Languages</em> <em>—Guidance to Avoiding Vulnerabilities in Programming Languages through Language Selection and Use</em> [ <a
+          href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IECTR24772-2013"
+          class=""
+        ><u>ISO/IEC TR 24772:2013</u></a> ]; <em>MISRA C 2012: Guidelines for the Use of the C Language in Critical Systems</em> [ <a
+          href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-MISRA12"
+          class=""
+        ><u>MISRA C:2012</u></a> ]; and CWE IDs in MITRE’s Common Weakness Enumeration (CWE) [ <a
+          href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-MITRE"
+          class=""
+        ><u>MITRE 2010</u></a> ].
+      </li>
+    </ul><ul><li><strong>Taxonomy item</strong> : A single named (and/or numbered) item in a taxonomy</li></ul><ul><li><strong>Relationship:</strong> For each entry in a Related Guidelines table, CERT has determined that there is some code flaw for which there is both a violation of some condition of the CERT guideline and a condition of the external-to-CERT guideline, where that condition is violated or that condition is described as a flaw.</li></ul><p>
+      These relationships may be defined in a precise or imprecise way. For <a
+        href="https://cwe.mitre.org/"
+        rel="nofollow"
+      ><u>Common Weakness Enumeration (CWE)</u></a> , CERT has made precise mappings between CERT C rules and CWEs, as described below. For other taxonomies of coding flaws or secure coding (such as <a
+        href="https://www.misra.org.uk/"
+        rel="nofollow"
+      ><u>MISRA</u></a> or <a
+        href="https://www.iso.org/standard/61457.html"
+        rel="nofollow"
+      ><u>ISO/IEC TR 24772:2013</u></a> ), so far, CERT has made only imprecise (“Unspecified Relationship”) mappings. An “Unspecified Relationship” label indicates there is some overlapping code flaw condition, but the extent is unspecified.
+    </p><p>If the mapping was made using an automated process developed by CERT, and not yet verified manually, the mapping is marked at the end with “(A)”.</p><p>Precise relationships explain more about the extent to which conditions of the CERT guideline and external guideline match.</p><p>In the simplest case, the guidelines are exactly equal (the relationship is labelled “Exact”). CERT's “partial mapping” terms {“Partial overlap”, “Guideline subset of &lt;EXTERNAL_GUIDELINE&gt;”, “&lt;EXTERNAL_ GUIDELINE &gt; subset of rule”} describe relationships between the guideline items using the language of sets, where the guideline item (a CERT guideline or an &lt;EXTERNAL_ GUIDELINE&gt; entry) is a set that holds one or more conditions. By subset we mean a proper subset, that “A ⊂ B” &nbsp;means every element (meaning, every condition) in A is also in B, but there exists at least one element in B that is not in A. If a condition of a program violates a CERT rule “R” and also exhibits an &lt;EXTERNAL_ GUIDELINE&gt; “E”, that condition is in the overlap between “R” and “E”.</p><p>For each CWE that has a partial mapping to a CERT rule, we have documented the nature of what the rule and CWE have in common, what is exclusive to the rule, and what is exclusive to the CWE, in a section titled “CERT-CWE Mapping Notes”.</p><p>
+      The 10 main precise relationship labels CERT uses are mostly the same as the 10 <a
+        href="https://cwe.mitre.org/documents/mapping_analysis/index.html"
+        rel="nofollow"
+      ><u>CWE Mapping Fit relationship labels</u></a> , with 3 different labels.
+    </p><table><thead><tr><th /><th /></tr></thead><tbody><tr><td><strong><u>Different but related terms:</u></strong></td><td /></tr><tr><td><strong><u>CERT term</u></strong></td><td><strong><u>MITRE term</u></strong></td></tr><tr><td>Rule subset of CWE</td><td>CWE_More_Abstract</td></tr><tr><td>CWE subset of rule</td><td>CWE_More_Specific</td></tr><tr><td>Partial overlap</td><td>Imprecise</td></tr></tbody></table><p>An 11th label "None" is specified in cases where previous mappings existed but it has been determined&nbsp; that there is no overlap of conditions.</p><p><strong>Table column <u>formats:</u></strong></p><ul><li><strong>Taxonomy</strong> : Taxonomy name (e.g., “CWE”) followed by version name that was mapped, if that is known (e.g., “CWE 2.11”, “CERT 2016”, or “MISRA”)</li><li><strong>Taxonomy item:</strong> A single named (and/or numbered) item in a taxonomy, sometimes with the full title text of the item and sometimes with a hyperlink to the item.</li></ul><ul><li><strong>Relationship:</strong> A combined entry with fields for date mapped, organization that did the mapping, and relationship (all in same cell for one mapping, separated by a colon, with one entry per line): &lt;(Optional “Prior to ”)YYYY-MM-DD: ORGANIZATION: RELATIONSHIP(Optional “(A)”)&gt;. &nbsp;Where specified by mapping day, precise mappings done by CERT use the latest published edition of a non-CERT taxonomy along with the latest published edition of the CERT standard plus changes on the CERT wiki. Precise mappings done by an external organization use the latest published edition of the CERT standard and their own latest published edition. Examples below:</li></ul><ul><li><ul><li>Example entries below, in the same cell on different lines: <code>     2017-10-31: CERT: CERT Subset of CWE    </code> <code>     2017-05-04: CWE: Exact    </code></li></ul></li></ul><ul><li><ul><li>Example entry for a different mapping, where the exact mapping date is unknown but is known to be before October 03, 2017:<br><code>      Prior to 2017-10-03: CERT: Unspecified Relationship     </code></li><li>Example entry for a different mapping that was made using an automated process and not yet manually verified:<br><code>      Prior to 2017-09-05: CERT: Unspecified Relationship (A)     </code></li></ul></li></ul><p>
+      The related guidelines sections contain links to guidelines in related standards, technical specifications, and guideline collections such as <em>Information Technology—Programming Languages, Their Environments and System Software Interfaces—C Secure Coding Rules</em> [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IECTS17961-2013"
+        class=""
+      ><u>ISO/IEC TS 17961:2013</u></a> ]; <em>Information Technology—Programming Languages</em> <em>—Guidance to Avoiding Vulnerabilities in Programming Languages through Language Selection and Use</em> [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-ISO/IECTR24772-2013"
+        class=""
+      ><u>ISO/IEC TR 24772:2013</u></a> ]; <em>MISRA C 2012: Guidelines for the Use of the C Language in Critical Systems</em> [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-MISRA12"
+        class=""
+      ><u>MISRA C:2012</u></a> ]; and CWE IDs in MITRE’s Common Weakness Enumeration (CWE) [ <a
+        href="/sei-cert-c-coding-standard/4-back-matter/aa.-bibliography#AA.Bibliography-MITRE"
+        class=""
+      ><u>MITRE 2010</u></a> ].
+    </p><p>
+      You can create a unique URL to get more information on CWEs by appending the relevant ID to the end of a fixed string. For example, to find more information about CWE-192, Integer Coercion Error,” you can append 192.html to <a
+        href="http://cwe.mitre.org/data/definitions/"
+        rel="nofollow"
+      ><u>http://cwe.mitre.org/data/definitions/</u></a> and enter the resulting URL in your browser: <a
+        href="http://cwe.mitre.org/data/definitions/192.html"
+        rel="nofollow"
+      ><u>http://cwe.mitre.org/data/definitions/192.html</u></a> .
+    </p><p>The other referenced technical specifications, technical reports, and guidelines are commercially available.</p><h2 id="cert-cwe-mapping-notes">
+      <a href="#cert-cwe-mapping-notes">CERT-CWE Mapping Notes</a>
+    </h2><p>CERT's “partial mapping” terms {Partial overlap, Rule subset of CWE, CWE subset of rule} describe relationships between the taxonomy items using the language of sets, where the taxonomy item (a CERT rule or a CWE weakness) is a set that holds one or more conditions. If a condition of a program violates a CERT rule “R” and also exhibits a CWE weakness “W”, that condition is in the overlap between the rule and weakness.</p><p>For each CWE that has a partial mapping to a CERT rule, in this section we document the nature of what the rule and CWE have in common, what is exclusive to the rule, and what is exclusive to the CWE. Sometimes what is exclusive or shared is simply described by set equations using taxonomy items, but other times documentation of what is shared may include function names or data types, or some prose description of shared characteristics.</p><p><strong>Notation: “Intersection(A, B) =”</strong> the right side of the equals sign defines if there is an overlap between A and B, meaning if a condition of a program exists with an overlapping area between A and B.</p><p><strong>Notation:&nbsp; “A</strong> <strong>⊂ B”</strong> means every element in A is also in B, but there exists at least one element in B that is not in A. (It means A is a “proper subset” of B.)</p><p><strong>Notation:&nbsp; “A</strong> <strong>⊄ B”</strong> means A is not a proper subset of B.</p><p><strong>Notation:&nbsp; “Intersection(A, B)</strong> <strong>= ∅”</strong> means no element in A is also in B. (It means the intersection is the empty set.)</p><p><strong>Notation:&nbsp; “A - B =”</strong> the right side of the equals sign defines what element(s), if any, exist in A that are not also in B.</p><p>No CERT C rule or recommendation is identical to any other CERT C rule or recommendation.</p><p>In this section, Independent() means all the rules listed within are independent: that is, every pair of two rules listed they have an empty intersection. Most CERT rules are designed to be independent, that is, they have no overlap. (This applies only to rules, not recommendations).</p><p>For CWE that have been identified as having at least a partial overlap with another CERT rule R <sub>1</sub> , for current mapping to CERT rule R <sub>2</sub> : In the Mapping Notes section we consider C’s possible overlap or exclusion of the CWE overlap area with R <sub>1</sub> . <strong>We also consider the relationship of R <sub>1</sub> and R <sub>2</sub> , if any.</strong> (By defining the relationship between the CERT rules that separately have at least some overlap with the CWE of interest, the mapping notes further define the conditions of overlap and/or non-overlap between the primary CWE-to-CERT-rule mapping of interest.)</p><p>Regarding partial overlap, we try to find segments of code as examples that are inseparable and exhibit both code flaws. An example of separable code:</p><p>The following line violates rules about integer overflow and floating-point overflow, but that does not mean that the rules about integer overflow and fp-overflow overlap:</p><p><code>  INT_MAX + 1 ; FLT_MAX + 1.0; </code></p><p><code>  static char x[3]; </code></p><p><code>  char* foo() { </code></p><p><code>  int x_int = (int) x; // x_int = 999 eg </code></p><p><code>  return x_int + 5; // returns 1004 , violates CWE 466 </code></p><p><code>  } </code></p><p><code>  ... </code></p><p><code>  int y_int = foo(); // violates CWE-466 </code></p><p><code>  char* y = (char*) y_int; //&nbsp; // well-defined but y may be invalid, violates INT36-C </code></p><p><code>  char c = *y; // indeterminate value, out-of-bounds read, violates CWE-119 </code></p><h2 id="bibliography">
+      <a href="#bibliography">Bibliography</a>
+    </h2><p>Most guidelines have a small bibliography section that lists documents and sections in those documents that provide information relevant to the guideline.</p><h2 id="attachments">
+      <a href="#attachments">Attachments:</a>
+    </h2>
   </div>
 </template>
