@@ -181,12 +181,12 @@ describe('Callout', () => {
         timestamp: new Date('December 4, 2012 03:20:00')
       },
       slots: {
-        default: '<a>This is a description</a>'
+        default: '<a href="https://sei.cmu.edu">This is a description</a>'
       }
     })
-    const linkContainer = wrapper.find('div[class*="[&_a:not([class*=\'no-underline\'])]:underline"]')
+    const linkContainer = wrapper.find('div.opacity-90 > div')
     expect(linkContainer.exists()).toBe(true)
-    expect(linkContainer.classes()).toContain('[&_a:not([class*=\'no-underline\'])]:underline')
+    expect(linkContainer.attributes('class')).toContain('[&_a:not([class*=\'no-underline\'])]:underline')
   })
 
   it('should have icon in leftSlot', () => {
