@@ -62,7 +62,6 @@
     </template>
     <template #default>
       <div class="flex flex-col">
-        <!-- First group: Original options (what to sort by) -->
         <div class="px-2 pt-4 pb-2">
           <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2">
             Sort by
@@ -97,7 +96,6 @@
             </li>
           </ul>
         </div>
-        <!-- Second group: Direction filters (how to sort) based on selected option -->
         <div
           v-if="orderBy"
           class="border-t border-gray-100 dark:border-gray-700 px-2 pt-4 pb-2"
@@ -267,12 +265,6 @@ const model = defineModel<SortByDropdownModel | null>({
   default: null
 })
 
-const emit = defineEmits<{
-  'update:modelValue': [value: SortByDropdownModel | null]
-  'sortByChange': [value: SortByDropdownModel | null]
-  'orderByChange': [value: SortByDropdownModel | null]
-}>()
-
 const id = useId()
 const button = ref<HTMLButtonElement | undefined>()
 
@@ -309,38 +301,28 @@ const localModelValue = computed({
     return selectedOption.value?.value || null
   },
   set(value: RadioGroupOptionValue) {
-    // Set flag to indicate this is an internal update
     isInternalUpdate.value = true
     
-    // Find the option that matches this value
+    // Find and set the selected option based on the new value
     selectedOption.value = props.options.find(opt => opt.value === value) || null
     // Default direction to ascending when changing the main option
     selectedDirection.value = selectedOption.value && selectedOption.value.type 
       ? `${selectedOption.value.type}:ascending` 
       : null
     
-    // Emit sortByChange with the complete object when the sort by option changes
     if (selectedOption.value) {
-      const newValue = {
+      model.value = {
         sortBy: selectedOption.value.value,
         orderBy: selectedDirection.value
       }
-      emit('sortByChange', newValue)
-      
-      // Update the model value
-      model.value = newValue
     }
     
-    // Reset the flag after a tick to allow other operations
     nextTick(() => {
       isInternalUpdate.value = false
     })
   }
 })
 
-/**
- * Computes the current order by filter based on the selected option.
- */
 const orderBy = computed(() => selectedOption.value)
 
 /**
@@ -349,13 +331,9 @@ const orderBy = computed(() => selectedOption.value)
  * with appropriate labels based on the selected sort type.
  */
 const directionFilters = computed(() => {
-  // Return empty array if no option is selected
   if (!orderBy.value) return []
-  
-  // Return empty array if the option has no type property
   if (!orderBy.value.type) return []
   
-  // Array to hold the generated filter options
   const filters: Array<{ 
     id: `${SortByDropdownOption['id']}`;
     label: SortByDropdownOption['label'];
@@ -363,26 +341,26 @@ const directionFilters = computed(() => {
     direction: OrderByDirection;
   }> = []
   
-  // Convert the selected option type to uppercase for ORDER_BY_TYPES lookup
+  // Get the type key in uppercase to match ORDER_BY_TYPES keys
   const typeKey = orderBy.value.type.toUpperCase() as keyof typeof ORDER_BY_TYPES
   
-  // Generate direction options if the type exists in our configuration
   if (ORDER_BY_TYPES[typeKey]) {
     const directions = ORDER_BY_TYPES[typeKey]
     
     // Create a filter option for each direction/type (ascending/descending)
     Object.entries(directions).forEach(
       ([directionKey, directionLabel]: [string, string | ((value: string) => string)]) => {
-        // Construct the direction/type value in the format "type:direction"
-        const type = `${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType
-        
+        // Construct the type/direction value in the format "type:direction"
+        const type = (`${typeKey.toLowerCase()}:${directionKey.toLowerCase()}` as SortByDropdownType)
         // Create unique ID for the radio input
         const filterId = `${id}__${orderBy.value?.type}__${type}`
         
         let label: string
-        // Handle dynamic labels for custom sort types
         if (typeof directionLabel === 'function') {
-          // For custom types, pass the selected option's customAttribute prop if available, otherwise use the label to generate contextual text
+          /**
+           * For custom types, pass the selected option's customAttribute prop to a function if available 
+           * for dynamically, generated labels, otherwise use the label to get the context
+           */
           const customValue = (orderBy.value?.customAttribute || orderBy.value?.label || '').toString().toLowerCase()
           label = directionLabel(customValue)
         } else {
@@ -390,7 +368,6 @@ const directionFilters = computed(() => {
           label = directionLabel
         }
         
-        // Add the filter option to the array
         filters.push({
           id: filterId,
           label,
@@ -404,33 +381,14 @@ const directionFilters = computed(() => {
   return filters
 })
 
-// Watch for direction changes and emit the complete object
-watch(selectedDirection, (newDirection) => {
-  // Only emit if this is not an internal update and we have a valid state
-  if (!isInternalUpdate.value && newDirection !== null && selectedOption.value) {
-    // Set flag to prevent model watcher from emitting
-    isInternalUpdate.value = true
-    
-    const newValue = {
+// Watch for direction changes and update the model
+watch(selectedDirection, (newDirection, oldDirection) => {
+  // Only update if this is not an internal update, direction actually changed, and we have a valid state
+  if (!isInternalUpdate.value && newDirection !== oldDirection && newDirection !== null && selectedOption.value) {
+    model.value = {
       sortBy: selectedOption.value.value,
       orderBy: newDirection
     }
-    emit('orderByChange', newValue)
-    
-    // Update the model value
-    model.value = newValue
-    
-    // Reset flag after the update
-    nextTick(() => {
-      isInternalUpdate.value = false
-    })
-  }
-})
-
-// Emit model update when model changes (but prevent duplicate emissions)
-watch(model, (newValue) => {
-  if (!isInternalUpdate.value && newValue) {
-    emit('update:modelValue', newValue)
   }
 })
 
@@ -447,29 +405,23 @@ onMounted(() => {
   isInternalUpdate.value = true
   
   if (model.value !== null) {
-    // Model value was explicitly provided (even if properties are null)
     if (model.value.sortBy && model.value.orderBy) {
-      // If there's a valid model value, extract sortBy and orderBy
       selectedOption.value = props.options.find(opt => opt.value === model.value?.sortBy) || null
       selectedDirection.value = model.value.orderBy
     } else {
-      // Model value explicitly set but with null properties - don't auto-select
       selectedOption.value = null
       selectedDirection.value = null
     }
   } else if (props.options.length > 0) {
-    // No model value provided - select first option by default
     selectedOption.value = props.options[0]
     selectedDirection.value = `${selectedOption.value.type}:ascending`
     
-    // Set the initial model value
     model.value = {
       sortBy: selectedOption.value.value,
       orderBy: selectedDirection.value
     }
   }
   
-  // Reset the internal update flag
   nextTick(() => {
     isInternalUpdate.value = false
   })

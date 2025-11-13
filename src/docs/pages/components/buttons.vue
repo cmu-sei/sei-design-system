@@ -1748,8 +1748,6 @@
           v-model="sortBy.value"
           :options="sortBy.options"
           @update:model-value="(value) => console.log('Model updated:', value)"
-          @sort-by-change="(value) => console.log('Sort by changed:', value)"
-          @order-by-change="(value) => console.log('Order by changed:', value)"
         />
       </div>
     </div>

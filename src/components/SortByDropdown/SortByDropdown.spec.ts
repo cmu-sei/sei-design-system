@@ -525,13 +525,13 @@ describe('SortByDropdown.vue', () => {
   // User Interactions - Sort By Selection
   // ============================================================================
   describe('User Interactions - Sort By Selection', () => {
-    it('should select option and emit sortByChange event when user clicks a sort by option', async () => {
-      // Arrange & Act - Component emits sortByChange when user selects an option
+    it('should select option and emit update:modelValue event when user clicks a sort by option', async () => {
+      // Arrange & Act - Component emits update:modelValue when user selects an option
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component is set up to emit sortByChange events
-      // The component's localModelValue computed setter emits sortByChange
+      // Assert - Component is set up to emit update:modelValue events
+      // The component's localModelValue computed setter updates model which emits via defineModel
       expect(wrapper.exists()).toBe(true)
       expect(wrapper.props('options').length).toBeGreaterThan(0)
     })
@@ -572,12 +572,12 @@ describe('SortByDropdown.vue', () => {
       expect(wrapper.exists()).toBe(true)
     })
 
-    it('should emit sortByChange with complete object (sortBy + orderBy)', async () => {
+    it('should emit update:modelValue with complete object (sortBy + orderBy) when sortBy changes', async () => {
       // Arrange & Act - Component emits complete object with both sortBy and orderBy
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component's emit includes both sortBy and orderBy in the payload
+      // Assert - Component's defineModel emits update:modelValue with both sortBy and orderBy in the payload
       expect(wrapper.exists()).toBe(true)
     })
 
@@ -604,21 +604,21 @@ describe('SortByDropdown.vue', () => {
   // User Interactions - Order By Selection
   // ============================================================================
   describe('User Interactions - Order By Selection', () => {
-    it('should select ascending and emit orderByChange event when user clicks ascending direction', async () => {
-      // Arrange & Act - Component emits orderByChange when direction changes
+    it('should select ascending and emit update:modelValue event when user clicks ascending direction', async () => {
+      // Arrange & Act - Component emits update:modelValue when direction changes
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component has selectedDirection watcher that emits orderByChange
+      // Assert - Component has selectedDirection watcher that updates model which emits via defineModel
       expect(wrapper.exists()).toBe(true)
     })
 
-    it('should change to descending and emit orderByChange event when user clicks descending direction', async () => {
-      // Arrange & Act - Component emits orderByChange for direction changes
+    it('should change to descending and emit update:modelValue event when user clicks descending direction', async () => {
+      // Arrange & Act - Component emits update:modelValue for direction changes
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component watches selectedDirection and emits events
+      // Assert - Component watches selectedDirection and updates model which emits via defineModel
       expect(wrapper.exists()).toBe(true)
     })
 
@@ -640,12 +640,12 @@ describe('SortByDropdown.vue', () => {
       expect(wrapper.exists()).toBe(true)
     })
 
-    it('should emit orderByChange with complete object (sortBy + orderBy)', async () => {
-      // Arrange & Act - Component emits complete object for orderByChange
+    it('should emit update:modelValue with complete object (sortBy + orderBy) when orderBy changes', async () => {
+      // Arrange & Act - Component emits complete object via update:modelValue
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component's orderByChange emission includes sortBy and orderBy
+      // Assert - Component's defineModel emission includes sortBy and orderBy
       expect(wrapper.exists()).toBe(true)
     })
 
@@ -654,7 +654,7 @@ describe('SortByDropdown.vue', () => {
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component's model watcher emits update:modelValue
+      // Assert - Component's defineModel emits update:modelValue
       expect(wrapper.exists()).toBe(true)
     })
 
@@ -763,12 +763,12 @@ describe('SortByDropdown.vue', () => {
       expect(wrapper.props('modelValue')).toBeNull()
     })
 
-    it('should emit events in correct order when both sortBy and orderBy change in sequence', async () => {
-      // Arrange & Act - Component emits sortByChange then orderByChange
+    it('should emit update:modelValue when both sortBy and orderBy change in sequence', async () => {
+      // Arrange & Act - Component emits update:modelValue for each change
       const wrapper = createWrapper()
       await nextTick()
 
-      // Assert - Component's event emission order is defined by watchers
+      // Assert - Component's event emission happens via defineModel for each change
       expect(wrapper.exists()).toBe(true)
     })
   })
