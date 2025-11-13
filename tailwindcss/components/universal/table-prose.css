@@ -1,18 +1,24 @@
 @layer components {
   :where(.table-prose) {
-    @apply w-full table-auto text-left;
+    @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-hidden sds-theme-plaid:rounded-none;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  :where(.dark .table-prose) {
+    @apply border border-gray-750;
   }
 
   :where(.table-prose thead) {
-    @apply border-y border-gray-100;
+    @apply border-y border-gray-100 rounded-lg sds-theme-plaid:rounded-none;
   }
 
   :where(.dark .table-prose thead) {
-    @apply border-gray-700;
+    @apply border-gray-950;
   }
   
   :where(.table-prose thead th) {
-    @apply text-gray-600 bg-gray-50 font-bold text-sm align-middle p-2 relative select-none;
+    @apply text-gray-600 bg-gray-25/50 font-semibold text-sm align-middle p-2 relative select-none;
   }
 
   :where(.dark .table-prose thead th) {
@@ -20,7 +26,7 @@
   }
   
   :where(.table-prose tbody tr) {
-    @apply bg-white border-b border-gray-100;
+    @apply bg-white border-b border-gray-100 px-2;
   }
 
   :where(.table-prose tbody tr:last-child) {
@@ -44,15 +50,15 @@
 /* sm */
 
 @utility table-prose-sm {
-  & thead th, & tbody td {
-    @apply p-1;
+  & tbody td {
+    @apply py-1;
   }
 }
 
 /* lg */
 
 @utility table-prose-lg {
-  & thead th, & tbody td {
-    @apply p-4;
+  & tbody td {
+    @apply py-4;
   }
 }
