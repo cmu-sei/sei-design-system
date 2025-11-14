@@ -183,7 +183,7 @@ export interface SortByDropdownModel {
  * A mapping of order by types and their corresponding direction labels.
  * Used to generate appropriate labels for sorting directions based on the selected sort type.
  */
-const ORDER_BY_TYPES = Object.freeze({
+const ORDER_BY_TYPES = readonly(ref({
   'ALPHA': {
     'ASCENDING': 'A-Z',
     'DESCENDING': 'Z-A'
@@ -204,7 +204,7 @@ const ORDER_BY_TYPES = Object.freeze({
       return value ? `Least ${value} first` : 'Least first'
     }
   }
-} as const)
+}))
 
 defineOptions({
   name: "SdsSortByDropdown"
@@ -304,8 +304,8 @@ const localModelValue = computed({
     isInternalUpdate.value = true
     
     // Find and set the selected option based on the new value
-    selectedOption.value = props.options.find(opt => opt.value === value) || null
-    // Default direction to ascending when changing the main option
+    selectedOption.value = props.options.find((opt) => opt.value === value) ?? null
+    // Set default direction to "ascending" when changing the main option
     selectedDirection.value = selectedOption.value && selectedOption.value.type 
       ? `${selectedOption.value.type}:ascending` 
       : null
@@ -323,6 +323,9 @@ const localModelValue = computed({
   }
 })
 
+/**
+ * Computes the currently selected sort option.
+ */
 const orderBy = computed(() => selectedOption.value)
 
 /**
@@ -331,9 +334,9 @@ const orderBy = computed(() => selectedOption.value)
  * with appropriate labels based on the selected sort type.
  */
 const directionFilters = computed(() => {
-  if (!orderBy.value) return []
-  if (!orderBy.value.type) return []
+  if (!orderBy.value || !orderBy.value.type) return []
   
+  // Order by filter options to be returned
   const filters: Array<{ 
     id: `${SortByDropdownOption['id']}`;
     label: SortByDropdownOption['label'];
@@ -342,10 +345,10 @@ const directionFilters = computed(() => {
   }> = []
   
   // Get the type key in uppercase to match ORDER_BY_TYPES keys
-  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof ORDER_BY_TYPES
+  const typeKey = orderBy.value.type.toUpperCase() as keyof typeof ORDER_BY_TYPES.value
   
-  if (ORDER_BY_TYPES[typeKey]) {
-    const directions = ORDER_BY_TYPES[typeKey]
+  if (ORDER_BY_TYPES.value[typeKey]) {
+    const directions = ORDER_BY_TYPES.value[typeKey]
     
     // Create a filter option for each direction/type (ascending/descending)
     Object.entries(directions).forEach(
@@ -383,7 +386,7 @@ const directionFilters = computed(() => {
 
 // Watch for direction changes and update the model
 watch(selectedDirection, (newDirection, oldDirection) => {
-  // Only update if this is not an internal update, direction actually changed, and we have a valid state
+  // Only update if this is not an internal update, a direction actually changed, and we have a valid state
   if (!isInternalUpdate.value && newDirection !== oldDirection && newDirection !== null && selectedOption.value) {
     model.value = {
       sortBy: selectedOption.value.value,
