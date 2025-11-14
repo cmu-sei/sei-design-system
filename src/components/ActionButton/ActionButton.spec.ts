@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Component from './ActionButton.vue'
 
@@ -209,9 +209,20 @@ describe('ActionButton', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it.skip('emits on click event', async () => {
-    const wrapper = mount(Component, {})
+  it('emits click event when button is clicked', async () => {
+    // Mount the component as a button with an onClick spy
+    const onClickSpy = vi.fn()
+    const wrapper = mount(Component, {
+      slots: {
+        default: 'Click Me'
+      },
+      attrs: {
+        onClick: onClickSpy
+      }
+    })
+
+    // Trigger a click event on the button element and make sure it was called once
     await wrapper.trigger('click')
-    expect(wrapper.emitted()).toHaveProperty('click')
+    expect(onClickSpy).toHaveBeenCalledOnce()
   })
 })
