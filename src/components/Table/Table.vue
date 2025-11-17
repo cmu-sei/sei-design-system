@@ -28,7 +28,7 @@
         </slot>
       </template>
     </colgroup>
-    <thead class="border-t dark:border-gray-700">
+    <thead>
       <tr>
         <th 
           v-if="hasDrawers"
@@ -107,29 +107,35 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     aria-hidden="true"
                     role="img"
-                    class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2"
+                    class="inline-block text-gray-900 dark:text-gray-100 -mt-2"
+                    fill="none"
+                    :height="sortField !== f.key ? '15' : '15'"
+                    :width="sortField !== f.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === f.key,
-                      'opacity-0 -mb-1 group-hover:opacity-50': sortField !== f.key,
-                      '-mb-3': sortField === f.key && sortOrder > 0,
-                      '-mt-2': sortField === f.key && sortOrder < 0,
+                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== f.key,
+                      '-mb-1 ml-2': sortField === f.key && sortOrder > 0 || sortField === f.key && sortOrder < 0,
                     }"
                     preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 320 512"
+                    :viewBox="sortField !== f.key ? '0 0 15 15' : '0 0 11 15'"
                   >
-                    <path
-                      v-if="sortField !== f.key"
-                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                    <!-- Both arrows -->
+                    <path 
+                      v-if="sortField !== f.key" 
+                      d="M4.20703 0.328125L6.83203 2.95312C7.16016 3.30859 7.16016 3.85547 6.83203 4.21094C6.47656 4.53906 5.92969 4.53906 5.57422 4.21094L4.45312 3.0625V13.207C4.45312 13.6992 4.07031 14.082 3.57812 14.082C3.08594 14.082 2.70312 13.6992 2.70312 13.207V3.0625L1.58203 4.21094C1.22656 4.53906 0.679688 4.53906 0.324219 4.21094C-0.00390625 3.85547 -0.00390625 3.30859 0.324219 2.95312L2.94922 0.328125C3.30469 0 3.85156 0 4.20703 0.328125ZM13.832 11.2109L11.207 13.8359C10.8516 14.1641 10.3047 14.1641 9.94922 13.8359L7.32422 11.2109C6.99609 10.8555 6.99609 10.3086 7.32422 9.95312C7.67969 9.625 8.22656 9.625 8.58203 9.95312L9.70312 11.1016V0.957031C9.70312 0.464844 10.0859 0.0820312 10.5781 0.0820312C11.0703 0.0820312 11.4531 0.464844 11.4531 0.957031V11.1016L12.5742 9.95312C12.9297 9.625 13.4766 9.625 13.832 9.95312C14.1602 10.3086 14.1602 10.8555 13.832 11.2109Z" 
                       fill="currentColor"
                     />
-                    <path
-                      v-if="sortField === f.key && sortOrder > 0"
-                      d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+
+                    <!-- Up arrow -->
+                    <path 
+                      v-if="sortField === f.key && sortOrder > 0" 
+                      d="M6.12891 0.328125L10.5039 4.70312C10.832 5.05859 10.832 5.60547 10.5039 5.96094C10.1484 6.28906 9.60156 6.28906 9.24609 5.96094L6.375 3.0625V13.207C6.375 13.6992 5.99219 14.082 5.5 14.082C5.00781 14.082 4.625 13.6992 4.625 13.207V3.0625L1.75391 5.96094C1.39844 6.28906 0.851562 6.28906 0.496094 5.96094C0.167969 5.60547 0.167969 5.05859 0.496094 4.70312L4.87109 0.328125C5.22656 0 5.77344 0 6.12891 0.328125Z" 
                       fill="currentColor"
                     />
-                    <path
+                    <!-- Down arrow -->
+                    <path 
                       v-if="sortField === f.key && sortOrder < 0"
-                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+                      d="M4.69922 13.7539L0.324219 9.37891C-0.00390625 9.02344 -0.00390625 8.47656 0.324219 8.12109C0.679688 7.79297 1.22656 7.79297 1.58203 8.12109L4.45312 11.0195V0.875C4.45312 0.382812 4.83594 0 5.32812 0C5.82031 0 6.20312 0.382812 6.20312 0.875V11.0195L9.07422 8.12109C9.42969 7.79297 9.97656 7.79297 10.332 8.12109C10.6602 8.47656 10.6602 9.02344 10.332 9.37891L5.95703 13.7539C5.60156 14.082 5.05469 14.082 4.69922 13.7539Z" 
                       fill="currentColor"
                     />
                   </svg>
@@ -172,29 +178,35 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     aria-hidden="true"
                     role="img"
-                    class="inline-block w-4 h-4 text-gray-900 dark:text-gray-100 -mt-2"
+                    class="inline-block text-gray-900 dark:text-gray-100 -mt-2"
+                    fill="none"
+                    :height="sortField !== field.key ? '15' : '15'"
+                    :width="sortField !== field.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === field.key,
-                      'opacity-0 -mb-1 group-hover:opacity-50': sortField !== field.key,
-                      '-mb-3': sortField === field.key && sortOrder > 0,
-                      '-mt-2': sortField === field.key && sortOrder < 0,
+                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== field.key,
+                      '-mb-1 ml-2': sortField === field.key && sortOrder > 0 || sortField === field.key && sortOrder < 0,
                     }"
                     preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 320 512"
+                    :viewBox="sortField !== field.key ? '0 0 15 15' : '0 0 11 15'"
                   >
-                    <path
-                      v-if="sortField !== field.key"
-                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"
+                    <!-- Both arrows -->
+                    <path 
+                      v-if="sortField !== field.key" 
+                      d="M4.20703 0.328125L6.83203 2.95312C7.16016 3.30859 7.16016 3.85547 6.83203 4.21094C6.47656 4.53906 5.92969 4.53906 5.57422 4.21094L4.45312 3.0625V13.207C4.45312 13.6992 4.07031 14.082 3.57812 14.082C3.08594 14.082 2.70312 13.6992 2.70312 13.207V3.0625L1.58203 4.21094C1.22656 4.53906 0.679688 4.53906 0.324219 4.21094C-0.00390625 3.85547 -0.00390625 3.30859 0.324219 2.95312L2.94922 0.328125C3.30469 0 3.85156 0 4.20703 0.328125ZM13.832 11.2109L11.207 13.8359C10.8516 14.1641 10.3047 14.1641 9.94922 13.8359L7.32422 11.2109C6.99609 10.8555 6.99609 10.3086 7.32422 9.95312C7.67969 9.625 8.22656 9.625 8.58203 9.95312L9.70312 11.1016V0.957031C9.70312 0.464844 10.0859 0.0820312 10.5781 0.0820312C11.0703 0.0820312 11.4531 0.464844 11.4531 0.957031V11.1016L12.5742 9.95312C12.9297 9.625 13.4766 9.625 13.832 9.95312C14.1602 10.3086 14.1602 10.8555 13.832 11.2109Z" 
                       fill="currentColor"
                     />
-                    <path
-                      v-if="sortField === field.key && sortOrder > 0"
-                      d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"
+
+                    <!-- Up arrow -->
+                    <path 
+                      v-if="sortField === field.key && sortOrder > 0" 
+                      d="M6.12891 0.328125L10.5039 4.70312C10.832 5.05859 10.832 5.60547 10.5039 5.96094C10.1484 6.28906 9.60156 6.28906 9.24609 5.96094L6.375 3.0625V13.207C6.375 13.6992 5.99219 14.082 5.5 14.082C5.00781 14.082 4.625 13.6992 4.625 13.207V3.0625L1.75391 5.96094C1.39844 6.28906 0.851562 6.28906 0.496094 5.96094C0.167969 5.60547 0.167969 5.05859 0.496094 4.70312L4.87109 0.328125C5.22656 0 5.77344 0 6.12891 0.328125Z" 
                       fill="currentColor"
                     />
-                    <path
+                    <!-- Down arrow -->
+                    <path 
                       v-if="sortField === field.key && sortOrder < 0"
-                      d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41z"
+                      d="M4.69922 13.7539L0.324219 9.37891C-0.00390625 9.02344 -0.00390625 8.47656 0.324219 8.12109C0.679688 7.79297 1.22656 7.79297 1.58203 8.12109L4.45312 11.0195V0.875C4.45312 0.382812 4.83594 0 5.32812 0C5.82031 0 6.20312 0.382812 6.20312 0.875V11.0195L9.07422 8.12109C9.42969 7.79297 9.97656 7.79297 10.332 8.12109C10.6602 8.47656 10.6602 9.02344 10.332 9.37891L5.95703 13.7539C5.60156 14.082 5.05469 14.082 4.69922 13.7539Z" 
                       fill="currentColor"
                     />
                   </svg>
@@ -213,9 +225,8 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            '[.table-prose_tbody_&]:border-b-0 dark:[.table-prose_tbody_&]:border-b-0': item.toggled,
-            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-850': item.toggled && !item.nestedRows && rowHighlight
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-950': item.toggled && !item.nestedRows && rowHighlight
           }"
           @mouseover="onMouseover(item)"
           @mouseleave="onMouseleave(item)"
@@ -223,6 +234,9 @@
           <td
             v-if="hasDrawers"
             class="[.table-prose_tbody_&]:px-2 w-10"
+            :class="{
+              'border-b-0': item.toggled
+            }"
             :aria-label="hasDrawers ? undefined : 'No value'"
           >
             <button 
@@ -267,7 +281,8 @@
               :class="{
                 'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
-                'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
+                'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
+                'border-b-0': item.toggled
               }"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -289,13 +304,15 @@
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
-                '[.table-prose_tbody_&]:border-b-0 dark:[.table-prose_tbody_&]:border-b-0': rIndex !== (item.nestedRows.length - 1),
-                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight
               }"
             >
               <td 
                 aria-label="No value"
                 class="[.table-prose_tbody_&]:px-2 w-10"
+                :class="{
+                  'border-b-0': rIndex !== (item.nestedRows.length - 1)
+                }"
               />
               <template
                 v-for="key in displayedFieldKeys"
@@ -306,7 +323,8 @@
                   :class="{
                     'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                     'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
-                    'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right'
+                    'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
+                    'border-b-0': rIndex !== (item.nestedRows.length - 1)
                   }"
                 >
                   <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -329,8 +347,8 @@
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-850': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-850': rowHighlight && item.hover
+              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-950': rowHighlight && item.hover
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
