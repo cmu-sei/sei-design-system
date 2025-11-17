@@ -33,7 +33,9 @@
             'pb-2': timestamp
           }"
         >
-          <slot>{{ description }}</slot>
+          <div class="[&_a:not([class*='no-underline'])]:underline">
+            <slot>{{ description }}</slot>
+          </div>
         </div>
         <span
           v-if="timestamp"
