@@ -80,6 +80,108 @@ exports[`ActionButton > should be a md button 1`] = `
 </button>
 `;
 
+exports[`ActionButton > should be a pending button 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue action-btn-sm active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <svg
+        class="animate-spin text-current h-3.5 w-3.5"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-2"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
+exports[`ActionButton > should be a pending button with block style 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue action-btn-sm action-btn-block active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center"
+    >
+      <svg
+        class="animate-spin text-current h-3.5 w-3.5"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-2"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
 exports[`ActionButton > should be a submit button 1`] = `
 <button
   aria-disabled="false"
@@ -245,6 +347,226 @@ exports[`ActionButton > should match its kind secondary, variant white snapshot 
 <button
   aria-disabled="false"
   class="action-btn action-btn-secondary action-btn-white action-btn-sm"
+  data-id="sds-action-button"
+  type="button"
+>
+  
+  <!-- @slot ActionButton content. -->
+  
+  Action Button
+  
+  
+</button>
+`;
+
+exports[`ActionButton > should render pending state with lg size 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue action-btn-lg active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <svg
+        class="animate-spin text-current h-5 w-5"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-2"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
+exports[`ActionButton > should render pending state with md size 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <svg
+        class="animate-spin text-current h-4 w-4"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-2"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
+exports[`ActionButton > should render pending state with sm size 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue action-btn-sm active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <svg
+        class="animate-spin text-current h-3.5 w-3.5"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-2"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
+exports[`ActionButton > should render pending state with xs size 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue action-btn-xs active pointer-events-none"
+  data-id="sds-action-button"
+  data-pending="true"
+  type="button"
+>
+  <span
+    class="relative flex items-center"
+  >
+    <span
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <svg
+        class="animate-spin text-current h-3 w-3"
+        fill="none"
+        role="graphics-symbol"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          Pending
+        </title>
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        />
+        <path
+          class="opacity-75"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          fill="currentColor"
+        />
+      </svg>
+    </span>
+    <span
+      class="inline-flex items-center opacity-0 gap-1"
+    >
+      <!-- @slot ActionButton content. -->
+      
+      Action Button
+      
+    </span>
+  </span>
+</button>
+`;
+
+exports[`ActionButton > should render with size md (default case) 1`] = `
+<button
+  aria-disabled="false"
+  class="action-btn action-btn-primary action-btn-blue"
   data-id="sds-action-button"
   type="button"
 >
