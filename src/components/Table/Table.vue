@@ -97,7 +97,7 @@
                 >
                   <span
                     :class="{
-                      'text-gray-900 dark:text-gray-100': sortField === f.key,
+                      'text-gray-900 dark:text-gray-100 font-bold': sortField === f.key,
                       'font-normal': sortField !== f.key && index !== 0 
                     }"
                   >{{ f.label }}</span>
@@ -169,7 +169,7 @@
                 >
                   <span
                     :class="{
-                      'text-gray-900 dark:text-gray-100': sortField === field.key
+                      'text-gray-900 dark:text-gray-100 font-bold': sortField === field.key
                     }"
                   >{{ field.label }}</span>
                   <svg
