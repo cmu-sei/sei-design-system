@@ -298,6 +298,13 @@ const maskSpecForge = computed(() => {
 const maskSpecPlaid = computed(() => {
   return maskSpec('plaid')
 })
+
+defineExpose({
+  maskAlign,
+  maskSpec,
+  maskSpecForge,
+  maskSpecPlaid
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -171,6 +171,24 @@ describe('Callout', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should have default styling on slot for a link', () => {
+    const wrapper = mount(Component, {
+      props: {
+        type: 'subtle',
+        variant: 'gray',
+        size: 'md',
+        title: 'This is a title',
+        timestamp: new Date('December 4, 2012 03:20:00')
+      },
+      slots: {
+        default: '<a href="https://sei.cmu.edu">This is a description</a>'
+      }
+    })
+    const linkContainer = wrapper.find('div.opacity-90 > div')
+    expect(linkContainer.exists()).toBe(true)
+    expect(linkContainer.attributes('class')).toContain('[&_a:not([class*=\'no-underline\'])]:underline')
+  })
+
   it('should have icon in leftSlot', () => {
     const wrapper = mount(Component, {
       props: {

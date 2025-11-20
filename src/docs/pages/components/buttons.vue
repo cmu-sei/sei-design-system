@@ -1741,6 +1741,18 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Sort By Dropdown
+      </h2>
+      <div>
+        <SdsSortByDropdown
+          v-model="sortBy.value"
+          :options="sortBy.options"
+          @update:model-value="(value) => console.log('Model updated:', value)"
+        />
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Floating Action Button
       </h2>
       <div>
@@ -1850,6 +1862,7 @@
 </template>
 
 <script setup lang="ts">
+import { SdsSortByDropdown, SortByDropdownModel, type SortByDropdownOption } from '../../../components';
 import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
 
 const expandCollapseModel = ref(false)
@@ -1898,6 +1911,16 @@ const filtered = (options: FilterByDropdownOption[]) => {
     .map((i: FilterByDropdownOption) => i.id)
     .join(", ");
 }
+
+const sortBy = reactive({
+  value: null as SortByDropdownModel | null,
+  options: ([
+    { id: '1', label: 'Author', value: 'Author', type: 'alpha' },
+    { id: '2', label: 'Date published', value: 'Date published', type: 'chronological' },
+    { id: '3', label: 'Price', value: 'Price', type: 'numerical' },
+    { id: '4', label: 'Relevance', value: 'Relevance', type: 'custom', customAttribute: 'relevant' }
+  ] as SortByDropdownOption[]),
+})
 
 const fab = reactive({
   tabs: [
