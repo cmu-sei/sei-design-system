@@ -45,16 +45,16 @@ jobs:
     - name: Test components
       run: npm test
 
-    # - name: Set package version to release tag
-    #   run: |
-    #     TAG="${{ github.event.release.tag_name }}"
-    #     # strip leading v if present (e.g. v1.2.3 -> 1.2.3)
-    #     TAG="${TAG#v}"
-    #     echo "Using normalized tag: $TAG"
-    #     npm version "$TAG" --no-git-tag-version
+    - name: Set package version to release tag
+      run: |
+        TAG="${{ github.event.release.tag_name }}"
+        # strip leading v if present (e.g. v1.2.3 -> 1.2.3)
+        TAG="${TAG#v}"
+        echo "Using normalized tag: $TAG"
+        npm version "$TAG" --no-git-tag-version
 
-    # - name: Update package-lock.json
-    #   run: npm install --package-lock-only
+    - name: Update package-lock.json
+      run: npm install --package-lock-only
 
     - name: Check whether version already published
       env:
