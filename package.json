@@ -16,6 +16,7 @@
     "change-registry-in-package-lock": "./scripts/update-package-lock.sh",
     "bundle:release": "./scripts/bundle-release.sh",
     "create-component": "./scripts/create-component.sh",
+    "release": "./scripts/release.sh",
     "storybook": "npx storybook dev -p 6006 --disable-telemetry",
     "build-storybook": "npx storybook build --disable-telemetry",
     "gen-volar-dts": "./scripts/gen-component-declarations.sh"

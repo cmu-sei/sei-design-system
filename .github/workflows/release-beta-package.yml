@@ -21,7 +21,13 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'push' || ( github.event.head_commit != null && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[no publish]') ) }}
+    if: >-
+      github.event_name != 'push' || (
+        github.event.head_commit != null &&
+        !contains(github.event.head_commit.message, '[skip ci]') &&
+        !contains(github.event.head_commit.message, '[no publish]') &&
+        !contains(github.event.head_commit.message, 'chore: release v')
+      )
 
     permissions:
       contents: read
@@ -54,12 +60,6 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Lint components
-      run: npm run lint
-    
-    - name: Test components
-      run: npm test
-
     - name: Set package version to prerelease with commit SHA
       run: |
         SHORT_SHA=$(git rev-parse --short HEAD)
@@ -68,9 +68,17 @@ jobs:
         # strip leading v if present
         BASE_VERSION="${BASE_VERSION#v}"
         npm version "${BASE_VERSION}-beta.${SHORT_SHA}" --no-git-tag-version
+        NEW_VERSION=$(node -p "require('./package.json').version")
+        echo "Beta version set to: $NEW_VERSION"
 
     - name: Update package-lock.json
       run: npm install --package-lock-only
+
+    - name: Lint components
+      run: npm run lint
+    
+    - name: Test components
+      run: npm test
 
     - name: Check whether version already published
       env:
@@ -83,11 +91,6 @@ jobs:
           echo "Version $VERSION already exists in registry - aborting publish"
           exit 1
         fi
-
-    - name: Publish dry-run
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npm publish --tag beta --dry-run
     
     - name: Build components
       run: |
@@ -103,6 +106,11 @@ jobs:
 
     - name: Build Storybook
       run: npm run build-storybook
+
+    - name: Publish dry-run
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm publish --tag beta --dry-run
 
     - name: Publish package
       run: npm publish --tag beta
