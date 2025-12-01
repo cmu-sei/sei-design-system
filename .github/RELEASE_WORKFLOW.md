@@ -15,27 +15,25 @@ This document verifies that all three release components work together correctly
 **Steps:**
 1. Developer runs `npm run release` on `main` branch
 2. Script bumps version to `4.5.0` in `package.json` and `package-lock.json`
-3. Script runs `bundle-release.sh` which:
-   - Runs lint checks
-   - Runs all tests
-   - Builds all components
-   - Generates TypeScript declarations
-   - Generates Volar types
-   - Cleans up `dist/` directory
-4. Script shows diff and asks for confirmation
-5. Script verifies tag `v4.5.0` doesn't already exist
-6. Script commits changes with message: `chore: release v4.5.0`
-7. Script creates and pushes tag `v4.5.0` to `main`
-8. Script merges to `develop` with commit message: `chore: merge release v4.5.0 from main [skip ci]`
-9. Developer creates GitHub Release with tag `v4.5.0`
+3. Script shows diff and asks for confirmation
+4. Script verifies tag `v4.5.0` doesn't already exist
+5. Script commits changes with message: `chore: release v4.5.0`
+6. Script creates and pushes tag `v4.5.0` to `main`
+7. Script merges to `develop` with commit message: `chore: merge release v4.5.0 from main [skip ci]`
+8. Developer creates GitHub Release with tag `v4.5.0`
 
 **Expected Results:**
-- ✅ Local build completes successfully before any git operations
+- ✅ Version bump committed and tagged locally
+- ✅ Changes automatically merged to `develop` branch with `[skip ci]`
 - ✅ `release-package.yml` triggers (on release published)
 - ✅ Workflow verifies `package.json` version matches tag `v4.5.0`
-- ✅ Workflow runs tests/build again (CI verification)
+- ✅ Workflow converts registry in package-lock.json for GitHub Packages
+- ✅ Workflow checks version not already published
+- ✅ Workflow runs lint, tests, and builds (CI verification)
+- ✅ Workflow builds Storybook documentation
+- ✅ Workflow performs dry-run publish
 - ✅ Publishes `@cmu-sei/sei-design-system@4.5.0` to npm
-- ❌ `release-beta-package.yml` does NOT trigger (commit has `[skip ci]`)
+- ❌ `release-beta-package.yml` does NOT trigger (merge commit has `[skip ci]`)
 
 ---
 
@@ -107,24 +105,23 @@ This document verifies that all three release components work together correctly
 **Steps:**
 1. Developer runs `npm run release`
 2. Script bumps version to `4.5.0`
-3. `bundle-release.sh` fails (e.g., test failure)
+3. Script encounters an error (e.g., git operation failure)
 
 **Expected Results:**
 - ❌ Script exits with error
-- ✅ Repository is in clean state (via `set -e`)
-- ✅ `package.json` and `package-lock.json` modified but not committed
+- ✅ Repository is cleaned up by script's error handling
+- ✅ `package.json` and `package-lock.json` restored to original state (if error before commit)
 - ✅ Developer can fix issues and run script again
-- ❌ No git commits or tags created
+- ❌ No git commits or tags created (unless error happened after successful push)
 
 **Alternative: User Cancels After Seeing Diff**
 1. Developer runs `npm run release`
-2. Script bumps version and runs build
+2. Script bumps version
 3. Script shows diff
 4. Developer selects "N" (cancel)
 
 **Expected Results:**
 - ✅ Script restores original `package.json` and `package-lock.json`
-- ✅ Script runs `npm install --package-lock-only` to restore working state
 - ✅ Message: "✓ Restored to version X.Y.Z"
 - ❌ No git commits or tags created
 
@@ -136,7 +133,6 @@ This document verifies that all three release components work together correctly
 **Expected Results:**
 - ❌ Script fails with: "Error: Tag v4.5.0 already exists"
 - ✅ Script restores original `package.json` and `package-lock.json`
-- ✅ Script runs `npm install --package-lock-only` to restore working state
 - ❌ No git commits or tags created
 
 **Alternative: Git Push Fails**
@@ -186,13 +182,13 @@ This document verifies that all three release components work together correctly
 
 ## Key Safety Features
 
-### 1. Local Validation Before Git Operations (release.sh)
-- Full build pipeline runs (`bundle-release.sh`) BEFORE any commits
-- Lint, test, and build failures prevent version commits
+### 1. Local Version Management (release.sh)
 - User confirmation required after seeing exact changes
 - Duplicate tag detection before commit
 - Automatic rollback on git push failures
 - Clean restoration of files if user cancels or errors occur
+- No local build/test (validation happens in CI)
+- Automatic merge to develop branch after successful push
 
 ### 2. No Version Modification in Production Workflow
 - `release-package.yml` only verifies version, never modifies it
@@ -212,7 +208,7 @@ This document verifies that all three release components work together correctly
 ### 5. Version Verification
 - Production workflow fails if tag doesn't match `package.json`
 - Prevents accidental publishing of wrong version
-- Early failure (step 3) saves CI time
+- Early failure (step 5) saves CI time
 
 ### 6. Duplicate Prevention
 - `release.sh` checks for duplicate tags before committing

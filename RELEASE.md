@@ -36,17 +36,11 @@ This interactive script will:
    - **Major** (4.4.0 → 5.0.0): Breaking changes
    - **Custom**: Specify any version (e.g., for pre-releases like 5.0.0-beta.1)
 4. Bump the version in `package.json` and `package-lock.json`
-5. Run the full build pipeline (`bundle-release.sh`):
-   - Lint all components
-   - Run all tests
-   - Build the component library
-   - Generate TypeScript declarations
-   - Generate Volar types
-6. Show you the changes and ask for confirmation
-7. Verify the git tag doesn't already exist
-8. Commit the version bump
-9. Create and push the git tag (e.g., `v4.5.0`)
-10. Automatically merge the changes to the `develop` branch (if it exists)
+5. Show you the changes and ask for confirmation
+6. Verify the git tag doesn't already exist
+7. Commit the version bump with message `chore: release vX.Y.Z`
+8. Create and push the git tag (e.g., `v4.5.0`)
+9. Automatically merge the changes to the `develop` branch with message `chore: merge release vX.Y.Z from main [skip ci]` (if it exists)
 
 **Note:** The script includes comprehensive error handling and will cleanly restore your repository to its original state if any step fails before the commit is pushed.
 
@@ -61,8 +55,14 @@ After the script completes successfully:
 5. Click "Publish release"
 
 This will trigger the GitHub Actions workflow that:
-- Runs linting and tests again
-- Builds the component library
+- Verifies the package.json version matches the release tag
+- Converts registry references in package-lock.json
+- Checks if the version is already published
+- Runs linting and tests
+- Builds the component library and generates TypeScript declarations
+- Generates Volar types for global components
+- Builds Storybook documentation
+- Performs a dry-run publish
 - Publishes to the npm registry
 
 ## What NOT to Do
@@ -93,8 +93,8 @@ This tag was already created. Either:
 - You're trying to release the same version twice (bump to a higher version)
 - A previous release failed partway through (delete the tag: `git tag -d vX.Y.Z` and `git push origin :refs/tags/vX.Y.Z`)
 
-#### Lint or test failures
-The script runs `bundle-release.sh` which includes linting, testing, and building. Fix the errors and run the script again. Your repository will be restored to its original state.
+#### Script execution errors
+If the script encounters any errors (git operations, network issues, etc.), it will attempt to restore your repository to its original state by reverting uncommitted changes to `package.json` and `package-lock.json`.
 
 #### "Failed to push commit to origin"
 This usually means:
