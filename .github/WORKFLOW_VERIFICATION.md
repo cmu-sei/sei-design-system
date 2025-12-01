@@ -8,9 +8,9 @@
 2. ✅ **Setup Node** - Configure Node.js environment
 3. ✅ **Convert registry** - CRITICAL: Must happen before cache
 4. ✅ **Cache dependencies** - Uses hash of CONVERTED package-lock.json
-5. ✅ **Verify version matches tag** ⚡ EARLY FAIL - Still early, before install
+5. ✅ **Verify version matches tag** ⚡ EARLY FAIL - Before install, saves time
 6. ✅ **Install dependencies** - Only after verification passes
-7. ✅ **Check if already published** ⚡ EARLY FAIL - Prevents duplicate releases
+7. ✅ **Check if already published** ⚡ EARLY FAIL - Before build, prevents duplicate releases
 8. ✅ **Lint components** - Code quality check
 9. ✅ **Test components** - Functional verification
 10. ✅ **Build components** - Create distribution files
@@ -22,10 +22,11 @@
 ### Why This Order?
 
 - **Registry First**: Conversion MUST happen before cache (cache key uses package-lock hash)
-- **Fast Failure**: Version check happens early (step 5) before install, still saves ~5 minutes
+- **Fast Failure**: Version check happens early (step 5) after cache setup, before install
+- **Duplicate Check Early**: Step 7 prevents wasting build time on already-published versions
 - **Safety First**: Dry-run is the last step before actual publish
-- **Logical Flow**: Convert → Cache → Verify → Install → Test → Build → Publish
-- **Cost Effective**: Don't waste CI minutes on builds that can't be published
+- **Logical Flow**: Convert → Cache → Verify → Install → Check Duplicate → Test → Build → Publish
+- **Cost Effective**: Don't waste CI minutes on builds/tests that can't be published
 
 **CRITICAL:** Steps 3-4 order is non-negotiable. Cache key is `${{ hashFiles('package-lock.json') }}` which must be the CONVERTED file, not the original internal registry version.
 
@@ -187,14 +188,11 @@ PRODUCTION RELEASE:
          v
 ┌────────────────────────────┐
 │ 1. Bump version in package │
-│ 2. Run bundle-release.sh   │
-│    - Lint components       │
-│    - Test components       │
-│    - Build components      │
-│    - Generate types        │
-│ 3. Commit & tag v4.5.0     │
-│ 4. Push to main            │
-│ 5. Merge to develop        │
+│ 2. Show diff               │
+│ 3. Ask confirmation        │
+│ 4. Commit & tag v4.5.0     │
+│ 5. Push to main            │
+│ 6. Merge to develop        │
 └────────┬───────────────────┘
          │
          v
@@ -205,11 +203,15 @@ PRODUCTION RELEASE:
          v
 ┌────────────────────────────────────┐
 │ release-package.yml                │
-│ ✓ Verify v4.5.0 matches tag        │
 │ ✓ Convert registry                 │
+│ ✓ Cache dependencies               │
+│ ✓ Verify v4.5.0 matches tag        │
+│ ✓ Install dependencies             │
 │ ✓ Check not already published      │
-│ ✓ Lint & Test (again)              │
-│ ✓ Build & Generate types (again)   │
+│ ✓ Lint & Test                      │
+│ ✓ Build & Generate types           │
+│ ✓ Build Storybook                  │
+│ ✓ Dry-run publish                  │
 │ ✓ Publish 4.5.0 with tag "latest"  │
 └────────────────────────────────────┘
 
@@ -221,9 +223,16 @@ BETA RELEASE:
          v
 ┌────────────────────────────────────┐
 │ release-beta-package.yml           │
+│ ✓ Convert registry                 │
+│ ✓ Cache dependencies               │
+│ ✓ Install dependencies             │
 │ ✓ Set version to 4.5.0-beta.abc    │
-│ ✓ Test & Build                     │
+│ ✓ Update package-lock.json         │
+│ ✓ Lint & Test                      │
 │ ✓ Check not already published      │
+│ ✓ Build & Generate types           │
+│ ✓ Build Storybook                  │
+│ ✓ Dry-run publish                  │
 │ ✓ Publish with tag "beta"          │
 └────────────────────────────────────┘
 ```
