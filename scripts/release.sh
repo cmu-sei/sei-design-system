@@ -36,11 +36,20 @@ CURRENT_VERSION=$(node -p "require('./package.json').version")
 echo "Current version: $CURRENT_VERSION"
 echo ""
 
+# Calculate preview versions using bash
+IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+# Remove any pre-release suffix (e.g., -beta.1)
+PATCH="${PATCH%%-*}"
+
+PATCH_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+MINOR_VERSION="$MAJOR.$((MINOR + 1)).0"
+MAJOR_VERSION="$((MAJOR + 1)).0.0"
+
 # Ask for new version
 echo "What type of release is this?"
-echo "  1) Patch (bug fixes)       - $CURRENT_VERSION -> $(npm version patch --no-git-tag-version --dry-run 2>/dev/null | tail -1)"
-echo "  2) Minor (new features)    - $CURRENT_VERSION -> $(npm version minor --no-git-tag-version --dry-run 2>/dev/null | tail -1)"
-echo "  3) Major (breaking changes)- $CURRENT_VERSION -> $(npm version major --no-git-tag-version --dry-run 2>/dev/null | tail -1)"
+echo "  1) Patch (bug fixes)       - $CURRENT_VERSION → $PATCH_VERSION"
+echo "  2) Minor (new features)    - $CURRENT_VERSION → $MINOR_VERSION"
+echo "  3) Major (breaking changes)- $CURRENT_VERSION → $MAJOR_VERSION"
 echo "  4) Custom version"
 echo ""
 read -p "Enter choice [1-4]: " choice
@@ -72,21 +81,6 @@ npm version $RELEASE_TYPE --no-git-tag-version
 NEW_VERSION=$(node -p "require('./package.json').version")
 echo -e "${GREEN}New version: $NEW_VERSION${NC}"
 
-# Update package-lock.json
-echo ""
-echo -e "${YELLOW}Updating package-lock.json...${NC}"
-npm install --package-lock-only
-
-# Run bundle-release script (includes lint, test, and build)
-echo ""
-echo -e "${YELLOW}Running lint, tests, and build...${NC}"
-if [ ! -x "./scripts/bundle-release.sh" ]; then
-  chmod +x ./scripts/bundle-release.sh
-fi
-./scripts/bundle-release.sh
-
-# Clean up build artifacts (don't want to commit dist/)
-rm -rf dist/
 
 # Show diff
 echo ""
@@ -100,7 +94,6 @@ if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
   echo -e "${RED}Release cancelled${NC}"
   echo -e "${YELLOW}Restoring original version...${NC}"
   git checkout package.json package-lock.json
-  npm install --package-lock-only
   echo -e "${GREEN}✓ Restored to version $CURRENT_VERSION${NC}"
   exit 1
 fi
@@ -110,7 +103,6 @@ if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
   echo -e "${RED}Error: Tag v$NEW_VERSION already exists${NC}"
   echo -e "${YELLOW}Restoring original version...${NC}"
   git checkout package.json package-lock.json
-  npm install --package-lock-only
   exit 1
 fi
 
@@ -131,7 +123,6 @@ if ! git push origin $CURRENT_BRANCH; then
   git tag -d "v$NEW_VERSION"
   git reset --soft HEAD~1
   git checkout package.json package-lock.json
-  npm install --package-lock-only
   echo -e "${YELLOW}You may need to pull changes if remote has diverged${NC}"
   exit 1
 fi
