@@ -68,7 +68,8 @@ jobs:
         # strip leading v if present
         BASE_VERSION="${BASE_VERSION#v}"
         npm version "${BASE_VERSION}-beta.${SHORT_SHA}" --no-git-tag-version
-        echo "Beta version set to: $(node -p \"require('./package.json').version\")"
+        NEW_VERSION=$(node -p "require('./package.json').version")
+        echo "Beta version set to: $NEW_VERSION"
 
     - name: Update package-lock.json
       run: npm install --package-lock-only
