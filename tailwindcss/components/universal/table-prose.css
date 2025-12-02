@@ -6,7 +6,7 @@
   }
 
   :where(.dark .table-prose) {
-    @apply border border-gray-750;
+    @apply border border-gray-800;
   }
 
   :where(.table-prose thead) {
@@ -14,7 +14,7 @@
   }
 
   :where(.dark .table-prose thead) {
-    @apply border-gray-950;
+    @apply border-gray-800;
   }
   
   :where(.table-prose thead th) {
@@ -22,7 +22,7 @@
   }
 
   :where(.dark .table-prose thead th) {
-    @apply text-gray-400 bg-gray-950 border-b border-gray-750;
+    @apply text-gray-400 bg-gray-900/85 border-b border-gray-800;
   }
   
   :where(.table-prose tbody tr) {
@@ -30,7 +30,7 @@
   }
 
   :where(.dark .table-prose tbody tr) {
-    @apply bg-gray-900;
+    @apply bg-gray-950;
   }
   
   :where(.table-prose tbody td) {
@@ -42,7 +42,7 @@
   }
 
   :where(.dark .table-prose tbody td) {
-    @apply border-gray-750;
+    @apply border-gray-800;
   }
 }
 
