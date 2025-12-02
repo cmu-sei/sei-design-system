@@ -212,7 +212,7 @@ const props = defineProps({
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
+  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
   /**
    * Determines the size.
    */

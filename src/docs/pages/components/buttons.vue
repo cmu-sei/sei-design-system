@@ -1747,7 +1747,7 @@
         <SdsSortByDropdown
           v-model="sortBy.value"
           :options="sortBy.options"
-          @update:model-value="(value) => console.log('Model updated:', value)"
+          @update:model-value="(value: SortByDropdownModel) => console.log('Model updated:', value)"
         />
       </div>
     </div>
@@ -1862,7 +1862,7 @@
 </template>
 
 <script setup lang="ts">
-import { SdsSortByDropdown, SortByDropdownModel, type SortByDropdownOption } from '../../../components';
+import { type SortByDropdownOption, SortByDropdownModel } from '../../../components';
 import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
 
 const expandCollapseModel = ref(false)

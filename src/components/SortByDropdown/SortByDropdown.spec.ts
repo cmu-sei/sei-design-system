@@ -103,8 +103,8 @@ describe('SortByDropdown.vue', () => {
       }
     })
 
-    it('should apply correct color variant (gray, blue)', async () => {
-      const variants = ['gray', 'blue'] as const
+    it('should apply correct color variant (gray, blue, red, white)', async () => {
+      const variants = ['gray', 'blue', 'red', 'white'] as const
 
       for (const variant of variants) {
         const wrapper = createWrapper({ variant })
