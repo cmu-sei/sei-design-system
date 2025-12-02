@@ -14,6 +14,7 @@
       <SdsTooltip
         size="auto"
         type="dark"
+        :disabled="disabled"
       >
         <template #trigger>
           <SdsActionButton 
@@ -28,6 +29,7 @@
             :class="{
               'flex flex-col items-center justify-center h-8.5 w-8.5': hideArrow
             }"
+            :disabled="disabled"
             @click="toggle()"
           >
             <svg
@@ -82,13 +84,9 @@
                 class="cursor-pointer relative top-px"
                 :value="option.value"
                 :name="name ? name : `${id}__sortBy__option`"
-                :disabled="disabled"
               >
               <label
                 :for="`${id}__sortBy__option_${index}`"
-                :class="{
-                  'opacity-50 pointer-events-none select-none': disabled
-                }"
                 class="cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
               >
                 <span>{{ option.label }}</span>
@@ -116,14 +114,10 @@
                 class="cursor-pointer relative top-px"
                 :value="filter.value"
                 :name="name ? name : `${id}__direction__option`"
-                :disabled="disabled"
                 @click.stop
               >
               <label
                 :for="filter.id"
-                :class="{
-                  'opacity-50 pointer-events-none select-none': disabled
-                }"
                 class="flex items-center gap-1.5 cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
                 @click.stop
               >
