@@ -157,10 +157,12 @@
 
 <script lang="ts" setup>
 import type { RadioGroupOptionValue } from '../RadioGroup/RadioGroup.vue'
+import type { Placement as BasePlacement } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
 
-export type SortByDropdownPlacement = 'auto' | 'top' | 'right' | 'bottom-start';
+export type SortByDropdownPlacement = BasePlacement;
 
 type OrderByType = 'alpha' | 'chronological' | 'numerical' | 'custom';
 type OrderByDirection = 'ascending' | 'descending';
