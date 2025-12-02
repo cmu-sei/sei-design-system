@@ -25,18 +25,20 @@
             :size="size" 
             :active="isOpen"
             aria-haspopup="true"
-            :aria-expanded="isOpen"
-            :class="{
-              'flex flex-col items-center justify-center h-8.5 w-8.5': hideArrow
-            }"
+            :class="[
+              hideArrow ? `flex flex-col items-center justify-center ${buttonSizeClasses}` : ''
+            ]"
             :disabled="disabled"
             @click="toggle()"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"
+              aria-hidden="true"
+              role="img"
               fill="currentColor"
-              class="inline-block self-center w-4.5 h-4.5"
+              class="inline-block self-center"
+              :class="[iconSizeClasses]"
             >
               <path d="M214.6 73.4C202.1 60.9 181.8 60.9 169.3 73.4L73.3 169.4C60.8 181.9 60.8 202.2 73.3 214.7C85.8 227.2 106.1 227.2 118.6 214.7L160 173.3L160 544C160 561.7 174.3 576 192 576C209.7 576 224 561.7 224 544L224 173.3L265.4 214.7C277.9 227.2 298.2 227.2 310.7 214.7C323.2 202.2 323.2 181.9 310.7 169.4L214.7 73.4zM566.6 470.7C579.1 458.2 579.1 437.9 566.6 425.4C554.1 412.9 533.8 412.9 521.3 425.4L480 466.7L480 96C480 78.3 465.7 64 448 64C430.3 64 416 78.3 416 96L416 466.7L374.6 425.3C362.1 412.8 341.8 412.8 329.3 425.3C316.8 437.8 316.8 458.1 329.3 470.6L425.3 566.6C437.8 579.1 458.1 579.1 470.6 566.6L566.6 470.6z" />
             </svg>
@@ -125,6 +127,8 @@
                   v-if="filter.direction.includes('ascending')"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 640 640"
+                  aria-hidden="true"
+                  role="img"
                   fill="currentColor"
                   class="h-3.5 w-3.5"
                 >
@@ -134,6 +138,8 @@
                   v-else
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 640 640"
+                  aria-hidden="true"
+                  role="img"
                   fill="currentColor"
                   class="h-3.5 w-3.5"
                 >
@@ -268,6 +274,33 @@ const selectedDirection = ref<SortByDropdownType | null>(null)
 
 // Flag to prevent duplicate emissions during internal state updates
 const isInternalUpdate = ref(false)
+
+const iconSizeClasses = computed(() => {
+  switch (props.size) {
+    case 'xs':
+    case 'sm':
+      return 'w-4 h-4'
+    case 'md':
+    case 'lg':
+    default:
+      return 'w-4.5 h-4.5'
+  }
+})
+
+const buttonSizeClasses = computed(() => {
+  switch (props.size) {
+    case 'xs':
+      return 'h-6.5 w-6.5'
+    case 'sm':
+      return 'h-7.5 w-7.5'
+    case 'md':
+      return 'h-8.5 w-8.5'
+    case 'lg':
+      return 'h-10.5 w-10.5'
+    default:
+      return 'h-8.5 w-8.5'
+  }
+})
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {

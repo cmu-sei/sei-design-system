@@ -189,6 +189,56 @@ describe('SortByDropdown.vue', () => {
 
       expect(wrapper.text()).toContain(customSlotContent)
     })
+
+    it('should apply correct iconSizeClasses based on size prop', () => {
+      // Test xs and sm sizes (both should return 'w-4 h-4')
+      const xsWrapper = createWrapper({ size: 'xs' })
+      const xsSvg = xsWrapper.find('svg[role="img"]')
+      expect(xsSvg.classes()).toContain('w-4')
+      expect(xsSvg.classes()).toContain('h-4')
+
+      const smWrapper = createWrapper({ size: 'sm' })
+      const smSvg = smWrapper.find('svg[role="img"]')
+      expect(smSvg.classes()).toContain('w-4')
+      expect(smSvg.classes()).toContain('h-4')
+
+      // Test md and lg sizes (both should return 'w-4.5 h-4.5')
+      const mdWrapper = createWrapper({ size: 'md' })
+      const mdSvg = mdWrapper.find('svg[role="img"]')
+      expect(mdSvg.classes()).toContain('w-4.5')
+      expect(mdSvg.classes()).toContain('h-4.5')
+
+      const lgWrapper = createWrapper({ size: 'lg' })
+      const lgSvg = lgWrapper.find('svg[role="img"]')
+      expect(lgSvg.classes()).toContain('w-4.5')
+      expect(lgSvg.classes()).toContain('h-4.5')
+    })
+
+    it('should apply correct buttonSizeClasses when hideArrow is true', () => {
+      // Test xs size
+      const xsWrapper = createWrapper({ size: 'xs', hideArrow: true })
+      const xsButton = xsWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(xsButton.classes()).toContain('h-6.5')
+      expect(xsButton.classes()).toContain('w-6.5')
+
+      // Test sm size
+      const smWrapper = createWrapper({ size: 'sm', hideArrow: true })
+      const smButton = smWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(smButton.classes()).toContain('h-7.5')
+      expect(smButton.classes()).toContain('w-7.5')
+
+      // Test md size
+      const mdWrapper = createWrapper({ size: 'md', hideArrow: true })
+      const mdButton = mdWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(mdButton.classes()).toContain('h-8.5')
+      expect(mdButton.classes()).toContain('w-8.5')
+
+      // Test lg size
+      const lgWrapper = createWrapper({ size: 'lg', hideArrow: true })
+      const lgButton = lgWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(lgButton.classes()).toContain('h-10.5')
+      expect(lgButton.classes()).toContain('w-10.5')
+    })
   })
 
   describe('Options & Initial State', () => {
