@@ -46,6 +46,7 @@ describe('SortByDropdown.vue', () => {
     },
     SdsTooltip: {
       name: 'SdsTooltip',
+      props: ['size', 'type', 'disabled'],
       template: '<div data-id="sds-tooltip"><slot name="trigger" /><p><slot /></p></div>'
     }
   }
@@ -77,7 +78,7 @@ describe('SortByDropdown.vue', () => {
       const wrapper = createWrapper()
 
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
 
     it('should render with custom title prop', () => {
@@ -264,7 +265,7 @@ describe('SortByDropdown.vue', () => {
       await nextTick()
 
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
 
     it('should set default direction to "ascending" when option is first selected', async () => {
@@ -325,7 +326,7 @@ describe('SortByDropdown.vue', () => {
       await nextTick()
 
       expect(newWrapper.exists()).toBe(true)
-      expect(newWrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
+      expect(newWrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
   })
 
@@ -466,8 +467,8 @@ describe('SortByDropdown.vue', () => {
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured for dropdown toggling with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-action-button"]').exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-action-button"]').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).attributes('aria-haspopup')).toBe('true')
     })
 
     it('should show "active" state on button when dropdown is open', async () => {
@@ -475,8 +476,8 @@ describe('SortByDropdown.vue', () => {
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured to toggle open state with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-action-button"]').exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-action-button"]').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).attributes('aria-haspopup')).toBe('true')
     })
 
     it('should apply correct placement prop to FloatingUi (auto, top, right, bottom-start)', () => {
@@ -502,7 +503,7 @@ describe('SortByDropdown.vue', () => {
 
     it('should set aria-expanded based on dropdown open state', async () => {
       const wrapper = createWrapper()
-      const button = wrapper.find('[data-id="sds-action-button"]')
+      const button = wrapper.findComponent({ name: 'SdsActionButton' })
       // Component should be configured with button for aria-expanded toggling
       expect(button.exists()).toBe(true)
       expect(button.attributes('aria-haspopup')).toBe('true')
