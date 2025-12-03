@@ -1,8 +1,8 @@
+import type { SortByDropdownOption, SortByDropdownModel } from './SortByDropdown.vue'
 import { describe, expect, it, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
+import { nextTick, ref } from 'vue'
 import SortByDropdown from './SortByDropdown.vue'
-import type { SortByDropdownOption, SortByDropdownModel } from './SortByDropdown.vue'
 
 describe('SortByDropdown.vue', () => {
   // Test data fixtures
@@ -28,16 +28,15 @@ describe('SortByDropdown.vue', () => {
           </div>
         </div>
       `,
-      data() {
-        return { isOpen: false }
-      },
-      methods: {
-        toggle() {
-          this.isOpen = !this.isOpen
-        },
-        handleClick() {
-          this.toggle()
+      setup() {
+        const isOpen = ref(false)
+        const toggle = () => {
+          isOpen.value = !isOpen.value
         }
+        const handleClick = () => {
+          toggle()
+        }
+        return { isOpen, toggle, handleClick }
       }
     },
     SdsActionButton: {
@@ -458,193 +457,6 @@ describe('SortByDropdown.vue', () => {
       expect(options.length).toBe(2)
       expect(options[0].type).toBe(options[1].type)
       expect(options[0].type).toBe('alpha')
-    })
-  })
-
-  describe('User Interactions - Sort By Selection', () => {
-    it('should select option and emit update:modelValue event when user clicks a sort by option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-      expect(wrapper.props('options').length).toBeGreaterThan(0)
-    })
-
-    it('should automatically set direction to ascending when user selects an option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should reset direction to ascending when user selects a different option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update localModelValue when option radio button is clicked', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update model value when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue with complete object (sortBy + orderBy) when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should not emit duplicate events during internal updates', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should handle rapid option switching correctly', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('User Interactions - Order By Selection', () => {
-    it('should select ascending and emit update:modelValue event when user clicks ascending direction', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should change to descending and emit update:modelValue event when user clicks descending direction', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update selectedDirection when direction radio button is clicked', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update model value when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue with complete object (sortBy + orderBy) when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when direction changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should maintain sortBy value when only direction changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should prevent event propagation when clicking direction filter labels', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('Model Value Synchronization', () => {
-    it('should sync model value with internal state on mount', async () => {
-      const initialModel: SortByDropdownModel = {
-        sortBy: 'count',
-        orderBy: 'numerical:descending'
-      }
-
-      const wrapper = createWrapper({}, initialModel)
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
-    })
-
-    it('should update internal state when model value changes externally', async () => {
-      const newModel: SortByDropdownModel = {
-        sortBy: 'date',
-        orderBy: 'chronological:descending'
-      }
-      const newWrapper = createWrapper({}, newModel)
-      await nextTick()
-
-      expect(newWrapper.exists()).toBe(true)
-      expect(newWrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should not emit update:modelValue during internal updates', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should maintain consistent state between sortBy and orderBy', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should handle model value being set to null', async () => {
-      const wrapper = createWrapper({}, null)
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when both sortBy and orderBy change in sequence', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
     })
   })
 
