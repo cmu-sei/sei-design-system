@@ -225,8 +225,8 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-950': item.toggled && !item.nestedRows && rowHighlight
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': item.toggled && !item.nestedRows && rowHighlight
           }"
           @mouseover="onMouseover(item)"
           @mouseleave="onMouseleave(item)"
@@ -304,7 +304,7 @@
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
-                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight
               }"
             >
               <td 
@@ -347,8 +347,8 @@
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-950': rowHighlight && item.hover
+              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && item.hover
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
