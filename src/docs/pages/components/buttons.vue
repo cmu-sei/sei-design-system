@@ -1747,7 +1747,6 @@
         <SdsSortByDropdown
           v-model="sortBy.value"
           :options="sortBy.options"
-          :hide-arrow="true"
           @update:model-value="(value: SortByDropdownModel | null) => console.log('Model updated:', value)"
         />
       </div>

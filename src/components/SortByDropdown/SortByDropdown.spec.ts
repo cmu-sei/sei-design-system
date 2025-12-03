@@ -13,6 +13,44 @@ describe('SortByDropdown.vue', () => {
     { id: 4, value: 'priority', label: 'Priority', type: 'custom', customAttribute: 'important' }
   ]
 
+  // Reusable component stubs
+  const globalStubs = {
+    SdsFloatingUi: {
+      name: 'SdsFloatingUi',
+      props: ['placement', 'popperClass'], // popperClass contains styling for the dropdown including z-index
+      template: `
+        <div data-floating-ui>
+          <div @click="handleClick">
+            <slot name="trigger" :isOpen="isOpen" :toggle="toggle" />
+          </div>
+          <div data-id="dropdown-content" style="display: block;">
+            <slot />
+          </div>
+        </div>
+      `,
+      data() {
+        return { isOpen: false }
+      },
+      methods: {
+        toggle() {
+          this.isOpen = !this.isOpen
+        },
+        handleClick() {
+          this.toggle()
+        }
+      }
+    },
+    SdsActionButton: {
+      name: 'SdsActionButton',
+      props: ['id', 'kind', 'variant', 'size', 'active', 'disabled'],
+      template: '<button data-id="sds-action-button" v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>'
+    },
+    SdsTooltip: {
+      name: 'SdsTooltip',
+      template: '<div data-id="sds-tooltip"><slot name="trigger" /><p><slot /></p></div>'
+    }
+  }
+
   afterEach(() => {
     // Clean up any mounted components
     document.body.innerHTML = ''
@@ -30,42 +68,7 @@ describe('SortByDropdown.vue', () => {
       },
       attachTo: div,
       global: {
-        stubs: {
-          SdsFloatingUi: {
-            props: ['placement', 'popperClass'],
-            template: `
-              <div data-floating-ui>
-                <div @click="handleClick">
-                  <slot name="trigger" :isOpen="isOpen" :toggle="toggle" />
-                </div>
-                <div class="dropdown-content" style="display: block;">
-                  <slot />
-                </div>
-              </div>
-            `,
-            name: 'SdsFloatingUi',
-            data() {
-              return { isOpen: false }
-            },
-            methods: {
-              toggle() {
-                this.isOpen = !this.isOpen
-              },
-              handleClick() {
-                this.toggle()
-              }
-            }
-          },
-          SdsActionButton: {
-            name: 'SdsActionButton',
-            template: '<button v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>',
-            props: ['id', 'kind', 'variant', 'size', 'active', 'disabled']
-          },
-          SdsTooltip: {
-            name: 'SdsTooltip',
-            template: '<div class="tooltip-wrapper"><slot name="trigger" /><p><slot /></p></div>'
-          }
-        }
+        stubs: globalStubs
       }
     })
   }
@@ -90,7 +93,7 @@ describe('SortByDropdown.vue', () => {
       const button = wrapper.findComponent({ name: 'SdsActionButton' })
 
       expect(button.exists()).toBe(true)
-      expect(wrapper.find('button span').exists()).toBe(false)
+      expect(wrapper.find('[data-id="sds-action-button"] span').exists()).toBe(false)
       expect(wrapper.find('svg').exists()).toBe(true)
     })
 
@@ -125,35 +128,36 @@ describe('SortByDropdown.vue', () => {
     })
 
     it('should apply correct z-index class based on zIndex prop', () => {
-      const zIndexMap = {
-        '0': 'z-0',
-        '10': 'z-10',
-        '20': 'z-20',
-        '30': 'z-30',
-        '40': 'z-40',
-        '50': 'z-50',
-        'auto': 'z-auto',
-        '': ''
-      }
+      const zIndexTests = [
+        { prop: '0', expected: 'z-0' },
+        { prop: '10', expected: 'z-10' },
+        { prop: '20', expected: 'z-20' },
+        { prop: '30', expected: 'z-30' },
+        { prop: '40', expected: 'z-40' },
+        { prop: '50', expected: 'z-50' },
+        { prop: 'auto', expected: 'z-auto' }
+      ]
 
-      Object.entries(zIndexMap).forEach(([zIndex, expectedClass]) => {
-        const wrapper = createWrapper({ zIndex })
+      zIndexTests.forEach(({ prop, expected }) => {
+        const wrapper = createWrapper({ zIndex: prop })
         const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
-        const popperClass = floatingUi.attributes('popper-class')
-
-        if (expectedClass && popperClass) {
-          expect(popperClass).toContain(expectedClass)
-        } else if (expectedClass) {
-          // If no attribute but we expect a class, this is OK for the stub
-          expect(true).toBe(true)
-        }
+        const popperClass = floatingUi.props('popperClass')
+        
+        expect(popperClass).toContain(expected)
       })
+
+      // Test default (empty string) - should not contain any z-index class
+      const wrapperDefault = createWrapper({ zIndex: '' })
+      const floatingUiDefault = wrapperDefault.findComponent({ name: 'SdsFloatingUi' })
+      const popperClassDefault = floatingUiDefault.props('popperClass')
+      
+      expect(popperClassDefault).not.toMatch(/\bz-\d+\b/)
+      expect(popperClassDefault).not.toContain('z-auto')
     })
 
-    it('should render with custom tooltip text', () => {
+    it('should render with custom tooltip text', async () => {
       const wrapper = createWrapper({ tooltip: 'Click to sort items' })
-
-      expect(wrapper.find('button').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 
     it('should render button with disabled state', () => {
@@ -173,17 +177,7 @@ describe('SortByDropdown.vue', () => {
           title: customSlotContent
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="false" :toggle="() => {}" /></div>'
-            },
-            SdsActionButton: {
-              template: '<button><slot /></button>'
-            },
-            SdsTooltip: {
-              template: '<div><slot name="trigger" /></div>'
-            }
-          }
+          stubs: globalStubs
         }
       })
 
@@ -301,13 +295,7 @@ describe('SortByDropdown.vue', () => {
           modelValue: { sortBy: null, orderBy: null }
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="true" :toggle="() => {}" /><slot /></div>'
-            },
-            SdsActionButton: { template: '<button><slot /></button>' },
-            SdsTooltip: { template: '<div><slot name="trigger" /><slot /></div>' }
-          }
+          stubs: globalStubs
         }
       })
 
@@ -412,13 +400,7 @@ describe('SortByDropdown.vue', () => {
           modelValue: { sortBy: null, orderBy: null }
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="true" :toggle="() => {}" /><slot /></div>'
-            },
-            SdsActionButton: { template: '<button><slot /></button>' },
-            SdsTooltip: { template: '<div><slot name="trigger" /><slot /></div>' }
-          }
+          stubs: globalStubs
         }
       })
       await nextTick()
@@ -672,8 +654,8 @@ describe('SortByDropdown.vue', () => {
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured for dropdown toggling with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('button').exists()).toBe(true)
-      expect(wrapper.find('button').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.find('[data-id="sds-action-button"]').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-action-button"]').attributes('aria-haspopup')).toBe('true')
     })
 
     it('should show "active" state on button when dropdown is open', async () => {
@@ -681,8 +663,8 @@ describe('SortByDropdown.vue', () => {
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured to toggle open state with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('button').exists()).toBe(true)
-      expect(wrapper.find('button').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.find('[data-id="sds-action-button"]').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-action-button"]').attributes('aria-haspopup')).toBe('true')
     })
 
     it('should apply correct placement prop to FloatingUi (auto, top, right, bottom-start)', () => {
@@ -697,8 +679,7 @@ describe('SortByDropdown.vue', () => {
 
     it('should display tooltip on button hover', () => {
       const wrapper = createWrapper({ tooltip: 'Sort the list' })
-      // Component should render with button (wrapped by tooltip)
-      expect(wrapper.find('button').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 
     it('should set aria-haspopup="true" on trigger button', () => {
@@ -709,7 +690,7 @@ describe('SortByDropdown.vue', () => {
 
     it('should set aria-expanded based on dropdown open state', async () => {
       const wrapper = createWrapper()
-      const button = wrapper.findComponent({ name: 'SdsActionButton' })
+      const button = wrapper.find('[data-id="sds-action-button"]')
       // Component should be configured with button for aria-expanded toggling
       expect(button.exists()).toBe(true)
       expect(button.attributes('aria-haspopup')).toBe('true')
