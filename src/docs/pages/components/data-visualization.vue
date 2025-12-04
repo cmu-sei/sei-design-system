@@ -634,10 +634,14 @@
           :items="items_simple"
         >
           <template #cell(fruit)="{ value }">
-            <p class="font-bold">{{ value }}</p>
+            <p class="font-bold">
+              {{ value }}
+            </p>
           </template>
-          <template #cell(actions)="{ item }">
-            <button @click="edit(item.id)">Edit</button>
+          <template #cell(actions)>
+            <button>
+              Edit
+            </button>
           </template>
         </SdsTable>
       </div>
