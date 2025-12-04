@@ -32,6 +32,10 @@ const preview: Preview = {
   initialGlobals: {
     colorScheme: 'light',
     theme: 'sds-theme-forge',
+
+    backgrounds: {
+      value: 'transparent'
+    }
   },
 
   decorators: [
@@ -46,17 +50,16 @@ const preview: Preview = {
 
   parameters: {
     backgrounds: {
-      default: 'transparent',
-      values: [
-        { name: 'transparent', value: 'transparent' },
-        { name: 'white', value: '#ffffff' },
-        { name: 'gray-25', value: '#f8f8f8' },
-        { name: 'gray-50', value: '#f0f1f1' },
-        { name: 'gray-900', value: '#1b1c1d' },
-        { name: 'gray-950', value: '#0e0e0f' },
-        { name: 'black', value: '#000000' },
-        { name: 'blue-500', value: '#007cba' },
-      ],
+      options: {
+        transparent: { name: 'transparent', value: 'transparent' },
+        white: { name: 'white', value: '#ffffff' },
+        "gray-25": { name: 'gray-25', value: '#f8f8f8' },
+        "gray-50": { name: 'gray-50', value: '#f0f1f1' },
+        "gray-900": { name: 'gray-900', value: '#1b1c1d' },
+        "gray-950": { name: 'gray-950', value: '#0e0e0f' },
+        black: { name: 'black', value: '#000000' },
+        "blue-500": { name: 'blue-500', value: '#007cba' }
+      }
     },
 
     controls: {

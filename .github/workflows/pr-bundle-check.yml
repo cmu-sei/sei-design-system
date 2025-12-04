@@ -39,6 +39,9 @@ jobs:
     - name: Run bundle release
       run: npm run bundle:release
 
+    - name: Build Storybook
+      run: npm run build-storybook
+
     - name: Verify bundle artifacts
       run: |
         if [ ! -d "dist" ]; then
