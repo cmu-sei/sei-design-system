@@ -1,0 +1,48 @@
+name: PR Bundle Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  bundle-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+
+    - name: Convert registry in package-lock.json
+      run: npm run change-registry-in-package-lock
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      id: cache
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.nvmrc') }}
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run bundle release
+      run: npm run bundle:release
+
+    - name: Verify bundle artifacts
+      run: |
+        if [ ! -d "dist" ]; then
+          echo "Error: dist directory not found after bundle"
+          exit 1
+        fi
+        echo "✓ Bundle created successfully"
