@@ -1862,8 +1862,8 @@
 </template>
 
 <script setup lang="ts">
-import { type SortByDropdownOption, SortByDropdownModel } from '../../../components';
-import { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
+import type { SortByDropdownOption, SortByDropdownModel } from '../../../components';
+import type { FilterByDropdownOption } from '../../../components/FilterByDropdown/FilterByDropdown.vue';
 
 const expandCollapseModel = ref(false)
 
