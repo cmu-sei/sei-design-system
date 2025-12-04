@@ -17,6 +17,7 @@ on:
       - 'vite-library.config.js'
       - 'vite.config.ts'
       - 'tsconfig.json'
+      - '**.md'
 
 jobs:
   publish:
