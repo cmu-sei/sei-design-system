@@ -628,6 +628,19 @@
           </template>
         </SdsTable>
       </div>
+      <div>
+        <SdsTable
+          :fields="fields_simple"
+          :items="items_simple"
+        >
+          <template #cell(fruit)="{ value }">
+            <p class="font-bold">{{ value }}</p>
+          </template>
+          <template #cell(actions)="{ item }">
+            <button @click="edit(item.id)">Edit</button>
+          </template>
+        </SdsTable>
+      </div>
     </div>
     <div class="grid gap-4 h-full">
       <h2 class="text-xl">
@@ -1089,6 +1102,95 @@ const fields = ref<TableField[]>([
   {
     key: "actions",
     label: "Actions"
+  }
+])
+
+const fields_simple = ref<TableField[]>([
+  {
+    key: "id",
+    label: "ID",
+    sortable: true
+  },
+  {
+    key: "fruit",
+    label: "Fruit",
+    sortable: true
+  },
+  {
+    key: "amount",
+    label: "Amount",
+    sortable: true,
+    align: "right"
+  },
+  {
+    key: "pricePerPound",
+    label: "Price Per Pound",
+    sortable: true,
+    align: "right"
+  },
+  {
+    key: "lastDelivered",
+    label: "Last delivered",
+    sortable: true,
+    format: (date: Date) => date.toLocaleDateString()
+  },
+  {
+    key: "createdDate",
+    label: "Created date",
+    hidden: true,
+    format: (date: Date) => date.toLocaleDateString()
+  },
+  {
+    key: "actions",
+    label: "Actions"
+  }
+])
+
+const items_simple = ref([
+  {
+    id: 1,
+    fruit: "Apple",
+    employee: "Jacobim Mugatu",
+    amount: "32",
+    pricePerPound: "$1.42",
+    lastDelivered: new Date("01/01/2019"),
+    createdDate: new Date("02/23/2009"),
+  },
+  {
+    id: 2,
+    fruit: "Banana",
+    pricePerPound: "$0.99",
+    amount: "4",
+    employee: "Maury Ballstein",
+    lastDelivered: new Date("10/01/2020"),
+    createdDate: new Date("05/13/2010"),
+  },
+  {
+    id: 3,
+    fruit: "Cantaloupe",
+    pricePerPound: "$42.68",
+    amount: "18",
+    employee: "Derek Zoolander",
+    lastDelivered: new Date("12/01/2020"),
+    createdDate: new Date("01/13/2012"),
+  },
+  {
+    id: 4,
+    fruit: "Durian",
+    pricePerPound: "$32.98",
+    amount: "100",
+    employee: "Hansel MacDonald",
+    lastDelivered: new Date("02/01/2021"),
+    createdDate: new Date("12/09/2013"),
+  },
+  {
+    id: 5,
+    fruit: "Elderberry",
+    pricePerPound: "$2.93",
+    amount: "37",
+    employee: "Matilda Jeffries",
+    lastDelivered: new Date("01/01/2019"),
+    createdDate: new Date("04/10/2017"),
   }
 ])
 
