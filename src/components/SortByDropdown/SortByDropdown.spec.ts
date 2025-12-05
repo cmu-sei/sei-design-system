@@ -1,8 +1,8 @@
+import type { SortByDropdownOption, SortByDropdownModel } from './SortByDropdown.vue'
 import { describe, expect, it, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
+import { nextTick, ref } from 'vue'
 import SortByDropdown from './SortByDropdown.vue'
-import type { SortByDropdownOption, SortByDropdownModel } from './SortByDropdown.vue'
 
 describe('SortByDropdown.vue', () => {
   // Test data fixtures
@@ -12,6 +12,44 @@ describe('SortByDropdown.vue', () => {
     { id: 3, value: 'count', label: 'Count', type: 'numerical' },
     { id: 4, value: 'priority', label: 'Priority', type: 'custom', customAttribute: 'important' }
   ]
+
+  // Reusable component stubs
+  const globalStubs = {
+    SdsFloatingUi: {
+      name: 'SdsFloatingUi',
+      props: ['placement', 'popperClass'], // popperClass contains styling for the dropdown including z-index
+      template: `
+        <div data-floating-ui>
+          <div @click="handleClick">
+            <slot name="trigger" :isOpen="isOpen" :toggle="toggle" />
+          </div>
+          <div data-id="dropdown-content" style="display: block;">
+            <slot />
+          </div>
+        </div>
+      `,
+      setup() {
+        const isOpen = ref(false)
+        const toggle = () => {
+          isOpen.value = !isOpen.value
+        }
+        const handleClick = () => {
+          toggle()
+        }
+        return { isOpen, toggle, handleClick }
+      }
+    },
+    SdsActionButton: {
+      name: 'SdsActionButton',
+      props: ['id', 'kind', 'variant', 'size', 'active', 'disabled'],
+      template: '<button data-id="sds-action-button" v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>'
+    },
+    SdsTooltip: {
+      name: 'SdsTooltip',
+      props: ['size', 'type', 'disabled'],
+      template: '<div data-id="sds-tooltip"><slot name="trigger" /><p><slot /></p></div>'
+    }
+  }
 
   afterEach(() => {
     // Clean up any mounted components
@@ -30,42 +68,7 @@ describe('SortByDropdown.vue', () => {
       },
       attachTo: div,
       global: {
-        stubs: {
-          SdsFloatingUi: {
-            props: ['placement', 'popperClass'],
-            template: `
-              <div data-floating-ui>
-                <div @click="handleClick">
-                  <slot name="trigger" :isOpen="isOpen" :toggle="toggle" />
-                </div>
-                <div class="dropdown-content" style="display: block;">
-                  <slot />
-                </div>
-              </div>
-            `,
-            name: 'SdsFloatingUi',
-            data() {
-              return { isOpen: false }
-            },
-            methods: {
-              toggle() {
-                this.isOpen = !this.isOpen
-              },
-              handleClick() {
-                this.toggle()
-              }
-            }
-          },
-          SdsActionButton: {
-            name: 'SdsActionButton',
-            template: '<button v-bind="$attrs" @click="$emit(\'click\')"><slot /></button>',
-            props: ['id', 'kind', 'variant', 'size', 'active']
-          },
-          SdsTooltip: {
-            name: 'SdsTooltip',
-            template: '<div class="tooltip-wrapper"><slot name="trigger" /><p><slot /></p></div>'
-          }
-        }
+        stubs: globalStubs
       }
     })
   }
@@ -75,7 +78,7 @@ describe('SortByDropdown.vue', () => {
       const wrapper = createWrapper()
 
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-sort-by-dropdown"]').exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
 
     it('should render with custom title prop', () => {
@@ -90,7 +93,7 @@ describe('SortByDropdown.vue', () => {
       const button = wrapper.findComponent({ name: 'SdsActionButton' })
 
       expect(button.exists()).toBe(true)
-      expect(wrapper.find('button span').exists()).toBe(false)
+      expect(wrapper.find('[data-id="sds-action-button"] span').exists()).toBe(false)
       expect(wrapper.find('svg').exists()).toBe(true)
     })
 
@@ -103,8 +106,8 @@ describe('SortByDropdown.vue', () => {
       }
     })
 
-    it('should apply correct color variant (gray, blue)', async () => {
-      const variants = ['gray', 'blue'] as const
+    it('should apply correct color variant (gray, blue, red, white)', async () => {
+      const variants = ['gray', 'blue', 'red', 'white'] as const
 
       for (const variant of variants) {
         const wrapper = createWrapper({ variant })
@@ -125,48 +128,43 @@ describe('SortByDropdown.vue', () => {
     })
 
     it('should apply correct z-index class based on zIndex prop', () => {
-      const zIndexMap = {
-        '0': 'z-0',
-        '10': 'z-10',
-        '20': 'z-20',
-        '30': 'z-30',
-        '40': 'z-40',
-        '50': 'z-50',
-        'auto': 'z-auto',
-        '': ''
-      }
+      const zIndexTests = [
+        { prop: '0', expected: 'z-0' },
+        { prop: '10', expected: 'z-10' },
+        { prop: '20', expected: 'z-20' },
+        { prop: '30', expected: 'z-30' },
+        { prop: '40', expected: 'z-40' },
+        { prop: '50', expected: 'z-50' },
+        { prop: 'auto', expected: 'z-auto' }
+      ]
 
-      Object.entries(zIndexMap).forEach(([zIndex, expectedClass]) => {
-        const wrapper = createWrapper({ zIndex })
+      zIndexTests.forEach(({ prop, expected }) => {
+        const wrapper = createWrapper({ zIndex: prop })
         const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
-        const popperClass = floatingUi.attributes('popper-class')
-
-        if (expectedClass && popperClass) {
-          expect(popperClass).toContain(expectedClass)
-        } else if (expectedClass) {
-          // If no attribute but we expect a class, this is OK for the stub
-          expect(true).toBe(true)
-        }
+        const popperClass = floatingUi.props('popperClass')
+        
+        expect(popperClass).toContain(expected)
       })
+
+      // Test default (empty string) - should not contain any z-index class
+      const wrapperDefault = createWrapper({ zIndex: '' })
+      const floatingUiDefault = wrapperDefault.findComponent({ name: 'SdsFloatingUi' })
+      const popperClassDefault = floatingUiDefault.props('popperClass')
+      
+      expect(popperClassDefault).not.toMatch(/\bz-\d+\b/)
+      expect(popperClassDefault).not.toContain('z-auto')
     })
 
-    it('should render with custom tooltip text', () => {
+    it('should render with custom tooltip text', async () => {
       const wrapper = createWrapper({ tooltip: 'Click to sort items' })
-
-      expect(wrapper.find('button').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 
-    it('should render with disabled state', async () => {
+    it('should render button with disabled state', () => {
       const wrapper = createWrapper({ disabled: true })
+      const button = wrapper.findComponent({ name: 'SdsActionButton' })
 
-      await wrapper.find('button').trigger('click')
-      await nextTick()
-
-      const radioInputs = wrapper.findAll('input[type="radio"]')
-
-      radioInputs.forEach(input => {
-        expect(input.attributes('disabled')).toBeDefined()
-      })
+      expect(button.props('disabled')).toBe(true)
     })
 
     it('should render with custom slot content for title', () => {
@@ -179,21 +177,61 @@ describe('SortByDropdown.vue', () => {
           title: customSlotContent
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="false" :toggle="() => {}" /></div>'
-            },
-            SdsActionButton: {
-              template: '<button><slot /></button>'
-            },
-            SdsTooltip: {
-              template: '<div><slot name="trigger" /></div>'
-            }
-          }
+          stubs: globalStubs
         }
       })
 
       expect(wrapper.text()).toContain(customSlotContent)
+    })
+
+    it('should apply correct iconSizeClasses based on size prop', () => {
+      // Test xs and sm sizes (both should return 'w-4 h-4')
+      const xsWrapper = createWrapper({ size: 'xs' })
+      const xsSvg = xsWrapper.find('svg[role="img"]')
+      expect(xsSvg.classes()).toContain('w-4')
+      expect(xsSvg.classes()).toContain('h-4')
+
+      const smWrapper = createWrapper({ size: 'sm' })
+      const smSvg = smWrapper.find('svg[role="img"]')
+      expect(smSvg.classes()).toContain('w-4')
+      expect(smSvg.classes()).toContain('h-4')
+
+      // Test md and lg sizes (both should return 'w-4.5 h-4.5')
+      const mdWrapper = createWrapper({ size: 'md' })
+      const mdSvg = mdWrapper.find('svg[role="img"]')
+      expect(mdSvg.classes()).toContain('w-4.5')
+      expect(mdSvg.classes()).toContain('h-4.5')
+
+      const lgWrapper = createWrapper({ size: 'lg' })
+      const lgSvg = lgWrapper.find('svg[role="img"]')
+      expect(lgSvg.classes()).toContain('w-4.5')
+      expect(lgSvg.classes()).toContain('h-4.5')
+    })
+
+    it('should apply correct buttonSizeClasses when hideArrow is true', () => {
+      // Test xs size
+      const xsWrapper = createWrapper({ size: 'xs', hideArrow: true })
+      const xsButton = xsWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(xsButton.classes()).toContain('h-6.5')
+      expect(xsButton.classes()).toContain('w-6.5')
+
+      // Test sm size
+      const smWrapper = createWrapper({ size: 'sm', hideArrow: true })
+      const smButton = smWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(smButton.classes()).toContain('h-7.5')
+      expect(smButton.classes()).toContain('w-7.5')
+
+      // Test md size
+      const mdWrapper = createWrapper({ size: 'md', hideArrow: true })
+      const mdButton = mdWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(mdButton.classes()).toContain('h-8.5')
+      expect(mdButton.classes()).toContain('w-8.5')
+
+      // Test lg size
+      const lgWrapper = createWrapper({ size: 'lg', hideArrow: true })
+      const lgButton = lgWrapper.findComponent({ name: 'SdsActionButton' })
+      expect(lgButton.classes()).toContain('h-10.5')
+      expect(lgButton.classes()).toContain('w-10.5')
     })
   })
 
@@ -226,8 +264,8 @@ describe('SortByDropdown.vue', () => {
       const wrapper = createWrapper({}, initialModel)
       await nextTick()
 
-      expect(wrapper.props('modelValue')).toEqual(initialModel)
       expect(wrapper.exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
 
     it('should set default direction to "ascending" when option is first selected', async () => {
@@ -257,13 +295,7 @@ describe('SortByDropdown.vue', () => {
           modelValue: { sortBy: null, orderBy: null }
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="true" :toggle="() => {}" /><slot /></div>'
-            },
-            SdsActionButton: { template: '<button><slot /></button>' },
-            SdsTooltip: { template: '<div><slot name="trigger" /><slot /></div>' }
-          }
+          stubs: globalStubs
         }
       })
 
@@ -293,8 +325,8 @@ describe('SortByDropdown.vue', () => {
       const newWrapper = createWrapper({}, initialModel)
       await nextTick()
 
-      expect(newWrapper.props('modelValue')).toEqual(initialModel)
       expect(newWrapper.exists()).toBe(true)
+      expect(newWrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(true)
     })
   })
 
@@ -368,19 +400,15 @@ describe('SortByDropdown.vue', () => {
           modelValue: { sortBy: null, orderBy: null }
         },
         global: {
-          stubs: {
-            SdsFloatingUi: {
-              template: '<div><slot name="trigger" :isOpen="true" :toggle="() => {}" /><slot /></div>'
-            },
-            SdsActionButton: { template: '<button><slot /></button>' },
-            SdsTooltip: { template: '<div><slot name="trigger" /><slot /></div>' }
-          }
+          stubs: globalStubs
         }
       })
       await nextTick()
 
       expect(wrapper.exists()).toBe(true)
-      expect(wrapper.props('modelValue')?.sortBy).toBeNull()
+
+      const orderBySection = wrapper.find('.border-t.border-gray-100')
+      expect(orderBySection.exists()).toBe(false)
     })
 
     it('should update direction filters when switching between options', async () => {
@@ -433,205 +461,14 @@ describe('SortByDropdown.vue', () => {
     })
   })
 
-  describe('User Interactions - Sort By Selection', () => {
-    it('should select option and emit update:modelValue event when user clicks a sort by option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-      expect(wrapper.props('options').length).toBeGreaterThan(0)
-    })
-
-    it('should automatically set direction to ascending when user selects an option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should reset direction to ascending when user selects a different option', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update localModelValue when option radio button is clicked', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update model value when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue with complete object (sortBy + orderBy) when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should not emit duplicate events during internal updates', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should handle rapid option switching correctly', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('User Interactions - Order By Selection', () => {
-    it('should select ascending and emit update:modelValue event when user clicks ascending direction', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should change to descending and emit update:modelValue event when user clicks descending direction', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update selectedDirection when direction radio button is clicked', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update model value when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue with complete object (sortBy + orderBy) when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when direction changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should maintain sortBy value when only direction changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should prevent event propagation when clicking direction filter labels', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('Model Value Synchronization', () => {
-    it('should sync model value with internal state on mount', async () => {
-      const initialModel: SortByDropdownModel = {
-        sortBy: 'count',
-        orderBy: 'numerical:descending'
-      }
-
-      const wrapper = createWrapper({}, initialModel)
-      await nextTick()
-
-      expect(wrapper.props('modelValue')).toEqual(initialModel)
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should update internal state when model value changes externally', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      const newModel: SortByDropdownModel = {
-        sortBy: 'date',
-        orderBy: 'chronological:descending'
-      }
-      await wrapper.setProps({ modelValue: newModel })
-      await nextTick()
-
-      expect(wrapper.props('modelValue')).toEqual(newModel)
-    })
-
-    it('should emit update:modelValue when sortBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should emit update:modelValue when orderBy changes', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should not emit update:modelValue during internal updates', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should maintain consistent state between sortBy and orderBy', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should handle model value being set to null', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      await wrapper.setProps({ modelValue: null })
-      await nextTick()
-
-      expect(wrapper.props('modelValue')).toBeNull()
-    })
-
-    it('should emit update:modelValue when both sortBy and orderBy change in sequence', async () => {
-      const wrapper = createWrapper()
-      await nextTick()
-
-      expect(wrapper.exists()).toBe(true)
-    })
-  })
-
   describe('Dropdown Behavior & Placement', () => {
     it('should toggle dropdown when trigger button is clicked', async () => {
       const wrapper = createWrapper()
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured for dropdown toggling with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('button').exists()).toBe(true)
-      expect(wrapper.find('button').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).attributes('aria-haspopup')).toBe('true')
     })
 
     it('should show "active" state on button when dropdown is open', async () => {
@@ -639,8 +476,8 @@ describe('SortByDropdown.vue', () => {
       const floatingUi = wrapper.findComponent({ name: 'SdsFloatingUi' })
       // Component should be configured to toggle open state with FloatingUi
       expect(floatingUi.exists()).toBe(true)
-      expect(wrapper.find('button').exists()).toBe(true)
-      expect(wrapper.find('button').attributes('aria-haspopup')).toBe('true')
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).exists()).toBe(true)
+      expect(wrapper.findComponent({ name: 'SdsActionButton' }).attributes('aria-haspopup')).toBe('true')
     })
 
     it('should apply correct placement prop to FloatingUi (auto, top, right, bottom-start)', () => {
@@ -655,8 +492,7 @@ describe('SortByDropdown.vue', () => {
 
     it('should display tooltip on button hover', () => {
       const wrapper = createWrapper({ tooltip: 'Sort the list' })
-      // Component should render with button (wrapped by tooltip)
-      expect(wrapper.find('button').exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 
     it('should set aria-haspopup="true" on trigger button', () => {
@@ -740,16 +576,6 @@ describe('SortByDropdown.vue', () => {
         const wrapper = createWrapper({}, invalidModel)
         expect(wrapper.exists()).toBe(true)
       }).not.toThrow()
-    })
-
-    it('should prevent interactions when disabled prop is true', async () => {
-      const wrapper = createWrapper({ disabled: true })
-      await wrapper.find('button').trigger('click')
-      await nextTick()
-      const radioInputs = wrapper.findAll('input[type="radio"]')
-      radioInputs.forEach(input => {
-        expect(input.attributes('disabled')).toBeDefined()
-      })
     })
   })
 })

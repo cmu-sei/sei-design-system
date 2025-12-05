@@ -82,10 +82,11 @@
                 v-for="f, index in field.fields"
                 :key="f.key"
                 type="button"
-                class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
+                class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
                 :class="{
                   'cursor-default after:mr-0.5': !f.sortable,
-                  'after:mr-4' : f.sortable
+                  'after:mr-4' : f.sortable,
+                  'flex-row-reverse': field.align === 'right'
                 }"
                 @click="f.sortable ? handleSortBy(f) : undefined"
               >
@@ -113,8 +114,10 @@
                     :width="sortField !== f.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === f.key,
-                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== f.key,
-                      '-mb-1 ml-2': sortField === f.key && sortOrder > 0 || sortField === f.key && sortOrder < 0,
+                      '-mb-1.5 opacity-0 group-hover:opacity-50': sortField !== f.key,
+                      '-mb-1.5': sortField === f.key && sortOrder > 0 || sortField === f.key && sortOrder < 0,
+                      'ml-2': f.align !== 'right',
+                      'mr-2': f.align === 'right',
                     }"
                     preserveAspectRatio="xMidYMid meet"
                     :viewBox="sortField !== f.key ? '0 0 15 15' : '0 0 11 15'"
@@ -155,8 +158,10 @@
               class="whitespace-nowrap space-x-1 select-none group"
             >
               <button
+                class="inline-flex items-center"
                 :class="{
-                  'cursor-default': !field.sortable
+                  'cursor-default': !field.sortable,
+                  'flex-row-reverse': field.align === 'right'
                 }"
                 type="button"
                 @click="field.sortable ? handleSortBy(field) : undefined"
@@ -184,8 +189,10 @@
                     :width="sortField !== field.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === field.key,
-                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== field.key,
-                      '-mb-1 ml-2': sortField === field.key && sortOrder > 0 || sortField === field.key && sortOrder < 0,
+                      '-mb-1.5 opacity-0 group-hover:opacity-50': sortField !== field.key,
+                      '-mb-1.5': sortField === field.key && sortOrder > 0 || sortField === field.key && sortOrder < 0,
+                      'ml-2': field.align !== 'right',
+                      'mr-2': field.align === 'right',
                     }"
                     preserveAspectRatio="xMidYMid meet"
                     :viewBox="sortField !== field.key ? '0 0 15 15' : '0 0 11 15'"
@@ -225,8 +232,8 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-950': item.toggled && !item.nestedRows && rowHighlight
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': item.toggled && !item.nestedRows && rowHighlight
           }"
           @mouseover="onMouseover(item)"
           @mouseleave="onMouseleave(item)"
@@ -304,7 +311,7 @@
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
-                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight
               }"
             >
               <td 
@@ -347,8 +354,8 @@
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-950': rowHighlight && item.hover
+              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && item.hover
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">

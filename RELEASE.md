@@ -1,6 +1,8 @@
-# Release Process
+# Release Procedure
 
-## Overview
+## Production Releases
+
+### Overview
 
 The SEI Design System follows **semantic versioning** and uses a two-step release process:
 
@@ -9,16 +11,17 @@ The SEI Design System follows **semantic versioning** and uses a two-step releas
 
 This ensures that the source of truth for versions is always the committed `package.json` file, and the repository history accurately reflects all releases.
 
-## Prerequisites
+### Prerequisites
 
 - You must have write access to the repository
-- You must be on the `main` (or `master`) branch
+- You must be on the `main` branch
+- `develop` must first be merged into `main` via a Pull Request (if applicable)
 - All changes must be committed and pushed
 - All CI checks must be passing
 
-## Release Steps
+### Release Steps
 
-### 1. Run the Release Script
+#### 1. Run the Release Script
 
 From the root of the repository, run:
 
@@ -44,7 +47,7 @@ This interactive script will:
 
 **Note:** The script includes comprehensive error handling and will cleanly restore your repository to its original state if any step fails before the commit is pushed.
 
-### 2. Create a GitHub Release
+#### 2. Create a GitHub Release
 
 After the script completes successfully:
 
@@ -65,21 +68,21 @@ This will trigger the GitHub Actions workflow that:
 - Performs a dry-run publish
 - Publishes to the npm registry
 
-## What NOT to Do
+### What NOT to Do
 
 ❌ **Don't** manually edit version numbers in `package.json`  
 ❌ **Don't** modify versions in the GitHub Actions workflow  
 ❌ **Don't** create releases without first running the release script  
 ❌ **Don't** commit version bumps manually
 
-## Troubleshooting
+### Troubleshooting
 
-### Local Release Script Issues
+#### Local Release Script Issues
 
-#### "You must be on the main/master branch to create a release"
+##### "You must be on the main/master branch to create a release"
 Switch to the main branch: `git checkout main`
 
-#### "You have uncommitted changes"
+##### "You have uncommitted changes"
 Commit or stash your changes before running the release script:
 ```bash
 git add .
@@ -88,15 +91,15 @@ git commit -m "your changes"
 git stash
 ```
 
-#### "Tag vX.Y.Z already exists"
+##### "Tag vX.Y.Z already exists"
 This tag was already created. Either:
 - You're trying to release the same version twice (bump to a higher version)
 - A previous release failed partway through (delete the tag: `git tag -d vX.Y.Z` and `git push origin :refs/tags/vX.Y.Z`)
 
-#### Script execution errors
+##### Script execution errors
 If the script encounters any errors (git operations, network issues, etc.), it will attempt to restore your repository to its original state by reverting uncommitted changes to `package.json` and `package-lock.json`.
 
-#### "Failed to push commit to origin"
+##### "Failed to push commit to origin"
 This usually means:
 - Remote has diverged (someone else pushed): Pull changes and try again
 - Network issue: Check your connection and retry
@@ -104,13 +107,13 @@ This usually means:
 
 The script will automatically roll back the commit and restore your files.
 
-#### "Failed to push tag to origin"
+##### "Failed to push tag to origin"
 The commit was successfully pushed but the tag wasn't. You can manually push the tag:
 ```bash
 git push origin vX.Y.Z
 ```
 
-#### Merge to develop failed
+##### Merge to develop failed
 If the automatic merge to `develop` fails due to conflicts:
 ```bash
 git checkout develop
@@ -124,19 +127,32 @@ git push origin develop
 
 The release to `main` was successful even if the develop merge failed.
 
-### GitHub Actions Workflow Issues
+#### GitHub Actions Workflow Issues
 
-#### "Version does not match package.json version"
+##### "Version does not match package.json version"
 You created a GitHub Release without running `npm run release` first. Delete the release and tag, then run the release script.
 
-#### "Version already exists in registry"
+##### "Version already exists in registry"
 This version was already published to npm. You need to bump to a higher version number and create a new release.
 
-#### CI checks are failing
+##### CI checks are failing
 Fix the failing tests/lint errors, commit the fixes, and create a new patch release.
 
-#### Workflow failed partway through
+##### Workflow failed partway through
 If the GitHub Actions workflow fails, you can re-run it from the Actions tab. The workflow is idempotent - it won't republish if the version already exists.
+
+### Why This Approach?
+
+This two-step process follows industry best practices:
+
+1. **Version as source of truth**: The committed `package.json` is always the source of truth
+2. **Git history accuracy**: Every release has a corresponding commit and tag in git
+3. **Atomic releases**: Version bumps and code changes are separate concerns
+4. **Branch synchronization**: `main` and `develop` branches stay in sync automatically
+5. **CI/CD separation**: Local script handles versioning, CI handles publishing
+6. **Fail-fast**: Problems are caught before creating releases, not during
+
+This is the same pattern used by major frameworks like Vue.js, Nuxt, and many other popular open-source libraries.
 
 ## Beta Releases
 
@@ -180,18 +196,3 @@ Beta releases are automatically skipped for:
 - Release merge commits from main (e.g., `chore: release v4.5.0`)
 
 This prevents infinite loops and unwanted beta publishes.
-
----
-
-## Why This Approach?
-
-This two-step process follows industry best practices:
-
-1. **Version as source of truth**: The committed `package.json` is always the source of truth
-2. **Git history accuracy**: Every release has a corresponding commit and tag in git
-3. **Atomic releases**: Version bumps and code changes are separate concerns
-4. **Branch synchronization**: `main` and `develop` branches stay in sync automatically
-5. **CI/CD separation**: Local script handles versioning, CI handles publishing
-6. **Fail-fast**: Problems are caught before creating releases, not during
-
-This is the same pattern used by major frameworks like Vue.js, Nuxt, and many other popular open-source libraries.
