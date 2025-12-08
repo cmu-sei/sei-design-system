@@ -1,24 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TopFiveChart.vue > matches snapshot with malformed data 1`] = `
-"<div data-id="sds-top-five-chart" class="space-y-4 chart">
-  <h3 class="text-2xl font-light">Top Five Chart (malformed data)</h3>
-  <div>
-    <p>The chart data is malformed and cannot be displayed at this time.</p>
-  </div>
-</div>"
-`;
-
-exports[`TopFiveChart.vue > matches snapshot with no data 1`] = `
-"<div data-id="sds-top-five-chart" class="space-y-4 chart">
-  <h3 class="text-2xl font-light">Top Five Chart (no data)</h3>
-  <div>
-    <p>There is no chart data to display at this time.</p>
-  </div>
-</div>"
-`;
-
-exports[`TopFiveChart.vue > matches snapshot with no props assigned 1`] = `
+exports[`TopFiveChart.vue > Basic Rendering > matches snapshot with no props assigned 1`] = `
 "<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light"></h3>
   <div>
@@ -27,7 +9,7 @@ exports[`TopFiveChart.vue > matches snapshot with no props assigned 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
+exports[`TopFiveChart.vue > Entry Rendering > matches snapshot with no urls 1`] = `
 "<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="orange">
   <h3 class="text-2xl font-light">Top Five Chart (no urls)</h3>
   <div>
@@ -58,7 +40,7 @@ exports[`TopFiveChart.vue > matches snapshot with no urls 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
+exports[`TopFiveChart.vue > Entry Rendering > matches snapshot with urls 1`] = `
 "<div data-id="sds-top-five-chart" class="space-y-4 chart" progresscolor="cyan">
   <h3 class="text-2xl font-light">Top Five Chart (with urls, view all url, showPercent)</h3>
   <div>
@@ -119,7 +101,7 @@ exports[`TopFiveChart.vue > matches snapshot with urls 1`] = `
 </div>"
 `;
 
-exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
+exports[`TopFiveChart.vue > Entry Rendering > matches snapshot with urls, doNotLinkEntries 1`] = `
 "<div data-id="sds-top-five-chart" class="space-y-4 chart">
   <h3 class="text-2xl font-light">Top Five Chart (with urls, doNotLinkEntries)</h3>
   <div>
@@ -176,6 +158,24 @@ exports[`TopFiveChart.vue > matches snapshot with urls, doNotLinkEntries 1`] = `
       </li>
       <!--v-if-->
     </ul>
+  </div>
+</div>"
+`;
+
+exports[`TopFiveChart.vue > No Data and Error States > matches snapshot with malformed data 1`] = `
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
+  <h3 class="text-2xl font-light">Top Five Chart (malformed data)</h3>
+  <div>
+    <p>The chart data is malformed and cannot be displayed at this time.</p>
+  </div>
+</div>"
+`;
+
+exports[`TopFiveChart.vue > No Data and Error States > matches snapshot with no data 1`] = `
+"<div data-id="sds-top-five-chart" class="space-y-4 chart">
+  <h3 class="text-2xl font-light">Top Five Chart (no data)</h3>
+  <div>
+    <p>There is no chart data to display at this time.</p>
   </div>
 </div>"
 `;
