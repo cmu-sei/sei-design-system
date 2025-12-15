@@ -160,6 +160,31 @@
       </div>
       <div class="flex flex-row gap-4">
         <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              variant: 'green',
+            },
+            {
+              name: 'Jacobim Mugatu',
+              variant: 'purple',
+            },
+            {
+              name: 'Maury Ballstein',
+              variant: 'yellow'
+            },
+            {
+              name: 'Morgan Markowski',
+              variant: 'red',
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
           size="sm"
           shape="circle"
           density="condensed"
@@ -196,6 +221,27 @@
               href: 'https://google.com',
               src: 'https://picsum.photos/seed/6/200/400'
             },
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+              variant: 'red',
+              target: '_blank'
+            },
+            {
+              name: 'Jacobim Mugatu',
+              src: 'https://picsum.photos/seed/2/200/200',
+              href: 'https://google.com',
+            }
           ]"
         />
       </div>
@@ -464,17 +510,17 @@
       </h2>
       <div class="flex flex-row gap-4 flex-wrap">
         <div
-          v-for="variant in badgeVariants" 
-          :key="variant" 
+          v-for="variant in badgeVariants"
+          :key="variant"
           class="flex flex-col gap-4"
         >
-          <div 
-            v-for="type in badgeTypes" 
-            :key="type" 
+          <div
+            v-for="type in badgeTypes"
+            :key="type"
             class="flex flex-row gap-4"
           >
-            <SdsBadge 
-              :type="type" 
+            <SdsBadge
+              :type="type"
               :variant="variant"
             >
               Badge

@@ -156,7 +156,7 @@
             v-model:selected="comboBox1.selected"
             type="taggable-select"
             placeholder="Search"
-            :loading="comboBox1.loading"
+            :pending="comboBox1.pending"
             :suggestions="comboBox1.suggestions"
             focus-on-key-press
             multiple
@@ -280,6 +280,66 @@
               </a>
             </template>
           </SdsComboBox>
+          <code class="text-xs">type="select" option-type="custom" multiple with Avatar, Badge, and Indicator</code>
+          <SdsComboBox
+            v-model="comboBox6.modelValue"
+            v-model:selected="comboBox6.selected"
+            placeholder="Search users..."
+            :disabled="false"
+            :autofocus="false"
+            :suggestions="comboBox6.suggestions"
+            :debounce-complete="0"
+            size="sm"
+            type="select"
+            multiple
+            filter-suggestions
+            focus-on-key-press
+            option-label="name"
+            option-type="custom"
+            @complete="comboBox6.onComplete"
+            @result="comboBox6.onResult"
+            @enter="comboBox6.onEnter"
+          >
+            <template #customOption="{ option, classList, dataActive, onClick }">
+              <button
+                type="button"
+                :class="classList"
+                :data-active="dataActive"
+                class="flex items-center gap-3 w-full"
+                @click="onClick"
+              >
+                <SdsIndicator
+                  :variant="option.status === 'online' ? 'green' : option.status === 'away' ? 'orange' : 'gray'"
+                  :hide-indicator="option.status === 'offline'"
+                  placement="bottom-right"
+                  placement-over="circle"
+                  size="sm"
+                >
+                  <SdsAvatar
+                    :name="option.name"
+                    :variant="option.variant"
+                    size="sm"
+                    shape="circle"
+                  />
+                </SdsIndicator>
+                <div class="flex-1 min-w-0 text-left">
+                  <div class="font-medium text-sm truncate">
+                    {{ option.name }}
+                  </div>
+                  <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    {{ option.email }}
+                  </div>
+                </div>
+                <SdsBadge
+                  :variant="option.variant"
+                  type="light"
+                  class="!text-[10px] !px-1.5 !py-0.5"
+                >
+                  {{ option.role }}
+                </SdsBadge>
+              </button>
+            </template>
+          </SdsComboBox>
         </div>
         <SdsButton
           type="submit"
@@ -308,6 +368,9 @@
             </tr>
             <tr>
               <td>(taggable-select, multiple):</td><td>{{ formData.comboBox4 }}</td>
+            </tr>
+            <tr>
+              <td>(select, custom, multiple):</td><td>{{ formData.comboBox6 }}</td>
             </tr>
           </tbody>
         </table>
@@ -500,7 +563,7 @@ const comboBox0 = reactive({
 const comboBox1 = reactive({
   modelValue: '',
   selected: [] as ComboBoxSuggestion[],
-  loading: false,
+  pending: false,
   suggestions: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
     console.info('onComplete:', query)
@@ -521,7 +584,7 @@ const wait = (ms: number) => {
 const mockApiRequest = async (query: string) => {
   comboBox1.suggestions = []
   if (query === '') return
-  comboBox1.loading = true
+  comboBox1.pending = true
   console.log("Waiting 1 seconds...");
   await wait(1000);
   console.log("1 seconds passed... now return mock API data");
@@ -551,7 +614,7 @@ const mockApiRequest = async (query: string) => {
     }
     return false
   }) as ComboBoxSuggestion[]
-  comboBox1.loading = false
+  comboBox1.pending = false
 }
 
 const comboBox2_1 = reactive({
@@ -757,13 +820,42 @@ const comboBox5 = reactive({
   }
 })
 
+const userSuggestions = [
+  { id: 1, name: 'Sarah Chen', email: 'sarah.chen@example.com', role: 'Admin', status: 'online', initials: 'SC', variant: 'blue' },
+  { id: 2, name: 'James Rodriguez', email: 'james.r@example.com', role: 'Developer', status: 'online', initials: 'JR', variant: 'green' },
+  { id: 3, name: 'Emily Johnson', email: 'emily.j@example.com', role: 'Designer', status: 'away', initials: 'EJ', variant: 'purple' },
+  { id: 4, name: 'Michael Kim', email: 'michael.kim@example.com', role: 'Developer', status: 'offline', initials: 'MK', variant: 'green' },
+  { id: 5, name: 'Aisha Patel', email: 'aisha.p@example.com', role: 'Manager', status: 'online', initials: 'AP', variant: 'yellow' },
+  { id: 6, name: 'David Martinez', email: 'david.m@example.com', role: 'Developer', status: 'online', initials: 'DM', variant: 'green' },
+  { id: 7, name: 'Lisa Anderson', email: 'lisa.a@example.com', role: 'Designer', status: 'offline', initials: 'LA', variant: 'purple' },
+  { id: 8, name: 'Robert Chang', email: 'robert.chang@example.com', role: 'Admin', status: 'away', initials: 'RC', variant: 'blue' },
+  { id: 9, name: 'Maria Garcia', email: 'maria.g@example.com', role: 'Manager', status: 'online', initials: 'MG', variant: 'yellow' },
+  { id: 10, name: 'Thomas Wright', email: 'thomas.w@example.com', role: 'Developer', status: 'online', initials: 'TW', variant: 'green' }
+] as ComboBoxSuggestion[]
+
+const comboBox6 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: userSuggestions,
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  }
+})
+
 const formData = reactive({
   comboBox1: '',
   comboBox2_1: ([] as ComboBoxSuggestion[]),
   comboBox2_2: ([] as ComboBoxSuggestion[]),
   comboBox3: ([] as ComboBoxSuggestion[]),
   comboBox4: ([] as ComboBoxSuggestion[]),
-  comboBox5: ([] as ComboBoxSuggestion[])
+  comboBox5: ([] as ComboBoxSuggestion[]),
+  comboBox6: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {
@@ -773,6 +865,7 @@ watchEffect(() => {
   formData.comboBox3 = comboBox3.selected
   formData.comboBox4 = comboBox4.selected
   formData.comboBox5 = comboBox5.selected
+  formData.comboBox6 = comboBox6.selected
 })
 
 const handleSubmit = () => {
