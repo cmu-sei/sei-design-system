@@ -182,7 +182,8 @@
     @apply font-semibold text-sm transition-all duration-100 ease-linear;
   }
 
-  /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
+  /* Default CTA Arrow Colors (applies when no color variant is specified) */
+  /* Primary */
   :where(.sds-theme-plaid .link.link-cta.link-primary:not(.link-red):not(.link-white))::after {
     @apply bg-blue-600;
   }
@@ -199,7 +200,7 @@
     @apply bg-blue-200;
   }
 
-  /* Default CTA Arrow Colors - Secondary (applies if no color variant is present) */
+  /* Secondary */
   :where(.sds-theme-plaid .link.link-cta.link-secondary:not(.link-red):not(.link-white))::after {
     @apply bg-gray-900;
   }
@@ -216,7 +217,7 @@
     @apply bg-blue-200;
   }
 
-  /* Default CTA Arrow Colors - Tertiary (applies if no color variant is present) */
+  /* Tertiary */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary:not(.link-red):not(.link-white))::after {
     @apply bg-gray-600;
   }
@@ -233,6 +234,7 @@
     @apply bg-gray-100;
   }
 
+  /* Arrow Icon Sizing & Positioning */
   :where(.sds-theme-plaid .link.link-cta)::after {
     @apply content-[''] inline-block h-2.75 w-3.75 top-px ml-2 relative transition-transform;
     mask-image: var(--arrow-right-sm);
@@ -267,7 +269,8 @@
     @apply translate-x-1;
   }
 
-  /* CTA Arrow Colors - Blue (Default) */
+  /* ===== CTA COLOR VARIANTS ===== */
+  /* Primary - Blue */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue) {
     @apply text-black;
   }
@@ -281,7 +284,7 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover) {
-    @apply text-white;
+    @apply text-blue-200;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)::after {
@@ -300,6 +303,7 @@
     @apply bg-blue-200;
   }
 
+  /* Secondary - Blue */
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue)::after {
     @apply bg-gray-900;
   }
@@ -307,6 +311,7 @@
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover)::after {
     @apply bg-blue-600;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover) {
     @apply text-blue-600;
   }
@@ -319,7 +324,11 @@
     @apply bg-blue-200;
   }
 
-  /* CTA Arrow Colors - Red */
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary.link-blue:hover) {
+    @apply text-blue-200;
+  }
+
+  /* Primary - Red */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red) {
     @apply text-black;
   }
@@ -333,7 +342,7 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red:hover) {
-    @apply text-white;
+    @apply text-red-200;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red)::after {
@@ -352,6 +361,7 @@
     @apply bg-red-200;
   }
 
+  /* Secondary - Red */
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red)::after {
     @apply bg-gray-900;
   }
@@ -359,9 +369,11 @@
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red:hover)::after {
     @apply bg-red-500;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red:hover) {
     @apply text-red-500;
   }
+
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary.link-red:hover) {
     @apply text-red-200;
   }
@@ -374,7 +386,7 @@
     @apply bg-red-200;
   }
 
-  /* CTA Arrow Colors - White */
+  /* Primary - White */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-white) {
     @apply text-white;
   }
@@ -407,15 +419,19 @@
     @apply bg-white;
   }
 
+  /* Secondary - White */
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white) {
     @apply text-gray-100;
   }
+  
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white:hover) {
     @apply text-white;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white)::after {
     @apply bg-gray-100;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white:hover)::after {
     @apply bg-white;
   }
@@ -428,7 +444,7 @@
     @apply bg-white;
   }
 
-  /* CTA Arrow Colors - Tertiary */
+  /* Tertiary - Blue/Red */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary)::after {
     @apply bg-gray-600;
   }
@@ -438,42 +454,84 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary)::after {
-    @apply bg-gray-400;
+    @apply bg-white;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary:hover)::after {
-    @apply bg-gray-100;
+    @apply bg-white;
   }
 
-  /* CTA Tertiary Color Variants */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue),
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red) {
     @apply text-gray-600;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue:hover),
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red:hover) {
     @apply text-gray-900;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue)::after,
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red)::after {
     @apply bg-gray-600;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue:hover)::after,
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red:hover)::after {
     @apply bg-gray-900;
   }
-  /* White Variant */
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue),
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue:hover),
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue:hover)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red:hover)::after {
+    @apply bg-white;
+  }
+
+  /* Tertiary - White */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white) {
     @apply text-gray-100;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover) {
     @apply text-gray-100;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white)::after {
     @apply bg-gray-100;
   }
+
   :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover)::after {
     @apply bg-gray-100;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover)::after {
+    @apply bg-white;
   }
 
   /* ===== DIRECTIONAL CTA VARIANTS ===== */
