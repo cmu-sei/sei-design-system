@@ -171,8 +171,8 @@
           >
             <SdsComboBox
               v-model="comboBox2_1.modelValue"
-              v-model:selected="comboBox2_1.selected"
               id="comboBox2_1"
+              v-model:selected="comboBox2_1.selected"
               placeholder="Search"
               :suggestions="comboBox2_1.suggestions"
               size="sm"
