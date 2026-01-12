@@ -216,7 +216,7 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'secondary' },
+  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
   /**
    * Determines the color of the component.
    */
@@ -224,7 +224,7 @@ const props = defineProps({
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'md' },
+  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
   /**
    * The z-index for the popover.
    */
