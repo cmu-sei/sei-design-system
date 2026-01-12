@@ -88,7 +88,7 @@
           :readonly="isReadonly"
           :maxlength="maxlength"
           @input="onInputFieldInput"
-          @click.prevent="showDropdown = (readonly || disabled || !clickToSelect) ? false : !showDropdown"
+          @click.prevent="inputClick"
           @keydown.delete="handleDelete"
           @keydown.tab="showDropdown = false"
           @keydown.up.prevent="handleArrows('up', $event)"
@@ -813,6 +813,12 @@ const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
   return []
 }
 
+const inputClick = () => {
+  if (props.readonly || props.disabled) return
+  if (props.clickToSelect)
+    showDropdown.value = !showDropdown.value
+}
+
 const selectAllChecked = computed(() => {
   const options = getCurrentGroupOptions()
   if (!options.length) return false
@@ -1086,7 +1092,7 @@ onKeyStroke('Escape', (e: KeyboardEvent) => {
   showDropdown.value = false
 })
 
-onClickOutside(root, () => { showDropdown.value = false })
+onClickOutside(root, () => showDropdown.value = false)
 
 onKeyStroke('/', (e: KeyboardEvent) => {
   if (!props.focusOnKeyPress) return
@@ -1368,7 +1374,11 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   if (idx !== -1) {
     (selected.value as ComboBoxSuggestion[]).splice(idx, 1)
   } else {
-    (selected.value as ComboBoxSuggestion[]).push(normalizedOption)
+    // Replace selection for single select, otherwise add to selection
+    if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select'))
+      selected.value.splice(0, selected.value.length, normalizedOption)
+    else
+      (selected.value as ComboBoxSuggestion[]).push(normalizedOption)
   }
   // Always emit the original value from props.suggestions (object or string) for this click
   let emitValue = original !== undefined ? original : option
@@ -1756,7 +1766,7 @@ const shouldShowDropdown = computed(() => {
   if (pendingQueryDebounce.value) return false
   if (!showDropdown.value) return false
   if (!hasDropdownSuggestion.value) return false
-  if (props.type !== 'text' && selected.value.length === 1 && !props.multiple) return false
+  if (props.type !== 'text' && selected.value.length === 1 && !props.multiple && !props.clickToSelect) return false
   return true
 })
 
