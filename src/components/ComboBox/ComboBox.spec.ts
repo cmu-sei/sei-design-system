@@ -56,6 +56,7 @@ describe('ComboBox', () => {
   it('should render tabs (and labels) when optionGroupLabel is provided', async () => {
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -84,6 +85,7 @@ describe('ComboBox', () => {
   it('should switch tabs with ArrowLeft/ArrowRight, should update suggestions when switching tabs', async () => {
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -225,7 +227,7 @@ describe('ComboBox', () => {
     const wrapper = mount(Component, {
       props: { suggestions: objectSuggestions, optionType: 'custom', optionLabel: 'label' },
       slots: {
-        customOption: (props: { option: ComboBoxSuggestion }) => h('div', { class: 'custom-option' }, `Custom: ${props.option.label}`)
+        customOption: (props: { option: ComboBoxSuggestion }) => h('div', { class: 'custom-option' }, `Custom: ${typeof props.option !== 'string' ? props.option.label : props.option}`)
       }
     })
     expect(wrapper.html()).toMatchSnapshot()
@@ -243,7 +245,7 @@ describe('ComboBox', () => {
   })
 
   it('should open dropdown and highlight last option on ArrowUp', async () => {
-    const wrapper = mount(Component, { props: { suggestions } })
+    const wrapper = mount(Component, { props: { suggestions, clickToSelect: true } })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await input.trigger('keydown.up')
@@ -258,6 +260,7 @@ describe('ComboBox', () => {
     const selected = []
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -285,7 +288,7 @@ describe('ComboBox', () => {
   })
 
   it('should close dropdown on Tab', async () => {
-    const wrapper = mount(Component, { props: { suggestions } })
+    const wrapper = mount(Component, { props: { suggestions, clickToSelect: true } })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     const dropdown = wrapper.find('[data-id="sds-combo-box-dropdown"]')
@@ -297,7 +300,7 @@ describe('ComboBox', () => {
   })
 
   it('should not throw or open dropdown on ArrowDown if no suggestions', async () => {
-    const wrapper = mount(Component, { props: { suggestions: [] } })
+    const wrapper = mount(Component, { props: { suggestions: [], clickToSelect: true } })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('keydown.down')
     await nextTick()
@@ -310,6 +313,7 @@ describe('ComboBox', () => {
   it('should allow navigation with dropdown already open', async () => {
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         mutliple: false,
       }
@@ -328,7 +332,7 @@ describe('ComboBox', () => {
   })
 
   it('should set input as readonly and allow focus when readonly prop is true', async () => {
-    const wrapper = mount(Component, { attachTo: document.body, props: { readonly: true, suggestions } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { clickToSelect: true, readonly: true, suggestions } })
     const input = wrapper.find('input[type="text"]')
     expect(input.attributes('readonly')).toBeDefined()
     // Should still be focusable
@@ -342,6 +346,7 @@ describe('ComboBox', () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -373,7 +378,7 @@ describe('ComboBox', () => {
 
   it('shakes input on invalid submit (type="select" and value not in suggestions)', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, type: 'select', multiple: false },
+      props: { suggestions, clickToSelect: true, type: 'select', multiple: false },
       attachTo: document.body
     })
     const input = wrapper.find('input[type="text"]')
@@ -393,6 +398,7 @@ describe('ComboBox', () => {
     const selected = []
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -421,7 +427,7 @@ describe('ComboBox', () => {
 
   it('should allow removing a tag in multiselect mode (click)', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, clickToSelect: true, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Find the remove button for the first tag
     const removeButtons = wrapper.findAll('.tag-remove, .remove-tag, .remove')
@@ -438,7 +444,7 @@ describe('ComboBox', () => {
 
   it('should allow clearing all tags with clear button in multiselect mode', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, clickToSelect: true, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Simulate input value to trigger clear button
     // Simulate input value to trigger clear button
@@ -459,7 +465,7 @@ describe('ComboBox', () => {
 
   it('shows dropdown after typing', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, debounceComplete: 0 }
+      props: { suggestions, clickToSelect: true, debounceComplete: 0 }
     })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('focus')
@@ -470,7 +476,7 @@ describe('ComboBox', () => {
 
   it('should allow removing a tag in taggable-select mode (click)', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Find the remove button for the first tag
     const removeButtons = wrapper.findAll('.tag-remove, .remove-tag, .remove')
@@ -487,7 +493,7 @@ describe('ComboBox', () => {
 
   it('should allow clearing all tags with clear button in taggable-select mode', async () => {
     const wrapper = mount(Component, {
-      props: { suggestions, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Simulate input value to trigger clear button
     const input = wrapper.find('input[type="text"]')
@@ -508,6 +514,7 @@ describe('ComboBox', () => {
   it('should remove last tag on Backspace when input is empty (taggable-select)', async () => {
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'taggable-select',
         multiple: true,
@@ -533,6 +540,7 @@ describe('ComboBox', () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -559,6 +567,7 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -592,6 +601,7 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -625,6 +635,7 @@ describe('ComboBox', () => {
   it('navigates from tab to first suggestion with ArrowDown, and from first suggestion to tab with ArrowUp', async () => {
     const wrapper = mount(Component, {
       props: {
+        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
