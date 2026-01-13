@@ -1729,9 +1729,8 @@
       <div>
         <sds-filter-by-dropdown
           v-model="filterBy.options"
-          :title="filterByBtnText"
-          enable-filter
           enable-sort-options
+          count
           @update:model-value="filtered"
         />
         <p class="mt-4">

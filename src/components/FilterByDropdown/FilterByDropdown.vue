@@ -25,7 +25,7 @@
       >
         <!-- @slot Title content of trigger button. -->
         <slot name="title">
-          <span>{{ title }}</span>
+          <span>{{ title + (props.count ? ` (${selectedCount})` : '') }}</span>
         </slot>
         <svg
           class="inline-block self-center w-5 h-5 -mr-1"
@@ -48,7 +48,7 @@
       >
         <div
           v-if="enableFilter"
-          class="px-4 pt-4 pb-3"
+          class="px-4 pt-4 pb-2.5"
         >
           <div
             class="input-group input-group-sm"
@@ -64,20 +64,26 @@
         </div>
         <div
           v-if="!enableFilter"
-          class="p-4 mb-3 space-x-2 space-y-2 border-b border-gray-100 dark:border-gray-700"
+          class="py-2 mb-2 border-b border-gray-100 dark:border-gray-700 pt-2"
         >
-          <label
-            class="leading-none text-gray-900 dark:text-gray-50 flex gap-2 items-center w-max"
+          <div
+            class="leading-5 flex gap-2 items-start px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
           >
             <input
+              id="filter_by_dropdown_select_all"
               type="checkbox"
-              class="my-auto"
+              class="my-auto focus:ring-0 mt-0.5"
               :checked="allSelected"
               :indeterminate.prop="indeterminate"
-              @click="toggleSelect()"
+              @change="toggleSelect()"
             >
-            <span class="my-auto">Select all</span>
-          </label>
+            <label
+              for="filter_by_dropdown_select_all"
+              class="cursor-pointer leading-none text-gray-900 dark:text-gray-50 flex gap-2 items-center w-full"
+            >
+              <span class="my-auto">Select all</span>
+            </label>
+          </div>
         </div>
         <div class="scroll-area max-h-56">
           <ul>
@@ -85,7 +91,9 @@
               v-for="o in filteredTmpOptions"
               :key="o.id"
             >
-              <div class="leading-5 flex gap-2 items-start px-4 py-1 hover:bg-gray-50 dark:hover:bg-gray-700">
+              <div 
+                class="leading-5 flex gap-2 items-start px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
                 <input
                   :id="`filter_by_dropdown_selection_list_${o.id}`"
                   v-model="o.selected"
@@ -101,7 +109,7 @@
             </li>
           </ul>
         </div>
-        <div class="px-4 pt-3 pb-4 space-y-2">
+        <div class="px-4 pt-2.5 pb-2 space-y-2">
           <SdsButton
             kind="primary"
             size="sm"
@@ -180,7 +188,11 @@ const props = defineProps({
   /**
    * Determines if the dropdown is disabled
    */
-  disabled: { type: Boolean, default: false}
+  disabled: { type: Boolean, default: false},
+  /**
+   * Determines if the count is visible next to the title
+   */
+  count: { type: Boolean, default: false}
 })
 
 /**
@@ -194,6 +206,8 @@ const button = ref<HTMLButtonElement | undefined>()
 const filterTextInput = ref<HTMLInputElement | undefined>()
 const filterText = ref("")
 const tmpOptions = ref([])
+
+const selectedCount = computed(() => options.value.filter((i: FilterByDropdownOption) => i.selected).length)
 
 const zIndexClass = computed(() => {
   switch (props.zIndex) {
@@ -232,12 +246,8 @@ const allSelected = computed(() => {
   return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
 })
 
-const someSelected = computed(() => {
-  return tmpOptions.value.some((i: FilterByDropdownOption) => i.selected);
-})
-
 const indeterminate = computed(() => {
-  return someSelected.value && !allSelected.value;
+  return allSelected.value;
 })
 
 const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
