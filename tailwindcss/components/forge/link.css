@@ -1,7 +1,7 @@
 @layer components {
   /* ===== BASE LINK STYLES ===== */
   :where(.sds-theme-forge .link) {
-    @apply inline-block break-words cursor-pointer;
+    @apply inline-block wrap-break-word cursor-pointer;
   }
 
   :where(.sds-theme-forge .link:hover) {
@@ -234,32 +234,32 @@
   }
 
   :where(.sds-theme-forge .link.link-cta)::after {
-    @apply content-[''] inline-block h-[11px] w-3 top-px ml-2 relative transition-transform;
+    @apply content-[''] inline-block h-2.75 w-3 top-px ml-2 relative transition-transform;
     mask-image: var(--chevrons-right-sm);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-xs)::after {
-    @apply h-[9px] w-2.5 top-px;
+    @apply h-2.25 w-2.5 top-px;
     mask-image: var(--chevrons-right-xs);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-sm)::after {
-    @apply h-[11px] w-3 top-px;
+    @apply h-2.75 w-3 top-px;
     mask-image: var(--chevrons-right-sm);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-base)::after {
-    @apply h-[13px] w-3.5 top-px;
+    @apply h-3.25 w-3.5 top-px;
     mask-image: var(--chevrons-right-md);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-lg)::after {
-    @apply h-[15px] w-4 top-px;
+    @apply h-3.75 w-4 top-px;
     mask-image: var(--chevrons-right-lg);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-xl)::after {
-    @apply h-[17px] w-4.5 top-0.5;
+    @apply h-4.25 w-4.5 top-0.5;
     mask-image: var(--chevrons-right-xl);
   }
 
