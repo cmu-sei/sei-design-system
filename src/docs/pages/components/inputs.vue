@@ -164,23 +164,27 @@
             @result="comboBox1.onResult"
             @enter="comboBox1.onEnter"
           />
-          <code class="text-xs">type="select" :multiple="false"</code>
-          <SdsComboBox
-            v-model="comboBox2_1.modelValue"
-            v-model:selected="comboBox2_1.selected"
-            placeholder="Search"
-            :suggestions="comboBox2_1.suggestions"
-            size="sm"
-            type="select"
-            filter-suggestions
-            focus-on-key-press
-            option-label="name"
-            option-group-label="section"
-            option-group-children="items"
-            @complete="comboBox2_1.onComplete"
-            @result="comboBox2_1.onResult"
-            @enter="comboBox2_1.onEnter"
-          />
+          <SdsFormGroup
+            for="comboBox2_1"
+            label="type='select' :multiple='false' :click-to-select='true'"
+            helper-text="Select items to add to your grocery list"
+          >
+            <SdsComboBox
+              id="comboBox2_1"
+              v-model="comboBox2_1.modelValue"
+              v-model:selected="comboBox2_1.selected"
+              placeholder="Search"
+              :suggestions="comboBox2_1.suggestions"
+              size="sm"
+              type="select"
+              filter-suggestions
+              focus-on-key-press
+              click-to-select
+              @complete="comboBox2_1.onComplete"
+              @result="comboBox2_1.onResult"
+              @enter="comboBox2_1.onEnter"
+            />
+          </SdsFormGroup>
           <code class="text-xs">type="select" :multiple="true"</code>
           <SdsComboBox
             v-model="comboBox2_2.modelValue"
@@ -216,6 +220,7 @@
             option-label="name"
             option-group-label="section"
             option-group-children="items"
+            :click-to-select="false"
             @complete="comboBox3.onComplete"
             @result="comboBox3.onResult"
             @enter="comboBox3.onEnter"
@@ -620,23 +625,13 @@ const mockApiRequest = async (query: string) => {
 const comboBox2_1 = reactive({
   modelValue: '',
   suggestions: [
-    {
-      section: 'Fruits',
-      items: [
-        { name: 'Apple' },
-        { name: 'Banana' },
-        { name: 'Blueberry' },
-        { name: 'Cantaloupe' },
-        { name: 'Kiwi' },
-        { name: 'Strawberry' }
-      ]
-    },
-    {
-      section: 'Vegetables',
-      items: [
-        { name: 'Artichoke' },
-      ]
-    }
+    'Apple',
+    'Banana',
+    'Blueberry',
+    'Cantaloupe',
+    'Kiwi',
+    'Strawberry',
+    'Artichoke'
   ] as ComboBoxSuggestion[],
   selected: [] as ComboBoxSuggestion[],
   async onComplete(query: string) {
