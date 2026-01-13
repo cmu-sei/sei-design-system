@@ -1,7 +1,7 @@
 @layer components {
   /* ===== BASE LINK STYLES ===== */
   :where(.sds-theme-plaid .link) {
-    @apply inline-block break-words cursor-pointer;
+    @apply inline-block wrap-break-word cursor-pointer;
   }
 
   :where(.sds-theme-plaid .link:hover) {
@@ -182,7 +182,8 @@
     @apply font-semibold text-sm transition-all duration-100 ease-linear;
   }
 
-  /* Default CTA Arrow Colors - Blue (applies if no color variant is present) */
+  /* Default CTA Arrow Colors (applies when no color variant is specified) */
+  /* Primary */
   :where(.sds-theme-plaid .link.link-cta.link-primary:not(.link-red):not(.link-white))::after {
     @apply bg-blue-600;
   }
@@ -199,7 +200,7 @@
     @apply bg-blue-200;
   }
 
-  /* Default CTA Arrow Colors - Secondary (applies if no color variant is present) */
+  /* Secondary */
   :where(.sds-theme-plaid .link.link-cta.link-secondary:not(.link-red):not(.link-white))::after {
     @apply bg-gray-900;
   }
@@ -216,7 +217,7 @@
     @apply bg-blue-200;
   }
 
-  /* Default CTA Arrow Colors - Tertiary (applies if no color variant is present) */
+  /* Tertiary */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary:not(.link-red):not(.link-white))::after {
     @apply bg-gray-600;
   }
@@ -233,33 +234,34 @@
     @apply bg-gray-100;
   }
 
+  /* Arrow Icon Sizing & Positioning */
   :where(.sds-theme-plaid .link.link-cta)::after {
-    @apply content-[''] inline-block h-[11px] w-[15px] top-px ml-2 relative transition-transform;
+    @apply content-[''] inline-block h-2.75 w-3.75 top-px ml-2 relative transition-transform;
     mask-image: var(--arrow-right-sm);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-xs)::after {
-    @apply h-[9px] w-[13px] top-px;
+    @apply h-2.25 w-3.25 top-px;
     mask-image: var(--arrow-right-xs);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-sm)::after {
-    @apply h-[11px] w-[15px] top-px;
+    @apply h-2.75 w-3.75 top-px;
     mask-image: var(--arrow-right-sm);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-base)::after {
-    @apply h-[13px] w-[17px] top-0;
+    @apply h-3.25 w-4.25 top-0;
     mask-image: var(--arrow-right-md);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-lg)::after {
-    @apply h-[15px] w-[19px] top-0.5;
+    @apply h-3.75 w-4.75 top-0.5;
     mask-image: var(--arrow-right-lg);
   }
 
   :where(.sds-theme-plaid .link.link-cta.text-xl)::after {
-    @apply h-[17px] w-[21px] top-0.75;
+    @apply h-4.25 w-5.25 top-0.75;
     mask-image: var(--arrow-right-xl);
   }
 
@@ -267,13 +269,14 @@
     @apply translate-x-1;
   }
 
-  /* CTA Arrow Colors - Blue (Default) */
+  /* ===== CTA COLOR VARIANTS ===== */
+  /* Primary - Blue */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue) {
     @apply text-black;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue:hover) {
-    @apply text-black;
+    @apply text-blue-500;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue) {
@@ -281,7 +284,7 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover) {
-    @apply text-white;
+    @apply text-blue-200;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)::after {
@@ -300,12 +303,17 @@
     @apply bg-blue-200;
   }
 
+  /* Secondary - Blue */
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue)::after {
     @apply bg-gray-900;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover)::after {
-    @apply bg-blue-500;
+    @apply bg-blue-600;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover) {
+    @apply text-blue-600;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary.link-blue)::after {
@@ -316,13 +324,17 @@
     @apply bg-blue-200;
   }
 
-  /* CTA Arrow Colors - Red */
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary.link-blue:hover) {
+    @apply text-blue-200;
+  }
+
+  /* Primary - Red */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red) {
     @apply text-black;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red:hover) {
-    @apply text-black;
+    @apply text-red-500;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red) {
@@ -330,7 +342,7 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-primary.link-red:hover) {
-    @apply text-white;
+    @apply text-red-200;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-red)::after {
@@ -349,12 +361,21 @@
     @apply bg-red-200;
   }
 
+  /* Secondary - Red */
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red)::after {
     @apply bg-gray-900;
   }
   
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red:hover)::after {
     @apply bg-red-500;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-secondary.link-red:hover) {
+    @apply text-red-500;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-secondary.link-red:hover) {
+    @apply text-red-200;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-secondary.link-red)::after {
@@ -365,7 +386,7 @@
     @apply bg-red-200;
   }
 
-  /* CTA Arrow Colors - White */
+  /* Primary - White */
   :where(.sds-theme-plaid .link.link-cta.link-primary.link-white) {
     @apply text-white;
   }
@@ -398,8 +419,17 @@
     @apply bg-white;
   }
 
+  /* Secondary - White */
+  :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white) {
+    @apply text-gray-100;
+  }
+  
+  :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white:hover) {
+    @apply text-white;
+  }
+
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white)::after {
-    @apply bg-gray-900;
+    @apply bg-gray-100;
   }
 
   :where(.sds-theme-plaid .link.link-cta.link-secondary.link-white:hover)::after {
@@ -414,7 +444,7 @@
     @apply bg-white;
   }
 
-  /* CTA Arrow Colors - Tertiary */
+  /* Tertiary - Blue/Red */
   :where(.sds-theme-plaid .link.link-cta.link-tertiary)::after {
     @apply bg-gray-600;
   }
@@ -424,11 +454,84 @@
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary)::after {
-    @apply bg-gray-400;
+    @apply bg-white;
   }
 
   :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary:hover)::after {
+    @apply bg-white;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue),
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red) {
+    @apply text-gray-600;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue:hover),
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red:hover) {
+    @apply text-gray-900;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue)::after,
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red)::after {
+    @apply bg-gray-600;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-blue:hover)::after,
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-red:hover)::after {
+    @apply bg-gray-900;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue),
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue:hover),
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-blue:hover)::after,
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-red:hover)::after {
+    @apply bg-white;
+  }
+
+  /* Tertiary - White */
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white) {
+    @apply text-gray-100;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover) {
+    @apply text-gray-100;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white)::after {
     @apply bg-gray-100;
+  }
+
+  :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover)::after {
+    @apply bg-gray-100;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover) {
+    @apply text-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white)::after {
+    @apply bg-white;
+  }
+
+  :where(:is(.dark.sds-theme-plaid, .dark .sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover)::after {
+    @apply bg-white;
   }
 
   /* ===== DIRECTIONAL CTA VARIANTS ===== */
