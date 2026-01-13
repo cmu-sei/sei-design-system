@@ -1894,16 +1894,6 @@ const filterBy = reactive({
   idsText: null as string | null
 })
 
-const filterBySelectedOptions = computed(() => {
-  return filterBy.options.filter((i) => i.selected);
-})
-
-const filterByBtnText = computed(() => {
-  return filterBySelectedOptions.value.length > 0
-    ? "One or more options selected"
-    : "No options are selected";
-})
-
 const filtered = (options: FilterByDropdownOption[]) => {
   filterBy.idsText = options
     .filter((i: FilterByDropdownOption) => i.selected)

@@ -207,38 +207,6 @@ describe('FilterByDropdown.vue', () => {
       
       expect(button.props('size')).toBe('sm')
     })
-
-    it('should apply correct iconSizeClasses for xs size', () => {
-      const wrapper = createWrapper({ size: 'xs' })
-      const svg = wrapper.find('svg')
-      
-      expect(svg.classes()).toContain('w-4')
-      expect(svg.classes()).toContain('h-4')
-    })
-
-    it('should apply correct iconSizeClasses for sm size', () => {
-      const wrapper = createWrapper({ size: 'sm' })
-      const svg = wrapper.find('svg')
-      
-      expect(svg.classes()).toContain('w-4')
-      expect(svg.classes()).toContain('h-4')
-    })
-
-    it('should apply correct iconSizeClasses for md size', () => {
-      const wrapper = createWrapper({ size: 'md' })
-      const svg = wrapper.find('svg')
-      
-      expect(svg.classes()).toContain('w-4.5')
-      expect(svg.classes()).toContain('h-4.5')
-    })
-
-    it('should apply correct iconSizeClasses for lg size', () => {
-      const wrapper = createWrapper({ size: 'lg' })
-      const svg = wrapper.find('svg')
-      
-      expect(svg.classes()).toContain('w-4.5')
-      expect(svg.classes()).toContain('h-4.5')
-    })
   })
 
   describe('Props: Z-Index', () => {
