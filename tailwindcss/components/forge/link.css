@@ -129,7 +129,7 @@
 
   /* White Color Variant */
   :where(.sds-theme-forge .link.link-primary.link-white) {
-    @apply text-white;
+    @apply text-white/95;
   }
 
   :where(.sds-theme-forge .link.link-primary.link-white:hover) {
@@ -137,7 +137,7 @@
   }
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.link-primary.link-white) {
-    @apply text-white;
+    @apply text-white/95;
   }
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.link-primary.link-white:hover) {
