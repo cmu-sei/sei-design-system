@@ -227,7 +227,7 @@ describe('ComboBox', () => {
     const wrapper = mount(Component, {
       props: { suggestions: objectSuggestions, optionType: 'custom', optionLabel: 'label' },
       slots: {
-        customOption: (props: { option: ComboBoxSuggestion }) => h('div', { class: 'custom-option' }, `Custom: ${props.option.label}`)
+        customOption: (props: { option: ComboBoxSuggestion }) => h('div', { class: 'custom-option' }, `Custom: ${typeof props.option !== 'string' ? props.option.label : props.option}`)
       }
     })
     expect(wrapper.html()).toMatchSnapshot()
