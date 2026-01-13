@@ -170,8 +170,8 @@
             helper-text="Select items to add to your grocery list"
           >
             <SdsComboBox
-              v-model="comboBox2_1.modelValue"
               id="comboBox2_1"
+              v-model="comboBox2_1.modelValue"
               v-model:selected="comboBox2_1.selected"
               placeholder="Search"
               :suggestions="comboBox2_1.suggestions"
@@ -179,6 +179,7 @@
               type="select"
               filter-suggestions
               focus-on-key-press
+              click-to-select
               @complete="comboBox2_1.onComplete"
               @result="comboBox2_1.onResult"
               @enter="comboBox2_1.onEnter"

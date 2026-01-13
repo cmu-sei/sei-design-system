@@ -644,7 +644,7 @@ const props = defineProps({
   /**
    * Display the suggestions dropdown on click.
    */
-  clickToSelect: { type: Boolean, default: true },
+  clickToSelect: { type: Boolean, default: false },
   /**
    * The debounce period before complete event is emitted.
    */
@@ -1681,7 +1681,6 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     // Allow left/right arrow navigation only if categories are shown and input is not focused
     case 'left':
       if (arrowCounter.value > -1) {
-        console.log(comboBoxTabs.value, activeGroupKey.value)
         if (activeGroupKey.value === -1) {
           activeGroupKey.value = comboBoxTabs.value ? comboBoxTabs.value.length - 2 : -1
         } else {
