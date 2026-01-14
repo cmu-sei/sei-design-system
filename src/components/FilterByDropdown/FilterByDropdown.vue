@@ -251,7 +251,7 @@ const someSelected = computed(() => {
 })
 
 const indeterminate = computed(() => {
-  return someSelected.value && !allSelected.value;;
+  return someSelected.value && !allSelected.value;
 })
 
 const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
