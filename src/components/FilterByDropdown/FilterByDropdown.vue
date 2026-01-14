@@ -246,8 +246,12 @@ const allSelected = computed(() => {
   return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
 })
 
+const someSelected = computed(() => {
+  return tmpOptions.value.some((i: FilterByDropdownOption) => i.selected);
+})
+
 const indeterminate = computed(() => {
-  return allSelected.value;
+  return someSelected.value && !allSelected.value;;
 })
 
 const filteredTmpOptions = computed<FilterByDropdownOption[]>(() => {
