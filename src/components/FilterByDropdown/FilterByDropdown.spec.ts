@@ -356,14 +356,14 @@ describe('FilterByDropdown.vue', () => {
 
   describe('Props: Count', () => {
     it('should show selected count when count prop is true', () => {
-      const wrapper = createWrapper({ count: true }, mockOptions)
+      const wrapper = createWrapper({ showCount: true }, mockOptions)
       
       // mockOptions has 2 selected items
       expect(wrapper.text()).toContain('(2)')
     })
 
     it('should not show selected count when count prop is false (default)', () => {
-      const wrapper = createWrapper({ count: false }, mockOptions)
+      const wrapper = createWrapper({ showCount: false }, mockOptions)
       
       // Should not show the count in parentheses
       expect(wrapper.text()).not.toMatch(/\(\d+\)/)
@@ -374,7 +374,7 @@ describe('FilterByDropdown.vue', () => {
         { id: 1, text: 'Option 1', selected: false },
         { id: 2, text: 'Option 2', selected: false }
       ]
-      const wrapper = createWrapper({ count: true }, options)
+      const wrapper = createWrapper({ showCount: true }, options)
       
       // Initially no selections
       expect(wrapper.text()).toContain('(0)')
@@ -405,7 +405,7 @@ describe('FilterByDropdown.vue', () => {
 
     it('should concatenate title with count when count is enabled', () => {
       const customTitle = 'Status'
-      const wrapper = createWrapper({ title: customTitle, count: true }, mockOptions)
+      const wrapper = createWrapper({ title: customTitle, showCount: true }, mockOptions)
       
       // Should show "Status (2)" since mockOptions has 2 selected
       expect(wrapper.text()).toContain(`${customTitle} (2)`)

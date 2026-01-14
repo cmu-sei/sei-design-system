@@ -25,7 +25,7 @@
       >
         <!-- @slot Title content of trigger button. -->
         <slot name="title">
-          <span>{{ title + (props.count ? ` (${selectedCount})` : '') }}</span>
+          <span>{{ title + (props.showCount ? ` (${selectedCount})` : '') }}</span>
         </slot>
         <svg
           class="inline-block self-center w-5 h-5 -mr-1"
@@ -192,7 +192,7 @@ const props = defineProps({
   /**
    * Determines if the count is visible next to the title
    */
-  count: { type: Boolean, default: false}
+  showCount: { type: Boolean, default: false}
 })
 
 /**
