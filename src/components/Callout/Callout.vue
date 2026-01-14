@@ -19,8 +19,10 @@
         <span
           v-if="title" 
           :class="{
+            'text-xs leading-4 font-semibold': size === 'xs',
             'text-sm leading-5 font-semibold': size === 'sm',
-            'leading-5.5 font-semibold': size === 'md',
+            'text-md leading-5.5 font-semibold': size === 'md',
+            'text-lg leading-6.5 font-semibold': size === 'lg',
             'pb-1': description,
             'pb-2': !description && timestamp
           }"
@@ -28,8 +30,10 @@
         <div
           class="opacity-90"
           :class="{
-            'text-xs': size === 'sm',
-            'text-sm': size === 'md',
+            'text-xs leading-4': size === 'xs',
+            'text-sm leading-5': size === 'sm',
+            'text-md leading-6': size === 'md',
+            'text-lg leading-7': size === 'lg',
             'pb-2': timestamp
           }"
         >
@@ -39,7 +43,7 @@
         </div>
         <span
           v-if="timestamp"
-          class="text-xs opacity-90 italic"
+          class="text-xs leading-4 opacity-90 italic"
         >{{ format(timestamp, `MMM dd, yyyy 'at' hh:mm aaa`) }}</span>
         <!-- Buttons -->
         <div
@@ -91,7 +95,7 @@ const props = defineProps({
   /**
    * Determines the size of the callout
    */
-  size: { type: String as PropType<'sm' | 'md'>, default: 'md'},
+  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'md'},
   /**
    * Determines the title of the Callout.
    */
