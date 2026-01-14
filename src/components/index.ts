@@ -15,6 +15,7 @@ import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselec
 import type { PaginatorProps } from './Paginator/Paginator.vue'
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
+import type { ResultRangeProps } from './ResultRange/ResultRange.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
 import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownPlacement, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
 import type { TableField, TableItem, TableProps } from './Table/Table.vue'
@@ -51,6 +52,7 @@ export type {
   PopoverPlacement,
   RadioGroupOption,
   RadioGroupOptionValue,
+  ResultRangeProps,
   SelectOption,
   SelectOptionValue,
   SortByDropdownOption,
@@ -118,6 +120,7 @@ import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsResizer from "./Resizer";
+import SdsResultRange from "./ResultRange";
 import SdsScrollArea from "./ScrollArea";
 import SdsScrollspy from "./Scrollspy";
 import SdsSection from "./Section";
@@ -189,6 +192,7 @@ const Components: ComponentList = {
   SdsPopover,
   SdsRadioGroup,
   SdsResizer,
+  SdsResultRange,
   SdsScrollArea,
   SdsScrollspy,
   SdsSection,
@@ -264,6 +268,7 @@ export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsResizer } from "./Resizer";
+export { default as SdsResultRange } from "./ResultRange";
 export { default as SdsScrollArea } from "./ScrollArea";
 export { default as SdsScrollspy } from "./Scrollspy";
 export { default as SdsSection } from "./Section";
