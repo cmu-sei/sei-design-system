@@ -53,6 +53,8 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['update:paginator'])
+
 const currentPage = ref(props.paginator?.currentPage ?? 1)
 const paginatorProps = computed(() => ({ ...props.paginator, currentPage: currentPage.value }))
 
@@ -60,8 +62,11 @@ const setCurrentPage = (
   { page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }
 ) => {
   event.preventDefault()
+
   currentPage.value = typeof page === 'string' 
     ? Number(page) 
     : page
+
+  emit('update:paginator', { paginator: { ...paginatorProps.value } })
 }
 </script>

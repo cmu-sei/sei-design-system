@@ -3,6 +3,7 @@
     <SdsDataTable
       :data="data"
       :paginator="paginator"
+      @update:paginator="(newPaginator) => console.log(newPaginator)"
     />
   </div>
 </template>
