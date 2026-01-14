@@ -1730,7 +1730,7 @@
         <sds-filter-by-dropdown
           v-model="filterBy.options"
           enable-sort-options
-          count
+          show-count
           @update:model-value="filtered"
         />
         <p class="mt-4">
