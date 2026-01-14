@@ -22,7 +22,7 @@
           <col
             :key="field.key"
             :class="{
-              [sortedColumnClass]: sortField === field.key
+              [sortedColumnClass || '']: sortField === field.key
             }"
           >
         </slot>
@@ -32,7 +32,7 @@
       <tr>
         <th 
           v-if="hasDrawers"
-          class="[.table-prose_&]:px-2 w-10"
+          class="in-[.table-prose_&]:px-2 w-10"
         >
           <button 
             class="flex items-center justify-center w-6 h-6"
@@ -375,40 +375,37 @@
 <script setup lang="ts">
 import SdsSvgIcon from '../SvgIcon'
 
-export type TableDensity = typeof densityTypes[number]
+export type TableDensity = typeof densityTypes[number];
 
 export interface TableField {
-  key: string
-  label?: string
-  format?: GenericFunctionType
-  sortable?: boolean
-  hidden?: boolean
-  header?: boolean
-  align?: 'left' | 'center' | 'right'
-  fields?: TableField[]
-  [key: string]: unknown
+  key: string;
+  label?: string;
+  format?: GenericFunctionType;
+  sortable?: boolean;
+  hidden?: boolean;
+  header?: boolean;
+  align?: 'left' | 'center' | 'right';
+  fields?: TableField[];
+  [key: string]: unknown;
 }
 
 export interface TableItem {
-  id: number
-  enableDrawer?: boolean
-  toggled?: boolean
-  nestedRows?: TableItem[]
-  [key: string]: unknown
+  id: number;
+  enableDrawer?: boolean;
+  toggled?: boolean;
+  nestedRows?: TableItem[];
+  [key: string]: unknown;
 }
 
-defineOptions({
-  name: 'SdsTable'
-})
-
-const props = defineProps({
+/**
+ * Props for the Table component.
+ */
+export interface TableProps {
   /**
    * A unique id used as a prefix for unique table row ids.
+   * @default undefined
    */
-  id: {
-    type: String,
-    default: null
-  },
+  id?: string;
   /**
    * An array of objects. Each object must have a unique "id" but everything else is optional.
    *
@@ -419,10 +416,7 @@ const props = defineProps({
    *
    * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
    */
-  items: {
-    type: Array as PropType<TableItem[]>,
-    default: () => [],
-  },
+  items: TableItem[];
   /**
    * An array of objects. These objects determine the column headers.
    *
@@ -447,30 +441,31 @@ const props = defineProps({
    *   format: (date) => date.toLocaleDateString()
    * }**
    */
-  fields: {
-    type: Array as PropType<TableField[]>,
-    default: () => [],
-  },
+  fields: TableField[];
   /**
    * Determines the field key to sort by.
    */
-  sortBy: { type: String, default: '' },
+  sortBy: string;
   /**
    * Determines if sorting should be descending or ascending.
+   * @default false
    */
-  sortDesc: { type: Boolean, default: false },
+  sortDesc?: boolean;
   /**
    * Determines the caption for the table if desired.
+   * @default undefined
    */
-  caption: { type: String, default: null },
+  caption?: string;
   /**
    * Determines the CSS classes used on the sorted column.
+   * @default undefined
    */
-  sortedColumnClass: { type: String, default: null },
+  sortedColumnClass?: string;
   /**
-   * Toggles on/off a drawer below each table row
+   * Toggles on/off a drawer below each table row.
+   * @default false
    */
-  enableDrawer: { type: Boolean, default: false },
+  enableDrawer?: boolean;
   /**
    * Overrides the built-in sorting behavior of the table.
    * 
@@ -493,22 +488,40 @@ const props = defineProps({
    * * `field`: The field you are sorting on.
    * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
    * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
+   * @default undefined
    */
-  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined },
+  onSort?: GenericFunctionType;
   /**
-   * Determines the table's density, or padding, for the "th", "td" HTML tags
+   * Determines the table's density, or padding, for the "th", "td" HTML tags.
    * 
    * Density options:
    *
    * * comfortable: p-4 (16px)
    * * condensed: p-1 (4px)
    * * default: p-2 (8px)
+   * @default undefined
    */
-  density: { type: String as PropType<TableDensity>, default: undefined },
+  density?: TableDensity;
   /**
-   * Determines if rows within a table have a hover state (bg-gray-25)
+   * Determines if rows within a table have a hover state (bg-gray-25).
+   * @default undefined
    */
-  rowHighlight: { type: Boolean, default: undefined }
+  rowHighlight?: boolean;
+}
+
+defineOptions({
+  name: 'SdsTable'
+})
+
+const props = withDefaults(defineProps<TableProps>(), {
+  id: undefined,
+  sortDesc: false,
+  caption: undefined,
+  sortedColumnClass: undefined,
+  enableDrawer: false,
+  onSort: undefined,
+  density: undefined,
+  rowHighlight: undefined,
 })
 
 const emit = defineEmits([
@@ -536,7 +549,7 @@ const icons = Object.freeze({
 const isBatchExpanded = ref(false)
 const itemsNormalized = ref<TableItem[]>([])
 const enableDrawer = ref(props.enableDrawer)
-const sortField = ref(props.sortBy)
+const sortField = ref(props.sortBy ?? '')
 const sortOrder = ref(props.sortDesc ? -1 : 1)
 
 const flatFields = computed(() => {

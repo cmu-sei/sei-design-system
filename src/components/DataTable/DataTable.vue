@@ -15,13 +15,15 @@
     </SdsTable>
     <div>
       <SdsPaginator 
-        v-bind="{ ...$props.meta, ...$attrs }"
+        v-bind="{ ...$props.paginator, ...$attrs }"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { PaginatorProps } from '../Paginator/Paginator.vue'
+import type { TableProps } from '../Table/Table.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsTable from '../Table/Table.vue'
 
@@ -31,12 +33,12 @@ defineOptions({
 
 defineProps({
   data: {
-    type: Object,
+    type: Object as PropType<TableProps>,
     required: false,
     default: () => ({})
   },
-  meta: {
-    type: Object,
+  paginator: {
+    type: Object as PropType<PaginatorProps>,
     required: false,
     default: () => ({})
   }

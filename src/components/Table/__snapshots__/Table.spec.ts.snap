@@ -13,7 +13,7 @@ exports[`Table > emits when toggling a table drawer 1`] = `
   </colgroup>
   <thead>
     <tr>
-      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+      <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
           </svg><span class="sr-only">Expand all drawers</span></button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
@@ -127,7 +127,7 @@ exports[`Table > emits when toggling all table drawers 1`] = `
   </colgroup>
   <thead>
     <tr>
-      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+      <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
           </svg><span class="sr-only">Collapse all drawers</span></button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
@@ -241,7 +241,7 @@ exports[`Table > matches default snapshot 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -347,7 +347,7 @@ exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -451,7 +451,7 @@ exports[`Table > matches snapshot with assigned \`density\` prop 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -555,7 +555,7 @@ exports[`Table > matches snapshot with assigned \`density\` prop 2`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -663,7 +663,7 @@ exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
   </colgroup>
   <thead>
     <tr>
-      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+      <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
           </svg><span class="sr-only">Expand all drawers</span></button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
@@ -769,7 +769,7 @@ exports[`Table > matches snapshot with assigned \`rowHighlight\` prop 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -872,7 +872,7 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null">
+    <col class="">
   </colgroup>
   <thead>
     <tr>
@@ -973,7 +973,7 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
   </colgroup>
   <thead>
     <tr>
-      <th class="[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
+      <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
           </svg><span class="sr-only">Collapse all drawers</span></button></th>
       <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
@@ -1093,7 +1093,7 @@ exports[`Table > sorts table by field (column) 1`] = `
   <colgroup>
     <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class="">
@@ -1390,7 +1390,7 @@ exports[`Table > sorts table using an external source as its sorting behavior 1`
   <!--v-if-->
   <colgroup>
     <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
-    <col class="null"><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
+    <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
     <col class=""><!-- @slot Col content. Used to help style columns. @binding active, activeClass -->
