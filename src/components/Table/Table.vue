@@ -445,7 +445,7 @@ export interface TableProps {
   /**
    * Determines the field key to sort by.
    */
-  sortBy: string;
+  sortBy?: string;
   /**
    * Determines if sorting should be descending or ascending.
    * @default false
@@ -515,6 +515,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<TableProps>(), {
   id: undefined,
+  sortBy: undefined,
   sortDesc: false,
   caption: undefined,
   sortedColumnClass: undefined,
@@ -702,6 +703,7 @@ watch(() => props.enableDrawer, (value) => {
 })
 
 watch(() => props.sortBy, (value) => {
+  if (!value) return
   sortField.value = value
 })
 

@@ -12,11 +12,12 @@ import type { ApplicationSidebarNavItem } from './Application/Application.vue'
 import type { MegaMenuItem } from './MegaMenu/MegaMenu.vue'
 import type { MobileMenuItem } from './MobileMenu/MobileMenu.vue'
 import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselect.vue'
+import type { PaginatorProps } from './Paginator/Paginator.vue'
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
 import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownPlacement, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
-import type { TableField, TableItem } from './Table/Table.vue'
+import type { TableField, TableItem, TableProps } from './Table/Table.vue'
 import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
 import type { TooltipPlacement } from './Tooltip/Tooltip.vue'
@@ -46,6 +47,7 @@ export type {
   MobileMenuItem,
   MultiselectOption,
   MultiselectTag,
+  PaginatorProps,
   PopoverPlacement,
   RadioGroupOption,
   RadioGroupOptionValue,
@@ -59,6 +61,7 @@ export type {
   SvgIconTypes,
   TableField,
   TableItem,
+  TableProps,
   TabItem,
   ToasterToast,
   TooltipPlacement,
@@ -79,6 +82,7 @@ import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
 import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
+import SdsDataTable from "./DataTable";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
 import SdsDropdownHeader from "./DropdownHeader";
@@ -149,6 +153,7 @@ const Components: ComponentList = {
   SdsComboBox,
   SdsDatapoint,
   SdsDatepicker,
+  SdsDataTable,
   SdsDropdown,
   SdsDropdownDivider,
   SdsDropdownHeader,
@@ -223,6 +228,7 @@ export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
 export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
+export { default as SdsDataTable } from "./DataTable";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
 export { default as SdsDropdownHeader } from "./DropdownHeader";

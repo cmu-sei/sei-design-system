@@ -13,9 +13,18 @@
         />
       </template>
     </SdsTable>
-    <div>
+    <div 
+      class="
+        flex self-stretch justify-center items-center gap-x-4 
+        border border-gray-100 dark:border-gray-800
+        rounded-bl-[7px] rounded-br-[7px]
+        bg-gray-600/2 dark:bg-gray-400/2
+        p-4
+      "
+    >
       <SdsPaginator 
-        v-bind="{ ...$props.paginator, ...$attrs }"
+        v-bind="{ ...paginatorProps, ...$attrs }"
+        @go-to-page="setCurrentPage"
       />
     </div>
   </div>
@@ -31,7 +40,7 @@ defineOptions({
   name: "SdsDataTable"
 })
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object as PropType<TableProps>,
     required: false,
@@ -43,4 +52,16 @@ defineProps({
     default: () => ({})
   }
 })
+
+const currentPage = ref(props.paginator?.currentPage ?? 1)
+const paginatorProps = computed(() => ({ ...props.paginator, currentPage: currentPage.value }))
+
+const setCurrentPage = (
+  { page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }
+) => {
+  event.preventDefault()
+  currentPage.value = typeof page === 'string' 
+    ? Number(page) 
+    : page
+}
 </script>

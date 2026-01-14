@@ -107,6 +107,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/patterns/data-table': RouteRecordInfo<
+      '/patterns/data-table',
+      '/patterns/data-table',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/patterns/form-group': RouteRecordInfo<
       '/patterns/form-group',
       '/patterns/form-group',
@@ -203,6 +210,12 @@ declare module 'vue-router/auto-routes' {
     'src/docs/pages/css/typography.vue': {
       routes:
         | '/css/typography'
+      views:
+        | never
+    }
+    'src/docs/pages/patterns/data-table.vue': {
+      routes:
+        | '/patterns/data-table'
       views:
         | never
     }
