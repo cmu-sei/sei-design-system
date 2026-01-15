@@ -114,6 +114,7 @@ import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
+import PaginatorPageSizeDropdown from "./PaginatorPageSizeDropdown";
 import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
@@ -185,6 +186,7 @@ const Components: ComponentList = {
   SdsMultiselect,
   SdsNavigationItem,
   SdsPaginator,
+  PaginatorPageSizeDropdown,
   SdsPanel,
   SdsPopover,
   SdsRadioGroup,
@@ -260,6 +262,7 @@ export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
+export { default as PaginatorPageSizeDropdown } from "./PaginatorPageSizeDropdown";
 export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";

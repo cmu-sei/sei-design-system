@@ -3,7 +3,7 @@
     <SdsDataTable
       :data="data"
       :pagination="pagination"
-      @update:pagination="(newPagination) => console.log(newPagination)"
+      @update:pagination="updatePagination"
     />
   </div>
 </template>
@@ -62,7 +62,7 @@ const data = computed(() => ({ fields: fields.value, items: items.value }))
 const currentPage = ref(1)
 const totalResults = ref(350)
 const totalResultsPerPage = ref(10)
-const totalPages = computed(() => Math.ceil(totalResults.value / totalResultsPerPage.value))
+const totalPages = ref(Math.ceil(totalResults.value / totalResultsPerPage.value))
 
 const pagination = computed(() => ({ 
   currentPage: currentPage.value, 
@@ -70,4 +70,16 @@ const pagination = computed(() => ({
   totalResultsPerPage: totalResultsPerPage.value, 
   totalResults: totalResults.value 
 }))
+
+function updatePagination(newPagination: {
+  currentPage: number;
+  totalPages: number;
+  totalResultsPerPage: number;
+  totalResults: number;
+}) {
+  currentPage.value = newPagination.currentPage
+  totalPages.value = newPagination.totalPages
+  totalResults.value = newPagination.totalResults
+  totalResultsPerPage.value = newPagination.totalResultsPerPage
+}
 </script>
