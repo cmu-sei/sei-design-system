@@ -15,15 +15,20 @@
     </SdsTable>
     <div 
       class="
-        flex self-stretch justify-center items-center gap-x-4 p-4 
-        bg-gray-600/2 dark:bg-gray-400/2
-        border border-gray-100 dark:border-gray-800
+        flex self-stretch justify-between items-center gap-x-4 p-4 
+        bg-gray-600/2 dark:bg-gray-400/2 
+        border border-gray-100 dark:border-gray-800 
         rounded-bl-[7px] rounded-br-[7px]
       "
     >
-      <SdsResultRange
-        v-bind="{ ...$props }"
-      />
+      <p
+        aria-live="polite" 
+        aria-atomic="true"  
+      >
+        <span class="text-sm text-gray-800 dark:text-gray-600">
+          Showing <span class="font-semibold">{{ start !== end ? `${start}-${end}` : start }}</span> of <span class="font-semibold">{{ total }}</span>
+        </span>
+      </p>
       <SdsPaginator 
         v-bind="{ ...paginatorProps, ...$attrs }"
         @go-to-page="setCurrentPage"
@@ -36,8 +41,8 @@
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
-import SdsResultRange from '../ResultRange/ResultRange.vue'
 import SdsTable from '../Table/Table.vue'
+import usePaginationRange from '../../composables/usePaginationRange'
 
 defineOptions({
   name: "SdsDataTable"
@@ -49,17 +54,31 @@ const props = defineProps({
     required: false,
     default: () => ({})
   },
-  paginator: {
-    type: Object as PropType<PaginatorProps>,
+  pagination: {
+    type: Object as PropType<PaginatorProps & { totalResultsPerPage: number; totalResults: number }>,
     required: false,
     default: () => ({})
   }
 })
 
-const emit = defineEmits(['update:paginator'])
+const emit = defineEmits(['update:pagination'])
 
-const currentPage = ref(props.paginator?.currentPage ?? 1)
-const paginatorProps = computed(() => ({ ...props.paginator, currentPage: currentPage.value }))
+const currentPage = ref(props.pagination?.currentPage ?? 1)
+const totalResultsPerPage = ref(props.pagination?.totalResultsPerPage ?? 0)
+const totalResults = ref(props.pagination?.totalResults ?? 0)
+const totalPages = ref(props.pagination?.totalPages ?? 0)
+
+const paginatorProps = computed(() => ({ 
+  currentPage: currentPage.value, 
+  totalPages: totalPages.value
+}))
+
+const { start, end, total } = usePaginationRange(
+  currentPage,
+  totalResultsPerPage,
+  totalResults,
+  totalPages
+)
 
 function setCurrentPage(
   { page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }
@@ -70,6 +89,6 @@ function setCurrentPage(
     ? Number(page) 
     : page
 
-  emit('update:paginator', { paginator: { ...paginatorProps.value } })
+  emit('update:pagination', { pagination: { ...paginatorProps.value } })
 }
 </script>
