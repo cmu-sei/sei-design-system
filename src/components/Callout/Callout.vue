@@ -2,9 +2,14 @@
   <div
     v-if="!dismiss"
     :class="[
-      styleClass, 
-      size === 'md' ? 'p-4' : 'p-2.5', 
-      inset ? 'rounded-none' : 'rounded-lg sds-theme-plaid:rounded-none'
+      styleClass,
+      {
+        'p-2': size === 'xs',
+        'p-3': size === 'sm',
+        'p-4': size === 'md' || size === 'lg',
+        'rounded-none': inset,
+        'rounded-lg sds-theme-plaid:rounded-none': !inset
+      }
     ]"
   >
     <div class="flex items-top space-x-2">
