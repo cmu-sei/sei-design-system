@@ -1729,9 +1729,8 @@
       <div>
         <sds-filter-by-dropdown
           v-model="filterBy.options"
-          :title="filterByBtnText"
-          enable-filter
           enable-sort-options
+          show-count
           @update:model-value="filtered"
         />
         <p class="mt-4">
@@ -1893,16 +1892,6 @@ const filterBy = reactive({
     { id: 20, text: "Option 20", selected: false },
   ],
   idsText: null as string | null
-})
-
-const filterBySelectedOptions = computed(() => {
-  return filterBy.options.filter((i) => i.selected);
-})
-
-const filterByBtnText = computed(() => {
-  return filterBySelectedOptions.value.length > 0
-    ? "One or more options selected"
-    : "No options are selected";
 })
 
 const filtered = (options: FilterByDropdownOption[]) => {

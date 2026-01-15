@@ -7,7 +7,7 @@
     @apply bg-white text-blue-500;
   }
 
-  :where(input[type='checkbox']:checked, input[type='radio']:checked) {
+  :where(input[type='checkbox']:checked, input[type='checkbox']:indeterminate, input[type='radio']:checked) {
     @apply bg-blue-500;
   }
 
