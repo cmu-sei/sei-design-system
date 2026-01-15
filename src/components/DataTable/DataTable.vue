@@ -1,5 +1,8 @@
 <template>
-  <div data-id="sds-data-table">
+  <div 
+    data-id="sds-data-table"
+    class="overflow-x-auto"
+  >
     <SdsTable 
       v-bind="{ ...$props.data, ...$attrs }"
     >
@@ -15,7 +18,7 @@
     </SdsTable>
     <div 
       class="
-        flex self-stretch justify-between items-center gap-x-4 p-4 
+        grid grid-cols-3 grid-rows-1 items-center gap-x-4 p-4 
         bg-gray-600/2 dark:bg-gray-400/2 
         border border-gray-100 dark:border-gray-800 
         rounded-bl-[7px] rounded-br-[7px]
