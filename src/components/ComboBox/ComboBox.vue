@@ -33,13 +33,7 @@
         />
       </div>
       <div class="flex flex-row">
-        <button
-          class="input-group-addon"
-          :disabled="disabled"
-          tabindex="-1"
-          type="button"
-          @click="handleEnterKeyUp"
-        >
+        <div class="input-group-addon">
           <span class="sr-only">Combo box</span>
           <svg
             v-if="!pending"
@@ -62,7 +56,7 @@
             v-else
             size="sm"
           />
-        </button>
+        </div>
         <span
           v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
           class="input-group-addon"
@@ -81,7 +75,8 @@
           autocorrect="off"
           class="form-control border-none focus-visible:ring-0"
           :class="{
-            'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length
+            'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
+            'absolute left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
           }"
           :placeholder="placeholder"
           :disabled="disabled"
