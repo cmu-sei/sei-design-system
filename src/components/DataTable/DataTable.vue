@@ -24,14 +24,7 @@
         rounded-bl-[7px] rounded-br-[7px]
       "
     >
-      <p
-        aria-live="polite" 
-        aria-atomic="true"  
-      >
-        <span class="text-sm text-gray-800 dark:text-gray-600">
-          Showing <span class="font-semibold">{{ start !== end ? `${start}-${end}` : start }}</span> of <span class="font-semibold">{{ total }}</span>
-        </span>
-      </p>
+      <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
       <SdsPaginator 
         v-bind="{ ...paginatorProps, ...$attrs }"
         @go-to-page="setCurrentPage"
@@ -51,8 +44,8 @@ import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/PaginatorPageSizeDropdown.vue'
+import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
-import usePaginationRange from '../../composables/usePaginationRange'
 
 defineOptions({
   name: "SdsDataTable"
@@ -89,16 +82,14 @@ const paginatorProps = computed(() => ({
   totalPages: totalPages.value
 }))
 
-const { start, end, total } = usePaginationRange(
-  currentPage,
-  totalResultsPerPage,
-  totalResults,
-  totalPages
-)
+const paginatorRangeProps = computed(() => ({
+  currentPage: currentPage.value,
+  totalResultsPerPage: totalResultsPerPage.value,
+  totalResults: totalResults.value,
+  totalPages: totalPages.value
+}))
 
-function setCurrentPage(
-  { page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }
-) {
+function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
   event.preventDefault()
 
   currentPage.value = typeof page === 'string' 
