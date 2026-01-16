@@ -6,6 +6,14 @@
     :title="title"
     :disabled="disabled"
   >
+    <template #title>
+      <slot 
+        name="label" 
+        :selection="selection"
+      >
+        {{ title }}
+      </slot>
+    </template>
     <template 
       v-for="option in options" 
       :key="JSON.stringify(option)"

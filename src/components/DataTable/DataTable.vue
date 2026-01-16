@@ -36,7 +36,11 @@
                 :options="[...options]"
                 class="justify-self-end"
                 @update:model-value="setPageSize"
-              />
+              >
+                <template #label="{ selection }">
+                  {{ selection }} rows
+                </template>
+              </SdsPaginatorPageSizeDropdown>
             </div>
           </td>
         </tr>
