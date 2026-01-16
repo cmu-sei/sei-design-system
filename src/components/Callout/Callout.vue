@@ -54,7 +54,7 @@
         <div
           v-if="slots.buttons"
           class="justify-center space-x-2"
-          :class="size === 'md' ? 'pt-4' : 'pt-3'"
+          :class="size !== 'xs' ? 'pt-4' : 'pt-3'"
         >
           <slot name="buttons" />
         </div>
