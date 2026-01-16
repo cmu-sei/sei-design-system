@@ -5,7 +5,7 @@
   >
     <SdsTable 
       v-bind="{ ...tableProps, ...$attrs }"
-      class="rounded-bl-none rounded-br-none"
+      class="table-prose-td:align-middle rounded-bl-none rounded-br-none"
     >
       <template
         v-for="(_, name) in $slots"
@@ -20,7 +20,6 @@
     <div 
       class="
         flex flex-row flex-nowrap justify-between items-center gap-x-4 p-4 
-        w-full overflow-x-auto
         bg-gray-600/2 dark:bg-gray-400/2 
         border border-t-0 border-gray-100 dark:border-gray-800 
         rounded-bl-[7px] rounded-br-[7px]

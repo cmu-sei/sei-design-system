@@ -4,13 +4,46 @@
       :data="data"
       :pagination="pagination"
       @update:pagination="updatePagination"
-    />
+    >
+      <template #cell(task)="{ item }: { item: TableItem }">
+        <SdsLink 
+          href="https://www.atlassian.com/software/jira"
+          kind="primary"
+          type="standalone"
+          variant="blue"
+          size="md"
+          :external="true"
+        >
+          {{ item.task }}
+        </SdsLink>
+      </template>
+      <template #cell(assignee)="{ item }: { item: TableItem }">
+        <div class="flex flex-row gap-2 items-start">
+          <SdsAvatar
+            :name="(item.assignee as string)"
+            class="grow-0 shrink-0"
+            shape="circle"
+            size="sm"
+            variant="gray"
+          />
+          <span class="pt-1">{{ item.assignee }}</span>
+        </div>
+      </template>
+      <template #cell(status)="{ item }: { item: TableItem }">
+        <SdsBadge v-bind="getBadgeVariant((item.status as string))">
+          {{ item.status }}
+        </SdsBadge>
+      </template>
+    </SdsDataTable>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { TableField, TableItem } from '../../../components/Table/Table.vue'
+import SdsAvatar from '../../../components/Avatar/Avatar.vue'
+import SdsBadge from '../../../components/Badge/Badge.vue'
 import SdsDataTable from '../../../components/DataTable/DataTable.vue'
+import SdsLink from '../../../components/Link/Link.vue'
 
 defineOptions({
   name: 'DataTablePage'
@@ -31,7 +64,7 @@ const tableFields = computed<TableField[]>(() => [
   {
     key: 'task',
     label: 'Task',
-    sortable: false
+    sortable: true
   },
   {
     key: 'description',
@@ -41,7 +74,7 @@ const tableFields = computed<TableField[]>(() => [
   {
     key: 'assignee',
     label: 'Assignee',
-    sortable: false
+    sortable: true
   },
   {
     key: 'status',
@@ -56,7 +89,7 @@ const tableFields = computed<TableField[]>(() => [
   }
 ])
 
-const tableItems = computed<TableItem[]>(() => [
+const tableItems = ref<TableItem[]>([
   { id: 1, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit' },
   { id: 2, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit' },
   { id: 3, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit' },
@@ -84,6 +117,10 @@ const tableItems = computed<TableItem[]>(() => [
   { id: 25, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit' }
 ])
 
+/* Table */
+const sort_by = ref<string>('status')
+const sort_desc = ref<boolean>(true)
+
 /* Pagination */
 const currentPage = ref(1)
 const totalResults = ref(tableItems.value.length)
@@ -95,7 +132,10 @@ const items = computed(() => chunkArray(tableItems.value, totalResultsPerPage.va
 
 const data = computed(() => ({ 
   fields: tableFields.value, 
-  items: items.value[currentPage.value - 1] 
+  items: items.value[currentPage.value - 1],
+  sortBy: sort_by.value,
+  sortDesc: sort_desc.value,
+  onSort: sortTableItems
 }))
 
 const pagination = computed(() => ({ 
@@ -105,6 +145,7 @@ const pagination = computed(() => ({
   totalResults: totalResults.value 
 }))
 
+/* Pagination update handler */
 function updatePagination(newPagination: {
   currentPage: number;
   totalPages: number;
@@ -117,21 +158,68 @@ function updatePagination(newPagination: {
   totalResultsPerPage.value = newPagination.totalResultsPerPage
 }
 
+// --- Sorting helper functions --- //
+
 /**
- * Splits an array into chunks of a specified size.
- *
- * @template T The type of elements in the array.
- * @param {T[]} arr - The array to be split into chunks.
- * @param {number} size - The size of each chunk. Must be a positive integer.
- * @returns {T[][]} A new array containing subarrays (chunks) of the specified size.
- *                  The last chunk may contain fewer elements if the array cannot
- *                  be evenly divided.
- * 
- * @example
- * // Example usage:
- * const result = chunkArray([1, 2, 3, 4, 5], 2);
- * console.log(result); // [[1, 2], [3, 4], [5]]
+ * Sorts tableItems by a string field.
  */
+function sortByStringField(field: keyof TableItem, desc: boolean) {
+  tableItems.value.sort((a: TableItem, b: TableItem) => {
+    const aVal = a[field] as string
+    const bVal = b[field] as string
+    if (desc) {
+      return String(bVal).localeCompare(String(aVal))
+    } else {
+      return String(aVal).localeCompare(String(bVal))
+    }
+  })
+}
+
+/**
+ * Extracts the last name from a full name string.
+ *
+ * Notes/limitations:
+ * - Treats the last *non-suffix* token as the last name.
+ * - Does not try to handle multi-word last names, prefixes, or non‑Western orders.
+ * - Returns an empty string if no name part can be found.
+ */
+function getLastName(fullName: string): string {
+  const trimmed = fullName.trim()
+  if (!trimmed) return ""
+
+  const parts = trimmed.split(/\s+/)
+  if (parts.length === 1) return parts[0]
+
+  const rawLast = parts[parts.length - 1]
+
+  // Handle very common suffixes (normalized to lowercase, no dots)
+  const suffixes = new Set(["jr", "sr", "ii", "iii", "iv"])
+  const normalized = rawLast.replace(/\./g, "").toLowerCase()
+
+  if (suffixes.has(normalized) && parts.length > 1) {
+    return parts[parts.length - 2]
+  }
+
+  return rawLast
+}
+
+/**
+ * Sorts tableItems by assignee's last name.
+ */
+function sortByAssigneeLastName(desc: boolean) {
+  tableItems.value.sort((a: TableItem, b: TableItem) => {
+    const aLast = getLastName(a.assignee as string)
+    const bLast = getLastName(b.assignee as string)
+    if (desc) {
+      return bLast.localeCompare(aLast)
+    } else {
+      return aLast.localeCompare(bLast)
+    }
+  })
+}
+
+/* Utility functions */
+
 function chunkArray<T>(arr: T[], size: number): T[][] {
   return arr.reduce((acc: T[], val, i) => {
     const index = Math.floor(i / size)
@@ -139,5 +227,44 @@ function chunkArray<T>(arr: T[], size: number): T[][] {
     ;(acc[index] as T[]).push(val)
     return acc
   }, []) as T[][]
+}
+
+function getBadgeVariant(status: string): {
+  type: 'light-border' | undefined
+  variant: 'green' | 'blue' | 'yellow' | undefined
+}  {
+  switch (status.toLocaleLowerCase()) {
+    case 'submitted':
+      return {
+        type: 'light-border',
+        variant: 'blue'
+      }
+    case 'approved':
+      return {
+        type: 'light-border',
+        variant: 'green'
+      }
+    case 'draft':
+    default:
+      return {
+        type: 'light-border',
+        variant: 'yellow'
+      }
+  }
+}
+
+function sortTableItems({ sortBy, sortDesc }: { sortBy: string; sortDesc: boolean }) {
+  sort_by.value = sortBy
+  sort_desc.value = sortDesc
+
+  switch (sort_by.value) {
+    case 'status':
+    case 'task':
+      sortByStringField(sort_by.value, sort_desc.value)
+      break
+    case 'assignee':
+      sortByAssigneeLastName(sort_desc.value)
+      break
+  }
 }
 </script>
