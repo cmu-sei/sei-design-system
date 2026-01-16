@@ -369,6 +369,12 @@
         </template>
       </template>
     </tbody>
+    <tfoot v-if="$slots.footer">
+      <slot 
+        name="footer" 
+        :col-count="displayedFieldKeys.length + 1" 
+      />
+    </tfoot>
   </table>
 </template>
 
