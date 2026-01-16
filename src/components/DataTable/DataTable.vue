@@ -4,7 +4,7 @@
     class="overflow-x-auto"
   >
     <SdsTable 
-      v-bind="{ ...$props.data, ...$attrs }"
+      v-bind="{ ...tableProps, ...$attrs }"
       class="rounded-bl-none rounded-br-none"
     >
       <template
@@ -79,6 +79,10 @@ const totalResultsPerPage = ref(props.pagination?.totalResultsPerPage ?? 0)
 const totalResults = ref(props.pagination?.totalResults ?? 0)
 const totalPages = ref(props.pagination?.totalPages ?? 0)
 
+const tableProps = computed(() => ({ 
+  ...props.data 
+}))
+
 const paginatorProps = computed(() => ({ 
   currentPage: currentPage.value, 
   totalPages: totalPages.value
@@ -99,11 +103,9 @@ function setCurrentPage({ page, event }: { page: number | string; event: Keyboar
     : page
 
   emit('update:pagination', { 
-    pagination: { 
-      ...paginatorProps.value, 
-      totalResults: totalResults.value,
-      totalResultsPerPage: totalResultsPerPage.value
-    } 
+    ...paginatorProps.value, 
+    totalResults: totalResults.value,
+    totalResultsPerPage: totalResultsPerPage.value
   })
 }
 
@@ -113,11 +115,9 @@ function setPageSize(page: number) {
   totalResultsPerPage.value = page
 
   emit('update:pagination', { 
-    pagination: { 
-      ...paginatorProps.value, 
-      totalResults: totalResults.value,
-      totalResultsPerPage: totalResultsPerPage.value
-    } 
+    ...paginatorProps.value, 
+    totalResults: totalResults.value,
+    totalResultsPerPage: totalResultsPerPage.value
   })
 }
 </script>
