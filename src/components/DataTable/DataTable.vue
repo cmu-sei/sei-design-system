@@ -26,22 +26,17 @@
         rounded-bl-[7px] rounded-br-[7px]
       "
     >
-      <div>
-        <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
-      </div>
-      <div class="flex w-max">
-        <SdsPaginator 
-          v-bind="{ ...paginatorProps, ...$attrs }"
-          @go-to-page="setCurrentPage"
-        />
-      </div>
-      <div class="justify-self-end">
-        <SdsPaginatorPageSizeDropdown
-          v-model="totalResultsPerPage"
-          :options="[...options]"
-          @update:model-value="setPageSize"
-        />
-      </div>
+      <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
+      <SdsPaginator 
+        v-bind="{ ...paginatorProps, ...$attrs }"
+        @go-to-page="setCurrentPage"
+      />
+      <SdsPaginatorPageSizeDropdown
+        v-model="totalResultsPerPage"
+        :options="[...options]"
+        class="justify-self-end"
+        @update:model-value="setPageSize"
+      />
     </div>
   </div>
 </template>
