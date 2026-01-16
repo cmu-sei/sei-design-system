@@ -5,6 +5,7 @@
   >
     <SdsTable 
       v-bind="{ ...$props.data, ...$attrs }"
+      class="rounded-bl-none rounded-br-none"
     >
       <template
         v-for="(_, name) in $slots"
@@ -18,23 +19,29 @@
     </SdsTable>
     <div 
       class="
-        grid grid-cols-3 grid-rows-1 items-center gap-x-4 p-4 
+        flex flex-row flex-nowrap justify-between items-center gap-x-4 p-4 
+        w-full overflow-x-auto
         bg-gray-600/2 dark:bg-gray-400/2 
-        border border-gray-100 dark:border-gray-800 
+        border border-t-0 border-gray-100 dark:border-gray-800 
         rounded-bl-[7px] rounded-br-[7px]
       "
     >
-      <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
-      <SdsPaginator 
-        v-bind="{ ...paginatorProps, ...$attrs }"
-        @go-to-page="setCurrentPage"
-      />
-      <SdsPaginatorPageSizeDropdown
-        v-model="totalResultsPerPage"
-        :options="[...options]"
-        class="justify-self-end"
-        @update:model-value="setPageSize"
-      />
+      <div>
+        <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
+      </div>
+      <div class="flex w-max">
+        <SdsPaginator 
+          v-bind="{ ...paginatorProps, ...$attrs }"
+          @go-to-page="setCurrentPage"
+        />
+      </div>
+      <div class="justify-self-end">
+        <SdsPaginatorPageSizeDropdown
+          v-model="totalResultsPerPage"
+          :options="[...options]"
+          @update:model-value="setPageSize"
+        />
+      </div>
     </div>
   </div>
 </template>
