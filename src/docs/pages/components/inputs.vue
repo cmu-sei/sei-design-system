@@ -145,7 +145,7 @@
           <code class="text-xs">type="text" no autosuggest</code>
           <SdsComboBox
             v-model="comboBox0.modelValue"
-            size="sm"
+            size="md"
             placeholder="Search"
             focus-on-key-press
             @enter="comboBox0.onEnter"
@@ -204,7 +204,7 @@
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
           />
-          <code class="text-xs">type="taggable-select" :multiple="false"</code>
+          <code class="text-xs">type="taggable-select" :multiple="false" :click-to-select="true"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
             v-model:selected="comboBox3.selected"
@@ -217,10 +217,10 @@
             type="taggable-select"
             filter-suggestions
             focus-on-key-press
+            click-to-select
             option-label="name"
             option-group-label="section"
             option-group-children="items"
-            :click-to-select="false"
             @complete="comboBox3.onComplete"
             @result="comboBox3.onResult"
             @enter="comboBox3.onEnter"
