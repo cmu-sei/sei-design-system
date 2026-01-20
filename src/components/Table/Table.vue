@@ -370,10 +370,11 @@
       </template>
     </tbody>
     <tfoot v-if="$slots.footer">
-      <slot 
-        name="footer" 
-        :col-count="displayedFieldKeys.length + 1" 
-      />
+      <tr>
+        <td :colspan="displayedFieldKeys.length + 1">
+          <slot name="footer" />
+        </td>
+      </tr>
     </tfoot>
   </table>
 </template>

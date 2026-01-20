@@ -16,34 +16,24 @@
           v-bind="slotProps ?? {}"
         />
       </template>
-      <template #footer="{ colCount }">
-        <tr>
-          <td :colspan="colCount">
-            <div 
-              class="
-                flex flex-row flex-nowrap justify-between items-center gap-x-4 p-4
-              bg-gray-600/2 dark:bg-gray-400/2 
-                border-t border-gray-100 dark:border-gray-800 
-              "
-            >
-              <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
-              <SdsPaginator 
-                v-bind="{ ...paginatorProps, ...$attrs }"
-                @go-to-page="setCurrentPage"
-              />
-              <SdsPaginatorPageSizeDropdown
-                v-model="totalResultsPerPage"
-                :options="[...options]"
-                class="justify-self-end"
-                @update:model-value="setPageSize"
-              >
-                <template #label="{ selection }">
-                  {{ selection }} rows
-                </template>
-              </SdsPaginatorPageSizeDropdown>
-            </div>
-          </td>
-        </tr>
+      <template #footer>
+        <div class="flex flex-row flex-nowrap justify-between items-center gap-x-4">
+          <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
+          <SdsPaginator 
+            v-bind="{ ...paginatorProps, ...$attrs }"
+            @go-to-page="setCurrentPage"
+          />
+          <SdsPaginatorPageSizeDropdown
+            v-model="totalResultsPerPage"
+            :options="[...options]"
+            class="justify-self-end"
+            @update:model-value="setPageSize"
+          >
+            <template #label="{ selection }">
+              {{ selection }} rows
+            </template>
+          </SdsPaginatorPageSizeDropdown>
+        </div>
       </template>
     </SdsTable>
   </div>
