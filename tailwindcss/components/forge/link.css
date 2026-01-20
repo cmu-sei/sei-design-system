@@ -1,7 +1,7 @@
 @layer components {
   /* ===== BASE LINK STYLES ===== */
   :where(.sds-theme-forge .link) {
-    @apply inline-block break-words cursor-pointer;
+    @apply inline-block wrap-break-word cursor-pointer;
   }
 
   :where(.sds-theme-forge .link:hover) {
@@ -129,7 +129,7 @@
 
   /* White Color Variant */
   :where(.sds-theme-forge .link.link-primary.link-white) {
-    @apply text-white;
+    @apply text-white/95;
   }
 
   :where(.sds-theme-forge .link.link-primary.link-white:hover) {
@@ -137,7 +137,7 @@
   }
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.link-primary.link-white) {
-    @apply text-white;
+    @apply text-white/95;
   }
 
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.link-primary.link-white:hover) {
@@ -145,7 +145,7 @@
   }
 
   :where(.sds-theme-forge .link.link-secondary.link-white) {
-    @apply text-gray-900;
+    @apply text-gray-100;
   }
 
   :where(.sds-theme-forge .link.link-secondary.link-white:hover) {
@@ -234,32 +234,32 @@
   }
 
   :where(.sds-theme-forge .link.link-cta)::after {
-    @apply content-[''] inline-block h-[11px] w-3 top-px ml-2 relative transition-transform;
+    @apply content-[''] inline-block h-2.75 w-3 top-px ml-2 relative transition-transform;
     mask-image: var(--chevrons-right-sm);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-xs)::after {
-    @apply h-[9px] w-2.5 top-px;
+    @apply h-2.25 w-2.5 top-px;
     mask-image: var(--chevrons-right-xs);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-sm)::after {
-    @apply h-[11px] w-3 top-px;
+    @apply h-2.75 w-3 top-px;
     mask-image: var(--chevrons-right-sm);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-base)::after {
-    @apply h-[13px] w-3.5 top-px;
+    @apply h-3.25 w-3.5 top-px;
     mask-image: var(--chevrons-right-md);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-lg)::after {
-    @apply h-[15px] w-4 top-px;
+    @apply h-3.75 w-4 top-px;
     mask-image: var(--chevrons-right-lg);
   }
 
   :where(.sds-theme-forge .link.link-cta.text-xl)::after {
-    @apply h-[17px] w-4.5 top-0.5;
+    @apply h-4.25 w-4.5 top-0.5;
     mask-image: var(--chevrons-right-xl);
   }
 
@@ -267,7 +267,8 @@
     @apply translate-x-1;
   }
 
-  /* CTA Arrow Colors - Blue (Default) */
+  /* ===== CTA COLOR VARIANTS ===== */
+  /* Primary - Blue */
   :where(.sds-theme-forge .link.link-cta.link-primary.link-blue)::after {
     @apply bg-blue-600;
   }
@@ -284,6 +285,7 @@
     @apply bg-blue-200;
   }
 
+  /* Secondary - Blue */
   :where(.sds-theme-forge .link.link-cta.link-secondary.link-blue)::after {
     @apply bg-gray-900;
   }
@@ -300,7 +302,28 @@
     @apply bg-blue-200;
   }
 
-  /* CTA Arrow Colors - Red */
+  /* Secondary - Blue - Disabled */
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-blue,
+         .sds-theme-forge .link[disabled].link-cta.link-secondary.link-blue) {
+    @apply text-blue-600;
+  }
+
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-blue)::after,
+  :where(.sds-theme-forge .link[disabled].link-cta.link-secondary.link-blue)::after {
+    @apply bg-blue-600;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-blue,
+         :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-blue) {
+    @apply text-blue-300;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-blue)::after,
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-blue)::after {
+    @apply bg-blue-300;
+  }
+
+  /* Primary - Red */
   :where(.sds-theme-forge .link.link-cta.link-primary.link-red)::after {
     @apply bg-red-600;
   }
@@ -317,6 +340,7 @@
     @apply bg-red-200;
   }
 
+  /* Secondary - Red */
   :where(.sds-theme-forge .link.link-cta.link-secondary.link-red)::after {
     @apply bg-gray-900;
   }
@@ -333,7 +357,28 @@
     @apply bg-red-200;
   }
 
-  /* CTA Arrow Colors - White */
+  /* Secondary - Red - Disabled */
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-red,
+         .sds-theme-forge .link[disabled].link-cta.link-secondary.link-red) {
+    @apply text-red-500;
+  }
+
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-red)::after,
+  :where(.sds-theme-forge .link[disabled].link-cta.link-secondary.link-red)::after {
+    @apply bg-red-500;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-red,
+         :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-red) {
+    @apply text-red-200;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-red)::after,
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-red)::after {
+    @apply bg-red-200;
+  }
+
+  /* Primary - White */
   :where(.sds-theme-forge .link.link-cta.link-primary.link-white)::after {
     @apply bg-white;
   }
@@ -350,8 +395,9 @@
     @apply bg-white;
   }
 
+  /* Secondary - White */
   :where(.sds-theme-forge .link.link-cta.link-secondary.link-white)::after {
-    @apply bg-gray-900;
+    @apply bg-gray-100;
   }
 
   :where(.sds-theme-forge .link.link-cta.link-secondary.link-white:hover)::after {
@@ -366,7 +412,28 @@
     @apply bg-white;
   }
 
-  /* CTA Arrow Colors - Tertiary */
+  /* Secondary - White - Disabled */
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-white,
+         .sds-theme-forge .link[disabled].link-cta.link-secondary.link-white) {
+    @apply text-gray-100;
+  }
+
+  :where(.sds-theme-forge .link.disabled.link-cta.link-secondary.link-white)::after,
+  :where(.sds-theme-forge .link[disabled].link-cta.link-secondary.link-white)::after {
+    @apply bg-gray-100;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-white,
+         :is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-white) {
+    @apply text-gray-100;
+  }
+
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link.disabled.link-cta.link-secondary.link-white)::after,
+  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .link[disabled].link-cta.link-secondary.link-white)::after {
+    @apply bg-gray-100;
+  }
+
+  /* Tertiary - Blue/Red/White */
   :where(.sds-theme-forge .link.link-cta.link-tertiary)::after {
     @apply bg-gray-600;
   }
