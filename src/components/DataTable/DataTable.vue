@@ -17,8 +17,11 @@
         />
       </template>
       <template #footer>
-        <div class="flex flex-row flex-nowrap justify-between items-center gap-x-4">
-          <SdsPaginatorRange v-bind="{ ...paginatorRangeProps, ...$attrs }" />
+        <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
+          <SdsPaginatorRange 
+            v-bind="{ ...paginatorRangeProps, ...$attrs }"
+            class="w-full md:w-auto"
+          />
           <SdsPaginator 
             v-bind="{ ...paginatorProps, ...$attrs }"
             @go-to-page="setCurrentPage"
