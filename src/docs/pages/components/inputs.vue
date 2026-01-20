@@ -145,7 +145,7 @@
           <code class="text-xs">type="text" no autosuggest</code>
           <SdsComboBox
             v-model="comboBox0.modelValue"
-            size="sm"
+            size="md"
             placeholder="Search"
             focus-on-key-press
             @enter="comboBox0.onEnter"
