@@ -14,12 +14,12 @@ exports[`Callout > should have a bold gray variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -30,7 +30,7 @@ exports[`Callout > should have a bold gray variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -58,12 +58,12 @@ exports[`Callout > should have a bold orange variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -74,7 +74,7 @@ exports[`Callout > should have a bold orange variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -102,12 +102,12 @@ exports[`Callout > should have a bold red variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -118,7 +118,7 @@ exports[`Callout > should have a bold red variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -146,12 +146,12 @@ exports[`Callout > should have a subtle green variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -162,7 +162,7 @@ exports[`Callout > should have a subtle green variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -190,12 +190,12 @@ exports[`Callout > should have a subtle teal variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -206,7 +206,7 @@ exports[`Callout > should have a subtle teal variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -234,12 +234,12 @@ exports[`Callout > should have a title, description, timestamp, and be size md 1
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -250,7 +250,7 @@ exports[`Callout > should have a title, description, timestamp, and be size md 1
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -266,7 +266,7 @@ exports[`Callout > should have a title, description, timestamp, and be size md 1
 
 exports[`Callout > should have a title, description, timestamp, and be size sm 1`] = `
 <div
-  class="border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300 p-2.5 rounded-lg sds-theme-plaid:rounded-none"
+  class="border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300 p-3 rounded-lg sds-theme-plaid:rounded-none"
 >
   <div
     class="flex items-top space-x-2"
@@ -283,7 +283,7 @@ exports[`Callout > should have a title, description, timestamp, and be size sm 1
         This is a title
       </span>
       <div
-        class="opacity-90 text-xs pb-2"
+        class="opacity-90 text-sm leading-5 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -294,7 +294,7 @@ exports[`Callout > should have a title, description, timestamp, and be size sm 1
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -322,12 +322,12 @@ exports[`Callout > should have an outline blue variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -338,7 +338,7 @@ exports[`Callout > should have an outline blue variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -366,12 +366,12 @@ exports[`Callout > should have an outline indigo variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -382,7 +382,7 @@ exports[`Callout > should have an outline indigo variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -410,12 +410,12 @@ exports[`Callout > should have an outline purple variant 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -426,7 +426,7 @@ exports[`Callout > should have an outline purple variant 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -454,12 +454,12 @@ exports[`Callout > should have button in button slot 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -470,7 +470,7 @@ exports[`Callout > should have button in button slot 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -506,12 +506,12 @@ exports[`Callout > should have dismissable icon 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -522,7 +522,7 @@ exports[`Callout > should have dismissable icon 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -571,12 +571,12 @@ exports[`Callout > should have icon in leftSlot 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -587,7 +587,7 @@ exports[`Callout > should have icon in leftSlot 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -615,12 +615,12 @@ exports[`Callout > should have inset 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -631,7 +631,7 @@ exports[`Callout > should have inset 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
@@ -664,7 +664,7 @@ exports[`Callout > should have inset 1`] = `
 
 exports[`Callout > should match its default snapshot 1`] = `
 <div
-  class="border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300 p-2.5 rounded-lg sds-theme-plaid:rounded-none"
+  class="border border-gray-900 bg-gray-25 text-gray-900 dark:border-gray-300 dark:bg-gray-900 dark:text-gray-300 rounded-lg sds-theme-plaid:rounded-none"
 >
   <div
     class="flex items-top space-x-2"
@@ -712,12 +712,12 @@ exports[`Callout > should override description with slot 1`] = `
       class="flex flex-col"
     >
       <span
-        class="leading-5.5 font-semibold pb-1"
+        class="text-md leading-5.5 font-semibold pb-1"
       >
         This is a title
       </span>
       <div
-        class="opacity-90 text-sm pb-2"
+        class="opacity-90 text-md leading-6 pb-2"
       >
         <div
           class="[&_a:not([class*='no-underline'])]:underline"
@@ -728,7 +728,7 @@ exports[`Callout > should override description with slot 1`] = `
         </div>
       </div>
       <span
-        class="text-xs opacity-90 italic"
+        class="text-xs leading-4 opacity-90 italic"
       >
         Dec 04, 2012 at 03:20 am
       </span>
