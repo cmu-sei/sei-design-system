@@ -57,21 +57,21 @@ import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/Paginator
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
+interface DataTableProps {
+  data?: TableProps;
+  pagination?: PaginatorProps & { 
+    totalResultsPerPage: number; 
+    totalResults: number 
+  };
+}
+
 defineOptions({
-  name: "SdsDataTable"
+  name: 'SdsDataTable'
 })
 
-const props = defineProps({
-  data: {
-    type: Object as PropType<TableProps>,
-    required: false,
-    default: () => ({})
-  },
-  pagination: {
-    type: Object as PropType<PaginatorProps & { totalResultsPerPage: number; totalResults: number }>,
-    required: false,
-    default: () => ({})
-  }
+const props = withDefaults(defineProps<DataTableProps>(), {
+  data: undefined,
+  pagination: undefined
 })
 
 const emit = defineEmits(['update:pagination'])
@@ -88,6 +88,8 @@ const totalResults = ref(props.pagination?.totalResults ?? 0)
 const totalPages = ref(props.pagination?.totalPages ?? 0)
 
 const tableProps = computed(() => ({ 
+  items: [],
+  fields: [],
   ...props.data 
 }))
 

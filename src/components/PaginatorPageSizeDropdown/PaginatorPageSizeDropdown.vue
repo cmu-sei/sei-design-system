@@ -23,27 +23,30 @@
         tag="button"
         @click="onClick(option.value)"
       >
-        {{ option.value }}
+        {{ option.text }}
       </SdsDropdownItem>
     </template>
   </SdsActionDropdown>
 </template>
 
 <script lang="ts" setup>
+interface PaginatorPageSizeDropdownItem {
+  value: number;
+  text: string;
+}
+
+interface PaginatorPageSizeDropdown {
+  options?: PaginatorPageSizeDropdownItem[];
+  disabled?: boolean;
+}
+
 defineOptions({
-  name: "SdsPaginatorPageSizeDropdown"
+  name: 'SdsPaginatorPageSizeDropdown'
 })
 
-const props = defineProps({
-  options: {
-    type: Array as PropType<{ value: number, text: string }[]>,
-    default: (): { value: number, text: string }[] => [],
-    validator: (arr: { value: number, text: string }[]) => Array.isArray(arr)
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  }
+const props = withDefaults(defineProps<PaginatorPageSizeDropdown>(), {
+  options: () => [],
+  disabled: false
 })
 
 const model = defineModel({ type: Number, default: 0 })
