@@ -32,13 +32,19 @@
           @remove="multiselectRemove(index)"
         />
       </div>
-      <div class="flex flex-row">
-        <button
-          class="input-group-addon"
-          :disabled="disabled"
-          tabindex="-1"
-          type="button"
-          @click="handleEnterKeyUp"
+      <div
+        class="flex flex-row"
+        :class="{
+          'h-7': size === 'sm',
+          'h-10': size !== 'sm',
+        }"
+      >
+        <div
+          class="input-group-addon absolute z-0"
+          :class="{
+            'py-1.75': size === 'sm',
+            'py-3': size !== 'sm',
+          }"
         >
           <span class="sr-only">Combo box</span>
           <svg
@@ -62,10 +68,14 @@
             v-else
             size="sm"
           />
-        </button>
+        </div>
         <span
           v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
-          class="input-group-addon"
+          class="input-group-addon absolute z-0"
+          :class="{
+            'py-1 left-7': size === 'sm',
+            'py-2 left-8': size !== 'sm',
+          }"
         >
           {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
         </span>
@@ -79,9 +89,12 @@
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
-          class="form-control border-none focus-visible:ring-0"
+          class="form-control border-none focus-visible:ring-0 z-1"
           :class="{
-            'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length
+            'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
+            'pl-8': size === 'sm',
+            'pl-10': size !== 'sm',
+            'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
           }"
           :placeholder="placeholder"
           :disabled="disabled"
