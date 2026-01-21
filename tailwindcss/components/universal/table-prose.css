@@ -47,7 +47,6 @@
 
   :where(.table-prose tfoot) {
     @apply bg-gray-600/2 dark:bg-gray-400/2;
-    @apply border-t border-gray-100 dark:border-gray-800;
   }
 
   :where(.table-prose tfoot tr) {
@@ -55,6 +54,7 @@
   }
 
   :where(.table-prose tfoot td) {
+    @apply border-t border-gray-100 dark:border-gray-800;
     @apply px-2 py-4;
   }
 }
