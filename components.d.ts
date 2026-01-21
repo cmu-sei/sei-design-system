@@ -27,6 +27,7 @@ declare module 'vue' {
     PagesCssComponents: typeof import('./src/docs/pages/css/css-components.vue')['default']
     PagesCssTableProse: typeof import('./src/docs/pages/css/table-prose.vue')['default']
     PagesCssTypography: typeof import('./src/docs/pages/css/typography.vue')['default']
+    PagesPatternsDataTable: typeof import('./src/docs/pages/patterns/data-table.vue')['default']
     PagesPatternsFormGroup: typeof import('./src/docs/pages/patterns/form-group.vue')['default']
     PagesPatternsLayoutExternal: typeof import('./src/docs/pages/patterns/layout-external.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

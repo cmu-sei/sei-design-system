@@ -21,11 +21,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            hover:not-disabled:bg-gray-600/10 dark:hover:not-disabled:bg-gray-400/10
             border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            w-[2.125rem] h-[2.125rem] p-2
+            w-8.5 h-8.5 p-2
           "
           @click.prevent="goToPage(currentPage - 1, $event)"
         >
@@ -68,7 +68,7 @@
                 flex items-center justify-center grow-0 shrink-0
                 bg-white/0 hover:bg-gray-600/10 dark:hover:bg-gray-400/10
                 rounded-theme-sm
-                w-[2.125rem] h-[2.125rem]
+                w-8.5 h-8.5
                 disabled:pointer-events-none
               "
               :class="{
@@ -107,10 +107,8 @@
                     v-model="pageInputNumber"
                     type="number"
                     class="
-                      form-control
-                      form-control-sm
-                      max-w-[2.125rem]
-                      min-w-[2.125rem]
+                      form-control form-control-sm
+                      max-w-8.5 min-w-8.5
                       [-moz-appearance:textfield]
                       [&::-webkit-inner-spin-button]:appearance-none
                       [&::-webkit-outer-spin-button]:appearance-none
@@ -139,12 +137,12 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            hover:not-disabled:bg-gray-600/10 dark:hover:not-disabled:bg-gray-400/10
             border rounded-theme-sm
             border-gray-600/20 dark:border-gray-600/20
             text-gray-600 dark:text-gray-400
             font-semibold
-            min-w-[2.125rem] h-[2.125rem] p-2
+            min-w-8.5 h-8.5 p-2
           "
           :class="{
             // Active state
@@ -188,11 +186,11 @@
           class="
             flex items-center justify-center grow-0 shrink-0
             bg-white dark:bg-gray-950
-            hover:[&:not(:disabled)]:bg-gray-600/10 dark:hover:[&:not(:disabled)]:bg-gray-400/10
+            hover:not-disabled:bg-gray-600/10 dark:hover:not-disabled:bg-gray-400/10
             border rounded-theme-sm
             border-gray-600/20 dark:border-gray-400/20
             disabled:border-gray-600/10 dark:disabled:border-gray-400/10
-            w-[2.125rem] h-[2.125rem] p-2
+            w-8.5 h-8.5 p-2
           "
           @click.prevent="goToPage(currentPage + 1, $event)"
         >
@@ -223,39 +221,41 @@ import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsSelect from '../Select/Select.vue'
 import SdsSvgIcon from '../SvgIcon/SvgIcon.vue'
 
+/**
+ * Props for the Paginator component.
+ */
+export interface PaginatorProps {
+  /**
+   * The active page number.
+   * @default 1
+   */
+  currentPage?: number;
+  /**
+   * The total number of pages.
+   * @default 0
+   */
+  totalPages?: number;
+  /**
+   * Determines whether to show the loading state or not.
+   * @default false
+   */
+  loading?: boolean;
+  /**
+   * Determines the page threshold before the ellipsis truncation begins.
+   * @default 5
+   */
+  threshold?: number;
+}
+
 defineOptions({
   name: 'SdsPaginator'
 })
 
-const props = defineProps({
-  /**
-   * The active page number.
-   */
-  currentPage: {
-    type: Number,
-    default: 1,
-  },
-  /**
-   * The total number of pages.
-   */
-  totalPages: {
-    type: Number,
-    default: 0,
-  },
-  /**
-   * Determines whether to show the loading state or not.
-   */
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Determines the page threshold before the ellipsis truncation begins.
-   */
-  threshold: {
-    type: Number,
-    default: 5,
-  },
+const props = withDefaults(defineProps<PaginatorProps>(), {
+  currentPage: 1,
+  totalPages: 0,
+  loading: false,
+  threshold: 5
 })
 
 const icons = Object.freeze({
