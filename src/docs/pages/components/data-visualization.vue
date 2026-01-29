@@ -160,6 +160,31 @@
       </div>
       <div class="flex flex-row gap-4">
         <SdsAvatarGroup
+          size="md"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              variant: 'green',
+            },
+            {
+              name: 'Jacobim Mugatu',
+              variant: 'purple',
+            },
+            {
+              name: 'Maury Ballstein',
+              variant: 'yellow'
+            },
+            {
+              name: 'Morgan Markowski',
+              variant: 'red',
+            }
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
           size="sm"
           shape="circle"
           density="condensed"
@@ -196,6 +221,27 @@
               href: 'https://google.com',
               src: 'https://picsum.photos/seed/6/200/400'
             },
+          ]"
+        />
+      </div>
+      <div class="flex flex-row gap-4">
+        <SdsAvatarGroup
+          size="sm"
+          shape="circle"
+          density="condensed"
+          :srcset="[
+            {
+              name: 'Morgan Markowski',
+              src: 'https://picsum.photos/seed/1/200/200',
+              href: 'https://google.com',
+              variant: 'red',
+              target: '_blank'
+            },
+            {
+              name: 'Jacobim Mugatu',
+              src: 'https://picsum.photos/seed/2/200/200',
+              href: 'https://google.com',
+            }
           ]"
         />
       </div>
@@ -464,17 +510,17 @@
       </h2>
       <div class="flex flex-row gap-4 flex-wrap">
         <div
-          v-for="variant in badgeVariants" 
-          :key="variant" 
+          v-for="variant in badgeVariants"
+          :key="variant"
           class="flex flex-col gap-4"
         >
-          <div 
-            v-for="type in badgeTypes" 
-            :key="type" 
+          <div
+            v-for="type in badgeTypes"
+            :key="type"
             class="flex flex-row gap-4"
           >
-            <SdsBadge 
-              :type="type" 
+            <SdsBadge
+              :type="type"
               :variant="variant"
             >
               Badge
@@ -625,6 +671,23 @@
                 </p>
               </li>
             </ul>
+          </template>
+        </SdsTable>
+      </div>
+      <div>
+        <SdsTable
+          :fields="fields_simple"
+          :items="items_simple"
+        >
+          <template #cell(fruit)="{ value }">
+            <p class="font-bold">
+              {{ value }}
+            </p>
+          </template>
+          <template #cell(actions)>
+            <button>
+              Edit
+            </button>
           </template>
         </SdsTable>
       </div>
@@ -1089,6 +1152,95 @@ const fields = ref<TableField[]>([
   {
     key: "actions",
     label: "Actions"
+  }
+])
+
+const fields_simple = ref<TableField[]>([
+  {
+    key: "id",
+    label: "ID",
+    sortable: true
+  },
+  {
+    key: "fruit",
+    label: "Fruit",
+    sortable: true
+  },
+  {
+    key: "amount",
+    label: "Amount",
+    sortable: true,
+    align: "right"
+  },
+  {
+    key: "pricePerPound",
+    label: "Price Per Pound",
+    sortable: true,
+    align: "right"
+  },
+  {
+    key: "lastDelivered",
+    label: "Last delivered",
+    sortable: true,
+    format: (date: Date) => date.toLocaleDateString()
+  },
+  {
+    key: "createdDate",
+    label: "Created date",
+    hidden: true,
+    format: (date: Date) => date.toLocaleDateString()
+  },
+  {
+    key: "actions",
+    label: "Actions"
+  }
+])
+
+const items_simple = ref([
+  {
+    id: 1,
+    fruit: "Apple",
+    employee: "Jacobim Mugatu",
+    amount: "32",
+    pricePerPound: "$1.42",
+    lastDelivered: new Date("01/01/2019"),
+    createdDate: new Date("02/23/2009"),
+  },
+  {
+    id: 2,
+    fruit: "Banana",
+    pricePerPound: "$0.99",
+    amount: "4",
+    employee: "Maury Ballstein",
+    lastDelivered: new Date("10/01/2020"),
+    createdDate: new Date("05/13/2010"),
+  },
+  {
+    id: 3,
+    fruit: "Cantaloupe",
+    pricePerPound: "$42.68",
+    amount: "18",
+    employee: "Derek Zoolander",
+    lastDelivered: new Date("12/01/2020"),
+    createdDate: new Date("01/13/2012"),
+  },
+  {
+    id: 4,
+    fruit: "Durian",
+    pricePerPound: "$32.98",
+    amount: "100",
+    employee: "Hansel MacDonald",
+    lastDelivered: new Date("02/01/2021"),
+    createdDate: new Date("12/09/2013"),
+  },
+  {
+    id: 5,
+    fruit: "Elderberry",
+    pricePerPound: "$2.93",
+    amount: "37",
+    employee: "Matilda Jeffries",
+    lastDelivered: new Date("01/01/2019"),
+    createdDate: new Date("04/10/2017"),
   }
 ])
 

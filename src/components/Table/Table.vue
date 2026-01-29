@@ -22,7 +22,7 @@
           <col
             :key="field.key"
             :class="{
-              [sortedColumnClass]: sortField === field.key
+              [sortedColumnClass || '']: sortField === field.key
             }"
           >
         </slot>
@@ -32,7 +32,7 @@
       <tr>
         <th 
           v-if="hasDrawers"
-          class="[.table-prose_&]:px-2 w-10"
+          class="in-[.table-prose_&]:px-2 w-10"
         >
           <button 
             class="flex items-center justify-center w-6 h-6"
@@ -82,10 +82,11 @@
                 v-for="f, index in field.fields"
                 :key="f.key"
                 type="button"
-                class="after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
+                class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
                 :class="{
                   'cursor-default after:mr-0.5': !f.sortable,
-                  'after:mr-4' : f.sortable
+                  'after:mr-4' : f.sortable,
+                  'flex-row-reverse': field.align === 'right'
                 }"
                 @click="f.sortable ? handleSortBy(f) : undefined"
               >
@@ -113,8 +114,10 @@
                     :width="sortField !== f.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === f.key,
-                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== f.key,
-                      '-mb-1 ml-2': sortField === f.key && sortOrder > 0 || sortField === f.key && sortOrder < 0,
+                      '-mb-1.5 opacity-0 group-hover:opacity-50': sortField !== f.key,
+                      '-mb-1.5': sortField === f.key && sortOrder > 0 || sortField === f.key && sortOrder < 0,
+                      'ml-2': f.align !== 'right',
+                      'mr-2': f.align === 'right',
                     }"
                     preserveAspectRatio="xMidYMid meet"
                     :viewBox="sortField !== f.key ? '0 0 15 15' : '0 0 11 15'"
@@ -155,8 +158,10 @@
               class="whitespace-nowrap space-x-1 select-none group"
             >
               <button
+                class="inline-flex items-center"
                 :class="{
-                  'cursor-default': !field.sortable
+                  'cursor-default': !field.sortable,
+                  'flex-row-reverse': field.align === 'right'
                 }"
                 type="button"
                 @click="field.sortable ? handleSortBy(field) : undefined"
@@ -184,8 +189,10 @@
                     :width="sortField !== field.key ? '15' : '11'"
                     :class="{
                       'opacity-100': sortField === field.key,
-                      '-mb-1.5 ml-2 opacity-0 group-hover:opacity-50': sortField !== field.key,
-                      '-mb-1 ml-2': sortField === field.key && sortOrder > 0 || sortField === field.key && sortOrder < 0,
+                      '-mb-1.5 opacity-0 group-hover:opacity-50': sortField !== field.key,
+                      '-mb-1.5': sortField === field.key && sortOrder > 0 || sortField === field.key && sortOrder < 0,
+                      'ml-2': field.align !== 'right',
+                      'mr-2': field.align === 'right',
                     }"
                     preserveAspectRatio="xMidYMid meet"
                     :viewBox="sortField !== field.key ? '0 0 15 15' : '0 0 11 15'"
@@ -225,8 +232,8 @@
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
-            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-950': item.toggled && !item.nestedRows && rowHighlight
+            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': item.toggled && !item.nestedRows && rowHighlight
           }"
           @mouseover="onMouseover(item)"
           @mouseleave="onMouseleave(item)"
@@ -304,7 +311,7 @@
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
-                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight
+                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight
               }"
             >
               <td 
@@ -347,8 +354,8 @@
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-950': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-950': rowHighlight && item.hover
+              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && item.hover
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
@@ -362,46 +369,50 @@
         </template>
       </template>
     </tbody>
+    <tfoot v-if="$slots.footer">
+      <tr>
+        <td :colspan="displayedFieldKeys.length + 1">
+          <slot name="footer" />
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </template>
 
 <script setup lang="ts">
 import SdsSvgIcon from '../SvgIcon'
 
-export type TableDensity = typeof densityTypes[number]
+export type TableDensity = typeof densityTypes[number];
 
 export interface TableField {
-  key: string
-  label?: string
-  format?: GenericFunctionType
-  sortable?: boolean
-  hidden?: boolean
-  header?: boolean
-  align?: 'left' | 'center' | 'right'
-  fields?: TableField[]
-  [key: string]: unknown
+  key: string;
+  label?: string;
+  format?: GenericFunctionType;
+  sortable?: boolean;
+  hidden?: boolean;
+  header?: boolean;
+  align?: 'left' | 'center' | 'right';
+  fields?: TableField[];
+  [key: string]: unknown;
 }
 
 export interface TableItem {
-  id: number
-  enableDrawer?: boolean
-  toggled?: boolean
-  nestedRows?: TableItem[]
-  [key: string]: unknown
+  id: number;
+  enableDrawer?: boolean;
+  toggled?: boolean;
+  nestedRows?: TableItem[];
+  [key: string]: unknown;
 }
 
-defineOptions({
-  name: 'SdsTable'
-})
-
-const props = defineProps({
+/**
+ * Props for the Table component.
+ */
+export interface TableProps {
   /**
    * A unique id used as a prefix for unique table row ids.
+   * @default undefined
    */
-  id: {
-    type: String,
-    default: null
-  },
+  id?: string;
   /**
    * An array of objects. Each object must have a unique "id" but everything else is optional.
    *
@@ -412,10 +423,7 @@ const props = defineProps({
    *
    * **{ id: 1, title: "Title", lastModified: "01/01/2019" }**
    */
-  items: {
-    type: Array as PropType<TableItem[]>,
-    default: () => [],
-  },
+  items: TableItem[];
   /**
    * An array of objects. These objects determine the column headers.
    *
@@ -440,30 +448,31 @@ const props = defineProps({
    *   format: (date) => date.toLocaleDateString()
    * }**
    */
-  fields: {
-    type: Array as PropType<TableField[]>,
-    default: () => [],
-  },
+  fields: TableField[];
   /**
    * Determines the field key to sort by.
    */
-  sortBy: { type: String, default: '' },
+  sortBy?: string;
   /**
    * Determines if sorting should be descending or ascending.
+   * @default false
    */
-  sortDesc: { type: Boolean, default: false },
+  sortDesc?: boolean;
   /**
    * Determines the caption for the table if desired.
+   * @default undefined
    */
-  caption: { type: String, default: null },
+  caption?: string;
   /**
    * Determines the CSS classes used on the sorted column.
+   * @default undefined
    */
-  sortedColumnClass: { type: String, default: null },
+  sortedColumnClass?: string;
   /**
-   * Toggles on/off a drawer below each table row
+   * Toggles on/off a drawer below each table row.
+   * @default false
    */
-  enableDrawer: { type: Boolean, default: false },
+  enableDrawer?: boolean;
   /**
    * Overrides the built-in sorting behavior of the table.
    * 
@@ -486,22 +495,41 @@ const props = defineProps({
    * * `field`: The field you are sorting on.
    * * `sortBy`: The field key. Provided as a helper that can be used to update the `sortBy` prop of this component.
    * * `sortDesc`: The component's internal value for what it expects the `sortDesc` prop to equal. Provided as a helper that can be used to update the `sortDesc` prop of the component.
+   * @default undefined
    */
-  onSort: { type: Function as PropType<GenericFunctionType>, default: undefined },
+  onSort?: GenericFunctionType;
   /**
-   * Determines the table's density, or padding, for the "th", "td" HTML tags
+   * Determines the table's density, or padding, for the "th", "td" HTML tags.
    * 
    * Density options:
    *
    * * comfortable: p-4 (16px)
    * * condensed: p-1 (4px)
    * * default: p-2 (8px)
+   * @default undefined
    */
-  density: { type: String as PropType<TableDensity>, default: undefined },
+  density?: TableDensity;
   /**
-   * Determines if rows within a table have a hover state (bg-gray-25)
+   * Determines if rows within a table have a hover state (bg-gray-25).
+   * @default undefined
    */
-  rowHighlight: { type: Boolean, default: undefined }
+  rowHighlight?: boolean;
+}
+
+defineOptions({
+  name: 'SdsTable'
+})
+
+const props = withDefaults(defineProps<TableProps>(), {
+  id: undefined,
+  sortBy: undefined,
+  sortDesc: false,
+  caption: undefined,
+  sortedColumnClass: undefined,
+  enableDrawer: false,
+  onSort: undefined,
+  density: undefined,
+  rowHighlight: undefined,
 })
 
 const emit = defineEmits([
@@ -529,7 +557,7 @@ const icons = Object.freeze({
 const isBatchExpanded = ref(false)
 const itemsNormalized = ref<TableItem[]>([])
 const enableDrawer = ref(props.enableDrawer)
-const sortField = ref(props.sortBy)
+const sortField = ref(props.sortBy ?? '')
 const sortOrder = ref(props.sortDesc ? -1 : 1)
 
 const flatFields = computed(() => {
@@ -682,6 +710,7 @@ watch(() => props.enableDrawer, (value) => {
 })
 
 watch(() => props.sortBy, (value) => {
+  if (!value) return
   sortField.value = value
 })
 

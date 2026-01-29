@@ -29,7 +29,7 @@
               :src="item.src ?? ''"
               :name="item.name ?? ''"
               class="relative cursor-pointer [&>span]:cursor-pointer"
-              :class="`${baseClasses} ${indentClass(index, srcset.length-1)}`"
+              :class="`${baseClasses} ${indentClass(index, srcset.length-1)} ${((srcset.length-1 === index) && (srcset.length < 5)) ? 'mask-none!' : ''}`"
             />
           </template>
           {{ item.name }}
@@ -52,7 +52,7 @@
             :src="item.src ?? ''"
             :name="item.name ?? ''"
             class="relative"
-            :class="`${baseClasses} ${indentClass(index, srcset.length-1)}`"
+            :class="`${baseClasses} ${indentClass(index, srcset.length-1)} ${((srcset.length-1 === index) && (srcset.length < 5)) ? 'mask-none!' : ''}`"
           />
         </template>
         {{ item.name }}
@@ -63,7 +63,6 @@
     >
       <template #trigger="{ toggle }">
         <button
-          v-if="srcset.length >= 5"
           :class="[
             lastClasses,
             'bg-gray-100',
@@ -191,7 +190,7 @@ const lastClasses = computed(() => {
     'border-2',
     'border-transparent',
     'cursor-pointer',
-    'mask-none',
+    'mask-none!',
     'hover:border-gray-200',
     'focus:border-gray-200',
     'active:bg-gray-200/50',

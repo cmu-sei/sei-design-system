@@ -67,6 +67,12 @@
         title="Patterns Navigation"
       >
         <RouterLink
+          to="/patterns/data-table"
+          class="link link-secondary w-fit"
+        >
+          Data Table
+        </RouterLink>
+        <RouterLink
           to="/patterns/form-group"
           class="link link-secondary w-fit"
         >

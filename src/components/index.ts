@@ -12,11 +12,13 @@ import type { ApplicationSidebarNavItem } from './Application/Application.vue'
 import type { MegaMenuItem } from './MegaMenu/MegaMenu.vue'
 import type { MobileMenuItem } from './MobileMenu/MobileMenu.vue'
 import type { MultiselectOption, MultiselectTag } from './Multiselect/Multiselect.vue'
+import type { PaginatorProps } from './Paginator/Paginator.vue'
+import type { PaginatorRangeProps } from './PaginatorRange/PaginatorRange.vue'
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
 import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownPlacement, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
-import type { TableField, TableItem } from './Table/Table.vue'
+import type { TableField, TableItem, TableProps } from './Table/Table.vue'
 import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
 import type { TooltipPlacement } from './Tooltip/Tooltip.vue'
@@ -46,6 +48,8 @@ export type {
   MobileMenuItem,
   MultiselectOption,
   MultiselectTag,
+  PaginatorProps,
+  PaginatorRangeProps,
   PopoverPlacement,
   RadioGroupOption,
   RadioGroupOptionValue,
@@ -59,6 +63,7 @@ export type {
   SvgIconTypes,
   TableField,
   TableItem,
+  TableProps,
   TabItem,
   ToasterToast,
   TooltipPlacement,
@@ -79,6 +84,7 @@ import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
 import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
+import SdsDataTable from "./DataTable";
 import SdsDropdown from "./Dropdown";
 import SdsDropdownDivider from "./DropdownDivider";
 import SdsDropdownHeader from "./DropdownHeader";
@@ -110,6 +116,8 @@ import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
+import SdsPaginatorPageSizeDropdown from "./PaginatorPageSizeDropdown";
+import SdsPaginatorRange from "./PaginatorRange";
 import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
@@ -149,6 +157,7 @@ const Components: ComponentList = {
   SdsComboBox,
   SdsDatapoint,
   SdsDatepicker,
+  SdsDataTable,
   SdsDropdown,
   SdsDropdownDivider,
   SdsDropdownHeader,
@@ -180,6 +189,8 @@ const Components: ComponentList = {
   SdsMultiselect,
   SdsNavigationItem,
   SdsPaginator,
+  SdsPaginatorPageSizeDropdown,
+  SdsPaginatorRange,
   SdsPanel,
   SdsPopover,
   SdsRadioGroup,
@@ -223,6 +234,7 @@ export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
 export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
+export { default as SdsDataTable } from "./DataTable";
 export { default as SdsDropdown } from "./Dropdown";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
 export { default as SdsDropdownHeader } from "./DropdownHeader";
@@ -254,6 +266,8 @@ export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
+export { default as SdsPaginatorPageSizeDropdown } from "./PaginatorPageSizeDropdown";
+export { default as SdsPaginatorRange } from "./PaginatorRange";
 export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";

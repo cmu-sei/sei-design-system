@@ -3,7 +3,7 @@
 
   :where(.action-btn) {
     @apply border border-transparent py-1.5 px-1.5 rounded-theme-sm select-none whitespace-nowrap cursor-pointer;
-    @apply inline-flex gap-2 items-center text-left;
+    @apply inline-flex gap-1.5 items-center text-left;
   }
 
   :where(.action-btn:focus) {

@@ -17,6 +17,7 @@ export default defineConfig({
     coverage: {
       include: [
         'src/components/**/*.vue',
+        'src/composables/*.{js,ts}',
         'src/helpers/*.{js,ts}'
       ],
       provider: 'v8'
