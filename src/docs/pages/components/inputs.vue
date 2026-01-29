@@ -175,6 +175,7 @@
               v-model:selected="comboBox2_1.selected"
               placeholder="Search"
               :suggestions="comboBox2_1.suggestions"
+              :required="true"
               size="sm"
               type="select"
               filter-suggestions

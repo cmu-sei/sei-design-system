@@ -100,6 +100,7 @@
           :disabled="disabled"
           :readonly="isReadonly"
           :maxlength="maxlength"
+          :required="required"
           @input="onInputFieldInput"
           @click.prevent="inputClick"
           @keydown.delete="handleDelete"
@@ -731,6 +732,10 @@ const props = defineProps({
    * Makes the input read-only, preventing user input but still allowing focus and selection.
    */
   readonly: { type: Boolean, default: false },
+  /**
+   * Determines if the input is required.
+   */
+  required: { type: Boolean, default: false },
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
