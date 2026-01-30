@@ -8,7 +8,7 @@ exports[`ComboBox > should match its default snapshot 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -27,7 +27,7 @@ exports[`ComboBox > should match its snapshot with required prop assigned 1`] = 
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" required="" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" required="" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -46,7 +46,7 @@ exports[`ComboBox > should match snapshot for grouped options 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -65,7 +65,7 @@ exports[`ComboBox > should match snapshot for optionType="a" 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -84,7 +84,7 @@ exports[`ComboBox > should match snapshot for optionType="custom" 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -120,7 +120,7 @@ exports[`ComboBox > should match snapshot for type="select" (multiple) 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist --><input type="hidden" aria-hidden="true" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">
+      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI --><input type="text" aria-hidden="true" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">
           <path d="M6 18L18 6M6 6l12 12"></path>
         </svg></button>
       <!--v-if-->
@@ -139,7 +139,7 @@ exports[`ComboBox > should match snapshot for type="select" (single) 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -175,7 +175,7 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (multiple) 
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist --><input type="hidden" aria-hidden="true" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">
+      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI --><input type="text" aria-hidden="true" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">
           <path d="M6 18L18 6M6 6l12 12"></path>
         </svg></button>
       <!--v-if-->
@@ -194,7 +194,7 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (single) 1`
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -213,7 +213,7 @@ exports[`ComboBox > should match snapshot when autofocus is true 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -232,7 +232,7 @@ exports[`ComboBox > should match snapshot when disabled 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" disabled="" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" disabled="" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -251,7 +251,7 @@ exports[`ComboBox > should match snapshot when loading 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -270,7 +270,7 @@ exports[`ComboBox > should match snapshot with clearable (showClearButton) 1`] =
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value="e"><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value="e"><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if--><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true">
           <path d="M6 18L18 6M6 6l12 12"></path>
         </svg></button>
@@ -290,7 +290,7 @@ exports[`ComboBox > should match snapshot with custom value/label keys 1`] = `
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
           <path fill="currentColor" d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Hidden input for multiselect form validation - contains marker when selections exist -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for multiselect - positioned for browser validation UI -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
