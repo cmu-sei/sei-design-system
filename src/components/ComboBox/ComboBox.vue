@@ -100,7 +100,7 @@
           :disabled="disabled"
           :readonly="isReadonly"
           :maxlength="maxlength"
-          :required="required && !(multiple && (type === 'select' || type === 'taggable-select'))"
+          :required="required && !((type === 'select' || type === 'taggable-select'))"
           @input="onInputFieldInput"
           @click.prevent="inputClick"
           @keydown.delete="handleDelete"
@@ -112,9 +112,9 @@
           @keydown.enter.prevent.self
           @keyup.enter.prevent.self="handleEnterKeyUp"
         >
-        <!-- Validation input for multiselect - positioned for browser validation UI -->
+        <!-- Validation input for select/taggable-select types - checks if selected array has items -->
         <input
-          v-if="multiple && (type === 'select' || type === 'taggable-select')"
+          v-if="(type === 'select' || type === 'taggable-select')"
           type="text"
           :value="selected.length > 0 ? 'selected' : ''"
           :required="required"
