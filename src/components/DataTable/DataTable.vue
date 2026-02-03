@@ -3,9 +3,19 @@
     data-id="sds-data-table"
     class="overflow-x-auto"
   >
+    <div 
+      class="
+      bg-white dark:bg-gray-950
+        border border-b-0 border-gray-100 dark:border-gray-800 
+        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none
+        min-h-14.5 w-full min-w-3xl px-2 py-4
+      "
+    >
+      <!-- Data Table Filters -->
+    </div>
     <SdsTable 
       v-bind="{ ...tableProps, ...$attrs }"
-      class="table-prose-td:align-middle"
+      class="table-prose-td:align-middle w-full min-w-3xl"
     >
       <template
         v-for="(_, name) in $slots"
