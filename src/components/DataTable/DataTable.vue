@@ -60,12 +60,30 @@ import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/Paginator
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
+export interface DataTableFilterBase {
+  text: string;
+  selected: boolean;
+}
+
+export interface DataTableFilter extends DataTableFilterBase {
+  type: 'button';
+}
+
+export interface DataTableDropdownFilter {
+  type: 'dropdown';
+  title?: string;
+  options?: DataTableFilterBase[];
+}
+
+export type DataTableFilterItem = DataTableFilter | DataTableDropdownFilter;
+
 interface DataTableProps {
   data?: TableProps;
   pagination?: PaginatorProps & { 
     totalResultsPerPage: number; 
-    totalResults: number 
+    totalResults: number; 
   };
+  filters?: DataTableFilterItem[];
 }
 
 defineOptions({
@@ -74,7 +92,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
-  pagination: undefined
+  pagination: undefined,
+  filters: undefined
 })
 
 const emit = defineEmits(['update:pagination'])
