@@ -1,19 +1,19 @@
 <template>
   <div 
     data-id="sds-data-table"
-    class="overflow-x-auto"
+    class="w-full min-w-full"
   >
     <div 
-      v-if="props.filters"
+      v-if="filters && filters.button && filters.button.length"
       class="
-      bg-white dark:bg-gray-950
+        bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
-        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none
-        min-h-14.5 w-full min-w-3xl
+        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none 
+        min-h-14.5 w-full min-w-full
       "
     >
       <div class="overflow-x-auto px-2 py-4">
-        <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-3xl">
+        <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-full">
           <template v-if="filters?.button && filters.button.length">
             <SdsActionButton
               v-for="(filter, index) in filters.button"
@@ -28,42 +28,45 @@
         </div>
       </div>
     </div>
-    <SdsTable 
-      v-bind="{ ...tableProps, ...$attrs }"
-      class="table-prose-td:align-middle w-full min-w-3xl"
-    >
-      <template
-        v-for="(_, name) in $slots"
-        #[name]="slotProps"
+    <div class="overflow-x-auto max-w-full">
+      <SdsTable 
+        v-bind="{ ...tableProps, ...$attrs }"
+        class="table-prose-td:align-middle w-full min-w-5xl"
       >
-        <slot
-          :name="name"
-          v-bind="slotProps ?? {}"
-        />
-      </template>
-      <template #footer>
-        <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
-          <SdsPaginatorRange 
-            v-bind="{ ...paginatorRangeProps, ...$attrs }"
-            class="w-full md:w-auto"
+        <template
+          v-for="(_, name) in $slots"
+          #[name]="slotProps"
+        >
+          <slot
+            :name="name"
+            v-bind="slotProps ?? {}"
           />
-          <SdsPaginator 
-            v-bind="{ ...paginatorProps, ...$attrs }"
-            @go-to-page="setCurrentPage"
-          />
-          <SdsPaginatorPageSizeDropdown
-            v-model="totalResultsPerPage"
-            :options="[...options]"
-            class="justify-self-end"
-            @update:model-value="setPageSize"
-          >
-            <template #label="{ selection }">
-              {{ selection }} rows
-            </template>
-          </SdsPaginatorPageSizeDropdown>
-        </div>
-      </template>
-    </SdsTable>
+        </template>
+        <template #footer>
+          <!-- TODO: Implement footer content outside of SdsTable component with "overflow-x-auto" scrolling -->
+          <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
+            <SdsPaginatorRange 
+              v-bind="{ ...paginatorRangeProps, ...$attrs }"
+              class="w-full md:w-auto"
+            />
+            <SdsPaginator 
+              v-bind="{ ...paginatorProps, ...$attrs }"
+              @go-to-page="setCurrentPage"
+            />
+            <SdsPaginatorPageSizeDropdown
+              v-model="totalResultsPerPage"
+              :options="[...options]"
+              class="justify-self-end"
+              @update:model-value="setPageSize"
+            >
+              <template #label="{ selection }">
+                {{ selection }} rows
+              </template>
+            </SdsPaginatorPageSizeDropdown>
+          </div>
+        </template>
+      </SdsTable>
+    </div>
   </div>
 </template>
 
@@ -129,7 +132,7 @@ const filters = ref(props.filters
   ? { 
     button: props.filters.button 
       ? [{ text: 'All', selected: true }, ...props.filters.button] 
-      : undefined
+      : []
   }
   : undefined
 )
