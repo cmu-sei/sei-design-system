@@ -11,7 +11,7 @@
     @click.self="onClose(false)"
   >
     <div
-      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
+      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-5xl xl:max-w-7xl 2xl:px-12 2xl:max-w-screen-2xl"
       @click.self="onClose(false)"
     >
       <div
@@ -126,7 +126,7 @@
         >
           <div
             :class="{
-              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
+              'container mx-auto max-w-full lg:max-w-5xl xl:max-w-7xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
               'p-4 xl:px-8': width === 'auto'
             }"
           >
@@ -165,6 +165,7 @@
         :style="{
           top: `${rootBottom}px`
         }"
+        @click="onClose(false)"
       />
     </transition>
   </nav>

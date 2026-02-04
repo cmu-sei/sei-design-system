@@ -100,6 +100,7 @@
           :disabled="disabled"
           :readonly="isReadonly"
           :maxlength="maxlength"
+          :required="required && !((type === 'select' || type === 'taggable-select'))"
           @input="onInputFieldInput"
           @click.prevent="inputClick"
           @keydown.delete="handleDelete"
@@ -110,6 +111,19 @@
           @keydown.right="handleArrows('right', $event)"
           @keydown.enter.prevent.self
           @keyup.enter.prevent.self="handleEnterKeyUp"
+        >
+        <!-- Validation input for select/taggable-select types - checks if selected array has items -->
+        <input
+          v-if="(type === 'select' || type === 'taggable-select')"
+          type="text"
+          :value="selected.length > 0 ? 'selected' : ''"
+          :required="required"
+          aria-hidden="true"
+          tabindex="-1"
+          class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
+          style="clip: rect(0, 0, 0, 0);"
+          @input.prevent
+          @keydown.prevent
         >
         <button
           v-if="showClearButton"
@@ -732,6 +746,10 @@ const props = defineProps({
    */
   readonly: { type: Boolean, default: false },
   /**
+   * Determines if the input is required.
+   */
+  required: { type: Boolean, default: false },
+  /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
   size: { type: String as () => 'sm' | 'md', default: undefined },
@@ -1063,6 +1081,15 @@ const inputDisplayValue = computed(() => {
       return removeHtmlFromString(label)
     }
   }
+  // If there are selections (and query is empty), use the first selected value for form validation
+  // Only for single-select mode (multiselect shows selected items as tags, so input should be empty)
+  if (selected.value.length > 0 && query.value === '' && !props.multiple) {
+    const firstSelected = selected.value[0]
+    if (typeof firstSelected === 'object') {
+      return String(props.optionLabel ? firstSelected[props.optionLabel as string] : firstSelected[defaultOptionLabel.value] ?? '')
+    }
+    return String(firstSelected)
+  }
   // Otherwise, show the query
   return removeHtmlFromString(query.value)
 })
@@ -1135,10 +1162,22 @@ const scrollToChild = async () => {
 
 const clearQuery = () => {
   suppressCompleteDueToSelection = true
+  // For multiselect: first click clears query, second click clears selections
+  // For single-select: one click clears everything
   if (inputDisplayValue.value !== '') {
     query.value = ''
     inputField.value.value = ''
-  } else if (props.type === 'select' || props.type === 'taggable-select') {
+    // In multiselect mode, only clear query on first click (keep selections)
+    if (props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
+      isReadonly.value = props.readonly || false
+      showDropdown.value = false
+      inputField.value.focus()
+      return
+    }
+  }
+  // Clear selections for select/taggable-select types (and text type when input is empty)
+  // This handles the second click in multiselect mode or any click when input is already empty
+  if (props.type === 'select' || props.type === 'taggable-select' || props.type === 'text') {
     selected.value = []
   }
   isReadonly.value = props.readonly || false
@@ -1207,7 +1246,6 @@ const multiselectAdd = async () => {
     }
     suppressCompleteDueToLabelUpdate = true
     query.value = normalizedLabel
-    if (selected.value.length && props.type !== 'text') isReadonly.value = props.readonly || true
   }
   await nextTick()
   arrowCounter.value = -1
@@ -1233,6 +1271,14 @@ const multiselectRemove = (index: number) => {
 
 const handleDelete = () => {
   if (selected.value.length && props.type === 'text') (selected.value as ComboBoxSuggestion[]).pop()
+  // For single-select (select/taggable-select), pressing Delete clears the entire selection
+  if (selected.value.length && !props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
+    multiselectRemove(-1)
+    query.value = ''
+    if (inputField.value) inputField.value.value = ''
+    isReadonly.value = props.readonly || false
+    return
+  }
   if (selected.value.length && inputField.value.value === '') multiselectRemove(-1)
 }
 
@@ -1330,6 +1376,17 @@ watch([query, inputDisplayValue, () => selected.value.length, () => props.multip
 // Input handler for the input field (replaces v-model)
 const onInputFieldInput = (e: Event) => {
   const target = e.target as HTMLInputElement
+  // If user starts typing with an existing single selection in select/taggable-select mode,
+  // clear the selection and allow them to type a new value
+  if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select') && selected.value.length > 0) {
+    selected.value = []
+    isReadonly.value = props.readonly || false
+    // Clear the input value so typing starts fresh (not concatenated to the selected value)
+    target.value = target.value.slice(-1) // Keep only the last typed character
+    query.value = target.value
+    handleInput()
+    return
+  }
   query.value = target.value
   handleInput()
 }
