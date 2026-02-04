@@ -53,6 +53,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
@@ -60,22 +61,15 @@ import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/Paginator
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
-export interface DataTableFilterBase {
+export interface DataTableButtonFilter {
   text: string;
   selected: boolean;
 }
 
-export interface DataTableFilter extends DataTableFilterBase {
-  type: 'button';
-}
-
 export interface DataTableDropdownFilter {
-  type: 'dropdown';
   title?: string;
-  options?: DataTableFilterBase[];
+  options?: FilterByDropdownOption[];
 }
-
-export type DataTableFilterItem = DataTableFilter | DataTableDropdownFilter;
 
 interface DataTableProps {
   data?: TableProps;
@@ -83,7 +77,10 @@ interface DataTableProps {
     totalResultsPerPage: number; 
     totalResults: number; 
   };
-  filters?: DataTableFilterItem[];
+  filters?: {
+    button?: DataTableButtonFilter[];
+    dropdown?: DataTableDropdownFilter[];
+  }
 }
 
 defineOptions({

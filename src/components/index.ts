@@ -5,6 +5,7 @@ import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calen
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
+import type { DataTableButtonFilter, DataTableDropdownFilter } from './DataTable/DataTable.vue'
 import type { FileWithInvalidDefinitions, FileTypes, SvgIconTypes, SvgIcons } from './FileUploader/FileUploader.vue'
 import type { FilterByDropdownOption, FilterByDropdownPlacement } from './FilterByDropdown/FilterByDropdown.vue'
 import type { FloatingUiPlacement } from './FloatingUi/FloatingUi.vue'
@@ -38,6 +39,8 @@ export type {
   CheckboxGroupOptionValue,
   ComboBoxSuggestion,
   DatepickerPlacement,
+  DataTableButtonFilter,
+  DataTableDropdownFilter,
   FileWithInvalidDefinitions,
   FilterByDropdownOption,
   FilterByDropdownPlacement,
