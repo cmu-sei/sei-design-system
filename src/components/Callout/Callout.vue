@@ -18,9 +18,7 @@
         <slot name="leftIcon" />
       </div>
       <!-- Title and content -->
-      <div 
-        class="flex flex-col"
-      >
+      <div class="mr-0">
         <span
           v-if="title" 
           :class="{

@@ -11,7 +11,7 @@ exports[`Callout > should have a bold gray variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -55,7 +55,7 @@ exports[`Callout > should have a bold orange variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -99,7 +99,7 @@ exports[`Callout > should have a bold red variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -143,7 +143,7 @@ exports[`Callout > should have a subtle green variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -187,7 +187,7 @@ exports[`Callout > should have a subtle teal variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -231,7 +231,7 @@ exports[`Callout > should have a title, description, timestamp, and be size md 1
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -275,7 +275,7 @@ exports[`Callout > should have a title, description, timestamp, and be size sm 1
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-sm leading-5 font-semibold pb-1"
@@ -319,7 +319,7 @@ exports[`Callout > should have an outline blue variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -363,7 +363,7 @@ exports[`Callout > should have an outline indigo variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -407,7 +407,7 @@ exports[`Callout > should have an outline purple variant 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -451,7 +451,7 @@ exports[`Callout > should have button in button slot 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -503,7 +503,7 @@ exports[`Callout > should have dismissable icon 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -568,7 +568,7 @@ exports[`Callout > should have icon in leftSlot 1`] = `
     </div>
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -612,7 +612,7 @@ exports[`Callout > should have inset 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
@@ -673,7 +673,7 @@ exports[`Callout > should match its default snapshot 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <!--v-if-->
       <div
@@ -709,7 +709,7 @@ exports[`Callout > should override description with slot 1`] = `
     <!--v-if-->
     <!-- Title and content -->
     <div
-      class="flex flex-col"
+      class="mr-0"
     >
       <span
         class="text-md leading-5.5 font-semibold pb-1"
