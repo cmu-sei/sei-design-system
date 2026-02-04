@@ -4,14 +4,29 @@
     class="overflow-x-auto"
   >
     <div 
+      v-if="props.filters"
       class="
       bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
         rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none
-        min-h-14.5 w-full min-w-3xl px-2 py-4
+        min-h-14.5 w-full min-w-3xl
       "
     >
-      <!-- Data Table Filters -->
+      <div class="overflow-x-auto px-2 py-4">
+        <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-3xl">
+          <template v-if="filters?.button && filters.button.length">
+            <SdsActionButton
+              v-for="(filter, index) in filters.button"
+              v-bind="{ ...actionButtonProps }"
+              :key="index"
+              :active="filter.selected"
+              @click="onFilterChange(filter)"
+            >
+              <span>{{ filter.text }}</span>
+            </SdsActionButton>
+          </template>
+        </div>
+      </div>
     </div>
     <SdsTable 
       v-bind="{ ...tableProps, ...$attrs }"
@@ -56,6 +71,7 @@
 import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
+import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/PaginatorPageSizeDropdown.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
@@ -80,7 +96,7 @@ interface DataTableProps {
   filters?: {
     button?: DataTableButtonFilter[];
     dropdown?: DataTableDropdownFilter[];
-  }
+  };
 }
 
 defineOptions({
@@ -93,18 +109,30 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   filters: undefined
 })
 
-const emit = defineEmits(['update:pagination'])
+const emit = defineEmits(['update:filter', 'update:pagination'])
 
+// Paginator page size dropdown options
 const options = [
   { value: 10, text: '10' },
   { value: 25, text: '25' },
   { value: 50, text: '50' }
 ] as const
 
+// Pagination state
 const currentPage = ref(props.pagination?.currentPage ?? 1)
 const totalResultsPerPage = ref(props.pagination?.totalResultsPerPage ?? 0)
 const totalResults = ref(props.pagination?.totalResults ?? 0)
 const totalPages = ref(props.pagination?.totalPages ?? 0)
+
+// Filter state
+const filters = ref(props.filters 
+  ? { 
+    button: props.filters.button 
+      ? [{ text: 'All', selected: true }, ...props.filters.button] 
+      : undefined
+  }
+  : undefined
+)
 
 const tableProps = computed(() => ({ 
   items: [],
@@ -123,6 +151,29 @@ const paginatorRangeProps = computed(() => ({
   totalResults: totalResults.value,
   totalPages: totalPages.value
 }))
+
+const actionButtonProps = computed<{
+  kind: 'ghost' | 'primary' | 'secondary';
+  variant: 'gray' | 'red' | 'blue' | 'white';
+  size: 'xs' | 'sm' | 'md' | 'lg';
+  type: 'button' | 'submit';
+  selected: boolean;
+}>(() => ({
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'xs',
+  type: 'button',
+  selected: false
+}))
+
+function onFilterChange(filter: DataTableButtonFilter) {
+  if (!filters.value || !filters.value.button) return
+  filters.value.button.forEach((f) => f.selected = (f.text === filter.text))
+
+  emit('update:filter', { 
+    filters: filters.value 
+  });
+}
 
 function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
   event.preventDefault()

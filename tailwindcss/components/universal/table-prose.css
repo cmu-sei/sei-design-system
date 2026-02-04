@@ -61,7 +61,7 @@
   /* Style when [data-id="sds-data-table"] is the parent of .table-prose */
   :where([data-id="sds-data-table"] > .table-prose),
   :where([data-id="sds-data-table"] > .table-prose > thead) {
-    @apply rounded-none;
+    @apply rounded-tl-none rounded-tr-none;
   }
 }
 

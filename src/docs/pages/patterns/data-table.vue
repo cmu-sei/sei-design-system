@@ -3,6 +3,7 @@
     <SdsDataTable
       :data="data"
       :pagination="pagination"
+      :filters="filters"
       @update:pagination="updatePagination"
     >
       <template #cell(task)="{ item }: { item: TableItem }">
@@ -143,6 +144,23 @@ const pagination = computed(() => ({
   totalPages: totalPages.value, 
   totalResultsPerPage: totalResultsPerPage.value, 
   totalResults: totalResults.value 
+}))
+
+const filters = computed(() => ({
+  button: [
+    {
+      text: 'Open',
+      selected: false
+    },
+    {
+      text: 'Testing',
+      selected: false
+    },
+    {
+      text: 'Recently Updated',
+      selected: false
+    }
+  ]
 }))
 
 /* Pagination update handler */
