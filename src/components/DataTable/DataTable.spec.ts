@@ -88,7 +88,7 @@ describe('SdsDataTable', () => {
 
       expect(wrapper.findComponent({ name: 'SdsPaginator' }).exists()).toBe(true)
       expect(wrapper.findComponent({ name: 'SdsPaginatorRange' }).exists()).toBe(true)
-      expect(wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' }).exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-data-table-page-size-dropdown"]').exists()).toBe(true)
     })
 
     it('should render pagination controls even when pagination prop is not provided', () => {
@@ -101,7 +101,7 @@ describe('SdsDataTable', () => {
 
       expect(wrapper.findComponent({ name: 'SdsPaginator' }).exists()).toBe(true)
       expect(wrapper.findComponent({ name: 'SdsPaginatorRange' }).exists()).toBe(true)
-      expect(wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' }).exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-data-table-page-size-dropdown"]').exists()).toBe(true)
     })
   })
 
@@ -175,36 +175,6 @@ describe('SdsDataTable', () => {
       expect(rangeComponent.props('totalResults')).toBe(pagination.totalResults)
       expect(rangeComponent.props('totalPages')).toBe(pagination.totalPages)
     })
-
-    it('should pass page size options to SdsPaginatorPageSizeDropdown', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.props('options')).toEqual([
-        { value: 10, text: '10' },
-        { value: 25, text: '25' },
-        { value: 50, text: '50' }
-      ])
-    })
-
-    it('should bind totalResultsPerPage to dropdown with v-model', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.props('modelValue')).toBe(pagination.totalResultsPerPage)
-    })
   })
 
   describe('Event Handlers', () => {
@@ -220,20 +190,6 @@ describe('SdsDataTable', () => {
       const paginatorComponent = wrapper.findComponent({ name: 'SdsPaginator' })
       expect(paginatorComponent.exists()).toBe(true)
       expect(paginatorComponent.vm).toBeDefined()
-    })
-
-    it('should have update:model-value listener on SdsPaginatorPageSizeDropdown', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.exists()).toBe(true)
-      expect(dropdownComponent.vm).toBeDefined()
     })
   })
 

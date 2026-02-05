@@ -73,16 +73,28 @@
               v-bind="{ ...paginatorProps, ...$attrs }"
               @go-to-page="setCurrentPage"
             />
-            <SdsPaginatorPageSizeDropdown
-              v-model="totalResultsPerPage"
-              :options="[...options]"
+            <SdsActionDropdown
+              v-model="options"
+              data-id="sds-data-table-page-size-dropdown"
+              kind="secondary"
+              variant="gray"
               class="justify-self-end"
-              @update:model-value="setPageSize"
             >
-              <template #label="{ selection }">
-                {{ selection }} rows
+              <template #title>
+                {{ totalRowsPerPage }}
               </template>
-            </SdsPaginatorPageSizeDropdown>
+              <template 
+                v-for="option in options" 
+                :key="JSON.stringify(option)"
+              >
+                <SdsDropdownItem
+                  tag="button"
+                  @click="setPageSize(option.value)"
+                >
+                  {{ option.text }}
+                </SdsDropdownItem>
+              </template>
+            </SdsActionDropdown>
           </div>
         </template>
       </SdsTable>
@@ -95,9 +107,9 @@ import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdow
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
+import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
-import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/PaginatorPageSizeDropdown.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
@@ -138,13 +150,6 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 
 const emit = defineEmits(['update:filter', 'update:pagination'])
 
-// Paginator page size dropdown options
-const options = [
-  { value: 10, text: '10' },
-  { value: 25, text: '25' },
-  { value: 50, text: '50' }
-] as const
-
 // Pagination state
 const currentPage = ref(props.pagination?.currentPage ?? 1)
 const totalResultsPerPage = ref(props.pagination?.totalResultsPerPage ?? 0)
@@ -181,6 +186,15 @@ const paginatorRangeProps = computed(() => ({
   totalResults: totalResults.value,
   totalPages: totalPages.value
 }))
+
+// Paginator page size dropdown options
+const options = computed(() => [
+  { value: 10, text: '10' },
+  { value: 25, text: '25' },
+  { value: 50, text: '50' }
+])
+
+const totalRowsPerPage = computed(() => `${totalResultsPerPage.value} rows`)
 
 const hasFilters = computed(() => {
   const { filters } = props
