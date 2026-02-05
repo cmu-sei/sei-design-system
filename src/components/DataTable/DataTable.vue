@@ -63,7 +63,6 @@
           />
         </template>
         <template #footer>
-          <!-- TODO: Implement footer content outside of SdsTable component with "overflow-x-auto" scrolling -->
           <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
             <SdsPaginatorRange 
               v-bind="{ ...paginatorRangeProps, ...$attrs }"
@@ -150,13 +149,11 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 
 const emit = defineEmits(['update:filter', 'update:pagination'])
 
-// Pagination state
 const currentPage = ref(props.pagination?.currentPage ?? 1)
 const totalResultsPerPage = ref(props.pagination?.totalResultsPerPage ?? 0)
 const totalResults = ref(props.pagination?.totalResults ?? 0)
 const totalPages = ref(props.pagination?.totalPages ?? 0)
 
-// Filter state
 const filters = ref(props.filters 
   ? { 
     button: props.filters.button 
@@ -187,7 +184,6 @@ const paginatorRangeProps = computed(() => ({
   totalPages: totalPages.value
 }))
 
-// Paginator page size dropdown options
 const options = computed(() => [
   { value: 10, text: '10' },
   { value: 25, text: '25' },
@@ -201,8 +197,6 @@ const hasFilters = computed(() => {
   return !!(filters?.button?.length || filters?.dropdown?.length)
 })
 
-// Type guards
-
 function isButtonFilter(filter: DataTableFilter): filter is DataTableButtonFilter {
   return 'text' in filter && 'selected' in filter
 }
@@ -210,8 +204,6 @@ function isButtonFilter(filter: DataTableFilter): filter is DataTableButtonFilte
 function isDropdownFilter(filter: DataTableFilter): filter is DataTableDropdownFilter {
   return 'options' in filter && 'title' in filter
 }
-
-// Custom events
 
 function onFilterChange(filter: DataTableFilter) {
   if (isButtonFilter(filter)) {
