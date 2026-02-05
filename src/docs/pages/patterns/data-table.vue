@@ -91,7 +91,7 @@ const tableFields = computed<TableField[]>(() => [
   }
 ])
 
-const tableItems = ref<TableItem[]>([
+const tableItemsOriginal = ref<TableItem[]>([
   { id: 1, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit' },
   { id: 2, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit' },
   { id: 3, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit' },
@@ -118,6 +118,8 @@ const tableItems = ref<TableItem[]>([
   { id: 24, task: 'SDS-124', description: 'Refactor state management', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit' },
   { id: 25, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit' }
 ])
+
+const tableItems = ref<TableItem[]>([...tableItemsOriginal.value])
 
 /* Table */
 const sort_by = ref<string>('status')
@@ -147,7 +149,7 @@ const pagination = computed(() => ({
   totalResults: totalResults.value 
 }))
 
-const filters = computed(() => ({
+const filters = ref({
   button: [
     {
       text: 'Open',
@@ -165,7 +167,7 @@ const filters = computed(() => ({
   dropdown: [
     {
       title: 'Assignee',
-      options: getUniqueBy(tableItems.value, 'assignee').map((i) => ({
+      options: getUniqueBy(tableItemsOriginal.value, 'assignee').map((i) => ({
         id: i.id,
         text: (i.assignee as string),
         selected: false
@@ -180,14 +182,50 @@ const filters = computed(() => ({
       ]
     }
   ]
-}))
+})
 
 
 /* Filter update handler */
-function handleFilterUpdate(newFilters: {
-  filters: typeof filters.value
-}) {
-  console.log(newFilters)
+function handleFilterUpdate() {
+  const { dropdown, button } = filters.value
+  
+  // Check if all filters are cleared
+  const allDropdownsCleared = dropdown.every((d) => !d.options || d.options.every((o) => !o.selected))
+  const allButtonsCleared = !button || button.every((b, idx) => idx === 0 ? b.selected : !b.selected)
+
+  if (allDropdownsCleared && allButtonsCleared) {
+    // Restore original data and reset pagination
+    tableItems.value = [...tableItemsOriginal.value]
+    currentPage.value = 1
+    totalResults.value = tableItemsOriginal.value.length
+    totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
+    return
+  }
+
+  // Otherwise, filter as usual
+  let filtered = [...tableItemsOriginal.value]
+
+  // Assignee filter
+  const assigneeDropdown = dropdown.find((d) => d.title === 'Assignee')
+  const selectedAssignees = assigneeDropdown?.options.filter((o) => o.selected).map((o) => o.text) || []
+
+  // Status filter
+  const statusDropdown = dropdown.find((d) => d.title === 'Status')
+  const selectedStatuses = statusDropdown?.options.filter((o) => o.selected).map((o) => o.text) || []
+
+  // Apply filters
+  if (selectedAssignees.length > 0) {
+    filtered = filtered.filter((item) => selectedAssignees.includes(item.assignee as string))
+  }
+
+  if (selectedStatuses.length > 0) {
+    filtered = filtered.filter((item) => selectedStatuses.includes(item.status as string))
+  }
+
+  tableItems.value = filtered
+  currentPage.value = 1
+  totalResults.value = filtered.length
+  totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
 }
 
 /* Pagination update handler */
