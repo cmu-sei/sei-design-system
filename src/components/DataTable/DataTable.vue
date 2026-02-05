@@ -20,9 +20,12 @@
           <template v-if="filters?.button && filters.button.length">
             <SdsActionButton
               v-for="(button, index) in filters.button"
-              v-bind="{ ...actionButtonProps }"
               :key="index"
               :active="button.selected"
+              kind="ghost"
+              variant="gray"
+              size="xs"
+              type="button"
               @click="onFilterChange(button)"
             >
               <span>{{ button.text }}</span>
@@ -31,9 +34,14 @@
           <template v-if="filters?.dropdown && filters.dropdown.length">
             <SdsFilterByDropdown
               v-for="(dropdown, index) in filters.dropdown"
-              v-bind="{ ...filterByDropdownProps, title: dropdown.title }"
               :key="index"
               v-model="dropdown.options"
+              :title="dropdown.title ?? undefined"
+              :disabled="dropdown.disabled ?? undefined"
+              :enable-filter="true"
+              kind="ghost"
+              variant="gray"
+              size="xs"
               @update:model-value="onFilterChange(dropdown)"
             />
           </template>
@@ -100,6 +108,7 @@ export interface DataTableButtonFilter {
 
 export interface DataTableDropdownFilter {
   title?: string;
+  disabled?: boolean;
   options?: FilterByDropdownOption[];
 }
 
@@ -171,34 +180,6 @@ const paginatorRangeProps = computed(() => ({
   totalResultsPerPage: totalResultsPerPage.value,
   totalResults: totalResults.value,
   totalPages: totalPages.value
-}))
-
-const actionButtonProps = computed<{
-  kind: 'ghost' | 'primary' | 'secondary';
-  variant: 'gray' | 'red' | 'blue' | 'white';
-  size: 'xs' | 'sm' | 'md' | 'lg';
-  type: 'button' | 'submit';
-  selected: boolean;
-}>(() => ({
-  kind: 'ghost',
-  variant: 'gray',
-  size: 'xs',
-  type: 'button',
-  selected: false
-}))
-
-const filterByDropdownProps = computed<{
-  kind: 'ghost' | 'primary' | 'secondary';
-  variant: 'gray' | 'blue';
-  size: 'xs' | 'sm' | 'md' | 'lg';
-  enableFilter: boolean;
-  disabled: boolean;
-}>(() => ({
-  kind: 'ghost',
-  variant: 'gray',
-  size: 'xs',
-  enableFilter: true,
-  disabled: false
 }))
 
 const hasFilters = computed(() => {
