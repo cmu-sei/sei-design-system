@@ -4,7 +4,8 @@
       :data="data"
       :pagination="pagination"
       :filters="filters"
-      @update:pagination="updatePagination"
+      @update:filter="handleFilterUpdate"
+      @update:pagination="handlePaginationUpdate"
     >
       <template #cell(task)="{ item }: { item: TableItem }">
         <SdsLink 
@@ -160,11 +161,37 @@ const filters = computed(() => ({
       text: 'Recently Updated',
       selected: false
     }
+  ],
+  dropdown: [
+    {
+      title: 'Assignee',
+      options: getUniqueBy(tableItems.value, 'assignee').map((i) => ({
+        id: i.id,
+        text: (i.assignee as string),
+        selected: false
+      }))
+    },
+    {
+      title: 'Status',
+      options: [
+        { id: 1, text: 'Submitted', selected: false },
+        { id: 2, text: 'Approved', selected: false },
+        { id: 3, text: 'Draft', selected: false }
+      ]
+    }
   ]
 }))
 
+
+/* Filter update handler */
+function handleFilterUpdate(newFilters: {
+  filters: typeof filters.value
+}) {
+  console.log(newFilters)
+}
+
 /* Pagination update handler */
-function updatePagination(newPagination: {
+function handlePaginationUpdate(newPagination: {
   currentPage: number;
   totalPages: number;
   totalResultsPerPage: number;
@@ -269,6 +296,16 @@ function getBadgeVariant(status: string): {
         variant: 'yellow'
       }
   }
+}
+
+function getUniqueBy<T>(arr: T[], prop: keyof T): T[] {
+  const seen = new Set()
+  return arr.filter((i) => {
+    const value = i[prop]
+    if (seen.has(value)) return false
+    seen.add(value)
+    return true
+  })
 }
 
 function sortTableItems({ sortBy, sortDesc }: { sortBy: string; sortDesc: boolean }) {

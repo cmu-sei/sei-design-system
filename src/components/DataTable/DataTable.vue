@@ -4,7 +4,7 @@
     class="w-full min-w-full"
   >
     <div 
-      v-if="filters && filters.button && filters.button.length"
+      v-if="hasFilters"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -12,18 +12,30 @@
         min-h-14.5 w-full min-w-full
       "
     >
-      <div class="overflow-x-auto px-2 py-4">
+      <div 
+        v-if="hasFilters"
+        class="overflow-x-auto px-2 py-4"
+      >
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-full">
           <template v-if="filters?.button && filters.button.length">
             <SdsActionButton
-              v-for="(filter, index) in filters.button"
+              v-for="(button, index) in filters.button"
               v-bind="{ ...actionButtonProps }"
               :key="index"
-              :active="filter.selected"
-              @click="onFilterChange(filter)"
+              :active="button.selected"
+              @click="onFilterChange(button)"
             >
-              <span>{{ filter.text }}</span>
+              <span>{{ button.text }}</span>
             </SdsActionButton>
+          </template>
+          <template v-if="filters?.dropdown && filters.dropdown.length">
+            <SdsFilterByDropdown
+              v-for="(dropdown, index) in filters.dropdown"
+              v-bind="{ ...filterByDropdownProps, title: dropdown.title }"
+              :key="index"
+              v-model="dropdown.options"
+              @update:model-value="onFilterChange(dropdown)"
+            />
           </template>
         </div>
       </div>
@@ -75,6 +87,7 @@ import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdow
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
+import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorPageSizeDropdown from '../PaginatorPageSizeDropdown/PaginatorPageSizeDropdown.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
@@ -89,6 +102,8 @@ export interface DataTableDropdownFilter {
   title?: string;
   options?: FilterByDropdownOption[];
 }
+
+export type DataTableFilter = DataTableButtonFilter | DataTableDropdownFilter;
 
 interface DataTableProps {
   data?: TableProps;
@@ -132,6 +147,9 @@ const filters = ref(props.filters
   ? { 
     button: props.filters.button 
       ? [{ text: 'All', selected: true }, ...props.filters.button] 
+      : [],
+    dropdown: props.filters.dropdown 
+      ? [...props.filters.dropdown] 
       : []
   }
   : undefined
@@ -169,13 +187,54 @@ const actionButtonProps = computed<{
   selected: false
 }))
 
-function onFilterChange(filter: DataTableButtonFilter) {
-  if (!filters.value || !filters.value.button) return
-  filters.value.button.forEach((f) => f.selected = (f.text === filter.text))
+const filterByDropdownProps = computed<{
+  kind: 'ghost' | 'primary' | 'secondary';
+  variant: 'gray' | 'blue';
+  size: 'xs' | 'sm' | 'md' | 'lg';
+  enableFilter: boolean;
+  disabled: boolean;
+}>(() => ({
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'xs',
+  enableFilter: true,
+  disabled: false
+}))
 
-  emit('update:filter', { 
-    filters: filters.value 
-  });
+const hasFilters = computed(() => {
+  const { filters } = props
+  return !!(filters?.button?.length || filters?.dropdown?.length)
+})
+
+// Type guards
+
+function isButtonFilter(filter: DataTableFilter): filter is DataTableButtonFilter {
+  return 'text' in filter && 'selected' in filter
+}
+
+function isDropdownFilter(filter: DataTableFilter): filter is DataTableDropdownFilter {
+  return 'options' in filter && 'title' in filter
+}
+
+// Custom events
+
+function onFilterChange(filter: DataTableFilter) {
+  if (isButtonFilter(filter)) {
+    filters.value?.button.forEach((f) => f.selected = (f.text === filter.text))
+  }
+
+  if (isDropdownFilter(filter)) {
+    filters.value?.dropdown.forEach((f) => {
+      if (f.title === filter.title && Array.isArray(f.options) && Array.isArray(filter.options)) {
+        f.options.forEach((o) => {
+          const match = filter.options?.find((fo) => fo.text === o.text && fo.selected)
+          o.selected = !!match
+        })
+      }
+    })
+  }
+
+  emit('update:filter', { filters: filters.value })
 }
 
 function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
