@@ -239,6 +239,27 @@ describe('Datepicker', () => {
       const arrow = wrapper.find('svg[viewBox="0 0 24 24"]')
       expect(arrow.exists()).toBe(false)
     })
+
+    it('should swap input display when modelValue watcher detects start date after end date', async () => {
+      const wrapper = mount(Component, {
+        props: {
+          modelValue: { start: new Date(2022, 8, 3), end: new Date(2022, 8, 8) }
+        }
+      })
+
+      // Set modelValue programmatically with start > end to trigger watcher swap logic
+      await wrapper.setProps({
+        modelValue: { start: new Date(2022, 8, 15), end: new Date(2022, 8, 5) }
+      })
+      await flushPromises()
+
+      const startInput = wrapper.find('input[aria-label="Start date"]')
+      const endInput = wrapper.find('input[aria-label="End date"]')
+      
+      // Verify the watcher swapped the display (end date shown in start input, start date in end input)
+      expect(startInput.element.value).toBe('09/05/2022')
+      expect(endInput.element.value).toBe('09/15/2022')
+    })
   })
 
   describe('Time Mode', () => {
@@ -818,6 +839,47 @@ describe('Datepicker', () => {
       await flushPromises()
 
       expect(input.element.value).toMatch(/\d{2}\/\d{2}\/\d{4}/)
+    })
+
+    it('should handle "tomorrow" keyword in date mode', async () => {
+      const wrapper = mount(Component, {
+        props: {
+          modelValue: null
+        }
+      })
+      const input = wrapper.find('input[aria-label="Start date"]')
+
+      await input.setValue('tomorrow')
+      await input.trigger('change')
+      await flushPromises()
+
+      expect(input.element.value).toMatch(/\d{2}\/\d{2}\/\d{4}/)
+      
+      // Verify the date is actually tomorrow
+      const tomorrow = new Date()
+      tomorrow.setDate(tomorrow.getDate() + 1)
+      const expectedDate = `${String(tomorrow.getMonth() + 1).padStart(2, '0')}/${String(tomorrow.getDate()).padStart(2, '0')}/${tomorrow.getFullYear()}`
+      expect(input.element.value).toBe(expectedDate)
+    })
+
+    it('should handle "yesterday" keyword in date mode', async () => {
+      const wrapper = mount(Component, {
+        props: {
+          modelValue: null
+        }
+      })
+      const input = wrapper.find('input[aria-label="Start date"]')
+      await input.setValue('yesterday')
+      await input.trigger('change')
+      await flushPromises()
+
+      expect(input.element.value).toMatch(/\d{2}\/\d{2}\/\d{4}/)
+      
+      // Verify the date is actually yesterday
+      const yesterday = new Date()
+      yesterday.setDate(yesterday.getDate() - 1)
+      const expectedDate = `${String(yesterday.getMonth() + 1).padStart(2, '0')}/${String(yesterday.getDate()).padStart(2, '0')}/${yesterday.getFullYear()}`
+      expect(input.element.value).toBe(expectedDate)
     })
   })
 

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Datepicker > should hide arrow for a range selection 1`] = `
+exports[`Datepicker > Snapshots > should hide arrow for a range selection 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -90,7 +90,7 @@ exports[`Datepicker > should hide arrow for a range selection 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should match its default snapshot 1`] = `
+exports[`Datepicker > Snapshots > should match its default snapshot 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -144,7 +144,7 @@ exports[`Datepicker > should match its default snapshot 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show disabled 1`] = `
+exports[`Datepicker > Snapshots > should show disabled 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -257,7 +257,7 @@ exports[`Datepicker > should show disabled 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show invalid 1`] = `
+exports[`Datepicker > Snapshots > should show invalid 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -366,7 +366,7 @@ exports[`Datepicker > should show invalid 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show readonly 1`] = `
+exports[`Datepicker > Snapshots > should show readonly 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -479,7 +479,7 @@ exports[`Datepicker > should show readonly 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show required 1`] = `
+exports[`Datepicker > Snapshots > should show required 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -590,7 +590,7 @@ exports[`Datepicker > should show required 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show the arrow for a range selection 1`] = `
+exports[`Datepicker > Snapshots > should show the arrow for a range selection 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -699,7 +699,7 @@ exports[`Datepicker > should show the arrow for a range selection 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show the sm size with the dateTime mode 1`] = `
+exports[`Datepicker > Snapshots > should show the sm size with the dateTime mode 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -808,7 +808,7 @@ exports[`Datepicker > should show the sm size with the dateTime mode 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show the sm size with the time mode 1`] = `
+exports[`Datepicker > Snapshots > should show the sm size with the time mode 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
@@ -919,7 +919,7 @@ exports[`Datepicker > should show the sm size with the time mode 1`] = `
 </div>
 `;
 
-exports[`Datepicker > should show valid 1`] = `
+exports[`Datepicker > Snapshots > should show valid 1`] = `
 <div
   class="inline-block w-full"
   data-id="sds-datepicker"
