@@ -20,7 +20,7 @@ export default {
       control: { type: 'select' }
     },
     side: {
-      options: ['left', 'right'],
+      options: ['left', 'right', 'bottom'],
       control: { type: 'select' }
     },
     zIndex: {
@@ -62,5 +62,18 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
+};
+
+export const BottomPanel = Template.bind({});
+BottomPanel.args = {
+  side: 'bottom',
+  size: 'md'
+};
+BottomPanel.parameters = {
+  docs: {
+    description: {
+      story: 'Bottom panels slide up from the bottom of the screen. They are commonly used on mobile for action sheets, forms, or supplementary content. The size prop controls the max-height: sm=40vh, md=60vh, lg=75vh, xl=90vh.'
+    }
+  }
 };
 

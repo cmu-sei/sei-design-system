@@ -193,7 +193,7 @@ onUnmounted(() => {
 /* Helper function for exiting mobile menu on "Esc" */
 const makeDomChanges = () => {
   if (typeof document === "undefined") return;
-  document.documentElement.classList.add("panel-prevent-scroll");
+  document.documentElement.classList.add("sds-overlay-prevent-scroll");
   setTimeout(() => {
     document.addEventListener("keyup", handleEscKey);
   }, 0);
@@ -202,7 +202,7 @@ const makeDomChanges = () => {
 /* Helper function for exiting mobile menu on "Esc" */
 const removeDomChanges = () => {
   if (typeof document === "undefined") return;
-  document.documentElement.classList.remove("panel-prevent-scroll");
+  document.documentElement.classList.remove("sds-overlay-prevent-scroll");
   document.removeEventListener("keyup", handleEscKey);
 }
 
@@ -237,9 +237,3 @@ defineExpose({
   showPanel
 })
 </script>
-
-<style>
-.panel-prevent-scroll {
-  overflow: hidden;
-}
-</style>

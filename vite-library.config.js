@@ -21,6 +21,11 @@ export default defineConfig({
     }),
     vue()
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')
+    }
+  },
   publicDir: false,
   define: { 'process.env.NODE_ENV': '"production"' },
   build: {
@@ -38,7 +43,9 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: [
+        'vue'
+      ],
       output: {
         // remove the default exports warning
         exports: 'named',

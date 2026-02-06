@@ -43,19 +43,11 @@
           <slot name="title">
             {{ title }}
           </slot>
-          <svg
+          <FontAwesomeIcon
             v-if="!hideArrow"
+            :icon="faChevronDown"
             class="inline-block self-center w-5 h-5 -mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          />
         </button>
       </slot>
     </template>
@@ -79,7 +71,9 @@
 </template>
 
 <script setup lang="ts">
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import { useDropdown, type ButtonKind, type ButtonVariant, type ActionButtonSize, type ZIndexValue } from '@/composables'
 
 import type { DropdownPlacement } from "../Dropdown/Dropdown.vue";
 import type { Strategy } from '@floating-ui/dom'
@@ -87,8 +81,6 @@ import type { Strategy } from '@floating-ui/dom'
 defineOptions({
   name: 'SdsActionButton'
 })
-
-const id = useId()
 
 const props = defineProps({
   /**
@@ -98,15 +90,15 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  kind: { type: String as PropType<ButtonKind>, default: 'ghost' },
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
+  variant: { type: String as PropType<ButtonVariant>, default: 'gray' },
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex: { type: String as PropType<ZIndexValue>, required: false, default: '50' },
   /**
    * The distance between the popper and the trigger.
    */
@@ -122,7 +114,7 @@ const props = defineProps({
   /**
    * Determines the size of the trigger button.
    */
-  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'xs'>, default: 'sm' },
+  size: { type: String as PropType<ActionButtonSize>, default: 'sm' },
   /**
    * Determines if the arrow should display or not.
    */
@@ -199,89 +191,27 @@ const props = defineProps({
   willClose: { type: Function as PropType<GenericFunctionType>, default: null }
 })
 
-const button = ref()
-
-const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericFunctionType) => {
-  if (isOpen) {
-    close(props.closeDelay)
-  } else {
-    open(props.openDelay)
-  }
-}
-
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
-
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'action-btn-lg'
-    case 'md':
-      return 'action-btn-md'
-    case 'sm':
-      return 'action-btn-sm'
-    case 'xs':
-      return 'action-btn-xs'
-    default:
-      return ''
-  }
-})
-
-const btnClass = computed(() => {
-  return props.kind ? 'action-btn' : ''
-})
-
-const kindClass = computed(() => {
-  switch (props.kind) {
-    case 'primary':
-      return 'action-btn-primary'
-    case 'secondary':
-      return 'action-btn-secondary'
-    case 'ghost':
-      return 'action-btn-ghost'
-    default:
-      return ''
-  }
-})
-
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'gray':
-      return 'action-btn-gray'
-    case 'red':
-      return 'action-btn-red'
-    case 'blue':
-      return 'action-btn-blue'
-    case 'white':
-      return 'action-btn-white'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => {
-  return props.disabled ? 'disabled' : ''
-})
-
-const blockClass = computed(() => {
-  return props.block ? 'action-btn-block' : ''
+// Use unified dropdown composable
+const {
+  id,
+  buttonRef: button,
+  zIndexClass,
+  btnClass,
+  kindClass,
+  variantClass,
+  sizeClass,
+  disabledClass,
+  blockClass,
+  handleClick
+} = useDropdown({
+  prefix: 'action-btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  zIndex: () => props.zIndex,
+  disabled: () => props.disabled,
+  block: () => props.block,
+  openDelay: props.openDelay,
+  closeDelay: props.closeDelay
 })
 </script>

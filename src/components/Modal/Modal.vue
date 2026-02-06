@@ -46,7 +46,7 @@
             data-id="sds-modal"
             :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
             class="z-50 p-2"
-            @keydown="checkKeyEvent"
+            @keydown="trapFocus"
             @mousedown.self="close"
           >
             <div
@@ -93,32 +93,22 @@
                   v-focus
                   aria-label="close"
                   class="
-                inline-block
-                p-0
-                ml-auto
-                text-3xl text-gray-500
-                bg-transparent
-                border-0
-                cursor-pointer
-                hover:text-gray-700 hover:outline-hidden
-                focus:text-gray-700 focus:outline-hidden
-                dark:hover:text-gray-300 dark:focus:text-gray-300
-                active:text-gray-500
-                dark:active:text-gray-600
-              "
+                    inline-block
+                    p-0
+                    ml-auto
+                    text-lg text-gray-500
+                    bg-transparent
+                    border-0
+                    cursor-pointer
+                    hover:text-gray-700 hover:outline-hidden
+                    focus:text-gray-700 focus:outline-hidden
+                    dark:hover:text-gray-300 dark:focus:text-gray-300
+                    active:text-gray-500
+                    dark:active:text-gray-600
+                  "
                   @click="close"
                 >
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  <FontAwesomeIcon :icon="faXmark" />
                 </button>
               </div>
               <div class="p-6">
@@ -142,7 +132,9 @@
 
 <script setup lang="ts">
 import { type Directive } from "vue";
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
+import { useOverlay } from '@/composables'
 
 const id = useId()
 
@@ -192,8 +184,8 @@ const slots = defineSlots<{
   footer: () => unknown
 }>()
 
-const titleWrapper = ref(null)
-const modalContainer = ref(null)
+const titleWrapper = ref<HTMLElement | null>(null)
+const modalContainer = ref<HTMLElement | null>(null)
 
 const hasTitleSlot = computed(() => {
   return !!slots.title;
@@ -215,106 +207,21 @@ const showModal = computed({
   },
 })
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+// Use unified overlay composable for consistent behavior
+const { zIndexClass, close, trapFocus } = useOverlay(
+  showModal,
+  modalContainer,
+  {
+    zIndex: () => props.zIndex,
+    closeOnEscape: true,
+    focusTrap: true,
+    lockBodyScroll: true,
+    autoFocus: true,
+    restoreFocus: true,
+    transitionDuration: 225, // delay-75 (75ms) + duration-75 (75ms) = 150ms, use 225ms to be safe
+    onClose: () => {
+      showModal.value = false
+    }
   }
-})
-
-onUnmounted(() => {
-  removeDomChanges();
-})
-
-const makeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.add("modal-prevent-scroll");
-  setTimeout(() => {
-    document.addEventListener("keyup", handleEscKey);
-  }, 0);
-}
-
-const removeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.remove("modal-prevent-scroll");
-  document.removeEventListener("keyup", handleEscKey);
-}
-
-const close = () => {
-  showModal.value = false;
-}
-
-const handleEscKey = (e: KeyboardEvent) => {
-  if (e.key === "Escape") {
-    close();
-  }
-}
-
-const checkKeyEvent = (event: KeyboardEvent) => {
-  if (modalContainer.value === null) return;
-
-  // close modal and return early if escape
-  if (event.key === "Escape") {
-    close();
-    return;
-  }
-  const focusableList: NodeListOf<HTMLElement> = (modalContainer.value as unknown as HTMLElement).querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
-
-  // escape early if only 1 or no elements to focus
-  if (focusableList.length < 2 && event.key === "Tab") {
-    event.preventDefault();
-    return;
-  }
-
-  const last = focusableList.length - 1;
-
-  if (
-    event.key === "Tab" &&
-    event.shiftKey === false &&
-    event.target === focusableList[last]
-  ) {
-    event.preventDefault();
-    focusableList[0].focus();
-  } else if (
-    event.key === "Tab" &&
-    event.shiftKey === true &&
-    event.target === focusableList[0]
-  ) {
-    event.preventDefault();
-    focusableList[last].focus();
-  }
-}
-
-watch(showModal, (value) => {
-  showModal.value = (value as boolean);
-  if (typeof document === "undefined") return;
-  if (value) {
-    makeDomChanges();
-  } else {
-    removeDomChanges();
-  }
-}, { immediate: true })
+)
 </script>
-
-<style>
-.modal-prevent-scroll {
-  scrollbar-gutter: stable;
-  overflow: hidden;
-}
-</style>

@@ -1,6 +1,7 @@
 import { defineConfig, configDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [
@@ -13,6 +14,11 @@ export default defineConfig({
       dts: 'auto-imports.d.ts'
     })
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')
+    }
+  },
   test: {
     coverage: {
       include: [

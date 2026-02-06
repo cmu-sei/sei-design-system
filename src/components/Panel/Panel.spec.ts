@@ -119,6 +119,53 @@ describe('Panel', () => {
     expect(document.querySelector('[data-id="sds-panel"]')?.classList).toContain('left-0')
   })
 
+  it('applies correct size and bottom position classes', async () => {
+    const model = ref(true)
+    const wrapper = mount(Panel, {
+      attachTo: document.body,
+      props: {
+        modelValue: model.value,
+        size: 'md',
+        side: 'bottom'
+      },
+      slots: { default: '', title: '', footer: '' }
+    })
+    await wrapper.vm.$nextTick()
+    const panel = document.querySelector('[data-id="sds-panel"]')
+    expect(panel).not.toBeNull()
+    expect(panel?.classList).toContain('max-h-[60vh]')
+    expect(panel?.classList).toContain('bottom-0')
+    expect(panel?.classList).toContain('w-full')
+    expect(panel?.classList).toContain('rounded-b-none')
+  })
+
+  it('applies correct max-height for all bottom panel sizes', async () => {
+    const sizes = [
+      { size: 'sm', expectedClass: 'max-h-[40vh]' },
+      { size: 'md', expectedClass: 'max-h-[60vh]' },
+      { size: 'lg', expectedClass: 'max-h-[75vh]' },
+      { size: 'xl', expectedClass: 'max-h-[90vh]' }
+    ] as const
+
+    for (const { size, expectedClass } of sizes) {
+      document.body.innerHTML = ''
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value,
+          size,
+          side: 'bottom'
+        },
+        slots: { default: '', title: '', footer: '' }
+      })
+      await wrapper.vm.$nextTick()
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      expect(panel?.classList).toContain(expectedClass)
+      wrapper.unmount()
+    }
+  })
+
   it('applies correct zIndex class for all valid `zIndex` prop values', () => {
     const zIndexes = ['0', '10', '20', '30', '40', '50', 'auto', ''] as const
     const expectedClasses = {
@@ -209,5 +256,197 @@ describe('Panel', () => {
     Object.defineProperty(shiftTabEvent, 'target', { value: firstFocusable })
     panel.dispatchEvent(shiftTabEvent)
     expect(document.activeElement).toBe(lastFocusable)
+  })
+
+  describe('Accessibility (WCAG 2.1)', () => {
+    it('has aria-modal="true" for screen readers', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: { default: '', title: 'My Panel', footer: '' }
+      })
+      await wrapper.vm.$nextTick()
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      expect(panel?.getAttribute('aria-modal')).toBe('true')
+    })
+
+    it('has aria-labelledby when title slot is provided', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: {
+          default: '',
+          title: 'My Panel Title',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      const ariaLabelledBy = panel?.getAttribute('aria-labelledby')
+      expect(ariaLabelledBy).toBeTruthy()
+      const titleElement = document.getElementById(ariaLabelledBy!)
+      expect(titleElement?.textContent).toContain('My Panel Title')
+    })
+
+    it('has aria-label fallback when no title slot is provided', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: {
+          default: 'Content without title',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      expect(panel?.getAttribute('aria-label')).toBe('Panel')
+      expect(panel?.getAttribute('aria-labelledby')).toBeNull()
+    })
+
+    it('has aria-describedby pointing to content when default slot is present', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: {
+          default: 'Panel content description',
+          title: 'Title',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      const ariaDescribedBy = panel?.getAttribute('aria-describedby')
+      expect(ariaDescribedBy).toBeTruthy()
+      expect(ariaDescribedBy).toMatch(/-content$/)
+      const contentElement = document.getElementById(ariaDescribedBy!)
+      expect(contentElement?.textContent).toContain('Panel content description')
+    })
+
+    it('close button has descriptive aria-label', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: { default: '', title: 'Test Panel', footer: '' }
+      })
+      await wrapper.vm.$nextTick()
+      const closeButton = document.querySelector('[data-id="sds-panel"] header button[aria-label]')
+      expect(closeButton?.getAttribute('aria-label')).toBe('Close panel')
+    })
+
+    it('restores focus to previously focused element when panel closes', async () => {
+      // Create a button in the document to focus initially
+      const triggerButton = document.createElement('button')
+      triggerButton.id = 'trigger'
+      triggerButton.textContent = 'Open Panel'
+      triggerButton.tabIndex = 0  // Ensure it's focusable
+      document.body.appendChild(triggerButton)
+      
+      // Mock focus to track calls BEFORE focusing
+      const focusSpy = vi.spyOn(triggerButton, 'focus')
+      
+      triggerButton.focus()
+      expect(document.activeElement).toBe(triggerButton)
+      expect(focusSpy).toHaveBeenCalledTimes(1)
+
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value,
+          'onUpdate:modelValue': (val: boolean) => {
+            model.value = val
+          }
+        },
+        slots: {
+          default: '<button id="inside">Inside Panel</button>',
+          title: 'Test Panel',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      // Advance timers to complete transition
+      vi.advanceTimersByTime(300)
+      await wrapper.vm.$nextTick()
+      
+      // Panel should be open and focus should move away from trigger
+      const panel = document.querySelector('[data-id="sds-panel"]')
+      expect(panel).not.toBeNull()
+      expect(document.activeElement).not.toBe(triggerButton)
+
+      // Count should still be 1 (only the initial focus)
+      expect(focusSpy).toHaveBeenCalledTimes(1)
+
+      // Close the panel
+      await wrapper.setProps({ modelValue: false })
+      await wrapper.vm.$nextTick()
+      // Advance timers enough for close transition (150ms) + focus restoration (200ms)
+      vi.advanceTimersByTime(400)
+      await wrapper.vm.$nextTick()
+
+      // Verify focus() was called again (focus restoration occurred)
+      expect(focusSpy).toHaveBeenCalledTimes(2)
+      
+      // Cleanup
+      triggerButton.remove()
+    })
+
+    it('focuses first interactive element (not close button) when panel opens', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: {
+          default: `
+            <input id="first-input" type="text" />
+            <button id="submit">Submit</button>
+          `,
+          title: 'Test Panel',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      // Advance timers to complete transition and trigger @after-enter
+      vi.advanceTimersByTime(300)
+      await wrapper.vm.$nextTick()
+
+      // Should focus the first input, not the close button
+      const firstInput = document.getElementById('first-input')
+      expect(document.activeElement).toBe(firstInput)
+    })
+
+    it('main content area has tabindex="-1" for programmatic focus', async () => {
+      const model = ref(true)
+      const wrapper = mount(Panel, {
+        attachTo: document.body,
+        props: {
+          modelValue: model.value
+        },
+        slots: {
+          default: 'Content',
+          title: 'Test Panel',
+          footer: ''
+        }
+      })
+      await wrapper.vm.$nextTick()
+      const mainContent = document.querySelector('[data-id="sds-panel"] main')
+      expect(mainContent?.getAttribute('tabindex')).toBe('-1')
+    })
   })
 })

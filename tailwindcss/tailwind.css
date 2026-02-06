@@ -64,6 +64,17 @@
 }
 
 /**
+ * Overlay scroll prevention for Modal, Panel, and other overlay components
+ * Uses scrollbar-gutter to prevent layout shift when scrollbar is hidden
+ */
+@layer base {
+  .sds-overlay-prevent-scroll {
+    scrollbar-gutter: stable;
+    overflow: hidden;
+  }
+}
+
+/**
  * Restore padding and margins of container from v3
  */
 @utility container {
