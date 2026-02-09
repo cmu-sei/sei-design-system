@@ -90,7 +90,7 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<ButtonKind>, default: 'ghost' },
+  kind: { type: String as PropType<Exclude<ButtonKind, 'tertiary'>>, default: 'ghost' },
   /**
    * Styling for the button trigger.
    */
