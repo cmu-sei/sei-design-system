@@ -1,5 +1,12 @@
 import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import "../tailwindcss/tailwind.css"
+
+// Register FontAwesomeIcon globally for all stories
+setup((app) => {
+  app.component('FontAwesomeIcon', FontAwesomeIcon)
+})
 
 const preview: Preview = {
   globalTypes: {

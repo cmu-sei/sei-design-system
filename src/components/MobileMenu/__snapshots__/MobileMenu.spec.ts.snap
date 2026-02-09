@@ -8,23 +8,23 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
         <button class="absolute inset-0"><span class="sr-only">Close panel</span>
         </button>
     </div>
-    <div role="dialog" data-id="sds-panel" class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
-    aria-labelledby="v-0">
-        <header class="flex items-center p-6 pb-0">
+    <div role="dialog" aria-modal="true" data-id="sds-panel" aria-labelledby="v-0"
+    aria-describedby="v-0-content" class="z-50 max-w-md right-0 rounded-r-none inset-y-0 w-11/12 fixed flex flex-col bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800">
+        <header class="flex items-center shrink-0 sticky z-10 w-full top-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
             <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                 <!-- @slot Panel header content. -->
                 <!-- @slot The "title" slot used to supply custom logo or panel title
                 that will display in at the top of every panel. I.e.: \`<template #title>...</template>\` -->
                 <div id="customTitle">Custom Title</div>
             </div>
-            <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M6 18L18 6M6 6l12 12"></path>
+            <button type="button" aria-label="Close panel" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                <svg class="svg-inline--fa fa-xmark" data-prefix="fas" data-icon="xmark"
+                role="img" viewBox="0 0 384 512" aria-hidden="true">
+                    <path class="" fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"></path>
                 </svg>
             </button>
         </header>
-        <main class="p-6 flex grow flex-col z-1">
+        <main id="v-0-content" class="p-6 pt-0 flex grow flex-col z-1" tabindex="-1">
             <!-- @slot Panel content. -->
             <!--v-if-->
             <div>
@@ -47,20 +47,20 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
         <button class="absolute inset-0"><span class="sr-only">Close panel</span>
         </button>
     </div>
-    <div role="dialog" data-id="sds-panel" class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
-    aria-labelledby="v-0">
-        <header class="flex items-center p-6 pb-0">
+    <div role="dialog" aria-modal="true" data-id="sds-panel" aria-labelledby="v-0"
+    aria-describedby="v-0-content" class="z-50 max-w-md right-0 rounded-r-none inset-y-0 w-11/12 fixed flex flex-col bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800">
+        <header class="flex items-center shrink-0 sticky z-10 w-full top-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
             <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                 <!-- @slot Panel header content. -->
             </div>
-            <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M6 18L18 6M6 6l12 12"></path>
+            <button type="button" aria-label="Close panel" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                <svg class="svg-inline--fa fa-xmark" data-prefix="fas" data-icon="xmark"
+                role="img" viewBox="0 0 384 512" aria-hidden="true">
+                    <path class="" fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"></path>
                 </svg>
             </button>
         </header>
-        <main class="p-6 flex grow flex-col z-1">
+        <main id="v-0-content" class="p-6 pt-0 flex grow flex-col z-1" tabindex="-1">
             <!-- @slot Panel content. -->
             <!--v-if-->
             <div>
@@ -77,14 +77,16 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
 
 exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] = `
 <div
+  aria-describedby="v-0-content"
   aria-labelledby="mocked"
-  class="z-50 max-w-md right-0 rounded-r-none fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+  aria-modal="true"
+  class="z-50 max-w-md right-0 rounded-r-none inset-y-0 w-11/12 fixed flex flex-col bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
   data-id="sds-panel"
   id="mocked1"
   role="dialog"
 >
   <header
-    class="flex items-center p-6 pb-0"
+    class="flex items-center shrink-0 sticky z-10 w-full top-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm"
   >
     <div
       class="flex items-center gap-2 text-2xl leading-7 font-light"
@@ -95,26 +97,30 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
       
     </div>
     <button
-      aria-label="close"
-      class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
+      aria-label="Close panel"
+      class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600"
+      type="button"
     >
       <svg
-        class="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
+        aria-hidden="true"
+        class="svg-inline--fa fa-xmark"
+        data-icon="xmark"
+        data-prefix="fas"
+        role="img"
+        viewBox="0 0 384 512"
       >
         <path
-          d="M6 18L18 6M6 6l12 12"
+          class=""
+          d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"
+          fill="currentColor"
         />
       </svg>
     </button>
   </header>
   <main
-    class="p-6 flex grow flex-col z-1"
+    class="p-6 pt-0 flex grow flex-col z-1"
+    id="v-0-content"
+    tabindex="-1"
   >
     <!-- @slot Panel content. -->
     

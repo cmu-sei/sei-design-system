@@ -110,16 +110,7 @@
       class="multiselect-clear"
       @click.prevent.stop="handleClearBtn"
     >
-      <svg
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        class="h-5 w-5"
-        aria-hidden="true"
-      ><path d="M6 18L18 6M6 6l12 12" /></svg>
+      <FontAwesomeIcon :icon="faXmark" />
     </button>
     <div
       v-if="!hideCaret && !(showClear && selected.length > 0)"
@@ -240,6 +231,7 @@
 </template>
 
 <script setup lang="ts">
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import debounce from "../../helpers/debounce";
 
 export interface MultiselectOption {
@@ -1236,7 +1228,7 @@ fieldset[valid] .sds-multiselect {
 }
 
 .tag-list {
-  @apply flex flex-wrap items-center py-[2px] px-[8px];
+  @apply flex flex-wrap items-center py-0.5 px-2;
 }
 
 .hideCaret .tag-list,

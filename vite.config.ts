@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import VueRouter from 'unplugin-vue-router/vite'
+import VueRouter from 'vue-router/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import { VueRouterAutoImports } from 'unplugin-vue-router'
+import { VueRouterAutoImports } from 'vue-router/unplugin'
 import Components from 'unplugin-vue-components/vite'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,10 +29,22 @@ export default defineConfig({
       dts: true,
       directoryAsNamespace: true,
       collapseSamePrefixes: true,
-      dirs: ['src/docs'],
+      dirs: ['src/docs', 'src/components'],
+      resolvers: [
+        (componentName) => {
+          if (componentName === 'FontAwesomeIcon') {
+            return { name: 'FontAwesomeIcon', from: '@fortawesome/vue-fontawesome' }
+          }
+        }
+      ],
     }),
     vue()
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')
+    }
+  },
   server: {
     hmr: { overlay: false },
     fs: {

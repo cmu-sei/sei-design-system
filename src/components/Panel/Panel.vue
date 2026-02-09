@@ -31,10 +31,10 @@
         </div>
       </transition>
       <transition
-        :enter-from-class="`${side === 'left' ? '-translate-x-full' : 'translate-x-full'}`"
-        :enter-to-class="`${side === 'left' ? '-translate-x-0' : 'translate-x-0'}`"
-        :leave-from-class="`${side === 'left' ? '-translate-x-0' : 'translate-x-0'}`"
-        :leave-to-class="`${side === 'left' ? '-translate-x-full' : 'translate-x-full'}`"
+        :enter-from-class="side === 'bottom' ? 'translate-y-full' : (side === 'left' ? '-translate-x-full' : 'translate-x-full')"
+        :enter-to-class="side === 'bottom' ? 'translate-y-0' : (side === 'left' ? '-translate-x-0' : 'translate-x-0')"
+        :leave-from-class="side === 'bottom' ? 'translate-y-0' : (side === 'left' ? '-translate-x-0' : 'translate-x-0')"
+        :leave-to-class="side === 'bottom' ? 'translate-y-full' : (side === 'left' ? '-translate-x-full' : 'translate-x-full')"
         leave-active-class="transform transition ease-in-out duration-150"
         enter-active-class="transform transition ease-in-out duration-150 delay-75"
       >
@@ -42,21 +42,29 @@
           v-if="showPanel"
           ref="panelContainer"
           role="dialog"
+          aria-modal="true"
           data-id="sds-panel"
-          :aria-labelledby="titleWrapper && (titleWrapper as HTMLElement).id || undefined"
+          :aria-labelledby="hasTitleSlot ? id : undefined"
+          :aria-describedby="hasDefaultSlot ? `${id}-content` : undefined"
+          :aria-label="!hasTitleSlot ? 'Panel' : undefined"
           :class="{
             [zIndexClass]: true,
-            'max-w-sm': size === 'sm',
-            'max-w-md': size === 'md',
-            'max-w-lg': size === 'lg',
-            'max-w-xl': size === 'xl',
-            'right-0 rounded-r-none': side === 'right',
-            'left-0 rounded-l-none': side === 'left'
+            'max-w-sm': size === 'sm' && side !== 'bottom',
+            'max-w-md': size === 'md' && side !== 'bottom',
+            'max-w-lg': size === 'lg' && side !== 'bottom',
+            'max-w-xl': size === 'xl' && side !== 'bottom',
+            'max-h-[40vh]': size === 'sm' && side === 'bottom',
+            'max-h-[60vh]': size === 'md' && side === 'bottom',
+            'max-h-[75vh]': size === 'lg' && side === 'bottom',
+            'max-h-[90vh]': size === 'xl' && side === 'bottom',
+            'right-0 rounded-r-none inset-y-0 w-11/12': side === 'right',
+            'left-0 rounded-l-none inset-y-0 w-11/12': side === 'left',
+            'bottom-0 left-0 right-0 rounded-b-none w-full': side === 'bottom'
           }"
-          class="fixed flex flex-col inset-y-0 w-11/12 bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
-          @keydown="checkKeyEvent"
+          class="fixed flex flex-col bg-white overflow-y-scroll border rounded-theme-lg shadow-xl dark:text-gray-25 dark:bg-gray-900 dark:border-gray-800"
+          @keydown="trapFocus"
         >
-          <header class="flex items-center p-6 pb-0">
+          <header class="flex items-center shrink-0 sticky z-10 w-full top-0 p-6 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
             <div
               v-if="hasTitleSlot"
               :id="id"
@@ -67,13 +75,15 @@
               <slot name="title" />
             </div>
             <button
-              v-focus
-              aria-label="close"
+              ref="closeButton"
+              type="button"
+              aria-label="Close panel"
               class="
                 inline-block
                 p-0
                 ml-auto
-                text-3xl text-gray-500
+                text-lg
+                text-gray-500
                 bg-transparent
                 border-0
                 cursor-pointer
@@ -85,20 +95,14 @@
               "
               @click="close"
             >
-              <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <FontAwesomeIcon :icon="faXmark" />
             </button>
           </header>
-          <main class="p-6 flex grow flex-col z-1">
+          <main
+            :id="`${id}-content`"
+            class="p-6 pt-0 flex grow flex-col z-1"
+            tabindex="-1"
+          >
             <!-- @slot Panel content. -->
             <slot />
           </main>
@@ -116,20 +120,14 @@
 </template>
 
 <script setup lang="ts">
-import { type Directive } from 'vue'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
+import { useOverlay } from '@/composables'
 
 const id = useId()
 
 defineOptions({
-  name: 'SdsPanel',
-  directives: {
-    focus: {
-      mounted(el: HTMLElement) {
-        el.focus()
-      },
-    } as Directive,
-  }
+  name: 'SdsPanel'
 })
 
 const props = defineProps({
@@ -144,7 +142,7 @@ const props = defineProps({
    * Determines the location of the panel.
    */
   side: {
-    type: String as PropType<'left' | 'right' | ''>,
+    type: String as PropType<'left' | 'right' | 'bottom' | ''>,
     default: 'right',
   },
   /**
@@ -166,8 +164,7 @@ const slots = defineSlots<{
   footer: () => unknown
 }>()
 
-const titleWrapper = ref(null)
-const panelContainer = ref(null)
+const panelContainer = ref<HTMLElement | null>(null)
 
 const hasTitleSlot = computed(() => {
   return !!slots.title
@@ -177,11 +174,15 @@ const hasFooterSlot = computed(() => {
   return !!slots.footer
 })
 
+const hasDefaultSlot = computed(() => {
+  return !!slots.default
+})
+
 const showPanel = computed({
   get() {
     return model.value
   },
-  set(value) {
+  set(value: boolean) {
     /**
      * Emmitted when modelValue changes.
      */
@@ -189,87 +190,22 @@ const showPanel = computed({
   },
 })
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
+// Use unified overlay composable for consistent behavior
+const { zIndexClass, close, trapFocus } = useOverlay(
+  showPanel,
+  panelContainer,
+  {
+    zIndex: () => props.zIndex,
+    closeOnEscape: true,
+    focusTrap: true,
+    lockBodyScroll: true,
+    autoFocus: true,
+    restoreFocus: true,
+    transitionDuration: 250, // delay-75 (75ms) + duration-150 (150ms) = 225ms, use 250ms to be safe
+    onClose: () => {
+      showPanel.value = false
+    }
   }
-})
-
-onMounted(() => {
-  if (typeof document === 'undefined') return
-  document.addEventListener('keyup', handleEscKey, false)
-})
-
-onUnmounted(() => {
-  if (typeof document === 'undefined') return
-  document.removeEventListener('keyup', handleEscKey, false)
-})
-
-const close = () => {
-  showPanel.value = false
-}
-
-const handleEscKey = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
-    close()
-  }
-}
-
-const checkKeyEvent = (event: KeyboardEvent) => {
-  if (panelContainer.value === null) return
-
-  const focusableList: NodeListOf<HTMLElement> = (panelContainer.value as unknown as HTMLElement).querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  )
-
-  // escape early if only 1 or no elements to focus
-  if (focusableList.length < 2 && event.key === 'Tab') {
-    event.preventDefault()
-    return
-  }
-
-  const last = focusableList.length - 1
-
-  if (
-    event.key === 'Tab' &&
-    event.shiftKey === false &&
-    event.target === focusableList[last]
-  ) {
-    event.preventDefault()
-    focusableList[0].focus()
-  } else if (
-    event.key === 'Tab' &&
-    event.shiftKey === true &&
-    event.target === focusableList[0]
-  ) {
-    event.preventDefault()
-    focusableList[last].focus()
-  }
-}
-
-watch(showPanel, (value) => {
-  if (typeof document === 'undefined') return
-  document.documentElement.classList[(value ? 'add' : 'remove')]('panel-prevent-scroll')
-}, { immediate: true })
+)
 </script>
 
-<style>
-.panel-prevent-scroll {
-  overflow: hidden;
-}
-</style>

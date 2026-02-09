@@ -25,7 +25,7 @@ export default {
       control: {type: 'select'}
     },
     kind: {
-      options: ['primary', 'secondary', 'tertiary', 'ghost'],
+      options: ['primary', 'secondary', 'ghost'],
       control: { type: 'select' }
     },
     variant: {

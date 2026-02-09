@@ -73,109 +73,98 @@ const props = defineProps({
   }
 })
 
-const positionClass = computed(() => {
-  switch(props.position) {
-    case 'bottom':
-      return 'bg-bottom'
-    case 'left':
-      return 'bg-left'
-    case 'right':
-      return 'bg-right'
-    case 'top':
-      return 'bg-top'
-    case 'center':
-    default:
-      return 'bg-center'
+// Consolidated computed properties for better performance
+const avatarClasses = computed(() => {
+  const position = (() => {
+    switch(props.position) {
+      case 'bottom': return 'bg-bottom'
+      case 'left': return 'bg-left'
+      case 'right': return 'bg-right'
+      case 'top': return 'bg-top'
+      case 'center':
+      default: return 'bg-center'
+    }
+  })()
+
+  const size = (() => {
+    switch (props.size) {
+      case '2xl': return 'w-44'
+      case 'xl': return 'w-[88px]'
+      case 'md': return 'w-12'
+      case 'sm': return 'w-8'
+      case 'xs': return 'w-6'
+      case 'auto': return 'w-full'
+      case 'lg':
+      default: return 'w-16'
+    }
+  })()
+
+  const text = (() => {
+    switch (props.size) {
+      case '2xl': return 'text-6xl font-light'
+      case 'xl': return 'text-3xl font-regular'
+      case 'md': return 'text-xl font-regular'
+      case 'sm': return 'text-sm font-semibold'
+      case 'xs': return 'text-xs font-semibold'
+      default:
+      case 'lg': return 'text-2xl font-regular'
+    }
+  })()
+
+  const shape = (() => {
+    const classes = []
+    if (props.shape === 'circle') classes.push('rounded-full aspect-square')
+    if (props.shape === 'portrait') classes.push('aspect-[4/5]')
+    if (props.shape === 'square') classes.push('aspect-square')
+    if (props.shape === 'square' || props.shape === 'portrait') {
+      if (['xs', 'sm'].includes(props.size)) classes.push('rounded-theme-sm')
+      if (['md', 'lg'].includes(props.size)) classes.push('rounded-theme-md')
+      if (['xl', '2xl'].includes(props.size)) classes.push('rounded-theme-lg')
+    }
+    return classes.join(' ')
+  })()
+
+  const variantOuter = (() => {
+    const shapeVariants = [
+      'bg-gray-100 dark:bg-gray-900',
+      'bg-red-100 dark:bg-red-900',
+      'bg-yellow-25 dark:bg-yellow-900',
+      'bg-green-50 dark:bg-green-900',
+      'bg-blue-50 dark:bg-blue-900',
+      'bg-purple-100 dark:bg-purple-900'
+    ]
+    return props.variant ? shapeVariants.filter((color) => color.includes(props.variant))[0] : ''
+  })()
+
+  const variantInner = (() => {
+    const textVariants = [
+      'dark:text-gray-400',
+      'dark:text-red-500',
+      'dark:text-yellow-400',
+      'dark:text-green-400',
+      'dark:text-blue-400',
+      'dark:text-purple-400'
+    ]
+    return props.variant ? textVariants.filter((color) => color.includes(props.variant))[0] : ''
+  })()
+
+  return {
+    position,
+    size,
+    text,
+    shape,
+    variantOuter,
+    variantInner
   }
 })
 
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case '2xl':
-      return 'w-44'
-    case 'xl':
-      return 'w-[88px]'
-    case 'md':
-      return 'w-12'
-    case 'sm':
-      return 'w-8'
-    case 'xs':
-      return 'w-6'
-    case 'auto':
-      return 'w-full'
-    case 'lg':
-    default:
-      return 'w-16'
-  }
-})
-
-const textClass = computed(() => {
-  switch (props.size) {
-    case '2xl':
-      return 'text-6xl font-light'
-    case 'xl':
-      return 'text-3xl font-regular'
-    case 'md':
-      return 'text-xl font-regular'
-    case 'sm':
-      return 'text-sm font-semibold'
-    case 'xs':
-      return 'text-xs font-semibold'
-    default:
-    case 'lg':
-      return 'text-2xl font-regular'
-  }
-})
-
-const shapeClass = computed(() => {
-  const classes = []
-  if (props.shape === 'circle')
-    classes.push('rounded-full aspect-square')
-  if (props.shape === 'portrait')
-    classes.push('aspect-[4/5]')
-  if (props.shape === 'square')
-    classes.push('aspect-square')
-  if (
-    props.shape === 'square' ||
-    props.shape === 'portrait'
-  ) {
-    if (['xs', 'sm'].includes(props.size))
-      classes.push('rounded-theme-sm')
-    if (['md', 'lg'].includes(props.size))
-      classes.push('rounded-theme-md')
-    if (['xl', '2xl'].includes(props.size))
-      classes.push('rounded-theme-lg')
-  }
-  return classes
-})
-
-const variantOuterClass = computed(() => {
-  const shapeVariants = [
-    'bg-gray-100 dark:bg-gray-900',
-    'bg-red-100 dark:bg-red-900',
-    'bg-yellow-25 dark:bg-yellow-900',
-    'bg-green-50 dark:bg-green-900',
-    'bg-blue-50 dark:bg-blue-900',
-    'bg-purple-100 dark:bg-purple-900'
-  ]
-  if (props.variant) {
-    return shapeVariants.filter((color) => color.includes(props.variant))[0]
-  }
-})
-
-const variantInnerClass = computed(() => {
-  const textVariants = [
-    'dark:text-gray-400',
-    'dark:text-red-500',
-    'dark:text-yellow-400',
-    'dark:text-green-400',
-    'dark:text-blue-400',
-    'dark:text-purple-400'
-  ]
-  if (props.variant) {
-    return textVariants.filter((color) => color.includes(props.variant))[0]
-  }
-})
+// Keep backward compatibility - expose individual properties if needed
+const positionClass = computed(() => avatarClasses.value.position)
+const sizeClass = computed(() => avatarClasses.value.size)
+const textClass = computed(() => avatarClasses.value.text)
+const shapeClass = computed(() => avatarClasses.value.shape)
+const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
+const variantInnerClass = computed(() => avatarClasses.value.variantInner)
 
 const initials = computed(() => {
   if (!props.name) {

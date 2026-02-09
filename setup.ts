@@ -3,8 +3,12 @@ import { vi, expect } from 'vitest'
 import { config } from '@vue/test-utils'
 import beautify from 'beautify'
 import SeiDesignSystem from './src/components'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 config.global.plugins.push(SeiDesignSystem)
+config.global.components = {
+  FontAwesomeIcon
+}
 
 config.global.provide = {
   emitter: vi.fn()

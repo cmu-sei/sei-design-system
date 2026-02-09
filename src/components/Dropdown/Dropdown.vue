@@ -47,19 +47,11 @@
           <slot name="title">
             {{ title }}
           </slot>
-          <svg
+          <FontAwesomeIcon
             v-if="!hideArrow"
+            :icon="faChevronDown"
             class="inline-block self-center w-5 h-5 -mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          />
         </button>
       </slot>
     </template>
@@ -86,12 +78,12 @@
 </template>
 
 <script setup lang="ts">
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue } from '@/composables'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
-
-const id = useId()
 
 defineOptions({
   name: 'SdsDropdown'
@@ -105,11 +97,11 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
+  kind: { type: String as PropType<ButtonKind>, default: 'secondary' },
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
+  variant: { type: String as PropType<ButtonVariant>, default: '' },
   /**
    * Allows you to force dark mode on all child components
    */
@@ -117,7 +109,7 @@ const props = defineProps({
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex: { type: String as PropType<ZIndexValue>, required: false, default: '50' },
   /**
    * The distance between the popper and the trigger.
    */
@@ -210,85 +202,28 @@ const props = defineProps({
   willClose: { type: Function as PropType<GenericFunctionType>, default: null }
 })
 
-const button = ref()
-
-const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericFunctionType) => {
-  if (isOpen) {
-    close(props.closeDelay)
-  } else {
-    open(props.openDelay)
-  }
-}
-
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
-
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'md':
-      return ''
-    case 'sm':
-      return 'btn-sm'
-    default:
-      return ''
-  }
-})
-
-const btnClass = computed(() => {
-  return props.kind ? 'btn' : ''
-})
-
-const kindClass = computed(() => {
-  switch (props.kind) {
-    case 'primary':
-      return 'btn-primary'
-    case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
-    case 'ghost':
-      return 'btn-ghost'
-    default:
-      return ''
-  }
-})
-
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'btn-blue'
-    case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => {
-  return props.disabled ? 'disabled' : ''
-})
-
-const blockClass = computed(() => {
-  return props.block ? 'btn-block' : ''
+// Use unified dropdown composable
+const {
+  id,
+  buttonRef: button,
+  zIndexClass,
+  btnClass,
+  kindClass,
+  variantClass,
+  sizeClass,
+  disabledClass,
+  blockClass,
+  handleClick
+} = useDropdown({
+  prefix: 'btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  zIndex: () => props.zIndex,
+  disabled: () => props.disabled,
+  block: () => props.block,
+  openDelay: props.openDelay,
+  closeDelay: props.closeDelay,
+  darkMode: () => props.type === 'dark'
 })
 </script>

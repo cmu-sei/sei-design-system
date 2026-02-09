@@ -86,7 +86,6 @@
           v-model="showModal"
           size="md"
           title="Prop title"
-          hide-header
         >
           <template #title>
             Slotted title
@@ -111,7 +110,7 @@
         </SdsButton>
         <SdsPanel
           v-model="showPanel"
-          side="right"
+          side="bottom"
           size="md"
         >
           <template #title>
@@ -160,7 +159,7 @@
         Callout
       </h2>
       <div class="space-x-4 flex pb-16">
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"
@@ -271,7 +270,7 @@
             size="md"
           />
         </div>
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"
@@ -382,7 +381,7 @@
             size="md"
           />
         </div>
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"
@@ -496,7 +495,7 @@
       </div>
       <!-- Callout sm -->
       <div class="space-x-4 flex">
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"
@@ -607,7 +606,7 @@
             size="sm"
           />
         </div>
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"
@@ -718,7 +717,7 @@
             size="sm"
           />
         </div>
-        <div class="w-[352px] space-y-4">
+        <div class="w-88 space-y-4">
           <template
             v-for="v in calloutVariants"
             :key="v"

@@ -5,7 +5,7 @@
         ref="container"
         data-id="sds-floating-action-button"
         class="hidden sm:block fixed inset-0 h-screen w-screen pointer-events-none z-50"
-        @keydown="checkKeyEvent"
+        @keydown="trapFocus"
       >
         <div class="p-4 flex h-screen w-screen">
           <div class="ml-auto mt-auto relative">
@@ -27,36 +27,22 @@
                 @click="open = !open"
               >
                 <span class="block w-6 h-6">
-                  <svg
+                  <FontAwesomeIcon
                     v-if="open"
+                    :icon="faChevronDown"
                     class="inline-block h-6 w-6"
                     aria-hidden="true"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                    />
-                  </svg>
+                  />
                   <!-- @slot Icon replacement for the unopened trigger button. -->
                   <slot
                     v-if="!open"
                     name="trigger-icon"
                   >
-                    <svg
+                    <FontAwesomeIcon
+                      :icon="faBullhorn"
                       class="inline-block h-6 w-6"
                       aria-hidden="true"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 576 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M544 32c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32s-32-14.3-32-32V64c0-17.7 14.3-32 32-32zM64 190.3L480 64V448L348.9 408.2C338.2 449.5 300.7 480 256 480c-53 0-96-43-96-96c0-11 1.9-21.7 5.3-31.5L64 321.7C63.1 338.6 49.1 352 32 352c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32c17.1 0 31.1 13.4 32 30.3zm239 203.9l-91.6-27.8c-2.1 5.4-3.3 11.4-3.3 17.6c0 26.5 21.5 48 48 48c23 0 42.2-16.2 46.9-37.8z"
-                      />
-                    </svg>
+                    />
                   </slot>
                 </span>
                 <span class="sr-only">{{ open ? 'close' : 'open' }}</span>
@@ -73,7 +59,7 @@
               <div
                 v-if="open"
                 ref="modal"
-                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-theme-lg h-144 max-w-[32rem] w-[calc(100vw-2rem)] sm:w-[32rem] bg-white dark:bg-gray-950 shadow-lg"
+                class="absolute flex flex-col bottom-20 right-0 pointer-events-auto border border-gray-100 dark:border-gray-700 rounded-theme-lg h-144 max-w-lg w-[calc(100vw-2rem)] sm:w-lg bg-white dark:bg-gray-950 shadow-lg"
                 aria-orientation="vertical"
                 :aria-labelledby="button && (button as HTMLElement).id || undefined"
                 role="dialog"
@@ -94,18 +80,11 @@
                     variant="white"
                     @click="open = false"
                   >
-                    <svg
+                    <FontAwesomeIcon
+                      :icon="faChevronDown"
                       class="inline-block h-4 w-4"
                       aria-hidden="true"
-                      role="img"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                      />
-                    </svg>
+                    />
                     <span class="sr-only">Close</span>
                   </ActionButton>
                 </div>
@@ -162,10 +141,12 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside, onKeyStroke } from '@vueuse/core';
+import { faChevronDown, faBullhorn } from '@fortawesome/free-solid-svg-icons'
+import { onClickOutside } from '@vueuse/core';
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
 import ActionButton from '../ActionButton/ActionButton.vue';
+import { useFocusTrap } from '@/composables'
 
 const id = useId()
 
@@ -261,44 +242,15 @@ onClickOutside(modal, () => {
   }
 }, { ignore: [button] })
 
-onKeyStroke('Escape', (e) => {
-  if (open.value) {
-    e.preventDefault()
-    open.value = false
-  }
-})
-
-const checkKeyEvent = (event: KeyboardEvent) => {
-  if (container.value === null) return;
-
-  const focusableList: NodeListOf<HTMLElement> = (container.value as unknown as HTMLElement).querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
-
-  // escape early if only 1 or no elements to focus
-  if (focusableList.length < 2 && event.key === "Tab") {
-    event.preventDefault();
-    return;
-  }
-
-  const last = focusableList.length - 1;
-
-  if (
-    event.key === "Tab" &&
-    event.shiftKey === false &&
-    event.target === focusableList[last]
-  ) {
-    event.preventDefault();
-    focusableList[0].focus();
-  } else if (
-    event.key === "Tab" &&
-    event.shiftKey === true &&
-    event.target === focusableList[0]
-  ) {
-    event.preventDefault();
-    focusableList[last].focus();
-  }
+const closeMenu = () => {
+  open.value = false
 }
+
+const { trapFocus } = useFocusTrap(container, {
+  enabled: open,
+  handleEscape: true,
+  onEscape: closeMenu
+})
 
 const setActiveTab = (tab: { key: string | number, title: string, tabName: string, active: boolean, iconSrc?: string }) => {
   tabs.value.map(i => i.active = tab.key === i.key)

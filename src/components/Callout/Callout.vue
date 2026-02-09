@@ -66,22 +66,18 @@
         class="ml-auto -mt-1.5"
       >
         <button @click="dismiss = true">
-          <svg
+          <FontAwesomeIcon
+            :icon="faXmark"
             :class="fillClass"
-            width="20"
-            height="24"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z" />
-          </svg>
+            :size="size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : undefined"
+          />
         </button>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'date-fns/format';
 
 defineOptions({

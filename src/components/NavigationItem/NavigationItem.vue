@@ -4,16 +4,10 @@
     class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4 w-full"
     @click="(e: Event) => { onClick(e) }"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
+    <FontAwesomeIcon
+      :icon="faArrowLeft"
       class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col pointer-events-none"
-      viewBox="0 0 256 256"
-    >
-      <path
-        fill="currentColor"
-        d="M222 128a6 6 0 0 1-6 6H54.49l61.75 61.76a6 6 0 1 1-8.48 8.48l-72-72a6 6 0 0 1 0-8.48l72-72a6 6 0 0 1 8.48 8.48L54.49 122H216a6 6 0 0 1 6 6"
-      />
-    </svg>
+    />
     <h3 class="text-2xl font-thin pointer-events-none">
       Go Back
     </h3>
@@ -59,27 +53,16 @@
       v-if="(type === 'expand' && $slots.children) || type === 'slide'"
       class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 dark:group-hover:text-gray-100 pointer-events-none"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-        viewBox="0 0 512 512"
+      <FontAwesomeIcon
+        :icon="faChevronRight"
         class="ml-auto -mr-1 shrink-0"
         :class="{
           'transition-transform mr-0': type === 'expand',
           'rotate-90': !selected && type === 'expand',
           '-rotate-90': selected && type === 'expand'
         }"
-      >
-        <path
-          fill="none"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="48"
-          d="m184 112l144 144l-144 144"
-        />
-      </svg>
+        size="lg"
+      />
     </div>
   </component>
   <div
@@ -106,6 +89,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { faArrowLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { getCurrentInstance } from "vue"
 
 /**
