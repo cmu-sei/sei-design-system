@@ -80,7 +80,7 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<ButtonKind>, default: 'ghost' },
+  kind: { type: String as PropType<Exclude<ButtonKind, 'tertiary'>>, default: 'ghost' },
   /**
    * Determines the color of the component.
    */
