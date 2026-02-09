@@ -105,11 +105,11 @@
                     <!-- @slot App icon content. @binding classList -->
                     <slot
                       name="app-icon"
-                      class-list="block w-4 h-4 my-auto shrink-0"
+                      class-list="flex items-center w-4 h-4 my-auto shrink-0"
                     >
                       <span
                         v-if="!hideAppIcon"
-                        class="block w-4 h-4 my-auto shrink-0"
+                        class="flex items-center w-4 h-4 my-auto shrink-0"
                       >
                         <template v-if="appUrl">
                           <a
@@ -194,11 +194,11 @@
                         <slot
                           name="mobile-sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-4 h-4 my-auto shrink-0"
+                          class-list="flex items-center w-4 h-4 my-auto shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-4 h-4 my-auto shrink-0"
+                            class="flex items-center w-4 h-4 my-auto shrink-0"
                           >
                             <img
                               v-if="item.iconUrl"
@@ -208,7 +208,7 @@
                             >
                             <FontAwesomeIcon
                               v-else
-                              :icon="faBoxesStacked"
+                              :icon="faCube"
                               class="w-4 h-4"
                               aria-hidden="true"
                             />
@@ -283,11 +283,11 @@
                       <slot
                         name="mobile-sidebar-navigation-item-icon"
                         :item="item"
-                        class-list="inline-block w-4 h-4 my-auto shrink-0"
+                        class-list="flex items-center w-4 h-4 my-auto shrink-0"
                       >
                         <span
                           v-if="!hideSidebarIcons"
-                          class="inline-block w-4 h-4 my-auto shrink-0"
+                          class="flex items-center w-4 h-4 my-auto shrink-0"
                         >
                           <img
                             v-if="item.iconUrl"
@@ -297,7 +297,7 @@
                           >
                           <FontAwesomeIcon
                             v-else
-                            :icon="faBoxesStacked"
+                            :icon="faCube"
                             class="w-4 h-4"
                             aria-hidden="true"
                           />
@@ -433,11 +433,11 @@
                   <!-- @slot App icon content. @binding classList -->
                   <slot
                     name="app-icon"
-                    class-list="block w-4 h-4 my-auto shrink-0"
+                    class-list="flex items-center w-4 h-4 my-auto shrink-0"
                   >
                     <span
                       v-if="!hideAppIcon"
-                      class="block w-4 h-4 my-auto shrink-0"
+                      class="flex items-center w-4 h-4 my-auto shrink-0"
                       :class="{ 'mx-auto': collapsed }"
                     >
                       <template v-if="appUrl">
@@ -532,11 +532,11 @@
                           <slot
                             name="sidebar-navigation-item-icon"
                             :item="item"
-                            class-list="inline-block w-4 h-4 my-auto shrink-0"
+                            class-list="flex items-center w-4 h-4 my-auto shrink-0"
                           >
                             <span
                               v-if="!hideSidebarIcons"
-                              class="inline-block w-4 h-4 my-auto shrink-0"
+                              class="flex items-center w-4 h-4 my-auto shrink-0"
                               :class="{ 'mx-auto': collapsed }"
                             >
                               <img
@@ -547,7 +547,7 @@
                               >
                               <FontAwesomeIcon
                                 v-else
-                                :icon="faBoxesStacked"
+                                :icon="faCube"
                                 class="w-4 h-4"
                                 aria-hidden="true"
                               />
@@ -642,11 +642,11 @@
                         <slot
                           name="sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="inline-block w-4 h-4 my-auto shrink-0"
+                          class-list="flex items-center w-4 h-4 my-auto shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="inline-block w-4 h-4 my-auto shrink-0"
+                            class="flex items-center w-4 h-4 my-auto shrink-0"
                             :class="{ 'mx-auto': collapsed }"
                           >
                             <img
@@ -657,7 +657,7 @@
                             >
                             <FontAwesomeIcon
                               v-else
-                              :icon="faBoxesStacked"
+                              :icon="faCube"
                               class="w-4 h-4"
                               aria-hidden="true"
                             />
@@ -827,7 +827,7 @@
 </template>
 
 <script setup lang="ts">
-import { faBars, faCubes, faBoxesStacked, faChevronDown, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCubes, faCube, faChevronDown, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
