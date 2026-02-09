@@ -69,7 +69,7 @@
           <FontAwesomeIcon
             :icon="faXmark"
             :class="fillClass"
-            class="w-5 h-6"
+            :size="size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : undefined"
           />
         </button>
       </div>

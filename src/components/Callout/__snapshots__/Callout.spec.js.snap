@@ -537,7 +537,7 @@ exports[`Callout > should have dismissable icon 1`] = `
       <button>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-xmark fill-gray-900 dark:fill-gray-300 w-5 h-6"
+          class="svg-inline--fa fa-xmark fill-gray-900 dark:fill-gray-300"
           data-icon="xmark"
           data-prefix="fas"
           role="img"
@@ -648,7 +648,7 @@ exports[`Callout > should have inset 1`] = `
       <button>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-xmark fill-gray-900 dark:fill-gray-300 w-5 h-6"
+          class="svg-inline--fa fa-xmark fill-gray-900 dark:fill-gray-300"
           data-icon="xmark"
           data-prefix="fas"
           role="img"
