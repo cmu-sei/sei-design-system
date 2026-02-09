@@ -31,8 +31,7 @@
             :disabled="disabled"
             @click="toggle()"
           >
-            <FontAwesomeIcon
-              :icon="faArrowsUpDown"
+            <IconFa7SolidArrowsUpDown
               :class="[iconSizeClasses]"
               class="inline-block self-center"
             />
@@ -40,10 +39,9 @@
             <slot name="title">
               <span v-if="!hideArrow">{{ title }}</span>
             </slot>
-            <FontAwesomeIcon
+            <IconFa7SolidChevronDown
               v-if="!hideArrow"
-              :icon="faChevronDown"
-              class="inline-block self-center w-5 h-5 -mr-1"
+              class="inline-block self-center w-4 h-4 -mr-1"
             />
           </SdsActionButton>
         </template>
@@ -109,8 +107,12 @@
                 class="flex items-center gap-1.5 cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
                 @click.stop
               >
-                <FontAwesomeIcon
-                  :icon="filter.direction.includes('ascending') ? faArrowUp : faArrowDown"
+                <IconFa7SolidArrowUp
+                  v-if="filter.direction.includes('ascending')"
+                  class="h-3.5 w-3.5"
+                />
+                <IconFa7SolidArrowDown
+                  v-else
                   class="h-3.5 w-3.5"
                 />
                 <span>{{ filter.label }}</span>
@@ -124,7 +126,6 @@
 </template>
 
 <script lang="ts" setup>
-import { faArrowsUpDown, faChevronDown, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import type { RadioGroupOptionValue } from '../RadioGroup/RadioGroup.vue'
 import type { Placement as BasePlacement } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'

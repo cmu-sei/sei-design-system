@@ -95,7 +95,7 @@
               "
               @click="close"
             >
-              <FontAwesomeIcon :icon="faXmark" />
+              <IconFa7SolidXmark />
             </button>
           </header>
           <main
@@ -120,7 +120,6 @@
 </template>
 
 <script setup lang="ts">
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { useOverlay } from '@/composables'
 

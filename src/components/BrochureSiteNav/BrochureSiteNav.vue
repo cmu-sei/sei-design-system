@@ -31,8 +31,7 @@
           class="inline-flex font-bold uppercase group text-gray-600"
         >
           <span class="group-hover:underline">{{ item.seeAll.title }}</span>
-          <FontAwesomeIcon
-            :icon="faChevronRight"
+          <IconFa7SolidChevronRight
             class="w-5 h-5 my-auto"
           />
         </a>
@@ -42,8 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-
 defineOptions({
   name: 'SdsBrochureSiteNav'
 })

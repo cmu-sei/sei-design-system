@@ -17,8 +17,7 @@
             @click="goToPrevMonth"
           >
             <span class="sr-only">Go to previous month</span>
-            <FontAwesomeIcon
-              :icon="faChevronLeft"
+            <IconFa7SolidChevronLeft
               class="w-5 h-5"
             />
           </button>
@@ -53,8 +52,7 @@
             @click="goToNextMonth"
           >
             <span class="sr-only">Go to next month</span>
-            <FontAwesomeIcon
-              :icon="faChevronRight"
+            <IconFa7SolidChevronRight
               class="w-5 h-5"
             />
           </button>
@@ -238,9 +236,8 @@
           </template>
         </div>
         <div class="flex gap-1">
-          <FontAwesomeIcon
-            :icon="faClock"
-            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          <IconFa7RegularClock
+            class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           />
           <label class="w-full">
             <span class="sr-only">Hour</span>
@@ -308,9 +305,8 @@
           </template>
         </div>
         <div class="flex gap-1">
-          <FontAwesomeIcon
-            :icon="faClock"
-            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
+          <IconFa7RegularClock
+            class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           />
           <label class="w-full">
             <span class="sr-only">Hour</span>
@@ -368,8 +364,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { faClock } from '@fortawesome/free-regular-svg-icons'
 import { isToday } from 'date-fns/isToday'
 import { isWithinInterval } from 'date-fns/isWithinInterval'
 import { isBefore } from 'date-fns/isBefore'

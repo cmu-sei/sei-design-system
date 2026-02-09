@@ -47,10 +47,13 @@
           <slot name="title">
             {{ title }}
           </slot>
-          <FontAwesomeIcon
+          <IconFa7SolidChevronDown
             v-if="!hideArrow"
-            :icon="faChevronDown"
-            class="inline-block self-center w-5 h-5 -mr-1"
+            class="inline-block self-center"
+            :class="{
+              'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm' || size === '',
+              'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm' && size !== '',
+            }"
           />
         </button>
       </slot>
@@ -78,7 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
 import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue } from '@/composables'
 

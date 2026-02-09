@@ -66,10 +66,8 @@
         class="ml-auto -mt-1.5"
       >
         <button @click="dismiss = true">
-          <FontAwesomeIcon
-            :icon="faXmark"
-            :class="fillClass"
-            :size="size === 'xs' ? 'xs' : size === 'sm' ? 'sm' : undefined"
+          <IconFa7SolidXmark
+            :class="[fillClass, size === 'xs' ? 'w-3 h-3' : 'w-4 h-4']"
           />
         </button>
       </div>
@@ -77,7 +75,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { format } from 'date-fns/format';
 
 defineOptions({

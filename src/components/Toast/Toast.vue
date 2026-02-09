@@ -11,16 +11,21 @@
       <div class="p-4">
         <div class="flex toasts-start">
           <div class="shrink-0">
-            <FontAwesomeIcon
-              v-if="localType"
-              :icon="localType === 'success' ? faCircleCheck : localType === 'info' ? faCircleInfo : localType === 'warning' ? faTriangleExclamation : faCircleExclamation"
-              :class="{
-                'text-green-400 dark:text-green-300': localType === 'success',
-                'text-blue-400 dark:text-blue-300': localType === 'info',
-                'text-orange-300 dark:text-orange-300': localType === 'warning',
-                'text-red-600 dark:text-red-300': localType === 'danger',
-              }"
-              class="w-6 h-6"
+            <IconFa7SolidCircleCheck
+              v-if="localType === 'success'"
+              class="w-6 h-6 text-green-400 dark:text-green-300"
+            />
+            <IconFa7SolidCircleInfo
+              v-else-if="localType === 'info'"
+              class="w-6 h-6 text-blue-400 dark:text-blue-300"
+            />
+            <IconFa7SolidTriangleExclamation
+              v-else-if="localType === 'warning'"
+              class="w-6 h-6 text-orange-300 dark:text-orange-300"
+            />
+            <IconFa7SolidCircleExclamation
+              v-else-if="localType === 'danger'"
+              class="w-6 h-6 text-red-600 dark:text-red-300"
             />
           </div>
           <div class="ml-3 w-0 flex-1 pt-0.5">
@@ -42,10 +47,7 @@
               class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-hidden hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >
-              <FontAwesomeIcon
-                :icon="faXmark"
-                size="sm"
-              />
+              <IconFa7SolidXmark />
               <span class="sr-only">Close toast</span>
             </button>
           </div>
@@ -56,8 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { faXmark, faCircleCheck, faCircleInfo, faTriangleExclamation, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
-
 defineOptions({
   name: 'SdsToast'
 })

@@ -24,15 +24,14 @@ exports[`Dropdown > Snapshots > should match its default snapshot 1`] = `
       
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-chevron-down inline-block self-center w-5 h-5 -mr-1"
-        data-icon="chevron-down"
-        data-prefix="fas"
+        class="inline-block self-center w-5 h-5 ml-2 -mt-1 -mr-2"
+        height="1.2em"
         role="img"
-        viewBox="0 0 448 512"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          class=""
-          d="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
           fill="currentColor"
         />
       </svg>

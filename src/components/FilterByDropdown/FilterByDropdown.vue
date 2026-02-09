@@ -27,9 +27,8 @@
         <slot name="title">
           <span>{{ title + (props.showCount ? ` (${selectedCount})` : '') }}</span>
         </slot>
-        <FontAwesomeIcon
-          :icon="faChevronDown"
-          class="inline-block self-center w-5 h-5 -mr-1"
+        <IconFa7SolidChevronDown
+          class="inline-block self-center w-4 h-4 -mr-1"
         />
       </SdsActionButton>
     </template>
@@ -125,7 +124,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'

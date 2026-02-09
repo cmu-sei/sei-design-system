@@ -27,21 +27,17 @@
                 @click="open = !open"
               >
                 <span class="block w-6 h-6">
-                  <FontAwesomeIcon
+                  <IconFa7SolidChevronDown
                     v-if="open"
-                    :icon="faChevronDown"
                     class="inline-block h-6 w-6"
-                    aria-hidden="true"
                   />
                   <!-- @slot Icon replacement for the unopened trigger button. -->
                   <slot
                     v-if="!open"
                     name="trigger-icon"
                   >
-                    <FontAwesomeIcon
-                      :icon="faBullhorn"
+                    <IconFa7SolidBullhorn
                       class="inline-block h-6 w-6"
-                      aria-hidden="true"
                     />
                   </slot>
                 </span>
@@ -80,10 +76,8 @@
                     variant="white"
                     @click="open = false"
                   >
-                    <FontAwesomeIcon
-                      :icon="faChevronDown"
-                      class="inline-block h-4 w-4"
-                      aria-hidden="true"
+                    <IconFa7SolidChevronDown
+                      class="inline-block h-5 w-5"
                     />
                     <span class="sr-only">Close</span>
                   </ActionButton>
@@ -141,7 +135,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronDown, faBullhorn } from '@fortawesome/free-solid-svg-icons'
 import { onClickOutside } from '@vueuse/core';
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
