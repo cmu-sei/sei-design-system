@@ -28,7 +28,7 @@
           <span>{{ title + (props.showCount ? ` (${selectedCount})` : '') }}</span>
         </slot>
         <IconFa7SolidChevronDown
-          class="inline-block self-center w-4 h-4 -mr-1"
+          class="inline-block self-center w-4 h-4"
         />
       </SdsActionButton>
     </template>

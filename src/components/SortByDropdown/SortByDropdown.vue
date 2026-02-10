@@ -31,7 +31,7 @@
             :disabled="disabled"
             @click="toggle()"
           >
-            <IconFa7SolidArrowsUpDown
+            <IconFa7SolidUpDown
               :class="[iconSizeClasses]"
               class="inline-block self-center"
             />
@@ -41,7 +41,7 @@
             </slot>
             <IconFa7SolidChevronDown
               v-if="!hideArrow"
-              class="inline-block self-center w-4 h-4 -mr-1"
+              class="inline-block self-center w-4 h-4"
             />
           </SdsActionButton>
         </template>
