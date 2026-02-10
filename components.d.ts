@@ -54,7 +54,6 @@ declare module 'vue' {
     IconFa7SolidArrowDown: typeof import('~icons/fa7-solid/arrow-down')['default']
     IconFa7SolidArrowLeft: typeof import('~icons/fa7-solid/arrow-left')['default']
     IconFa7SolidArrowRight: typeof import('~icons/fa7-solid/arrow-right')['default']
-    IconFa7SolidArrowsUpDown: typeof import('~icons/fa7-solid/arrows-up-down')['default']
     IconFa7SolidArrowUp: typeof import('~icons/fa7-solid/arrow-up')['default']
     IconFa7SolidArrowUpRightFromSquare: typeof import('~icons/fa7-solid/arrow-up-right-from-square')['default']
     IconFa7SolidBars: typeof import('~icons/fa7-solid/bars')['default']

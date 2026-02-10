@@ -24,7 +24,7 @@ exports[`ActionDropdown > should be block styling 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -68,7 +68,7 @@ exports[`ActionDropdown > should be disabled 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -111,7 +111,7 @@ exports[`ActionDropdown > should have a ghost kind with a blue variant 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -154,7 +154,7 @@ exports[`ActionDropdown > should have a lg size 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -197,7 +197,7 @@ exports[`ActionDropdown > should have a md size 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -240,7 +240,7 @@ exports[`ActionDropdown > should have a primary kind with a gray variant 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -283,7 +283,7 @@ exports[`ActionDropdown > should have a secondary kind with a red variant 1`] = 
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -326,7 +326,7 @@ exports[`ActionDropdown > should have an xs size 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -369,7 +369,7 @@ exports[`ActionDropdown > should have the proper title 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -443,7 +443,7 @@ exports[`ActionDropdown > should match its default snapshot 1`] = `
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -486,7 +486,7 @@ exports[`ActionDropdown > should match its kind ghost, variant white snapshot 1`
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -529,7 +529,7 @@ exports[`ActionDropdown > should match its kind primary, variant white snapshot 
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
@@ -572,7 +572,7 @@ exports[`ActionDropdown > should match its kind secondary, variant white snapsho
       
       <svg
         aria-hidden="true"
-        class="inline-block self-center w-4 h-4 -mr-1"
+        class="inline-block self-center w-4 h-4"
         height="1.2em"
         role="img"
         viewBox="0 0 640 640"
