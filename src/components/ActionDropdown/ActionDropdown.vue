@@ -45,7 +45,7 @@
           </slot>
           <IconFa7SolidChevronDown
             v-if="!hideArrow"
-            class="inline-block self-center -mr-1"
+            class="inline-block self-center w-4 h-4 -mr-1"
           />
         </button>
       </slot>
