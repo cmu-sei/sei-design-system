@@ -23,15 +23,14 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-left w-5 h-5"
-          data-icon="chevron-left"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
             fill="currentColor"
           />
         </svg>
@@ -75,15 +74,14 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-right w-5 h-5"
-          data-icon="chevron-right"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
             fill="currentColor"
           />
         </svg>
@@ -999,15 +997,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-left w-5 h-5"
-          data-icon="chevron-left"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
             fill="currentColor"
           />
         </svg>
@@ -1050,15 +1047,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-right w-5 h-5"
-          data-icon="chevron-right"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
             fill="currentColor"
           />
         </svg>
@@ -1919,15 +1915,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-clock my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          data-icon="clock"
-          data-prefix="far"
+          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M464 256a208 208 0 1 1 -416 0 208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2223,15 +2218,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-clock my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          data-icon="clock"
-          data-prefix="far"
+          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M464 256a208 208 0 1 1 -416 0 208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2541,15 +2535,14 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-clock my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          data-icon="clock"
-          data-prefix="far"
+          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M464 256a208 208 0 1 1 -416 0 208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2845,15 +2838,14 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-clock my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          data-icon="clock"
-          data-prefix="far"
+          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M464 256a208 208 0 1 1 -416 0 208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -3160,15 +3152,14 @@ exports[`Calendar > should match its default snapshot 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-left w-5 h-5"
-          data-icon="chevron-left"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
             fill="currentColor"
           />
         </svg>
@@ -3199,15 +3190,14 @@ exports[`Calendar > should match its default snapshot 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-right w-5 h-5"
-          data-icon="chevron-right"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
             fill="currentColor"
           />
         </svg>
@@ -3662,15 +3652,14 @@ exports[`Calendar > start and end date should be correct 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-left w-5 h-5"
-          data-icon="chevron-left"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
             fill="currentColor"
           />
         </svg>
@@ -3713,15 +3702,14 @@ exports[`Calendar > start and end date should be correct 1`] = `
         </span>
         <svg
           aria-hidden="true"
-          class="svg-inline--fa fa-chevron-right w-5 h-5"
-          data-icon="chevron-right"
-          data-prefix="fas"
+          class="w-5 h-5"
+          height="1.2em"
           role="img"
-          viewBox="0 0 320 512"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            class=""
-            d="M311.1 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L243.2 256 73.9 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
             fill="currentColor"
           />
         </svg>

@@ -47,14 +47,12 @@
           }"
         >
           <span class="sr-only">Combo box</span>
-          <FontAwesomeIcon
+          <IconFa7SolidMagnifyingGlass
             v-if="!pending"
-            :icon="faMagnifyingGlass"
             :class="{
               'w-4 h-3.5': size === 'sm',
               'w-4 h-4': size !== 'sm',
             }"
-            aria-hidden="true"
           />
           <SdsLoadingSpinner
             v-else
@@ -110,7 +108,6 @@
           type="text"
           :value="selected.length > 0 ? 'selected' : ''"
           :required="required"
-          aria-hidden="true"
           tabindex="-1"
           class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
           style="clip: rect(0, 0, 0, 0);"
@@ -129,10 +126,7 @@
           @mousedown.prevent="clearQuery"
         >
           <span class="sr-only">Clear query</span>
-          <FontAwesomeIcon
-            :icon="faXmark"
-            :size="size === 'sm' ? 'sm' : '1x'"
-          />
+          <IconFa7SolidXmark />
         </button>
         <div
           v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
@@ -332,9 +326,8 @@
                 >
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
-                <FontAwesomeIcon
+                <IconFa7SolidCheck
                   v-if="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text' && !multiple"
-                  :icon="faCheck"
                   class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
                 />
               </component>
@@ -409,9 +402,8 @@
               >
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
-              <FontAwesomeIcon
+              <IconFa7SolidCheck
                 v-if="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text' && !multiple"
-                :icon="faCheck"
                 class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
               />
             </component>
@@ -507,8 +499,7 @@
               }"
               :label="query"
             >
-              <FontAwesomeIcon
-                :icon="faPlus"
+              <IconFa7SolidPlus
                 class="w-3 h-3 my-auto ml-1 mr-2"
               />
               Add "{{ query }}"
@@ -523,15 +514,11 @@
       >
         <div class="ml-auto flex items-center gap-1.5">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <FontAwesomeIcon
-              :icon="faArrowUp"
+            <IconFa7SolidArrowUp
               class="w-3 h-3"
-              aria-hidden="true"
             />
-            <FontAwesomeIcon
-              :icon="faArrowDown"
+            <IconFa7SolidArrowDown
               class="w-3 h-3"
-              aria-hidden="true"
             />
           </div>
           <span class="sr-only">Up, down</span> to navigate
@@ -541,25 +528,19 @@
           class="flex items-center gap-1.5"
         >
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <FontAwesomeIcon
-              :icon="faArrowLeft"
+            <IconFa7SolidArrowLeft
               class="w-3 h-3"
-              aria-hidden="true"
             />
-            <FontAwesomeIcon
-              :icon="faArrowRight"
+            <IconFa7SolidArrowRight
               class="w-3 h-3"
-              aria-hidden="true"
             />
           </div>
           <span class="sr-only">Left, right</span> to switch tabs
         </div>
         <div class="flex items-center gap-1.5">
           <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <FontAwesomeIcon
-              :icon="faRotateLeft"
+            <IconFa7SolidRotateLeft
               class="w-3 h-3"
-              aria-hidden="true"
             />
           </div>
           <span class="sr-only">Enter</span> to select
@@ -570,7 +551,6 @@
 </template>
 
 <script setup lang="ts">
-import { faXmark, faMagnifyingGlass, faCheck, faPlus, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'

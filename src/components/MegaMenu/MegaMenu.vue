@@ -62,10 +62,8 @@
             >{{ topLink.title }}</span>
             <!-- Below icon is a caret to indicate Mega Menu opened/closed status -->
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
-            <FontAwesomeIcon
+            <IconFa7SolidChevronUp
               v-if="topLink.tag !== 'a'"
-              :icon="faChevronUp"
-              size="xs"
               :class="{
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
@@ -73,10 +71,8 @@
               class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300 pointer-events-none"
             />
             <!-- Show a box with an arrow exiting to the upper right to indicate an external link -->
-            <FontAwesomeIcon
+            <IconFa7SolidArrowUpRightFromSquare
               v-if="topLink.tag === 'a' && topLink.external"
-              :icon="faArrowUpRightFromSquare"
-              size="xs"
               class="ml-0 relative inline-block w-4 h-4"
             />
           </slot>
@@ -161,7 +157,6 @@
 </template>
 
 <script setup lang="ts">
-import { faChevronUp, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 
 /* Top Link navigation label type interface */

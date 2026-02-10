@@ -4,8 +4,7 @@
     class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4 w-full"
     @click="(e: Event) => { onClick(e) }"
   >
-    <FontAwesomeIcon
-      :icon="faArrowLeft"
+    <IconFa7SolidArrowLeft
       class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col pointer-events-none"
     />
     <h3 class="text-2xl font-thin pointer-events-none">
@@ -53,15 +52,13 @@
       v-if="(type === 'expand' && $slots.children) || type === 'slide'"
       class="my-auto ml-auto text-gray-500 dark:text-gray-400 group-hover:text-red-700 dark:group-hover:text-gray-100 pointer-events-none"
     >
-      <FontAwesomeIcon
-        :icon="faChevronRight"
+      <IconFa7SolidChevronRight
         class="ml-auto -mr-1 shrink-0"
         :class="{
           'transition-transform mr-0': type === 'expand',
           'rotate-90': !selected && type === 'expand',
           '-rotate-90': selected && type === 'expand'
         }"
-        size="lg"
       />
     </div>
   </component>
@@ -89,7 +86,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { faArrowLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { getCurrentInstance } from "vue"
 
 /**

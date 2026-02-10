@@ -102,17 +102,38 @@
                       'font-normal': sortField !== f.key && index !== 0 
                     }"
                   >{{ f.label }}</span>
-                  <FontAwesomeIcon
-                    v-if="f.sortable"
-                    :icon="sortField !== f.key ? faUpDown : (sortOrder > 0 ? faArrowUp : faArrowDown)"
-                    class="inline-block text-gray-900 dark:text-gray-100"
-                    :class="{
-                      'opacity-100': sortField === f.key,
-                      'opacity-0 group-hover:opacity-50': sortField !== f.key,
-                      'ml-2': f.align !== 'right',
-                      'mr-2': f.align === 'right',
-                    }"
-                  />
+                  <template v-if="f.sortable">
+                    <IconFa7SolidUpDown
+                      v-if="sortField !== f.key"
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === f.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
+                        'ml-2': f.align !== 'right',
+                        'mr-2': f.align === 'right',
+                      }"
+                    />
+                    <IconFa7SolidArrowUp
+                      v-else-if="sortOrder > 0"
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === f.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
+                        'ml-2': f.align !== 'right',
+                        'mr-2': f.align === 'right',
+                      }"
+                    />
+                    <IconFa7SolidArrowDown
+                      v-else
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === f.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
+                        'ml-2': f.align !== 'right',
+                        'mr-2': f.align === 'right',
+                      }"
+                    />
+                  </template>
                 </slot>
               </button>
             </th>
@@ -148,17 +169,38 @@
                       'text-gray-900 dark:text-gray-100 font-bold': sortField === field.key
                     }"
                   >{{ field.label }}</span>
-                  <FontAwesomeIcon
-                    v-if="field.sortable"
-                    :icon="sortField !== field.key ? faUpDown : (sortOrder > 0 ? faArrowUp : faArrowDown)"
-                    class="inline-block text-gray-900 dark:text-gray-100"
-                    :class="{
-                      'opacity-100': sortField === field.key,
-                      'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                      'ml-2': field.align !== 'right',
-                      'mr-2': field.align === 'right',
-                    }"
-                  />
+                  <template v-if="field.sortable">
+                    <IconFa7SolidUpDown
+                      v-if="sortField !== field.key"
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === field.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                        'ml-2': field.align !== 'right',
+                        'mr-2': field.align === 'right',
+                      }"
+                    />
+                    <IconFa7SolidArrowUp
+                      v-else-if="sortOrder > 0"
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === field.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                        'ml-2': field.align !== 'right',
+                        'mr-2': field.align === 'right',
+                      }"
+                    />
+                    <IconFa7SolidArrowDown
+                      v-else
+                      class="inline-block text-gray-900 dark:text-gray-100"
+                      :class="{
+                        'opacity-100': sortField === field.key,
+                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                        'ml-2': field.align !== 'right',
+                        'mr-2': field.align === 'right',
+                      }"
+                    />
+                  </template>
                 </slot>
               </button>
             </th>
@@ -322,7 +364,6 @@
 </template>
 
 <script setup lang="ts">
-import { faUpDown, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import SdsSvgIcon from '../SvgIcon'
 
 export type TableDensity = typeof densityTypes[number];

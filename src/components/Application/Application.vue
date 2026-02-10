@@ -34,8 +34,7 @@
         class="flex items-center md:hidden gap-1 focus:outline-hidden"
         @click="showMobileMenu = !showMobileMenu"
       >
-        <FontAwesomeIcon
-          :icon="faBars"
+        <IconFa7SolidBars
           class="text-black dark:text-white h-6 w-6"
         />
         <span class="flex items-center">
@@ -122,11 +121,9 @@
                               :alt="appName"
                               class="w-4 h-4"
                             >
-                            <FontAwesomeIcon
+                            <IconFa7SolidCubes
                               v-else
-                              :icon="faCubes"
                               class="w-4 h-4 text-blue-400"
-                              aria-hidden="true"
                             />
                             <span class="sr-only">{{ appName }}</span>
                           </a>
@@ -138,11 +135,9 @@
                             :alt="appName"
                             class="w-4 h-4"
                           >
-                          <FontAwesomeIcon
+                          <IconFa7SolidCubes
                             v-else
-                            :icon="faCubes"
                             class="w-4 h-4 text-blue-400"
-                            aria-hidden="true"
                           />
                           <span class="sr-only">{{ appName }}</span>
                         </template>
@@ -206,11 +201,9 @@
                               :alt="item.title"
                               class="w-4 h-4"
                             >
-                            <FontAwesomeIcon
+                            <IconFa7SolidCube
                               v-else
-                              :icon="faCube"
                               class="w-4 h-4"
-                              aria-hidden="true"
                             />
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
@@ -224,10 +217,13 @@
                             class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ itemsGroupBadgeCount(item) }}</span>
                         </span>
-                        <FontAwesomeIcon
-                          :icon="showItemsGroup(item) ? faChevronDown : faChevronRight"
+                        <IconFa7SolidChevronDown
+                          v-if="showItemsGroup(item)"
                           class="shrink-0 w-4 h-4 ml-auto my-auto"
-                          aria-hidden="true"
+                        />
+                        <IconFa7SolidChevronRight
+                          v-else
+                          class="shrink-0 w-4 h-4 ml-auto my-auto"
                         />
                       </button>
                       <template v-if="showItemsGroup(item)">
@@ -295,11 +291,9 @@
                             :alt="item.title"
                             class="w-4 h-4"
                           >
-                          <FontAwesomeIcon
+                          <IconFa7SolidCube
                             v-else
-                            :icon="faCube"
                             class="w-4 h-4"
-                            aria-hidden="true"
                           />
                           <span class="sr-only">{{ item.title }}</span>
                         </span>
@@ -389,10 +383,13 @@
                     :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
                     @click="toggleCollapse"
                   >
-                    <FontAwesomeIcon
-                      :icon="collapsed ? faAnglesRight : faAnglesLeft"
+                    <IconFa7SolidAnglesRight
+                      v-if="collapsed"
                       class="w-4 h-4 mx-auto"
-                      aria-hidden="true"
+                    />
+                    <IconFa7SolidAnglesLeft
+                      v-else
+                      class="w-4 h-4 mx-auto"
                     />
                   </button>
                 </div>
@@ -403,8 +400,7 @@
                 class="flex md:hidden gap-1 focus:outline-hidden"
                 @click="showMobileMenu = !showMobileMenu"
               >
-                <FontAwesomeIcon
-                  :icon="faBars"
+                <IconFa7SolidBars
                   class="text-white h-6 w-6"
                 />
                 <span class="text-xl leading-6 flex">
@@ -451,11 +447,9 @@
                             :alt="appName"
                             class="w-4 h-4"
                           >
-                          <FontAwesomeIcon
+                          <IconFa7SolidCubes
                             v-else
-                            :icon="faCubes"
                             class="w-4 h-4 text-blue-400"
-                            aria-hidden="true"
                           />
                           <span class="sr-only">{{ appName }}</span>
                         </a>
@@ -467,11 +461,9 @@
                           :alt="appName"
                           class="w-4 h-4"
                         >
-                        <FontAwesomeIcon
+                        <IconFa7SolidCubes
                           v-else
-                          :icon="faCubes"
                           class="w-4 h-4 text-blue-400"
-                          aria-hidden="true"
                         />
                         <span class="sr-only">{{ appName }}</span>
                       </template>
@@ -545,11 +537,9 @@
                                 :alt="item.title"
                                 class="w-4 h-4"
                               >
-                              <FontAwesomeIcon
+                              <IconFa7SolidCube
                                 v-else
-                                :icon="faCube"
                                 class="w-4 h-4"
-                                aria-hidden="true"
                               />
                               <span class="sr-only">{{ item.title }}</span>
                             </span>
@@ -574,11 +564,13 @@
                               class="flex justify-center p-1 rounded-full bg-red-600"
                             ><span class="sr-only">{{ itemsGroupBadgeCount(item) }}</span></span>
                           </span>
-                          <FontAwesomeIcon
-                            v-if="!collapsed"
-                            :icon="showItemsGroup(item) ? faChevronDown : faChevronRight"
+                          <IconFa7SolidChevronDown
+                            v-if="!collapsed && showItemsGroup(item)"
                             class="shrink-0 w-4 h-4 ml-auto my-auto"
-                            aria-hidden="true"
+                          />
+                          <IconFa7SolidChevronRight
+                            v-else-if="!collapsed"
+                            class="shrink-0 w-4 h-4 ml-auto my-auto"
                           />
                         </button>
                       </template>
@@ -655,11 +647,9 @@
                               :alt="item.title"
                               class="w-4 h-4"
                             >
-                            <FontAwesomeIcon
+                            <IconFa7SolidCube
                               v-else
-                              :icon="faCube"
                               class="w-4 h-4"
-                              aria-hidden="true"
                             />
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
@@ -827,7 +817,6 @@
 </template>
 
 <script setup lang="ts">
-import { faBars, faCubes, faCube, faChevronDown, faChevronRight, faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'

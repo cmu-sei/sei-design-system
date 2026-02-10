@@ -110,7 +110,7 @@
       class="multiselect-clear"
       @click.prevent.stop="handleClearBtn"
     >
-      <FontAwesomeIcon :icon="faXmark" />
+      <IconFa7SolidXmark />
     </button>
     <div
       v-if="!hideCaret && !(showClear && selected.length > 0)"
@@ -231,7 +231,6 @@
 </template>
 
 <script setup lang="ts">
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import debounce from "../../helpers/debounce";
 
 export interface MultiselectOption {

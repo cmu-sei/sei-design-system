@@ -18,9 +18,9 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 <div id="customTitle">Custom Title</div>
             </div>
             <button type="button" aria-label="Close panel" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                <svg class="svg-inline--fa fa-xmark" data-prefix="fas" data-icon="xmark"
-                role="img" viewBox="0 0 384 512" aria-hidden="true">
-                    <path class="" fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"></path>
+                <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                height="1.2em">
+                    <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                 </svg>
             </button>
         </header>
@@ -54,9 +54,9 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 1`] =
                 <!-- @slot Panel header content. -->
             </div>
             <button type="button" aria-label="Close panel" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                <svg class="svg-inline--fa fa-xmark" data-prefix="fas" data-icon="xmark"
-                role="img" viewBox="0 0 384 512" aria-hidden="true">
-                    <path class="" fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"></path>
+                <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                height="1.2em">
+                    <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                 </svg>
             </button>
         </header>
@@ -103,15 +103,13 @@ exports[`SdsMobileMenu > toggles panel visibility based on modelValue prop 2`] =
     >
       <svg
         aria-hidden="true"
-        class="svg-inline--fa fa-xmark"
-        data-icon="xmark"
-        data-prefix="fas"
+        height="1.2em"
         role="img"
-        viewBox="0 0 384 512"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          class=""
-          d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"
+          d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"
           fill="currentColor"
         />
       </svg>

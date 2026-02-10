@@ -37,10 +37,13 @@
             :disabled="disabled || readonly"
             @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
           >
-            <FontAwesomeIcon
-              :icon="mode === 'time' ? faClock : faCalendar"
-              class="w-4 h-4"
-              aria-hidden="true"
+            <IconFa7RegularClock
+              v-if="mode === 'time'"
+              :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+            />
+            <IconFa7RegularCalendar
+              v-else
+              :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
             />
             <span class="sr-only">Select a date</span>
           </button>
@@ -75,11 +78,9 @@
               'opacity-50': disabled || readonly
             }"
           >
-            <FontAwesomeIcon
-              :icon="faArrowRight"
+            <IconFa7SolidArrowRight
               class="text-gray-700"
               :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
-              aria-hidden="true"
             />
           </div>
           <div
@@ -102,10 +103,13 @@
               :disabled="disabled || readonly"
               @click="toggle(); ($refs.endDateInput as HTMLElement).focus()"
             >
-              <FontAwesomeIcon
-                :icon="mode === 'time' ? faClock : faCalendar"
-                class="w-4 h-4"
-                aria-hidden="true"
+              <IconFa7RegularClock
+                v-if="mode === 'time'"
+                :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+              />
+              <IconFa7RegularCalendar
+                v-else
+                :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
               />
               <span class="sr-only">Select a date</span>
             </button>
@@ -152,8 +156,6 @@
 </template>
 
 <script setup lang="ts">
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { faCalendar, faClock } from '@fortawesome/free-regular-svg-icons'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsCalendar from '../Calendar/Calendar.vue'
 

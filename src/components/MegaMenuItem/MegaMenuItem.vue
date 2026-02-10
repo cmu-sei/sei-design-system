@@ -30,20 +30,17 @@
               class="w-fit my-auto h-full whitespace-nowrap"
             >
               {{ '\u00a0' /* This is a whitespace character, it will prevent the trailing icon from wrapping */ }}
-              <FontAwesomeIcon
+              <IconFa7SolidArrowUpRightFromSquare
                 v-if="external && type === 'landing-page'"
-                :icon="faArrowUpRightFromSquare"
-                class="-ml-1 relative inline-block mb-0.5 w-6 h-6 group-hover:ml-1 group-hover:-mr-1 text-red-600 dark:text-red-300 transition-all"
+                class="-mt-1 -ml-1 relative inline-block mb-0.5 w-5 h-5 group-hover:ml-1 group-hover:-mr-1 text-red-600 dark:text-red-300 transition-all"
               />
-              <FontAwesomeIcon
+              <IconFa7SolidArrowRight
                 v-if="(cta || type === 'landing-page') && !external"
-                :icon="faArrowRight"
-                class="inline-block w-4 h-4 transition-all text-red-600 dark:text-red-300 group-hover:ml-2 group-hover:-mr-2"
+                class="-mt-1 inline-block w-5 h-5 transition-all text-red-600 dark:text-red-300 group-hover:ml-2 group-hover:-mr-2"
               />
-              <FontAwesomeIcon
+              <IconFa7SolidArrowUpRightFromSquare
                 v-if="external && (type === 'simple' || type === 'descriptive')"
-                :icon="faArrowUpRightFromSquare"
-                class="w-4 h-4 -ml-0.5 opacity-0 group-hover:opacity-100 relative inline-block transition-all"
+                class="-mt-1 w-4 h-4 -ml-0.5 opacity-0 group-hover:opacity-100 relative inline-block transition-all"
               />
             </span>
           </p>
@@ -55,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { faArrowUpRightFromSquare, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 defineOptions({
   name: 'SdsMegaMenuItem'
 })
