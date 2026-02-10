@@ -224,7 +224,7 @@ describe('Datepicker', () => {
         }
       })
 
-      const arrow = wrapper.find('svg[viewBox="0 0 24 24"]')
+      const arrow = wrapper.find('.shrink-0 svg[viewBox="0 0 640 640"]')
       expect(arrow.exists()).toBe(true)
     })
 
@@ -296,7 +296,7 @@ describe('Datepicker', () => {
         }
       })
 
-      const clockIcon = wrapper.find('svg[viewBox="0 0 512 512"] path')
+      const clockIcon = wrapper.find('button svg[viewBox="0 0 640 640"] path')
       expect(clockIcon.exists()).toBe(true)
     })
   })
