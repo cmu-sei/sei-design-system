@@ -237,7 +237,7 @@
         </div>
         <div class="flex gap-1">
           <IconFa7RegularClock
-            class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+            class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           />
           <label class="w-full">
             <span class="sr-only">Hour</span>
@@ -306,7 +306,7 @@
         </div>
         <div class="flex gap-1">
           <IconFa7RegularClock
-            class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+            class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           />
           <label class="w-full">
             <span class="sr-only">Hour</span>
