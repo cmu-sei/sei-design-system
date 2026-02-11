@@ -1915,7 +1915,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           height="1.2em"
           role="img"
           viewBox="0 0 640 640"
@@ -2218,7 +2218,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           height="1.2em"
           role="img"
           viewBox="0 0 640 640"
@@ -2535,7 +2535,7 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           height="1.2em"
           role="img"
           viewBox="0 0 640 640"
@@ -2838,7 +2838,7 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
           height="1.2em"
           role="img"
           viewBox="0 0 640 640"

@@ -50,8 +50,9 @@
           <IconFa7SolidMagnifyingGlass
             v-if="!pending"
             :class="{
-              'w-4 h-3.5': size === 'sm',
-              'w-4 h-4': size !== 'sm',
+              '-mt-px': true,
+              'w-4 h-4': size === 'sm',
+              'w-5 h-5': size !== 'sm',
             }"
           />
           <SdsLoadingSpinner

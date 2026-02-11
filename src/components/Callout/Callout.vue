@@ -4,6 +4,7 @@
     :class="[
       styleClass,
       {
+        'relative': true,
         'p-2': size === 'xs',
         'p-3': size === 'sm',
         'p-4': size === 'md' || size === 'lg',
@@ -63,7 +64,7 @@
       <!-- Close icon -->
       <div
         v-if="dismissable"
-        class="ml-auto -mt-1.5"
+        class="absolute top-2 right-2"
       >
         <button @click="dismiss = true">
           <IconFa7SolidXmark
