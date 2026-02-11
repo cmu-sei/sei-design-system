@@ -1,5 +1,5 @@
 <template>
-  <floating-ui
+  <SdsFloatingUi
     data-id="sds-dropdown"
     :offset="offset"
     :strategy="strategy"
@@ -77,11 +77,11 @@
         />
       </div>
     </template>
-  </floating-ui>
+  </SdsFloatingUi>
 </template>
 
 <script setup lang="ts">
-import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import SdsFloatingUi from "../FloatingUi/FloatingUi.vue";
 import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue } from '@/composables'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
