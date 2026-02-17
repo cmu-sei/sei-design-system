@@ -263,13 +263,13 @@
   /* Tertiary - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
-    @apply hover:text-gray-900 hover:bg-white;
+    @apply hover:text-gray-900 hover:bg-white hover:border-white;
   }
 
   /* Tertiary - Default Type - White Variant - Dark Mode */
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
-    @apply hover:text-gray-900 hover:bg-white;
+    @apply hover:text-gray-900 hover:bg-white hover:border-white;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white:active, .sds-theme-forge .btn.btn-tertiary.btn-white.active) {
