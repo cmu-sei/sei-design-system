@@ -24,21 +24,14 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M328 112L184 256l144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -82,21 +75,14 @@ exports[`Calendar > calendar mode min and max is correct 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M184 112l144 144l-144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -1012,21 +998,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M328 112L184 256l144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -1069,21 +1048,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M184 112l144 144l-144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -1943,17 +1915,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2249,17 +2218,14 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2569,17 +2535,14 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -2875,17 +2838,14 @@ exports[`Calendar > calendar mode should be time 1`] = `
       >
         <svg
           aria-hidden="true"
-          class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
+            d="M528 320c0 114.9-93.1 208-208 208s-208-93.1-208-208s93.1-208 208-208s208 93.1 208 208m-464 0c0 141.4 114.6 256 256 256s256-114.6 256-256S461.4 64 320 64S64 178.6 64 320m232-136v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L344 307.2V184c0-13.3-10.7-24-24-24s-24 10.7-24 24"
             fill="currentColor"
           />
         </svg>
@@ -3193,21 +3153,14 @@ exports[`Calendar > should match its default snapshot 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M328 112L184 256l144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -3238,21 +3191,14 @@ exports[`Calendar > should match its default snapshot 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M184 112l144 144l-144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -3707,21 +3653,14 @@ exports[`Calendar > start and end date should be correct 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M328 112L184 256l144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -3764,21 +3703,14 @@ exports[`Calendar > start and end date should be correct 1`] = `
         <svg
           aria-hidden="true"
           class="w-5 h-5"
-          height="32"
-          preserveAspectRatio="xMidYMid meet"
+          height="1.2em"
           role="img"
-          viewBox="0 0 512 512"
-          width="32"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 640 640"
+          width="1.2em"
         >
           <path
-            d="M184 112l144 144l-144 144"
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            fill="currentColor"
           />
         </svg>
       </button>

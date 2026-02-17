@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AvatarGroup > matches snapshot with 4 avatars and specific props (shape: square, size: xs, density: condensed) 1`] = `
+exports[`AvatarGroup > matches snapshot with 3 avatars and specific props (shape: square, size: sm, density: condensed) 1`] = `
 "<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0  [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-8 h-8"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-5" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
     <a
     href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
@@ -16,23 +16,8 @@ exports[`AvatarGroup > matches snapshot with 4 avatars and specific props (shape
                 </div>
             </div>
         </div>
-        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-5" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
-        <a
-        href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
-            <div class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip">
-                <div class="inline-block w-full">
-                    <div>
-                        <!-- @slot Trigger content. -->
-                        <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  mask-none mask-none!"
-                        role="img" aria-label="Avatar Name4">
-                            <div title="Avatar Name4" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm"
-                            style="background-image: url(&quot;https://picsum.photos/seed/4/200/200&quot;);"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </a>
-            <!--v-if-->
+        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  mask-none mask-none!" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
+        <!--v-if-->
 </div>"
 `;
 
@@ -53,28 +38,14 @@ exports[`AvatarGroup > matches snapshot with 7 avatars and specific props (shape
             </div>
         </div>
         </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-6 rounded-full aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
-        <a
-        href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
-            <div class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip">
-                <div class="inline-block w-full">
-                    <div>
-                        <!-- @slot Trigger content. -->
-                        <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined"
-                        role="img" aria-label="Avatar Name4">
-                            <div title="Avatar Name4" class="bg-cover bg-center w-6 rounded-full aspect-square"
-                            style="background-image: url(&quot;https://picsum.photos/seed/4/200/200&quot;);"></div>
-                        </div>
-                    </div>
-                </div>
+        <div
+        class="inline-block" data-id="sds-dropdown">
+            <div class="inline-block w-full">
+                <!-- @slot Trigger content (used to replace trigger button). @binding
+                open, close, isOpen, toggle -->
+                <button class="border-2 border-transparent cursor-pointer mask-none! hover:border-gray-200 focus:border-gray-200 active:bg-gray-200/50 active:border-gray-300 dark:hover:border-gray-800 dark:focus:border-gray-800 dark:active:bg-gray-700 dark:active:border-gray-500 active:shadow-inner bg-gray-100 dark:bg-gray-900 relative flex flex-col justify-center text-center rounded-full text-xs size-6 font-semibold text-gray-700 dark:text-gray-200">+4</button>
             </div>
-            </a>
-            <div class="inline-block" data-id="sds-dropdown">
-                <div class="inline-block w-full">
-                    <!-- @slot Trigger content (used to replace trigger button). @binding
-                    open, close, isOpen, toggle -->
-                    <button class="border-2 border-transparent cursor-pointer mask-none! hover:border-gray-200 focus:border-gray-200 active:bg-gray-200/50 active:border-gray-300 dark:hover:border-gray-800 dark:focus:border-gray-800 dark:active:bg-gray-700 dark:active:border-gray-500 active:shadow-inner bg-gray-100 dark:bg-gray-900 relative flex flex-col justify-center text-center rounded-full text-xs size-6 font-semibold text-gray-700 dark:text-gray-200">+3</button>
-                </div>
-            </div>
+</div>
 </div>"
 `;
 

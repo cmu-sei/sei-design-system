@@ -4,7 +4,7 @@
     :class="rightClasses"
   >
     <template
-      v-for="(item, index) in srcset.slice(0, 4)"
+      v-for="(item, index) in srcset.slice(0, 3)"
     >
       <a
         v-if="item.href"
@@ -59,7 +59,7 @@
       </SdsTooltip>
     </template>
     <SdsDropdown
-      v-if="srcset.length >= 5"
+      v-if="srcset.length >= 4"
     >
       <template #trigger="{ toggle }">
         <button
@@ -80,12 +80,15 @@
           ]"
           @click="toggle()"
         >
-          +{{ srcset.length - 4 }}
+          +{{ srcset.length - 3 }}
         </button>
       </template>
       <SdsDropdownItem
-        v-for="(item, index) in srcset.slice(4)"
+        v-for="(item, index) in srcset.slice(3)"
         :key="index"
+        :href="item.href ?? undefined"
+        :target="item.target ?? undefined"
+        :rel="item.target === '_blank' ? 'noopener noreferrer' : undefined"
       >
         <div class="flex flex-row gap-2">
           <SdsAvatar

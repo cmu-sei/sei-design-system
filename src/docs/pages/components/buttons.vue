@@ -1545,6 +1545,7 @@
       <div class="space-x-4">
         <sds-dropdown
           title="Dropdown"
+          size="sm"
         >
           <sds-dropdown-header>
             <p>Signed in as</p>

@@ -11,7 +11,7 @@
     @click.self="onClose(false)"
   >
     <div
-      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
+      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-5xl xl:max-w-7xl 2xl:px-12 2xl:max-w-screen-2xl"
       @click.self="onClose(false)"
     >
       <div
@@ -60,36 +60,21 @@
             <span
               class="pointer-events-none"
             >{{ topLink.title }}</span>
-            <!-- Below SVG is a caret to indicate Mega Menu opened/closed status -->
+            <!-- Below icon is a caret to indicate Mega Menu opened/closed status -->
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
-            <svg
+            <IconFa7SolidChevronUp
               v-if="topLink.tag !== 'a'"
               :class="{
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
               class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300 pointer-events-none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 550 500"
-              fill="currentColor"
-            >
-              <path
-                d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
-              />
-            </svg>
+            />
             <!-- Show a box with an arrow exiting to the upper right to indicate an external link -->
-            <svg
+            <IconFa7SolidArrowUpRightFromSquare
               v-if="topLink.tag === 'a' && topLink.external"
               class="ml-0 relative inline-block w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                fill="currentColor"
-                d="M14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-9.293 9.293a1 1 0 0 1-1.414-1.414L17.586 5zM3 7a2 2 0 0 1 2-2h5a1 1 0 1 1 0 2H5v12h12v-5a1 1 0 1 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-              />
-            </svg>
+            />
           </slot>
         </component>
       </div>
@@ -126,7 +111,7 @@
         >
           <div
             :class="{
-              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
+              'container mx-auto max-w-full lg:max-w-5xl xl:max-w-7xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
               'p-4 xl:px-8': width === 'auto'
             }"
           >
@@ -165,6 +150,7 @@
         :style="{
           top: `${rootBottom}px`
         }"
+        @click="onClose(false)"
       />
     </transition>
   </nav>

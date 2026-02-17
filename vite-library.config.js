@@ -2,12 +2,29 @@ import { resolve } from 'path'
 import { defineConfig, configDefaults } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
+import Components from 'unplugin-vue-components/vite'
 
 console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    Icons({
+      compiler: 'vue3',
+      autoInstall: true,
+      iconCustomizer(_collection, _icon, props) {
+        props['aria-hidden'] = 'true'
+        props['role'] = 'img'
+      },
+    }),
+    Components({
+      dts: false,
+      resolvers: [ IconsResolver({ prefix: 'icon',
+        enabledCollections: ['fa7-solid', 'fa7-regular']
+      })]
+    }),
     AutoImport({
       dts: true,
       imports: [
@@ -21,6 +38,11 @@ export default defineConfig({
     }),
     vue()
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src')
+    }
+  },
   publicDir: false,
   define: { 'process.env.NODE_ENV': '"production"' },
   build: {
@@ -38,7 +60,9 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue'],
+      external: [
+        'vue'
+      ],
       output: {
         // remove the default exports warning
         exports: 'named',

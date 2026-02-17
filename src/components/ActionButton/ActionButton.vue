@@ -70,6 +70,8 @@
 </template>
 
 <script setup lang="ts">
+import { useButtonClasses, type ButtonKind, type ButtonVariant, type ActionButtonSize } from '@/composables'
+
 defineOptions({
   name: 'SdsActionButton'
 })
@@ -78,11 +80,11 @@ const props = defineProps({
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  kind: { type: String as PropType<Exclude<ButtonKind, 'tertiary'>>, default: 'ghost' },
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
+  variant: { type: String as PropType<ButtonVariant>, default: 'gray' },
   /**
    * Determines the HTML tag use for the component
    */
@@ -104,7 +106,7 @@ const props = defineProps({
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
+  size: { type: String as PropType<ActionButtonSize>, default: 'sm' },
   /**
    * Sets the active state of a button.
    */
@@ -125,65 +127,16 @@ const props = defineProps({
 
 const emit = defineEmits(['click'])
 
-const btnClass = computed(() => {
-  return props.kind ? 'action-btn' : ''
-})
-
-const kindClass = computed(() => {
-  switch (props.kind) {
-    case 'primary':
-      return 'action-btn-primary'
-    case 'secondary':
-      return 'action-btn-secondary'
-    case 'ghost':
-      return 'action-btn-ghost'
-    default:
-      return ''
-  }
-})
-
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'gray':
-      return 'action-btn-gray'
-    case 'red':
-      return 'action-btn-red'
-    case 'blue':
-      return 'action-btn-blue'
-    case 'white':
-      return 'action-btn-white'
-    default:
-      return ''
-  }
-})
-
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'action-btn-lg'
-    case 'sm':
-      return 'action-btn-sm'
-    case 'xs':
-      return 'action-btn-xs'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => {
-  return props.disabled ? 'disabled' : ''
-})
-
-const activeClass = computed(() => {
-  return props.active ? 'active' : ''
-})
-
-const blockClass = computed(() => {
-  return props.block ? 'action-btn-block' : ''
-})
-
-const pendingClass = computed(() => {
-  return props.pending ? 'active pointer-events-none' : ''
+// Use composable for action button classes - single source of truth!
+const { btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass } = useButtonClasses({
+  prefix: 'action-btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  disabled: () => props.disabled,
+  active: () => props.active,
+  block: () => props.block,
+  pending: () => props.pending
 })
 
 const onClick = () => {

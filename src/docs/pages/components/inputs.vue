@@ -156,6 +156,7 @@
             v-model:selected="comboBox1.selected"
             type="taggable-select"
             placeholder="Search"
+            required
             :pending="comboBox1.pending"
             :suggestions="comboBox1.suggestions"
             focus-on-key-press
@@ -175,6 +176,7 @@
               v-model:selected="comboBox2_1.selected"
               placeholder="Search"
               :suggestions="comboBox2_1.suggestions"
+              :required="true"
               size="sm"
               type="select"
               filter-suggestions
@@ -185,13 +187,14 @@
               @enter="comboBox2_1.onEnter"
             />
           </SdsFormGroup>
-          <code class="text-xs">type="select" :multiple="true"</code>
+          <code class="text-xs">type="select" :multiple="true" required</code>
           <SdsComboBox
             v-model="comboBox2_2.modelValue"
             v-model:selected="comboBox2_2.selected"
             placeholder="Search"
             :disabled="false"
             :autofocus="false"
+            required
             :suggestions="comboBox2_2.suggestions"
             :debounce-complete="0"
             size="sm"
@@ -844,7 +847,7 @@ const comboBox6 = reactive({
 })
 
 const formData = reactive({
-  comboBox1: '',
+  comboBox1: ([] as ComboBoxSuggestion[]),
   comboBox2_1: ([] as ComboBoxSuggestion[]),
   comboBox2_2: ([] as ComboBoxSuggestion[]),
   comboBox3: ([] as ComboBoxSuggestion[]),
@@ -854,7 +857,7 @@ const formData = reactive({
 })
 
 watchEffect(() => {
-  formData.comboBox1 = comboBox1.modelValue
+  formData.comboBox1 = comboBox1.selected
   formData.comboBox2_1 = comboBox2_1.selected
   formData.comboBox2_2 = comboBox2_2.selected
   formData.comboBox3 = comboBox3.selected

@@ -31,34 +31,18 @@
             :disabled="disabled"
             @click="toggle()"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 640 640"
-              aria-hidden="true"
-              role="img"
-              fill="currentColor"
-              class="inline-block self-center"
+            <IconFa7SolidUpDown
               :class="[iconSizeClasses]"
-            >
-              <path d="M214.6 73.4C202.1 60.9 181.8 60.9 169.3 73.4L73.3 169.4C60.8 181.9 60.8 202.2 73.3 214.7C85.8 227.2 106.1 227.2 118.6 214.7L160 173.3L160 544C160 561.7 174.3 576 192 576C209.7 576 224 561.7 224 544L224 173.3L265.4 214.7C277.9 227.2 298.2 227.2 310.7 214.7C323.2 202.2 323.2 181.9 310.7 169.4L214.7 73.4zM566.6 470.7C579.1 458.2 579.1 437.9 566.6 425.4C554.1 412.9 533.8 412.9 521.3 425.4L480 466.7L480 96C480 78.3 465.7 64 448 64C430.3 64 416 78.3 416 96L416 466.7L374.6 425.3C362.1 412.8 341.8 412.8 329.3 425.3C316.8 437.8 316.8 458.1 329.3 470.6L425.3 566.6C437.8 579.1 458.1 579.1 470.6 566.6L566.6 470.6z" />
-            </svg>
+              class="inline-block self-center"
+            />
             <!-- @slot Title content of trigger button. -->
             <slot name="title">
               <span v-if="!hideArrow">{{ title }}</span>
             </slot>
-            <svg
+            <IconFa7SolidChevronDown
               v-if="!hideArrow"
-              class="inline-block self-center w-5 h-5 -mr-1"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
+              class="inline-block self-center w-4 h-4"
+            />
           </SdsActionButton>
         </template>
         <p>{{ tooltip }}</p>
@@ -123,28 +107,14 @@
                 class="flex items-center gap-1.5 cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
                 @click.stop
               >
-                <svg 
+                <IconFa7SolidArrowUp
                   v-if="filter.direction.includes('ascending')"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 640 640"
-                  aria-hidden="true"
-                  role="img"
-                  fill="currentColor"
                   class="h-3.5 w-3.5"
-                >
-                  <path d="M342.6 81.4C330.1 68.9 309.8 68.9 297.3 81.4L137.3 241.4C124.8 253.9 124.8 274.2 137.3 286.7C149.8 299.2 170.1 299.2 182.6 286.7L288 181.3L288 552C288 569.7 302.3 584 320 584C337.7 584 352 569.7 352 552L352 181.3L457.4 286.7C469.9 299.2 490.2 299.2 502.7 286.7C515.2 274.2 515.2 253.9 502.7 241.4L342.7 81.4z" />
-                </svg>
-                <svg 
+                />
+                <IconFa7SolidArrowDown
                   v-else
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 640 640"
-                  aria-hidden="true"
-                  role="img"
-                  fill="currentColor"
                   class="h-3.5 w-3.5"
-                >
-                  <path d="M297.4 566.6C309.9 579.1 330.2 579.1 342.7 566.6L502.7 406.6C515.2 394.1 515.2 373.8 502.7 361.3C490.2 348.8 469.9 348.8 457.4 361.3L352 466.7L352 96C352 78.3 337.7 64 320 64C302.3 64 288 78.3 288 96L288 466.7L182.6 361.3C170.1 348.8 149.8 348.8 137.3 361.3C124.8 373.8 124.8 394.1 137.3 406.6L297.3 566.6z" />
-                </svg>
+                />
                 <span>{{ filter.label }}</span>
               </label>
             </li>
@@ -161,6 +131,7 @@ import type { Placement as BasePlacement } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
+import { useZIndex } from '@/composables'
 
 export type SortByDropdownPlacement = BasePlacement;
 
@@ -304,26 +275,7 @@ const buttonSizeClasses = computed(() => {
   }
 })
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
+const { zIndexClass } = useZIndex(() => props.zIndex)
 
 const localModelValue = computed({
   get() {

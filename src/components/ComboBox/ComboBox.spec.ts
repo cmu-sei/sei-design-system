@@ -342,6 +342,16 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('should match its snapshot with required prop assigned', () => {
+    const wrapper = mount(Component, {
+      props: { required: true, suggestions }
+    })
+    const input = wrapper.find('input[type="text"]')
+    expect(input.attributes('required')).toBeDefined()
+    expect(input.element.required).toBe(true)
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it('clears input and selections when clicking clear button', async () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {

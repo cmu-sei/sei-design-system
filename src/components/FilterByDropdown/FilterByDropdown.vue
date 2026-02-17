@@ -27,18 +27,9 @@
         <slot name="title">
           <span>{{ title + (props.showCount ? ` (${selectedCount})` : '') }}</span>
         </slot>
-        <svg
-          class="inline-block self-center w-5 h-5 -mr-1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
+        <IconFa7SolidChevronDown
+          class="inline-block self-center w-4 h-4"
+        />
       </SdsActionButton>
     </template>
     <template #default="{ close }">
@@ -136,6 +127,7 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
+import { useZIndex } from '@/composables'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -209,26 +201,7 @@ const tmpOptions = ref([])
 
 const selectedCount = computed(() => options.value.filter((i: FilterByDropdownOption) => i.selected).length)
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
+const { zIndexClass } = useZIndex(() => props.zIndex)
 
 const options = computed({
   get() {

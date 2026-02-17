@@ -288,3 +288,6 @@ export { default as SdsToaster } from "./Toaster";
 export { default as SdsToggleSwitch } from "./ToggleSwitch";
 export { default as SdsTooltip } from "./Tooltip";
 export { default as SdsTopFiveChart } from "./TopFiveChart";
+
+// Export composables for consumers
+export * from '../composables';

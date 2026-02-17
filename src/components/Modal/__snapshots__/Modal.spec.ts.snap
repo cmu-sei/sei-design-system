@@ -12,10 +12,10 @@ exports[`Modal > modelValue: true, size: 2xl, title: Wonderful SEI modal, hideHe
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
@@ -41,10 +41,10 @@ exports[`Modal > modelValue: true, size: lg, title: Wonderful SEI modal, hideHea
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
@@ -70,10 +70,10 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
@@ -99,10 +99,10 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
                 <div class="flex items-center p-6 pb-0 sr-only">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
@@ -128,10 +128,10 @@ exports[`Modal > modelValue: true, size: sm, title: Wonderful SEI modal, hideHea
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
@@ -157,10 +157,10 @@ exports[`Modal > modelValue: true, size: xl, title: Wonderful SEI modal, hideHea
                 <div class="flex items-center p-6 pb-0">
                     <div id="v-0" class="flex items-center gap-2 text-2xl leading-7 font-light">
                         <!-- @slot Modal title content. -->Wonderful SEI modal</div>
-                    <button aria-label="close" class="inline-block p-0 ml-auto text-3xl text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
-                        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" stroke="currentColor" viewBox="0 0 24 24">
-                            <path d="M6 18L18 6M6 6l12 12"></path>
+                    <button aria-label="close" class="inline-block p-0 ml-auto text-lg text-gray-500 bg-transparent border-0 cursor-pointer hover:text-gray-700 hover:outline-hidden focus:text-gray-700 focus:outline-hidden dark:hover:text-gray-300 dark:focus:text-gray-300 active:text-gray-500 dark:active:text-gray-600">
+                        <svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em"
+                        height="1.2em">
+                            <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
                         </svg>
                     </button>
                 </div>
