@@ -19,9 +19,9 @@ exports[`Modal > modelValue: true, size: 2xl, title: Wonderful SEI modal, hideHe
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
@@ -48,9 +48,9 @@ exports[`Modal > modelValue: true, size: lg, title: Wonderful SEI modal, hideHea
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
@@ -77,9 +77,9 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
@@ -106,9 +106,9 @@ exports[`Modal > modelValue: true, size: md, title: Wonderful SEI modal, hideHea
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
@@ -135,9 +135,9 @@ exports[`Modal > modelValue: true, size: sm, title: Wonderful SEI modal, hideHea
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
@@ -164,9 +164,9 @@ exports[`Modal > modelValue: true, size: xl, title: Wonderful SEI modal, hideHea
                         </svg>
                     </button>
                 </div>
-                <div class="p-6">
+                <main class="p-6" tabindex="-1">
                     <!-- @slot Modal content. -->
-                </div>
+                </main>
                 <!--v-if-->
             </div>
         </div>
