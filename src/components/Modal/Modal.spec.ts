@@ -1,6 +1,6 @@
-import type { Directive } from 'vue'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import Component from './Modal.vue'
 
 /**
@@ -11,7 +11,12 @@ import Component from './Modal.vue'
  */
 
 describe('Modal', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
   afterEach(() => {
+    vi.restoreAllMocks()
     document.body.outerHTML = ''
   })
 
@@ -25,13 +30,6 @@ describe('Modal', () => {
   it('modelValue: true, size: md, title: Wonderful SEI modal, hideHeader: false', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: 'md',
@@ -46,13 +44,6 @@ describe('Modal', () => {
   it('modelValue: true, size: md, title: Wonderful SEI modal, hideHeader: true', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: 'md',
@@ -67,13 +58,6 @@ describe('Modal', () => {
   it('modelValue: true, size: sm, title: Wonderful SEI modal, hideHeader: false, z-index: 40', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: 'sm',
@@ -89,13 +73,6 @@ describe('Modal', () => {
   it('modelValue: true, size: lg, title: Wonderful SEI modal, hideHeader: false, z-index: 30', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: 'lg',
@@ -111,13 +88,6 @@ describe('Modal', () => {
   it('modelValue: true, size: xl, title: Wonderful SEI modal, hideHeader: false, z-index: 20', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: 'xl',
@@ -133,13 +103,6 @@ describe('Modal', () => {
   it('modelValue: true, size: 2xl, title: Wonderful SEI modal, hideHeader: false, z-index: 10', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      directives: {
-        focus: {
-          mounted(el: HTMLElement) {
-            el.focus();
-          },
-        } as Directive
-      },
       props: {
         modelValue: true,
         size: '2xl',
@@ -150,5 +113,53 @@ describe('Modal', () => {
     })
     await wrapper.vm.$nextTick()
     expect(document.body.outerHTML).toMatchSnapshot()
+  })
+
+  it('should focus element with autofocus attribute when modal opens', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        modelValue: true,
+        title: 'Test Modal'
+      },
+      slots: {
+        default: `
+          <button id="not-autofocus">Regular Button</button>
+          <input id="autofocus-input" type="text" autofocus />
+        `
+      }
+    })
+    
+    await nextTick()
+    // Advance timers to complete transition and autofocus logic
+    vi.advanceTimersByTime(300)
+    await nextTick()
+
+    const input = document.getElementById('autofocus-input')
+    expect(document.activeElement).toBe(input)
+  })
+
+  it('should focus first focusable element in main content when no autofocus attribute', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        modelValue: true,
+        title: 'Test Modal'
+      },
+      slots: {
+        default: `
+          <input id="first-input" type="text" />
+          <button id="second-button">Button</button>
+        `
+      }
+    })
+    
+    await nextTick()
+    // Advance timers to complete transition and autofocus logic
+    vi.advanceTimersByTime(300)
+    await nextTick()
+
+    const input = document.getElementById('first-input')
+    expect(document.activeElement).toBe(input)
   })
 })

@@ -90,7 +90,6 @@
                   </slot>
                 </div>
                 <button
-                  v-focus
                   aria-label="close"
                   class="
                     inline-block
@@ -111,10 +110,13 @@
                   <IconFa7SolidXmark />
                 </button>
               </div>
-              <div class="p-6">
+              <main
+                class="p-6"
+                tabindex="-1"
+              >
                 <!-- @slot Modal content. -->
                 <slot />
-              </div>
+              </main>
               <div
                 v-if="hasFooterSlot"
                 class="p-6 pt-0"
@@ -131,7 +133,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Directive } from "vue";
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import { useOverlay } from '@/composables'
 
@@ -139,13 +140,6 @@ const id = useId()
 
 defineOptions({
   name: 'SdsModal',
-  directives: {
-    focus: {
-      mounted(el: HTMLElement) {
-        el.focus();
-      },
-    } as Directive,
-  },
 })
 
 const props = defineProps({
