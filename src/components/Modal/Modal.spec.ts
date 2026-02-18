@@ -137,6 +137,7 @@ describe('Modal', () => {
 
     const input = document.getElementById('autofocus-input')
     expect(document.activeElement).toBe(input)
+    wrapper.unmount()
   })
 
   it('should focus first focusable element in main content when no autofocus attribute', async () => {
@@ -161,5 +162,6 @@ describe('Modal', () => {
 
     const input = document.getElementById('first-input')
     expect(document.activeElement).toBe(input)
+    wrapper.unmount()
   })
 })
