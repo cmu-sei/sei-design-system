@@ -276,6 +276,68 @@ describe('useOverlay', () => {
 
       document.body.removeChild(container)
     })
+
+    it('should prioritize element with autofocus attribute over other focusable elements', async () => {
+      const isVisible = ref(false)
+      const container = document.createElement('div')
+      const main = document.createElement('main')
+      const firstButton = document.createElement('button')
+      firstButton.textContent = 'First'
+      firstButton.setAttribute('tabindex', '0')
+      const autofocusInput = document.createElement('input')
+      autofocusInput.setAttribute('autofocus', '')
+      autofocusInput.setAttribute('type', 'text')
+      main.appendChild(firstButton)
+      main.appendChild(autofocusInput)
+      container.appendChild(main)
+      document.body.appendChild(container)
+      containerRef.value = container
+
+      useOverlay(isVisible, containerRef, {
+        autoFocus: true,
+        transitionDuration: 100
+      })
+
+      isVisible.value = true
+      await nextTick()
+      vi.advanceTimersByTime(100)
+
+      // Should focus the autofocus input, not the first button
+      expect(document.activeElement).toBe(autofocusInput)
+
+      document.body.removeChild(container)
+    })
+
+    it('should skip disabled element with autofocus attribute', async () => {
+      const isVisible = ref(false)
+      const container = document.createElement('div')
+      const main = document.createElement('main')
+      const disabledInput = document.createElement('input')
+      disabledInput.setAttribute('autofocus', '')
+      disabledInput.setAttribute('disabled', '')
+      const enabledButton = document.createElement('button')
+      enabledButton.textContent = 'Click'
+      enabledButton.setAttribute('tabindex', '0')
+      main.appendChild(disabledInput)
+      main.appendChild(enabledButton)
+      container.appendChild(main)
+      document.body.appendChild(container)
+      containerRef.value = container
+
+      useOverlay(isVisible, containerRef, {
+        autoFocus: true,
+        transitionDuration: 100
+      })
+
+      isVisible.value = true
+      await nextTick()
+      vi.advanceTimersByTime(100)
+
+      // Should focus the enabled button, not the disabled autofocus input
+      expect(document.activeElement).toBe(enabledButton)
+
+      document.body.removeChild(container)
+    })
   })
 
   describe('Restore Focus', () => {

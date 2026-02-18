@@ -178,6 +178,13 @@ export function useOverlay(
           setTimeout(() => {
             if (!containerRef.value) return
 
+            // Prioritize element with autofocus attribute first
+            const autofocusElement = containerRef.value.querySelector<HTMLElement>('[autofocus]')
+            if (autofocusElement && !autofocusElement.hasAttribute('disabled')) {
+              autofocusElement.focus()
+              return
+            }
+
             // Try to find first focusable element in main content area
             const mainContent = containerRef.value.querySelector('main')
             if (mainContent) {
