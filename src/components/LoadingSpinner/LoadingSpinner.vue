@@ -32,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+import { useVariantClasses } from '@/composables'
 defineOptions({
   name: 'SdsLoadingSpinner'
 })
@@ -47,16 +48,9 @@ const props = defineProps({
   label: { type: String, default: null }
 })
 
-const sizeClass =  computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'h-20 w-20'
-    case 'sm': 
-      return 'h-4 w-4'
-    case 'auto':
-      return ''
-    default:
-      return 'h-12 w-12'
-  }
-})
+const sizeClass = useVariantClasses(() => props.size, {
+  lg: 'h-20 w-20',
+  sm: 'h-4 w-4',
+  auto: ''
+}, 'h-12 w-12')
 </script>

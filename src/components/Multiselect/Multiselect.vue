@@ -4,11 +4,9 @@
     data-id="sds-multiselect"
     class="sds-multiselect"
     :class="{
-      valid,
-      invalid,
+      ...validationClasses,
       open: showDropdown,
       active,
-      disabled,
       up: dropUp,
       canSearch,
       hideCaret,
@@ -231,7 +229,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from "../../helpers/debounce";
+import { useDebounce, useEventListener, useFormField, formFieldProps } from '@/composables'
 
 export interface MultiselectOption {
   [id: string | number]: unknown
@@ -296,20 +294,6 @@ const props = defineProps({
    * Determines whether more than one option can be selected.
    */
   multiple: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Determines the required state of the component.
-   */
-  required: {
     type: Boolean,
     default: false,
   },
@@ -482,20 +466,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  /**
-   * Determines if the multiselect shows a valid state
-   */
-  valid: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Determines if the multiselect shows an invalid state
-   */
-  invalid: {
-    type: Boolean,
-    default: false
-  }
+  ...formFieldProps,
 })
 
 /**
@@ -505,7 +476,8 @@ const model = defineModel<string>({ type: String, default: '' })
 
 const emit = defineEmits(['update:modelValue', 'update-selected', 'update-options', 'open', 'close', 'focus'])
 
-const debouncePositionDropdown = ref<null | EventListener>(null)
+const { validationClasses } = useFormField(props)
+
 const root = ref()
 const input = ref()
 const fauxInput = ref()
@@ -591,9 +563,8 @@ const isReadonlyInput = computed(() => {
 })
 
 const isCleanInput = computed(() => {
-  // TODO: Fix this linting issue
-  // eslint-disable-next-line no-constant-binary-expression
-  return !trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) !== null;
+  // Returns true if input contains no HTML tags or entities
+  return trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) === null;
 })
 
 const trimmedValue = computed(() => {
@@ -654,19 +625,6 @@ onMounted(() => {
       active.value = true;
     }
   }, 0);
-  document.addEventListener("click", handleOutsideClick);
-  document.addEventListener("keyup", handleOutsideKeyUp);
-
-  debouncePositionDropdown.value = debounce(positionDropdown, 150);
-  document.addEventListener("scroll", debouncePositionDropdown.value);
-  window.addEventListener("resize", debouncePositionDropdown.value);
-})
-
-onUnmounted(() => {
-  document.removeEventListener("click", handleOutsideClick);
-  document.removeEventListener("keyup", handleOutsideKeyUp);
-  document.removeEventListener("scroll", (debouncePositionDropdown.value as EventListener));
-  window.removeEventListener("resize", (debouncePositionDropdown.value as EventListener));
 })
 
 const selectText = () => {
@@ -1045,6 +1003,14 @@ const handleRequired = () => {
   (input.value as HTMLInputElement).focus();
   if (!active.value) active.value = true;
 }
+
+// Setup event listeners with automatic cleanup
+const debouncePositionDropdown = useDebounce(positionDropdown, 150);
+
+useEventListener(document, "click", handleOutsideClick)
+useEventListener(document, "keyup", handleOutsideKeyUp)
+useEventListener(document, "scroll", debouncePositionDropdown)
+useEventListener(window, "resize", debouncePositionDropdown)
 </script>
 
 <style lang="postcss" scoped>

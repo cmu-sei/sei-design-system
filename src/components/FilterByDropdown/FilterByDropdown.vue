@@ -254,13 +254,11 @@ const cancelSelections = () => {
   resetTmpOptions();
 }
 
-const handleInputFocus = () => {
+const handleInputFocus = async () => {
   if (!props.enableFilter) return
-  const interval = setInterval(() => {
-    if (typeof filterTextInput.value === 'undefined') return
+  setTimeout(() => {
     filterTextInput.value?.focus()
-    clearInterval(interval)
-  }, 100)
+  }, 0)
 }
 
 const resetTmpOptions = () => {

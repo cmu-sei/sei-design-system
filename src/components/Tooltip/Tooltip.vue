@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
-import { useZIndex } from '@/composables'
+import { useZIndex, useVariantClasses } from '@/composables'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type TooltipPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
@@ -140,40 +140,33 @@ const props = defineProps({
 
 const { zIndexClass } = useZIndex(() => props.zIndex)
 
-const variantClass = computed(() => {
-  switch (props.type) {
-    case 'light':
-      return 'bg-gray-25 text-gray-900 border-gray-200'
-    case 'dark':
-    default:
-      return 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
-  }
-})
+const variantClass = useVariantClasses(
+  () => props.type,
+  {
+    light: 'bg-gray-25 text-gray-900 border-gray-200',
+    dark: 'bg-black text-gray-50 border-gray-800 dark:shadow-gray-900'
+  },
+  'dark'
+)
 
-const variantArrowClass = computed(() => {
-  switch (props.type) {
-    case 'light':
-      return 'bg-gray-25 border-gray-200'
-    case 'dark':
-    default:
-      return 'bg-black border-gray-800'
-  }
-})
+const variantArrowClass = useVariantClasses(
+  () => props.type,
+  {
+    light: 'bg-gray-25 border-gray-200',
+    dark: 'bg-black border-gray-800'
+  },
+  'dark'
+)
 
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'w-32'
-    case 'md':
-      return 'w-48'
-    case 'lg':
-      return 'w-56'
-    case 'xl':
-      return 'w-72'
-    case 'auto':
-      return 'w-auto'
-    default:
-      return 'w-32'
-  }
-})
+const sizeClass = useVariantClasses(
+  () => props.size,
+  {
+    sm: 'w-32',
+    md: 'w-48',
+    lg: 'w-56',
+    xl: 'w-72',
+    auto: 'w-auto'
+  },
+  'sm'
+)
 </script>

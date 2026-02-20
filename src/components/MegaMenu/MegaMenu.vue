@@ -157,7 +157,8 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import { onKeyStroke, useElementBounding, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import { useClickOutside, useResizeObserver } from '@/composables'
 
 /* Top Link navigation label type interface */
 export type MegaMenuItem<T = Record<string, unknown>> = {
@@ -288,7 +289,7 @@ const onClose = (focusTopLink = true) => {
  * Close the mega menu when clicking somewhere on the document
  * outside the mega menu component
  **/
-onClickOutside(root, () => {
+useClickOutside(root, () => {
   onClose(false)
 })
 

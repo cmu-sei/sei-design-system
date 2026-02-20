@@ -109,6 +109,7 @@
 
 <script setup lang="ts">
 import pxToRem from '../../helpers/pxToRem'
+import { useVariantClasses } from '@/composables'
 
 export interface TabItem {
   count?: number
@@ -239,51 +240,28 @@ const activeTabCalcPosition = computed(() => {
   return { left, width }
 })
 
-const tabIndicatorClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'tab-indicator-blue'
-    case 'gray':
-      return 'tab-indicator-gray'
-    case 'red':
-    default:
-      return 'tab-indicator-red'
-  }
-})
+const tabIndicatorClass = useVariantClasses(() => props.variant, {
+  blue: 'tab-indicator-blue',
+  gray: 'tab-indicator-gray',
+  red: 'tab-indicator-red'
+}, 'tab-indicator-red')
 
-const textSizeClass = computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'tab-lg'
-    case 'sm':
-    default:
-      return 'tab-sm'
-  }
-})
+const textSizeClass = useVariantClasses(() => props.size, {
+  lg: 'tab-lg',
+  sm: 'tab-sm'
+}, 'tab-sm')
 
-const typeClass = computed(() => {
-  switch (props.type) {
-    case 'block':
-      return 'tab-block'
-    case 'underline':
-      return 'tab-underline'
-    case 'folder':
-    default:
-      return 'tab-folder'
-  }
-})
+const typeClass = useVariantClasses(() => props.type, {
+  block: 'tab-block',
+  underline: 'tab-underline',
+  folder: 'tab-folder'
+}, 'tab-folder')
 
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'tab-blue'
-    case 'gray':
-      return 'tab-gray'
-    case 'red':
-    default:
-      return 'tab-red'
-  }
-})
+const variantClass = useVariantClasses(() => props.variant, {
+  blue: 'tab-blue',
+  gray: 'tab-gray',
+  red: 'tab-red'
+}, 'tab-red')
 
 const willChangeTabStateDelay = async (tab: TabItem, fn: GenericFunctionType) => {
   if (typeof fn !== 'function') return

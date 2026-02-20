@@ -131,7 +131,7 @@ import type { Placement as BasePlacement } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
-import { useZIndex } from '@/composables'
+import { useZIndex, useVariantClasses } from '@/composables'
 
 export type SortByDropdownPlacement = BasePlacement;
 
@@ -248,32 +248,19 @@ const selectedDirection = ref<SortByDropdownType | null>(null)
 // Flag to prevent duplicate emissions during internal state updates
 const isInternalUpdate = ref(false)
 
-const iconSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-    case 'sm':
-      return 'w-4 h-4'
-    case 'md':
-    case 'lg':
-    default:
-      return 'w-4.5 h-4.5'
-  }
-})
+const iconSizeClasses = useVariantClasses(() => props.size, {
+  xs: 'w-4 h-4',
+  sm: 'w-4 h-4',
+  md: 'w-4.5 h-4.5',
+  lg: 'w-4.5 h-4.5'
+}, 'w-4.5 h-4.5')
 
-const buttonSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-      return 'h-6.5 w-6.5'
-    case 'sm':
-      return 'h-7.5 w-7.5'
-    case 'md':
-      return 'h-8.5 w-8.5'
-    case 'lg':
-      return 'h-10.5 w-10.5'
-    default:
-      return 'h-8.5 w-8.5'
-  }
-})
+const buttonSizeClasses = useVariantClasses(() => props.size, {
+  xs: 'h-6.5 w-6.5',
+  sm: 'h-7.5 w-7.5',
+  md: 'h-8.5 w-8.5',
+  lg: 'h-10.5 w-10.5'
+}, 'h-8.5 w-8.5')
 
 const { zIndexClass } = useZIndex(() => props.zIndex)
 

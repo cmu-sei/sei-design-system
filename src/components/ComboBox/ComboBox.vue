@@ -6,11 +6,13 @@
   >
     <div
       class="input-group flex flex-col"
-      :class="{
-        disabled,
-        'input-group-sm': size === 'sm',
-        'bg-gray-50 dark:bg-gray-950': readonly
-      }"
+      :class="[
+        validationClasses,
+        {
+          'input-group-sm': size === 'sm',
+          'bg-gray-50 dark:bg-gray-950': readonly
+        }
+      ]"
     >
       <div
         v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
@@ -555,6 +557,7 @@
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
+import { useFormField, formFieldProps } from '@/composables'
 
 export type ComboBoxSuggestionObject = { [id: string | number]: unknown }
 export type ComboBoxSuggestion = ComboBoxSuggestionObject | string
@@ -574,10 +577,6 @@ const props = defineProps({
    * The debounce period before complete event is emitted.
    */
   debounceComplete: { type: Number, default: 250 },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
@@ -640,14 +639,6 @@ const props = defineProps({
    */
   placeholder: { type: String, default: undefined },
   /**
-   * Makes the input read-only, preventing user input but still allowing focus and selection.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Determines if the input is required.
-   */
-  required: { type: Boolean, default: false },
-  /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
   size: { type: String as () => 'sm' | 'md', default: undefined },
@@ -658,13 +649,16 @@ const props = defineProps({
   /**
    * Use combobox as text "autosuggest", selectable text, or taggable-selection.
    */
-  type: { type: String as () => 'text' | 'select' | 'taggable-select', default: 'text' }
+  type: { type: String as () => 'text' | 'select' | 'taggable-select', default: 'text' },
+  ...formFieldProps,
 })
 
 const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const root = ref(), scrollArea = ref(), inputField = ref(), selectAllRef = ref(), dropdownOption = ref()
 const isReadonly = ref(props.readonly)
+
+const { validationClasses } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)

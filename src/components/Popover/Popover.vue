@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import { useZIndex, useVariantClasses } from '@/composables'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type PopoverPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
@@ -132,39 +133,16 @@ const props = defineProps({
   willClose: { type: Function as PropType<GenericFunctionType>, default: null }
 })
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
+const { zIndexClass } = useZIndex(() => props.zIndex)
 
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'w-64'
-    case 'md':
-      return 'w-80'
-    case 'lg':
-      return 'w-96'
-    case 'auto':
-      return 'min-w-96 w-auto'
-    default:
-      return 'w-64'
-  }
-})
+const sizeClass = useVariantClasses(
+  () => props.size,
+  {
+    sm: 'w-64',
+    md: 'w-80',
+    lg: 'w-96',
+    auto: 'min-w-96 w-auto'
+  },
+  'sm'
+)
 </script>

@@ -7,7 +7,7 @@
       :id="id"
       v-model="text"
       class="form-control"
-      :class="{ valid, invalid, 'resize-none': !resize }"
+      :class="{ ...validationClasses, 'resize-none': !resize }"
       :rows="rows"
       :maxlength="maxlength"
       :minlength="minlength"
@@ -29,12 +29,13 @@
 
 <script setup lang="ts">
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
+import { useFormField, formFieldProps } from '@/composables'
 
 defineOptions({
   name: 'SdsTextarea'
 })
 
-defineProps({
+const props = defineProps({
   /**
    * Determine whether to display the character counter or not.
    */
@@ -64,29 +65,10 @@ defineProps({
    */
   autofocus: { type: Boolean, default: false },
   /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines the required state of the component.
-   */
-  required: { type: Boolean, default: false },
-  /**
-   * Determines the read-only state of the component.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Gives the component a valid/success styling.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Gives the component an invalid/danger styling.
-   */
-  invalid: { type: Boolean, default: false },
-  /**
    * Determines whether or not the component can be resized
    */
-  resize: { type: Boolean, default: false}
+  resize: { type: Boolean, default: false},
+  ...formFieldProps,
 })
 
 /**
@@ -95,6 +77,8 @@ defineProps({
 const model = defineModel<string>({ type: String, default: '' })
 
 const emit = defineEmits(['update:modelValue'])
+
+const { validationClasses } = useFormField(props)
 
 const text = computed({
   get() {

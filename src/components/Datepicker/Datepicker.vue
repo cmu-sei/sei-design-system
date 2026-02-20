@@ -20,10 +20,7 @@
           class="w-full input-group"
           :class="{
             'input-group-sm': size === 'sm',
-            disabled,
-            readonly,
-            valid,
-            invalid,
+            ...validationClasses
           }"
         >
           <button
@@ -156,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFormField, formFieldProps } from '@/composables'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsCalendar from '../Calendar/Calendar.vue'
 
@@ -214,31 +212,12 @@ const props = defineProps({
    */
   min: { type: Date, default: null },
   /**
-   * Determines if the component is required.
-   */
-  required: { type: Boolean, default: false },
-  /**
-   * Sets a valid styling if true.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Sets an invalid styling if true.
-   */
-  invalid: { type: Boolean, default: false },
-  /**
-   * Determines if the component is readonly.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Determines if the component is disabled.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
    * Determines whether to use the current time when selecting a date that is equal to today.
    *
    * If false, this sets the time to the start of the date.
    */
-  useCurrentTimeForToday: { type: Boolean, default: false }
+  useCurrentTimeForToday: { type: Boolean, default: false },
+  ...formFieldProps,
 })
 
 /**
@@ -259,6 +238,8 @@ const model = defineModel<CalendarRange | CalendarDate>({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const { validationClasses } = useFormField(props)
 
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()

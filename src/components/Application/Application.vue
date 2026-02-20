@@ -820,7 +820,7 @@
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
-import { useFocusTrap } from '@/composables'
+import { useFocusTrap, useEventListener } from '@/composables'
 
 export interface ApplicationSidebarNavItem {
   id: number | string
@@ -983,18 +983,17 @@ watch(collapsed, (value) => {
   }
 })
 
-onMounted(() => {
-  // Setup collapse functionality
-  document.addEventListener("keyup", handleDocumentKeyUp);
-})
+const handleDocumentKeyUp = ($event: KeyboardEvent) => {
+  if (!$event.target) return
+  const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
+  if (tagName === "textarea") return;
+  if (tagName === "input") return;
+  // toggle collapse on "[" key
+  if ($event.key === "[") toggleCollapse();
+}
 
-onUnmounted(() => {
-  // enable scrolling
-  document.documentElement.classList.remove("application-internal-prevent-scroll");
-
-  // Destroy collapse functionality
-  document.removeEventListener("keyup", handleDocumentKeyUp);
-})
+// Setup collapse functionality with automatic cleanup
+useEventListener(document, "keyup", handleDocumentKeyUp)
 
 const itemsGroupBadgeCount = (item: ApplicationSidebarNavItem) => {
   if (!item.items) { return null }
@@ -1047,15 +1046,6 @@ const toggleCollapse = () => {
   } else {
     collapsed.value = !collapsed.value;
   }
-}
-
-const handleDocumentKeyUp = ($event: KeyboardEvent) => {
-  if (!$event.target) return
-  const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
-  if (tagName === "textarea") return;
-  if (tagName === "input") return;
-  // toggle collapse on "[" key
-  if ($event.key === "[") toggleCollapse();
 }
 
 const closeMobileMenu = () => {

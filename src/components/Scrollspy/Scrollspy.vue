@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { throttleAndDebounce } from '../../helpers/throttleAndDebounce'
+import { useThrottleAndDebounce, useEventListener } from '@/composables'
 
 defineOptions({
   name: 'SdsScrollspy'
@@ -64,9 +64,10 @@ const props = defineProps({
   inactiveClass: { type: String, default: '' }
 })
 
-const parentEl = computed<HTMLElement | null>(() => {
-  if (typeof document === 'undefined') return null
-  return props.parent ? document.querySelector(props.parent) : null
+const parentEl = computed<HTMLElement | undefined>(() => {
+  if (typeof document === 'undefined') return undefined
+  const element = props.parent ? document.querySelector(props.parent) : null
+  return element as HTMLElement | undefined
 })
 
 const activeId = ref()
@@ -155,24 +156,23 @@ const setActiveItem = () => {
   }
 }
 
-const onScroll = throttleAndDebounce(setActiveItem, 100)
+const onScroll = useThrottleAndDebounce(setActiveItem, 100)
 
+// Reactive scroll target that switches between parent element and window
+const scrollTarget = ref<HTMLElement | undefined>(undefined)
+
+// Update the scroll target when component mounts and evaluate parent element
 onMounted(() => {
+  scrollTarget.value = parentEl.value
   requestAnimationFrame(setActiveItem)
-  if (parentEl.value) {
-    parentEl.value.addEventListener('scroll', onScroll)
-  } else {
-    window.addEventListener('scroll', onScroll)
-  }
 })
 
-onUnmounted(() => {
-  if (parentEl.value) {
-    parentEl.value.removeEventListener('scroll', onScroll)
-  } else {
-    window.removeEventListener('scroll', onScroll)
-  }
-})
+// Set up listener on scrollTarget if it exists, otherwise on window
+if (props.parent) {
+  useEventListener(scrollTarget, 'scroll', onScroll)
+} else {
+  useEventListener(window, 'scroll', onScroll)
+}
 
 const scrollToIdTarget = (id: string, event: Event) => {
   if (!parentEl.value) return

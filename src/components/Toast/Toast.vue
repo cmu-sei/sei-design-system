@@ -4,8 +4,8 @@
     role="alert"
     aria-live="polite"
     class="w-full max-w-sm bg-white rounded-theme-sm shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
-    @mouseenter="clearTimer"
-    @mouseleave="setTimer"
+    @mouseenter="autoHideTimer.clear"
+    @mouseleave="autoHideTimer.reset"
   >
     <div class="overflow-hidden rounded-theme-sm ring-1 ring-black/5 dark:ring-gray-700">
       <div class="p-4">
@@ -58,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import { useTimedAction } from '@/composables'
 defineOptions({
   name: 'SdsToast'
 })
@@ -91,20 +92,9 @@ const props = defineProps({
 
 const emit = defineEmits(['remove'])
 
-const timer = ref<null | ReturnType<typeof setTimeout>>()
-
 const localType = computed(() => {
   return props.type
 })
-
-onMounted(() => {
-  setTimer();
-})
-
-onUnmounted(() => {
-  clearTimer();
-})
-
 
 const removeToast = () => {
   /**
@@ -115,16 +105,9 @@ const removeToast = () => {
   emit("remove", props.id);
 }
 
-const clearTimer = () => {
-  if (!timer.value) return;
-  clearTimeout(timer.value);
-}
-
-const setTimer = () => {
-  clearTimer();
-  if (props.noAutoHide) return;
-  timer.value = setTimeout(() => {
-    removeToast();
-  }, props.autoHideDelay);
-}
+const autoHideTimer = useTimedAction(removeToast, {
+  delay: computed(() => props.autoHideDelay),
+  enabled: computed(() => !props.noAutoHide),
+  autoStart: true
+})
 </script>

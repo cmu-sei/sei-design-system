@@ -49,7 +49,8 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside, onKeyStroke } from '@vueuse/core'
+import { onKeyStroke } from '@vueuse/core'
+import { useClickOutside } from '@/composables'
 import {
   autoUpdate,
   autoPlacement,
@@ -350,7 +351,7 @@ emitter.on("floating-ui-toggle", (value) => {
   }
 })
 
-onClickOutside(popperRef, (event: Event) => {
+useClickOutside(popperRef, (event: Event) => {
   if (triggerRef.value && event.target && (triggerRef.value as HTMLElement)?.contains(event.target as HTMLElement)) return
   if (!open.value) return
   onClose()
@@ -360,6 +361,13 @@ onKeyStroke('Escape', (e) => {
   if (!open.value) return
   e.preventDefault()
   onClose()
+})
+
+onBeforeUnmount(() => {
+  if (openStateTimeout.value) {
+    clearTimeout(openStateTimeout.value)
+    openStateTimeout.value = null
+  }
 })
 
 /**

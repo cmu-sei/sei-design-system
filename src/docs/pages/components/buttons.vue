@@ -1731,6 +1731,7 @@
         <sds-filter-by-dropdown
           v-model="filterBy.options"
           enable-sort-options
+          enable-filter
           show-count
           @update:model-value="filtered"
         />

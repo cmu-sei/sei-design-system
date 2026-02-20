@@ -135,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core';
+import { useClickOutside } from '@/composables'
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
 import ActionButton from '../ActionButton/ActionButton.vue';
@@ -229,7 +229,7 @@ watch(open, (isOpen) => {
   }
 })
 
-onClickOutside(modal, () => {
+useClickOutside(modal, () => {
   if (open.value) {
     open.value = false
   }

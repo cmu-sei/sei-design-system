@@ -8,8 +8,7 @@
       v-model="text"
       class="form-control"
       :class="{
-        valid,
-        invalid,
+        ...validationClasses,
         'form-control-sm': size === 'sm'
       }"
       :type="type"
@@ -32,12 +31,13 @@
 
 <script setup lang="ts">
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
+import { useFormField, formFieldProps } from '@/composables'
 
 defineOptions({
   name: 'SdsInput'
 })
 
-defineProps({
+const props = defineProps({
   /**
    * Determines whether to display the character counter or not.
    */
@@ -67,29 +67,10 @@ defineProps({
    */
   autofocus: { type: Boolean, default: false },
   /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines whether the input is required or not.
-   */
-  required: { type: Boolean, default: false },
-  /**
    * Determines the regex pattern used for validation.
    */
   pattern: { type: String, default: undefined },
-  /**
-   * Determines whether the input is read-only or not.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Sets a valid styling if true.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Sets an invalid styling if true.
-   */
-  invalid: { type: Boolean, default: false },
+  ...formFieldProps,
 })
 
 /**
@@ -98,6 +79,8 @@ defineProps({
 const model = defineModel({ type: String, default: '' })
 
 const emit = defineEmits(['update:modelValue'])
+
+const { validationClasses } = useFormField(props)
 
 const text = computed({
   get() {

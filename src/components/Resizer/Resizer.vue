@@ -77,6 +77,7 @@
 
 <script setup lang="ts">
 import { ref, StyleValue } from 'vue'
+import { useEventListener } from '@/composables'
 
 defineOptions({
   name: 'SdsResizer'
@@ -443,18 +444,18 @@ const setDefaults = () => {
 
 onMounted(() => {
   setDefaults()
-  // Setup mouse handler events on the document
-  document?.addEventListener("mousemove", handleMove);
-  document?.addEventListener("touchmove", handleMove);
-  document?.addEventListener("mouseup", handleUp);
-  document?.addEventListener("touchend", handleUp);
 })
 
-onUnmounted(() => {
-  // Clean up mouse handlers on unmount
-  document?.removeEventListener("mousemove", handleMove);
-  document?.removeEventListener("touchmove", handleMove);
-  document?.removeEventListener("mouseup", handleUp);
-  document?.removeEventListener("touchend", handleUp);
+onBeforeUnmount(() => {
+  if (doubleClick.value.timer) {
+    clearTimeout(doubleClick.value.timer)
+    doubleClick.value.timer = undefined
+  }
 })
+
+// Setup mouse handler events with automatic cleanup
+useEventListener(document, "mousemove", handleMove)
+useEventListener(document, "touchmove", handleMove)
+useEventListener(document, "mouseup", handleUp)
+useEventListener(document, "touchend", handleUp)
 </script>

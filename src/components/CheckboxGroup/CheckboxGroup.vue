@@ -19,11 +19,12 @@
         v-model="localModelValue"
         type="checkbox"
         class="relative top-1"
-        :class="{ valid, invalid }"
+        :class="validationClasses"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
         :required="required && localModelValue.length < 1"
         :disabled="disabled"
+        :readonly="readonly"
         @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
@@ -35,7 +36,7 @@
         <label
           :for="`${root?.id}__option_${index}`"
           :class="{
-            'opacity-50 pointer-events-none select-none': disabled
+            'opacity-50 pointer-events-none select-none': disabled || readonly
           }"
         ><span>{{ option[labelKey] }}</span></label>
       </slot>
@@ -44,6 +45,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFormField, formFieldProps } from '@/composables'
+
 export type CheckboxGroupOptionValue = string | number | boolean
 
 export interface CheckboxGroupOption<T> {
@@ -56,7 +59,7 @@ defineOptions({
   name: "SdsCheckboxGroup"
 })
 
-defineProps({
+const props = defineProps({
   /**
    * The name of the checkbox form field.
    */
@@ -65,14 +68,6 @@ defineProps({
    * An array of options for the checkbox group.
    */
   options: { type: Array as PropType<CheckboxGroupOption<CheckboxGroupOptionValue>[]>, default: () => [] },
-  /**
-   * Determines whether the checkbox group is disabled or not.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines whether the checkbox group is required or not.
-   */
-  required: { type: Boolean, default: false },
   /**
    * Determines whether the options are stacked vertically or horizontally.
    */
@@ -85,14 +80,7 @@ defineProps({
    * Determines the value key used for options
    */
   valueKey: { type: String, default: 'value' },
-  /**
-   * Sets a valid styling if true.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Sets an invalid styling if true.
-   */
-  invalid: { type: Boolean, default: false }
+  ...formFieldProps,
 })
 
 /**
@@ -101,6 +89,8 @@ defineProps({
 const model = defineModel<CheckboxGroupOptionValue[]>({ type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] })
 
 const emit = defineEmits(['update:modelValue', 'change'])
+
+const { validationClasses } = useFormField(props)
 
 const root = ref()
 

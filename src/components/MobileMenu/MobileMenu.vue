@@ -82,7 +82,7 @@ export default {
 
 <script setup lang="ts">
 import SdsPanel from '../Panel/Panel.vue';
-import { computed, ref, watch, onUnmounted, PropType } from "vue";
+import { computed, ref, PropType } from "vue";
 
 /**
  * Default Tailwind classes for transitioning panels
@@ -186,51 +186,9 @@ const showPanel = computed({
   }
 });
 
-onUnmounted(() => {
-  removeDomChanges();
-})
-
-/* Helper function for exiting mobile menu on "Esc" */
-const makeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.add("sds-overlay-prevent-scroll");
-  setTimeout(() => {
-    document.addEventListener("keyup", handleEscKey);
-  }, 0);
-}
-
-/* Helper function for exiting mobile menu on "Esc" */
-const removeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.remove("sds-overlay-prevent-scroll");
-  document.removeEventListener("keyup", handleEscKey);
-}
-
-const close = () => {
-  showPanel.value = false;
-}
-
-/* Helper function for exiting mobile menu on "Esc" */
-const handleEscKey = (e: KeyboardEvent) => {
-  if (e.key === "Escape") {
-    close();
-  }
-}
-
-watch(showPanel, (value) => {
-  showPanel.value = (value as boolean);
-  if (typeof document === "undefined") return;
-  if (value) {
-    makeDomChanges();
-  } else {
-    removeDomChanges();
-  }
-}, { immediate: true })
 
 defineExpose({
   activePanel,
-  close,
-  handleEscKey,
   mobileMenus,
   navigate,
   panel,
