@@ -176,24 +176,30 @@ export type MegaMenuItem<T = Record<string, unknown>> = {
   [key: string]: unknown
 }
 
-defineOptions({
-  name: 'SdsMegaMenu',
-})
-
-const props = defineProps({
+interface MegaMenuProps {
   /**
    * Overall look and feel of the component (two options)
    */
-  type: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
+  type?: 'block' | 'underline';
   /**
    * Sets the panel width. Full width stretches to fill the width of the screen.
    * Auto width will fit the width of the content inside the panel.
    */
-  width: { type: String as PropType<'auto' | 'full'>, default: 'full' },
+  width?: 'auto' | 'full';
   /**
    * Sets the aria-label for the component
    */
-  ariaLabel: { type: String, default: undefined }
+  ariaLabel?: string;
+}
+
+defineOptions({
+  name: 'SdsMegaMenu',
+})
+
+const props = withDefaults(defineProps<MegaMenuProps>(), {
+  type: 'underline',
+  width: 'full',
+  ariaLabel: undefined
 })
 
 /**
@@ -224,34 +230,7 @@ const props = defineProps({
  *
  * ```
  */
-const model = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
-
-const emits = defineEmits(
-  [
-    /**
-     * When data supplied to the Mega Menu component
-     * changes, emit an event. This lets developers
-     * trigger other actions off the Mega Menu's modelValue
-     * when it changes.
-     */
-    'update:modelValue'
-  ]
-)
-
-const topLinks = computed({
-  /* Get SdsMegaMenu modelValue property */
-  get(): MegaMenuItem[] {
-    return model.value
-  },
-  /* Set SdsMegaMenu modelValue property */
-  set(value: MegaMenuItem[]) {
-    /**
-     * Emmitted when the v-model (Mega Menu's data source)
-     * has changed.
-     */
-    emits('update:modelValue', value)
-  }
-})
+const topLinks = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
 
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
@@ -261,7 +240,7 @@ const menu = ref()
 const panel = ref()
 
 const selectedTopLink = computed(() => {
-  const selected = model.value.find(i => i.selected)
+  const selected = topLinks.value.find(i => i.selected)
   return selected || null
 })
 const focusableList = ref<HTMLElement[]>([])

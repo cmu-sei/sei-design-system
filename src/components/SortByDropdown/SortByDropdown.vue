@@ -179,55 +179,69 @@ const ORDER_BY_TYPES = readonly(ref({
   }
 }))
 
+interface SortByDropdownProps {
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind?: 'primary' | 'secondary' | 'ghost';
+  /**
+   * Determines the color of the component.
+   */
+  variant?: 'gray' | 'red' | 'blue' | 'white';
+  /**
+   * Determines the size.
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  /**
+   * The z-index for the popover.
+   */
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  /**
+   * The title for the toggle button.
+   */
+  title?: string;
+  /**
+   * Determines if the arrow should display or not.
+   */
+  hideArrow?: boolean;
+  /**
+   * Determines the placement of the dropdown on the screen.
+   */
+  placement?: SortByDropdownPlacement;
+  /**
+   * Determines if the dropdown is disabled
+   */
+  disabled?: boolean;
+  /**
+   * The name of the radio form field.
+   */
+  name?: string | null;
+  /**
+   * An array of options for the dropdown.
+   */
+  options?: SortByDropdownOption[];
+  /**
+   * The tooltip text for the sort button.
+   */
+  tooltip?: string;
+}
+
 defineOptions({
   name: "SdsSortByDropdown"
 })
 
-const props = defineProps({
-  /**
-   * Determines the purpose and particular function of the component.
-   */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
-  /**
-   * Determines the color of the component.
-   */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
-  /**
-   * Determines the size.
-   */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
-  /**
-   * The z-index for the popover.
-   */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-  /**
-   * The title for the toggle button.
-   */
-  title: { type: String, default: 'Sort by' },
-  /**
-   * Determines if the arrow should display or not.
-   */
-  hideArrow: { type: Boolean, default: false },
-  /**
-   * Determines the placement of the dropdown on the screen.
-   */
-  placement: { type: String as PropType<SortByDropdownPlacement>, default: 'bottom-start' },
-  /**
-   * Determines if the dropdown is disabled
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * The name of the radio form field.
-   */
-  name: { type: String, default: null },
-  /**
-   * An array of options for the dropdown.
-   */
-  options: { type: Array as PropType<SortByDropdownOption[]>, default: () => [] },
-  /**
-   * The tooltip text for the sort button.
-   */
-  tooltip: { type: String, default: 'Sort' }
+const props = withDefaults(defineProps<SortByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: 'Sort by',
+  hideArrow: false,
+  placement: 'bottom-start',
+  disabled: false,
+  name: null,
+  options: () => [],
+  tooltip: 'Sort'
 })
 
 /**

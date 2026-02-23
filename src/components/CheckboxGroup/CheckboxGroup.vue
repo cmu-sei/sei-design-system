@@ -16,16 +16,16 @@
     >
       <input
         :id="`${root?.id}__option_${index}`"
-        v-model="localModelValue"
+        v-model="model"
         type="checkbox"
         class="relative top-1"
         :class="validationClasses"
-        :value="option[valueKey]"
+        :value="option[valueKey!]"
         :name="name ? name : `${root?.id}__option`"
-        :required="required && localModelValue.length < 1"
+        :required="required && model.length < 1"
         :disabled="disabled"
         :readonly="readonly"
-        @click="onChange(option[valueKey])"
+        @click="onChange(option[valueKey!])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
       <slot
@@ -38,14 +38,14 @@
           :class="{
             'opacity-50 pointer-events-none select-none': disabled || readonly
           }"
-        ><span>{{ option[labelKey] }}</span></label>
+        ><span>{{ option[labelKey!] }}</span></label>
       </slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useFormField, formFieldProps } from '@/composables'
+import { useFormField } from '@/composables'
 
 export type CheckboxGroupOptionValue = string | number | boolean
 
@@ -59,28 +59,60 @@ defineOptions({
   name: "SdsCheckboxGroup"
 })
 
-const props = defineProps({
+interface CheckboxGroupProps {
   /**
    * The name of the checkbox form field.
    */
-  name: { type: String, default: null },
+  name?: string | null
   /**
    * An array of options for the checkbox group.
    */
-  options: { type: Array as PropType<CheckboxGroupOption<CheckboxGroupOptionValue>[]>, default: () => [] },
+  options?: CheckboxGroupOption<CheckboxGroupOptionValue>[]
   /**
    * Determines whether the options are stacked vertically or horizontally.
    */
-  stacked: { type: Boolean, default: false },
+  stacked?: boolean
   /**
    * Determines the label key used for options
    */
-  labelKey: { type: String, default: 'text' },
+  labelKey?: string
   /**
    * Determines the value key used for options
    */
-  valueKey: { type: String, default: 'value' },
-  ...formFieldProps,
+  valueKey?: string
+  /**
+   * Disabled state for the form field.
+   */
+  disabled?: boolean
+  /**
+   * Readonly state for the form field.
+   */
+  readonly?: boolean
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean
+}
+
+const props = withDefaults(defineProps<CheckboxGroupProps>(), {
+  name: null,
+  options: () => [],
+  stacked: false,
+  labelKey: 'text',
+  valueKey: 'value',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -88,23 +120,11 @@ const props = defineProps({
  */
 const model = defineModel<CheckboxGroupOptionValue[]>({ type: Array as PropType<CheckboxGroupOptionValue[]>, default: () => [] })
 
-const emit = defineEmits(['update:modelValue', 'change'])
+const emit = defineEmits(['change'])
 
 const { validationClasses } = useFormField(props)
 
 const root = ref()
-
-const localModelValue = computed({
-  get() {
-    return model.value
-  },
-  set(value: CheckboxGroupOptionValue[]) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
-})
 
 const onChange = (value: CheckboxGroupOptionValue) => {
   /**

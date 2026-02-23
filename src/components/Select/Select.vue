@@ -1,7 +1,7 @@
 <template>
   <select
     :id="id"
-    v-model="localValue"
+    v-model="model"
     data-id="sds-select"
     :disabled="disabled"
     :readonly="readonly"
@@ -17,15 +17,15 @@
     <option
       v-for="option in options"
       :key="`${id}_${JSON.stringify(option)}`"
-      :value="option[valueKey]"
+      :value="option[valueKey!]"
     >
-      {{ option[labelKey] }}
+      {{ option[labelKey!] }}
     </option>
   </select>
 </template>
 
 <script setup lang="ts">
-import { useFormField, formFieldProps } from '@/composables'
+import { useFormField } from '@/composables'
 
 export type SelectOptionValue = boolean | string | number | null
 
@@ -37,34 +37,67 @@ defineOptions({
   name: 'SdsSelect'
 })
 
-const props = defineProps({
+interface SelectProps {
   /**
    * Determines the id of the select.
    */
-  id: { type: String, default: undefined },
+  id?: string
   /**
    * The name of the select form field.
    */
-  name: { type: String, default: null },
+  name?: string | null
   /**
    * The options for the component.
    * 
    * Expects: `{ id, value, text }`
    */
-  options: { type: Array as PropType<SelectOption<SelectOptionValue>[]>, default: () => [] },
+  options?: SelectOption<SelectOptionValue>[]
   /**
    * Determines the size of the component.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size?: 'md' | 'sm' | ''
   /**
    * Determines the label key used for options
    */
-  labelKey: { type: String, default: 'text' },
+  labelKey?: string
   /**
    * Determines the value key used for options
    */
-  valueKey: { type: String, default: 'value' },
-  ...formFieldProps,
+  valueKey?: string
+  /**
+   * Disabled state for the form field.
+   */
+  disabled?: boolean
+  /**
+   * Readonly state for the form field.
+   */
+  readonly?: boolean
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean
+}
+
+const props = withDefaults(defineProps<SelectProps>(), {
+  id: undefined,
+  name: null,
+  options: () => [],
+  size: '',
+  labelKey: 'text',
+  valueKey: 'value',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -75,19 +108,5 @@ const model = defineModel<boolean | string | number | null>({
   default: null
 })
 
-const emit = defineEmits(['update:modelValue'])
-
 const { validationClasses } = useFormField(props)
-
-const localValue = computed({
-  get() {
-    return model.value;
-  },
-  set(value: SelectOptionValue) {
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit("update:modelValue", value);
-  }
-})
 </script>

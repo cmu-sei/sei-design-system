@@ -63,31 +63,37 @@ defineOptions({
   name: 'SdsToast'
 })
 
-const props = defineProps({
+interface ToastProps {
   /**
    * Determines the id of the component.
    */
-  id: { type: Number, required: true },
+  id: number
   /**
    * Determines the purpose and particular function of the component.
    */
-  type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+  type?: 'success' | 'info' | 'warning' | 'danger' | null
   /**
    * Determines the title content of the component.
    */
-  title: { type: String, required: true },
+  title: string
   /**
    * Determines the text content of the component.
    */
-  text: { type: String, required: true },
+  text: string
   /**
    * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
    */
-  autoHideDelay: { type: Number, default: 5000 },
+  autoHideDelay?: number
   /**
    * Determines whether to ignore the autoHideDelay property.
    */
-  noAutoHide: { type: Boolean, default: false },
+  noAutoHide?: boolean
+}
+
+const props = withDefaults(defineProps<ToastProps>(), {
+  type: null,
+  autoHideDelay: 5000,
+  noAutoHide: false
 })
 
 const emit = defineEmits(['remove'])

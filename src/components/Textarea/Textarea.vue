@@ -29,66 +29,87 @@
 
 <script setup lang="ts">
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
-import { useFormField, formFieldProps } from '@/composables'
+import { useFormField } from '@/composables'
 
 defineOptions({
   name: 'SdsTextarea'
 })
 
-const props = defineProps({
+interface TextareaProps {
   /**
    * Determine whether to display the character counter or not.
    */
-  countCharacters: { type: Boolean, default: false },
+  countCharacters?: boolean
   /**
    * Determines the minlength of the component.
    */
-  minlength: { type: Number, default: 0 },
+  minlength?: number
   /**
    * Determines the maxlength of the component.
    */
-  maxlength: { type: Number, default: 524288 },
+  maxlength?: number
   /**
    * Determines the id of the textarea.
    */
-  id: { type: String, default: undefined },
+  id?: string
   /**
    * Determines the placeholder text of the component.
    */
-  placeholder: { type: String, default: '' },
+  placeholder?: string
   /**
    * Determines the row (height) of the component.
    */
-  rows: { type: Number, default: 5 },
+  rows?: number
   /**
    * Determines whether to autofocus the component or not.
    */
-  autofocus: { type: Boolean, default: false },
+  autofocus?: boolean
   /**
    * Determines whether or not the component can be resized
    */
-  resize: { type: Boolean, default: false},
-  ...formFieldProps,
+  resize?: boolean
+  /**
+   * Disabled state for the form field.
+   */
+  disabled?: boolean
+  /**
+   * Readonly state for the form field.
+   */
+  readonly?: boolean
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean
+}
+
+const props = withDefaults(defineProps<TextareaProps>(), {
+  countCharacters: false,
+  minlength: 0,
+  maxlength: 524288,
+  id: undefined,
+  placeholder: '',
+  rows: 5,
+  autofocus: false,
+  resize: false,
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
  * The v-model for this component's text input.
  */
-const model = defineModel<string>({ type: String, default: '' })
-
-const emit = defineEmits(['update:modelValue'])
+const text = defineModel<string>({ type: String, default: '' })
 
 const { validationClasses } = useFormField(props)
-
-const text = computed({
-  get() {
-    return model.value
-  },
-  set(value: string) {
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  },
-})
 </script>

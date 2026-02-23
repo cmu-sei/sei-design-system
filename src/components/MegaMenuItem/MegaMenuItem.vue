@@ -52,34 +52,39 @@
 </template>
 
 <script setup lang="ts">
+interface MegaMenuItemProps {
+  /**
+   * Main MegaMenuItem text content
+   */
+  label?: string;
+  /**
+   * Determines the MegaMenuItem component type to use.
+   */
+  type?: "landing-page" | "descriptive" | "simple";
+  /**
+   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+   */
+  external?: boolean;
+  /**
+   * Gives the link a "Call to Action" styling.
+   */
+  cta?: boolean;
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+}
+
 defineOptions({
   name: 'SdsMegaMenuItem'
 })
 
-const props = defineProps({
-  /**
-   * Main MegaMenuItem text content
-   */
-  label: { type: String, default: "" },
-  /**
-   * Determines the MegaMenuItem component type to use.
-   */
-  type: {
-    type: String as PropType<"landing-page" | "descriptive" | "simple">,
-    default: "simple",
-  },
-  /**
-   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
-   */
-  external: { type: Boolean, default: false },
-  /**
-   * Gives the link a "Call to Action" styling.
-   */
-  cta: { type: Boolean, default: false },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
+const props = withDefaults(defineProps<MegaMenuItemProps>(), {
+  label: "",
+  type: "simple",
+  external: false,
+  cta: false,
+  disabled: false
 })
 
 const linkClass = computed(() => {

@@ -34,32 +34,29 @@
 import BrochureSiteHeader from "../BrochureSiteHeader/BrochureSiteHeader.vue";
 import BrochureSiteFooter from "../BrochureSiteFooter/BrochureSiteFooter.vue";
 
-defineOptions({
-  name: 'SdsBrochureSite'
-})
-
-defineProps({
+interface BrochureSiteProps {
   /**
    * An object containing various properties that display in the header
    */
-  page: {
-    type: Object,
-    default: () => ({}),
-  },
+  page?: Record<string, unknown>;
   /**
    * Removes the content padding from the default slot section.
    * Useful when you want to custom style the main content section.
    */
-  removeContentPadding: {
-    type: Boolean,
-    default: false,
-  },
+  removeContentPadding?: boolean;
   /**
    * Determines whether to show the footer section or not.
    */
-  showFooter: {
-    type: Boolean,
-    default: false,
-  },
+  showFooter?: boolean;
+}
+
+defineOptions({
+  name: 'SdsBrochureSite'
+})
+
+withDefaults(defineProps<BrochureSiteProps>(), {
+  page: () => ({}),
+  removeContentPadding: false,
+  showFooter: false
 })
 </script>

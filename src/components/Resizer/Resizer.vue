@@ -83,39 +83,47 @@ defineOptions({
   name: 'SdsResizer'
 })
 
-const props = defineProps({
+interface ResizerProps {
   /**
    * If the "clamp" property is set,
    * the slot content can not be
    * resized beyond its original size.
    */
-  clamp: { type: Boolean, default: true },
+  clamp?: boolean
   /**
    * Set the direction you'd like the
    * resizer to grow/shrink. This is
    * the side of the slot content that
    * can be clicked and dragged.
    */
-  direction: { type: String as PropType<'right' | 'bottom'>, default: 'bottom' },
+  direction?: 'right' | 'bottom'
   /**
    * Set the initial height (if direction == 'bottom') or
    * width (if direction == 'right').
    */
-  initial: { type: Number, default: null },
+  initial?: number | null
   /**
    * Set the max width (if direction right)
    * or max height (if direction bottom) of
    * the resizer. If no max is set, the original
    * width or height will be used (if clamp is true).
    */
-  max: { type: Number, default: null },
+  max?: number | null
   /**
    * Set the min width (if direction right)
    * or min height (if direction bottom) of
    * the resizer. If no min is set, resizer
    * will be able to shrink to 0.
    */
-  min: { type: Number, default: null }
+  min?: number
+}
+
+const props = withDefaults(defineProps<ResizerProps>(), {
+  clamp: true,
+  direction: 'bottom',
+  initial: undefined,
+  max: undefined,
+  min: undefined
 })
 
 const scrollAreaOuter = ref<null | HTMLElement>(null)
@@ -330,7 +338,7 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       if (props.clamp) {
         const nextValue = originalWidth.value ? (scrollAreaOuter.value.offsetWidth + xDist) > (props.direction === 'right' ? originalWidth.value : originalWidth.value) ? dynamicWidth.value : newWidth : newWidth
         if (nextValue) {
-          if (parseInt(nextValue) > props.min) {
+          if (props.min === undefined || parseInt(nextValue) > props.min) {
             dynamicWidth.value = nextValue
           }
         }
@@ -359,7 +367,7 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
       if (props.clamp) {
         const nextValue = originalHeight.value ? (scrollAreaOuter.value.offsetHeight + yDist) > originalHeight.value ? dynamicHeight.value : newHeight : newHeight
         if (nextValue) {
-          if (parseInt(nextValue) > props.min) {
+          if (props.min === undefined || parseInt(nextValue) > props.min) {
             dynamicHeight.value = nextValue
           }
         }

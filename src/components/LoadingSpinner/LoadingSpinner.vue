@@ -37,15 +37,20 @@ defineOptions({
   name: 'SdsLoadingSpinner'
 })
 
-const props = defineProps({
+interface LoadingSpinnerProps {
   /**
    * Sets the size of the spinner.
    */
-  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'md' },
+  size?: 'lg' | 'md' | 'sm' | 'auto' | ''
   /**
    * Sets the accessiblity label for the spinner.
    */
-  label: { type: String, default: null }
+  label?: string | null
+}
+
+const props = withDefaults(defineProps<LoadingSpinnerProps>(), {
+  size: 'md',
+  label: null
 })
 
 const sizeClass = useVariantClasses(() => props.size, {

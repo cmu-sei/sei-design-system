@@ -49,43 +49,39 @@ import { useZIndex, useVariantClasses } from '@/composables'
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type TooltipPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
-defineOptions({
-  name: 'SdsPopover'
-})
-
-const props = defineProps({
+interface TooltipProps {
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * Determines the purpose and particular function of the component.
    */
-  type: { type: String as PropType<'dark' | 'light'>, default: null },
+  type?: 'dark' | 'light';
   /**
    * Delays opening the toggle in ms.
    */
-  openDelay: { type: Number, default: 0 },
+  openDelay?: number;
   /**
    * Delays closing the toggle in ms.
    */
-  closeDelay: { type: Number, default: 0 },
+  closeDelay?: number;
   /**
    * The width of the popover.
    */
-  size: { type: String as PropType<'xl' | 'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'sm' },
+  size?: 'xl' | 'lg' | 'md' | 'sm' | 'auto' | '';
   /**
    * The strategy of the popover on the screen.
    */
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  strategy?: Strategy;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<TooltipPlacement>, default: 'top' },
+  placement?: TooltipPlacement;
   /**
    * Determines if the popover should display or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean;
   /**
    * Allows for code execution prior to opening the tooltip.
    * 
@@ -110,7 +106,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willOpen?: GenericFunctionType;
   /**
    * Allows for code execution prior to closing the tooltip.
    * 
@@ -135,7 +131,24 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
+  willClose?: GenericFunctionType;
+}
+
+defineOptions({
+  name: 'SdsPopover'
+})
+
+const props = withDefaults(defineProps<TooltipProps>(), {
+  zIndex: '50',
+  type: 'dark',
+  openDelay: 0,
+  closeDelay: 0,
+  size: 'sm',
+  strategy: 'absolute',
+  placement: 'top',
+  disabled: false,
+  willOpen: undefined,
+  willClose: undefined
 })
 
 const { zIndexClass } = useZIndex(() => props.zIndex)

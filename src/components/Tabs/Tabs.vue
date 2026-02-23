@@ -123,23 +123,19 @@ export interface TabItem {
   disabled?: boolean
 }
 
-defineOptions({
-  name: 'SdsTabs'
-})
-
-const props = defineProps({
+interface TabsProps {
   /**
    * Determines the size of the tab(s).
    */
-  size: { type: String as PropType<'sm' | 'lg'>, default: 'sm' },
+  size?: 'sm' | 'lg';
   /**
    * The overall look and feel of the component.
    */
-  type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
+  type?: 'folder' | 'underline' | 'block';
   /**
    * Determines the color of the tab(s).
    */
-  variant: { type: String as PropType<'red' | 'blue' | 'gray'>, default: 'red' },
+  variant?: 'red' | 'blue' | 'gray';
   /**
    * Allows for code execution prior to changing tabs.
    *
@@ -166,7 +162,18 @@ const props = defineProps({
    * }
    * ```
    */
-  willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
+  willChangeTab?: GenericFunctionType;
+}
+
+defineOptions({
+  name: 'SdsTabs'
+})
+
+const props = withDefaults(defineProps<TabsProps>(), {
+  size: 'sm',
+  type: 'folder',
+  variant: 'red',
+  willChangeTab: undefined
 })
 
 /**
@@ -278,7 +285,9 @@ const changeTab = async (tab: TabItem) => {
   if (tab.tag === 'a' && tab.href) {
     return true
   } else {
-    await willChangeTabStateDelay(tab, props.willChangeTab)
+    if (props.willChangeTab) {
+      await willChangeTabStateDelay(tab, props.willChangeTab)
+    }
     tabs.value = tabs.value.map((i) => {
       i.active = tab.key === i.key
       return i

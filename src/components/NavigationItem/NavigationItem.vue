@@ -2,7 +2,7 @@
   <button
     v-if="type === 'back'"
     class="flex flex-row text-gray-700 dark:text-gray-300 text-xl cursor-pointer mb-4 w-full"
-    @click="(e: Event) => { onClick(e) }"
+    @click="(e: Event) => { onClick?.(e) }"
   >
     <IconFa7SolidArrowLeft
       class="mr-2 my-auto pt-0.5 relative w-6 h-6 self-center flex flex-col pointer-events-none"
@@ -30,7 +30,7 @@
     }"
     :tabindex="disabled || type === 'title' ? -1 : href ? undefined : 0"
     role="menuitem"
-    @click="onClick"
+    @click="(e: Event) => { onClick?.(e) }"
   >
     <div
       v-if="$slots.left"
@@ -79,69 +79,56 @@
   >
 </template>
 
-<script lang="ts">
-export default {
-  name: "SdsNavigationItem",
-}
-</script>
-
 <script setup lang="ts">
 import { getCurrentInstance } from "vue"
+
+interface NavigationItemProps {
+  /**
+   * Determines show/hide state of the panel or the open/closed state of the 'expand'-able navigation item.
+   */
+  selected?: boolean;
+  /**
+   * This is the main navigation item text.
+   */
+  label?: string;
+  /**
+   * Provides the "href" link to the Navigation Item
+   */
+  href?: string | null;
+  /**
+   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+   */
+  external?: boolean;
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+  /**
+   * The "type" prop determines the interaction for navigating to menu item's children.
+   */
+  type?: 'back' | 'expand' | 'simple' | 'slide' | 'title';
+  /**
+   * Override the default event handler.
+   */
+  onClick?: ((event: Event) => void) | null;
+}
+
+defineOptions({
+  name: "SdsNavigationItem",
+})
 
 /**
  * Get the navigation item's key
  */
 const key = getCurrentInstance()?.vnode.key ?? null;
 
-defineProps({
-  /**
-   * Determines show/hide state of the panel or the open/closed state of the 'expand'-able navigation item.
-   */
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * This is the main navigation item text.
-   */
-  label: {
-    type: String,
-    default: ""
-  },
-  /**
-   * Provides the "href" link to the Navigation Item
-   */
-  href: {
-    type: String,
-    default: null
-  },
-  /**
-   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
-   */
-  external: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * The "type" prop determines the interaction for navigating to menu item's children.
-   */
-  type: {
-    type: String as PropType<'back' | 'expand' | 'simple' | 'slide' | 'title' >,
-    default: 'simple'
-  },
-  /**
-   * Override the default event handler.
-   */
-  onClick: {
-    type: Function,
-    default: null
-  }
+withDefaults(defineProps<NavigationItemProps>(), {
+  selected: false,
+  label: "",
+  href: null,
+  external: false,
+  disabled: false,
+  type: 'simple',
+  onClick: null
 });
 </script>

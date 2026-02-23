@@ -21,11 +21,7 @@
 <script setup lang="ts">
 import { useThrottleAndDebounce, useEventListener } from '@/composables'
 
-defineOptions({
-  name: 'SdsScrollspy'
-})
-
-const props = defineProps({
+interface ScrollspyProps {
   /**
    * Determines the items list that is observed when the page scrolls.
    * 
@@ -42,26 +38,35 @@ const props = defineProps({
    * The object's `text` property should be the content of the link that is observing
    * the page.
    */
-  items: {
-    type: Array as PropType<{ id: string, text: string }[]>,
-    default: () => [],
-  },
+  items?: { id: string, text: string }[];
   /**
    * The HTML selector of the container for the element being spied upon.
    */
-  parent: { type: String, default: undefined },
+  parent?: string;
   /**
    * Determines the CSS class list for each item.
    */
-  itemClass: { type: String, default: '' },
+  itemClass?: string;
   /**
    * Determines the CSS class list for the active item.
    */
-  activeClass: { type: String, default: '' },
+  activeClass?: string;
   /**
    * Determines the CSS class list for the inactive items.
    */
-  inactiveClass: { type: String, default: '' }
+  inactiveClass?: string;
+}
+
+defineOptions({
+  name: 'SdsScrollspy'
+})
+
+const props = withDefaults(defineProps<ScrollspyProps>(), {
+  items: () => [],
+  parent: undefined,
+  itemClass: '',
+  activeClass: '',
+  inactiveClass: ''
 })
 
 const parentEl = computed<HTMLElement | undefined>(() => {

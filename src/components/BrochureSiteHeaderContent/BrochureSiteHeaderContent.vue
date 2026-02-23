@@ -24,17 +24,18 @@
 </template>
 
 <script setup lang="ts">
+interface BrochureSiteHeaderContentProps {
+  /**
+   * An object containing various properties that display in the content.
+   */
+  page?: Record<string, unknown>;
+}
+
 defineOptions({
   name: 'SdsBrochureSiteHeaderContent'
 })
 
-defineProps({
-  /**
-   * An object containing various properties that display in the content.
-   */
-  page: {
-    type: Object,
-    default: () => ({}),
-  },
+withDefaults(defineProps<BrochureSiteHeaderContentProps>(), {
+  page: () => ({})
 })
 </script>

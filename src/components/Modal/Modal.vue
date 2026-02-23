@@ -142,34 +142,36 @@ defineOptions({
   name: 'SdsModal',
 })
 
-const props = defineProps({
+interface ModalProps {
   /**
    * Determines the size of the modal.
    */
-  size: {
-    type: String as PropType<'2xl' | 'xl' | 'lg' | 'md' | 'sm'>,
-    default: "md",
-  },
+  size?: '2xl' | 'xl' | 'lg' | 'md' | 'sm'
   /**
    * Determines the title of the modal.
    */
-  title: { type: String, default: null },
+  title?: string | null
   /**
    * Determines if the modal header should be hidden.
    */
-  hideHeader: { type: Boolean, default: false },
+  hideHeader?: boolean
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''
+}
+
+const props = withDefaults(defineProps<ModalProps>(), {
+  size: 'md',
+  title: null,
+  hideHeader: false,
+  zIndex: '50'
 })
 
 /**
  * The v-model that determines the show/hide state of the modal.
  */
-const model = defineModel<boolean>({ type: Boolean, default: false })
-
-const emit = defineEmits(['update:modelValue'])
+const showModal = defineModel<boolean>({ type: Boolean, default: false })
 
 const slots = defineSlots<{
   default: () => unknown
@@ -186,18 +188,6 @@ const hasTitleSlot = computed(() => {
 
 const hasFooterSlot = computed(() => {
   return !!slots.footer;
-})
-
-const showModal = computed({
-  get() {
-    return model.value
-  },
-  set(value) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit("update:modelValue", value);
-  },
 })
 
 // Use unified overlay composable for consistent behavior

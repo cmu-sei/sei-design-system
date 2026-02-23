@@ -22,44 +22,39 @@
 import { Emitter } from 'mitt';
 import { useVariantClasses } from '@/composables'
 
+interface DropdownItemProps {
+  /**
+   * Styling for the item.
+   */
+  variant?: 'gray' | 'red';
+  /**
+   * Determines the tag use for the component.
+   */
+  tag?: string;
+  /**
+   * Determines whether to close the parent dropdown when this component is clicked.
+   */
+  closeOnClick?: boolean;
+  /**
+   * Determines if this component is currently active.
+   */
+  active?: boolean;
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+}
+
 defineOptions({
   name: 'SdsDropdownItem'
 })
 
-const props = defineProps({
-  /**
-   * Styling for the item.
-   */
-  variant: { type: String as PropType<'gray' | 'red'>, default: 'gray' },
-  /**
-   * Determines the tag use for the component.
-   */
-  tag: {
-    type: String,
-    default: "a",
-  },
-  //  type prop
-  /**
-   * Determines whether to close the parent dropdown when this component is clicked.
-   */
-  closeOnClick: {
-    type: Boolean,
-    default: true,
-  },
-  /**
-   * Determines if this component is currently active.
-   */
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+const props = withDefaults(defineProps<DropdownItemProps>(), {
+  variant: 'gray',
+  tag: "a",
+  closeOnClick: true,
+  active: false,
+  disabled: false
 })
 
 const emitter: Emitter<Record<'floating-ui-toggle', boolean>> | undefined = inject('emitter')

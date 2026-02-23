@@ -397,34 +397,39 @@ defineOptions({
   name: 'SdsCalendar'
 })
 
-const props = defineProps({
+interface CalendarProps {
   /**
    * Determines the mode in which the calendar will function.
    * 
    * Options include 'date', 'dateTime', and 'time'.
    */
-  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  mode?: CalendarMode;
   /**
    * Determines the minimum selectable date for this component.
    */
-  min: { type: Date as PropType<CalendarDate>, default: null },
+  min?: CalendarDate | null;
   /**
    * Determines the maximum selectable date for this component.
    */
-  max: { type: Date as PropType<CalendarDate>, default: null },
+  max?: CalendarDate | null;
   /**
    * Determines whether to use the current time when selecting a date that is equal to today.
    * 
    * If false, this sets the time to the start of the date.
    */
-  useCurrentTimeForToday: { type: Boolean, default: false },
+  useCurrentTimeForToday?: boolean;
   /**
    * Determines the input to prioritize for changes to the modelValue.
    */
-  inputToChange: {
-    type: String as PropType<'start' | 'end'>,
-    default: undefined
-  }
+  inputToChange?: 'start' | 'end';
+}
+
+const props = withDefaults(defineProps<CalendarProps>(), {
+  mode: 'date',
+  min: null,
+  max: null,
+  useCurrentTimeForToday: false,
+  inputToChange: undefined
 })
 
 /**
@@ -439,23 +444,9 @@ const props = defineProps({
  * 
  * **{ start: new Date(), end: null }**
  */
-const model = defineModel<CalendarDate | CalendarRange>({
+const date = defineModel<CalendarDate | CalendarRange>({
   type: [Object, Date] as PropType<CalendarDate | CalendarRange>,
   default: new Date()
-})
-
-const emit = defineEmits(['update:modelValue'])
-
-const date = computed<CalendarDate | CalendarRange>({
-  get() {
-    return model.value
-  },
-  set(value) {
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
 })
 
 const displayedMonth = ref(new Date())
@@ -508,7 +499,7 @@ onMounted(async () => {
   updateTimeSelects()
 })
 
-watch(() => model.value, () => {
+watch(() => date.value, () => {
   updateTimeSelects()
 }, { deep: true })
 
@@ -686,7 +677,7 @@ const canGoToNextMonth = computed(() => {
 })
 
 const formatDate = (date: Date, output: string) => format(date, output)
-const isRange = computed(() => model.value && !isDate(model.value))
+const isRange = computed(() => date.value && !isDate(date.value))
 
 const setModelValueDate = async (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value

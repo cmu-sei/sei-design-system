@@ -49,17 +49,7 @@ const props = withDefaults(defineProps<PaginatorPageSizeDropdown>(), {
   disabled: false
 })
 
-const model = defineModel({ type: Number, default: 0 })
-const emit = defineEmits(['update:modelValue'])
-
-const selection = computed({
-  get () {
-    return model.value
-  },
-  set (value) {
-    emit('update:modelValue', value)
-  }
-})
+const selection = defineModel({ type: Number, default: 0 })
 
 const options = computed(() => props.options)
 const title = computed(() => `${selection.value} per page`)

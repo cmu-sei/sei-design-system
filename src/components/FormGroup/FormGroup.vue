@@ -144,60 +144,56 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'SdsFormGroup'
-})
-
-const props = defineProps({
+interface FormGroupProps {
   /**
    * Determines whether to render the component as a fieldset with a legend or
    * a div with a label.
    */
-  el: { type: String as PropType<'div' | 'fieldset'>, default: 'div' },
+  el?: 'div' | 'fieldset';
   /**
    * Determines whether to display the required/optional labeling.
    */
-  showMarker: { type: Boolean, default: false },
+  showMarker?: boolean;
   /**
    * Determines the text of the label.
    */
-  label: { type: String as PropType<string | null>, default: null },
+  label?: string | null;
   /**
    * Optionally determine the value of the label's for attribute. Only
    * necessary if you aren't using the automatically generated
    * id and `el` equals `div`.
    */
-  labelFor: { type: String as PropType<string | null>, default: null },
+  labelFor?: string | null;
   /**
    * Determines the alignment of the label.
    */
-  labelAlignment: { type: String as PropType<'left' | 'center' | 'right'>, default: 'left' },
+  labelAlignment?: 'left' | 'center' | 'right';
   /**
    * Determines the width of the label.
    */
-  labelWidth: { type: [Number, String] as PropType<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 'auto'>, default: 'auto' },
+  labelWidth?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 'auto';
   /**
    * Determines the top margin of the label.
    */
-  labelMargin: { type: [Number, String] as PropType<0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 'auto'>, default: null },
+  labelMargin?: 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 'auto' | null;
   /**
    * Determines the display style of the form group.
    */
-  labelPosition: { type: String as PropType<'left' | 'top'>, default: 'top' },
+  labelPosition?: 'left' | 'top';
   /**
    * Determines the helper text of the form field.
    */
-  helperText: { type: String as PropType<string | null>, default: null },
+  helperText?: string | null;
   /**
    * Determines the success message displayed when `state`
    * is `true`
    */
-  validFeedback: { type: String as PropType<string | null>, default: null },
+  validFeedback?: string | null;
   /**
    * Determines the failure message displayed when `state`
    * is `false`
    */
-  invalidFeedback: { type: String as PropType<string | null>, default: null },
+  invalidFeedback?: string | null;
   /**
    * Determines the valid/invalid state of the form group.
    * 
@@ -205,19 +201,41 @@ const props = defineProps({
    * If `null`, there is no valid or invalid state associated with
    * the field.
    */
-  state: { type: Boolean as PropType<boolean | null>, default: null },
+  state?: boolean | null;
   /**
    * Determines if the form group is required.
    */
-  required: { type: Boolean, default: false },
+  required?: boolean;
   /**
    * Determines if the form group is readonly.
    */
-  readonly: { type: Boolean, default: false },
+  readonly?: boolean;
   /**
    * Determines whether the form group is disabled or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean;
+}
+
+defineOptions({
+  name: 'SdsFormGroup'
+})
+
+const props = withDefaults(defineProps<FormGroupProps>(), {
+  el: 'div',
+  showMarker: false,
+  label: null,
+  labelFor: null,
+  labelAlignment: 'left',
+  labelWidth: 'auto',
+  labelMargin: null,
+  labelPosition: 'top',
+  helperText: null,
+  validFeedback: null,
+  invalidFeedback: null,
+  state: null,
+  required: false,
+  readonly: false,
+  disabled: false,
 })
 
 const root = ref()

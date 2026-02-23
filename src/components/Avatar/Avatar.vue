@@ -26,51 +26,42 @@ defineOptions({
   name: 'SdsAvatar'
 })
 
-const props = defineProps({
+interface AvatarProps {
   /**
    * Determines the background color of the avatar when no image is present.
    */
-  variant: {
-    type: String as PropType<'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'>,
-    default: 'gray'
-  },
+  variant?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
   /**
    * Determines the position of the image.
    */
-  position: {
-    type: String as PropType<'bottom' | 'center' | 'left' | 'right' | 'top'>,
-    default: 'center'
-  },
+  position?: 'bottom' | 'center' | 'left' | 'right' | 'top'
   /**
    * Determines the shape of the avatar.
    */
-  shape: {
-    type: String as PropType<'circle' | 'square' | 'portrait'>,
-    default: 'portrait'
-  },
+  shape?: 'circle' | 'square' | 'portrait'
   /**
    * Determines the size of the avatar.
    */
-  size: {
-    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'auto'>,
-    default: 'md'
-  },
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'auto'
   /**
    * Determines the text name (ex. John Doe) will show "JD" initials as a placeholder when no image is present.
    *
    * The full name, "John Doe" will display on hover with or without an image present.
    */
-  name: {
-    type: String,
-    default: ''
-  },
+  name?: string
   /**
    * Set the image of the avatar.
    */
-  src: {
-    type: String,
-    default: ''
-  }
+  src?: string
+}
+
+const props = withDefaults(defineProps<AvatarProps>(), {
+  variant: 'gray',
+  position: 'center',
+  shape: 'portrait',
+  size: 'md',
+  name: '',
+  src: ''
 })
 
 // Consolidated computed properties for better performance

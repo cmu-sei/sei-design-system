@@ -52,35 +52,35 @@ defineOptions({
   name: 'SdsPopover'
 })
 
-const props = defineProps({
+interface PopoverProps {
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''
   /**
    * Delays opening the toggle in ms.
    */
-  openDelay: { type: Number, default: 500 },
+  openDelay?: number
   /**
    * Delays closing the toggle in ms.
    */
-  closeDelay: { type: Number, default: 250 },
+  closeDelay?: number
   /**
    * The width of the popover.
    */
-  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'auto' | ''>, default: 'lg' },
+  size?: 'lg' | 'md' | 'sm' | 'auto' | ''
   /**
    * The strategy of the popover on the screen.
    */
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  strategy?: Strategy
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<PopoverPlacement>, default: 'auto' },
+  placement?: PopoverPlacement
   /**
    * Determines if the popover should display or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean
   /**
    * Allows for code execution prior to opening the popover.
    * 
@@ -105,7 +105,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willOpen?: GenericFunctionType
   /**
    * Allows for code execution prior to closing the popover.
    * 
@@ -130,7 +130,19 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
+  willClose?: GenericFunctionType
+}
+
+const props = withDefaults(defineProps<PopoverProps>(), {
+  zIndex: '50',
+  openDelay: 500,
+  closeDelay: 250,
+  size: 'lg',
+  strategy: 'absolute',
+  placement: 'auto',
+  disabled: false,
+  willOpen: undefined,
+  willClose: undefined
 })
 
 const { zIndexClass } = useZIndex(() => props.zIndex)
