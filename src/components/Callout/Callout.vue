@@ -82,39 +82,50 @@ defineOptions({
   name: 'SdsCallout'
 })
 
-const props = defineProps({
+interface CalloutProps {
   /**
    * Determines the look of the callout
    */
-  type: { type: String as PropType<'bold' | 'outline' | 'subtle'>, default: 'subtle' },
+  type?: 'bold' | 'outline' | 'subtle'
   /**
    * Determines the color of the callout
    */
-  variant: { type: String as PropType<'gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>, default: 'gray'},
+  variant?: 'gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'
   /**
    * Determines the size of the callout
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'md'},
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   /**
    * Determines the title of the Callout.
    */
-  title: { type: String, default: null },
+  title?: string | null
   /**
    * Determines the description of the Callout. If there is a description slot active, it overrides this.
    */
-  description: { type: String, default: null },
+  description?: string | null
   /**
    * Determines the timestamp of the Callout.
    */
-  timestamp: { type: Date, default: null },
+  timestamp?: Date | null
   /**
    * Determines if the Callout can be dismissed or if it is persistent.
    */
-  dismissable: { type: Boolean, default: false },
+  dismissable?: boolean
   /**
    * Determines whether to use block styling or not.
    */
-  inset: { type: Boolean, default: false }
+  inset?: boolean
+}
+
+const props = withDefaults(defineProps<CalloutProps>(), {
+  type: 'subtle',
+  variant: 'gray',
+  size: 'md',
+  title: null,
+  description: null,
+  timestamp: null,
+  dismissable: false,
+  inset: false
 })
 
 const dismiss = defineModel<boolean>({ type: Boolean, default: false })

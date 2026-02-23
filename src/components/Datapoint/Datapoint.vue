@@ -35,33 +35,34 @@ defineOptions({
   name: 'SdsDatapoint'
 })
 
-const props = defineProps({
+interface DatapointProps {
   /**
    * Determines the content of the label slot.
    * 
    * This is overridden if the label slot is present.
    */
-  label: { type: String, default: null },
+  label?: string | null;
   /**
    * Determines the content of the context slot.
    * 
    * This is overridden if the context slot is present.
    */
-  context: { type: String, default: null },
+  context?: string | null;
   /**
    * Determines the overall look and feel of the component.
    */
-  size: {
-    type: String as PropType<'sm' | 'md' | 'lg'>,
-    default: 'md'
-  },
+  size?: 'sm' | 'md' | 'lg';
   /**
    * Determines the color of the component.
    */
-  variant: {
-    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
-    default: null
-  }
+  variant?: 'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green' | null;
+}
+
+const props = withDefaults(defineProps<DatapointProps>(), {
+  label: null,
+  context: null,
+  size: 'md',
+  variant: null
 })
 
 /**

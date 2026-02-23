@@ -10,20 +10,19 @@ defineOptions({
   name: 'SdsLoadingSkeleton'
 })
 
-defineProps({
+interface LoadingSkeletonProps {
   /**
    * Sets the height of the skeleton. Accepts tailwind height classes.
    */
-  height: {
-    default: 'h-full',
-    type: String
-  },
+  height?: string
   /**
    * Sets the width of the skeleton. Accepts tailwind width classes.
    */
-  width: {
-    default: 'w-full',
-    type: String
-  }
+  width?: string
+}
+
+withDefaults(defineProps<LoadingSkeletonProps>(), {
+  height: 'h-full',
+  width: 'w-full'
 })
 </script>

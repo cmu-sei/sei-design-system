@@ -16,35 +16,45 @@ defineOptions({
   name: 'SdsLink'
 })
 
-const props = defineProps({
+interface LinkProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary'>, default: 'primary' },
+  kind?: 'primary' | 'secondary' | 'tertiary'
   /**
    * Determines the type of the component.
    */
-  type: { type: String as PropType<'standalone' | 'inline' | 'cta'>, default: 'standalone' },
+  type?: 'standalone' | 'inline' | 'cta'
   /**
    * Determines the color variant of the component.
    */
-  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: 'blue' },
+  variant?: 'blue' | 'red' | 'white'
   /**
    * Determines whether to display a decorated underline.
    */
-  decoration: { type: String as PropType<'underline'>, default: undefined },
+  decoration?: 'underline'
   /**
    * Determines the size of the component.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl'>, default: undefined },
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
    */
-  external: { type: Boolean, default: false },
+  external?: boolean
   /**
    * Disables the component to prevent user interaction.
    */
-  disabled: { type: Boolean, default: false }
+  disabled?: boolean
+}
+
+const props = withDefaults(defineProps<LinkProps>(), {
+  kind: 'primary',
+  type: 'standalone',
+  variant: 'blue',
+  decoration: undefined,
+  size: undefined,
+  external: false,
+  disabled: false
 })
 
 const kindClass = computed(() => {

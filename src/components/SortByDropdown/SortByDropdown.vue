@@ -131,7 +131,7 @@ import type { Placement as BasePlacement } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
-import { useZIndex } from '@/composables'
+import { useZIndex, useVariantClasses } from '@/composables'
 
 export type SortByDropdownPlacement = BasePlacement;
 
@@ -179,55 +179,69 @@ const ORDER_BY_TYPES = readonly(ref({
   }
 }))
 
+interface SortByDropdownProps {
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind?: 'primary' | 'secondary' | 'ghost';
+  /**
+   * Determines the color of the component.
+   */
+  variant?: 'gray' | 'red' | 'blue' | 'white';
+  /**
+   * Determines the size.
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  /**
+   * The z-index for the popover.
+   */
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  /**
+   * The title for the toggle button.
+   */
+  title?: string;
+  /**
+   * Determines if the arrow should display or not.
+   */
+  hideArrow?: boolean;
+  /**
+   * Determines the placement of the dropdown on the screen.
+   */
+  placement?: SortByDropdownPlacement;
+  /**
+   * Determines if the dropdown is disabled
+   */
+  disabled?: boolean;
+  /**
+   * The name of the radio form field.
+   */
+  name?: string | null;
+  /**
+   * An array of options for the dropdown.
+   */
+  options?: SortByDropdownOption[];
+  /**
+   * The tooltip text for the sort button.
+   */
+  tooltip?: string;
+}
+
 defineOptions({
   name: "SdsSortByDropdown"
 })
 
-const props = defineProps({
-  /**
-   * Determines the purpose and particular function of the component.
-   */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
-  /**
-   * Determines the color of the component.
-   */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
-  /**
-   * Determines the size.
-   */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
-  /**
-   * The z-index for the popover.
-   */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-  /**
-   * The title for the toggle button.
-   */
-  title: { type: String, default: 'Sort by' },
-  /**
-   * Determines if the arrow should display or not.
-   */
-  hideArrow: { type: Boolean, default: false },
-  /**
-   * Determines the placement of the dropdown on the screen.
-   */
-  placement: { type: String as PropType<SortByDropdownPlacement>, default: 'bottom-start' },
-  /**
-   * Determines if the dropdown is disabled
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * The name of the radio form field.
-   */
-  name: { type: String, default: null },
-  /**
-   * An array of options for the dropdown.
-   */
-  options: { type: Array as PropType<SortByDropdownOption[]>, default: () => [] },
-  /**
-   * The tooltip text for the sort button.
-   */
-  tooltip: { type: String, default: 'Sort' }
+const props = withDefaults(defineProps<SortByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: 'Sort by',
+  hideArrow: false,
+  placement: 'bottom-start',
+  disabled: false,
+  name: null,
+  options: () => [],
+  tooltip: 'Sort'
 })
 
 /**
@@ -248,32 +262,19 @@ const selectedDirection = ref<SortByDropdownType | null>(null)
 // Flag to prevent duplicate emissions during internal state updates
 const isInternalUpdate = ref(false)
 
-const iconSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-    case 'sm':
-      return 'w-4 h-4'
-    case 'md':
-    case 'lg':
-    default:
-      return 'w-4.5 h-4.5'
-  }
-})
+const iconSizeClasses = useVariantClasses(() => props.size, {
+  xs: 'w-4 h-4',
+  sm: 'w-4 h-4',
+  md: 'w-4.5 h-4.5',
+  lg: 'w-4.5 h-4.5'
+}, 'w-4.5 h-4.5')
 
-const buttonSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-      return 'h-6.5 w-6.5'
-    case 'sm':
-      return 'h-7.5 w-7.5'
-    case 'md':
-      return 'h-8.5 w-8.5'
-    case 'lg':
-      return 'h-10.5 w-10.5'
-    default:
-      return 'h-8.5 w-8.5'
-  }
-})
+const buttonSizeClasses = useVariantClasses(() => props.size, {
+  xs: 'h-6.5 w-6.5',
+  sm: 'h-7.5 w-7.5',
+  md: 'h-8.5 w-8.5',
+  lg: 'h-10.5 w-10.5'
+}, 'h-8.5 w-8.5')
 
 const { zIndexClass } = useZIndex(() => props.zIndex)
 

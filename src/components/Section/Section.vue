@@ -58,46 +58,39 @@
 </template>
 
 <script setup lang="ts">
+interface SectionProps {
+  /**
+   * Determines the overall look and feel of the section.
+   */
+  type?: string;
+  /**
+   * Determines if the header is hidden or shown.
+   */
+  hideHeader?: boolean;
+  /**
+   * Determines if the content is hidden or shown.
+   */
+  hideContent?: boolean;
+  /**
+   * The class list for the nav slot.
+   */
+  navClass?: string;
+  /**
+   * The class list of the default slot.
+   */
+  contentClass?: string;
+}
+
 defineOptions({
   name: 'SdsSection'
 })
 
-defineProps({
-  /**
-   * Determines the overall look and feel of the section.
-   */
-  type: {
-    type: String,
-    default: "",
-  },
-  /**
-   * Determines if the header is hidden or shown.
-   */
-  hideHeader: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Determines if the content is hidden or shown.
-   */
-  hideContent: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * The class list for the nav slot.
-   */
-  navClass: {
-    type: String,
-    default: "",
-  },
-  /**
-   * The class list of the default slot.
-   */
-  contentClass: {
-    type: String,
-    default: "p-4",
-  },
+withDefaults(defineProps<SectionProps>(), {
+  type: '',
+  hideHeader: false,
+  hideContent: false,
+  navClass: '',
+  contentClass: 'p-4'
 })
 
 const slots = defineSlots<{

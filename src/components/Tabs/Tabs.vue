@@ -109,6 +109,7 @@
 
 <script setup lang="ts">
 import pxToRem from '../../helpers/pxToRem'
+import { useVariantClasses } from '@/composables'
 
 export interface TabItem {
   count?: number
@@ -122,23 +123,19 @@ export interface TabItem {
   disabled?: boolean
 }
 
-defineOptions({
-  name: 'SdsTabs'
-})
-
-const props = defineProps({
+interface TabsProps {
   /**
    * Determines the size of the tab(s).
    */
-  size: { type: String as PropType<'sm' | 'lg'>, default: 'sm' },
+  size?: 'sm' | 'lg';
   /**
    * The overall look and feel of the component.
    */
-  type: { type: String as PropType<'folder' | 'underline' | 'block'>, default: 'folder' },
+  type?: 'folder' | 'underline' | 'block';
   /**
    * Determines the color of the tab(s).
    */
-  variant: { type: String as PropType<'red' | 'blue' | 'gray'>, default: 'red' },
+  variant?: 'red' | 'blue' | 'gray';
   /**
    * Allows for code execution prior to changing tabs.
    *
@@ -165,7 +162,18 @@ const props = defineProps({
    * }
    * ```
    */
-  willChangeTab: { type: Function as PropType<GenericFunctionType>, default: null },
+  willChangeTab?: GenericFunctionType;
+}
+
+defineOptions({
+  name: 'SdsTabs'
+})
+
+const props = withDefaults(defineProps<TabsProps>(), {
+  size: 'sm',
+  type: 'folder',
+  variant: 'red',
+  willChangeTab: undefined
 })
 
 /**
@@ -239,51 +247,28 @@ const activeTabCalcPosition = computed(() => {
   return { left, width }
 })
 
-const tabIndicatorClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'tab-indicator-blue'
-    case 'gray':
-      return 'tab-indicator-gray'
-    case 'red':
-    default:
-      return 'tab-indicator-red'
-  }
-})
+const tabIndicatorClass = useVariantClasses(() => props.variant, {
+  blue: 'tab-indicator-blue',
+  gray: 'tab-indicator-gray',
+  red: 'tab-indicator-red'
+}, 'tab-indicator-red')
 
-const textSizeClass = computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'tab-lg'
-    case 'sm':
-    default:
-      return 'tab-sm'
-  }
-})
+const textSizeClass = useVariantClasses(() => props.size, {
+  lg: 'tab-lg',
+  sm: 'tab-sm'
+}, 'tab-sm')
 
-const typeClass = computed(() => {
-  switch (props.type) {
-    case 'block':
-      return 'tab-block'
-    case 'underline':
-      return 'tab-underline'
-    case 'folder':
-    default:
-      return 'tab-folder'
-  }
-})
+const typeClass = useVariantClasses(() => props.type, {
+  block: 'tab-block',
+  underline: 'tab-underline',
+  folder: 'tab-folder'
+}, 'tab-folder')
 
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'tab-blue'
-    case 'gray':
-      return 'tab-gray'
-    case 'red':
-    default:
-      return 'tab-red'
-  }
-})
+const variantClass = useVariantClasses(() => props.variant, {
+  blue: 'tab-blue',
+  gray: 'tab-gray',
+  red: 'tab-red'
+}, 'tab-red')
 
 const willChangeTabStateDelay = async (tab: TabItem, fn: GenericFunctionType) => {
   if (typeof fn !== 'function') return
@@ -300,7 +285,9 @@ const changeTab = async (tab: TabItem) => {
   if (tab.tag === 'a' && tab.href) {
     return true
   } else {
-    await willChangeTabStateDelay(tab, props.willChangeTab)
+    if (props.willChangeTab) {
+      await willChangeTabStateDelay(tab, props.willChangeTab)
+    }
     tabs.value = tabs.value.map((i) => {
       i.active = tab.key === i.key
       return i

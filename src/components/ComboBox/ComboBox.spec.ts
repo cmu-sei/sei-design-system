@@ -676,4 +676,45 @@ describe('ComboBox', () => {
     expect(activeAfterUp.exists()).toBe(false)
     wrapper.unmount()
   })
+
+  it('should apply valid class when valid prop is true', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        valid: true
+      }
+    })
+
+    expect(wrapper.find('.input-group').classes()).toContain('valid')
+    wrapper.unmount()
+  })
+
+  it('should apply invalid class when invalid prop is true', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        invalid: true
+      }
+    })
+
+    expect(wrapper.find('.input-group').classes()).toContain('invalid')
+    wrapper.unmount()
+  })
+
+  it('should work with FormGroup validation pattern', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        valid: false,
+        invalid: true,
+        required: true,
+        disabled: false
+      }
+    })
+
+    const inputGroup = wrapper.find('.input-group')
+    expect(inputGroup.classes()).toContain('invalid')
+    expect(inputGroup.classes()).not.toContain('valid')
+    wrapper.unmount()
+  })
 })

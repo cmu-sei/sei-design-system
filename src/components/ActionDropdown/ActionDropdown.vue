@@ -76,67 +76,63 @@ import { useDropdown, type ButtonKind, type ButtonVariant, type ActionButtonSize
 import type { DropdownPlacement } from "../Dropdown/Dropdown.vue";
 import type { Strategy } from '@floating-ui/dom'
 
-defineOptions({
-  name: 'SdsActionDropdown'
-})
-
-const props = defineProps({
+interface ActionDropdownProps {
   /**
    * The content of the dropdown trigger.
    */
-  title: { type: String, default: '' },
+  title?: string;
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<Exclude<ButtonKind, 'tertiary'>>, default: 'ghost' },
+  kind?: Exclude<ButtonKind, 'tertiary'>;
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<ButtonVariant>, default: 'gray' },
+  variant?: ButtonVariant;
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<ZIndexValue>, required: false, default: '50' },
+  zIndex?: ZIndexValue;
   /**
    * The distance between the popper and the trigger.
    */
-  offset: { type: Number, default: 5 },
+  offset?: number;
   /**
    * Delays opening the toggle in ms.
    */
-  openDelay: { type: Number, default: 0 },
+  openDelay?: number;
   /**
    * Delays closing the toggle in ms.
    */
-  closeDelay: { type: Number, default: 0 },
+  closeDelay?: number;
   /**
    * Determines the size of the trigger button.
    */
-  size: { type: String as PropType<ActionButtonSize>, default: 'sm' },
+  size?: ActionButtonSize;
   /**
    * Determines if the arrow should display or not.
    */
-  hideArrow: { type: Boolean, default: false },
+  hideArrow?: boolean;
   /**
    * Determines whether the content of the popper will set the width of the popper.
    */
-  auto: { type: Boolean, default: false },
+  auto?: boolean;
   /**
    * The strategy of the popover on the screen.
    */
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  strategy?: Strategy;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<DropdownPlacement>, default: 'bottom-start' },
+  placement?: DropdownPlacement;
   /**
    * Determines whether to use the block styling on the trigger button or not.
    */
-  block: { type: Boolean, default: false },
+  block?: boolean;
   /**
    * Determines if the popover should display or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean;
   /**
    * Allows for code execution prior to opening the popover.
    * 
@@ -161,7 +157,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willOpen?: GenericFunctionType;
   /**
    * Allows for code execution prior to closing the popover.
    * 
@@ -186,7 +182,30 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
+  willClose?: GenericFunctionType;
+}
+
+defineOptions({
+  name: 'SdsActionDropdown'
+})
+
+const props = withDefaults(defineProps<ActionDropdownProps>(), {
+  title: '',
+  kind: 'ghost',
+  variant: 'gray',
+  zIndex: '50',
+  offset: 5,
+  openDelay: 0,
+  closeDelay: 0,
+  size: 'sm',
+  hideArrow: false,
+  auto: false,
+  strategy: 'absolute',
+  placement: 'bottom-start',
+  block: false,
+  disabled: false,
+  willOpen: undefined,
+  willClose: undefined
 })
 
 // Use unified dropdown composable

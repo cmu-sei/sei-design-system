@@ -144,55 +144,66 @@ defineOptions({
   name: "SdsFilterByDropdown"
 })
 
-const props = defineProps({
+interface FilterByDropdownProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  kind?: 'primary' | 'secondary' | 'ghost';
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
+  variant?: 'gray' | 'blue';
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * The title for the toggle button.
    */
-  title: { type: String, default: "Filter" },
+  title?: string;
   /**
    * Determine whether to enable option filtering on the dropdown.
    */
-  enableFilter: { type: Boolean, default: false },
+  enableFilter?: boolean;
   /**
    * Determines whether to alphabetically sort the options.
    */
-  enableSortOptions: { type: Boolean, default: false },
+  enableSortOptions?: boolean;
   /**
    * Determines the placement of the dropdown on the screen.
    */
-  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' },
+  placement?: FilterByDropdownPlacement;
   /**
    * Determines if the dropdown is disabled
    */
-  disabled: { type: Boolean, default: false},
+  disabled?: boolean;
   /**
    * Determines if the count is visible next to the title
    */
-  showCount: { type: Boolean, default: false}
+  showCount?: boolean;
+}
+
+const props = withDefaults(defineProps<FilterByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: "Filter",
+  enableFilter: false,
+  enableSortOptions: false,
+  placement: 'bottom-start' as FilterByDropdownPlacement,
+  disabled: false,
+  showCount: false
 })
 
 /**
  * The v-model for this component. Determines opened/closed state.
  */
-const model = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
-
-const emit = defineEmits(['update:modelValue'])
+const options = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
 
 const button = ref<HTMLButtonElement | undefined>()
 const filterTextInput = ref<HTMLInputElement | undefined>()
@@ -202,18 +213,6 @@ const tmpOptions = ref([])
 const selectedCount = computed(() => options.value.filter((i: FilterByDropdownOption) => i.selected).length)
 
 const { zIndexClass } = useZIndex(() => props.zIndex)
-
-const options = computed({
-  get() {
-    return model.value;
-  },
-  set(value: FilterByDropdownOption[]) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit("update:modelValue", value);
-  },
-})
 
 const allSelected = computed(() => {
   return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
@@ -243,10 +242,7 @@ const toggleSelect = () => {
 }
 
 const saveSelections = () => {
-  /**
-   * Emmitted when modelValue changes.
-   */
-  emit("update:modelValue", tmpOptions.value);
+  options.value = tmpOptions.value;
 }
 
 const cancelSelections = () => {
@@ -254,13 +250,11 @@ const cancelSelections = () => {
   resetTmpOptions();
 }
 
-const handleInputFocus = () => {
+const handleInputFocus = async () => {
   if (!props.enableFilter) return
-  const interval = setInterval(() => {
-    if (typeof filterTextInput.value === 'undefined') return
+  setTimeout(() => {
     filterTextInput.value?.focus()
-    clearInterval(interval)
-  }, 100)
+  }, 0)
 }
 
 const resetTmpOptions = () => {

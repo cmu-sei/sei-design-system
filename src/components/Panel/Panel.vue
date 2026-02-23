@@ -125,37 +125,35 @@ import { useOverlay } from '@/composables'
 
 const id = useId()
 
+interface PanelProps {
+  /**
+   * Determines the size of the panel.
+   */
+  size?: 'xl' | 'lg' | 'md' | 'sm';
+  /**
+   * Determines the location of the panel.
+   */
+  side?: 'left' | 'right' | 'bottom' | '';
+  /**
+   * The z-index for the popover.
+   */
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+}
+
 defineOptions({
   name: 'SdsPanel'
 })
 
-const props = defineProps({
-  /**
-   * Determines the size of the panel.
-   */
-  size: {
-    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-    default: 'md',
-  },
-  /**
-   * Determines the location of the panel.
-   */
-  side: {
-    type: String as PropType<'left' | 'right' | 'bottom' | ''>,
-    default: 'right',
-  },
-  /**
-   * The z-index for the popover.
-   */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+const props = withDefaults(defineProps<PanelProps>(), {
+  size: 'md',
+  side: 'right',
+  zIndex: '50'
 })
 
 /**
  * The v-model that determines the show/hide state of the panel.
  */
-const model = defineModel<boolean>({ type: Boolean, default: false })
-
-const emit = defineEmits(['update:modelValue'])
+const showPanel = defineModel<boolean>({ type: Boolean, default: false })
 
 const slots = defineSlots<{
   default: () => unknown
@@ -175,18 +173,6 @@ const hasFooterSlot = computed(() => {
 
 const hasDefaultSlot = computed(() => {
   return !!slots.default
-})
-
-const showPanel = computed({
-  get() {
-    return model.value
-  },
-  set(value: boolean) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  },
 })
 
 // Use unified overlay composable for consistent behavior

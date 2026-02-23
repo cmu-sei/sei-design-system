@@ -6,11 +6,13 @@
   >
     <div
       class="input-group flex flex-col"
-      :class="{
-        disabled,
-        'input-group-sm': size === 'sm',
-        'bg-gray-50 dark:bg-gray-950': readonly
-      }"
+      :class="[
+        validationClasses,
+        {
+          'input-group-sm': size === 'sm',
+          'bg-gray-50 dark:bg-gray-950': readonly
+        }
+      ]"
     >
       <div
         v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
@@ -555,116 +557,155 @@
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
+import { useFormField } from '@/composables'
 
 export type ComboBoxSuggestionObject = { [id: string | number]: unknown }
 export type ComboBoxSuggestion = ComboBoxSuggestionObject | string
 
-defineOptions({ name: 'SdsComboBox' })
-
-const props = defineProps({
+interface ComboBoxProps {
   /**
    * Determine whether to autofocus the input.
    */
-  autofocus: { type: Boolean, default: false },
+  autofocus?: boolean;
   /**
    * Display the suggestions dropdown on click.
    */
-  clickToSelect: { type: Boolean, default: false },
+  clickToSelect?: boolean;
   /**
    * The debounce period before complete event is emitted.
    */
-  debounceComplete: { type: Number, default: 250 },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
+  debounceComplete?: number;
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
-  disableGroupTabs: { type: Boolean, default: false },
+  disableGroupTabs?: boolean;
   /**
    * The max amount of characters that can be entered into the input.
    */
-  maxlength: { type: Number, default: undefined },
+  maxlength?: number;
   /**
    * Allows the user to select multiple items. This setting only works with the `type`
    * prop set to "select" or "taggable-select", because the text type is not a selection field.
    */
-  multiple: { type: Boolean, default: false },
+  multiple?: boolean;
   /**
    * Determines the id of the input.
    */
-  id: { type: String, default: undefined },
+  id?: string;
   /**
    * Determines whether to focus the input on "/" key press.
    */
-  focusOnKeyPress: { type: Boolean, default: false },
+  focusOnKeyPress?: boolean;
   /**
    * If enabled, the suggestions will narrow down as the user types, otherwise the suggestions
    * will remain a static list. Setting to `false` is necessary for suggestions that are provided
    * _and filtered_ by a secondary API.
    */
-  filterSuggestions: { type: Boolean, default: false },
+  filterSuggestions?: boolean;
   /**
    * This will hide the "/" and focus tooltip helper text,
    * but `focusOnKeyPress` can still be enabled.
    */
-  hideFocusIndicator: { type: Boolean, default: false },
+  hideFocusIndicator?: boolean;
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
-  hideEmptyGroups: { type: Boolean, default: false },
+  hideEmptyGroups?: boolean;
   /**
    * The label key used for each non-group suggestion.
    */
-  optionLabel: { type: String, default: undefined },
+  optionLabel?: string;
   /**
    * The label key used for each group suggestion.
    */
-  optionGroupLabel: { type: String, default: undefined },
+  optionGroupLabel?: string;
   /**
    * The key used to determine the children array for each group suggestion.
    */
-  optionGroupChildren: { type: String, default: undefined },
+  optionGroupChildren?: string;
   /**
    * Determines the type, or tag, use for the option/component
    */
-  optionType: { type: String as () => 'a' | 'button' | 'custom', default: 'button' },
+  optionType?: 'a' | 'button' | 'custom';
   /**
    * The pending prop allows the user to show a loading spinner in the input.
    * This is useful when fetching suggestions from an API.
    */
-  pending: { type: Boolean, default: false },
+  pending?: boolean;
   /**
    * The placeholder for the input.
    */
-  placeholder: { type: String, default: undefined },
-  /**
-   * Makes the input read-only, preventing user input but still allowing focus and selection.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Determines if the input is required.
-   */
-  required: { type: Boolean, default: false },
+  placeholder?: string;
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
-  size: { type: String as () => 'sm' | 'md', default: undefined },
+  size?: 'sm' | 'md';
   /**
    * The suggestions used for autosuggest.
    */
-  suggestions: { type: Array as () => ComboBoxSuggestion[], default: () => [] },
+  suggestions?: ComboBoxSuggestion[];
   /**
    * Use combobox as text "autosuggest", selectable text, or taggable-selection.
    */
-  type: { type: String as () => 'text' | 'select' | 'taggable-select', default: 'text' }
+  type?: 'text' | 'select' | 'taggable-select';
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+  /**
+   * Determines whether the field is read-only.
+   */
+  readonly?: boolean;
+  /**
+   * Determines whether the field is required.
+   */
+  required?: boolean;
+  /**
+   * Sets a valid styling if true.
+   */
+  valid?: boolean;
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid?: boolean;
+}
+
+defineOptions({ name: 'SdsComboBox' })
+
+const props = withDefaults(defineProps<ComboBoxProps>(), {
+  autofocus: false,
+  clickToSelect: false,
+  debounceComplete: 250,
+  disableGroupTabs: false,
+  maxlength: undefined,
+  multiple: false,
+  id: undefined,
+  focusOnKeyPress: false,
+  filterSuggestions: false,
+  hideFocusIndicator: false,
+  hideEmptyGroups: false,
+  optionLabel: undefined,
+  optionGroupLabel: undefined,
+  optionGroupChildren: undefined,
+  optionType: 'button',
+  pending: false,
+  placeholder: undefined,
+  size: undefined,
+  suggestions: () => [],
+  type: 'text',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const root = ref(), scrollArea = ref(), inputField = ref(), selectAllRef = ref(), dropdownOption = ref()
 const isReadonly = ref(props.readonly)
+
+const { validationClasses } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)

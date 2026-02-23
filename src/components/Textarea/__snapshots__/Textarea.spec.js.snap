@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Textarea.vue > matches snapshot with disabled prop assigned 1`] = `
-"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" disabled=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control disabled resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" disabled=""></textarea>
   <!--v-if-->
 </div>"
 `;
@@ -25,7 +25,7 @@ exports[`Textarea.vue > matches snapshot with placeholder prop assigned 1`] = `
 `;
 
 exports[`Textarea.vue > matches snapshot with readonly prop assigned 1`] = `
-"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" readonly=""></textarea>
+"<div data-id="sds-textarea" class="w-full relative"><textarea class="form-control readonly resize-none" rows="5" maxlength="524288" minlength="0" placeholder="" readonly=""></textarea>
   <!--v-if-->
 </div>"
 `;

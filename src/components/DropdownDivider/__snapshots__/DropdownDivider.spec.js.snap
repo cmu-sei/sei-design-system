@@ -2,7 +2,7 @@
 
 exports[`DropdownDivider > should match its default snapshot 1`] = `
 <div
-  class="my-2 border-t bg-white border-gray-100 [.dropdown-dark_&]:bg-gray-950 [.dropdown-dark_&]:border-gray-700 dark:bg-gray-950 dark:border-gray-700"
+  class="my-2 border-t bg-white border-gray-100 in-[.dropdown-dark]:bg-gray-950 in-[.dropdown-dark]:border-gray-700 dark:bg-gray-950 dark:border-gray-700"
   data-id="sds-dropdown-divider"
 />
 `;

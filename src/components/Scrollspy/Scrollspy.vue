@@ -19,13 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { throttleAndDebounce } from '../../helpers/throttleAndDebounce'
+import { useThrottleAndDebounce, useEventListener } from '@/composables'
 
-defineOptions({
-  name: 'SdsScrollspy'
-})
-
-const props = defineProps({
+interface ScrollspyProps {
   /**
    * Determines the items list that is observed when the page scrolls.
    * 
@@ -42,31 +38,41 @@ const props = defineProps({
    * The object's `text` property should be the content of the link that is observing
    * the page.
    */
-  items: {
-    type: Array as PropType<{ id: string, text: string }[]>,
-    default: () => [],
-  },
+  items?: { id: string, text: string }[];
   /**
    * The HTML selector of the container for the element being spied upon.
    */
-  parent: { type: String, default: undefined },
+  parent?: string;
   /**
    * Determines the CSS class list for each item.
    */
-  itemClass: { type: String, default: '' },
+  itemClass?: string;
   /**
    * Determines the CSS class list for the active item.
    */
-  activeClass: { type: String, default: '' },
+  activeClass?: string;
   /**
    * Determines the CSS class list for the inactive items.
    */
-  inactiveClass: { type: String, default: '' }
+  inactiveClass?: string;
+}
+
+defineOptions({
+  name: 'SdsScrollspy'
 })
 
-const parentEl = computed<HTMLElement | null>(() => {
-  if (typeof document === 'undefined') return null
-  return props.parent ? document.querySelector(props.parent) : null
+const props = withDefaults(defineProps<ScrollspyProps>(), {
+  items: () => [],
+  parent: undefined,
+  itemClass: '',
+  activeClass: '',
+  inactiveClass: ''
+})
+
+const parentEl = computed<HTMLElement | undefined>(() => {
+  if (typeof document === 'undefined') return undefined
+  const element = props.parent ? document.querySelector(props.parent) : null
+  return element as HTMLElement | undefined
 })
 
 const activeId = ref()
@@ -155,24 +161,23 @@ const setActiveItem = () => {
   }
 }
 
-const onScroll = throttleAndDebounce(setActiveItem, 100)
+const onScroll = useThrottleAndDebounce(setActiveItem, 100)
 
+// Reactive scroll target that switches between parent element and window
+const scrollTarget = ref<HTMLElement | undefined>(undefined)
+
+// Update the scroll target when component mounts and evaluate parent element
 onMounted(() => {
+  scrollTarget.value = parentEl.value
   requestAnimationFrame(setActiveItem)
-  if (parentEl.value) {
-    parentEl.value.addEventListener('scroll', onScroll)
-  } else {
-    window.addEventListener('scroll', onScroll)
-  }
 })
 
-onUnmounted(() => {
-  if (parentEl.value) {
-    parentEl.value.removeEventListener('scroll', onScroll)
-  } else {
-    window.removeEventListener('scroll', onScroll)
-  }
-})
+// Set up listener on scrollTarget if it exists, otherwise on window
+if (props.parent) {
+  useEventListener(scrollTarget, 'scroll', onScroll)
+} else {
+  useEventListener(window, 'scroll', onScroll)
+}
 
 const scrollToIdTarget = (id: string, event: Event) => {
   if (!parentEl.value) return

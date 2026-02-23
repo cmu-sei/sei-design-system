@@ -20,10 +20,7 @@
           class="w-full input-group"
           :class="{
             'input-group-sm': size === 'sm',
-            disabled,
-            readonly,
-            valid,
-            invalid,
+            ...validationClasses
           }"
         >
           <button
@@ -156,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFormField} from '@/composables'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsCalendar from '../Calendar/Calendar.vue'
 
@@ -180,65 +178,80 @@ import type { CalendarDate, CalendarMode, CalendarRange } from '../Calendar/Cale
 
 export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
-defineOptions({
-  name: 'SdsDatepicker'
-})
-
-const props = defineProps({
+interface DatepickerProps {
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * Determines whether to display or hide the arrow for range selection.
    */
-  hideArrow: { type: Boolean, default: false },
+  hideArrow?: boolean;
   /**
    * Determines the sizing of the component.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size?: 'md' | 'sm' | '';
   /**
    * Determines the mode of the component.
    */
-  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  mode?: CalendarMode;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
+  placement?: DatepickerPlacement;
   /**
    * The max date allowed for the datepicker.
    */
-  max: { type: Date, default: null },
+  max?: Date | null;
   /**
-   * The min date allowed for the datepicker.
-   */
-  min: { type: Date, default: null },
-  /**
-   * Determines if the component is required.
-   */
-  required: { type: Boolean, default: false },
-  /**
-   * Sets a valid styling if true.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Sets an invalid styling if true.
-   */
-  invalid: { type: Boolean, default: false },
-  /**
-   * Determines if the component is readonly.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Determines if the component is disabled.
-   */
-  disabled: { type: Boolean, default: false },
+   * The min date allowed for the datepicker.  */
+  min?: Date | null;
   /**
    * Determines whether to use the current time when selecting a date that is equal to today.
    *
    * If false, this sets the time to the start of the date.
    */
-  useCurrentTimeForToday: { type: Boolean, default: false }
+  useCurrentTimeForToday?: boolean;
+  /**
+   * Disabled state for the form field.
+   */
+  disabled?: boolean;
+  /**
+   * Readonly state for the form field.
+   */
+  readonly?: boolean;
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean;
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean;
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean;
+}
+
+defineOptions({
+  name: 'SdsDatepicker'
+})
+
+const props = withDefaults(defineProps<DatepickerProps>(), {
+  zIndex: '50',
+  hideArrow: false,
+  size: '',
+  mode: 'date',
+  placement: 'bottom',
+  max: null,
+  min: null,
+  useCurrentTimeForToday: false,
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -259,6 +272,8 @@ const model = defineModel<CalendarRange | CalendarDate>({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const { validationClasses } = useFormField(props)
 
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()

@@ -820,7 +820,7 @@
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
-import { useFocusTrap } from '@/composables'
+import { useFocusTrap, useEventListener } from '@/composables'
 
 export interface ApplicationSidebarNavItem {
   id: number | string
@@ -854,11 +854,11 @@ const slots = defineSlots<{
   'action-bar': () => unknown
 }>()
 
-const props = defineProps({
+interface ApplicationProps {
   /**
    * The width class of the non-collapsed sidebar when not in a mobile responsive view.
    */
-  sidebarWidth: { type: String, default: 'w-72' },
+  sidebarWidth?: string;
   /**
    * Determines whether to enable collapsing functionality.
    *
@@ -866,45 +866,45 @@ const props = defineProps({
    *
    * Including an **appIconUrl** will also improve the user experience.
    */
-  enableCollapsibleSidebar: { type: Boolean, default: false },
+  enableCollapsibleSidebar?: boolean;
   /**
    * The app suite name's prefix (styled in red) for the layout.
    */
-  appSuitePrefix: { type: String, default: 'SEI' },
+  appSuitePrefix?: string;
   /**
    * The app suite name for the layout.
    */
-  appSuite: { type: String, default: null },
+  appSuite?: string | null;
   /**
    * The app suite url for the layout.
    */
-  appSuiteUrl: { type: String, default: null },
+  appSuiteUrl?: string | null;
   /**
    * The app name for the layout.
    */
-  appName: { type: String, default: null },
+  appName?: string | null;
   /**
    * The app url for the layout.
    */
-  appUrl: { type: String, default: null },
+  appUrl?: string | null;
   /**
    * Determines whether to hide the **appName** in the mobile header.
    *
    * This is useful when an application's name is very long.
    */
-  hideAppNameInMobileHeader: { type: Boolean, default: false },
+  hideAppNameInMobileHeader?: boolean;
   /**
    * The app icon url for the layout.
    */
-  appIconUrl: { type: String, default: null },
+  appIconUrl?: string | null;
   /**
    * The page title for the layout.
    */
-  pageTitle: { type: String, default: null },
+  pageTitle?: string | null;
   /**
    * Determines whether to hide the page header.
    */
-  hidePageHeader: { type: Boolean, default: false },
+  hidePageHeader?: boolean;
   /**
    * The sidebar navigation array for the layout.
    *
@@ -914,27 +914,45 @@ const props = defineProps({
    *
    * { id: Number, title: String, active: Boolean, href: String, badgeCount: Number, iconUrl: String }
    */
-  sidebarNavigationItems: { type: Array as PropType<ApplicationSidebarNavItem[]>, default: () => [] },
+  sidebarNavigationItems?: ApplicationSidebarNavItem[];
   /**
    * Determines whether to hide the app icon.
    */
-  hideAppIcon: { type: Boolean, default: false },
+  hideAppIcon?: boolean;
   /**
    * Determines whether to hide the icons in the sidebar.
    */
-  hideSidebarIcons: { type: Boolean, default: false },
+  hideSidebarIcons?: boolean;
   /**
    * Determines whether to hide the action bar slot.
    */
-  hideActionBar: { type: Boolean, default: false },
+  hideActionBar?: boolean;
+}
+
+const props = withDefaults(defineProps<ApplicationProps>(), {
+  sidebarWidth: 'w-72',
+  enableCollapsibleSidebar: false,
+  appSuitePrefix: 'SEI',
+  appSuite: null,
+  appSuiteUrl: null,
+  appName: null,
+  appUrl: null,
+  hideAppNameInMobileHeader: false,
+  appIconUrl: null,
+  pageTitle: null,
+  hidePageHeader: false,
+  sidebarNavigationItems: () => [],
+  hideAppIcon: false,
+  hideSidebarIcons: false,
+  hideActionBar: false
 })
 
 /**
  * The v-model that determines collapsed state.
  */
-const model = defineModel<boolean>({ type: Boolean, default: false })
+const collapsed = defineModel<boolean>({ type: Boolean, default: false })
 
-const emit = defineEmits(['update:modelValue', 'navigate'])
+const emit = defineEmits(['navigate'])
 
 const showMobileMenu = ref(false)
 const mobileMenuCloseBtn = ref()
@@ -950,18 +968,6 @@ const year = computed(() => {
 const computedSidebarWidth = computed(() => {
   if (!props.enableCollapsibleSidebar) return props.sidebarWidth
   return collapsed.value ? 'w-auto' : props.sidebarWidth;
-})
-
-const collapsed = computed({
-  get() {
-    return model.value;
-  },
-  set(val: boolean) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit("update:modelValue", val);
-  }
 })
 
 watch(showMobileMenu, async (value) => {
@@ -983,18 +989,17 @@ watch(collapsed, (value) => {
   }
 })
 
-onMounted(() => {
-  // Setup collapse functionality
-  document.addEventListener("keyup", handleDocumentKeyUp);
-})
+const handleDocumentKeyUp = ($event: KeyboardEvent) => {
+  if (!$event.target) return
+  const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
+  if (tagName === "textarea") return;
+  if (tagName === "input") return;
+  // toggle collapse on "[" key
+  if ($event.key === "[") toggleCollapse();
+}
 
-onUnmounted(() => {
-  // enable scrolling
-  document.documentElement.classList.remove("application-internal-prevent-scroll");
-
-  // Destroy collapse functionality
-  document.removeEventListener("keyup", handleDocumentKeyUp);
-})
+// Setup collapse functionality with automatic cleanup
+useEventListener(document, "keyup", handleDocumentKeyUp)
 
 const itemsGroupBadgeCount = (item: ApplicationSidebarNavItem) => {
   if (!item.items) { return null }
@@ -1047,15 +1052,6 @@ const toggleCollapse = () => {
   } else {
     collapsed.value = !collapsed.value;
   }
-}
-
-const handleDocumentKeyUp = ($event: KeyboardEvent) => {
-  if (!$event.target) return
-  const tagName = ($event.target as HTMLElement).tagName.toLowerCase();
-  if (tagName === "textarea") return;
-  if (tagName === "input") return;
-  // toggle collapse on "[" key
-  if ($event.key === "[") toggleCollapse();
 }
 
 const closeMobileMenu = () => {

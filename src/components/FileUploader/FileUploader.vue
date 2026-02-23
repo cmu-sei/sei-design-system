@@ -267,43 +267,54 @@ export type SvgIcons = Record<SvgIconTypes, { height: number; path: string; view
 
 const id = useId()
 
+interface FileUploaderProps {
+  /**
+   * Determines the form name to use for the upload input field.
+   */
+  name?: string;
+  /**
+   * Determines whether the user can upload more than one file.
+   */
+  multiple?: boolean;
+  /**
+   * Determines if the file upload field is required.
+   */
+  required?: boolean;
+  /**
+   * Determines the accepted file formats used on the upload input field.
+   */
+  accept?: string;
+  /**
+   * Determines the file types used for validation.
+   */
+  allowedFiletypes?: string[];
+  /**
+   * Determines the maximum allowed filesize in megabytes for each uploaded file.
+   */
+  filesize?: number;
+  /**
+   * Determines the maximum allowed size for all uploaded files in megabytes.
+   */
+  maxFilesSize?: number;
+  /**
+   * Determines the helper text used to describe the upload field.
+   */
+  helperText?: string;
+}
+
 defineOptions({
   name: 'SdsFileUploader'
 })
 
-const props = defineProps({
-  /**
-   * Determines the form name to use for the upload input field.
-   */
-  name: { type: String, default: 'sdsFileUploader' },
-  /**
-   * Determines whether the user can upload more than one file.
-   */
-  multiple: { type: Boolean, default: false },
-  /**
-   * Determines if the file upload field is required.
-   */
-  required: { type: Boolean, default: false },
-  /**
-   * Determines the accepted file formats used on the upload input field.
-   */
-  accept: { type: String, default: undefined },
-  /**
-   * Determines the file types used for validation.
-   */
-  allowedFiletypes: { type: Array as PropType<string[]>, default: () => [] },
-  /**
-   * Determines the maximum allowed filesize in megabytes for each uploaded file.
-   */
-  filesize: { type: Number, default: 10 },
-  /**
-   * Determines the maximum allowed size for all uploaded files in megabytes.
-   */
-  maxFilesSize: { type: Number, default: undefined },
-  /**
-   * Determines the helper text used to describe the upload field.
-   */
-  helperText: { type: String, default: undefined }
+const props = withDefaults(defineProps<FileUploaderProps>(), {
+  name: 'sdsFileUploader',
+  multiple: false,
+  required: false,
+  accept: undefined,
+  allowedFiletypes: () => [],
+  filesize: 10,
+  maxFilesSize: undefined,
+  helperText: undefined
 })
 
 /**
@@ -320,7 +331,7 @@ const props = defineProps({
  */
 const model = defineModel({ type: Array as PropType<File[]>, default: () => [] })
 
-const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size', 'update:modelValue'])
+const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size'])
 
 const fileInput = ref<null | HTMLInputElement>(null)
 const fileList = ref<File[]>([])
@@ -399,7 +410,7 @@ const removeFile = (file: File) => {
    * Emitted when a valid file is removed.
    */
   emit('remove', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
+  model.value = [...fileList.value, ...invalidFileList.value]
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -418,7 +429,7 @@ const removeInvalidFile = (file: File) => {
    * Emitted when an invalid file is removed.
    */
   emit('remove-invalid', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
+  model.value = [...fileList.value, ...invalidFileList.value]
   emit('total-files-size', totalFilesSize.value)
 }
 
@@ -446,7 +457,7 @@ const processFiles = (event: Event) => {
    * Emitted when a file or files have been added.
    */
   emit('add', { files: fileList.value, invalidFiles: invalidFileList.value })
-  emit('update:modelValue', [...fileList.value, ...invalidFileList.value])
+  model.value = [...fileList.value, ...invalidFileList.value]
   emit('total-files-size', totalFilesSize.value)
 }
 

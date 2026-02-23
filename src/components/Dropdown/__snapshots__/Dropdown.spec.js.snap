@@ -39,6 +39,6 @@ exports[`Dropdown > Snapshots > should match its default snapshot 1`] = `
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;

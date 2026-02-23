@@ -27,25 +27,24 @@
 </template>
 
 <script setup lang="ts">
+interface StructuredPageProps {
+  /**
+   * Determines whether to make the header sticky or not.
+   */
+  stickyHeader?: boolean;
+  /**
+   * Determines whether to make the footer sticky or not.
+   */
+  stickyFooter?: boolean;
+}
+
 defineOptions({
   name: 'SdsStructuredPage'
 })
 
-defineProps({
-  /**
-   * Determines whether to make the header sticky or not.
-   */
-  stickyHeader: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Determines whether to make the footer sticky or not.
-   */
-  stickyFooter: {
-    type: Boolean,
-    default: false,
-  },
+withDefaults(defineProps<StructuredPageProps>(), {
+  stickyHeader: false,
+  stickyFooter: false
 })
 
 const slots = defineSlots<{
