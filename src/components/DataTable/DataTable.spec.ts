@@ -120,7 +120,7 @@ describe('SdsDataTable', () => {
       expect(paginatorComponent.props('totalPages')).toBe(pagination.totalPages)
     })
 
-    it('should maintain internal refs independently from prop updates', async () => {
+    it('should update pagination props when pagination prop changes', async () => {
       const wrapper = mount(SdsDataTable, {
         props: {
           data: { fields, items },
@@ -142,8 +142,8 @@ describe('SdsDataTable', () => {
       await wrapper.vm.$nextTick()
 
       const paginatorComponent = wrapper.findComponent({ name: 'SdsPaginator' })
-      expect(paginatorComponent.props('currentPage')).toBe(1)
-      expect(paginatorComponent.props('totalPages')).toBe(pagination.totalPages)
+      expect(paginatorComponent.props('currentPage')).toBe(2)
+      expect(paginatorComponent.props('totalPages')).toBe(3)
     })
 
     it('should pass current pagination state to SdsPaginator via props', () => {
@@ -249,7 +249,7 @@ describe('SdsDataTable', () => {
   })
 
   describe('Props & Configuration', () => {
-    it('should use default values when data prop is undefined', () => {
+    it('should render empty state when data prop is undefined', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
           pagination
@@ -257,9 +257,13 @@ describe('SdsDataTable', () => {
         attachTo: container
       })
 
+      // When no data is provided, table should not render
       const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
-      expect(tableComponent.props('items')).toEqual([])
-      expect(tableComponent.props('fields')).toEqual([])
+      expect(tableComponent.exists()).toBe(false)
+      
+      // Should show "No Results" empty state instead
+      expect(wrapper.text()).toContain('No Results')
+      expect(wrapper.text()).toContain('There are no results you can view')
     })
 
     it('should use default pagination values when pagination prop is undefined', () => {

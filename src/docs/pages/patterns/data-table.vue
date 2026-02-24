@@ -246,9 +246,10 @@ function handlePaginationUpdate(newPagination: {
   totalResults: number;
 }) {
   currentPage.value = newPagination.currentPage
-  totalPages.value = newPagination.totalPages
-  totalResults.value = newPagination.totalResults
+  // Recalculate totalPages based on current filtered results and new page size
+  totalPages.value = Math.ceil(tableItems.value.length / newPagination.totalResultsPerPage)
   totalResultsPerPage.value = newPagination.totalResultsPerPage
+  totalResults.value = newPagination.totalResults
 }
 
 // --- Sorting helper functions --- //

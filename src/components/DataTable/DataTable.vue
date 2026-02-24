@@ -206,7 +206,7 @@ export interface DataTableFilterConfig {
   label: string; // Display name for the filter: e.g. "Status", etc.
   disabled?: boolean; // Determines whether the filter is disabled
   type: DataTableFilterType; // Render as buttons or dropdown
-  segments?: Segments[]; // For segmented (button) controls
+  segments?: Segments[]; // For segmented controls
   options?: FilterByDropdownOption[]; // For checkbox dropdowns
 }
 
