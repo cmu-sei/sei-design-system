@@ -26,27 +26,35 @@ defineOptions({
   name: 'SdsExpandCollapse'
 })
 
-defineProps({
+interface ExpandCollapseProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary'>, default: 'primary' },
+  kind?: 'primary' | 'secondary' | 'tertiary'
   /**
    * Determines the color variant of the component.
    */
-  variant: { type: String as PropType<'blue' | 'red'>, default: 'blue' },
+  variant?: 'blue' | 'red'
   /**
    * Determines the label for the expanded state.
    */
-  expandLabel: { type: String, default: 'Show more' },
+  expandLabel?: string
   /**
    * Determines the label for the collapse state.
    */
-  collapseLabel: { type: String, default: 'Show less' },
+  collapseLabel?: string
   /**
    * Determines the disabled state of the component.
    */
-  disabled: { type: Boolean, default: false }
+  disabled?: boolean
+}
+
+withDefaults(defineProps<ExpandCollapseProps>(), {
+  kind: 'primary',
+  variant: 'blue',
+  expandLabel: 'Show more',
+  collapseLabel: 'Show less',
+  disabled: false
 })
 
 /**
@@ -54,7 +62,5 @@ defineProps({
  */
 const model = defineModel<boolean>({ type: Boolean, default: false })
 
-const emit = defineEmits(['update:modelValue'])
-
-const onClick = () => emit('update:modelValue', !model.value)
+const onClick = () => model.value = !model.value
 </script>

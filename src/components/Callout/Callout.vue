@@ -4,6 +4,7 @@
     :class="[
       styleClass,
       {
+        'relative': true,
         'p-2': size === 'xs',
         'p-3': size === 'sm',
         'p-4': size === 'md' || size === 'lg',
@@ -63,19 +64,12 @@
       <!-- Close icon -->
       <div
         v-if="dismissable"
-        class="ml-auto -mt-1.5"
+        class="absolute top-2 right-2"
       >
         <button @click="dismiss = true">
-          <svg
-            :class="fillClass"
-            width="20"
-            height="24"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M11.5625 15.2891C11.7734 15.5234 11.7734 15.875 11.5625 16.0859C11.3281 16.3203 10.9766 16.3203 10.7656 16.0859L8 13.2969L5.21094 16.0859C4.97656 16.3203 4.625 16.3203 4.41406 16.0859C4.17969 15.875 4.17969 15.5234 4.41406 15.2891L7.20312 12.5L4.41406 9.71094C4.17969 9.47656 4.17969 9.125 4.41406 8.91406C4.625 8.67969 4.97656 8.67969 5.1875 8.91406L8 11.7266L10.7891 8.9375C11 8.70312 11.3516 8.70312 11.5625 8.9375C11.7969 9.14844 11.7969 9.5 11.5625 9.73438L8.77344 12.5L11.5625 15.2891Z" />
-          </svg>
+          <IconFa7SolidXmark
+            :class="[fillClass, size === 'xs' ? 'w-3 h-3' : 'w-4 h-4']"
+          />
         </button>
       </div>
     </div>
@@ -88,39 +82,50 @@ defineOptions({
   name: 'SdsCallout'
 })
 
-const props = defineProps({
+interface CalloutProps {
   /**
    * Determines the look of the callout
    */
-  type: { type: String as PropType<'bold' | 'outline' | 'subtle'>, default: 'subtle' },
+  type?: 'bold' | 'outline' | 'subtle'
   /**
    * Determines the color of the callout
    */
-  variant: { type: String as PropType<'gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>, default: 'gray'},
+  variant?: 'gray' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'
   /**
    * Determines the size of the callout
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'md'},
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   /**
    * Determines the title of the Callout.
    */
-  title: { type: String, default: null },
+  title?: string | null
   /**
    * Determines the description of the Callout. If there is a description slot active, it overrides this.
    */
-  description: { type: String, default: null },
+  description?: string | null
   /**
    * Determines the timestamp of the Callout.
    */
-  timestamp: { type: Date, default: null },
+  timestamp?: Date | null
   /**
    * Determines if the Callout can be dismissed or if it is persistent.
    */
-  dismissable: { type: Boolean, default: false },
+  dismissable?: boolean
   /**
    * Determines whether to use block styling or not.
    */
-  inset: { type: Boolean, default: false }
+  inset?: boolean
+}
+
+const props = withDefaults(defineProps<CalloutProps>(), {
+  type: 'subtle',
+  variant: 'gray',
+  size: 'md',
+  title: null,
+  description: null,
+  timestamp: null,
+  dismissable: false,
+  inset: false
 })
 
 const dismiss = defineModel<boolean>({ type: Boolean, default: false })

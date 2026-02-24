@@ -20,10 +20,7 @@
           class="w-full input-group"
           :class="{
             'input-group-sm': size === 'sm',
-            disabled,
-            readonly,
-            valid,
-            invalid,
+            ...validationClasses
           }"
         >
           <button
@@ -37,23 +34,14 @@
             :disabled="disabled || readonly"
             @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              aria-hidden="true"
-              role="img"
-              class="fill-current w-4 h-4"
-            >
-              <path
-                v-if="mode === 'time'"
-                d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                fill="currentColor"
-              />
-              <path
-                v-else
-                d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"
-              />
-            </svg>
+            <IconFa7RegularClock
+              v-if="mode === 'time'"
+              :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+            />
+            <IconFa7RegularCalendar
+              v-else
+              :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+            />
             <span class="sr-only">Select a date</span>
           </button>
           <input
@@ -87,23 +75,10 @@
               'opacity-50': disabled || readonly
             }"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              aria-hidden="true"
-              role="img"
+            <IconFa7SolidArrowRight
               class="text-gray-700"
               :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
-              width="32"
-              height="32"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                fill="currentColor"
-              />
-            </svg>
+            />
           </div>
           <div
             class="w-full input-group"
@@ -125,23 +100,14 @@
               :disabled="disabled || readonly"
               @click="toggle(); ($refs.endDateInput as HTMLElement).focus()"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                aria-hidden="true"
-                role="img"
-                class="fill-current w-4 h-4"
-              >
-                <path
-                  v-if="mode === 'time'"
-                  d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                  fill="currentColor"
-                />
-                <path
-                  v-else
-                  d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"
-                />
-              </svg>
+              <IconFa7RegularClock
+                v-if="mode === 'time'"
+                :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+              />
+              <IconFa7RegularCalendar
+                v-else
+                :class="{ 'w-5 h-5': size !== 'sm', 'w-4 h-4': size === 'sm' }"
+              />
               <span class="sr-only">Select a date</span>
             </button>
             <input
@@ -187,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import { useFormField} from '@/composables'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsCalendar from '../Calendar/Calendar.vue'
 
@@ -211,65 +178,80 @@ import type { CalendarDate, CalendarMode, CalendarRange } from '../Calendar/Cale
 
 export type DatepickerPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
-defineOptions({
-  name: 'SdsDatepicker'
-})
-
-const props = defineProps({
+interface DatepickerProps {
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * Determines whether to display or hide the arrow for range selection.
    */
-  hideArrow: { type: Boolean, default: false },
+  hideArrow?: boolean;
   /**
    * Determines the sizing of the component.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size?: 'md' | 'sm' | '';
   /**
    * Determines the mode of the component.
    */
-  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  mode?: CalendarMode;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<DatepickerPlacement>, default: 'bottom' },
+  placement?: DatepickerPlacement;
   /**
    * The max date allowed for the datepicker.
    */
-  max: { type: Date, default: null },
+  max?: Date | null;
   /**
-   * The min date allowed for the datepicker.
-   */
-  min: { type: Date, default: null },
-  /**
-   * Determines if the component is required.
-   */
-  required: { type: Boolean, default: false },
-  /**
-   * Sets a valid styling if true.
-   */
-  valid: { type: Boolean, default: false },
-  /**
-   * Sets an invalid styling if true.
-   */
-  invalid: { type: Boolean, default: false },
-  /**
-   * Determines if the component is readonly.
-   */
-  readonly: { type: Boolean, default: false },
-  /**
-   * Determines if the component is disabled.
-   */
-  disabled: { type: Boolean, default: false },
+   * The min date allowed for the datepicker.  */
+  min?: Date | null;
   /**
    * Determines whether to use the current time when selecting a date that is equal to today.
    *
    * If false, this sets the time to the start of the date.
    */
-  useCurrentTimeForToday: { type: Boolean, default: false }
+  useCurrentTimeForToday?: boolean;
+  /**
+   * Disabled state for the form field.
+   */
+  disabled?: boolean;
+  /**
+   * Readonly state for the form field.
+   */
+  readonly?: boolean;
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean;
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean;
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean;
+}
+
+defineOptions({
+  name: 'SdsDatepicker'
+})
+
+const props = withDefaults(defineProps<DatepickerProps>(), {
+  zIndex: '50',
+  hideArrow: false,
+  size: '',
+  mode: 'date',
+  placement: 'bottom',
+  max: null,
+  min: null,
+  useCurrentTimeForToday: false,
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -290,6 +272,8 @@ const model = defineModel<CalendarRange | CalendarDate>({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+const { validationClasses } = useFormField(props)
 
 const inputDate = ref({ start: '', end: '' })
 const startDateInput = ref()

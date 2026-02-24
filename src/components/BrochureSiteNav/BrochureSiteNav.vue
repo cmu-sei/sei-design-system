@@ -8,7 +8,7 @@
       :key="item.title"
       class="p-4 space-y-2 bg-gray-50"
     >
-      <h3 class="text-xl text-gray-400 break-words">
+      <h3 class="text-xl text-gray-400 wrap-break-words">
         {{ item.title }}
       </h3>
       <ul class="pb-2 space-y-2">
@@ -18,7 +18,7 @@
         >
           <a
             :href="link.url"
-            class="text-red-600 break-words hover:text-red-700 hover:underline"
+            class="text-red-600 wrap-break-words hover:text-red-700 hover:underline"
           >{{ link.title }}</a>
         </li>
       </ul>
@@ -31,13 +31,9 @@
           class="inline-flex font-bold uppercase group text-gray-600"
         >
           <span class="group-hover:underline">{{ item.seeAll.title }}</span>
-          <svg
-            viewBox="0 0 32 32"
-            class="block w-5 h-5 my-auto fill-current"
-            aria-hidden="true"
-          >
-            <path d="M11.303 8l11.394 7.997L11.303 24z" />
-          </svg>
+          <IconFa7SolidChevronRight
+            class="w-5 h-5 my-auto"
+          />
         </a>
       </div>
     </div>
@@ -45,17 +41,24 @@
 </template>
 
 <script setup lang="ts">
+interface BrochureSiteNavProps {
+  /**
+   * An object containing various properties that determine the navigation.
+   */
+  page?: {
+    nav?: Array<{
+      title?: string;
+      items?: Array<{ url?: string; title?: string }>;
+      seeAll?: { url?: string; title?: string };
+    }>;
+  };
+}
+
 defineOptions({
   name: 'SdsBrochureSiteNav'
 })
 
-defineProps({
-  /**
-   * An object containing various properties that determine the navigation.
-   */
-  page: {
-    type: Object,
-    default: () => ({}),
-  },
+withDefaults(defineProps<BrochureSiteNavProps>(), {
+  page: () => ({ nav: [] })
 })
 </script>

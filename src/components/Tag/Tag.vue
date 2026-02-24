@@ -80,7 +80,7 @@
           {{ label }}
         </slot>
       </span>
-      <template v-if="isAction(action) && !readonly">
+      <template v-if="action && isAction(action) && !readonly">
         <template v-if="action === 'increment'">
           <button
             ref="button"
@@ -175,43 +175,55 @@ const slots = defineSlots<{
 const actions = ['increment', 'decrement', 'remove'] as const
 const isAction = (action: TagActionType): action is TagActionType => actions.includes(action)
 
-const props = defineProps({
+interface TagProps {
   /**
    * Determines the type of action or button.
    */
-  action: { type: String as PropType<TagActionType>, default: null },
+  action?: TagActionType | null
   /**
    * Determines the default count(er).
    */
-  counter: { type: Number, default: null },
+  counter?: number | null
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
    */
-  external: { type: Boolean, default: false },
+  external?: boolean
   /**
    * Provides the "href" link for the tag or label.
    */
-  href: { type: String, default: null },
+  href?: string | null
   /**
    * Determines the id of the component.
    */
-  id: { type: String, default: undefined },
+  id?: string
   /**
    * Determines the text of the label.
    */
-  label: { type: String, default: '' },
+  label?: string
   /**
    * Determines whether or not the tag is readonly.
    */
-  readonly: { type: Boolean, default: false },
+  readonly?: boolean
   /**
    * Determines the size of the tag.
    */
-  size: { type: String as PropType<TagIconSize>, default: 'sm' },
+  size?: TagIconSize
   /**
    * Determines if the tag is disabled.
    */
-  disabled: { type: Boolean, default: false }
+  disabled?: boolean
+}
+
+const props = withDefaults(defineProps<TagProps>(), {
+  action: null,
+  counter: null,
+  external: false,
+  href: null,
+  id: undefined,
+  label: '',
+  readonly: false,
+  size: 'sm',
+  disabled: false
 })
 
 const emit = defineEmits(['increment', 'decrement', 'remove'])
@@ -265,58 +277,68 @@ const icons = ref<TagIconTypes>({
 
 const renderLeftSlot = computed(() => !!slots.leftSlot)
 
-const paddingClass = computed(() => {
-  const { action, readonly, size } = props
-  switch (size) {
-    case 'sm':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
-    case 'md':
-      if(props.counter) {
-        return isAction(action) && !readonly ? '' : 'pr-2.5'
-      }
-      return isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
-    default:
-      return ''
+// Consolidated computed properties for better performance
+const tagClasses = computed(() => {
+  const { action, readonly, size, counter, disabled } = props
+
+  const padding = (() => {
+    switch (size) {
+      case 'sm':
+        if(counter) {
+          return action && isAction(action) && !readonly ? '' : 'pr-2'
+        }
+        return action && isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1 pr-0' : 'pl-2 pr-0' : 'px-2'
+      case 'md':
+        if(counter) {
+          return action && isAction(action) && !readonly ? '' : 'pr-2.5'
+        }
+        return action && isAction(action) && !readonly ? renderLeftSlot.value ? 'pl-1.5 pr-0' : 'pl-3 pr-0' : 'px-3'
+      default:
+        return ''
+    }
+  })()
+
+  const sizeValue = (() => {
+    switch (size) {
+      case 'sm': return 'h-6'
+      case 'md': return 'h-8'
+      default: return ''
+    }
+  })()
+
+  const textSize = (() => {
+    switch (size) {
+      case 'sm': return 'text-xs leading-4'
+      case 'md': return 'text-base leading-6'
+      default: return ''
+    }
+  })()
+
+  const buttonSize = (() => {
+    switch (size) {
+      case 'sm': return 'h-[1.375rem] w-6'
+      case 'md': return 'h-[1.875rem] w-8'
+      default: return ''
+    }
+  })()
+
+  const disabledValue = disabled ? 'opacity-50 pointer-events-none' : ''
+
+  return {
+    padding,
+    size: sizeValue,
+    textSize,
+    buttonSize,
+    disabled: disabledValue
   }
 })
 
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'h-6'
-    case 'md':
-      return 'h-8'
-    default:
-      return ''
-  }
-})
-
-const textSizeClass = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'text-xs leading-4'
-    case 'md':
-      return 'text-base leading-6'
-    default:
-      return ''
-  }
-})
-
-const buttonSizeClass = computed(() => {
-  switch (props.size) {
-    case 'sm':
-      return 'h-[1.375rem] w-6'
-    case 'md':
-      return 'h-[1.875rem] w-8'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => props.disabled ? 'opacity-50 pointer-events-none' : '')
+// Keep backward compatibility - expose individual properties
+const paddingClass = computed(() => tagClasses.value.padding)
+const sizeClass = computed(() => tagClasses.value.size)
+const textSizeClass = computed(() => tagClasses.value.textSize)
+const buttonSizeClass = computed(() => tagClasses.value.buttonSize)
+const disabledClass = computed(() => tagClasses.value.disabled)
 
 const increment = () => {
   count.value += 1

@@ -91,18 +91,11 @@ export interface TopFiveChartResult {
   url?: string
 }
 
-defineOptions({
-  name: 'SdsTopFiveChart'
-})
-
-const props = defineProps({
+interface TopFiveChartProps {
   /**
    * The title of the chart.
    */
-  title: {
-    type: String,
-    default: null,
-  },
+  title?: string | null;
   /**
    * An array of objects. Each object must contain a unique "id" param and a "title" and "count" param. The "url" param is optional.
    *
@@ -111,60 +104,51 @@ const props = defineProps({
    *
    * Example object: { id: 1, title: "Entry title", url: "https://seinet.sei.cmu.edu", count: 20 }
    */
-  entries: {
-    type: Array as PropType<TopFiveChartResult[]>,
-    default: () => [],
-  },
+  entries?: TopFiveChartResult[];
   /**
    * This prevents all entries from having a clickable link if set to true.
    */
-  doNotLinkEntries: {
-    type: Boolean,
-    default: false,
-  },
+  doNotLinkEntries?: boolean;
   /**
    * The url for the "View All" link. Hides the link if null or omitted.
    */
-  viewAllUrl: {
-    type: String,
-    default: null,
-  },
+  viewAllUrl?: string | null;
   /**
    * Determines the color of the progress bars.
    */
-  variant: {
-    type: String as PropType<'gray' | 'tan' | 'red' | 'green' | 'yellow' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo'>,
-    default: null,
-  },
+  variant?: 'gray' | 'tan' | 'red' | 'green' | 'yellow' | 'orange' | 'blue' | 'teal' | 'purple' | 'indigo' | null;
   /**
    * Displays a "%" character if true.
    */
-  showPercent: {
-    type: Boolean,
-    default: false,
-  },
+  showPercent?: boolean;
   /**
    * Decreases the size of the chart title and makes it bold if true.
    */
-  smallHeading: {
-    type: Boolean,
-    default: false,
-  },
+  smallHeading?: boolean;
   /**
    * The message displayed when no entries data is available.
    */
-  noDataMsg: {
-    type: String,
-    default: "There is no chart data to display at this time.",
-  },
+  noDataMsg?: string;
   /**
    * The message displayed when the entries data is missing the required "id", "title", or "count" params.
    */
-  missingPropsMsg: {
-    type: String,
-    default:
-      "The chart data is malformed and cannot be displayed at this time.",
-  },
+  missingPropsMsg?: string;
+}
+
+defineOptions({
+  name: 'SdsTopFiveChart'
+})
+
+const props = withDefaults(defineProps<TopFiveChartProps>(), {
+  title: null,
+  entries: () => [],
+  doNotLinkEntries: false,
+  viewAllUrl: null,
+  variant: null,
+  showPercent: false,
+  smallHeading: false,
+  noDataMsg: "There is no chart data to display at this time.",
+  missingPropsMsg: "The chart data is malformed and cannot be displayed at this time."
 })
 
 const emit = defineEmits(['result-click'])

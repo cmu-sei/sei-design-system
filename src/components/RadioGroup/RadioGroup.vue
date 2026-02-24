@@ -16,14 +16,15 @@
     >
       <input
         :id="`${root?.id}__option_${index}`"
-        v-model="localModelValue"
+        v-model="model"
         type="radio"
         class="relative top-1"
-        :class="{ valid, invalid }"
+        :class="validationClasses"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
-        :required="required && !localModelValue"
+        :required="required && !model"
         :disabled="disabled"
+        :readonly="readonly"
         @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->
@@ -35,7 +36,7 @@
         <label
           :for="`${root?.id}__option_${index}`"
           :class="{
-            'opacity-50 pointer-events-none select-none': disabled
+            'opacity-50 pointer-events-none select-none': disabled || readonly
           }"
         ><span>{{ option[labelKey] }}</span></label>
       </slot>
@@ -44,6 +45,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFormField } from '@/composables'
+
 export type RadioGroupOptionValue = boolean | string | number | null
 
 export interface RadioGroupOption<T> {
@@ -56,43 +59,60 @@ defineOptions({
   name: "SdsRadioGroup"
 })
 
-defineProps({
+interface RadioGroupProps {
   /**
    * The name of the radio form field.
    */
-  name: { type: String, default: null },
+  name?: string | null
   /**
    * An array of options for the radio group.
    */
-  options: { type: Array as PropType<RadioGroupOption<RadioGroupOptionValue>[]>, default: () => [] },
-  /**
-   * Determines whether the radio group is disabled or not.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines whether the radio group is required or not.
-   */
-  required: { type: Boolean, default: false },
+  options?: RadioGroupOption<RadioGroupOptionValue>[]
   /**
    * Determines whether the options are stacked vertically or horizontally.
    */
-  stacked: { type: Boolean, default: false },
+  stacked?: boolean
   /**
    * Determines the label key used for options
    */
-  labelKey: { type: String, default: 'text' },
+  labelKey?: string
   /**
    * Determines the value key used for options
    */
-  valueKey: { type: String, default: 'value' },
+  valueKey?: string
   /**
-   * Sets a valid styling if true.
+   * Disabled state for the form field.
    */
-  valid: { type: Boolean, default: false },
+  disabled?: boolean
   /**
-   * Sets an invalid styling if true.
+   * Readonly state for the form field.
    */
-  invalid: { type: Boolean, default: false }
+  readonly?: boolean
+  /**
+   * Required state for the form field.
+   */
+  required?: boolean
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean
+}
+
+const props = withDefaults(defineProps<RadioGroupProps>(), {
+  name: null,
+  options: () => [],
+  stacked: false,
+  labelKey: 'text',
+  valueKey: 'value',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -103,21 +123,11 @@ const model = defineModel<RadioGroupOptionValue | undefined>({
   default: undefined
 })
 
-const emit = defineEmits(['update:modelValue', 'change'])
+const emit = defineEmits(['change'])
+
+const { validationClasses } = useFormField(props)
 
 const root = ref()
-
-const localModelValue = computed({
-  get() {
-    return model.value
-  },
-  set(value: RadioGroupOptionValue) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
-})
 
 const onChange = (value: RadioGroupOptionValue) => {
   /**

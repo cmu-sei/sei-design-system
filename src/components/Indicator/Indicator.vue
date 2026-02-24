@@ -26,47 +26,40 @@ defineOptions({
   name: 'SdsIndicator'
 })
 
-const props = defineProps({
+interface IndicatorProps {
   /**
    * Determines whether to display the indicator or not.
    */
-  hideIndicator: {
-    type: Boolean, default: false
-  },
+  hideIndicator?: boolean
   /**
    * Determines the placement of the indicator.
    */
-  placement: {
-    type: String as PropType<'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'>,
-    default: 'top-right'
-  },
+  placement?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
   /**
    * Determines whether the indicator is placed over a portrait (rectangle) or a circle.
    */
-  placementOver: {
-    type: String as PropType<'portrait' | 'circle' | 'square'>,
-    default: 'portrait'
-  },
+  placementOver?: 'portrait' | 'circle' | 'square'
   /**
    * Determines the size of the component.
    */
-  size: {
-    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'>,
-    default: 'md'
-  },
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   /**
    * Determines the status of the indicator (used for accessibility).
    */
-  status: {
-    type: String, default: null
-  },
+  status?: string | null
   /**
    * Determines the color of the component.
    */
-  variant: {
-    type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,
-    default: 'primary'
-  }
+  variant?: 'gray' | 'blue' | 'green' | 'orange' | 'red'
+}
+
+const props = withDefaults(defineProps<IndicatorProps>(), {
+  hideIndicator: false,
+  placement: 'top-right',
+  placementOver: 'portrait',
+  size: 'md',
+  status: null,
+  variant: 'blue'
 })
 
 const placementClass = computed(() => {

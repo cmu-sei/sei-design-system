@@ -1545,6 +1545,7 @@
       <div class="space-x-4">
         <sds-dropdown
           title="Dropdown"
+          size="sm"
         >
           <sds-dropdown-header>
             <p>Signed in as</p>
@@ -1730,6 +1731,7 @@
         <sds-filter-by-dropdown
           v-model="filterBy.options"
           enable-sort-options
+          enable-filter
           show-count
           @update:model-value="filtered"
         />

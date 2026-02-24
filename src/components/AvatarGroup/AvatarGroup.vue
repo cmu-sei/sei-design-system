@@ -4,7 +4,7 @@
     :class="rightClasses"
   >
     <template
-      v-for="(item, index) in srcset.slice(0, 4)"
+      v-for="(item, index) in srcset.slice(0, 3)"
     >
       <a
         v-if="item.href"
@@ -59,7 +59,7 @@
       </SdsTooltip>
     </template>
     <SdsDropdown
-      v-if="srcset.length >= 5"
+      v-if="srcset.length >= 4"
     >
       <template #trigger="{ toggle }">
         <button
@@ -80,12 +80,15 @@
           ]"
           @click="toggle()"
         >
-          +{{ srcset.length - 4 }}
+          +{{ srcset.length - 3 }}
         </button>
       </template>
       <SdsDropdownItem
-        v-for="(item, index) in srcset.slice(4)"
+        v-for="(item, index) in srcset.slice(3)"
         :key="index"
+        :href="item.href ?? undefined"
+        :target="item.target ?? undefined"
+        :rel="item.target === '_blank' ? 'noopener noreferrer' : undefined"
       >
         <div class="flex flex-row gap-2">
           <SdsAvatar
@@ -122,28 +125,19 @@ export interface AvatarGroupItem {
   target?: string | null
 }
 
-const props = defineProps({
+interface AvatarGroupProps {
   /**
    * Determines the shape of the avatar.
    */
-  shape: {
-    type: String as PropType<'circle' | 'square'>,
-    default: 'circle'
-  },
+  shape?: 'circle' | 'square';
   /**
    * Determines the size of the avatar.
    */
-  size: {
-    type: String as PropType<'xs' | 'sm' | 'md'>,
-    default: 'md'
-  },
+  size?: 'xs' | 'sm' | 'md';
   /**
    * Determines the spacing between avatar images.
    */
-  density: {
-    type: String as PropType<'default' | 'condensed'>,
-    default: 'default'
-  },
+  density?: 'default' | 'condensed';
   /**
    * **name** (required) — Determines the text name (e.g. John Doe will show "JD" initials as a placeholder when no image is present)
    * The full name, "John Doe" will display on hover with or without an image present.
@@ -156,10 +150,14 @@ const props = defineProps({
    *
    * **target** (optional) — Sets the `target` attribute for avatar links (e.g. `_blank`, `_self`, etc.)
    */
-  srcset: {
-    type: Array as PropType<AvatarGroupItem[]>,
-    default: () => []
-  }
+  srcset?: AvatarGroupItem[];
+}
+
+const props = withDefaults(defineProps<AvatarGroupProps>(), {
+  shape: 'circle',
+  size: 'md',
+  density: 'default',
+  srcset: () => []
 })
 
 const rightClasses = computed(() => {

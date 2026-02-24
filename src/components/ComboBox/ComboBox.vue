@@ -6,11 +6,13 @@
   >
     <div
       class="input-group flex flex-col"
-      :class="{
-        disabled,
-        'input-group-sm': size === 'sm',
-        'bg-gray-50 dark:bg-gray-950': readonly
-      }"
+      :class="[
+        validationClasses,
+        {
+          'input-group-sm': size === 'sm',
+          'bg-gray-50 dark:bg-gray-950': readonly
+        }
+      ]"
     >
       <div
         v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
@@ -47,23 +49,14 @@
           }"
         >
           <span class="sr-only">Combo box</span>
-          <svg
+          <IconFa7SolidMagnifyingGlass
             v-if="!pending"
-            aria-hidden="true"
-            focusable="false"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
             :class="{
-              'w-4 h-3.5': size === 'sm',
-              'w-4 h-4': size !== 'sm',
+              '-mt-px': true,
+              'w-4 h-4': size === 'sm',
+              'w-5 h-5': size !== 'sm',
             }"
-          >
-            <path
-              fill="currentColor"
-              d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-            />
-          </svg>
+          />
           <SdsLoadingSpinner
             v-else
             size="sm"
@@ -100,6 +93,7 @@
           :disabled="disabled"
           :readonly="isReadonly"
           :maxlength="maxlength"
+          :required="required && !((type === 'select' || type === 'taggable-select'))"
           @input="onInputFieldInput"
           @click.prevent="inputClick"
           @keydown.delete="handleDelete"
@@ -110,6 +104,18 @@
           @keydown.right="handleArrows('right', $event)"
           @keydown.enter.prevent.self
           @keyup.enter.prevent.self="handleEnterKeyUp"
+        >
+        <!-- Validation input for select/taggable-select types - checks if selected array has items -->
+        <input
+          v-if="(type === 'select' || type === 'taggable-select')"
+          type="text"
+          :value="selected.length > 0 ? 'selected' : ''"
+          :required="required"
+          tabindex="-1"
+          class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
+          style="clip: rect(0, 0, 0, 0);"
+          @input.prevent
+          @keydown.prevent
         >
         <button
           v-if="showClearButton"
@@ -123,19 +129,7 @@
           @mousedown.prevent="clearQuery"
         >
           <span class="sr-only">Clear query</span>
-          <svg
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            :class="{
-              'w-4 h-4': size === 'sm',
-              'w-5 h-5': size !== 'sm',
-            }"
-            aria-hidden="true"
-          ><path d="M6 18L18 6M6 6l12 12" /></svg>
+          <IconFa7SolidXmark />
         </button>
         <div
           v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
@@ -335,20 +329,10 @@
                 >
                   {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
                 </slot>
-                <svg
+                <IconFa7SolidCheck
                   v-if="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text' && !multiple"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="11"
-                  height="9"
-                  viewBox="0 0 11 9"
-                  fill="none"
-                  class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-                >
-                  <path
-                    d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-                    fill="currentColor"
-                  />
-                </svg>
+                  class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
+                />
               </component>
               <div
                 v-else
@@ -421,20 +405,10 @@
               >
                 {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
               </slot>
-              <svg
+              <IconFa7SolidCheck
                 v-if="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text' && !multiple"
-                xmlns="http://www.w3.org/2000/svg"
-                width="11"
-                height="9"
-                viewBox="0 0 11 9"
-                fill="none"
-                class="text-blue-700 dark:text-blue-400 ml-auto my-auto"
-              >
-                <path
-                  d="M10.5156 0.984375C10.8203 1.26562 10.8203 1.75781 10.5156 2.03906L4.51562 8.03906C4.23438 8.34375 3.74219 8.34375 3.46094 8.03906L0.460938 5.03906C0.15625 4.75781 0.15625 4.26562 0.460938 3.98438C0.742188 3.67969 1.23438 3.67969 1.51562 3.98438L3.97656 6.44531L9.46094 0.984375C9.74219 0.679688 10.2344 0.679688 10.5156 0.984375Z"
-                  fill="currentColor"
-                />
-              </svg>
+                class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
+              />
             </component>
             <div
               v-else
@@ -528,19 +502,9 @@
               }"
               :label="query"
             >
-              <!-- Font Awesome Solid (plus) -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="32"
+              <IconFa7SolidPlus
                 class="w-3 h-3 my-auto ml-1 mr-2"
-                viewBox="0 0 448 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32v144H48c-17.7 0-32 14.3-32 32s14.3 32 32 32h144v144c0 17.7 14.3 32 32 32s32-14.3 32-32V288h144c17.7 0 32-14.3 32-32s-14.3-32-32-32H256z"
-                />
-              </svg>
+              />
               Add "{{ query }}"
             </slot>
           </button>
@@ -553,32 +517,12 @@
       >
         <div class="ml-auto flex items-center gap-1.5">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <svg
+            <IconFa7SolidArrowUp
               class="w-3 h-3"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 384 512"
-            >
-              <path
-                fill="currentColor"
-                d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-              />
-            </svg>
-            <svg
+            />
+            <IconFa7SolidArrowDown
               class="w-3 h-3"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 384 512"
-            >
-              <path
-                fill="currentColor"
-                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-              />
-            </svg>
+            />
           </div>
           <span class="sr-only">Up, down</span> to navigate
         </div>
@@ -587,50 +531,20 @@
           class="flex items-center gap-1.5"
         >
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <svg
+            <IconFa7SolidArrowLeft
               class="w-3 h-3"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path
-                fill="currentColor"
-                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
-              />
-            </svg>
-            <svg
+            />
+            <IconFa7SolidArrowRight
               class="w-3 h-3"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path
-                fill="currentColor"
-                d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
-              />
-            </svg>
+            />
           </div>
           <span class="sr-only">Left, right</span> to switch tabs
         </div>
         <div class="flex items-center gap-1.5">
           <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <svg
+            <IconFa7SolidRotateLeft
               class="w-3 h-3"
-              aria-hidden="true"
-              focusable="false"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="currentColor"
-                d="M448 64c0-17.7 14.3-32 32-32s32 14.3 32 32V224c0 53-43 96-96 96H109.3l73.4 73.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3l128-128c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3L109.3 256H416c17.7 0 32-14.3 32-32V64z"
-              />
-            </svg>
+            />
           </div>
           <span class="sr-only">Enter</span> to select
         </div>
@@ -643,112 +557,155 @@
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
+import { useFormField } from '@/composables'
 
 export type ComboBoxSuggestionObject = { [id: string | number]: unknown }
 export type ComboBoxSuggestion = ComboBoxSuggestionObject | string
 
-defineOptions({ name: 'SdsComboBox' })
-
-const props = defineProps({
+interface ComboBoxProps {
   /**
    * Determine whether to autofocus the input.
    */
-  autofocus: { type: Boolean, default: false },
+  autofocus?: boolean;
   /**
    * Display the suggestions dropdown on click.
    */
-  clickToSelect: { type: Boolean, default: false },
+  clickToSelect?: boolean;
   /**
    * The debounce period before complete event is emitted.
    */
-  debounceComplete: { type: Number, default: 250 },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
+  debounceComplete?: number;
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
-  disableGroupTabs: { type: Boolean, default: false },
+  disableGroupTabs?: boolean;
   /**
    * The max amount of characters that can be entered into the input.
    */
-  maxlength: { type: Number, default: undefined },
+  maxlength?: number;
   /**
    * Allows the user to select multiple items. This setting only works with the `type`
    * prop set to "select" or "taggable-select", because the text type is not a selection field.
    */
-  multiple: { type: Boolean, default: false },
+  multiple?: boolean;
   /**
    * Determines the id of the input.
    */
-  id: { type: String, default: undefined },
+  id?: string;
   /**
    * Determines whether to focus the input on "/" key press.
    */
-  focusOnKeyPress: { type: Boolean, default: false },
+  focusOnKeyPress?: boolean;
   /**
    * If enabled, the suggestions will narrow down as the user types, otherwise the suggestions
    * will remain a static list. Setting to `false` is necessary for suggestions that are provided
    * _and filtered_ by a secondary API.
    */
-  filterSuggestions: { type: Boolean, default: false },
+  filterSuggestions?: boolean;
   /**
    * This will hide the "/" and focus tooltip helper text,
    * but `focusOnKeyPress` can still be enabled.
    */
-  hideFocusIndicator: { type: Boolean, default: false },
+  hideFocusIndicator?: boolean;
   /**
    * Determines whether to hide empty groups from the tabbed group suggestions.
    */
-  hideEmptyGroups: { type: Boolean, default: false },
+  hideEmptyGroups?: boolean;
   /**
    * The label key used for each non-group suggestion.
    */
-  optionLabel: { type: String, default: undefined },
+  optionLabel?: string;
   /**
    * The label key used for each group suggestion.
    */
-  optionGroupLabel: { type: String, default: undefined },
+  optionGroupLabel?: string;
   /**
    * The key used to determine the children array for each group suggestion.
    */
-  optionGroupChildren: { type: String, default: undefined },
+  optionGroupChildren?: string;
   /**
    * Determines the type, or tag, use for the option/component
    */
-  optionType: { type: String as () => 'a' | 'button' | 'custom', default: 'button' },
+  optionType?: 'a' | 'button' | 'custom';
   /**
    * The pending prop allows the user to show a loading spinner in the input.
    * This is useful when fetching suggestions from an API.
    */
-  pending: { type: Boolean, default: false },
+  pending?: boolean;
   /**
    * The placeholder for the input.
    */
-  placeholder: { type: String, default: undefined },
-  /**
-   * Makes the input read-only, preventing user input but still allowing focus and selection.
-   */
-  readonly: { type: Boolean, default: false },
+  placeholder?: string;
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
-  size: { type: String as () => 'sm' | 'md', default: undefined },
+  size?: 'sm' | 'md';
   /**
    * The suggestions used for autosuggest.
    */
-  suggestions: { type: Array as () => ComboBoxSuggestion[], default: () => [] },
+  suggestions?: ComboBoxSuggestion[];
   /**
    * Use combobox as text "autosuggest", selectable text, or taggable-selection.
    */
-  type: { type: String as () => 'text' | 'select' | 'taggable-select', default: 'text' }
+  type?: 'text' | 'select' | 'taggable-select';
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+  /**
+   * Determines whether the field is read-only.
+   */
+  readonly?: boolean;
+  /**
+   * Determines whether the field is required.
+   */
+  required?: boolean;
+  /**
+   * Sets a valid styling if true.
+   */
+  valid?: boolean;
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid?: boolean;
+}
+
+defineOptions({ name: 'SdsComboBox' })
+
+const props = withDefaults(defineProps<ComboBoxProps>(), {
+  autofocus: false,
+  clickToSelect: false,
+  debounceComplete: 250,
+  disableGroupTabs: false,
+  maxlength: undefined,
+  multiple: false,
+  id: undefined,
+  focusOnKeyPress: false,
+  filterSuggestions: false,
+  hideFocusIndicator: false,
+  hideEmptyGroups: false,
+  optionLabel: undefined,
+  optionGroupLabel: undefined,
+  optionGroupChildren: undefined,
+  optionType: 'button',
+  pending: false,
+  placeholder: undefined,
+  size: undefined,
+  suggestions: () => [],
+  type: 'text',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const root = ref(), scrollArea = ref(), inputField = ref(), selectAllRef = ref(), dropdownOption = ref()
 const isReadonly = ref(props.readonly)
+
+const { validationClasses } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)
@@ -1063,6 +1020,15 @@ const inputDisplayValue = computed(() => {
       return removeHtmlFromString(label)
     }
   }
+  // If there are selections (and query is empty), use the first selected value for form validation
+  // Only for single-select mode (multiselect shows selected items as tags, so input should be empty)
+  if (selected.value.length > 0 && query.value === '' && !props.multiple) {
+    const firstSelected = selected.value[0]
+    if (typeof firstSelected === 'object') {
+      return String(props.optionLabel ? firstSelected[props.optionLabel as string] : firstSelected[defaultOptionLabel.value] ?? '')
+    }
+    return String(firstSelected)
+  }
   // Otherwise, show the query
   return removeHtmlFromString(query.value)
 })
@@ -1135,10 +1101,22 @@ const scrollToChild = async () => {
 
 const clearQuery = () => {
   suppressCompleteDueToSelection = true
+  // For multiselect: first click clears query, second click clears selections
+  // For single-select: one click clears everything
   if (inputDisplayValue.value !== '') {
     query.value = ''
     inputField.value.value = ''
-  } else if (props.type === 'select' || props.type === 'taggable-select') {
+    // In multiselect mode, only clear query on first click (keep selections)
+    if (props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
+      isReadonly.value = props.readonly || false
+      showDropdown.value = false
+      inputField.value.focus()
+      return
+    }
+  }
+  // Clear selections for select/taggable-select types (and text type when input is empty)
+  // This handles the second click in multiselect mode or any click when input is already empty
+  if (props.type === 'select' || props.type === 'taggable-select' || props.type === 'text') {
     selected.value = []
   }
   isReadonly.value = props.readonly || false
@@ -1207,7 +1185,6 @@ const multiselectAdd = async () => {
     }
     suppressCompleteDueToLabelUpdate = true
     query.value = normalizedLabel
-    if (selected.value.length && props.type !== 'text') isReadonly.value = props.readonly || true
   }
   await nextTick()
   arrowCounter.value = -1
@@ -1233,6 +1210,14 @@ const multiselectRemove = (index: number) => {
 
 const handleDelete = () => {
   if (selected.value.length && props.type === 'text') (selected.value as ComboBoxSuggestion[]).pop()
+  // For single-select (select/taggable-select), pressing Delete clears the entire selection
+  if (selected.value.length && !props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
+    multiselectRemove(-1)
+    query.value = ''
+    if (inputField.value) inputField.value.value = ''
+    isReadonly.value = props.readonly || false
+    return
+  }
   if (selected.value.length && inputField.value.value === '') multiselectRemove(-1)
 }
 
@@ -1330,6 +1315,17 @@ watch([query, inputDisplayValue, () => selected.value.length, () => props.multip
 // Input handler for the input field (replaces v-model)
 const onInputFieldInput = (e: Event) => {
   const target = e.target as HTMLInputElement
+  // If user starts typing with an existing single selection in select/taggable-select mode,
+  // clear the selection and allow them to type a new value
+  if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select') && selected.value.length > 0) {
+    selected.value = []
+    isReadonly.value = props.readonly || false
+    // Clear the input value so typing starts fresh (not concatenated to the selected value)
+    target.value = target.value.slice(-1) // Keep only the last typed character
+    query.value = target.value
+    handleInput()
+    return
+  }
   query.value = target.value
   handleInput()
 }

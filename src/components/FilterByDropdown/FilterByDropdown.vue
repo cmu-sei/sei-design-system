@@ -27,18 +27,9 @@
         <slot name="title">
           <span>{{ title + (props.showCount ? ` (${selectedCount})` : '') }}</span>
         </slot>
-        <svg
-          class="inline-block self-center w-5 h-5 -mr-1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
+        <IconFa7SolidChevronDown
+          class="inline-block self-center w-4 h-4"
+        />
       </SdsActionButton>
     </template>
     <template #default="{ close }">
@@ -136,6 +127,7 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
+import { useZIndex } from '@/composables'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -152,55 +144,66 @@ defineOptions({
   name: "SdsFilterByDropdown"
 })
 
-const props = defineProps({
+interface FilterByDropdownProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  kind?: 'primary' | 'secondary' | 'ghost';
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
+  variant?: 'gray' | 'blue';
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * The title for the toggle button.
    */
-  title: { type: String, default: "Filter" },
+  title?: string;
   /**
    * Determine whether to enable option filtering on the dropdown.
    */
-  enableFilter: { type: Boolean, default: false },
+  enableFilter?: boolean;
   /**
    * Determines whether to alphabetically sort the options.
    */
-  enableSortOptions: { type: Boolean, default: false },
+  enableSortOptions?: boolean;
   /**
    * Determines the placement of the dropdown on the screen.
    */
-  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' },
+  placement?: FilterByDropdownPlacement;
   /**
    * Determines if the dropdown is disabled
    */
-  disabled: { type: Boolean, default: false},
+  disabled?: boolean;
   /**
    * Determines if the count is visible next to the title
    */
-  showCount: { type: Boolean, default: false}
+  showCount?: boolean;
+}
+
+const props = withDefaults(defineProps<FilterByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: "Filter",
+  enableFilter: false,
+  enableSortOptions: false,
+  placement: 'bottom-start' as FilterByDropdownPlacement,
+  disabled: false,
+  showCount: false
 })
 
 /**
  * The v-model for this component. Determines opened/closed state.
  */
-const model = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
-
-const emit = defineEmits(['update:modelValue'])
+const options = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
 
 const button = ref<HTMLButtonElement | undefined>()
 const filterTextInput = ref<HTMLInputElement | undefined>()
@@ -209,38 +212,7 @@ const tmpOptions = ref([])
 
 const selectedCount = computed(() => options.value.filter((i: FilterByDropdownOption) => i.selected).length)
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
-})
-
-const options = computed({
-  get() {
-    return model.value;
-  },
-  set(value: FilterByDropdownOption[]) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit("update:modelValue", value);
-  },
-})
+const { zIndexClass } = useZIndex(() => props.zIndex)
 
 const allSelected = computed(() => {
   return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
@@ -270,10 +242,7 @@ const toggleSelect = () => {
 }
 
 const saveSelections = () => {
-  /**
-   * Emmitted when modelValue changes.
-   */
-  emit("update:modelValue", tmpOptions.value);
+  options.value = tmpOptions.value;
 }
 
 const cancelSelections = () => {
@@ -281,13 +250,11 @@ const cancelSelections = () => {
   resetTmpOptions();
 }
 
-const handleInputFocus = () => {
+const handleInputFocus = async () => {
   if (!props.enableFilter) return
-  const interval = setInterval(() => {
-    if (typeof filterTextInput.value === 'undefined') return
+  setTimeout(() => {
     filterTextInput.value?.focus()
-    clearInterval(interval)
-  }, 100)
+  }, 0)
 }
 
 const resetTmpOptions = () => {

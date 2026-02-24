@@ -14,7 +14,7 @@ exports[`ActionDropdown > should be block styling 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md action-btn-block"
+      class="space-x action-btn action-btn-secondary action-btn-red action-btn-block"
       id="v-0"
       type="button"
     >
@@ -23,22 +23,23 @@ exports[`ActionDropdown > should be block styling 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -66,22 +67,23 @@ exports[`ActionDropdown > should be disabled 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -108,22 +110,23 @@ exports[`ActionDropdown > should have a ghost kind with a blue variant 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -150,22 +153,23 @@ exports[`ActionDropdown > should have a lg size 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -183,7 +187,7 @@ exports[`ActionDropdown > should have a md size 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md"
+      class="space-x action-btn action-btn-secondary action-btn-red"
       id="v-0"
       type="button"
     >
@@ -192,22 +196,23 @@ exports[`ActionDropdown > should have a md size 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -234,22 +239,23 @@ exports[`ActionDropdown > should have a primary kind with a gray variant 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -276,22 +282,23 @@ exports[`ActionDropdown > should have a secondary kind with a red variant 1`] = 
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -318,22 +325,23 @@ exports[`ActionDropdown > should have an xs size 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -360,22 +368,23 @@ exports[`ActionDropdown > should have the proper title 1`] = `
       Title for the action dropdown
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -393,7 +402,7 @@ exports[`ActionDropdown > should hide the arrow 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md"
+      class="space-x action-btn action-btn-secondary action-btn-red"
       id="v-0"
       type="button"
     >
@@ -406,7 +415,7 @@ exports[`ActionDropdown > should hide the arrow 1`] = `
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -433,22 +442,23 @@ exports[`ActionDropdown > should match its default snapshot 1`] = `
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -475,22 +485,23 @@ exports[`ActionDropdown > should match its kind ghost, variant white snapshot 1`
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -517,22 +528,23 @@ exports[`ActionDropdown > should match its kind primary, variant white snapshot 
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -559,21 +571,22 @@ exports[`ActionDropdown > should match its kind secondary, variant white snapsho
       
       
       <svg
-        class="inline-block self-center w-5 h-5 -mr-1"
-        fill="currentColor"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        class="inline-block self-center w-4 h-4"
+        height="1.2em"
+        role="img"
+        viewBox="0 0 640 640"
+        width="1.2em"
       >
         <path
-          clip-rule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          fill-rule="evenodd"
+          d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          fill="currentColor"
         />
       </svg>
     </button>
     
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;

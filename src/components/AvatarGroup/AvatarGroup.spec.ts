@@ -61,8 +61,8 @@ describe('AvatarGroup', () => {
   ]
 
   it('applies mask-none and max-w-fit classes to the last avatar', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 4) } })
-    // The last avatar is index 3, length-1 = 3
+    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3) } })
+    // The last avatar is index 2, length-1 = 2
     const tooltips = wrapper.findAllComponents(SdsTooltip)
     // Find the last tooltip
     const lastTooltip = tooltips[tooltips.length - 1]
@@ -80,7 +80,7 @@ describe('AvatarGroup', () => {
       { size: 'xs', shape: 'square', expected: ['sds-theme-plaid:rounded-none', 'rounded-sm', 'text-xs', 'size-6'] },
     ]
     for (const { size, shape, expected } of combos) {
-      const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 5), size, shape } })
+      const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 4), size, shape } })
       const button = wrapper.find('button')
       for (const cls of expected) {
         expect(button.classes()).toContain(cls)
@@ -97,7 +97,7 @@ describe('AvatarGroup', () => {
     items.forEach((item, idx) => {
       const avatar = item.findComponent(SdsAvatar)
       expect(avatar.exists()).toBe(true)
-      expect(item.text()).toContain(`Avatar Name${idx + 5}`)
+      expect(item.text()).toContain(`Avatar Name${idx + 4}`)
     })
   })
 
@@ -140,9 +140,9 @@ describe('AvatarGroup', () => {
     await wrapper.vm.$nextTick()
     await new Promise(resolve => setTimeout(resolve, 10))
     const avatar = wrapper.findComponent(SdsDropdownItem).findComponent(SdsAvatar)
-    expect(avatar.props('variant')).toBe(srcset[4].variant)
-    expect(avatar.props('src')).toBe(srcset[4].src)
-    expect(avatar.props('name')).toBe(srcset[4].name)
+    expect(avatar.props('variant')).toBe(srcset[3].variant)
+    expect(avatar.props('src')).toBe(srcset[3].src)
+    expect(avatar.props('name')).toBe(srcset[3].name)
   })
 
   it('root div has correct classes for each size', () => {
@@ -219,17 +219,17 @@ describe('AvatarGroup', () => {
     expect(avatar.props('name')).toBe('Extra')
   })
 
-  it('renders correct number of avatars and dropdown for 4, 5, 6, 7, 8 avatars', () => {
-    [4, 5, 6, 7, 8].forEach(count => {
+  it('renders correct number of avatars and dropdown for 3, 4, 5, 6, 7, 8 avatars', () => {
+    [3, 4, 5, 6, 7, 8].forEach(count => {
       const srcset = Array.from({ length: count }, (_, i) => ({ name: `Avatar ${i+1}` }))
       const wrapper = mount(Component, { props: { srcset } })
       const avatars = wrapper.findAllComponents(SdsAvatar)
       const dropdown = wrapper.findAllComponents(SdsDropdown)
-      if (count <= 4) {
+      if (count <= 3) {
         expect(avatars.length).toBe(count)
         expect(dropdown.length).toBe(0)
       } else {
-        expect(avatars.length).toBe(4)
+        expect(avatars.length).toBe(3)
         expect(dropdown.length).toBe(1)
       }
     })
@@ -269,7 +269,7 @@ describe('AvatarGroup', () => {
     /* Ensure the AvatarGroup renders with the correct number of avatars */
     const tooltips = wrapper3.findAllComponents(SdsTooltip)
     expect(tooltips.length).toBe(3)
-    /* Dropdown should not exist for groups <5 */
+    /* Dropdown should not exist for groups <=3 */
     const dropdown = wrapper3.findAllComponents(SdsDropdown)
     expect(dropdown.length).toBe(0)
   })
@@ -287,11 +287,11 @@ describe('AvatarGroup', () => {
       shape: 'square',
       size: 'sm',
       density: 'condensed',
-      srcset: srcset.slice(0, 4)
+      srcset: srcset.slice(0, 3)
     }
   })
 
-  it('matches snapshot with 4 avatars and specific props (shape: square, size: xs, density: condensed)', () => {
+  it('matches snapshot with 3 avatars and specific props (shape: square, size: sm, density: condensed)', () => {
     expect(wrapper4.element).toMatchSnapshot()
   })
 
@@ -307,11 +307,11 @@ describe('AvatarGroup', () => {
     expect(avatar.classes()).toContain('size-8')
   })
 
-  it('has 4 tooltip elements and no dropdown (shape: square, size: xs, density: condensed)', () => {
+  it('has 3 tooltip elements and no dropdown (shape: square, size: sm, density: condensed)', () => {
     /* Ensure the AvatarGroup renders with the correct number of avatars */
     const tooltips = wrapper4.findAllComponents(SdsTooltip)
-    expect(tooltips.length).toBe(4)
-    /* Dropdown should not exist for groups <5 */
+    expect(tooltips.length).toBe(3)
+    /* Dropdown should not exist for groups <=3 */
     const dropdown = wrapper4.findAllComponents(SdsDropdown)
     expect(dropdown.length).toBe(0)
   })
@@ -350,10 +350,10 @@ describe('AvatarGroup', () => {
     expect(avatar.classes()).toContain('size-6')
   })
 
-  it('has "+3" in the dropdown trigger text', () => {
-    /* Ensure the dropdown trigger text reflects the number of additional avatars */
+  it('has "+4" in the dropdown trigger text', () => {
+    /* Ensure the dropdown trigger text reflects the number of additional avatars (7 total - 3 shown = 4) */
     const dropdown = wrapper7.findComponent(SdsDropdown)
-    expect(dropdown.text()).toContain('+3')
+    expect(dropdown.text()).toContain('+4')
   })
 
   it('has correct href and target on first avatar', () => {
@@ -369,21 +369,21 @@ describe('AvatarGroup', () => {
     expect(firstAvatar.style.backgroundImage).toEqual('url("https://picsum.photos/seed/1/200/200")');
   })
 
-  it('has 7 tooltip elements and a dropdown (shape: square, size: xs, density: condensed)', () => {
+  it('has 3 tooltip elements and a dropdown (shape: circle, size: xs, density: condensed)', () => {
     /* Ensure the AvatarGroup renders with the correct number of avatars */
     const tooltips = wrapper7.findAllComponents(SdsTooltip)
-    expect(tooltips.length).toBe(4)
-    /* Dropdown should appear for groups >4 */
+    expect(tooltips.length).toBe(3)
+    /* Dropdown should appear for groups >=4 */
     const dropdown = wrapper7.findAllComponents(SdsDropdown)
     expect(dropdown.length).toBe(1)
   })
 
-  it('shows SdsDropdown div after click, contains 3 additional SdsAvatars', async () => {
+  it('shows SdsDropdown div after click, contains 4 additional SdsAvatars', async () => {
     wrapper7.find('button').trigger('click')
     await wrapper7.vm.$nextTick()
     // Wait for the floating-ui element to appear
     await new Promise(resolve => setTimeout(resolve, 10))
-    expect(wrapper7.findAllComponents(SdsDropdownItem).length).toEqual(3)
+    expect(wrapper7.findAllComponents(SdsDropdownItem).length).toEqual(4)
     expect(wrapper7.findAllComponents(SdsAvatar).length).toEqual(srcset.length)
   })
 

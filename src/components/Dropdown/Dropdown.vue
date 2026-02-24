@@ -1,5 +1,5 @@
 <template>
-  <floating-ui
+  <SdsFloatingUi
     data-id="sds-dropdown"
     :offset="offset"
     :strategy="strategy"
@@ -47,19 +47,14 @@
           <slot name="title">
             {{ title }}
           </slot>
-          <svg
+          <IconFa7SolidChevronDown
             v-if="!hideArrow"
-            class="inline-block self-center w-5 h-5 -mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
+            class="inline-block self-center"
+            :class="{
+              'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm' || size === '',
+              'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm' && size !== '',
+            }"
+          />
         </button>
       </slot>
     </template>
@@ -82,82 +77,77 @@
         />
       </div>
     </template>
-  </floating-ui>
+  </SdsFloatingUi>
 </template>
 
 <script setup lang="ts">
-import FloatingUi from "../FloatingUi/FloatingUi.vue";
+import SdsFloatingUi from "../FloatingUi/FloatingUi.vue";
+import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue } from '@/composables'
 
 import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
 export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
 
-const id = useId()
-
-defineOptions({
-  name: 'SdsDropdown'
-})
-
-const props = defineProps({
+interface DropdownProps {
   /**
    * The content of the dropdown trigger.
    */
-  title: { type: String, default: '' },
+  title?: string;
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: 'secondary' },
+  kind?: ButtonKind;
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'blue' | 'red' | 'white'>, default: '' },
+  variant?: ButtonVariant;
   /**
    * Allows you to force dark mode on all child components
    */
-  type: { type: String as PropType<'dark'>, default: undefined},
+  type?: 'dark';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: ZIndexValue;
   /**
    * The distance between the popper and the trigger.
    */
-  offset: { type: Number, default: 5 },
+  offset?: number;
   /**
    * Delays opening the toggle in ms.
    */
-  openDelay: { type: Number, default: 0 },
+  openDelay?: number;
   /**
    * Delays closing the toggle in ms.
    */
-  closeDelay: { type: Number, default: 0 },
+  closeDelay?: number;
   /**
    * Determines the size of the trigger button.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size?: 'md' | 'sm' | '';
   /**
    * Determines if the arrow should display or not.
    */
-  hideArrow: { type: Boolean, default: false },
+  hideArrow?: boolean;
   /**
    * Determines whether the content of the popper will set the width of the popper.
    */
-  auto: { type: Boolean, default: false },
+  auto?: boolean;
   /**
    * The strategy of the popover on the screen.
    */
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  strategy?: Strategy;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<DropdownPlacement>, default: 'bottom-start' },
+  placement?: DropdownPlacement;
   /**
    * Determines whether to use the block styling on the trigger button or not.
    */
-  block: { type: Boolean, default: false },
+  block?: boolean;
   /**
    * Determines if the popover should display or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean;
   /**
    * Allows for code execution prior to opening the popover.
    * 
@@ -182,7 +172,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willOpen?: GenericFunctionType;
   /**
    * Allows for code execution prior to closing the popover.
    * 
@@ -207,88 +197,55 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
-})
-
-const button = ref()
-
-const handleClick = (isOpen: boolean, open: GenericFunctionType, close: GenericFunctionType) => {
-  if (isOpen) {
-    close(props.closeDelay)
-  } else {
-    open(props.openDelay)
-  }
+  willClose?: GenericFunctionType;
 }
 
-const zIndexClass = computed(() => {
-  switch (props.zIndex) {
-    case '0':
-      return 'z-0'
-    case '10':
-      return 'z-10'
-    case '20':
-      return 'z-20'
-    case '30':
-      return 'z-30'
-    case '40':
-      return 'z-40'
-    case '50':
-      return 'z-50'
-    case 'auto':
-      return 'z-auto'
-    default:
-      return ''
-  }
+defineOptions({
+  name: 'SdsDropdown'
 })
 
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'md':
-      return ''
-    case 'sm':
-      return 'btn-sm'
-    default:
-      return ''
-  }
+const props = withDefaults(defineProps<DropdownProps>(), {
+  title: '',
+  kind: 'secondary',
+  variant: '' as ButtonVariant,
+  type: undefined,
+  zIndex: '50',
+  offset: 5,
+  openDelay: 0,
+  closeDelay: 0,
+  size: 'md',
+  hideArrow: false,
+  auto: false,
+  strategy: 'absolute',
+  placement: 'bottom-start',
+  block: false,
+  disabled: false,
+  willOpen: undefined,
+  willClose: undefined
 })
 
-const btnClass = computed(() => {
-  return props.kind ? 'btn' : ''
-})
-
-const kindClass = computed(() => {
-  switch (props.kind) {
-    case 'primary':
-      return 'btn-primary'
-    case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
-    case 'ghost':
-      return 'btn-ghost'
-    default:
-      return ''
-  }
-})
-
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'blue':
-      return 'btn-blue'
-    case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => {
-  return props.disabled ? 'disabled' : ''
-})
-
-const blockClass = computed(() => {
-  return props.block ? 'btn-block' : ''
+// Use unified dropdown composable
+const {
+  id,
+  buttonRef: button,
+  zIndexClass,
+  btnClass,
+  kindClass,
+  variantClass,
+  sizeClass,
+  disabledClass,
+  blockClass,
+  handleClick
+} = useDropdown({
+  prefix: 'btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  zIndex: () => props.zIndex,
+  disabled: () => props.disabled,
+  block: () => props.block,
+  openDelay: props.openDelay,
+  closeDelay: props.closeDelay,
+  darkMode: () => props.type === 'dark'
 })
 </script>

@@ -56,46 +56,72 @@
 </template>
 
 <script setup lang="ts">
+import { useButtonClasses, type ButtonKind, type ButtonVariant, type ButtonSize } from '@/composables'
+
 defineOptions({
   name: 'SdsButton'
 })
 
-const props = defineProps({
+interface ButtonProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'tertiary' | 'ghost'>, default: '' },
+  kind?: ButtonKind
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<'gray' | 'blue' | 'red' | 'white'>, default: '' },
+  variant?: ButtonVariant
   /**
    * Determines both the HTML type attribute and "theme" for the button.
    */
-  type: { type: String as PropType<'button' | 'cta' | 'submit'>, default: 'button' },
+  type?: 'button' | 'cta' | 'submit'
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'lg' | 'md' | 'sm' | 'xs' | ''>, default: '' },
+  size?: ButtonSize
   /**
    * Sets the active state of a button.
    */
-  active: { type: Boolean, default: false },
+  active?: boolean
   /**
    * Disables the component to prevent user interaction.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean
   /**
    * Determines whether to use the block styling or not.
    */
-  block: { type: Boolean, default: false },
+  block?: boolean
   /**
    * Determines whether to display a loading indicator and set the button to an active state.
    */
-  pending: { type: Boolean, default: false }
+  pending?: boolean
+}
+
+const props = withDefaults(defineProps<ButtonProps>(), {
+  kind: '' as ButtonKind,
+  variant: '' as ButtonVariant,
+  type: 'button',
+  size: '',
+  active: false,
+  disabled: false,
+  block: false,
+  pending: false
 })
 
 const emit = defineEmits(['click'])
+
+// Use composable for button classes - single source of truth!
+const { btnClass, kindClass, variantClass, sizeClass, disabledClass, activeClass, blockClass, pendingClass, ctaClass } = useButtonClasses({
+  prefix: 'btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  disabled: () => props.disabled,
+  active: () => props.active,
+  block: () => props.block,
+  pending: () => props.pending,
+  cta: () => props.type === 'cta'
+})
 
 const typeAttribute = computed(() => {
   switch (props.type) {
@@ -106,73 +132,6 @@ const typeAttribute = computed(() => {
     default:
       return 'button'
   }
-})
-
-const btnClass = computed(() => {
-  return props.kind ? 'btn' : ''
-})
-
-const kindClass = computed(() => {
-  switch (props.kind) {
-    case 'primary':
-      return 'btn-primary'
-    case 'secondary':
-      return 'btn-secondary'
-    case 'tertiary':
-      return 'btn-tertiary'
-    case 'ghost':
-      return 'btn-ghost'
-    default:
-      return ''
-  }
-})
-
-const variantClass = computed(() => {
-  switch (props.variant) {
-    case 'gray':
-      return 'btn-gray'
-    case 'blue':
-      return 'btn-blue'
-    case 'red':
-      return 'btn-red'
-    case 'white':
-      return 'btn-white'
-    default:
-      return ''
-  }
-})
-
-const sizeClass = computed(() => {
-  switch (props.size) {
-    case 'lg':
-      return 'btn-lg'
-    case 'sm':
-      return 'btn-sm'
-    case 'xs':
-      return 'btn-xs'
-    default:
-      return ''
-  }
-})
-
-const disabledClass = computed(() => {
-  return props.disabled ? 'disabled' : ''
-})
-
-const activeClass = computed(() => {
-  return props.active || props.pending ? 'active' : ''
-})
-
-const pendingClass = computed(() => {
-  return props.pending ? 'active pointer-events-none' : ''
-})
-
-const blockClass = computed(() => {
-  return props.block ? 'btn-block flex items-center justify-center' : ''
-})
-
-const ctaClass = computed(() => {
-  return props.type === 'cta' ? 'btn-cta' : ''
 })
 
 const onClick = () => {

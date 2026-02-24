@@ -49,7 +49,8 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside, onKeyStroke } from '@vueuse/core'
+import { onKeyStroke } from '@vueuse/core'
+import { useClickOutside } from '@/composables'
 import {
   autoUpdate,
   autoPlacement,
@@ -69,6 +70,33 @@ export type FloatingUiPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-
 defineOptions({
   name: 'SdsFloatingUi'
 })
+
+interface FloatingUiProps {
+  disabled?: boolean;
+  placement?: FloatingUiPlacement;
+  strategy?: Strategy;
+  overflowPadding?: number;
+  arrowPadding?: number;
+  offset?: number;
+  inline?: boolean;
+  shift?: boolean;
+  disableAnimation?: boolean;
+  animationEnterActiveClass?: string;
+  animationEnterFromClass?: string;
+  animationEnterToClass?: string;
+  animationLeaveActiveClass?: string;
+  animationLeaveFromClass?: string;
+  animationLeaveToClass?: string;
+  popperClass?: string | string[] | object;
+  hideArrow?: boolean;
+  arrowClass?: string;
+  placementTopArrowClass?: string;
+  placementRightArrowClass?: string;
+  placementBottomArrowClass?: string;
+  placementLeftArrowClass?: string;
+  willOpen?: GenericFunctionType;
+  willClose?: GenericFunctionType;
+}
 
 /**
  * Props for FloatingUi component.
@@ -98,31 +126,31 @@ defineOptions({
  * @prop {GenericFunctionType|null} willOpen - Callback function invoked before the floating element opens.
  * @prop {GenericFunctionType|null} willClose - Callback function invoked before the floating element closes.
  */
-const props = defineProps({
-  disabled: { type: Boolean, default: false },
-  placement: { type: String as PropType<FloatingUiPlacement>, default: 'auto' },
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
-  overflowPadding: { type: Number, default: 5 },
-  arrowPadding: { type: Number, default: 5 },
-  offset: { type: Number, default: 10 },
-  inline: { type: Boolean, default: false },
-  shift: { type: Boolean, default: false },
-  disableAnimation: { type: Boolean, default: false },
-  animationEnterActiveClass: { type: String, default: 'transition duration-75 ease-out' },
-  animationEnterFromClass: { type: String, default: 'transform scale-95 opacity-0' },
-  animationEnterToClass: { type: String, default: 'transform scale-100 opacity-100' },
-  animationLeaveActiveClass: { type: String, default: 'transition duration-50 ease-in' },
-  animationLeaveFromClass: { type: String, default: 'transform scale-100 opacity-100' },
-  animationLeaveToClass: { type: String, default: 'transform scale-95 opacity-0' },
-  popperClass: { type: [String, Array, Object], default: undefined },
-  hideArrow: { type: Boolean, default: false },
-  arrowClass: { type: String, default: undefined },
-  placementTopArrowClass: { type: String, default: undefined },
-  placementRightArrowClass: { type: String, default: undefined },
-  placementBottomArrowClass: { type: String, default: undefined },
-  placementLeftArrowClass: { type: String, default: undefined },
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null },
+const props = withDefaults(defineProps<FloatingUiProps>(), {
+  disabled: false,
+  placement: 'auto',
+  strategy: 'absolute',
+  overflowPadding: 5,
+  arrowPadding: 5,
+  offset: 10,
+  inline: false,
+  shift: false,
+  disableAnimation: false,
+  animationEnterActiveClass: 'transition duration-75 ease-out',
+  animationEnterFromClass: 'transform scale-95 opacity-0',
+  animationEnterToClass: 'transform scale-100 opacity-100',
+  animationLeaveActiveClass: 'transition duration-50 ease-in',
+  animationLeaveFromClass: 'transform scale-100 opacity-100',
+  animationLeaveToClass: 'transform scale-95 opacity-0',
+  popperClass: undefined,
+  hideArrow: false,
+  arrowClass: undefined,
+  placementTopArrowClass: undefined,
+  placementRightArrowClass: undefined,
+  placementBottomArrowClass: undefined,
+  placementLeftArrowClass: undefined,
+  willOpen: undefined,
+  willClose: undefined
 })
 
 /**
@@ -208,7 +236,7 @@ const onOpen = async (ms: number = 0): Promise<void> => {
     shouldOpen.value = true
     await openStateDelay(ms)
     if (shouldOpen.value) {
-      await willOpenStateDelay(props.willOpen)
+      await willOpenStateDelay(props.willOpen!)
       if (open.value || !shouldOpen.value) return
       shouldOpen.value = false
       open.value = true
@@ -232,7 +260,7 @@ const onClose = async (ms: number = 0): Promise<void> => {
   try {
     shouldOpen.value = false
     await openStateDelay(ms)
-    await willOpenStateDelay(props.willClose)
+    await willOpenStateDelay(props.willClose!)
     if (!open.value) return
     open.value = false
   } catch {
@@ -350,7 +378,7 @@ emitter.on("floating-ui-toggle", (value) => {
   }
 })
 
-onClickOutside(popperRef, (event: Event) => {
+useClickOutside(popperRef, (event: Event) => {
   if (triggerRef.value && event.target && (triggerRef.value as HTMLElement)?.contains(event.target as HTMLElement)) return
   if (!open.value) return
   onClose()
@@ -360,6 +388,13 @@ onKeyStroke('Escape', (e) => {
   if (!open.value) return
   e.preventDefault()
   onClose()
+})
+
+onBeforeUnmount(() => {
+  if (openStateTimeout.value) {
+    clearTimeout(openStateTimeout.value)
+    openStateTimeout.value = null
+  }
 })
 
 /**

@@ -15,21 +15,20 @@ defineOptions({
   name: 'SdsBadge'
 })
 
-const props = defineProps({
+interface BadgeProps {
   /**
    * Determines the overall look and feel of the component.
    */
-  type: {
-    type: String as PropType<'light-border' | 'light' | 'medium' | 'dark'>,
-    default: 'medium'
-  },
+  type?: 'light-border' | 'light' | 'medium' | 'dark'
   /**
    * Determines the color of the component.
    */
-  variant: {
-    type: String as PropType<'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'>,
-    default: 'gray'
-  }
+  variant?: 'gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green'
+}
+
+const props = withDefaults(defineProps<BadgeProps>(), {
+  type: 'medium',
+  variant: 'gray'
 })
 
 const variantClass = computed(() => {

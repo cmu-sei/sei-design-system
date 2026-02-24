@@ -342,6 +342,16 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('should match its snapshot with required prop assigned', () => {
+    const wrapper = mount(Component, {
+      props: { required: true, suggestions }
+    })
+    const input = wrapper.find('input[type="text"]')
+    expect(input.attributes('required')).toBeDefined()
+    expect(input.element.required).toBe(true)
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
   it('clears input and selections when clicking clear button', async () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mount(Component, {
@@ -664,6 +674,47 @@ describe('ComboBox', () => {
     const activeAfterUp = wrapper.find('button:not(.tab)[data-active="true"]')
     // Should not find an active suggestion (focus is on tab)
     expect(activeAfterUp.exists()).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('should apply valid class when valid prop is true', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        valid: true
+      }
+    })
+
+    expect(wrapper.find('.input-group').classes()).toContain('valid')
+    wrapper.unmount()
+  })
+
+  it('should apply invalid class when invalid prop is true', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        invalid: true
+      }
+    })
+
+    expect(wrapper.find('.input-group').classes()).toContain('invalid')
+    wrapper.unmount()
+  })
+
+  it('should work with FormGroup validation pattern', () => {
+    const wrapper = mount(Component, {
+      props: {
+        modelValue: '',
+        valid: false,
+        invalid: true,
+        required: true,
+        disabled: false
+      }
+    })
+
+    const inputGroup = wrapper.find('.input-group')
+    expect(inputGroup.classes()).toContain('invalid')
+    expect(inputGroup.classes()).not.toContain('valid')
     wrapper.unmount()
   })
 })

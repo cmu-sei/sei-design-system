@@ -4,68 +4,29 @@
     role="alert"
     aria-live="polite"
     class="w-full max-w-sm bg-white rounded-theme-sm shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
-    @mouseenter="clearTimer"
-    @mouseleave="setTimer"
+    @mouseenter="autoHideTimer.clear"
+    @mouseleave="autoHideTimer.reset"
   >
     <div class="overflow-hidden rounded-theme-sm ring-1 ring-black/5 dark:ring-gray-700">
       <div class="p-4">
         <div class="flex toasts-start">
           <div class="shrink-0">
-            <!-- Heroicon name: check-circle -->
-            <svg
-              v-if="localType"
-              :class="{
-                ' text-green-400 dark:text-green-300':
-                  localType && localType === 'success',
-                ' text-blue-400 dark:text-blue-300':
-                  localType && localType === 'info',
-                ' text-orange-300 dark:text-orange-300':
-                  localType && localType === 'warning',
-                ' text-red-600 dark:text-red-300':
-                  localType && localType === 'danger',
-              }"
-              class="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <!-- Success -->
-              <path
-                v-if="localType === 'success'"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-
-              <!-- Info -->
-              <path
-                v-if="localType === 'info'"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-
-              <!-- Warning -->
-              <path
-                v-if="localType === 'warning'"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-
-              <!-- Danger -->
-              <path
-                v-if="localType === 'danger'"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <IconFa7SolidCircleCheck
+              v-if="localType === 'success'"
+              class="w-6 h-6 text-green-400 dark:text-green-300"
+            />
+            <IconFa7SolidCircleInfo
+              v-else-if="localType === 'info'"
+              class="w-6 h-6 text-blue-400 dark:text-blue-300"
+            />
+            <IconFa7SolidTriangleExclamation
+              v-else-if="localType === 'warning'"
+              class="w-6 h-6 text-orange-300 dark:text-orange-300"
+            />
+            <IconFa7SolidCircleExclamation
+              v-else-if="localType === 'danger'"
+              class="w-6 h-6 text-red-600 dark:text-red-300"
+            />
           </div>
           <div class="ml-3 w-0 flex-1 pt-0.5">
             <p
@@ -86,16 +47,7 @@
               class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-hidden hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >
-              <svg
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                class="h-5 w-5"
-                aria-hidden="true"
-              ><path d="M6 18L18 6M6 6l12 12" /></svg>
+              <IconFa7SolidXmark />
               <span class="sr-only">Close toast</span>
             </button>
           </div>
@@ -106,53 +58,49 @@
 </template>
 
 <script setup lang="ts">
+import { useTimedAction } from '@/composables'
 defineOptions({
   name: 'SdsToast'
 })
 
-const props = defineProps({
+interface ToastProps {
   /**
    * Determines the id of the component.
    */
-  id: { type: Number, required: true },
+  id: number
   /**
    * Determines the purpose and particular function of the component.
    */
-  type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+  type?: 'success' | 'info' | 'warning' | 'danger' | null
   /**
    * Determines the title content of the component.
    */
-  title: { type: String, required: true },
+  title: string
   /**
    * Determines the text content of the component.
    */
-  text: { type: String, required: true },
+  text: string
   /**
    * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
    */
-  autoHideDelay: { type: Number, default: 5000 },
+  autoHideDelay?: number
   /**
    * Determines whether to ignore the autoHideDelay property.
    */
-  noAutoHide: { type: Boolean, default: false },
+  noAutoHide?: boolean
+}
+
+const props = withDefaults(defineProps<ToastProps>(), {
+  type: null,
+  autoHideDelay: 5000,
+  noAutoHide: false
 })
 
 const emit = defineEmits(['remove'])
 
-const timer = ref<null | ReturnType<typeof setTimeout>>()
-
 const localType = computed(() => {
   return props.type
 })
-
-onMounted(() => {
-  setTimer();
-})
-
-onUnmounted(() => {
-  clearTimer();
-})
-
 
 const removeToast = () => {
   /**
@@ -163,16 +111,9 @@ const removeToast = () => {
   emit("remove", props.id);
 }
 
-const clearTimer = () => {
-  if (!timer.value) return;
-  clearTimeout(timer.value);
-}
-
-const setTimer = () => {
-  clearTimer();
-  if (props.noAutoHide) return;
-  timer.value = setTimeout(() => {
-    removeToast();
-  }, props.autoHideDelay);
-}
+const autoHideTimer = useTimedAction(removeToast, {
+  delay: computed(() => props.autoHideDelay),
+  enabled: computed(() => !props.noAutoHide),
+  autoStart: true
+})
 </script>

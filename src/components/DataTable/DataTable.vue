@@ -196,7 +196,7 @@ import SdsTable from '../Table/Table.vue'
 
 export type DataTableFilterType = 'segment' | 'dropdown'
 
-export interface Segments {
+export interface DataTableSegments {
   label: string;
   selected: boolean;
 }
@@ -206,7 +206,7 @@ export interface DataTableFilterConfig {
   label: string; // Display name for the filter: e.g. "Status", etc.
   disabled?: boolean; // Determines whether the filter is disabled
   type: DataTableFilterType; // Render as buttons or dropdown
-  segments?: Segments[]; // For segmented controls
+  segments?: DataTableSegments[]; // For segmented controls
   options?: FilterByDropdownOption[]; // For checkbox dropdowns
 }
 
@@ -292,7 +292,7 @@ function clearFilters() {
   emit('update:filters', filters.value)
 }
 
-function onFilterChange(filterKey: string, segment?: Segments) {
+function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filters.value) return
 
   const filter = filters.value.find((f) => f.key === filterKey)

@@ -17,24 +17,9 @@
             @click="goToPrevMonth"
           >
             <span class="sr-only">Go to previous month</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              aria-hidden="true"
-              role="img"
+            <IconFa7SolidChevronLeft
               class="w-5 h-5"
-              width="32"
-              height="32"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 512 512"
-            ><path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="48"
-              d="M328 112L184 256l144 144"
-            /></svg>
+            />
           </button>
           <div class="grow">
             <button
@@ -67,24 +52,9 @@
             @click="goToNextMonth"
           >
             <span class="sr-only">Go to next month</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              aria-hidden="true"
-              role="img"
+            <IconFa7SolidChevronRight
               class="w-5 h-5"
-              width="32"
-              height="32"
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 512 512"
-            ><path
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="48"
-              d="M184 112l144 144l-144 144"
-            /></svg>
+            />
           </button>
         </div>
         <div
@@ -266,22 +236,9 @@
           </template>
         </div>
         <div class="flex gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-            width="32"
-            height="32"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
-              fill="currentColor"
-            />
-          </svg>
+          <IconFa7RegularClock
+            class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          />
           <label class="w-full">
             <span class="sr-only">Hour</span>
             <select
@@ -348,22 +305,9 @@
           </template>
         </div>
         <div class="flex gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            aria-hidden="true"
-            role="img"
-            class="my-auto shrink-0 w-4 h-4 text-gray-700 dark:text-gray-300"
-            width="32"
-            height="32"
-            preserveAspectRatio="xMidYMid meet"
-            viewBox="0 0 512 512"
-          >
-            <path
-              d="M256 8C119 8 8 119 8 256s111 248 248 248s248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200s-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"
-              fill="currentColor"
-            />
-          </svg>
+          <IconFa7RegularClock
+            class="-ml-0.5 my-auto shrink-0 w-5 h-5 text-gray-700 dark:text-gray-300"
+          />
           <label class="w-full">
             <span class="sr-only">Hour</span>
             <select
@@ -453,34 +397,39 @@ defineOptions({
   name: 'SdsCalendar'
 })
 
-const props = defineProps({
+interface CalendarProps {
   /**
    * Determines the mode in which the calendar will function.
    * 
    * Options include 'date', 'dateTime', and 'time'.
    */
-  mode: { type: String as PropType<CalendarMode>, default: 'date' },
+  mode?: CalendarMode;
   /**
    * Determines the minimum selectable date for this component.
    */
-  min: { type: Date as PropType<CalendarDate>, default: null },
+  min?: CalendarDate | null;
   /**
    * Determines the maximum selectable date for this component.
    */
-  max: { type: Date as PropType<CalendarDate>, default: null },
+  max?: CalendarDate | null;
   /**
    * Determines whether to use the current time when selecting a date that is equal to today.
    * 
    * If false, this sets the time to the start of the date.
    */
-  useCurrentTimeForToday: { type: Boolean, default: false },
+  useCurrentTimeForToday?: boolean;
   /**
    * Determines the input to prioritize for changes to the modelValue.
    */
-  inputToChange: {
-    type: String as PropType<'start' | 'end'>,
-    default: undefined
-  }
+  inputToChange?: 'start' | 'end';
+}
+
+const props = withDefaults(defineProps<CalendarProps>(), {
+  mode: 'date',
+  min: null,
+  max: null,
+  useCurrentTimeForToday: false,
+  inputToChange: undefined
 })
 
 /**
@@ -495,23 +444,9 @@ const props = defineProps({
  * 
  * **{ start: new Date(), end: null }**
  */
-const model = defineModel<CalendarDate | CalendarRange>({
+const date = defineModel<CalendarDate | CalendarRange>({
   type: [Object, Date] as PropType<CalendarDate | CalendarRange>,
   default: new Date()
-})
-
-const emit = defineEmits(['update:modelValue'])
-
-const date = computed<CalendarDate | CalendarRange>({
-  get() {
-    return model.value
-  },
-  set(value) {
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
 })
 
 const displayedMonth = ref(new Date())
@@ -564,7 +499,7 @@ onMounted(async () => {
   updateTimeSelects()
 })
 
-watch(() => model.value, () => {
+watch(() => date.value, () => {
   updateTimeSelects()
 }, { deep: true })
 
@@ -742,7 +677,7 @@ const canGoToNextMonth = computed(() => {
 })
 
 const formatDate = (date: Date, output: string) => format(date, output)
-const isRange = computed(() => model.value && !isDate(model.value))
+const isRange = computed(() => date.value && !isDate(date.value))
 
 const setModelValueDate = async (day: number, isNextMonth = false) => {
   const month = isNextMonth ? displayedNextMonth.value : displayedMonth.value

@@ -203,10 +203,10 @@ describe('SdsMobileMenu', () => {
       props: { ...defaultProps, modelValue: true }
     });
 
-    expect(document.documentElement.classList.contains('panel-prevent-scroll')).toBe(true);
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true);
     await wrapper.setProps({ modelValue: false });
     await wrapper.vm.$nextTick();
-    expect(document.documentElement.classList.contains('panel-prevent-scroll')).toBe(false);
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false);
   });
 
   it.todo('closes the panel on Esc key press', async () => {

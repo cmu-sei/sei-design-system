@@ -36,17 +36,18 @@
 <script setup lang="ts">
 import BrochureSiteWordmark from "../BrochureSiteWordmark/BrochureSiteWordmark.vue";
 
+interface BrochureSiteHeaderProps {
+  /**
+   * An object containing various properties that display in the header.
+   */
+  page?: Record<string, unknown>;
+}
+
 defineOptions({
   name: 'SdsBrochureSiteHeader'
 })
 
-defineProps({
-  /**
-   * An object containing various properties that display in the header.
-   */
-  page: {
-    type: Object,
-    default: () => ({}),
-  },
+withDefaults(defineProps<BrochureSiteHeaderProps>(), {
+  page: () => ({})
 })
 </script>

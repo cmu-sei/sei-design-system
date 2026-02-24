@@ -4,12 +4,11 @@
     class="w-full relative"
   >
     <input
-      :id="id"
+      :id="id || undefined"
       v-model="text"
       class="form-control"
       :class="{
-        valid,
-        invalid,
+        ...validationClasses,
         'form-control-sm': size === 'sm'
       }"
       :type="type"
@@ -19,7 +18,7 @@
       :disabled="disabled"
       :readonly="readonly"
       :required="required"
-      :pattern="pattern"
+      :pattern="pattern || undefined"
     >
     <character-counter
       v-if="countCharacters"
@@ -32,82 +31,87 @@
 
 <script setup lang="ts">
 import CharacterCounter from '../CharacterCounter/CharacterCounter.vue'
+import { useFormField } from '@/composables'
 
 defineOptions({
   name: 'SdsInput'
 })
 
-defineProps({
+interface InputProps {
   /**
    * Determines whether to display the character counter or not.
    */
-  countCharacters: { type: Boolean, default: false },
+  countCharacters?: boolean
   /**
    * Determines the maxlength of the component.
    */
-  maxlength: { type: Number, default: 524288 },
+  maxlength?: number
   /**
    * Determines the id of the input.
    */
-  id: { type: String, default: undefined },
+  id?: string
   /**
    * Determines the placeholder of the component.
    */
-  placeholder: { type: String, default: "" },
+  placeholder?: string
   /**
    * Determines the type of the input field.
    */
-  type: { type: String, default: "text" },
+  type?: string
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
-  size: { type: String as PropType<"sm" | "md">, default: "" },
+  size?: 'sm' | 'md' | ''
   /**
    * Determines whether to autofocus the input or not.
    */
-  autofocus: { type: Boolean, default: false },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines whether the input is required or not.
-   */
-  required: { type: Boolean, default: false },
+  autofocus?: boolean
   /**
    * Determines the regex pattern used for validation.
    */
-  pattern: { type: String, default: undefined },
+  pattern?: string
   /**
-   * Determines whether the input is read-only or not.
+   * Disabled state for the form field.
    */
-  readonly: { type: Boolean, default: false },
+  disabled?: boolean
   /**
-   * Sets a valid styling if true.
+   * Readonly state for the form field.
    */
-  valid: { type: Boolean, default: false },
+  readonly?: boolean
   /**
-   * Sets an invalid styling if true.
+   * Required state for the form field.
    */
-  invalid: { type: Boolean, default: false },
+  required?: boolean
+  /**
+   * Valid state for the form field.
+   */
+  valid?: boolean
+  /**
+   * Invalid state for the form field.
+   */
+  invalid?: boolean
+}
+
+const props = withDefaults(defineProps<InputProps>(), {
+  countCharacters: false,
+  maxlength: 524288,
+  id: undefined,
+  placeholder: '',
+  type: 'text',
+  size: '',
+  autofocus: false,
+  pattern: '',
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
  * The v-model of the component (the text input).
  */
-const model = defineModel({ type: String, default: '' })
+const text = defineModel({ type: String, default: '' })
 
-const emit = defineEmits(['update:modelValue'])
-
-const text = computed({
-  get() {
-    return model.value
-  },
-  set(value: string) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
-})
+const { validationClasses } = useFormField(props)
 </script>

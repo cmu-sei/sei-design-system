@@ -11,7 +11,7 @@
     @click.self="onClose(false)"
   >
     <div
-      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-screen-lg xl:max-w-screen-xl 2xl:px-12 2xl:max-w-screen-2xl"
+      class="w-full text-gray-900 dark:text-gray-100 container mx-auto px-4 max-w-full lg:px-8 lg:max-w-5xl xl:max-w-7xl 2xl:px-12 2xl:max-w-screen-2xl"
       @click.self="onClose(false)"
     >
       <div
@@ -60,36 +60,21 @@
             <span
               class="pointer-events-none"
             >{{ topLink.title }}</span>
-            <!-- Below SVG is a caret to indicate Mega Menu opened/closed status -->
+            <!-- Below icon is a caret to indicate Mega Menu opened/closed status -->
             <!-- If tag type is "a" (anchor tag), then the caret isn't rendered. -->
-            <svg
+            <IconFa7SolidChevronUp
               v-if="topLink.tag !== 'a'"
               :class="{
                 'rotate-0': topLink.selected,
                 'rotate-180': !topLink.selected
               }"
               class="mt-0.5 relative inline-block w-4 h-4 transition-transform ease-in-out duration-300 pointer-events-none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 550 500"
-              fill="currentColor"
-            >
-              <path
-                d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
-              />
-            </svg>
+            />
             <!-- Show a box with an arrow exiting to the upper right to indicate an external link -->
-            <svg
+            <IconFa7SolidArrowUpRightFromSquare
               v-if="topLink.tag === 'a' && topLink.external"
               class="ml-0 relative inline-block w-4 h-4"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                fill="currentColor"
-                d="M14 5a1 1 0 1 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V6.414l-9.293 9.293a1 1 0 0 1-1.414-1.414L17.586 5zM3 7a2 2 0 0 1 2-2h5a1 1 0 1 1 0 2H5v12h12v-5a1 1 0 1 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-              />
-            </svg>
+            />
           </slot>
         </component>
       </div>
@@ -126,7 +111,7 @@
         >
           <div
             :class="{
-              'container mx-auto max-w-full lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
+              'container mx-auto max-w-full lg:max-w-5xl xl:max-w-7xl 2xl:max-w-screen-2xl py-4 px-8 2xl:px-12': width === 'full',
               'p-4 xl:px-8': width === 'auto'
             }"
           >
@@ -165,13 +150,15 @@
         :style="{
           top: `${rootBottom}px`
         }"
+        @click="onClose(false)"
       />
     </transition>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { onClickOutside, onKeyStroke, useElementBounding, useResizeObserver, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import { onKeyStroke, useElementBounding, breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import { useClickOutside, useResizeObserver } from '@/composables'
 
 /* Top Link navigation label type interface */
 export type MegaMenuItem<T = Record<string, unknown>> = {
@@ -189,24 +176,30 @@ export type MegaMenuItem<T = Record<string, unknown>> = {
   [key: string]: unknown
 }
 
-defineOptions({
-  name: 'SdsMegaMenu',
-})
-
-const props = defineProps({
+interface MegaMenuProps {
   /**
    * Overall look and feel of the component (two options)
    */
-  type: { type: String as PropType<'block' | 'underline'>, default: 'underline' },
+  type?: 'block' | 'underline';
   /**
    * Sets the panel width. Full width stretches to fill the width of the screen.
    * Auto width will fit the width of the content inside the panel.
    */
-  width: { type: String as PropType<'auto' | 'full'>, default: 'full' },
+  width?: 'auto' | 'full';
   /**
    * Sets the aria-label for the component
    */
-  ariaLabel: { type: String, default: undefined }
+  ariaLabel?: string;
+}
+
+defineOptions({
+  name: 'SdsMegaMenu',
+})
+
+const props = withDefaults(defineProps<MegaMenuProps>(), {
+  type: 'underline',
+  width: 'full',
+  ariaLabel: undefined
 })
 
 /**
@@ -237,34 +230,7 @@ const props = defineProps({
  *
  * ```
  */
-const model = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
-
-const emits = defineEmits(
-  [
-    /**
-     * When data supplied to the Mega Menu component
-     * changes, emit an event. This lets developers
-     * trigger other actions off the Mega Menu's modelValue
-     * when it changes.
-     */
-    'update:modelValue'
-  ]
-)
-
-const topLinks = computed({
-  /* Get SdsMegaMenu modelValue property */
-  get(): MegaMenuItem[] {
-    return model.value
-  },
-  /* Set SdsMegaMenu modelValue property */
-  set(value: MegaMenuItem[]) {
-    /**
-     * Emmitted when the v-model (Mega Menu's data source)
-     * has changed.
-     */
-    emits('update:modelValue', value)
-  }
-})
+const topLinks = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
 
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
@@ -274,7 +240,7 @@ const menu = ref()
 const panel = ref()
 
 const selectedTopLink = computed(() => {
-  const selected = model.value.find(i => i.selected)
+  const selected = topLinks.value.find(i => i.selected)
   return selected || null
 })
 const focusableList = ref<HTMLElement[]>([])
@@ -302,7 +268,7 @@ const onClose = (focusTopLink = true) => {
  * Close the mega menu when clicking somewhere on the document
  * outside the mega menu component
  **/
-onClickOutside(root, () => {
+useClickOutside(root, () => {
   onClose(false)
 })
 
