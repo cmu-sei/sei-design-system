@@ -17,32 +17,34 @@
         class="overflow-x-auto px-2 py-4"
       >
         <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-full">
-          <template v-if="filters?.button && filters.button.length">
-            <SdsActionButton
-              v-for="(button, index) in filters.button"
-              :key="index"
-              :active="button.selected"
-              kind="ghost"
-              variant="gray"
-              size="xs"
-              type="button"
-              @click="onFilterChange(button)"
-            >
-              <span>{{ button.text }}</span>
-            </SdsActionButton>
-          </template>
-          <template v-if="filters?.dropdown && filters.dropdown.length">
+          <template 
+            v-for="(filter, filterIndex) in filters"
+            :key="filterIndex"
+          >
+            <template v-if="filter.type === 'segment' && filter.segments">
+              <SdsActionButton
+                v-for="(segment, segmentIndex) in filter.segments"
+                :key="`${filterIndex}-${segmentIndex}`"
+                :active="segment.selected"
+                kind="ghost"
+                variant="gray"
+                size="xs"
+                type="button"
+                @click="onFilterChange(filter.key, segment)"
+              >
+                <span>{{ segment.label }}</span>
+              </SdsActionButton>
+            </template>
             <SdsFilterByDropdown
-              v-for="(dropdown, index) in filters.dropdown"
-              :key="index"
-              v-model="dropdown.options"
-              :title="dropdown.title ?? undefined"
-              :disabled="dropdown.disabled ?? undefined"
+              v-else-if="filter.type === 'dropdown' && filter.options"
+              v-model="filter.options"
+              :title="filter.label ?? undefined"
+              :disabled="filter.disabled ?? undefined"
               :enable-filter="true"
               kind="ghost"
               variant="gray"
               size="xs"
-              @update:model-value="onFilterChange(dropdown)"
+              @update:model-value="onFilterChange(filter.key)"
             />
           </template>
         </div>
@@ -192,18 +194,21 @@ import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
-export interface DataTableButtonFilter {
-  text: string;
+export type DataTableFilterType = 'segment' | 'dropdown'
+
+export interface Segments {
+  label: string;
   selected: boolean;
 }
 
-export interface DataTableDropdownFilter {
-  title?: string;
-  disabled?: boolean;
-  options?: FilterByDropdownOption[];
+export interface DataTableFilterConfig {
+  key: string; // Property to filter on: e.g. "status", etc.
+  label: string; // Display name for the filter: e.g. "Status", etc.
+  disabled?: boolean; // Determines whether the filter is disabled
+  type: DataTableFilterType; // Render as buttons or dropdown
+  segments?: Segments[]; // For segmented (button) controls
+  options?: FilterByDropdownOption[]; // For checkbox dropdowns
 }
-
-export type DataTableFilter = DataTableButtonFilter | DataTableDropdownFilter;
 
 interface DataTableProps {
   data?: TableProps;
@@ -211,10 +216,7 @@ interface DataTableProps {
     totalResultsPerPage: number; 
     totalResults: number; 
   };
-  filters?: {
-    button?: DataTableButtonFilter[];
-    dropdown?: DataTableDropdownFilter[];
-  };
+  filters?: DataTableFilterConfig[];
 }
 
 defineOptions({
@@ -227,18 +229,16 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   filters: undefined
 })
 
-const emit = defineEmits(['update:filter', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:pagination'])
 
-const filters = ref(props.filters 
-  ? { 
-    button: props.filters.button 
-      ? [{ text: 'All', selected: true }, ...props.filters.button] 
-      : [],
-    dropdown: props.filters.dropdown 
-      ? [...props.filters.dropdown] 
-      : []
-  }
-  : undefined
+const filters = ref<DataTableFilterConfig[] | undefined>(
+  props.filters && Array.isArray(props.filters)
+    ? props.filters.map((f) => ({ 
+      ...f,
+      segments: f.segments ? [{ label: 'All', selected: true }, ...f.segments] : undefined,
+      options: f.options ? [...f.options] : undefined
+    })) 
+    : undefined
 )
 
 const tableProps = computed(() => ({
@@ -269,48 +269,45 @@ const totalRowsPerPage = computed(() => `${props.pagination?.totalResultsPerPage
 
 const hasFilters = computed(() => {
   const { filters } = props
-  return !!(filters?.button?.length || filters?.dropdown?.length)
+  return !!(filters && filters.length)
 })
 
-function isButtonFilter(filter: DataTableFilter): filter is DataTableButtonFilter {
-  return 'text' in filter && 'selected' in filter
-}
-
-function isDropdownFilter(filter: DataTableFilter): filter is DataTableDropdownFilter {
-  return 'options' in filter && 'title' in filter
-}
-
 function clearFilters() {
-  if (filters.value?.dropdown) {
-    filters.value.dropdown.forEach((dropdown) => {
-      if (dropdown.options) {
-        dropdown.options.forEach((opt) => {
-          opt.selected = false
+  if (filters.value) {
+    filters.value.forEach((filter) => {
+      if (filter.type === 'segment' && filter.segments) {
+        // Set "All" (first segment) to selected, rest to false
+        filter.segments.forEach((segment, index) => {
+          segment.selected = index === 0
+        })
+      } else if (filter.type === 'dropdown' && (filter.options && filter.options.length)) {
+        // Set all options to not selected
+        filter.options.forEach((option) => {
+          option.selected = false
         })
       }
     })
   }
 
-  emit('update:filter', filters.value)
+  emit('update:filters', filters.value)
 }
 
-function onFilterChange(filter: DataTableFilter) {
-  if (isButtonFilter(filter)) {
-    filters.value?.button.forEach((f) => f.selected = (f.text === filter.text))
-  }
+function onFilterChange(filterKey: string, segment?: Segments) {
+  if (!filters.value) return
 
-  if (isDropdownFilter(filter)) {
-    filters.value?.dropdown.forEach((f) => {
-      if (f.title === filter.title && Array.isArray(f.options) && Array.isArray(filter.options)) {
-        f.options.forEach((o) => {
-          const match = filter.options?.find((fo) => fo.text === o.text && fo.selected)
-          o.selected = !!match
-        })
-      }
+  const filter = filters.value.find((f) => f.key === filterKey)
+  if (!filter) return
+
+  if (filter.type === 'segment' && segment && filter.segments) {
+    // Set clicked segment to selected, all others to false
+    filter.segments.forEach((s) => {
+      s.selected = s.label === segment.label
     })
   }
 
-  emit('update:filter', filters.value)
+  // For dropdown filters, options are already updated via v-model, just emit!
+
+  emit('update:filters', filters.value)
 }
 
 function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
