@@ -21,7 +21,7 @@
             v-for="(filter, filterIndex) in filters"
             :key="filterIndex"
           >
-            <template v-if="filter.type === 'segment' && filter.segments">
+            <template v-if="isSegmentFilter(filter)">
               <SdsActionButton
                 v-for="(segment, segmentIndex) in filter.segments"
                 :key="`${filterIndex}-${segmentIndex}`"
@@ -36,7 +36,7 @@
               </SdsActionButton>
             </template>
             <SdsFilterByDropdown
-              v-else-if="filter.type === 'dropdown' && filter.options"
+              v-else-if="isDropdownFilter(filter)"
               v-model="filter.options"
               :title="filter.label ?? undefined"
               :disabled="filter.disabled ?? undefined"
@@ -47,6 +47,17 @@
               @update:model-value="onFilterChange(filter.key)"
             />
           </template>
+          <SdsActionButton
+            v-if="hasActiveFilters"
+            kind="ghost"
+            variant="gray"
+            size="xs"
+            type="button"
+            @click="clearFilters"
+          >
+            <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
+            <span>Clear filters</span>
+          </SdsActionButton>
         </div>
       </div>
     </div>
@@ -205,9 +216,9 @@ export interface DataTableFilterConfig {
   key: string; // Property to filter on: e.g. "status", etc.
   label: string; // Display name for the filter: e.g. "Status", etc.
   disabled?: boolean; // Determines whether the filter is disabled
-  type: DataTableFilterType; // Render as buttons or dropdown
+  type: DataTableFilterType; // Render as buttons or dropdowns
   segments?: DataTableSegments[]; // For segmented controls
-  options?: FilterByDropdownOption[]; // For checkbox dropdowns
+  options?: FilterByDropdownOption[]; // For dropdowns
 }
 
 interface DataTableProps {
@@ -272,15 +283,39 @@ const hasFilters = computed(() => {
   return !!(filters && filters.length)
 })
 
+const hasActiveFilters = computed(() => {
+  if (!filters.value) return false
+  return filters.value.some((filter) => {
+    if (isSegmentFilter(filter)) {
+      // Check if any segment other than "All" (first) is selected
+      return filter.segments.some((segment, index) => 
+        index !== 0 && segment.selected
+      )
+    } else if (isDropdownFilter(filter)) {
+      // Check if any options are selected
+      return filter.options.some((option) => option.selected)
+    }
+    return false
+  })
+})
+
+function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'segment'; segments: DataTableSegments[] } {
+  return filter.type === 'segment' && Array.isArray(filter.segments) && filter.segments.length > 0
+}
+
+function isDropdownFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'dropdown'; options: FilterByDropdownOption[] } {
+  return filter.type === 'dropdown' && Array.isArray(filter.options) && filter.options.length > 0
+}
+
 function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
-      if (filter.type === 'segment' && filter.segments) {
+      if (isSegmentFilter(filter)) {
         // Set "All" (first segment) to selected, rest to false
         filter.segments.forEach((segment, index) => {
           segment.selected = index === 0
         })
-      } else if (filter.type === 'dropdown' && (filter.options && filter.options.length)) {
+      } else if (isDropdownFilter(filter)) {
         // Set all options to not selected
         filter.options.forEach((option) => {
           option.selected = false
@@ -298,14 +333,14 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   const filter = filters.value.find((f) => f.key === filterKey)
   if (!filter) return
 
-  if (filter.type === 'segment' && segment && filter.segments) {
+  if (isSegmentFilter(filter) && segment) {
     // Set clicked segment to selected, all others to false
     filter.segments.forEach((s) => {
       s.selected = s.label === segment.label
     })
   }
 
-  // For dropdown filters, options are already updated via v-model, just emit!
+  // For dropdown filters, options are already updated via v-model. Just emit!
 
   emit('update:filters', filters.value)
 }

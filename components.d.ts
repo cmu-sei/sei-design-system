@@ -68,6 +68,7 @@ declare module 'vue' {
     IconFa7SolidCircleInfo: typeof import('~icons/fa7-solid/circle-info')['default']
     IconFa7SolidCube: typeof import('~icons/fa7-solid/cube')['default']
     IconFa7SolidCubes: typeof import('~icons/fa7-solid/cubes')['default']
+    IconFa7SolidFilterCircleXmark: typeof import('~icons/fa7-solid/filter-circle-xmark')['default']
     IconFa7SolidMagnifyingGlass: typeof import('~icons/fa7-solid/magnifying-glass')['default']
     IconFa7SolidPlus: typeof import('~icons/fa7-solid/plus')['default']
     IconFa7SolidRotateLeft: typeof import('~icons/fa7-solid/rotate-left')['default']
