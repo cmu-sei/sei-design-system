@@ -205,7 +205,7 @@ import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 
-export type DataTableFilterType = 'segment' | 'dropdown'
+export type DataTableFilterType = 'segment' | 'dropdown';
 
 export interface DataTableSegments {
   label: string;
@@ -311,12 +311,12 @@ function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
       if (isSegmentFilter(filter)) {
-        // Set "All" (first segment) to selected, rest to false
+        // Set "All" (first segment) to selected, or true, and the rest to false
         filter.segments.forEach((segment, index) => {
           segment.selected = index === 0
         })
       } else if (isDropdownFilter(filter)) {
-        // Set all options to not selected
+        // Set all options (selected) to false
         filter.options.forEach((option) => {
           option.selected = false
         })
@@ -334,7 +334,7 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filter) return
 
   if (isSegmentFilter(filter) && segment) {
-    // Set clicked segment to selected, all others to false
+    // Set clicked segment to selected and all others to false
     filter.segments.forEach((s) => {
       s.selected = s.label === segment.label
     })
