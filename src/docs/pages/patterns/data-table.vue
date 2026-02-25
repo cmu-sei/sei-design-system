@@ -4,6 +4,7 @@
       :data="data"
       :pagination="pagination"
       :filters="filters"
+      :filter-search="true"
       @update:filters="handleFilterUpdate"
       @update:pagination="handlePaginationUpdate"
     >

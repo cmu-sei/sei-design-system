@@ -13,10 +13,10 @@
       "
     >
       <div 
-        v-if="hasFilters"
+        v-if="hasFilters || hasFilterSearch"
         class="overflow-x-auto px-2 py-4"
       >
-        <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-full">
+        <div class="flex flex-row flex-nowrap items-center gap-2 relative min-h-7.5 w-full min-w-full">
           <template 
             v-for="(filter, filterIndex) in filters"
             :key="filterIndex"
@@ -58,6 +58,75 @@
             <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
             <span>Clear filters</span>
           </SdsActionButton>
+          <div 
+            v-if="hasFilterSearch"
+            class="flex flex-row items-center justify-end gap-4 transition-all duration-200 ease-in-out"
+            :class="{
+              'w-auto ml-auto': !isFilterSearchActive && !isFilterSearchClosing,
+              'absolute z-10 w-full min-w-full left-0': isFilterSearchActive || isFilterSearchClosing
+            }"
+          >
+            <Transition
+              enter-active-class="transition-all duration-200 ease-in-out"
+              leave-active-class="transition-all duration-200 ease-in-out"
+              enter-from-class="opacity-0 scale-95"
+              enter-to-class="opacity-100 scale-100"
+              leave-from-class="opacity-100 scale-100"
+              leave-to-class="opacity-0 scale-95"
+            >
+              <SdsActionButton
+                v-if="!isFilterSearchActive && !isFilterSearchClosing"
+                kind="secondary"
+                variant="gray"
+                size="sm"
+                type="button"
+                @click="() => isFilterSearchActive = true"
+              >
+                <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+                <span>Filter</span>
+              </SdsActionButton>
+            </Transition>
+            <Transition
+              enter-active-class="transition-all duration-200 ease-in-out"
+              leave-active-class="transition-all duration-300 ease-in-out"
+              enter-from-class="opacity-0 scale-x-0"
+              enter-to-class="opacity-100 scale-x-100"
+              leave-from-class="opacity-100 scale-x-100"
+              leave-to-class="opacity-0 scale-x-0"
+            >
+              <div
+                v-if="isFilterSearchActive"
+                class="flex-1 origin-right"
+              >
+                <SdsComboBox
+                  :autofocus="true"
+                  :pending="false"
+                  size="sm"
+                  class="w-full"
+                />
+              </div>
+            </Transition>
+            <Transition
+              enter-active-class="transition-all duration-200 ease-in-out"
+              leave-active-class="transition-all duration-300 ease-in-out"
+              enter-from-class="opacity-0 scale-95"
+              enter-to-class="opacity-100 scale-100"
+              leave-from-class="opacity-100 scale-100"
+              leave-to-class="opacity-0 scale-95"
+              @after-leave="onFilterSearchClosed"
+            >
+              <SdsActionButton
+                v-if="isFilterSearchActive"
+                kind="secondary"
+                variant="gray"
+                size="sm"
+                type="button"
+                @click="closeFilterSearch"
+              >
+                <span>Cancel</span>
+              </SdsActionButton>
+            </Transition>
+          </div>
         </div>
       </div>
     </div>
@@ -200,6 +269,7 @@ import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
+import SdsComboBox from '../ComboBox/ComboBox.vue'
 import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
@@ -228,6 +298,7 @@ interface DataTableProps {
     totalResults: number; 
   };
   filters?: DataTableFilterConfig[];
+  filterSearch?: boolean;
 }
 
 defineOptions({
@@ -237,7 +308,8 @@ defineOptions({
 const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
-  filters: undefined
+  filters: undefined,
+  filterSearch: undefined
 })
 
 const emit = defineEmits(['update:filters', 'update:pagination'])
@@ -251,6 +323,9 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     })) 
     : undefined
 )
+
+const isFilterSearchActive = ref(false)
+const isFilterSearchClosing = ref(false)
 
 const tableProps = computed(() => ({
   items: [],
@@ -282,6 +357,8 @@ const hasFilters = computed(() => {
   const { filters } = props
   return !!(filters && filters.length)
 })
+
+const hasFilterSearch = computed(() => !!props.filterSearch)
 
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
@@ -363,5 +440,14 @@ function setPageSize(page: number) {
     totalResults: props.pagination?.totalResults ?? 0,
     totalResultsPerPage: page
   })
+}
+
+function closeFilterSearch() {
+  isFilterSearchClosing.value = true
+  isFilterSearchActive.value = false
+}
+
+function onFilterSearchClosed() {
+  isFilterSearchClosing.value = false
 }
 </script>
