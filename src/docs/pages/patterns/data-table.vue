@@ -5,7 +5,9 @@
       :pagination="pagination"
       :filters="filters"
       :filter-search="true"
+      :loading="loading"
       @update:filters="handleFilterUpdate"
+      @update:filter-search="handleFilterSearchUpdate"
       @update:pagination="handlePaginationUpdate"
     >
       <template #cell(task)="{ item }: { item: TableItem }">
@@ -62,6 +64,8 @@ definePage({
 useHead({
   title: 'Data Table'
 })
+
+const loading = ref(false)
 
 /* Data */
 const tableFields = computed<TableField[]>(() => [
@@ -237,6 +241,76 @@ function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
   currentPage.value = 1
   totalResults.value = filtered.length
   totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
+}
+
+function useSearchFilter<T>(
+  items: T[], 
+  fields: (keyof T)[], 
+  minLength: number = 2
+): {
+  searchTerm: Ref<string>,
+  searchItems: ComputedRef<T[]>
+} {
+  const searchTerm = ref('')
+
+  const searchItems = computed(() => {
+    if (searchTerm.value && searchTerm.value.length >= minLength) {
+      return items.filter((item) => {
+        return fields.some((field) => {
+          const value = item[field]
+          return (
+            typeof value === 'string' && 
+            value.toLowerCase().includes(searchTerm.value.toLowerCase())
+          )
+        })
+      })
+    } else {
+      return items
+    }
+  })
+
+  return { 
+    searchTerm, 
+    searchItems 
+  }
+}
+
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const searchFields = ['task', 'description', 'assignee'] as (keyof TableItem)[]
+const { searchTerm, searchItems } = useSearchFilter<TableItem>(tableItemsOriginal.value, searchFields, 0)
+
+/* Filter search update handler */
+async function handleFilterSearchUpdate(searchQuery: string | null) {
+  loading.value = true
+  await delay(1000) // Simulate async operation
+
+  if (
+    searchQuery && 
+    searchQuery.length > 0
+  ) {
+    // Perform search
+    searchTerm.value = searchQuery
+    tableItems.value = searchItems.value
+
+    // Reset pagination
+    currentPage.value = 1
+    totalResults.value = tableItems.value.length
+    totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
+
+    // Done!
+    loading.value = false
+    return
+  }
+
+  // Default case
+  tableItems.value = [...tableItemsOriginal.value]
+  currentPage.value = 1
+  totalResults.value = tableItemsOriginal.value.length
+  totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
+  loading.value = false
 }
 
 /* Pagination update handler */

@@ -86,7 +86,7 @@
               v-if="isSearchActive"
               v-model="searchQuery"
               :autofocus="isSearchActive"
-              :pending="false"
+              :pending="isSearchLoading"
               size="sm"
               class="w-full"
             />
@@ -267,14 +267,33 @@ export interface DataTableFilterConfig {
 }
 
 interface DataTableProps {
+  /**
+   * Table data and configuration.
+   */
   data?: TableProps;
+  /**
+   * Pagination configuration and state.
+   */
   pagination?: PaginatorProps & { 
     totalResultsPerPage: number; 
     totalResults: number; 
   };
+  /**
+   * Array of filter configurations for the table.
+   */
   filters?: DataTableFilterConfig[];
+  /**
+   * Enables filter search input.
+   */
   filterSearch?: boolean;
+  /**
+   * Debounce wait time (ms) for filter search input.
+   */
   filterSearchDebounce?: number;
+  /**
+   * Loading state for the table and its controls.
+   */
+  loading?: boolean;
 }
 
 defineOptions({
@@ -286,7 +305,8 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   pagination: undefined,
   filters: undefined,
   filterSearch: undefined,
-  filterSearchDebounce: 300
+  filterSearchDebounce: 300,
+  loading: false
 })
 
 const emit = defineEmits(['update:filters', 'update:filterSearch', 'update:pagination'])
@@ -311,6 +331,7 @@ const tableProps = computed(() => ({
 }))
 
 const paginatorProps = computed(() => ({
+  loading: isLoading.value,
   currentPage: props.pagination?.currentPage ?? 1,
   totalPages: props.pagination?.totalPages ?? 0
 }))
@@ -353,6 +374,12 @@ const hasActiveFilters = computed(() => {
   })
 })
 
+/**
+ * Loading state(s) for the data table.
+ */
+const isLoading = computed(() => props.loading ?? false)
+const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
+
 function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'segment'; segments: DataTableSegments[] } {
   return filter.type === 'segment' && Array.isArray(filter.segments) && filter.segments.length > 0
 }
@@ -376,6 +403,13 @@ function clearFilters() {
         })
       }
     })
+  }
+
+  if (
+    searchQuery.value && 
+    searchQuery.value.length > 0
+  ) {
+    searchQuery.value = ''
   }
 
   emit('update:filters', filters.value)
