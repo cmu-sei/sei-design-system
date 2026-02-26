@@ -16,116 +16,90 @@
         v-if="hasFilters || hasFilterSearch"
         class="overflow-x-auto px-2 py-4"
       >
-        <div class="flex flex-row flex-nowrap items-center gap-2 relative min-h-7.5 w-full min-w-full">
-          <template 
-            v-for="(filter, filterIndex) in filters"
-            :key="filterIndex"
+        <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-7.5">
+          <div 
+            v-if="!isSearchActive"
+            class="flex flex-row flex-nowrap items-center gap-x-2"
           >
-            <template v-if="isSegmentFilter(filter)">
-              <SdsActionButton
-                v-for="(segment, segmentIndex) in filter.segments"
-                :key="`${filterIndex}-${segmentIndex}`"
-                :active="segment.selected"
+            <template 
+              v-for="(filter, filterIndex) in filters"
+              :key="filterIndex"
+            >
+              <template v-if="isSegmentFilter(filter)">
+                <SdsActionButton
+                  v-for="(segment, segmentIndex) in filter.segments"
+                  :key="`${filterIndex}-${segmentIndex}`"
+                  :active="segment.selected"
+                  kind="ghost"
+                  variant="gray"
+                  size="xs"
+                  type="button"
+                  @click="onFilterChange(filter.key, segment)"
+                >
+                  <span>{{ segment.label }}</span>
+                </SdsActionButton>
+              </template>
+              <SdsFilterByDropdown
+                v-else-if="isDropdownFilter(filter)"
+                v-model="filter.options"
+                :title="filter.label ?? undefined"
+                :disabled="filter.disabled ?? undefined"
+                :enable-filter="true"
                 kind="ghost"
                 variant="gray"
                 size="xs"
-                type="button"
-                @click="onFilterChange(filter.key, segment)"
-              >
-                <span>{{ segment.label }}</span>
-              </SdsActionButton>
+                @update:model-value="onFilterChange(filter.key)"
+              />
             </template>
-            <SdsFilterByDropdown
-              v-else-if="isDropdownFilter(filter)"
-              v-model="filter.options"
-              :title="filter.label ?? undefined"
-              :disabled="filter.disabled ?? undefined"
-              :enable-filter="true"
+            <SdsActionButton
+              v-if="hasActiveFilters"
               kind="ghost"
               variant="gray"
               size="xs"
-              @update:model-value="onFilterChange(filter.key)"
-            />
-          </template>
-          <SdsActionButton
-            v-if="hasActiveFilters"
-            kind="ghost"
-            variant="gray"
-            size="xs"
-            type="button"
-            @click="clearFilters"
-          >
-            <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
-            <span>Clear filters</span>
-          </SdsActionButton>
+              type="button"
+              @click="clearFilters"
+            >
+              <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
+              <span>Clear filters</span>
+            </SdsActionButton>
+          </div>
           <div 
             v-if="hasFilterSearch"
-            class="flex flex-row items-center justify-end gap-4 transition-all duration-200 ease-in-out"
+            class="flex flex-row items-center justify-end gap-x-4"
             :class="{
-              'w-auto ml-auto': !isFilterSearchActive && !isFilterSearchClosing,
-              'absolute z-10 w-full min-w-full left-0': isFilterSearchActive || isFilterSearchClosing
+              'ml-auto w-auto relative': !isSearchActive,
+              'absolute top-0 left-0 z-10 w-full': isSearchActive
             }"
           >
-            <Transition
-              enter-active-class="transition-all duration-200 ease-in-out"
-              leave-active-class="transition-all duration-200 ease-in-out"
-              enter-from-class="opacity-0 scale-95"
-              enter-to-class="opacity-100 scale-100"
-              leave-from-class="opacity-100 scale-100"
-              leave-to-class="opacity-0 scale-95"
+            <SdsActionButton
+              v-if="!isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              @click="setSearchActiveState(true)"
             >
-              <SdsActionButton
-                v-if="!isFilterSearchActive && !isFilterSearchClosing"
-                kind="secondary"
-                variant="gray"
-                size="sm"
-                type="button"
-                @click="() => isFilterSearchActive = true"
-              >
-                <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
-                <span>Filter</span>
-              </SdsActionButton>
-            </Transition>
-            <Transition
-              enter-active-class="transition-all duration-200 ease-in-out"
-              leave-active-class="transition-all duration-300 ease-in-out"
-              enter-from-class="opacity-0 scale-x-0"
-              enter-to-class="opacity-100 scale-x-100"
-              leave-from-class="opacity-100 scale-x-100"
-              leave-to-class="opacity-0 scale-x-0"
+              <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+              <span>Filter</span>
+            </SdsActionButton>
+            <SdsComboBox
+              v-if="isSearchActive"
+              v-model="searchQuery"
+              :autofocus="isSearchActive"
+              :pending="false"
+              size="sm"
+              class="w-full"
+            />
+            <SdsActionButton
+              v-if="isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              @click="setSearchActiveState(false)"
             >
-              <div
-                v-if="isFilterSearchActive"
-                class="flex-1 origin-right"
-              >
-                <SdsComboBox
-                  :autofocus="true"
-                  :pending="false"
-                  size="sm"
-                  class="w-full"
-                />
-              </div>
-            </Transition>
-            <Transition
-              enter-active-class="transition-all duration-200 ease-in-out"
-              leave-active-class="transition-all duration-300 ease-in-out"
-              enter-from-class="opacity-0 scale-95"
-              enter-to-class="opacity-100 scale-100"
-              leave-from-class="opacity-100 scale-100"
-              leave-to-class="opacity-0 scale-95"
-              @after-leave="onFilterSearchClosed"
-            >
-              <SdsActionButton
-                v-if="isFilterSearchActive"
-                kind="secondary"
-                variant="gray"
-                size="sm"
-                type="button"
-                @click="closeFilterSearch"
-              >
-                <span>Cancel</span>
-              </SdsActionButton>
-            </Transition>
+              <span>Cancel</span>
+            </SdsActionButton>
           </div>
         </div>
       </div>
@@ -274,6 +248,7 @@ import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
+import { useDebounce } from '@/composables'
 
 export type DataTableFilterType = 'segment' | 'dropdown';
 
@@ -299,6 +274,7 @@ interface DataTableProps {
   };
   filters?: DataTableFilterConfig[];
   filterSearch?: boolean;
+  filterSearchDebounce?: number;
 }
 
 defineOptions({
@@ -309,10 +285,11 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
   filters: undefined,
-  filterSearch: undefined
+  filterSearch: undefined,
+  filterSearchDebounce: 300
 })
 
-const emit = defineEmits(['update:filters', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:filterSearch', 'update:pagination'])
 
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
@@ -324,8 +301,8 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     : undefined
 )
 
-const isFilterSearchActive = ref(false)
-const isFilterSearchClosing = ref(false)
+const isSearchActive = ref(false)
+const searchQuery = ref('')
 
 const tableProps = computed(() => ({
   items: [],
@@ -442,12 +419,25 @@ function setPageSize(page: number) {
   })
 }
 
-function closeFilterSearch() {
-  isFilterSearchClosing.value = true
-  isFilterSearchActive.value = false
+function setSearchActiveState(active: boolean) {
+  isSearchActive.value = active
+  if (!active) {
+    searchQuery.value = ''
+  }
 }
 
-function onFilterSearchClosed() {
-  isFilterSearchClosing.value = false
-}
+/**
+ * Debounced function to emit search query changes.
+ * Delays emission to avoid excessive updates while typing.
+ */
+const debouncedEmitSearch = useDebounce((query) => {
+  emit('update:filterSearch', query)
+}, props.filterSearchDebounce)
+
+/**
+ * Watch for changes to the search query and emit debounced updates.
+ */
+watch(searchQuery, (newQuery) => {
+  debouncedEmitSearch(newQuery)
+})
 </script>
