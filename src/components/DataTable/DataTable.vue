@@ -278,9 +278,13 @@ interface DataTableProps {
    */
   filters?: DataTableFilterConfig[];
   /**
-   * Enables filter search input.
+   * Enables a search input for filtering table data.
    */
   filterSearch?: boolean;
+  /**
+   * Current search query for filtering table data.
+   */
+  filterSearchQuery?: string;
   /**
    * Debounce wait time (ms) for filter search input.
    */
@@ -299,12 +303,13 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
   filters: undefined,
-  filterSearch: undefined,
+  filterSearch: false,
+  filterSearchQuery: undefined,
   filterSearchDebounce: 300,
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:filterSearch', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination'])
 
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
@@ -317,7 +322,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 )
 
 const isSearchActive = ref(false)
-const searchQuery = ref('')
+const searchQuery = ref(props.filterSearchQuery ?? '')
 
 const tableProps = computed(() => ({
   items: [],
@@ -460,7 +465,7 @@ function setSearchActiveState(active: boolean) {
  * Delays emission to avoid excessive updates while typing.
  */
 const debouncedEmitSearch = useDebounce((query) => {
-  emit('update:filterSearch', query)
+  emit('update:filterSearchQuery', query)
 }, props.filterSearchDebounce)
 
 /**

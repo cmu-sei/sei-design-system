@@ -5,9 +5,10 @@
       :pagination="pagination"
       :filters="filters"
       :filter-search="true"
+      :filter-search-query="searchTerm"
       :loading="loading"
       @update:filters="handleFilterUpdate"
-      @update:filter-search="handleFilterSearchUpdate"
+      @update:filter-search-query="handleFilterSearchUpdate"
       @update:pagination="handlePaginationUpdate"
     >
       <template #cell(task)="{ item }: { item: TableItem }">
