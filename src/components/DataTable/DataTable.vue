@@ -4,7 +4,7 @@
     class="w-full min-w-full"
   >
     <div 
-      v-if="hasFilters"
+      v-if="hasFilters || hasFilterSearch"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -12,12 +12,9 @@
         min-h-14.5 w-full min-w-full
       "
     >
-      <div 
-        v-if="hasFilters || hasFilterSearch"
-        class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5"
-      >
+      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
-          v-if="!isSearchActive"
+          v-if="hasFilters && !isSearchActive"
           class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
         >
           <template 
