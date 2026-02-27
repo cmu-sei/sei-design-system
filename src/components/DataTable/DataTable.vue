@@ -14,93 +14,91 @@
     >
       <div 
         v-if="hasFilters || hasFilterSearch"
-        class="overflow-x-auto px-2 py-4"
+        class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5"
       >
-        <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-7.5">
-          <div 
-            v-if="!isSearchActive"
-            class="flex flex-row flex-nowrap items-center gap-x-2"
+        <div 
+          v-if="!isSearchActive"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
+        >
+          <template 
+            v-for="(filter, filterIndex) in filters"
+            :key="filterIndex"
           >
-            <template 
-              v-for="(filter, filterIndex) in filters"
-              :key="filterIndex"
-            >
-              <template v-if="isSegmentFilter(filter)">
-                <SdsActionButton
-                  v-for="(segment, segmentIndex) in filter.segments"
-                  :key="`${filterIndex}-${segmentIndex}`"
-                  :active="segment.selected"
-                  kind="ghost"
-                  variant="gray"
-                  size="xs"
-                  type="button"
-                  @click="onFilterChange(filter.key, segment)"
-                >
-                  <span>{{ segment.label }}</span>
-                </SdsActionButton>
-              </template>
-              <SdsFilterByDropdown
-                v-else-if="isDropdownFilter(filter)"
-                v-model="filter.options"
-                :title="filter.label ?? undefined"
-                :disabled="filter.disabled ?? undefined"
-                :enable-filter="true"
+            <template v-if="isSegmentFilter(filter)">
+              <SdsActionButton
+                v-for="(segment, segmentIndex) in filter.segments"
+                :key="`${filterIndex}-${segmentIndex}`"
+                :active="segment.selected"
                 kind="ghost"
                 variant="gray"
                 size="xs"
-                @update:model-value="onFilterChange(filter.key)"
-              />
+                type="button"
+                @click="onFilterChange(filter.key, segment)"
+              >
+                <span>{{ segment.label }}</span>
+              </SdsActionButton>
             </template>
-            <SdsActionButton
-              v-if="hasActiveFilters"
+            <SdsFilterByDropdown
+              v-else-if="isDropdownFilter(filter)"
+              v-model="filter.options"
+              :title="filter.label ?? undefined"
+              :disabled="filter.disabled ?? undefined"
+              :enable-filter="true"
               kind="ghost"
               variant="gray"
               size="xs"
-              type="button"
-              @click="clearFilters"
-            >
-              <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
-              <span>Clear filters</span>
-            </SdsActionButton>
-          </div>
-          <div 
-            v-if="hasFilterSearch"
-            class="flex flex-row items-center justify-end gap-x-4"
-            :class="{
-              'ml-auto w-auto relative': !isSearchActive,
-              'absolute top-0 left-0 z-10 w-full': isSearchActive
-            }"
-          >
-            <SdsActionButton
-              v-if="!isSearchActive"
-              kind="secondary"
-              variant="gray"
-              size="sm"
-              type="button"
-              @click="setSearchActiveState(true)"
-            >
-              <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
-              <span>Filter</span>
-            </SdsActionButton>
-            <SdsComboBox
-              v-if="isSearchActive"
-              v-model="searchQuery"
-              :autofocus="isSearchActive"
-              :pending="isSearchLoading"
-              size="sm"
-              class="w-full"
+              @update:model-value="onFilterChange(filter.key)"
             />
-            <SdsActionButton
-              v-if="isSearchActive"
-              kind="secondary"
-              variant="gray"
-              size="sm"
-              type="button"
-              @click="setSearchActiveState(false)"
-            >
-              <span>Cancel</span>
-            </SdsActionButton>
-          </div>
+          </template>
+          <SdsActionButton
+            v-if="hasActiveFilters"
+            kind="ghost"
+            variant="gray"
+            size="xs"
+            type="button"
+            @click="clearFilters"
+          >
+            <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
+            <span>Clear filters</span>
+          </SdsActionButton>
+        </div>
+        <div 
+          v-if="hasFilterSearch"
+          class="flex flex-row items-center justify-end gap-x-4 px-2 py-4"
+          :class="{
+            'ml-auto w-auto relative': !isSearchActive,
+            'absolute top-0 left-0 z-10 w-full': isSearchActive
+          }"
+        >
+          <SdsActionButton
+            v-if="!isSearchActive"
+            kind="secondary"
+            variant="gray"
+            size="sm"
+            type="button"
+            @click="setSearchActiveState(true)"
+          >
+            <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+            <span>Filter</span>
+          </SdsActionButton>
+          <SdsComboBox
+            v-if="isSearchActive"
+            v-model="searchQuery"
+            :autofocus="isSearchActive"
+            :pending="isSearchLoading"
+            size="sm"
+            class="w-full"
+          />
+          <SdsActionButton
+            v-if="isSearchActive"
+            kind="secondary"
+            variant="gray"
+            size="sm"
+            type="button"
+            @click="setSearchActiveState(false)"
+          >
+            <span>Cancel</span>
+          </SdsActionButton>
         </div>
       </div>
     </div>
