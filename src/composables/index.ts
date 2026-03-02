@@ -48,6 +48,8 @@ export type {
 } from './useFormValidation'
 
 export { formFieldProps, useFormField } from './useFormProps'
+
+export type { DropdownPlacement } from './types'
 export type { FormFieldProps, ComponentPropsWithFormFields } from './useFormProps'
 
 export { useDebounce } from './useDebounce'
