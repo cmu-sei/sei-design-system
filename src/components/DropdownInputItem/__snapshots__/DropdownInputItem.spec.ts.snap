@@ -1,0 +1,111 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DropdownInputItem > Snapshots > should match its default snapshot 1`] = `
+<div
+  class="px-4 pt-4 pb-2.5"
+  data-id="sds-dropdown-input-item"
+>
+  <!--v-if-->
+  <div
+    class="input-group input-group-sm"
+  >
+    <input
+      aria-label="Type to filter"
+      class="form-control"
+      id="v-0"
+      placeholder="Type to filter"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
+
+exports[`DropdownInputItem > Snapshots > should match snapshot with custom placeholder 1`] = `
+<div
+  class="px-4 pt-4 pb-2.5"
+  data-id="sds-dropdown-input-item"
+>
+  <!--v-if-->
+  <div
+    class="input-group input-group-sm"
+  >
+    <input
+      aria-label="Search items"
+      class="form-control"
+      id="v-0"
+      placeholder="Search items"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
+
+exports[`DropdownInputItem > Snapshots > should match snapshot with label 1`] = `
+<div
+  class="px-4 pt-4 pb-2.5"
+  data-id="sds-dropdown-input-item"
+>
+  <label
+    class="sr-only"
+    for="v-0"
+  >
+    Filter items
+  </label>
+  <div
+    class="input-group input-group-sm"
+  >
+    <input
+      aria-label="Filter items"
+      class="form-control"
+      id="v-0"
+      placeholder="Type to filter"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
+
+exports[`DropdownInputItem > Snapshots > should match snapshot with md size 1`] = `
+<div
+  class="px-4 pt-4 pb-2.5"
+  data-id="sds-dropdown-input-item"
+>
+  <!--v-if-->
+  <div
+    class="input-group input-group-md"
+  >
+    <input
+      aria-label="Type to filter"
+      class="form-control"
+      id="v-0"
+      placeholder="Type to filter"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
+
+exports[`DropdownInputItem > Snapshots > should match snapshot with value 1`] = `
+<div
+  class="px-4 pt-4 pb-2.5"
+  data-id="sds-dropdown-input-item"
+>
+  <!--v-if-->
+  <div
+    class="input-group input-group-sm"
+  >
+    <input
+      aria-label="Type to filter"
+      class="form-control"
+      id="v-0"
+      placeholder="Type to filter"
+      type="text"
+      value="filter text"
+    />
+  </div>
+</div>
+`;

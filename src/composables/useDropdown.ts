@@ -11,6 +11,7 @@ export interface UseDropdownOptions {
   disabled?: MaybeRefOrGetter<boolean>
   block?: MaybeRefOrGetter<boolean>
   active?: MaybeRefOrGetter<boolean>
+  iconOnly?: MaybeRefOrGetter<boolean>
   openDelay?: number
   closeDelay?: number
   darkMode?: MaybeRefOrGetter<boolean>
@@ -27,6 +28,8 @@ export interface UseDropdownReturn {
   disabledClass: Ref<string>
   blockClass: Ref<string>
   activeClass: Ref<string>
+  iconOnlyClasses: Ref<string>
+  iconSizeClasses: Ref<string>
   handleClick: (isOpen: boolean, open: GenericFunctionType, close: GenericFunctionType) => void
   dropdownClasses: Ref<Record<string, boolean>>
 }
@@ -91,6 +94,27 @@ export function useDropdown(options: UseDropdownOptions = {}): UseDropdownReturn
     [zIndexClass.value]: true
   }))
 
+  const iconOnlyClasses = computed(() => {
+    if (!toValue(options.iconOnly)) return ''
+
+    const prefixValue = toValue(prefix)
+    const squareClass = prefixValue === 'btn' ? 'btn-square' : 'action-btn-square'
+    
+    return squareClass
+  })
+  
+  const iconSizeClasses = computed(() => {
+    const size = toValue(options.size) || 'sm'
+    const sizeMap: Record<string, string> = {
+      xs: 'w-4 h-4',
+      sm: 'w-4 h-4',
+      md: 'w-4.5 h-4.5',
+      lg: 'w-4.5 h-4.5'
+    }
+    
+    return sizeMap[size] || sizeMap.sm
+  })
+
   return {
     id,
     buttonRef,
@@ -102,6 +126,8 @@ export function useDropdown(options: UseDropdownOptions = {}): UseDropdownReturn
     disabledClass,
     blockClass,
     activeClass,
+    iconOnlyClasses,
+    iconSizeClasses,
     handleClick,
     dropdownClasses
   }
