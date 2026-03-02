@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DropdownFooter > Snapshots > should match its default snapshot 1`] = `
+<div
+  class="px-4 pt-2.5 pb-2 space-y-2"
+  data-id="sds-dropdown-footer"
+>
+  <!-- @slot Footer content (typically buttons). -->
+  
+  <button>
+    Action
+  </button>
+  
+</div>
+`;
+
+exports[`DropdownFooter > Snapshots > should match snapshot with divider 1`] = `
+<div
+  class="px-4 pt-2.5 pb-2 space-y-2 border-t border-gray-100 dark:border-gray-700"
+  data-id="sds-dropdown-footer"
+>
+  <!-- @slot Footer content (typically buttons). -->
+  
+  <button>
+    Action
+  </button>
+  
+</div>
+`;
