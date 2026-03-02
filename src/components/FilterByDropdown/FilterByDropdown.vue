@@ -16,7 +16,7 @@
       >
         <template #trigger>
           <SdsIndicator
-            :hide-indicator="!(showCountBadge && selectedCount > 0)"
+            :hide-indicator="!(showCount && selectedCount > 0)"
             variant="red"
             placement="top-right"
             placement-over="circle"
@@ -48,7 +48,7 @@
 
       <SdsIndicator
         v-else-if="iconOnly"
-        :hide-indicator="!(showCountBadge && selectedCount > 0)"
+        :hide-indicator="!(showCount && selectedCount > 0)"
         variant="red"
         placement="top-right"
         placement-over="circle"
@@ -235,10 +235,6 @@ interface FilterByDropdownProps {
    */
   tooltip?: string;
   /**
-   * Show selected count as badge in icon-only mode.
-   */
-  showCountBadge?: boolean;
-  /**
    * Determine whether to enable option filtering on the dropdown.
    */
   enableFilter?: boolean;
@@ -284,7 +280,6 @@ const props = withDefaults(defineProps<FilterByDropdownProps>(), {
   title: "Filter",
   iconOnly: false,
   tooltip: '',
-  showCountBadge: true,
   enableFilter: false,
   enableSortOptions: false,
   placement: 'bottom-start',
