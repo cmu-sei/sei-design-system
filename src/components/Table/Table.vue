@@ -78,8 +78,13 @@
               }"
               class="whitespace-nowrap select-none group"
             >
+              <span
+                v-if="field.srOnly"
+                class="sr-only"
+              >{{ field.label }}</span>
               <button
                 v-for="f, index in field.fields"
+                v-else
                 :key="f.key"
                 type="button"
                 class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
@@ -149,7 +154,12 @@
               }"
               class="whitespace-nowrap space-x-1 select-none group"
             >
+              <span
+                v-if="field.srOnly"
+                class="sr-only"
+              >{{ field.label }}</span>
               <button
+                v-else
                 class="inline-flex items-center"
                 :class="{
                   'cursor-default': !field.sortable,
@@ -217,7 +227,7 @@
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
           :class="{
             'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': item.toggled && !item.nestedRows && rowHighlight
+            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': isToggled(item) && !item.nestedRows && rowHighlight
           }"
           @mouseover="onMouseover(item)"
           @mouseleave="onMouseleave(item)"
@@ -226,18 +236,18 @@
             v-if="hasDrawers"
             class="[.table-prose_tbody_&]:px-2 w-10"
             :class="{
-              'border-b-0': item.toggled
+              'border-b-0': isToggled(item)
             }"
             :aria-label="hasDrawers ? undefined : 'No value'"
           >
             <button 
-              v-if="item.enableDrawer"
+              v-if="isDrawerEnabled(item)"
               type="button"
               class="flex items-center justify-center w-6 h-6"
               @click="toggleDrawer(item)"
             >
               <SdsSvgIcon
-                v-if="item.toggled"
+                v-if="isToggled(item)"
                 aria-hidden="true"
                 class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                 fill="none"
@@ -260,7 +270,7 @@
                 :view-box="icons['angle-down'].viewBox"
                 :width="icons['angle-down'].width"
               />
-              <span class="sr-only">{{ item.toggled ? 'Collapse drawer' : 'Expand drawer' }}</span>
+              <span class="sr-only">{{ isToggled(item) ? 'Collapse drawer' : 'Expand drawer' }}</span>
             </button>
           </td>
           <template
@@ -273,7 +283,7 @@
                 'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
-                'border-b-0': item.toggled
+                'border-b-0': isToggled(item)
               }"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -291,7 +301,7 @@
         <template v-if="item.nestedRows && item.nestedRows.length">
           <template v-for="rItem, rIndex in item.nestedRows">
             <tr
-              v-if="item.enableDrawer && item.toggled"
+              v-if="isDrawerEnabled(item) && isToggled(item)"
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
               :class="{
@@ -334,12 +344,12 @@
         </template>
         <template v-else>
           <tr
-            v-if="item.enableDrawer && item.toggled"
+            v-if="isDrawerEnabled(item) && isToggled(item)"
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
             :class="{
               'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && item.hover
+              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && hoveredItemIds.has(item.id)
             }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
@@ -371,6 +381,7 @@ export type TableDensity = typeof densityTypes[number];
 export interface TableField {
   key: string;
   label?: string;
+  srOnly?: boolean;
   format?: GenericFunctionType;
   sortable?: boolean;
   hidden?: boolean;
@@ -539,10 +550,11 @@ const icons = Object.freeze({
 } as const)
 
 const isBatchExpanded = ref(false)
-const itemsNormalized = ref<TableItem[]>([])
 const enableDrawer = ref(props.enableDrawer)
 const sortField = ref(props.sortBy ?? '')
 const sortOrder = ref(props.sortDesc ? -1 : 1)
+const hoveredItemIds = ref<Set<number>>(new Set())
+const toggledItemIds = ref<Set<number>>(new Set())
 
 const flatFields = computed(() => {
   return props.fields.flatMap(i => {
@@ -554,12 +566,16 @@ const flatFields = computed(() => {
   })
 })
 
-const hasDrawers = computed(() => itemsNormalized.value.filter((i) => i.enableDrawer).length > 0)
+// Helper functions to check state without copying objects
+const isDrawerEnabled = (item: TableItem) => enableDrawer.value || !!item.enableDrawer
+const isToggled = (item: TableItem) => toggledItemIds.value.has(item.id)
+
+const hasDrawers = computed(() => props.items.filter((i) => isDrawerEnabled(i)).length > 0)
 
 const sortedItems = computed(() => {
-  if (props.onSort) return [ ...itemsNormalized.value ]
-  const items = [ ...itemsNormalized.value ]
-  return items.sort((a, b) => sortCompare(a, b, sortField.value))
+  if (props.onSort) return props.items
+  // Sort returns original objects, not copies
+  return [...props.items].sort((a, b) => sortCompare(a, b, sortField.value))
 })
 
 const displayedFields = computed(() => {
@@ -605,26 +621,10 @@ const handleSortBy = (field: TableField) => {
   }
 }
 
-const normalizeItems = (items: TableItem[]) => {
-  if (enableDrawer.value) {
-    return [ ...items ].map((i) => ({
-      ...i,
-      enableDrawer: true,
-      hover: false,
-      toggled: false
-    }))
-  }
-  return [ ...items ].map((i) => {
-    if ('enableDrawer' in i) {
-      if ('toggled' in i) return { ...i, hover: false }
-      return { ...i, hover: false, toggled: false }
-    }
-    return i
-  })
-}
 
-const onMouseover = (item: TableItem) => item.hover = true
-const onMouseleave = (item: TableItem) => item.hover = false 
+
+const onMouseover = (item: TableItem) => hoveredItemIds.value.add(item.id)
+const onMouseleave = (item: TableItem) => hoveredItemIds.value.delete(item.id) 
 
 const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   const a = aRow[key]
@@ -642,32 +642,34 @@ const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
 }
 
 const toggleDrawer = (item: TableItem) => {
-  const i = itemsNormalized.value.find(({ id }) => id === item.id)
-  if (typeof i === 'undefined') return
-  i.toggled = i.toggled ? false : true
-  if (i.toggled) {
+  if (toggledItemIds.value.has(item.id)) {
+    toggledItemIds.value.delete(item.id)
+  } else {
+    toggledItemIds.value.add(item.id)
     /**
      * Emitted when a drawer is opened. @binding item
      */
-    emit('open-drawer', i)
+    emit('open-drawer', item)
   }
 }
 
 const toggleAllDrawers = () => {
   isBatchExpanded.value = !isBatchExpanded.value
-  itemsNormalized.value = [ ...itemsNormalized.value ].map((i) => {
-    if (i.enableDrawer) {
-      return {
-        ...i,
-        toggled: isBatchExpanded.value ? true : false
+  if (isBatchExpanded.value) {
+    // Add all drawer-enabled items to toggledItemIds
+    props.items.forEach((i) => {
+      if (isDrawerEnabled(i)) {
+        toggledItemIds.value.add(i.id)
       }
-    }
-    return i
-  })
+    })
+  } else {
+    // Clear all toggled items
+    toggledItemIds.value.clear()
+  }
   /**
-   * Emitted when all drawers are opened. @binding itemsNormalized
+   * Emitted when all drawers are opened. @binding items
    */
-  emit('open-all-drawers', itemsNormalized.value)
+  emit('open-all-drawers', props.items)
 }
 
 // Helper function to stringify the values of an Object
@@ -684,14 +686,18 @@ const toString = (value: TableItem): string => {
   }
 }
 
-watch(() => props.items, (value) => {
-  itemsNormalized.value = normalizeItems(value)
-}, { deep: true, immediate: true })
-
 watch(() => props.enableDrawer, (value) => {
   enableDrawer.value = value
-  itemsNormalized.value = normalizeItems(props.items)
 })
+
+watch(() => props.items, (items) => {
+  // Sync toggled state from items that have toggled: true
+  items.forEach(item => {
+    if (item.toggled && !toggledItemIds.value.has(item.id)) {
+      toggledItemIds.value.add(item.id)
+    }
+  })
+}, { immediate: true })
 
 watch(() => props.sortBy, (value) => {
   if (!value) return
@@ -702,9 +708,12 @@ watch(() => props.sortDesc, (value) => {
   sortOrder.value = value ? -1 : 1
 })
 
-watch(() => itemsNormalized.value, (value) => {
-  const items = value.filter(({ enableDrawer }) => !!enableDrawer)
-  const itemsToggled = items.filter(({ toggled }) => !!toggled)
-  isBatchExpanded.value = items.length === itemsToggled.length
+// Watch for changes in toggled state to update batch expanded state
+const drawerEnabledItemsCount = computed(() => {
+  return props.items.filter((i) => isDrawerEnabled(i)).length
+})
+
+watch([toggledItemIds, drawerEnabledItemsCount], ([toggled, enabled]) => {
+  isBatchExpanded.value = enabled > 0 && toggled.size === enabled
 }, { deep: true, immediate: true })
 </script>
