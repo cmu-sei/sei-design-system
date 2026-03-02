@@ -11,6 +11,13 @@
       @update:filter-search-query="handleFilterSearchUpdate"
       @update:pagination="handlePaginationUpdate"
     >
+      <template #cell(selected)="{ item }: { item: TableItem }">
+        <input
+          v-model="item.selected"
+          type="checkbox"
+          class="mr-2"
+        >
+      </template>
       <template #cell(task)="{ item }: { item: TableItem }">
         <SdsLink 
           href="https://www.atlassian.com/software/jira"
@@ -102,31 +109,31 @@ function useSearchFilter<T>(
 
 // Sample table data
 const tableItemsOriginal = ref<TableItem[]>([
-  { id: 1, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 2, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 3, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 4, task: 'SDS-104', description: 'Add accessibility features', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 5, task: 'SDS-105', description: 'Integrate third-party API', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 6, task: 'SDS-106', description: 'Update user profile page', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 7, task: 'SDS-107', description: 'Fix mobile layout issues', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 8, task: 'SDS-108', description: 'Implement dark mode', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 9, task: 'SDS-109', description: 'Set up CI/CD pipeline', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 10, task: 'SDS-110', description: 'Improve form validation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 11, task: 'SDS-111', description: 'Create dashboard analytics', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 12, task: 'SDS-112', description: 'Implement file uploader', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 13, task: 'SDS-113', description: 'Add multi-language support', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 14, task: 'SDS-114', description: 'Redesign landing page', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 15, task: 'SDS-115', description: 'Integrate payment gateway', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 16, task: 'SDS-116', description: 'Fix broken links', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 17, task: 'SDS-117', description: 'Add user notifications', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 18, task: 'SDS-118', description: 'Implement search functionality', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 19, task: 'SDS-119', description: 'Update documentation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 20, task: 'SDS-120', description: 'Add role-based access control', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 21, task: 'SDS-121', description: 'Improve loading performance', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 22, task: 'SDS-122', description: 'Implement drag-and-drop', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 23, task: 'SDS-123', description: 'Add audit logging', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 24, task: 'SDS-124', description: 'Refactor state management', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 25, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' }
+  { id: 1, selected: false, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 2, selected: false, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 3, selected: false, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 4, selected: false, task: 'SDS-104', description: 'Add accessibility features', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 5, selected: false, task: 'SDS-105', description: 'Integrate third-party API', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 6, selected: false, task: 'SDS-106', description: 'Update user profile page', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 7, selected: false, task: 'SDS-107', description: 'Fix mobile layout issues', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 8, selected: false, task: 'SDS-108', description: 'Implement dark mode', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 9, selected: false, task: 'SDS-109', description: 'Set up CI/CD pipeline', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 10, selected: false, task: 'SDS-110', description: 'Improve form validation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 11, selected: false, task: 'SDS-111', description: 'Create dashboard analytics', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 12, selected: false, task: 'SDS-112', description: 'Implement file uploader', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 13, selected: false, task: 'SDS-113', description: 'Add multi-language support', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 14, selected: false, task: 'SDS-114', description: 'Redesign landing page', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 15, selected: false, task: 'SDS-115', description: 'Integrate payment gateway', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 16, selected: false, task: 'SDS-116', description: 'Fix broken links', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 17, selected: false, task: 'SDS-117', description: 'Add user notifications', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 18, selected: false, task: 'SDS-118', description: 'Implement search functionality', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 19, selected: false, task: 'SDS-119', description: 'Update documentation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 20, selected: false, task: 'SDS-120', description: 'Add role-based access control', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 21, selected: false, task: 'SDS-121', description: 'Improve loading performance', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 22, selected: false, task: 'SDS-122', description: 'Implement drag-and-drop', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
+  { id: 23, selected: false, task: 'SDS-123', description: 'Add audit logging', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
+  { id: 24, selected: false, task: 'SDS-124', description: 'Refactor state management', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
+  { id: 25, selected: false, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' }
 ])
 
 // Loading state
@@ -134,6 +141,13 @@ const loading = ref(false)
 
 // Table setup
 const tableFields = computed<TableField[]>(() => [
+  {
+    key: 'selected',
+    label: 'Selected',
+    srOnly: true,
+    sortable: false,
+    align: 'center'
+  },
   {
     key: 'task',
     label: 'Task',
