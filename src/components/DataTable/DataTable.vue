@@ -4,7 +4,7 @@
     class="w-full min-w-full"
   >
     <div 
-      v-if="hasFilters"
+      v-if="hasFilters || hasFilterSearch"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -12,11 +12,11 @@
         min-h-14.5 w-full min-w-full
       "
     >
-      <div 
-        v-if="hasFilters"
-        class="overflow-x-auto px-2 py-4"
-      >
-        <div class="flex flex-row flex-nowrap items-center gap-2 w-full min-w-full">
+      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
+        <div 
+          v-if="hasFilters && !isSearchActive"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
+        >
           <template 
             v-for="(filter, filterIndex) in filters"
             :key="filterIndex"
@@ -50,13 +50,51 @@
           <SdsActionButton
             v-if="hasActiveFilters"
             kind="ghost"
-            variant="gray"
+            variant="red"
             size="xs"
             type="button"
             @click="clearFilters"
           >
             <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
             <span>Clear filters</span>
+          </SdsActionButton>
+        </div>
+        <div 
+          v-if="hasFilterSearch"
+          class="flex flex-row items-center justify-end gap-x-4 px-2 py-4"
+          :class="{
+            'ml-auto w-auto relative': !isSearchActive,
+            'absolute top-0 left-0 z-10 w-full': isSearchActive
+          }"
+        >
+          <SdsActionButton
+            v-if="!isSearchActive"
+            kind="secondary"
+            variant="gray"
+            size="sm"
+            type="button"
+            @click="setSearchActiveState(true)"
+          >
+            <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+            <span>Filter</span>
+          </SdsActionButton>
+          <SdsComboBox
+            v-if="isSearchActive"
+            v-model="searchQuery"
+            :autofocus="isSearchActive"
+            :pending="isSearchLoading"
+            size="sm"
+            class="w-full"
+          />
+          <SdsActionButton
+            v-if="isSearchActive"
+            kind="secondary"
+            variant="gray"
+            size="sm"
+            type="button"
+            @click="setSearchActiveState(false)"
+          >
+            <span>Cancel</span>
           </SdsActionButton>
         </div>
       </div>
@@ -200,10 +238,12 @@ import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableProps } from '../Table/Table.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
+import SdsComboBox from '../ComboBox/ComboBox.vue'
 import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
+import { useDebounce } from '@/composables'
 
 export type DataTableFilterType = 'segment' | 'dropdown';
 
@@ -222,12 +262,37 @@ export interface DataTableFilterConfig {
 }
 
 interface DataTableProps {
+  /**
+   * Table data and configuration.
+   */
   data?: TableProps;
+  /**
+   * Pagination configuration and state.
+   */
   pagination?: PaginatorProps & { 
     totalResultsPerPage: number; 
     totalResults: number; 
   };
+  /**
+   * Array of filter configurations for the table.
+   */
   filters?: DataTableFilterConfig[];
+  /**
+   * Enables a search input for filtering table data.
+   */
+  filterSearch?: boolean;
+  /**
+   * Current search query for filtering table data.
+   */
+  filterSearchQuery?: string;
+  /**
+   * Debounce wait time (ms) for filter search input.
+   */
+  filterSearchDebounce?: number;
+  /**
+   * Loading state for the table and its controls.
+   */
+  loading?: boolean;
 }
 
 defineOptions({
@@ -237,10 +302,14 @@ defineOptions({
 const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
-  filters: undefined
+  filters: undefined,
+  filterSearch: false,
+  filterSearchQuery: undefined,
+  filterSearchDebounce: 300,
+  loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination'])
 
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
@@ -252,6 +321,9 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     : undefined
 )
 
+const isSearchActive = ref(false)
+const searchQuery = ref(props.filterSearchQuery ?? '')
+
 const tableProps = computed(() => ({
   items: [],
   fields: [],
@@ -259,6 +331,7 @@ const tableProps = computed(() => ({
 }))
 
 const paginatorProps = computed(() => ({
+  loading: isLoading.value,
   currentPage: props.pagination?.currentPage ?? 1,
   totalPages: props.pagination?.totalPages ?? 0
 }))
@@ -283,6 +356,8 @@ const hasFilters = computed(() => {
   return !!(filters && filters.length)
 })
 
+const hasFilterSearch = computed(() => !!props.filterSearch)
+
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
   return filters.value.some((filter) => {
@@ -298,6 +373,12 @@ const hasActiveFilters = computed(() => {
     return false
   })
 })
+
+/**
+ * Loading state(s) for the data table.
+ */
+const isLoading = computed(() => props.loading ?? false)
+const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
 
 function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'segment'; segments: DataTableSegments[] } {
   return filter.type === 'segment' && Array.isArray(filter.segments) && filter.segments.length > 0
@@ -322,6 +403,13 @@ function clearFilters() {
         })
       }
     })
+  }
+
+  if (
+    searchQuery.value && 
+    searchQuery.value.length > 0
+  ) {
+    searchQuery.value = ''
   }
 
   emit('update:filters', filters.value)
@@ -364,4 +452,26 @@ function setPageSize(page: number) {
     totalResultsPerPage: page
   })
 }
+
+function setSearchActiveState(active: boolean) {
+  isSearchActive.value = active
+  if (!active) {
+    searchQuery.value = ''
+  }
+}
+
+/**
+ * Debounced function to emit search query changes.
+ * Delays emission to avoid excessive updates while typing.
+ */
+const debouncedEmitSearch = useDebounce((query) => {
+  emit('update:filterSearchQuery', query)
+}, props.filterSearchDebounce)
+
+/**
+ * Watch for changes to the search query and emit debounced updates.
+ */
+watch(searchQuery, (newQuery) => {
+  debouncedEmitSearch(newQuery)
+})
 </script>
