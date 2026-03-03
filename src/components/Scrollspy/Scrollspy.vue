@@ -82,6 +82,7 @@ const lastActiveId = ref()
 const PAGE_OFFSET = 56
 
 const getAnchorTop = (item: { id: string, text: string }): number => {
+  if (typeof document === 'undefined') return 0
   const anchor = document.getElementById(item.id) as HTMLAnchorElement
   return anchor ? anchor.getBoundingClientRect().top  - PAGE_OFFSET - 15 : 0
 }
@@ -91,7 +92,7 @@ const isItemActive = (
   item: { id: string, text: string },
   nextItem: { id: string, text: string } | undefined
 ): [boolean, string | null] => {
-  const scrollTop = parentEl.value && parentEl.value.getBoundingClientRect().top || window.scrollY
+  const scrollTop = parentEl.value && parentEl.value.getBoundingClientRect().top || (typeof window !== 'undefined' ? window.scrollY : 0)
 
   if (index === 0 && scrollTop === 0) {
     return [true, null]
@@ -109,6 +110,7 @@ const isItemActive = (
 }
 
 const isInViewport = (item: { id: string, text: string }) => {
+  if (typeof document === 'undefined') return false
   const anchor = document.getElementById(item.id) as HTMLAnchorElement | null
   if (!anchor) return false;
   const rect = anchor.getBoundingClientRect();
@@ -121,7 +123,7 @@ const isInViewport = (item: { id: string, text: string }) => {
   } else {
     return (
       rect.top >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+      rect.bottom <= (typeof window !== 'undefined' ? (window.innerHeight || document.documentElement.clientHeight) : 0)
     )
   }
 }
@@ -181,6 +183,7 @@ if (props.parent) {
 
 const scrollToIdTarget = (id: string, event: Event) => {
   if (!parentEl.value) return
+  if (typeof document === 'undefined') return
   const el = document.getElementById(id)
   if (!el) return
   event.preventDefault();

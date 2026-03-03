@@ -44,6 +44,7 @@
           </div>
           <div class="flex shrink-0 ml-4">
             <button
+              aria-label="Close toast"
               class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-hidden hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >

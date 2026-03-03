@@ -31,6 +31,7 @@
       <button
         v-if="appSuite || appName"
         ref="mobileMenuOpenBtn"
+        aria-label="Open mobile menu"
         class="flex items-center md:hidden gap-1 focus:outline-hidden"
         @click="showMobileMenu = !showMobileMenu"
       >
@@ -397,6 +398,7 @@
               <button
                 v-if="appSuite || appName"
                 ref="mobileMenuOpenBtn"
+                aria-label="Open mobile menu"
                 class="flex md:hidden gap-1 focus:outline-hidden"
                 @click="showMobileMenu = !showMobileMenu"
               >
@@ -971,15 +973,17 @@ const computedSidebarWidth = computed(() => {
 })
 
 watch(showMobileMenu, async (value) => {
-  if (value) {
-    // prevent scrolling
-    document.documentElement.classList.add("application-internal-prevent-scroll")
-    await nextTick()
-    mobileMenuCloseBtn.value.focus()
-  } else {
-    // enable scrolling
-    document.documentElement.classList.remove("application-internal-prevent-scroll")
-    mobileMenuOpenBtn.value.focus()
+  if (typeof document !== 'undefined') {
+    if (value) {
+      // prevent scrolling
+      document.documentElement.classList.add("application-internal-prevent-scroll")
+      await nextTick()
+      mobileMenuCloseBtn.value.focus()
+    } else {
+      // enable scrolling
+      document.documentElement.classList.remove("application-internal-prevent-scroll")
+      mobileMenuOpenBtn.value.focus()
+    }
   }
 })
 

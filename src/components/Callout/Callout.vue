@@ -66,7 +66,10 @@
         v-if="dismissable"
         class="absolute top-2 right-2"
       >
-        <button @click="dismiss = true">
+        <button
+          aria-label="Dismiss"
+          @click="dismiss = true"
+        >
           <IconFa7SolidXmark
             :class="[fillClass, size === 'xs' ? 'w-3 h-3' : 'w-4 h-4']"
           />
