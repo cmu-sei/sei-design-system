@@ -22,9 +22,9 @@
         :class="validationClasses"
         :value="option[valueKey]"
         :name="name ? name : `${root?.id}__option`"
-        :required="required && !model"
-        :disabled="disabled"
-        :readonly="readonly"
+        :required="(required && !model) || undefined"
+        :disabled="disabled || undefined"
+        :readonly="readonly || undefined"
         @click="onChange(option[valueKey])"
       >
       <!-- @slot Label content (used to replace label element). @binding optionId, option -->

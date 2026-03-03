@@ -12,12 +12,12 @@
         'form-control-sm': size === 'sm'
       }"
       :type="type"
-      :maxlength="maxlength"
-      :placeholder="placeholder"
-      :autofocus="autofocus"
-      :disabled="disabled"
-      :readonly="readonly"
-      :required="required"
+      :maxlength="maxlength !== undefined ? maxlength : undefined"
+      :placeholder="placeholder || undefined"
+      :autofocus="autofocus || undefined"
+      :disabled="disabled || undefined"
+      :readonly="readonly || undefined"
+      :required="required || undefined"
       :pattern="pattern || undefined"
     >
     <character-counter

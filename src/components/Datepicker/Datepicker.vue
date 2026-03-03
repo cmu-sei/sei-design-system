@@ -31,7 +31,7 @@
               'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
               'border-none': disabled,
             }"
-            :disabled="disabled || readonly"
+            :disabled="disabled || readonly || undefined"
             @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
           >
             <IconFa7RegularClock
@@ -51,10 +51,10 @@
             type="text"
             class="form-control"
             :title="`${placeholder}`"
-            :placeholder="placeholder"
-            :readonly="readonly"
-            :disabled="disabled"
-            :required="required"
+            :placeholder="placeholder || undefined"
+            :readonly="readonly || undefined"
+            :disabled="disabled || undefined"
+            :required="required || undefined"
             :pattern="inputPattern"
             @focusin="!readonly ? open() : undefined"
             @mouseup="inputToChange = 'start'"
@@ -97,7 +97,7 @@
               :class="{
                 'pointer-events-none opacity-50': disabled || readonly
               }"
-              :disabled="disabled || readonly"
+              :disabled="disabled || readonly || undefined"
               @click="toggle(); ($refs.endDateInput as HTMLElement).focus()"
             >
               <IconFa7RegularClock
@@ -117,10 +117,10 @@
               type="text"
               class="form-control"
               :title="`${placeholder}`"
-              :placeholder="placeholder"
-              :readonly="readonly"
-              :disabled="disabled"
-              :required="required"
+              :placeholder="placeholder || undefined"
+              :readonly="readonly || undefined"
+              :disabled="disabled || undefined"
+              :required="required || undefined"
               :pattern="inputPattern"
               @focusin="!readonly ? open() : undefined"
               @mouseup="inputToChange = 'end'"

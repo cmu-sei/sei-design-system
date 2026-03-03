@@ -92,7 +92,7 @@
     </Component>
     <div class="grow">
       <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
-      <div>
+      <div v-if="$slots.default">
         <slot
           :id="id"
           :valid="state === true"
@@ -112,7 +112,7 @@
           name="helperText"
           :helper-text="helperText"
         >
-          <span aria-label="test">{{ helperText }}</span>
+          <span>{{ helperText }}</span>
         </slot>
       </p>
       <p

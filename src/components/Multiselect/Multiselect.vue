@@ -81,12 +81,12 @@
             ref="input"
             :value="model"
             :placeholder="showPlaceholder ? placeholder : ''"
-            :readonly="isReadonlyInput"
-            :disabled="disabled"
+            :readonly="isReadonlyInput || undefined"
+            :disabled="disabled || undefined"
             :style="{
               width: !multiple && showDropdown && canSearch ? '100%' : inputWidth,
             }"
-            :maxlength="maxlength"
+            :maxlength="maxlength !== undefined ? maxlength : undefined"
             autocomplete="off"
             spellcheck="false"
             autocorrect="off"
@@ -118,8 +118,8 @@
     <select
       v-if="id"
       :id="id"
-      :required="required"
-      :multiple="multiple"
+      :required="required || undefined"
+      :multiple="multiple || undefined"
       class="sr-only"
       aria-hidden="true"
       tabindex="-1"
@@ -982,11 +982,13 @@ const positionDropdown = async () => {
   }
   if (props.openDirection === "auto") {
     // const spaceAbove = root.value.getBoundingClientRect().top
-    const spaceBelow =
-      window.innerHeight - root.value.getBoundingClientRect().bottom;
-    const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
-    dropUp.value = notEnoughSpaceBelow;
-    bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+    if (typeof window !== 'undefined') {
+      const spaceBelow =
+        window.innerHeight - root.value.getBoundingClientRect().bottom;
+      const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
+      dropUp.value = notEnoughSpaceBelow;
+      bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+    }
   }
 }
 

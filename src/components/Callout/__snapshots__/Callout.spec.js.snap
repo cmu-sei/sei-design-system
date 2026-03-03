@@ -534,7 +534,9 @@ exports[`Callout > should have dismissable icon 1`] = `
     <div
       class="absolute top-2 right-2"
     >
-      <button>
+      <button
+        aria-label="Dismiss"
+      >
         <svg
           aria-hidden="true"
           class="fill-gray-900 dark:fill-gray-300 w-4 h-4"
@@ -644,7 +646,9 @@ exports[`Callout > should have inset 1`] = `
     <div
       class="absolute top-2 right-2"
     >
-      <button>
+      <button
+        aria-label="Dismiss"
+      >
         <svg
           aria-hidden="true"
           class="fill-gray-900 dark:fill-gray-300 w-4 h-4"

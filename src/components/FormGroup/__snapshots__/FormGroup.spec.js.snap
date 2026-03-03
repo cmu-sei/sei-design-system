@@ -26,10 +26,7 @@ exports[`Form Group > should match its default snapshot 1`] = `
     class="grow"
   >
     <!-- @slot Default slot content. This is where you add the form field. @binding id, valid, invalid, disabled, required, readonly. -->
-    <div>
-      
-      
-    </div>
+    <!--v-if-->
     <!--v-if-->
     <!--v-if-->
     <!--v-if-->

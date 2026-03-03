@@ -354,6 +354,7 @@ const onTabKeydown = async (event: KeyboardEvent, tab: TabItem): Promise<void> =
 
   // Focus the next tab element
   await nextTick(() => {
+    if (typeof document === 'undefined') return
     const nextTabElement = document.querySelector(`#sds-tabs-${root.value?.id}__${nextTab.key}__tab`) as HTMLButtonElement | HTMLAnchorElement | null
     if (nextTabElement) nextTabElement.focus()
   })

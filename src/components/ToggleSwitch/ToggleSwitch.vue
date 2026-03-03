@@ -9,7 +9,7 @@
       :class="[
         isToggled ? 'bg-green-500 disabled:bg-green-200 dark:disabled:bg-green-800' : 'bg-gray-700 disabled:bg-gray-200 dark:disabled:bg-gray-800'
       ]"
-      :disabled="disabled"
+      :disabled="disabled || undefined"
       role="switch"
       :aria-checked="isToggled"
       @click="update"

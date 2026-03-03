@@ -77,7 +77,7 @@
           ref="inputField"
           :value="inputDisplayValue"
           type="text"
-          :multiple="multiple"
+          :multiple="multiple || undefined"
           autocapitalize="off"
           autocomplete="off"
           spellcheck="false"
@@ -89,11 +89,11 @@
             'pl-10': size !== 'sm',
             'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
           }"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          :readonly="isReadonly"
-          :maxlength="maxlength"
-          :required="required && !((type === 'select' || type === 'taggable-select'))"
+          :placeholder="placeholder || undefined"
+          :disabled="disabled || undefined"
+          :readonly="isReadonly || undefined"
+          :maxlength="maxlength !== undefined ? maxlength : undefined"
+          :required="(required && !((type === 'select' || type === 'taggable-select'))) || undefined"
           @input="onInputFieldInput"
           @click.prevent="inputClick"
           @keydown.delete="handleDelete"
@@ -110,7 +110,7 @@
           v-if="(type === 'select' || type === 'taggable-select')"
           type="text"
           :value="selected.length > 0 ? 'selected' : ''"
-          :required="required"
+          :required="required || undefined"
           tabindex="-1"
           class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
           style="clip: rect(0, 0, 0, 0);"
@@ -1288,7 +1288,11 @@ const isSelected = (val: string) => {
 }
 
 const activeElement = useActiveElement()
-const isFocused = computed(() => activeElement.value === inputField.value)
+const isFocused = computed(() => {
+  // SSR guard: activeElement might be null during SSR
+  if (!activeElement.value || !inputField.value) return false
+  return activeElement.value === inputField.value
+})
 
 // Watcher to force open the dropdown for one tick when requested
 watch(forceShowDropdown, (val) => {
@@ -1605,7 +1609,8 @@ const hasDropdownSuggestion = computed(() => {
 })
 
 const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
-  const activeTab = (root.value.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+  // SSR guard: ensure root.value exists before querying
+  const activeTab = (root.value?.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
   if (direction === 'tabsUp' || direction === 'tabsDown') {
     if (direction === 'tabsUp') {
       event.preventDefault()
@@ -1648,7 +1653,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     case 'down': {
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === -1) { // Input should be focused
-          if (document.activeElement !== activeTab) { // "All" tab is not focused?
+          if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
             arrowCounter.value = -1
             activeTab?.focus()
             return
@@ -1667,7 +1672,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     case 'up': {
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === 0) { // First suggestion is focused
-          if (document.activeElement !== activeTab) { // "All" tab is not focused?
+          if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
             arrowCounter.value = -1
             activeTab?.focus()
             return
@@ -1696,7 +1701,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
+        const newActiveTab = root.value?.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
@@ -1710,7 +1715,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value++
         }
         await nextTick()
-        const newActiveTab = root.value.querySelector('button.tab[data-active="true"]')
+        const newActiveTab = root.value?.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
         arrowCounter.value = -1
