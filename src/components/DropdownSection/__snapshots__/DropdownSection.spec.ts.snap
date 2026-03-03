@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DropdownSection > Snapshots > should match its default snapshot 1`] = `
+<div
+  class="py-2"
+  data-id="sds-dropdown-section"
+>
+  <!--v-if-->
+  <div
+    class=""
+  >
+    <ul
+      class="flex flex-col"
+    >
+      <!-- @slot Dropdown section content (items). -->
+      
+      <div>
+        Content
+      </div>
+      
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`DropdownSection > Snapshots > should match snapshot as scrollable 1`] = `
+<div
+  class="py-2"
+  data-id="sds-dropdown-section"
+>
+  <!--v-if-->
+  <div
+    class="scroll-area max-h-56"
+  >
+    
+    <!-- @slot Dropdown section content (items). -->
+    
+    <div>
+      Content
+    </div>
+    
+    
+  </div>
+</div>
+`;
+
+exports[`DropdownSection > Snapshots > should match snapshot with divider 1`] = `
+<div
+  class="border-b border-gray-100 dark:border-gray-700 pb-2 py-2"
+  data-id="sds-dropdown-section"
+>
+  <!--v-if-->
+  <div
+    class=""
+  >
+    <ul
+      class="flex flex-col"
+    >
+      <!-- @slot Dropdown section content (items). -->
+      
+      <div>
+        Content
+      </div>
+      
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`DropdownSection > Snapshots > should match snapshot with title 1`] = `
+<div
+  class="px-2 pt-4 pb-2"
+  data-id="sds-dropdown-section"
+>
+  <span
+    aria-level="2"
+    class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2"
+    role="heading"
+  >
+    Section Title
+  </span>
+  <div
+    class=""
+  >
+    <ul
+      class="flex flex-col"
+    >
+      <!-- @slot Dropdown section content (items). -->
+      
+      <div>
+        Content
+      </div>
+      
+    </ul>
+  </div>
+</div>
+`;
