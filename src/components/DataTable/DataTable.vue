@@ -50,7 +50,7 @@
           <SdsActionButton
             v-if="hasActiveFilters"
             kind="ghost"
-            variant="gray"
+            variant="red"
             size="xs"
             type="button"
             @click="clearFilters"

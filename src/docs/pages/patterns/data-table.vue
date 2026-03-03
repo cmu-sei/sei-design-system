@@ -271,11 +271,32 @@ function applyFilters(items: TableItem[], filtersConfig: DataTableFilterConfig[]
 
 // Filter update handler
 function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
-  // Update local filters with the emitted values from DataTable
-  filters.value = updatedFilters
+  const normalizedFilters = updatedFilters.map((filter) => {
+    if (filter.type === 'segment' && filter.segments) {
+      // Find the "All" segment by label
+      const allIdx = filter.segments.findIndex(seg => seg.label === 'All')
+      const selectedIdx = filter.segments.findIndex(seg => seg.selected)
+      if (selectedIdx !== -1) {
+        if (allIdx !== -1 && selectedIdx === allIdx) {
+          // "All" selected, deselect all others
+          filter.segments.forEach((seg, idx) => {
+            seg.selected = idx === allIdx
+          })
+        } else {
+          // Only one segment selected at a time (not "All")
+          filter.segments.forEach((seg, idx) => {
+            seg.selected = idx === selectedIdx
+          })
+        }
+      }
+    }
+    return filter
+  })
+
+  filters.value = normalizedFilters
 
   // Check if all filters are cleared
-  const allFiltersCleared = updatedFilters.every((filter) => {
+  const allFiltersCleared = normalizedFilters.every((filter) => {
     if (filter.type === 'segment' && filter.segments) {
       // Check if no segment is selected or first segment ("All") is selected
       const hasSelection = filter.segments.some((s) => s.selected)
@@ -298,8 +319,13 @@ function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
     return
   }
 
-  // Apply filters to current tableItems (preserves search results)
-  const filtered = applyFilters(tableItems.value, updatedFilters)
+  // Determine base data: use search results if search is active, else use the original data
+  const baseData = searchTerm.value && searchTerm.value.length > 0
+    ? searchItems.value
+    : tableItemsOriginal.value
+
+  // Apply filters to base data
+  const filtered = applyFilters(baseData, normalizedFilters)
 
   tableItems.value = filtered
   currentPage.value = 1
