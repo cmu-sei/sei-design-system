@@ -1,981 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Calendar > calendar mode min and max is correct 1`] = `
-<div
-  class="select-none"
-  data-id="sds-calendar"
->
-  <div>
-    
-    <div
-      class="flex relative gap-1 mb-2 w-56 sm:w-120"
-    >
-      <button
-        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
-        disabled=""
-        tabindex="-1"
-        type="button"
-      >
-        <span
-          class="sr-only"
-        >
-          Go to previous month
-        </span>
-        <svg
-          aria-hidden="true"
-          class="w-5 h-5"
-          height="1.2em"
-          role="img"
-          viewBox="0 0 640 640"
-          width="1.2em"
-        >
-          <path
-            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-      <div
-        class="grow"
-      >
-        <button
-          class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
-          tabindex="-1"
-          type="button"
-        >
-          <span>
-            December 2021
-          </span>
-        </button>
-      </div>
-      <div
-        class="hidden grow sm:block"
-      >
-        <button
-          class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
-          tabindex="-1"
-          type="button"
-        >
-          <span>
-            January 2022
-          </span>
-        </button>
-      </div>
-      <button
-        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
-        disabled=""
-        tabindex="-1"
-        type="button"
-      >
-        <span
-          class="sr-only"
-        >
-          Go to next month
-        </span>
-        <svg
-          aria-hidden="true"
-          class="w-5 h-5"
-          height="1.2em"
-          role="img"
-          viewBox="0 0 640 640"
-          width="1.2em"
-        >
-          <path
-            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-    </div>
-    <div
-      class="flex flex-col sm:flex-row sm:gap-8"
-    >
-      <div
-        class="grid grid-cols-7 w-56 h-60 place-content-start"
-      >
-        
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          S
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          M
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          T
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          W
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          T
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          F
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          S
-        </div>
-        
-        
-        <div
-          class="w-8 h-8 mb-1 col-start-4"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            1
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            2
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            3
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            4
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            5
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            6
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            7
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            8
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            9
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            10
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            11
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            12
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            13
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            14
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
-            tabindex="-1"
-            title="Today"
-            type="button"
-          >
-            15
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            16
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            17
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            18
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900 bg-blue-25 dark:bg-blue-900 rounded-l-full"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm font-bold bg-blue-500 dark:bg-blue-700 text-white"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            19
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            20
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            21
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            22
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            23
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            24
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900 bg-blue-25 dark:bg-blue-900 rounded-r-full"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm font-bold bg-blue-500 dark:bg-blue-700 text-white"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            25
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            26
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            27
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            28
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            29
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            30
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            31
-          </button>
-        </div>
-        
-      </div>
-      <div
-        class="hidden sm:grid grid-cols-7 w- place-content-start"
-      >
-        
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          S
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          M
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          T
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          W
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          T
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          F
-        </div>
-        <div
-          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
-        >
-          S
-        </div>
-        
-        
-        <div
-          class="w-8 h-8 mb-1 col-start-7"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            1
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            2
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            3
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            4
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            5
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            6
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            7
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            8
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            9
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            10
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            11
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            12
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            13
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            14
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            15
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            16
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            17
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            18
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            19
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            20
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            21
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            22
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            23
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            24
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            25
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            26
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            27
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            28
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            29
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            30
-          </button>
-        </div>
-        <div
-          class="w-8 h-8 mb-1"
-        >
-          <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
-            disabled=""
-            tabindex="-1"
-            title=""
-            type="button"
-          >
-            31
-          </button>
-        </div>
-        
-      </div>
-    </div>
-    
-  </div>
-  <!-- Time pickers -->
-  <!--v-if-->
-</div>
-`;
-
-exports[`Calendar > calendar mode should be dateTime 1`] = `
+exports[`Calendar > Rendering > renders in dateTime mode 1`] = `
 <div
   class="select-none"
   data-id="sds-calendar"
@@ -2510,7 +1535,7 @@ exports[`Calendar > calendar mode should be dateTime 1`] = `
 </div>
 `;
 
-exports[`Calendar > calendar mode should be time 1`] = `
+exports[`Calendar > Rendering > renders in time mode 1`] = `
 <div
   class="select-none"
   data-id="sds-calendar"
@@ -3130,7 +2155,7 @@ exports[`Calendar > calendar mode should be time 1`] = `
 </div>
 `;
 
-exports[`Calendar > should match its default snapshot 1`] = `
+exports[`Calendar > Rendering > renders with min and max constraints 1`] = `
 <div
   class="select-none"
   data-id="sds-calendar"
@@ -3138,10 +2163,11 @@ exports[`Calendar > should match its default snapshot 1`] = `
   <div>
     
     <div
-      class="flex relative gap-1 mb-2 w-56"
+      class="flex relative gap-1 mb-2 w-56 sm:w-120"
     >
       <button
         class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
+        disabled=""
         tabindex="-1"
         type="button"
       >
@@ -3177,9 +2203,22 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </span>
         </button>
       </div>
-      <!--v-if-->
+      <div
+        class="hidden grow sm:block"
+      >
+        <button
+          class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+          tabindex="-1"
+          type="button"
+        >
+          <span>
+            January 2022
+          </span>
+        </button>
+      </div>
       <button
         class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
+        disabled=""
         tabindex="-1"
         type="button"
       >
@@ -3252,6 +2291,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3264,6 +2304,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3276,6 +2317,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3288,6 +2330,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3300,6 +2343,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3312,6 +2356,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3324,6 +2369,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3336,6 +2382,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3348,6 +2395,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3360,6 +2408,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3372,6 +2421,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3384,6 +2434,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3396,6 +2447,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3408,6 +2460,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3419,9 +2472,9 @@ exports[`Calendar > should match its default snapshot 1`] = `
           class="w-8 h-8 mb-1"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
             tabindex="-1"
-            title=""
+            title="Today"
             type="button"
           >
             15
@@ -3464,22 +2517,22 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900 bg-blue-25 dark:bg-blue-900 rounded-l-full"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm font-bold bg-blue-500 dark:bg-blue-700 text-white"
             tabindex="-1"
-            title="Today"
+            title=""
             type="button"
           >
             19
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
             tabindex="-1"
             title=""
             type="button"
@@ -3488,10 +2541,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
             tabindex="-1"
             title=""
             type="button"
@@ -3500,10 +2553,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
             tabindex="-1"
             title=""
             type="button"
@@ -3512,10 +2565,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
             tabindex="-1"
             title=""
             type="button"
@@ -3524,10 +2577,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-semibold text-blue-900 dark:text-blue-100"
             tabindex="-1"
             title=""
             type="button"
@@ -3536,10 +2589,10 @@ exports[`Calendar > should match its default snapshot 1`] = `
           </button>
         </div>
         <div
-          class="w-8 h-8 mb-1"
+          class="w-8 h-8 mb-1 bg-blue-25 dark:bg-blue-900 bg-blue-25 dark:bg-blue-900 rounded-r-full"
         >
           <button
-            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm font-bold bg-blue-500 dark:bg-blue-700 text-white"
             tabindex="-1"
             title=""
             type="button"
@@ -3600,6 +2653,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3612,6 +2666,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
         >
           <button
             class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
             tabindex="-1"
             title=""
             type="button"
@@ -3621,7 +2676,452 @@ exports[`Calendar > should match its default snapshot 1`] = `
         </div>
         
       </div>
-      <!--v-if-->
+      <div
+        class="hidden sm:grid grid-cols-7 w- place-content-start"
+      >
+        
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          S
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          M
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          T
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          W
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          T
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          F
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          S
+        </div>
+        
+        
+        <div
+          class="w-8 h-8 mb-1 col-start-7"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            1
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            2
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            3
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            4
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            5
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            6
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            7
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            8
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            9
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            10
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            11
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            12
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            13
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            14
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            15
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            16
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            17
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            18
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            19
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            20
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            21
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            22
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            23
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            24
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            25
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            26
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            27
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            28
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            29
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            30
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            disabled=""
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            31
+          </button>
+        </div>
+        
+      </div>
     </div>
     
   </div>
@@ -3630,7 +3130,7 @@ exports[`Calendar > should match its default snapshot 1`] = `
 </div>
 `;
 
-exports[`Calendar > start and end date should be correct 1`] = `
+exports[`Calendar > Rendering > renders with start and end date range 1`] = `
 <div
   class="select-none"
   data-id="sds-calendar"
@@ -4548,6 +4048,506 @@ exports[`Calendar > start and end date should be correct 1`] = `
         </div>
         
       </div>
+    </div>
+    
+  </div>
+  <!-- Time pickers -->
+  <!--v-if-->
+</div>
+`;
+
+exports[`Calendar > Rendering > should match its default snapshot 1`] = `
+<div
+  class="select-none"
+  data-id="sds-calendar"
+>
+  <div>
+    
+    <div
+      class="flex relative gap-1 mb-2 w-56"
+    >
+      <button
+        class="absolute left-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Go to previous month
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5"
+          height="1.2em"
+          role="img"
+          viewBox="0 0 640 640"
+          width="1.2em"
+        >
+          <path
+            d="M169.4 297.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 320l169.3-169.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <div
+        class="grow"
+      >
+        <button
+          class="m-auto text-lg font-semibold flex gap-1 text-gray-900 hover:text-gray-500 dark:text-gray-100"
+          tabindex="-1"
+          type="button"
+        >
+          <span>
+            December 2021
+          </span>
+        </button>
+      </div>
+      <!--v-if-->
+      <button
+        class="absolute right-0 top-0 text-gray-700 dark:text-gray-300 p-1 hover:bg-gray-100 dark:hover:bg-gray-750 rounded-sm disabled:pointer-events-none disabled:opacity-50"
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="sr-only"
+        >
+          Go to next month
+        </span>
+        <svg
+          aria-hidden="true"
+          class="w-5 h-5"
+          height="1.2em"
+          role="img"
+          viewBox="0 0 640 640"
+          width="1.2em"
+        >
+          <path
+            d="M471.1 297.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L403.2 320L233.9 150.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="flex flex-col sm:flex-row sm:gap-8"
+    >
+      <div
+        class="grid grid-cols-7 w-56 h-60 place-content-start"
+      >
+        
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          S
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          M
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          T
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          W
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          T
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          F
+        </div>
+        <div
+          class="text-sm font-bold text-gray-400 text-center uppercase mb-1"
+        >
+          S
+        </div>
+        
+        
+        <div
+          class="w-8 h-8 mb-1 col-start-4"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            1
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            2
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            3
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            4
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            5
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            6
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            7
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            8
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            9
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            10
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            11
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            12
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            13
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            14
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            15
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            16
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            17
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            18
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750 font-bold text-blue-500 bg-gray-100 dark:text-blue-100 dark:bg-gray-850"
+            tabindex="-1"
+            title="Today"
+            type="button"
+          >
+            19
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            20
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            21
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            22
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            23
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            24
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            25
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            26
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            27
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            28
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            29
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            30
+          </button>
+        </div>
+        <div
+          class="w-8 h-8 mb-1"
+        >
+          <button
+            class="disabled:pointer-events-none disabled:opacity-25 px-2 py-1 w-8 h-8 rounded-full sds-theme-plaid:rounded-none text-sm hover:bg-gray-100 dark:hover:bg-gray-750"
+            tabindex="-1"
+            title=""
+            type="button"
+          >
+            31
+          </button>
+        </div>
+        
+      </div>
+      <!--v-if-->
     </div>
     
   </div>
