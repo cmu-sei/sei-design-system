@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
-import Component from './Calendar.vue'
+import { mount, VueWrapper } from '@vue/test-utils'
+import { nextTick, ComponentPublicInstance } from 'vue'
+import Component, { type CalendarDate, type CalendarRange } from './Calendar.vue'
 
 describe('Calendar', () => {
   beforeEach(() => {
@@ -129,12 +129,12 @@ describe('Calendar', () => {
   describe('Single Date Selection', () => {
     it('selects a single date when clicked and component remains functional', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = null
+      let currentValue: CalendarDate | CalendarRange = null
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -154,12 +154,12 @@ describe('Calendar', () => {
 
     it('updates modelValue when selecting a different date', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = new Date(2021, 11, 10)
+      let currentValue: CalendarDate | CalendarRange = new Date(2021, 11, 10)
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -174,19 +174,19 @@ describe('Calendar', () => {
       await nextTick()
 
       expect(currentValue).toBeInstanceOf(Date)
-      expect(currentValue.getDate()).toBe(20)
+      expect((currentValue as Date).getDate()).toBe(20)
     })
 
     it('uses current time for today when useCurrentTimeForToday is true', async () => {
       const now = new Date(2021, 11, 15, 14, 30, 45)
       vi.setSystemTime(now)
-      let currentValue = null
+      let currentValue: CalendarDate | CalendarRange = null
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
           useCurrentTimeForToday: true,
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -201,19 +201,20 @@ describe('Calendar', () => {
       await nextTick()
 
       expect(currentValue).toBeInstanceOf(Date)
-      expect(currentValue?.getHours()).toBeGreaterThan(0)
+      const dateValue = currentValue as unknown as Date
+      expect(dateValue.getHours()).toBeGreaterThan(0)
     })
   })
 
   describe('Range Date Selection', () => {
     it('selects start date when both are null', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { start: null, end: null }
+      let currentValue: CalendarDate | CalendarRange = { start: null, end: null }
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -229,17 +230,17 @@ describe('Calendar', () => {
 
       expect(currentValue).toHaveProperty('start')
       expect(currentValue).toHaveProperty('end')
-      expect(currentValue.start).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
     })
 
     it('selects end date when start is already set', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { start: new Date(2021, 11, 10), end: null }
+      let currentValue: CalendarDate | CalendarRange = { start: new Date(2021, 11, 10), end: null }
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -253,17 +254,17 @@ describe('Calendar', () => {
       await dateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.end).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
     })
 
     it('sets end time to 23:59 when selecting the same day twice', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { start: new Date(2021, 11, 10, 0, 0, 0), end: null }
+      let currentValue: CalendarDate | CalendarRange = { start: new Date(2021, 11, 10, 0, 0, 0), end: null }
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -277,14 +278,14 @@ describe('Calendar', () => {
       await sameButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.end).toBeInstanceOf(Date)
-      expect(currentValue.end?.getHours()).toBe(23)
-      expect(currentValue.end?.getMinutes()).toBe(59)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
+      expect(((currentValue as CalendarRange).end as Date)?.getHours()).toBe(23)
+      expect(((currentValue as CalendarRange).end as Date)?.getMinutes()).toBe(59)
     })
 
     it('resets range when both dates are set and a new date is clicked', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10), 
         end: new Date(2021, 11, 20) 
       }
@@ -292,7 +293,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -312,7 +313,7 @@ describe('Calendar', () => {
 
     it('respects inputToChange prop when set to start', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10), 
         end: new Date(2021, 11, 20) 
       }
@@ -321,7 +322,7 @@ describe('Calendar', () => {
           modelValue: currentValue,
           mode: 'date',
           inputToChange: 'start',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -335,18 +336,18 @@ describe('Calendar', () => {
       await newDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.start).toBeInstanceOf(Date)
-      expect(currentValue.start?.getDate()).toBe(12)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
+      expect(((currentValue as CalendarRange).start as Date)?.getDate()).toBe(12)
     })
 
     it('swaps start and end when end is before start', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { start: null, end: new Date(2021, 11, 20) }
+      let currentValue: CalendarDate | CalendarRange = { start: null, end: new Date(2021, 11, 20) }
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -360,8 +361,8 @@ describe('Calendar', () => {
       await earlierDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.start).toBeInstanceOf(Date)
-      expect(currentValue.end).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
     })
   })
 
@@ -543,12 +544,12 @@ describe('Calendar', () => {
   describe('Time Selection', () => {
     it('changes hour when hour select is changed', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = new Date(2021, 11, 15, 10, 30)
+      let currentValue: CalendarDate | CalendarRange = new Date(2021, 11, 15, 10, 30)
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -567,12 +568,12 @@ describe('Calendar', () => {
 
     it('changes minutes when minutes select is changed', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = new Date(2021, 11, 15, 10, 30)
+      let currentValue: CalendarDate | CalendarRange = new Date(2021, 11, 15, 10, 30)
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -592,12 +593,12 @@ describe('Calendar', () => {
 
     it('changes meridian when meridian select is changed', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = new Date(2021, 11, 15, 10, 30)
+      let currentValue: CalendarDate | CalendarRange = new Date(2021, 11, 15, 10, 30)
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -617,7 +618,7 @@ describe('Calendar', () => {
 
     it('updates time for range start date', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10, 10, 0), 
         end: new Date(2021, 11, 20, 15, 0) 
       }
@@ -625,7 +626,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -639,12 +640,12 @@ describe('Calendar', () => {
       await nextTick()
 
       expect(currentValue).toHaveProperty('start')
-      expect(currentValue.start).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
     })
 
     it('updates time for range end date', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10, 10, 0), 
         end: new Date(2021, 11, 20, 15, 0) 
       }
@@ -652,7 +653,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -666,20 +667,20 @@ describe('Calendar', () => {
       await nextTick()
 
       expect(currentValue).toHaveProperty('end')
-      expect(currentValue.end).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
     })
   })
 
   describe('Time Mode Initialization', () => {
     it('initializes with default time when modelValue is null in time mode', async () => {
       vi.setSystemTime(new Date(2021, 11, 15, 14, 30))
-      let currentValue = null
-      let wrapper
+      let currentValue: CalendarDate | CalendarRange = null
+      let wrapper: VueWrapper<ComponentPublicInstance> | null = null
       wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'time',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             if (wrapper) {
               wrapper.setProps({ modelValue: value })
@@ -695,13 +696,13 @@ describe('Calendar', () => {
 
     it('initializes range with default times in time mode', async () => {
       vi.setSystemTime(new Date(2021, 11, 15, 14, 30))
-      let currentValue = { start: null, end: null }
-      let wrapper
+      let currentValue: CalendarDate | CalendarRange = { start: null, end: null }
+      let wrapper: VueWrapper<ComponentPublicInstance> | null = null
       wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'time',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             if (wrapper) {
               wrapper.setProps({ modelValue: value })
@@ -713,8 +714,8 @@ describe('Calendar', () => {
 
       expect(currentValue).toHaveProperty('start')
       expect(currentValue).toHaveProperty('end')
-      expect(currentValue.start).toBeInstanceOf(Date)
-      expect(currentValue.end).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
     })
   })
 
@@ -773,12 +774,12 @@ describe('Calendar', () => {
 
     it('selects date from next month calendar', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { start: new Date(2021, 11, 10), end: null }
+      let currentValue: CalendarDate | CalendarRange = { start: new Date(2021, 11, 10), end: null }
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -868,12 +869,12 @@ describe('Calendar', () => {
   describe('Single Date Time Changes', () => {
     it('changes hour in single date mode', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = new Date(2021, 11, 15, 3, 30)
+      let currentValue: CalendarDate | CalendarRange = new Date(2021, 11, 15, 3, 30)
       const wrapper = mount(Component, {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -887,14 +888,14 @@ describe('Calendar', () => {
       await nextTick()
 
       expect(currentValue).toBeInstanceOf(Date)
-      expect(currentValue.getHours()).toBeGreaterThanOrEqual(0)
+      expect((currentValue as Date).getHours()).toBeGreaterThanOrEqual(0)
     })
   })
 
   describe('Range Date Time Changes', () => {
     it('changes hour for range start with PM time', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10, 14, 0), 
         end: new Date(2021, 11, 20, 15, 0) 
       }
@@ -902,7 +903,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -915,12 +916,12 @@ describe('Calendar', () => {
       await hourSelect.setValue('04')
       await nextTick()
 
-      expect(currentValue.start).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
     })
 
     it('changes hour for range end with PM time', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10, 10, 0), 
         end: new Date(2021, 11, 20, 16, 0) 
       }
@@ -928,7 +929,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'dateTime',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -941,14 +942,14 @@ describe('Calendar', () => {
       await endHourSelect.setValue('06')
       await nextTick()
 
-      expect(currentValue.end).toBeInstanceOf(Date)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
     })
   })
 
   describe('Edge Cases Clicking Dates in Range', () => {
     it('clears end date when clicking same date as end in range', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10), 
         end: new Date(2021, 11, 20) 
       }
@@ -956,7 +957,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -970,12 +971,12 @@ describe('Calendar', () => {
       await endDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.end).toBeNull()
+      expect((currentValue as CalendarRange).end).toBeNull()
     })
 
     it('clears start date when clicking same date as start in range', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10), 
         end: new Date(2021, 11, 20) 
       }
@@ -983,7 +984,7 @@ describe('Calendar', () => {
         props: {
           modelValue: currentValue,
           mode: 'date',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -997,12 +998,12 @@ describe('Calendar', () => {
       await startDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.start).toBeNull()
+      expect((currentValue as CalendarRange).start).toBeNull()
     })
 
     it('updates start when clicking before current start with inputToChange=start', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 15), 
         end: new Date(2021, 11, 20) 
       }
@@ -1011,7 +1012,7 @@ describe('Calendar', () => {
           modelValue: currentValue,
           mode: 'date',
           inputToChange: 'start',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -1025,13 +1026,13 @@ describe('Calendar', () => {
       await earlierDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.start).toBeInstanceOf(Date)
-      expect(currentValue.start?.getDate()).toBe(10)
+      expect((currentValue as CalendarRange).start).toBeInstanceOf(Date)
+      expect(((currentValue as CalendarRange).start as Date)?.getDate()).toBe(10)
     })
 
     it('swaps dates when inputToChange=start and new date is after end', async () => {
       vi.setSystemTime(new Date(2021, 11, 15))
-      let currentValue = { 
+      let currentValue: CalendarDate | CalendarRange = { 
         start: new Date(2021, 11, 10), 
         end: new Date(2021, 11, 15) 
       }
@@ -1040,7 +1041,7 @@ describe('Calendar', () => {
           modelValue: currentValue,
           mode: 'date',
           inputToChange: 'start',
-          'onUpdate:modelValue': (value) => {
+          'onUpdate:modelValue': (value: CalendarDate | CalendarRange) => {
             currentValue = value
             wrapper.setProps({ modelValue: value })
           }
@@ -1054,8 +1055,8 @@ describe('Calendar', () => {
       await laterDateButton?.trigger('click')
       await nextTick()
 
-      expect(currentValue.end).toBeInstanceOf(Date)
-      expect(currentValue.end?.getDate()).toBe(25)
+      expect((currentValue as CalendarRange).end).toBeInstanceOf(Date)
+      expect(((currentValue as CalendarRange).end as Date)?.getDate()).toBe(25)
     })
   })
 })
