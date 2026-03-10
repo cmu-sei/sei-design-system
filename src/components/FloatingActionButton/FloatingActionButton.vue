@@ -135,7 +135,7 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core';
+import { useClickOutside } from '@/composables'
 import ClientOnly from '../ClientOnly/ClientOnly.vue'
 import SdsIndicator from '../Indicator/Indicator.vue'
 import ActionButton from '../ActionButton/ActionButton.vue';
@@ -143,31 +143,29 @@ import { useFocusTrap } from '@/composables'
 
 const id = useId()
 
+interface FloatingActionButtonProps {
+  /**
+   * Determines the color of the component.
+   */
+  variant?: 'blue' | 'red';
+  /**
+   * Determines whether to display the indicator or not.
+   */
+  showIndicator?: boolean;
+  /**
+   * Determines the color of the trigger button's indictor.
+   */
+  indicatorVariant?: 'gray' | 'blue' | 'green' | 'orange' | 'red';
+}
+
 defineOptions({
   name: 'SdsFloatingActionButton'
 })
 
-const props = defineProps({
-  /**
-   * Determines the color of the component.
-   */
-  variant: {
-    type: String as PropType<'blue' | 'red'>,
-    default: 'blue'
-  },
-  /**
-   * Determines whether to display the indicator or not.
-   */
-  showIndicator: {
-    type: Boolean, default: false
-  },
-  /**
-   * Determines the color of the trigger button's indictor.
-   */
-  indicatorVariant: {
-    type: String as PropType<'gray' | 'blue' | 'green' | 'orange' | 'red'>,
-    default: 'blue'
-  },
+const props = withDefaults(defineProps<FloatingActionButtonProps>(), {
+  variant: 'blue',
+  showIndicator: false,
+  indicatorVariant: 'blue'
 })
 
 /**
@@ -229,7 +227,7 @@ watch(open, (isOpen) => {
   }
 })
 
-onClickOutside(modal, () => {
+useClickOutside(modal, () => {
   if (open.value) {
     open.value = false
   }

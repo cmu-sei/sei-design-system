@@ -65,8 +65,11 @@
   </nav>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import SdsPanel from '../Panel/Panel.vue';
+import { computed, ref } from "vue";
 import { MegaMenuItem } from '../MegaMenu/MegaMenu.vue';
+
 /**
  * Right now, this is the same interface as Mega Menu's ITopLink, with the addition of "type"
  */
@@ -75,66 +78,50 @@ export interface MobileMenuItem<T = Record<string, unknown>> extends MegaMenuIte
   icon?: string
 }
 
-export default {
-  name: "SdsMobileMenu",
-}
-</script>
-
-<script setup lang="ts">
-import SdsPanel from '../Panel/Panel.vue';
-import { computed, ref, watch, onUnmounted, PropType } from "vue";
+defineOptions({
+  name: "SdsMobileMenu"
+})
 
 /**
  * Default Tailwind classes for transitioning panels
  */
-const activeClass = ref('transition-all duration-200 ease-in-out relative overflow-visible top-0 h-0');
-
-const props = defineProps({
+interface MobileMenuProps {
   /**
    * Provides the navigation item values used to populate the mobile menu.
    */
-  mobileMenus: {
-    type: Array as PropType<MobileMenuItem[]>,
-    default: () => []
-  },
+  mobileMenus?: MobileMenuItem[];
   /**
    * Determines the size of the panel.
    */
-  size: {
-    type: String as PropType<'xl' | 'lg' | 'md' | 'sm'>,
-    default: "md",
-  },
+  size?: 'xl' | 'lg' | 'md' | 'sm';
   /**
    * Determines the location of the panel.
    */
-  side: {
-    type: String as PropType<'left' | 'right' | ''>,
-    default: "right",
-  },
+  side?: 'left' | 'right' | '';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * Sets the aria-label for the component
    */
-  ariaLabel: { type: String, default: undefined }
+  ariaLabel?: string;
+}
+
+const activeClass = ref('transition-all duration-200 ease-in-out relative overflow-visible top-0 h-0');
+
+const props = withDefaults(defineProps<MobileMenuProps>(), {
+  mobileMenus: () => [],
+  size: "md",
+  side: "right",
+  zIndex: '50',
+  ariaLabel: undefined
 });
 
 /**
  * The v-model that determines the show/hide state of the panel.
  */
-const model = defineModel<boolean>({ type: Boolean, default: false })
-
-const emits = defineEmits([
-  /**
-   * When data supplied to the Mobile Menu component
-   * changes, emit an event. This lets developers
-   * trigger other actions off the Mobile Menu's modelValue
-   * when it changes.
-   */
-  'update:modelValue',
-]);
+const showPanel = defineModel<boolean>({ type: Boolean, default: false })
 
 /**
  * The "panel" ref keeps track of the current Mobile Menu panel
@@ -173,64 +160,8 @@ const activePanel = computed(() => {
   return mobileMenus.value.find(i => i.selected && i.type !== 'expand')
 })
 
-/* Update showPanel to toggle panel visibility */
-const showPanel = computed({
-  get() {
-    return model.value;
-  },
-  set(value: boolean) {
-    /**
-     * Emitted when mobileMenus changes.
-     */
-    emits("update:modelValue", value);
-  }
-});
-
-onUnmounted(() => {
-  removeDomChanges();
-})
-
-/* Helper function for exiting mobile menu on "Esc" */
-const makeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.add("sds-overlay-prevent-scroll");
-  setTimeout(() => {
-    document.addEventListener("keyup", handleEscKey);
-  }, 0);
-}
-
-/* Helper function for exiting mobile menu on "Esc" */
-const removeDomChanges = () => {
-  if (typeof document === "undefined") return;
-  document.documentElement.classList.remove("sds-overlay-prevent-scroll");
-  document.removeEventListener("keyup", handleEscKey);
-}
-
-const close = () => {
-  showPanel.value = false;
-}
-
-/* Helper function for exiting mobile menu on "Esc" */
-const handleEscKey = (e: KeyboardEvent) => {
-  if (e.key === "Escape") {
-    close();
-  }
-}
-
-watch(showPanel, (value) => {
-  showPanel.value = (value as boolean);
-  if (typeof document === "undefined") return;
-  if (value) {
-    makeDomChanges();
-  } else {
-    removeDomChanges();
-  }
-}, { immediate: true })
-
 defineExpose({
   activePanel,
-  close,
-  handleEscKey,
   mobileMenus,
   navigate,
   panel,

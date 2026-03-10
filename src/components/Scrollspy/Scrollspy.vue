@@ -19,13 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { throttleAndDebounce } from '../../helpers/throttleAndDebounce'
+import { useThrottleAndDebounce, useEventListener } from '@/composables'
 
-defineOptions({
-  name: 'SdsScrollspy'
-})
-
-const props = defineProps({
+interface ScrollspyProps {
   /**
    * Determines the items list that is observed when the page scrolls.
    * 
@@ -42,31 +38,41 @@ const props = defineProps({
    * The object's `text` property should be the content of the link that is observing
    * the page.
    */
-  items: {
-    type: Array as PropType<{ id: string, text: string }[]>,
-    default: () => [],
-  },
+  items?: { id: string, text: string }[];
   /**
    * The HTML selector of the container for the element being spied upon.
    */
-  parent: { type: String, default: undefined },
+  parent?: string;
   /**
    * Determines the CSS class list for each item.
    */
-  itemClass: { type: String, default: '' },
+  itemClass?: string;
   /**
    * Determines the CSS class list for the active item.
    */
-  activeClass: { type: String, default: '' },
+  activeClass?: string;
   /**
    * Determines the CSS class list for the inactive items.
    */
-  inactiveClass: { type: String, default: '' }
+  inactiveClass?: string;
+}
+
+defineOptions({
+  name: 'SdsScrollspy'
 })
 
-const parentEl = computed<HTMLElement | null>(() => {
-  if (typeof document === 'undefined') return null
-  return props.parent ? document.querySelector(props.parent) : null
+const props = withDefaults(defineProps<ScrollspyProps>(), {
+  items: () => [],
+  parent: undefined,
+  itemClass: '',
+  activeClass: '',
+  inactiveClass: ''
+})
+
+const parentEl = computed<HTMLElement | undefined>(() => {
+  if (typeof document === 'undefined') return undefined
+  const element = props.parent ? document.querySelector(props.parent) : null
+  return element as HTMLElement | undefined
 })
 
 const activeId = ref()
@@ -76,6 +82,7 @@ const lastActiveId = ref()
 const PAGE_OFFSET = 56
 
 const getAnchorTop = (item: { id: string, text: string }): number => {
+  if (typeof document === 'undefined') return 0
   const anchor = document.getElementById(item.id) as HTMLAnchorElement
   return anchor ? anchor.getBoundingClientRect().top  - PAGE_OFFSET - 15 : 0
 }
@@ -85,7 +92,7 @@ const isItemActive = (
   item: { id: string, text: string },
   nextItem: { id: string, text: string } | undefined
 ): [boolean, string | null] => {
-  const scrollTop = parentEl.value && parentEl.value.getBoundingClientRect().top || window.scrollY
+  const scrollTop = parentEl.value && parentEl.value.getBoundingClientRect().top || (typeof window !== 'undefined' ? window.scrollY : 0)
 
   if (index === 0 && scrollTop === 0) {
     return [true, null]
@@ -103,6 +110,7 @@ const isItemActive = (
 }
 
 const isInViewport = (item: { id: string, text: string }) => {
+  if (typeof document === 'undefined') return false
   const anchor = document.getElementById(item.id) as HTMLAnchorElement | null
   if (!anchor) return false;
   const rect = anchor.getBoundingClientRect();
@@ -115,7 +123,7 @@ const isInViewport = (item: { id: string, text: string }) => {
   } else {
     return (
       rect.top >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+      rect.bottom <= (typeof window !== 'undefined' ? (window.innerHeight || document.documentElement.clientHeight) : 0)
     )
   }
 }
@@ -155,27 +163,27 @@ const setActiveItem = () => {
   }
 }
 
-const onScroll = throttleAndDebounce(setActiveItem, 100)
+const onScroll = useThrottleAndDebounce(setActiveItem, 100)
 
+// Reactive scroll target that switches between parent element and window
+const scrollTarget = ref<HTMLElement | undefined>(undefined)
+
+// Update the scroll target when component mounts and evaluate parent element
 onMounted(() => {
+  scrollTarget.value = parentEl.value
   requestAnimationFrame(setActiveItem)
-  if (parentEl.value) {
-    parentEl.value.addEventListener('scroll', onScroll)
-  } else {
-    window.addEventListener('scroll', onScroll)
-  }
 })
 
-onUnmounted(() => {
-  if (parentEl.value) {
-    parentEl.value.removeEventListener('scroll', onScroll)
-  } else {
-    window.removeEventListener('scroll', onScroll)
-  }
-})
+// Set up listener on scrollTarget if it exists, otherwise on window
+if (props.parent) {
+  useEventListener(scrollTarget, 'scroll', onScroll)
+} else {
+  useEventListener(window, 'scroll', onScroll)
+}
 
 const scrollToIdTarget = (id: string, event: Event) => {
   if (!parentEl.value) return
+  if (typeof document === 'undefined') return
   const el = document.getElementById(id)
   if (!el) return
   event.preventDefault();

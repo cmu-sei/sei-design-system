@@ -12,19 +12,25 @@ defineOptions({
   name: "SdsCharacterCounter"
 })
 
-const props = defineProps({
+interface CharacterCounterProps {
   /**
    * The current count value.
    */
-  currentValue: { type: Number, default: 0 },
+  currentValue?: number
   /**
    * The minimum value allowed.
    */
-  minValue: { type: Number, default: 0 },
+  minValue?: number
   /**
    * The maximum value allowed.
    */
-  maxValue: { type: Number, default: 0 },
+  maxValue?: number
+}
+
+const props = withDefaults(defineProps<CharacterCounterProps>(), {
+  currentValue: 0,
+  minValue: 0,
+  maxValue: 0
 })
 
 const count = computed(() => {

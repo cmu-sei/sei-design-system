@@ -41,17 +41,24 @@
 </template>
 
 <script setup lang="ts">
+interface BrochureSiteNavProps {
+  /**
+   * An object containing various properties that determine the navigation.
+   */
+  page?: {
+    nav?: Array<{
+      title?: string;
+      items?: Array<{ url?: string; title?: string }>;
+      seeAll?: { url?: string; title?: string };
+    }>;
+  };
+}
+
 defineOptions({
   name: 'SdsBrochureSiteNav'
 })
 
-defineProps({
-  /**
-   * An object containing various properties that determine the navigation.
-   */
-  page: {
-    type: Object,
-    default: () => ({}),
-  },
+withDefaults(defineProps<BrochureSiteNavProps>(), {
+  page: () => ({ nav: [] })
 })
 </script>

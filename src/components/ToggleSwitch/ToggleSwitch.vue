@@ -9,7 +9,7 @@
       :class="[
         isToggled ? 'bg-green-500 disabled:bg-green-200 dark:disabled:bg-green-800' : 'bg-gray-700 disabled:bg-gray-200 dark:disabled:bg-gray-800'
       ]"
-      :disabled="disabled"
+      :disabled="disabled || undefined"
       role="switch"
       :aria-checked="isToggled"
       @click="update"
@@ -18,7 +18,7 @@
         aria-hidden="true"
         class="pointer-events-none inline-block h-4 w-4 my-0.5 rounded-full transform transition ease-in-out duration-200"
         :class="[
-          isToggled ? 'translate-x-[1.375rem]' : 'translate-x-[0.125rem]',
+          isToggled ? 'translate-x-5.5' : 'translate-x-0.5',
           disabled ? 'bg-gray-50 dark:bg-gray-500' : 'bg-white drop-shadow-sm shadow-lg'
         ]"
       />
@@ -32,34 +32,21 @@ defineOptions({
   name: 'SdsToggleSwitch'
 })
 
-defineProps({
+interface ToggleSwitchProps {
   /**
    * Disables the component to prevent user interaction.
    */
-  disabled: {
-    type: Boolean,
-    default: false
-  }
+  disabled?: boolean
+}
+
+withDefaults(defineProps<ToggleSwitchProps>(), {
+  disabled: false
 })
 
 /**
  * The v-model state of this component. Determines true or false value.
  */
-const model = defineModel<boolean>({ type: Boolean, default: false })
-
-const emit = defineEmits(['update:modelValue'])
-
-const isToggled = computed({
-  get() {
-    return model.value
-  },
-  set(value: boolean) {
-    /**
-     * Emitted when modelValue changes.
-     */
-    emit('update:modelValue', value)
-  }
-})
+const isToggled = defineModel<boolean>({ type: Boolean, default: false })
 
 const update = () => {
   isToggled.value = !isToggled.value

@@ -16,7 +16,7 @@ exports[`Tooltip.vue > matches snapshot 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -27,7 +27,7 @@ exports[`Tooltip.vue > matches snapshot with no props assigned 1`] = `
       <!-- @slot Trigger content. -->
     </div>
   </div>
-  <!---->
+  <!--v-if-->
 </div>"
 `;
 
@@ -38,6 +38,6 @@ exports[`Tooltip.vue > matches snapshot with prop assigned 1`] = `
       <!-- @slot Trigger content. -->
     </div>
   </div>
-  <!---->
+  <!--v-if-->
 </div>"
 `;

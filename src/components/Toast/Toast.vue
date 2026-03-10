@@ -4,8 +4,8 @@
     role="alert"
     aria-live="polite"
     class="w-full max-w-sm bg-white rounded-theme-sm shadow-lg pointer-events-auto dark:bg-gray-850 dark:border dark:border-gray-700"
-    @mouseenter="clearTimer"
-    @mouseleave="setTimer"
+    @mouseenter="autoHideTimer.clear"
+    @mouseleave="autoHideTimer.reset"
   >
     <div class="overflow-hidden rounded-theme-sm ring-1 ring-black/5 dark:ring-gray-700">
       <div class="p-4">
@@ -44,6 +44,7 @@
           </div>
           <div class="flex shrink-0 ml-4">
             <button
+              aria-label="Close toast"
               class="inline-flex text-gray-600 dark:text-gray-400 transition duration-150 ease-in-out focus:outline-hidden hover:text-gray-900 dark:hover:text-gray-100"
               @click="removeToast"
             >
@@ -58,53 +59,49 @@
 </template>
 
 <script setup lang="ts">
+import { useTimedAction } from '@/composables'
 defineOptions({
   name: 'SdsToast'
 })
 
-const props = defineProps({
+interface ToastProps {
   /**
    * Determines the id of the component.
    */
-  id: { type: Number, required: true },
+  id: number
   /**
    * Determines the purpose and particular function of the component.
    */
-  type: { type: String as PropType<'success' | 'info' | 'warning' | 'danger'>, default: null },
+  type?: 'success' | 'info' | 'warning' | 'danger' | null
   /**
    * Determines the title content of the component.
    */
-  title: { type: String, required: true },
+  title: string
   /**
    * Determines the text content of the component.
    */
-  text: { type: String, required: true },
+  text: string
   /**
    * Determines the wait time in milliseconds before automatically emitting the "remove" event for this component.
    */
-  autoHideDelay: { type: Number, default: 5000 },
+  autoHideDelay?: number
   /**
    * Determines whether to ignore the autoHideDelay property.
    */
-  noAutoHide: { type: Boolean, default: false },
+  noAutoHide?: boolean
+}
+
+const props = withDefaults(defineProps<ToastProps>(), {
+  type: null,
+  autoHideDelay: 5000,
+  noAutoHide: false
 })
 
 const emit = defineEmits(['remove'])
 
-const timer = ref<null | ReturnType<typeof setTimeout>>()
-
 const localType = computed(() => {
   return props.type
 })
-
-onMounted(() => {
-  setTimer();
-})
-
-onUnmounted(() => {
-  clearTimer();
-})
-
 
 const removeToast = () => {
   /**
@@ -115,16 +112,9 @@ const removeToast = () => {
   emit("remove", props.id);
 }
 
-const clearTimer = () => {
-  if (!timer.value) return;
-  clearTimeout(timer.value);
-}
-
-const setTimer = () => {
-  clearTimer();
-  if (props.noAutoHide) return;
-  timer.value = setTimeout(() => {
-    removeToast();
-  }, props.autoHideDelay);
-}
+const autoHideTimer = useTimedAction(removeToast, {
+  delay: computed(() => props.autoHideDelay),
+  enabled: computed(() => !props.noAutoHide),
+  autoStart: true
+})
 </script>

@@ -13,26 +13,27 @@
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  color: {
-    type: String,
-    default: 'currentColor'
-  },
-  height: {
-    type: Number,
-    default: 16
-  },
-  path: {
-    type: String,
-    required: true
-  },
-  viewBox: {
-    type: String,
-    default: '0 0 16 16'
-  },
-  width: {
-    type: Number,
-    default: 16
-  }
+defineOptions({
+  name: 'SdsSvgIcon'
+})
+
+interface SvgIconProps {
+  /** The color of the SVG path */
+  color?: string
+  /** The height of the SVG */
+  height?: number
+  /** The SVG path data */
+  path: string
+  /** The viewBox attribute of the SVG */
+  viewBox?: string
+  /** The width of the SVG */
+  width?: number
+}
+
+withDefaults(defineProps<SvgIconProps>(), {
+  color: 'currentColor',
+  height: 16,
+  viewBox: '0 0 16 16',
+  width: 16
 })
 </script>

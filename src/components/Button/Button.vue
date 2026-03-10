@@ -62,39 +62,50 @@ defineOptions({
   name: 'SdsButton'
 })
 
-const props = defineProps({
+interface ButtonProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<ButtonKind>, default: '' },
+  kind?: ButtonKind
   /**
    * Determines the color of the component.
    */
-  variant: { type: String as PropType<ButtonVariant>, default: '' },
+  variant?: ButtonVariant
   /**
    * Determines both the HTML type attribute and "theme" for the button.
    */
-  type: { type: String as PropType<'button' | 'cta' | 'submit'>, default: 'button' },
+  type?: 'button' | 'cta' | 'submit'
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<ButtonSize>, default: '' },
+  size?: ButtonSize
   /**
    * Sets the active state of a button.
    */
-  active: { type: Boolean, default: false },
+  active?: boolean
   /**
    * Disables the component to prevent user interaction.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean
   /**
    * Determines whether to use the block styling or not.
    */
-  block: { type: Boolean, default: false },
+  block?: boolean
   /**
    * Determines whether to display a loading indicator and set the button to an active state.
    */
-  pending: { type: Boolean, default: false }
+  pending?: boolean
+}
+
+const props = withDefaults(defineProps<ButtonProps>(), {
+  kind: '' as ButtonKind,
+  variant: '' as ButtonVariant,
+  type: 'button',
+  size: '',
+  active: false,
+  disabled: false,
+  block: false,
+  pending: false
 })
 
 const emit = defineEmits(['click'])

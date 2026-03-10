@@ -88,7 +88,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 disabled"
       disabled=""
       id="v-0__option_0"
       name="v-0__option"
@@ -111,7 +111,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 disabled"
       disabled=""
       id="v-0__option_1"
       name="v-0__option"
@@ -134,7 +134,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`disabled\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 disabled"
       disabled=""
       id="v-0__option_2"
       name="v-0__option"
@@ -322,7 +322,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 required"
       id="v-0__option_0"
       name="v-0__option"
       type="radio"
@@ -344,7 +344,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 required"
       id="v-0__option_1"
       name="v-0__option"
       type="radio"
@@ -366,7 +366,7 @@ exports[`RadioGroup > should match its snapshot with assigned \`required\` prop 
     class="flex gap-2 items-start"
   >
     <input
-      class="relative top-1"
+      class="relative top-1 required"
       id="v-0__option_2"
       name="v-0__option"
       type="radio"

@@ -5,8 +5,9 @@ import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calen
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
+import type { DataTableFilterConfig, DataTableFilterType, DataTableSegments } from './DataTable/DataTable.vue'
 import type { FileWithInvalidDefinitions, FileTypes, SvgIconTypes, SvgIcons } from './FileUploader/FileUploader.vue'
-import type { FilterByDropdownOption, FilterByDropdownPlacement } from './FilterByDropdown/FilterByDropdown.vue'
+import type { FilterByDropdownOption } from './FilterByDropdown/FilterByDropdown.vue'
 import type { FloatingUiPlacement } from './FloatingUi/FloatingUi.vue'
 import type { ApplicationSidebarNavItem } from './Application/Application.vue'
 import type { MegaMenuItem } from './MegaMenu/MegaMenu.vue'
@@ -17,7 +18,7 @@ import type { PaginatorRangeProps } from './PaginatorRange/PaginatorRange.vue'
 import type { PopoverPlacement } from './Popover/Popover.vue'
 import type { RadioGroupOption, RadioGroupOptionValue } from './RadioGroup/RadioGroup.vue'
 import type { SelectOption, SelectOptionValue } from './Select/Select.vue'
-import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownPlacement, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
+import type { SortByDropdownOption, SortByDropdownModel, SortByDropdownType } from './SortByDropdown/SortByDropdown.vue'
 import type { TableField, TableItem, TableProps } from './Table/Table.vue'
 import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
@@ -38,9 +39,11 @@ export type {
   CheckboxGroupOptionValue,
   ComboBoxSuggestion,
   DatepickerPlacement,
+  DataTableFilterConfig,
+  DataTableFilterType,
+  DataTableSegments,
   FileWithInvalidDefinitions,
   FilterByDropdownOption,
-  FilterByDropdownPlacement,
   FileTypes,
   FloatingUiPlacement,
   ApplicationSidebarNavItem,
@@ -57,7 +60,6 @@ export type {
   SelectOptionValue,
   SortByDropdownOption,
   SortByDropdownModel,
-  SortByDropdownPlacement,
   SortByDropdownType,
   SvgIcons,
   SvgIconTypes,
@@ -86,9 +88,16 @@ import SdsDatapoint from "./Datapoint";
 import SdsDatepicker from "./Datepicker";
 import SdsDataTable from "./DataTable";
 import SdsDropdown from "./Dropdown";
+import SdsDropdownCheckboxItem from "./DropdownCheckboxItem";
 import SdsDropdownDivider from "./DropdownDivider";
+import SdsDropdownInputItem from "./DropdownInputItem";
+import SdsDropdownFooter from "./DropdownFooter";
 import SdsDropdownHeader from "./DropdownHeader";
 import SdsDropdownItem from "./DropdownItem";
+import SdsDropdownRadioItem from "./DropdownRadioItem";
+import SdsDropdownSection from "./DropdownSection";
+// Backwards compatibility: DropdownFilterInput is now DropdownInputItem
+import SdsDropdownFilterInput from "./DropdownInputItem";
 import SdsExpandCollapse from "./ExpandCollapse";
 import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
@@ -116,7 +125,6 @@ import SdsModal from "./Modal";
 import SdsMultiselect from "./Multiselect";
 import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
-import SdsPaginatorPageSizeDropdown from "./PaginatorPageSizeDropdown";
 import SdsPaginatorRange from "./PaginatorRange";
 import SdsPanel from "./Panel";
 import SdsPopover from "./Popover";
@@ -159,9 +167,15 @@ const Components: ComponentList = {
   SdsDatepicker,
   SdsDataTable,
   SdsDropdown,
+  SdsDropdownCheckboxItem,
   SdsDropdownDivider,
+  SdsDropdownInputItem,
+  SdsDropdownFilterInput, // Backwards compatibility alias
+  SdsDropdownFooter,
   SdsDropdownHeader,
   SdsDropdownItem,
+  SdsDropdownRadioItem,
+  SdsDropdownSection,
   SdsExpandCollapse,
   SdsFileUploader,
   SdsFilterByDropdown,
@@ -189,7 +203,6 @@ const Components: ComponentList = {
   SdsMultiselect,
   SdsNavigationItem,
   SdsPaginator,
-  SdsPaginatorPageSizeDropdown,
   SdsPaginatorRange,
   SdsPanel,
   SdsPopover,
@@ -236,9 +249,16 @@ export { default as SdsDatapoint } from "./Datapoint";
 export { default as SdsDatepicker } from "./Datepicker";
 export { default as SdsDataTable } from "./DataTable";
 export { default as SdsDropdown } from "./Dropdown";
+export { default as SdsDropdownCheckboxItem } from "./DropdownCheckboxItem";
 export { default as SdsDropdownDivider } from "./DropdownDivider";
+export { default as SdsDropdownInputItem } from "./DropdownInputItem";
+/** @deprecated Use SdsDropdownInputItem instead */
+export { default as SdsDropdownFilterInput } from "./DropdownInputItem";
+export { default as SdsDropdownFooter } from "./DropdownFooter";
 export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
+export { default as SdsDropdownRadioItem } from "./DropdownRadioItem";
+export { default as SdsDropdownSection } from "./DropdownSection";
 export { default as SdsExpandCollapse } from "./ExpandCollapse";
 export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
@@ -266,7 +286,6 @@ export { default as SdsModal } from "./Modal";
 export { default as SdsMultiselect } from "./Multiselect";
 export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
-export { default as SdsPaginatorPageSizeDropdown } from "./PaginatorPageSizeDropdown";
 export { default as SdsPaginatorRange } from "./PaginatorRange";
 export { default as SdsPanel} from "./Panel";
 export { default as SdsPopover } from "./Popover";

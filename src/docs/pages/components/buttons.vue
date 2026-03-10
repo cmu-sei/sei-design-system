@@ -1727,23 +1727,39 @@
       <h2 class="text-xl">
         Filter By Dropdown
       </h2>
-      <div>
+      <div class="flex gap-1 items-center">
         <sds-filter-by-dropdown
           v-model="filterBy.options"
           enable-sort-options
+          enable-filter
+          show-count
+          icon-only
+          tooltip="Filter the items"
+          @update:model-value="filtered"
+        />
+        <sds-filter-by-dropdown
+          v-model="filterBy.options"
+          enable-sort-options
+          enable-filter
           show-count
           @update:model-value="filtered"
         />
-        <p class="mt-4">
-          Selected: {{ filterBy.idsText }}
-        </p>
       </div>
+      <p class="mt-4">
+        Selected: {{ filterBy.idsText }}
+      </p>
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Sort By Dropdown
       </h2>
-      <div>
+      <div class="flex gap-1 items-center">
+        <SdsSortByDropdown
+          v-model="sortBy.value"
+          :options="sortBy.options"
+          icon-only
+          @update:model-value="(value: SortByDropdownModel | null) => console.log('Model updated:', value)"
+        />
         <SdsSortByDropdown
           v-model="sortBy.value"
           :options="sortBy.options"

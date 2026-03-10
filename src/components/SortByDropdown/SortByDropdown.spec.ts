@@ -88,12 +88,12 @@ describe('SortByDropdown.vue', () => {
       expect(wrapper.text()).toContain(customTitle)
     })
 
-    it('should render with hideArrow=true and display only icon', () => {
-      const wrapper = createWrapper({ hideArrow: true })
+    it('should render with iconOnly=true and display only icon', () => {
+      const wrapper = createWrapper({ iconOnly: true })
       const button = wrapper.findComponent({ name: 'SdsActionButton' })
 
       expect(button.exists()).toBe(true)
-      expect(wrapper.find('[data-id="sds-action-button"] span').exists()).toBe(false)
+      expect(wrapper.find('[data-id="sds-action-button"] span:not(.sr-only)').exists()).toBe(false)
       expect(wrapper.find('svg').exists()).toBe(true)
     })
 
@@ -156,7 +156,7 @@ describe('SortByDropdown.vue', () => {
     })
 
     it('should render with custom tooltip text', async () => {
-      const wrapper = createWrapper({ tooltip: 'Click to sort items' })
+      const wrapper = createWrapper({ tooltip: 'Click to sort items', iconOnly: true })
       expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 
@@ -208,30 +208,26 @@ describe('SortByDropdown.vue', () => {
       expect(lgSvg.classes()).toContain('h-4.5')
     })
 
-    it('should apply correct buttonSizeClasses when hideArrow is true', () => {
+    it('should apply correct buttonSizeClasses when iconOnly is true', () => {
       // Test xs size
-      const xsWrapper = createWrapper({ size: 'xs', hideArrow: true })
+      const xsWrapper = createWrapper({ size: 'xs', iconOnly: true })
       const xsButton = xsWrapper.findComponent({ name: 'SdsActionButton' })
-      expect(xsButton.classes()).toContain('h-6.5')
-      expect(xsButton.classes()).toContain('w-6.5')
+      expect(xsButton.classes()).toContain('action-btn-square')
 
       // Test sm size
-      const smWrapper = createWrapper({ size: 'sm', hideArrow: true })
+      const smWrapper = createWrapper({ size: 'sm', iconOnly: true })
       const smButton = smWrapper.findComponent({ name: 'SdsActionButton' })
-      expect(smButton.classes()).toContain('h-7.5')
-      expect(smButton.classes()).toContain('w-7.5')
+      expect(smButton.classes()).toContain('action-btn-square')
 
       // Test md size
-      const mdWrapper = createWrapper({ size: 'md', hideArrow: true })
+      const mdWrapper = createWrapper({ size: 'md', iconOnly: true })
       const mdButton = mdWrapper.findComponent({ name: 'SdsActionButton' })
-      expect(mdButton.classes()).toContain('h-8.5')
-      expect(mdButton.classes()).toContain('w-8.5')
+      expect(mdButton.classes()).toContain('action-btn-square')
 
       // Test lg size
-      const lgWrapper = createWrapper({ size: 'lg', hideArrow: true })
+      const lgWrapper = createWrapper({ size: 'lg', iconOnly: true })
       const lgButton = lgWrapper.findComponent({ name: 'SdsActionButton' })
-      expect(lgButton.classes()).toContain('h-10.5')
-      expect(lgButton.classes()).toContain('w-10.5')
+      expect(lgButton.classes()).toContain('action-btn-square')
     })
   })
 
@@ -491,7 +487,7 @@ describe('SortByDropdown.vue', () => {
     })
 
     it('should display tooltip on button hover', () => {
-      const wrapper = createWrapper({ tooltip: 'Sort the list' })
+      const wrapper = createWrapper({ tooltip: 'Sort the list', iconOnly: true })
       expect(wrapper.find('[data-id="sds-tooltip"]').exists()).toBe(true)
     })
 

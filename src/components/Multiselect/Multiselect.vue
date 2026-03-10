@@ -4,11 +4,9 @@
     data-id="sds-multiselect"
     class="sds-multiselect"
     :class="{
-      valid,
-      invalid,
+      ...validationClasses,
       open: showDropdown,
       active,
-      disabled,
       up: dropUp,
       canSearch,
       hideCaret,
@@ -83,12 +81,12 @@
             ref="input"
             :value="model"
             :placeholder="showPlaceholder ? placeholder : ''"
-            :readonly="isReadonlyInput"
-            :disabled="disabled"
+            :readonly="isReadonlyInput || undefined"
+            :disabled="disabled || undefined"
             :style="{
               width: !multiple && showDropdown && canSearch ? '100%' : inputWidth,
             }"
-            :maxlength="maxlength"
+            :maxlength="maxlength !== undefined ? maxlength : undefined"
             autocomplete="off"
             spellcheck="false"
             autocorrect="off"
@@ -120,8 +118,8 @@
     <select
       v-if="id"
       :id="id"
-      :required="required"
-      :multiple="multiple"
+      :required="required || undefined"
+      :multiple="multiple || undefined"
       class="sr-only"
       aria-hidden="true"
       tabindex="-1"
@@ -231,7 +229,7 @@
 </template>
 
 <script setup lang="ts">
-import debounce from "../../helpers/debounce";
+import { useDebounce, useEventListener, useFormField } from '@/composables'
 
 export interface MultiselectOption {
   [id: string | number]: unknown
@@ -242,260 +240,201 @@ export interface MultiselectTag {
   isNewTag?: boolean
 }
 
-defineOptions({
-  name: 'SdsMultiselect'
-})
-
-const props = defineProps({
+interface MultiselectProps {
   /**
    * Determines the id of the component.
    */
-  id: { type: String, default: undefined },
+  id?: string;
   /**
    * An array of the selected options.
    */
-  selected: {
-    type: Array as PropType<MultiselectOption[]>,
-    default: () => [],
-  },
+  selected?: MultiselectOption[];
   /**
    * An array of options that can be selected.
    */
-  options: {
-    type: Array as PropType<MultiselectOption[]>,
-    default: () => [],
-  },
+  options?: MultiselectOption[];
   /**
    * The key used for an option's value.
    *
    * Be careful when setting this as it can trigger `undefined`
    * errors if it doesn't exist in the options object.
    */
-  valueKey: {
-    type: String,
-    default: "key",
-  },
+  valueKey?: string;
   /**
    * The key used for an option's label.
    *
    * Be careful when setting this as it can trigger `undefined`
    * and `trim()` errors if it doesn't exist in the options object.
    */
-  labelKey: {
-    type: String,
-    default: "value",
-  },
+  labelKey?: string;
   /**
    * Determines whether to enable autofocus or not.
    */
-  autofocus: {
-    type: Boolean,
-    default: false,
-  },
+  autofocus?: boolean;
   /**
    * Determines whether more than one option can be selected.
    */
-  multiple: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  /**
-   * Determines the required state of the component.
-   */
-  required: {
-    type: Boolean,
-    default: false,
-  },
+  multiple?: boolean;
   /**
    * Determines the loading state of the component.
    */
-  loading: {
-    type: Boolean,
-    default: false,
-  },
+  loading?: boolean;
   /**
    * The message displayed while loading is true.
    */
-  loadingMsg: {
-    type: String,
-    default: "Loading...",
-  },
+  loadingMsg?: string;
   /**
    * The message that displays when the menu is initially opened.
    */
-  defaultMsg: {
-    type: String,
-    default: "",
-  },
+  defaultMsg?: string;
   /**
    * The message that displays when there are no results returned from a lookup.
    */
-  noResultsMsg: {
-    type: String,
-    default: "",
-  },
+  noResultsMsg?: string;
   /**
    * The message that displays when you cannot select more items.
    */
-  cannotAddResultsMsg: {
-    type: String,
-    default: "You have added the maximum amount of items allowed.",
-  },
+  cannotAddResultsMsg?: string;
   /**
    * The message that displays when the user enters invalid text.
    */
-  invalidInputMsg: {
-    type: String,
-    default: "HTML input is not allowed.",
-  },
+  invalidInputMsg?: string;
   /**
    * Determines whether to show or hide your selections as tags inside the input field.
    */
-  hideTags: {
-    type: Boolean,
-    default: false,
-  },
+  hideTags?: boolean;
   /**
    * Determines whether you can loop through the menu's options with the arrow keys
    * (e.g., pressing down on that last result sends you to the first result).
    */
-  canLoopOptions: {
-    type: Boolean,
-    default: false,
-  },
+  canLoopOptions?: boolean;
   /**
    * Determines if options can be toggled when selected from the options list.
    */
-  toggleSelectedOptions: {
-    type: Boolean,
-    default: false,
-  },
+  toggleSelectedOptions?: boolean;
   /**
    * Determines if selected options should appear in the options list.
    */
-  hideSelectedOptions: {
-    type: Boolean,
-    default: false,
-  },
+  hideSelectedOptions?: boolean;
   /**
    * Determines whether to close the menu on selection.
    */
-  closeOnSelection: {
-    type: Boolean,
-    default: true,
-  },
+  closeOnSelection?: boolean;
   /**
    * Determines whether the component allows for searching.
    */
-  canSearch: {
-    type: Boolean,
-    default: true,
-  },
+  canSearch?: boolean;
   /**
    * Determines whether to remove the last selection.
    */
-  disableRemoveLastSelection: {
-    type: Boolean,
-    default: false,
-  },
+  disableRemoveLastSelection?: boolean;
   /**
    * Determines if the input should be cleared after making a selection.
    */
-  clearInputOnSelection: {
-    type: Boolean,
-    default: true,
-  },
+  clearInputOnSelection?: boolean;
   /**
    * Determines if the options list should be purged on selection.
    */
-  clearOptionsOnSelection: {
-    type: Boolean,
-    default: true,
-  },
+  clearOptionsOnSelection?: boolean;
   /**
    * Determines the placeholder of the input.
    */
-  placeholder: {
-    type: String,
-    default: "",
-  },
+  placeholder?: string;
   /**
    * Determines the position of the menu.
    */
-  openDirection: {
-    type: String,
-    default: "auto",
-  },
+  openDirection?: string;
   /**
    * Determines the max height of the open menu.
    */
-  maxHeight: {
-    type: Number,
-    default: 200,
-  },
+  maxHeight?: number;
   /**
    * Determines whether to hide the caret or not.
    */
-  hideCaret: {
-    type: Boolean,
-    default: false,
-  },
+  hideCaret?: boolean;
   /**
    * Determines whether to show the clear field button or not.
    */
-  showClear: {
-    type: Boolean,
-    default: false,
-  },
+  showClear?: boolean;
   /**
    * Determines whether the multiselect will accept new values from the input.
    */
-  taggable: {
-    type: Boolean,
-    default: false,
-  },
+  taggable?: boolean;
   /**
    * Determines the maxlength of the input field.
    */
-  maxlength: {
-    type: Number as PropType<number | undefined>,
-    default: undefined,
-  },
+  maxlength?: number;
   /**
    * Determines the max number of items that can be selected.
    */
-  maxItems: {
-    type: Number,
-    default: -1,
-  },
+  maxItems?: number;
   /**
    * Determines if new tags are forced to be lowercase.
    */
-  enforceLowercaseNewTag: {
-    type: Boolean,
-    default: false,
-  },
+  enforceLowercaseNewTag?: boolean;
   /**
-   * Determines if the multiselect shows a valid state
+   * Disables the component to prevent user interaction.
    */
-  valid: {
-    type: Boolean,
-    default: false
-  },
+  disabled?: boolean;
   /**
-   * Determines if the multiselect shows an invalid state
+   * Determines whether the field is read-only.
    */
-  invalid: {
-    type: Boolean,
-    default: false
-  }
+  readonly?: boolean;
+  /**
+   * Determines whether the field is required.
+   */
+  required?: boolean;
+  /**
+   * Sets a valid styling if true.
+   */
+  valid?: boolean;
+  /**
+   * Sets an invalid styling if true.
+   */
+  invalid?: boolean;
+}
+
+defineOptions({
+  name: 'SdsMultiselect'
+})
+
+const props = withDefaults(defineProps<MultiselectProps>(), {
+  id: undefined,
+  selected: () => [],
+  options: () => [],
+  valueKey: 'key',
+  labelKey: 'value',
+  autofocus: false,
+  multiple: false,
+  loading: false,
+  loadingMsg: 'Loading...',
+  defaultMsg: '',
+  noResultsMsg: '',
+  cannotAddResultsMsg: 'You have added the maximum amount of items allowed.',
+  invalidInputMsg: 'HTML input is not allowed.',
+  hideTags: false,
+  canLoopOptions: false,
+  toggleSelectedOptions: false,
+  hideSelectedOptions: false,
+  closeOnSelection: true,
+  canSearch: true,
+  disableRemoveLastSelection: false,
+  clearInputOnSelection: true,
+  clearOptionsOnSelection: true,
+  placeholder: '',
+  openDirection: 'auto',
+  maxHeight: 200,
+  hideCaret: false,
+  showClear: false,
+  taggable: false,
+  maxlength: undefined,
+  maxItems: -1,
+  enforceLowercaseNewTag: false,
+  disabled: false,
+  readonly: false,
+  required: false,
+  valid: false,
+  invalid: false
 })
 
 /**
@@ -503,9 +442,10 @@ const props = defineProps({
  */
 const model = defineModel<string>({ type: String, default: '' })
 
-const emit = defineEmits(['update:modelValue', 'update-selected', 'update-options', 'open', 'close', 'focus'])
+const emit = defineEmits(['update-selected', 'update-options', 'open', 'close', 'focus'])
 
-const debouncePositionDropdown = ref<null | EventListener>(null)
+const { validationClasses } = useFormField(props)
+
 const root = ref()
 const input = ref()
 const fauxInput = ref()
@@ -591,9 +531,8 @@ const isReadonlyInput = computed(() => {
 })
 
 const isCleanInput = computed(() => {
-  // TODO: Fix this linting issue
-  // eslint-disable-next-line no-constant-binary-expression
-  return !trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) !== null;
+  // Returns true if input contains no HTML tags or entities
+  return trimmedValue.value.match(/<[^\s]|&[^\s;]*;/gi) === null;
 })
 
 const trimmedValue = computed(() => {
@@ -654,19 +593,6 @@ onMounted(() => {
       active.value = true;
     }
   }, 0);
-  document.addEventListener("click", handleOutsideClick);
-  document.addEventListener("keyup", handleOutsideKeyUp);
-
-  debouncePositionDropdown.value = debounce(positionDropdown, 150);
-  document.addEventListener("scroll", debouncePositionDropdown.value);
-  window.addEventListener("resize", debouncePositionDropdown.value);
-})
-
-onUnmounted(() => {
-  document.removeEventListener("click", handleOutsideClick);
-  document.removeEventListener("keyup", handleOutsideKeyUp);
-  document.removeEventListener("scroll", (debouncePositionDropdown.value as EventListener));
-  window.removeEventListener("resize", (debouncePositionDropdown.value as EventListener));
 })
 
 const selectText = () => {
@@ -751,27 +677,49 @@ const focusInput = () => {
   (input.value as HTMLInputElement).focus();
 }
 
+/**
+ * Clears the input field by setting the model value to an empty string.
+ * Also triggers input resizing and dropdown repositioning.
+ * @returns {void}
+ */
 const clearInput = () => {
   setInput("");
 }
 
+/**
+ * Clears all currently selected options by resetting to an empty array.
+ * @returns {void}
+ */
 const clearSelected = () => {
   updateSelected([]);
 }
 
+/**
+ * Clears all available options by resetting to an empty array.
+ * @returns {void}
+ */
 const clearOptions = () => {
   updateOptions([]);
 }
 
+/**
+ * Updates the input field value and triggers layout updates.
+ * Automatically resizes the input and repositions the dropdown.
+ * @param {string} value - The new input value to set
+ * @returns {void}
+ */
 const setInput = (value: string) => {
-  /**
-   * Emmitted when modelValue changes.
-   */
-  emit("update:modelValue", value);
+  model.value = value;
   resizeInput();
   positionDropdown();
 }
 
+/**
+ * Updates the selected options and emits the change to the parent component.
+ * Automatically resizes the input and adjusts the arrow counter if needed.
+ * @param {MultiselectOption[]} s - Array of newly selected options
+ * @returns {void}
+ */
 const updateSelected = (s: MultiselectOption[]) => {
   /**
    * Emmitted when selections have changed with payload of selections.
@@ -783,6 +731,11 @@ const updateSelected = (s: MultiselectOption[]) => {
   }
 }
 
+/**
+ * Updates the available options and emits the change to the parent component.
+ * @param {MultiselectOption[]} s - Array of new available options
+ * @returns {void}
+ */
 const updateOptions = (s: MultiselectOption[]) => {
   /**
    * Emmitted when options have changed with payload of options.
@@ -1029,11 +982,13 @@ const positionDropdown = async () => {
   }
   if (props.openDirection === "auto") {
     // const spaceAbove = root.value.getBoundingClientRect().top
-    const spaceBelow =
-      window.innerHeight - root.value.getBoundingClientRect().bottom;
-    const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
-    dropUp.value = notEnoughSpaceBelow;
-    bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+    if (typeof window !== 'undefined') {
+      const spaceBelow =
+        window.innerHeight - root.value.getBoundingClientRect().bottom;
+      const notEnoughSpaceBelow = spaceBelow < props.maxHeight;
+      dropUp.value = notEnoughSpaceBelow;
+      bottom.value = dropUp.value ? root.value.clientHeight + "px" : "auto";
+    }
   }
 }
 
@@ -1045,6 +1000,14 @@ const handleRequired = () => {
   (input.value as HTMLInputElement).focus();
   if (!active.value) active.value = true;
 }
+
+// Setup event listeners with automatic cleanup
+const debouncePositionDropdown = useDebounce(positionDropdown, 150);
+
+useEventListener(document, "click", handleOutsideClick)
+useEventListener(document, "keyup", handleOutsideKeyUp)
+useEventListener(document, "scroll", debouncePositionDropdown)
+useEventListener(window, "resize", debouncePositionDropdown)
 </script>
 
 <style lang="postcss" scoped>

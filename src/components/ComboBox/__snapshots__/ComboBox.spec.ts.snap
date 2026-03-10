@@ -21,7 +21,7 @@ exports[`ComboBox > should match its default snapshot 1`] = `
 
 exports[`ComboBox > should match its snapshot with required prop assigned 1`] = `
 "<div data-id="sds-combo-box" class="relative">
-  <div class="input-group flex flex-col">
+  <div class="input-group flex flex-col required">
     <!--v-if-->
     <div class="flex flex-row h-10">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">

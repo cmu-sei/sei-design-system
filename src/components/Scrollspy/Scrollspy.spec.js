@@ -88,7 +88,7 @@ describe('Scrollspy', () => {
       props: { items }
     })
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function))
+    expect(addEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function), {})
   })
 
   it('removes window scroll event listener on unmount', () => {
@@ -100,7 +100,7 @@ describe('Scrollspy', () => {
 
     wrapper.unmount()
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function))
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function), {})
   })
 
   it('attaches parent element scroll event listener when parent selector is provided', () => {
@@ -117,7 +117,7 @@ describe('Scrollspy', () => {
       }
     })
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function))
+    expect(addEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function), {})
 
     // Cleanup
     document.body.removeChild(parentElement)
@@ -139,7 +139,7 @@ describe('Scrollspy', () => {
 
     wrapper.unmount()
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function))
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function), {})
 
     // Cleanup
     document.body.removeChild(parentElement)

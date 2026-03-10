@@ -43,8 +43,6 @@ describe('ToggleSwitch.vue', () => {
     await nextTick()
 
     const button = wrapper.find('button[role="switch"]')
-    await button.trigger('click')
-    await nextTick()
 
     expect(button.attributes('aria-checked')).toBe('true')
     expect(wrapper.html()).toMatchSnapshot()

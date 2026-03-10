@@ -90,7 +90,7 @@ exports[`Datepicker > Snapshots > should hide arrow for a range selection 1`] = 
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -146,7 +146,7 @@ exports[`Datepicker > Snapshots > should match its default snapshot 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -260,7 +260,7 @@ exports[`Datepicker > Snapshots > should show disabled 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -370,7 +370,7 @@ exports[`Datepicker > Snapshots > should show invalid 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -484,7 +484,7 @@ exports[`Datepicker > Snapshots > should show readonly 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -501,7 +501,7 @@ exports[`Datepicker > Snapshots > should show required 1`] = `
       class="flex w-full gap-2"
     >
       <div
-        class="w-full input-group"
+        class="w-full input-group required"
       >
         <button
           class="input-group-addon fill-current"
@@ -596,7 +596,7 @@ exports[`Datepicker > Snapshots > should show required 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -706,7 +706,7 @@ exports[`Datepicker > Snapshots > should show the arrow for a range selection 1`
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -816,7 +816,7 @@ exports[`Datepicker > Snapshots > should show the sm size with the dateTime mode
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -926,7 +926,7 @@ exports[`Datepicker > Snapshots > should show the sm size with the time mode 1`]
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;
 
@@ -1036,6 +1036,6 @@ exports[`Datepicker > Snapshots > should show valid 1`] = `
     </div>
     
   </div>
-  <!---->
+  <!--v-if-->
 </div>
 `;

@@ -1,17 +1,82 @@
 <template>
   <SdsFloatingUi
     data-id="sds-filter-by-dropdown"
+    :offset="offset"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
-    placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
-    placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
-    placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
-    placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
     shift
   >
     <template #trigger="{ isOpen, toggle }">
+      <SdsTooltip
+        v-if="iconOnly && tooltip"
+        :disabled="disabled"
+        size="auto"
+        type="dark"
+      >
+        <template #trigger>
+          <SdsIndicator
+            :hide-indicator="!(showCount && selectedCount > 0)"
+            variant="red"
+            placement="top-right"
+            placement-over="circle"
+            :size="size"
+            :status="selectedCount > 0 ? `${selectedCount} items selected` : null"
+          >
+            <SdsActionButton 
+              :id="id"
+              ref="button"
+              :kind="kind"
+              :variant="variant"
+              :size="size" 
+              :active="isOpen"
+              :disabled="disabled"
+              :block="block"
+              :class="iconOnlyClasses"
+              aria-haspopup="true"
+              :aria-expanded="isOpen"
+              :aria-label="tooltip || title"
+              @click="toggle(); resetTmpOptions()"
+            >
+              <IconFa7SolidFilter :class="iconSizeClasses" />
+              <span class="sr-only">{{ title }}</span>
+            </SdsActionButton>
+          </SdsIndicator>
+        </template>
+        {{ tooltip }}
+      </SdsTooltip>
+
+      <SdsIndicator
+        v-else-if="iconOnly"
+        :hide-indicator="!(showCount && selectedCount > 0)"
+        variant="red"
+        placement="top-right"
+        placement-over="circle"
+        :size="size"
+        :status="selectedCount > 0 ? `${selectedCount} items selected` : null"
+      >
+        <SdsActionButton 
+          :id="id"
+          ref="button"
+          :kind="kind"
+          :variant="variant"
+          :size="size" 
+          :active="isOpen"
+          :disabled="disabled"
+          :block="block"
+          :class="iconOnlyClasses"
+          aria-haspopup="true"
+          :aria-expanded="isOpen"
+          :aria-label="title"
+          @click="toggle(); resetTmpOptions()"
+        >
+          <IconFa7SolidFilter :class="iconSizeClasses" />
+          <span class="sr-only">{{ title }}</span>
+        </SdsActionButton>
+      </SdsIndicator>
+
       <SdsActionButton 
+        v-else
         :id="id"
         ref="button"
         :kind="kind"
@@ -19,9 +84,10 @@
         :size="size" 
         :active="isOpen"
         :disabled="disabled"
+        :block="block"
         aria-haspopup="true"
         :aria-expanded="isOpen"
-        @click="toggle(); handleInputFocus(); resetTmpOptions()"
+        @click="toggle(); resetTmpOptions()"
       >
         <!-- @slot Title content of trigger button. -->
         <slot name="title">
@@ -34,73 +100,48 @@
     </template>
     <template #default="{ close }">
       <div
+        role="menu"
         aria-orientation="vertical"
         :aria-labelledby="button && button.id || undefined"
       >
-        <div
+        <SdsDropdownInputItem
           v-if="enableFilter"
-          class="px-4 pt-4 pb-2.5"
-        >
-          <div
-            class="input-group input-group-sm"
-          >
-            <input
-              ref="filterTextInput"
-              v-model="filterText"
-              type="text"
-              class="form-control"
-              placeholder="Type to filter"
-            >
-          </div>
-        </div>
-        <div
+          v-model="filterText"
+          placeholder="Type to filter"
+          autofocus
+        />
+        
+        <SdsDropdownSection
           v-if="!enableFilter"
-          class="py-2 mb-2 border-b border-gray-100 dark:border-gray-700 pt-2"
+          divider
         >
-          <div
-            class="leading-5 flex gap-2 items-start px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
+          <SdsDropdownCheckboxItem
+            id="filter_by_dropdown_select_all"
+            v-model="allSelected"
+            label="Select all"
+            :indeterminate="indeterminate"
+            @update:model-value="toggleSelect"
+          />
+        </SdsDropdownSection>
+        
+        <SdsDropdownSection
+          scrollable
+          max-height="14rem"
+        >
+          <li
+            v-for="o in filteredTmpOptions"
+            :key="o.id"
           >
-            <input
-              id="filter_by_dropdown_select_all"
-              type="checkbox"
-              class="my-auto focus:ring-0 mt-0.5"
-              :checked="allSelected"
-              :indeterminate.prop="indeterminate"
-              @change="toggleSelect()"
-            >
-            <label
-              for="filter_by_dropdown_select_all"
-              class="cursor-pointer leading-none text-gray-900 dark:text-gray-50 flex gap-2 items-center w-full"
-            >
-              <span class="my-auto">Select all</span>
-            </label>
-          </div>
-        </div>
-        <div class="scroll-area max-h-56">
-          <ul>
-            <li
-              v-for="o in filteredTmpOptions"
-              :key="o.id"
-            >
-              <div 
-                class="leading-5 flex gap-2 items-start px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
-              >
-                <input
-                  :id="`filter_by_dropdown_selection_list_${o.id}`"
-                  v-model="o.selected"
-                  type="checkbox"
-                  class="focus:ring-0 mt-0.5"
-                  :value="o.id"
-                >
-                <label
-                  :for="`filter_by_dropdown_selection_list_${o.id}`"
-                  class="text-gray-900 hover:text-black dark:text-gray-50 dark:hover:text-white block w-full cursor-pointer"
-                >{{ o.text }}</label>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="px-4 pt-2.5 pb-2 space-y-2">
+            <SdsDropdownCheckboxItem
+              :id="`filter_by_dropdown_selection_list_${o.id}`"
+              v-model="o.selected"
+              :label="o.text"
+              :value="o.id"
+            />
+          </li>
+        </SdsDropdownSection>
+        
+        <SdsDropdownFooter divider>
           <SdsButton
             kind="primary"
             size="sm"
@@ -117,7 +158,7 @@
           >
             Cancel
           </SdsButton>
-        </div>
+        </SdsDropdownFooter>
       </div>
     </template>
   </SdsFloatingUi>
@@ -127,7 +168,13 @@
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsButton from '../Button/Button.vue'
-import { useZIndex } from '@/composables'
+import SdsTooltip from '../Tooltip/Tooltip.vue'
+import SdsIndicator from '../Indicator/Indicator.vue'
+import SdsDropdownCheckboxItem from '../DropdownCheckboxItem/DropdownCheckboxItem.vue'
+import SdsDropdownInputItem from '../DropdownInputItem/DropdownInputItem.vue'
+import SdsDropdownSection from '../DropdownSection/DropdownSection.vue'
+import SdsDropdownFooter from '../DropdownFooter/DropdownFooter.vue'
+import { useDropdown, type ButtonVariant, type DropdownPlacement } from '@/composables'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -136,84 +183,143 @@ export interface FilterByDropdownOption {
   [key: string]: unknown
 }
 
-export type FilterByDropdownPlacement = 'auto' | 'top' | 'right'
-
-const id = useId()
-
 defineOptions({
   name: "SdsFilterByDropdown"
 })
 
-const props = defineProps({
+/**
+ * A specialized dropdown for filtering items with checkboxes and apply/cancel actions.
+ * 
+ * Features:
+ * - Multi-select with checkboxes
+ * - "Select all" functionality with indeterminate state
+ * - Optional search/filter input
+ * - Apply/Cancel pattern for controlled updates
+ * - Selected count display
+ * 
+ * For other dropdown patterns, consider:
+ * - {@link SdsActionDropdown} - Generic dropdown with custom content
+ * - {@link SdsSortByDropdown} - Sorting with field and direction selection
+ * 
+ * @component
+ */
+interface FilterByDropdownProps {
   /**
    * Determines the purpose and particular function of the component.
    */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
+  kind?: 'primary' | 'secondary' | 'ghost';
   /**
-   * Determines the color of the component.
+   * Styling for the button trigger.
    */
-  variant: { type: String as PropType<'gray' | 'blue'>, default: 'gray' },
+  variant?: ButtonVariant;
   /**
    * Determines the size.
    */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
   /**
    * The title for the toggle button.
    */
-  title: { type: String, default: "Filter" },
+  title?: string;
+  /**
+   * When true, displays only an icon without text label.
+   * Useful for compact layouts and toolbars.
+   */
+  iconOnly?: boolean;
+  /**
+   * Tooltip text to display when iconOnly is enabled.
+   * Only shown when iconOnly is true and tooltip text is provided.
+   */
+  tooltip?: string;
   /**
    * Determine whether to enable option filtering on the dropdown.
    */
-  enableFilter: { type: Boolean, default: false },
+  enableFilter?: boolean;
   /**
    * Determines whether to alphabetically sort the options.
    */
-  enableSortOptions: { type: Boolean, default: false },
+  enableSortOptions?: boolean;
   /**
    * Determines the placement of the dropdown on the screen.
    */
-  placement: { type: String as PropType<FilterByDropdownPlacement>, default: 'bottom-start' },
+  placement?: DropdownPlacement;
   /**
    * Determines if the dropdown is disabled
    */
-  disabled: { type: Boolean, default: false},
+  disabled?: boolean;
   /**
    * Determines if the count is visible next to the title
    */
-  showCount: { type: Boolean, default: false}
+  showCount?: boolean;
+  /**
+   * The distance between the popper and the trigger.
+   */
+  offset?: number;
+  /**
+   * Delays opening the dropdown in ms.
+   */
+  openDelay?: number;
+  /**
+   * Delays closing the dropdown in ms.
+   */
+  closeDelay?: number;
+  /**
+   * Determines whether to use block styling on the trigger button.
+   */
+  block?: boolean;
+}
+
+const props = withDefaults(defineProps<FilterByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: "Filter",
+  iconOnly: false,
+  tooltip: '',
+  enableFilter: false,
+  enableSortOptions: false,
+  placement: 'bottom-start',
+  disabled: false,
+  showCount: false,
+  offset: 5,
+  openDelay: 0,
+  closeDelay: 0,
+  block: false
 })
 
 /**
  * The v-model for this component. Determines opened/closed state.
  */
-const model = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
+const options = defineModel<FilterByDropdownOption[]>({ type: Array as PropType<FilterByDropdownOption[]>, default: () => [] })
 
-const emit = defineEmits(['update:modelValue'])
+// Use unified dropdown composable
+const {
+  id,
+  buttonRef: button,
+  zIndexClass,
+  iconOnlyClasses,
+  iconSizeClasses
+} = useDropdown({
+  prefix: 'action-btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  zIndex: () => props.zIndex,
+  disabled: () => props.disabled,
+  block: () => props.block,
+  iconOnly: () => props.iconOnly,
+  openDelay: props.openDelay,
+  closeDelay: props.closeDelay
+})
 
-const button = ref<HTMLButtonElement | undefined>()
-const filterTextInput = ref<HTMLInputElement | undefined>()
 const filterText = ref("")
 const tmpOptions = ref([])
 
 const selectedCount = computed(() => options.value.filter((i: FilterByDropdownOption) => i.selected).length)
-
-const { zIndexClass } = useZIndex(() => props.zIndex)
-
-const options = computed({
-  get() {
-    return model.value;
-  },
-  set(value: FilterByDropdownOption[]) {
-    /**
-     * Emmitted when modelValue changes.
-     */
-    emit("update:modelValue", value);
-  },
-})
 
 const allSelected = computed(() => {
   return tmpOptions.value.every((i: FilterByDropdownOption) => i.selected);
@@ -243,24 +349,12 @@ const toggleSelect = () => {
 }
 
 const saveSelections = () => {
-  /**
-   * Emmitted when modelValue changes.
-   */
-  emit("update:modelValue", tmpOptions.value);
+  options.value = tmpOptions.value;
 }
 
 const cancelSelections = () => {
   // Make a unique copy of default list data
-  resetTmpOptions();
-}
-
-const handleInputFocus = () => {
-  if (!props.enableFilter) return
-  const interval = setInterval(() => {
-    if (typeof filterTextInput.value === 'undefined') return
-    filterTextInput.value?.focus()
-    clearInterval(interval)
-  }, 100)
+  resetTmpOptions()
 }
 
 const resetTmpOptions = () => {

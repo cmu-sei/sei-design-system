@@ -29,6 +29,28 @@
     @apply py-0.5 px-2 text-xs;
   }
 
+  /* ===== SQUARE BUTTON VARIANT ===== */
+
+  :where(.sds-theme-forge .btn.btn-square.btn-xl) {
+    @apply p-4;
+  }
+
+  :where(.sds-theme-forge .btn.btn-square.btn-lg) {
+    @apply p-3;
+  }
+
+  :where(.sds-theme-forge .btn.btn-square) {
+    @apply p-2;
+  }
+
+  :where(.sds-theme-forge .btn.btn-square.btn-sm) {
+    @apply p-1;
+  }
+
+  :where(.sds-theme-forge .btn.btn-square.btn-xs) {
+    @apply p-0.5;
+  }
+
   /* ===== BUTTON KINDS (PRIMARY, SECONDARY, TERTIARY, GHOST) ===== */
   /* Primary Buttons - Default Blue */
   :where(.sds-theme-forge .btn.btn-primary) {
@@ -263,13 +285,13 @@
   /* Tertiary - Default Type - White Variant */
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
-    @apply hover:text-gray-900 hover:bg-white;
+    @apply hover:text-gray-900 hover:bg-white hover:border-white;
   }
 
   /* Tertiary - Default Type - White Variant - Dark Mode */
   :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white) {
     @apply text-white border-white;
-    @apply hover:text-gray-900 hover:bg-white;
+    @apply hover:text-gray-900 hover:bg-white hover:border-white;
   }
 
   :where(.sds-theme-forge .btn.btn-tertiary.btn-white:active, .sds-theme-forge .btn.btn-tertiary.btn-white.active) {

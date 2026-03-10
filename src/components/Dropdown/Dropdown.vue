@@ -1,6 +1,6 @@
 <template>
   <SdsFloatingUi
-    data-id="sds-dropdown"
+    :data-id="dataId"
     :offset="offset"
     :strategy="strategy"
     :placement="placement"
@@ -26,7 +26,67 @@
         :is-open="isOpen"
         :toggle="toggle"
       >
+        <SdsTooltip
+          v-if="effectiveIconOnly && tooltip"
+          :disabled="disabled"
+          size="auto"
+          type="dark"
+        >
+          <template #trigger>
+            <button
+              :id="id"
+              ref="button"
+              type="button"
+              aria-haspopup="true"
+              :aria-expanded="isOpen"
+              :aria-label="tooltip || title"
+              :disabled="disabled"
+              :class="[
+                btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, iconOnlyClasses,
+                type && 'hover:bg-gray-800 text-white border-0',
+                (!isOpen && type) && 'bg-gray-900',
+                (isOpen && type) && 'active bg-gray-800',
+                isOpen && 'active'
+              ]"
+              @click="handleClick(isOpen, open, close)"
+            >
+              <!-- @slot Icon content for icon-only mode -->
+              <slot name="icon">
+                <IconFa7SolidBars :class="iconSizeClasses" />
+              </slot>
+              <span class="sr-only">{{ title }}</span>
+            </button>
+          </template>
+          {{ tooltip }}
+        </SdsTooltip>
+
         <button
+          v-else-if="effectiveIconOnly"
+          :id="id"
+          ref="button"
+          type="button"
+          aria-haspopup="true"
+          :aria-expanded="isOpen"
+          :aria-label="title"
+          :disabled="disabled"
+          :class="[
+            btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, iconOnlyClasses,
+            type && 'hover:bg-gray-800 text-white border-0',
+            (!isOpen && type) && 'bg-gray-900',
+            (isOpen && type) && 'active bg-gray-800',
+            isOpen && 'active'
+          ]"
+          @click="handleClick(isOpen, open, close)"
+        >
+          <!-- @slot Icon content for icon-only mode -->
+          <slot name="icon">
+            <IconFa7SolidBars :class="iconSizeClasses" />
+          </slot>
+          <span class="sr-only">{{ title }}</span>
+        </button>
+
+        <button
+          v-else
           :id="id"
           ref="button"
           type="button"
@@ -50,10 +110,12 @@
           <IconFa7SolidChevronDown
             v-if="!hideArrow"
             class="inline-block self-center"
-            :class="{
-              'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm' || size === '',
-              'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm' && size !== '',
-            }"
+            :class="buttonStyle === 'action' 
+              ? 'w-4 h-4' 
+              : {
+                'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm' || size === '',
+                'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm' && size !== '',
+              }"
           />
         </button>
       </slot>
@@ -82,76 +144,90 @@
 
 <script setup lang="ts">
 import SdsFloatingUi from "../FloatingUi/FloatingUi.vue";
-import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue } from '@/composables'
+import SdsTooltip from "../Tooltip/Tooltip.vue";
+import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue, type DropdownPlacement } from '@/composables'
 
-import type { Placement as BasePlacement, Strategy } from '@floating-ui/dom'
-export type DropdownPlacement = BasePlacement | 'auto' | 'auto-start' | 'auto-end'
+import type { Strategy } from '@floating-ui/dom'
 
-defineOptions({
-  name: 'SdsDropdown'
-})
-
-const props = defineProps({
+interface DropdownProps {
   /**
    * The content of the dropdown trigger.
    */
-  title: { type: String, default: '' },
+  title?: string;
+  /**
+   * Determines the button style.
+   * - 'default': Traditional button styling (btn prefix)
+   * - 'action': Compact action button styling (action-btn prefix)
+   * 
+   * @default 'default'
+   */
+  buttonStyle?: 'default' | 'action';
+  /**
+   * When true, displays only an icon without text label.
+   * Useful for compact layouts and toolbars.
+   */
+  iconOnly?: boolean;
+  /**
+   * Tooltip text to display when iconOnly is enabled.
+   * Only shown when iconOnly is true and tooltip text is provided.
+   */
+  tooltip?: string;
   /**
    * Determines the purpose and particular function of the button trigger.
    */
-  kind: { type: String as PropType<ButtonKind>, default: 'secondary' },
+  kind?: Exclude<ButtonKind, 'tertiary'>;
   /**
    * Styling for the button trigger.
    */
-  variant: { type: String as PropType<ButtonVariant>, default: '' },
+  variant?: ButtonVariant;
   /**
    * Allows you to force dark mode on all child components
    */
-  type: { type: String as PropType<'dark'>, default: undefined},
+  type?: 'dark';
   /**
    * The z-index for the popover.
    */
-  zIndex: { type: String as PropType<ZIndexValue>, required: false, default: '50' },
+  zIndex?: ZIndexValue;
   /**
    * The distance between the popper and the trigger.
    */
-  offset: { type: Number, default: 5 },
+  offset?: number;
   /**
    * Delays opening the toggle in ms.
    */
-  openDelay: { type: Number, default: 0 },
+  openDelay?: number;
   /**
    * Delays closing the toggle in ms.
    */
-  closeDelay: { type: Number, default: 0 },
+  closeDelay?: number;
   /**
    * Determines the size of the trigger button.
    */
-  size: { type: String as PropType<'md' | 'sm' | ''>, default: 'md' },
+  size?: 'xs' | 'sm' | 'md' | 'lg' | '';
   /**
    * Determines if the arrow should display or not.
    */
-  hideArrow: { type: Boolean, default: false },
+  hideArrow?: boolean;
   /**
    * Determines whether the content of the popper will set the width of the popper.
    */
-  auto: { type: Boolean, default: false },
+  auto?: boolean;
   /**
    * The strategy of the popover on the screen.
    */
-  strategy: { type: String as PropType<Strategy>, default: 'absolute' },
+  strategy?: Strategy;
   /**
    * The placement of the popover on the screen.
    */
-  placement: { type: String as PropType<DropdownPlacement>, default: 'bottom-start' },
+  placement?: DropdownPlacement;
   /**
    * Determines whether to use the block styling on the trigger button or not.
    */
-  block: { type: Boolean, default: false },
+  block?: boolean;
   /**
    * Determines if the popover should display or not.
    */
-  disabled: { type: Boolean, default: false },
+  disabled?: boolean;
   /**
    * Allows for code execution prior to opening the popover.
    * 
@@ -176,7 +252,7 @@ const props = defineProps({
    * }
    * ```
    */
-  willOpen: { type: Function as PropType<GenericFunctionType>, default: null },
+  willOpen?: GenericFunctionType;
   /**
    * Allows for code execution prior to closing the popover.
    * 
@@ -201,7 +277,34 @@ const props = defineProps({
    * }
    * ```
    */
-  willClose: { type: Function as PropType<GenericFunctionType>, default: null }
+  willClose?: GenericFunctionType;
+}
+
+defineOptions({
+  name: 'SdsDropdown'
+})
+
+const props = withDefaults(defineProps<DropdownProps>(), {
+  title: '',
+  buttonStyle: 'default',
+  iconOnly: false,
+  tooltip: '',
+  kind: (props) => (props as DropdownProps).buttonStyle === 'action' ? 'ghost' : 'secondary',
+  variant: (props) => (props as DropdownProps).buttonStyle === 'action' ? 'gray' : '' as ButtonVariant,
+  type: undefined,
+  zIndex: '50',
+  offset: 5,
+  openDelay: 0,
+  closeDelay: 0,
+  size: (props) => (props as DropdownProps).buttonStyle === 'action' ? 'sm' : 'md',
+  hideArrow: false,
+  auto: false,
+  strategy: 'absolute',
+  placement: 'bottom-start',
+  block: false,
+  disabled: false,
+  willOpen: undefined,
+  willClose: undefined
 })
 
 // Use unified dropdown composable
@@ -215,17 +318,25 @@ const {
   sizeClass,
   disabledClass,
   blockClass,
+  iconOnlyClasses,
+  iconSizeClasses,
   handleClick
 } = useDropdown({
-  prefix: 'btn',
+  prefix: props.buttonStyle === 'action' ? 'action-btn' : 'btn',
   kind: () => props.kind,
   variant: () => props.variant,
   size: () => props.size,
   zIndex: () => props.zIndex,
   disabled: () => props.disabled,
   block: () => props.block,
+  iconOnly: () => props.iconOnly,
   openDelay: props.openDelay,
   closeDelay: props.closeDelay,
   darkMode: () => props.type === 'dark'
 })
+
+const effectiveIconOnly = computed(() => props.iconOnly)
+
+// Dynamic data-id based on buttonStyle
+const dataId = computed(() => props.buttonStyle === 'action' ? 'sds-action-dropdown' : 'sds-dropdown')
 </script>

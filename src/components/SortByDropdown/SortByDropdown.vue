@@ -1,17 +1,17 @@
 <template>
   <SdsFloatingUi
     data-id="sds-sort-by-dropdown"
+    :offset="offset"
+    :strategy="strategy"
     :placement="placement"
     :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
     hide-arrow
-    placement-top-arrow-class="-bottom-1.5 border-t-0 border-l-0"
-    placement-right-arrow-class="-left-1.5 border-t-0 border-r-0"
-    placement-bottom-arrow-class="-top-1.5 border-b-0 border-r-0"
-    placement-left-arrow-class="-right-1.5 border-b-0 border-l-0"
     shift
   >
     <template #trigger="{ isOpen, toggle }">
+      <!-- Icon-only mode with tooltip -->
       <SdsTooltip
+        v-if="iconOnly && tooltip"
         size="auto"
         type="dark"
         :disabled="disabled"
@@ -24,102 +24,119 @@
             :variant="variant"
             :size="size" 
             :active="isOpen"
+            :block="block"
             aria-haspopup="true"
-            :class="[
-              hideArrow ? `flex flex-col items-center justify-center ${buttonSizeClasses}` : ''
-            ]"
+            :class="iconOnlyClasses"
             :disabled="disabled"
             @click="toggle()"
           >
             <IconFa7SolidUpDown
-              :class="[iconSizeClasses]"
+              :class="iconSizeClasses"
               class="inline-block self-center"
             />
-            <!-- @slot Title content of trigger button. -->
-            <slot name="title">
-              <span v-if="!hideArrow">{{ title }}</span>
-            </slot>
-            <IconFa7SolidChevronDown
-              v-if="!hideArrow"
-              class="inline-block self-center w-4 h-4"
-            />
+            <span class="sr-only">{{ title }}</span>
           </SdsActionButton>
         </template>
         <p>{{ tooltip }}</p>
       </SdsTooltip>
+
+      <!-- Icon-only mode without tooltip -->
+      <SdsActionButton 
+        v-else-if="iconOnly"
+        :id="id"
+        ref="button"
+        :kind="kind"
+        :variant="variant"
+        :size="size" 
+        :active="isOpen"
+        :block="block"
+        aria-haspopup="true"
+        :class="iconOnlyClasses"
+        :disabled="disabled"
+        @click="toggle()"
+      >
+        <IconFa7SolidUpDown
+          :class="iconSizeClasses"
+          class="inline-block self-center"
+        />
+        <span class="sr-only">{{ title }}</span>
+      </SdsActionButton>
+
+      <!-- Full button mode -->
+      <SdsActionButton
+        v-else
+        :id="id"
+        ref="button"
+        :kind="kind"
+        :variant="variant"
+        :size="size" 
+        :active="isOpen"
+        :block="block"
+        aria-haspopup="true"
+        :disabled="disabled"
+        @click="toggle()"
+      >
+        <IconFa7SolidUpDown
+          :class="iconSizeClasses"
+          class="inline-block self-center"
+        />
+        <!-- @slot Title content of trigger button. -->
+        <slot name="title">
+          <span>{{ title }}</span>
+        </slot>
+        <IconFa7SolidChevronDown
+          class="inline-block self-center w-4 h-4"
+        />
+      </SdsActionButton>
     </template>
     <template #default>
-      <div class="flex flex-col">
-        <div class="px-2 pt-4 pb-2">
-          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2">
-            Sort by
-          </span>
-          <ul
-            v-if="options.length"
-            class="flex flex-col"
-          >
-            <li
-              v-for="(option, index) in options"
-              :key="`${id}__sortBy__option_${index}`"
-              class="group flex flex-row gap-2 items-center px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750 cursor-pointer"
-            >
-              <input
-                :id="`${id}__sortBy__option_${index}`"
-                v-model="localModelValue"
-                type="radio"
-                class="cursor-pointer relative top-px"
-                :value="option.value"
-                :name="name ? name : `${id}__sortBy__option`"
-              >
-              <label
-                :for="`${id}__sortBy__option_${index}`"
-                class="cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
-              >
-                <span>{{ option.label }}</span>
-              </label>
-            </li>
-          </ul>
-        </div>
-        <div
-          v-if="orderBy"
-          class="border-t border-gray-100 dark:border-gray-700 px-2 pt-4 pb-2"
+      <div
+        role="menu"
+        aria-orientation="vertical"
+        :aria-labelledby="button && button.id || undefined"
+        class="flex flex-col"
+      >
+        <SdsDropdownSection
+          v-if="options.length"
+          title="Sort by"
         >
-          <span class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1 px-2">
-            Order by
-          </span>
-          <ul class="flex flex-col">
-            <li
-              v-for="(filter, index) in directionFilters"
-              :key="index"
-              class="group flex flex-row gap-2 items-center px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750 cursor-pointer"
-            >
-              <input
-                :id="filter.id"
-                v-model="selectedDirection"
-                type="radio"
-                class="cursor-pointer relative top-px"
-                :value="filter.value"
-                :name="name ? name : `${id}__direction__option`"
-                @click.stop
-              >
-              <label
-                :for="filter.id"
-                class="flex items-center gap-1.5 cursor-pointer text-sm text-black dark:text-gray-300 group-hover:text-gray-900 group-hover:dark:text-white w-full"
-                @click.stop
-              >
-                <IconFa7SolidArrowUp
-                  v-if="filter.direction.includes('ascending')"
-                  class="h-3.5 w-3.5"
-                />
-                <IconFa7SolidArrowDown
-                  v-else
-                  class="h-3.5 w-3.5"
-                />
-                <span>{{ filter.label }}</span>
-              </label>
-            </li>
-          </ul>
-        </div>
+          <SdsDropdownRadioItem
+            v-for="(option, index) in options"
+            :key="`${id}__sortBy__option_${index}`"
+            v-model="localModelValue"
+            :value="option.value"
+            :label="String(option.label || '')"
+            :name="name ? name : `${id}__sortBy__option`"
+          />
+        </SdsDropdownSection>
+        
+        <SdsDropdownSection
+          v-if="orderBy"
+          title="Order by"
+          divider
+        >
+          <SdsDropdownRadioItem
+            v-for="(filter, index) in directionFilters"
+            :id="filter.id"
+            :key="index"
+            v-model="selectedDirection"
+            :value="filter.value"
+            :name="name ? name : `${id}__direction__option`"
+            @click.stop
+          >
+            <template #icon>
+              <IconFa7SolidArrowUp
+                v-if="filter.direction.includes('ascending')"
+                class="h-3.5 w-3.5"
+              />
+              <IconFa7SolidArrowDown
+                v-else
+                class="h-3.5 w-3.5"
+              />
+            </template>
+            {{ filter.label }}
+          </SdsDropdownRadioItem>
+        </SdsDropdownSection>
       </div>
     </template>
   </SdsFloatingUi>
@@ -127,13 +144,13 @@
 
 <script lang="ts" setup>
 import type { RadioGroupOptionValue } from '../RadioGroup/RadioGroup.vue'
-import type { Placement as BasePlacement } from '@floating-ui/dom'
+import type { Strategy } from '@floating-ui/dom'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
-import { useZIndex } from '@/composables'
-
-export type SortByDropdownPlacement = BasePlacement;
+import SdsDropdownRadioItem from '../DropdownRadioItem/DropdownRadioItem.vue'
+import SdsDropdownSection from '../DropdownSection/DropdownSection.vue'
+import { useDropdown, type ButtonVariant, type DropdownPlacement } from '@/composables'
 
 type OrderByType = 'alpha' | 'chronological' | 'numerical' | 'custom';
 type OrderByDirection = 'ascending' | 'descending';
@@ -141,7 +158,7 @@ export type SortByDropdownType = `${OrderByType}:${OrderByDirection}`;
 
 export interface SortByDropdownOption {
   id: number | string;
-  value: RadioGroupOptionValue;
+  value: string | number;
   label: RadioGroupOptionValue;
   type: OrderByType;
   customAttribute?: string;
@@ -179,55 +196,111 @@ const ORDER_BY_TYPES = readonly(ref({
   }
 }))
 
+interface SortByDropdownProps {
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind?: 'primary' | 'secondary' | 'ghost';
+  /**
+   * Styling for the button trigger.
+   */
+  variant?: ButtonVariant;
+  /**
+   * Determines the size.
+   */
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  /**
+   * The z-index for the popover.
+   */
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  /**
+   * The title for the toggle button.
+   */
+  title?: string;
+  /**
+   * Displays only an icon button without label/arrow.
+   */
+  iconOnly?: boolean;
+  /**
+   * Determines the placement of the dropdown on the screen.
+   */
+  placement?: DropdownPlacement;
+  /**
+   * Determines if the dropdown is disabled
+   */
+  disabled?: boolean;
+  /**
+   * The name of the radio form field.
+   */
+  name?: string | null;
+  /**
+   * An array of options for the dropdown.
+   */
+  options?: SortByDropdownOption[];
+  /**
+   * Tooltip text to display when iconOnly is enabled.
+   * Only shown when iconOnly is true and tooltip text is provided.
+   */
+  tooltip?: string;
+  /**
+   * The distance between the popper and the trigger.
+   */
+  offset?: number;
+  /**
+   * Delays opening the dropdown in ms.
+   */
+  openDelay?: number;
+  /**
+   * Delays closing the dropdown in ms.
+   */
+  closeDelay?: number;
+  /**
+   * Determines whether to use block styling on the trigger button.
+   */
+  block?: boolean;
+  /**
+   * The strategy of the popover on the screen.
+   */
+  strategy?: Strategy;
+}
+
 defineOptions({
   name: "SdsSortByDropdown"
 })
 
-const props = defineProps({
-  /**
-   * Determines the purpose and particular function of the component.
-   */
-  kind: { type: String as PropType<'primary' | 'secondary' | 'ghost'>, default: 'ghost' },
-  /**
-   * Determines the color of the component.
-   */
-  variant: { type: String as PropType<'gray' | 'red' | 'blue' | 'white'>, default: 'gray' },
-  /**
-   * Determines the size.
-   */
-  size: { type: String as PropType<'xs' | 'sm' | 'md' | 'lg'>, default: 'sm' },
-  /**
-   * The z-index for the popover.
-   */
-  zIndex: { type: String as PropType<'0' | '10' | '20' | '30' | '40' | '50' | 'auto' | ''>, required: false, default: '50' },
-  /**
-   * The title for the toggle button.
-   */
-  title: { type: String, default: 'Sort by' },
-  /**
-   * Determines if the arrow should display or not.
-   */
-  hideArrow: { type: Boolean, default: false },
-  /**
-   * Determines the placement of the dropdown on the screen.
-   */
-  placement: { type: String as PropType<SortByDropdownPlacement>, default: 'bottom-start' },
-  /**
-   * Determines if the dropdown is disabled
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * The name of the radio form field.
-   */
-  name: { type: String, default: null },
-  /**
-   * An array of options for the dropdown.
-   */
-  options: { type: Array as PropType<SortByDropdownOption[]>, default: () => [] },
-  /**
-   * The tooltip text for the sort button.
-   */
-  tooltip: { type: String, default: 'Sort' }
+/**
+ * A specialized dropdown for sorting with field and direction selection.
+ * 
+ * Features:
+ * - Radio button selection for sort field
+ * - Automatic direction filters (ascending/descending) based on field type
+ * - Smart label generation for different sort types (alpha, chronological, numerical, custom)
+ * - Icon-only mode with tooltip
+ * - Immediate updates on selection
+ * 
+ * For other dropdown patterns, consider:
+ * - {@link SdsActionDropdown} - Generic dropdown with custom content
+ * - {@link SdsFilterByDropdown} - Multi-select filtering with checkboxes
+ * 
+ * @component
+ */
+const props = withDefaults(defineProps<SortByDropdownProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  size: 'sm',
+  zIndex: '50',
+  title: 'Sort by',
+  iconOnly: false,
+  placement: 'bottom-start',
+  disabled: false,
+  name: null,
+  options: () => [],
+  tooltip: 'Sort',
+  offset: 5,
+  openDelay: 0,
+  closeDelay: 0,
+  block: false,
+  strategy: 'absolute'
 })
 
 /**
@@ -238,8 +311,25 @@ const model = defineModel<SortByDropdownModel | null>({
   default: null
 })
 
-const id = useId()
-const button = ref<HTMLButtonElement | undefined>()
+// Use unified dropdown composable
+const {
+  id,
+  buttonRef: button,
+  zIndexClass,
+  iconOnlyClasses,
+  iconSizeClasses
+} = useDropdown({
+  prefix: 'action-btn',
+  kind: () => props.kind,
+  variant: () => props.variant,
+  size: () => props.size,
+  zIndex: () => props.zIndex,
+  disabled: () => props.disabled,
+  block: () => props.block,
+  iconOnly: () => props.iconOnly,
+  openDelay: props.openDelay,
+  closeDelay: props.closeDelay
+})
 
 // Track selected option and direction separately
 const selectedOption = ref<SortByDropdownOption | null>(null)
@@ -248,38 +338,13 @@ const selectedDirection = ref<SortByDropdownType | null>(null)
 // Flag to prevent duplicate emissions during internal state updates
 const isInternalUpdate = ref(false)
 
-const iconSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-    case 'sm':
-      return 'w-4 h-4'
-    case 'md':
-    case 'lg':
-    default:
-      return 'w-4.5 h-4.5'
-  }
-})
-
-const buttonSizeClasses = computed(() => {
-  switch (props.size) {
-    case 'xs':
-      return 'h-6.5 w-6.5'
-    case 'sm':
-      return 'h-7.5 w-7.5'
-    case 'md':
-      return 'h-8.5 w-8.5'
-    case 'lg':
-      return 'h-10.5 w-10.5'
-    default:
-      return 'h-8.5 w-8.5'
-  }
-})
-
-const { zIndexClass } = useZIndex(() => props.zIndex)
-
-const localModelValue = computed({
+const localModelValue = computed<string | number | null>({
   get() {
-    return selectedOption.value?.value || null
+    const value = selectedOption.value?.value
+    if (typeof value === 'string' || typeof value === 'number') {
+      return value
+    }
+    return null
   },
   set(value: RadioGroupOptionValue) {
     isInternalUpdate.value = true

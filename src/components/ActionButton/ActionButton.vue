@@ -72,57 +72,64 @@
 <script setup lang="ts">
 import { useButtonClasses, type ButtonKind, type ButtonVariant, type ActionButtonSize } from '@/composables'
 
+interface ActionButtonProps {
+  /**
+   * Determines the purpose and particular function of the component.
+   */
+  kind?: Exclude<ButtonKind, 'tertiary'>;
+  /**
+   * Determines the color of the component.
+   */
+  variant?: ButtonVariant;
+  /**
+   * Determines the HTML tag use for the component
+   */
+  href?: string | null;
+  /**
+   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
+   */
+  external?: boolean;
+  /**
+   * Determines the HTML type attribute for the button.
+   */
+  type?: 'button' | 'submit';
+  /**
+   * Determines the size.
+   */
+  size?: ActionButtonSize;
+  /**
+   * Sets the active state of a button.
+   */
+  active?: boolean;
+  /**
+   * Disables the component to prevent user interaction.
+   */
+  disabled?: boolean;
+  /**
+   * Determines whether to use the block styling or not.
+   */
+  block?: boolean;
+  /**
+   * Determines whether to display a loading indicator and set the button to an active state.
+   */
+  pending?: boolean;
+}
+
 defineOptions({
   name: 'SdsActionButton'
 })
 
-const props = defineProps({
-  /**
-   * Determines the purpose and particular function of the component.
-   */
-  kind: { type: String as PropType<Exclude<ButtonKind, 'tertiary'>>, default: 'ghost' },
-  /**
-   * Determines the color of the component.
-   */
-  variant: { type: String as PropType<ButtonVariant>, default: 'gray' },
-  /**
-   * Determines the HTML tag use for the component
-   */
-  href: {
-    type: String,
-    default: null
-  },
-  /**
-   * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
-   */
-  external: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * Determines the HTML type attribute for the button.
-   */
-  type: { type: String as PropType<'button' | 'submit'>, default: 'button' },
-  /**
-   * Determines the size.
-   */
-  size: { type: String as PropType<ActionButtonSize>, default: 'sm' },
-  /**
-   * Sets the active state of a button.
-   */
-  active: { type: Boolean, default: false },
-  /**
-   * Disables the component to prevent user interaction.
-   */
-  disabled: { type: Boolean, default: false },
-  /**
-   * Determines whether to use the block styling or not.
-   */
-  block: { type: Boolean, default: false },
-  /**
-   * Determines whether to display a loading indicator and set the button to an active state.
-   */
-  pending: { type: Boolean, default: false }
+const props = withDefaults(defineProps<ActionButtonProps>(), {
+  kind: 'ghost',
+  variant: 'gray',
+  href: null,
+  external: false,
+  type: 'button',
+  size: 'sm',
+  active: false,
+  disabled: false,
+  block: false,
+  pending: false
 })
 
 const emit = defineEmits(['click'])

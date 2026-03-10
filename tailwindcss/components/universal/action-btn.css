@@ -46,6 +46,24 @@
     @apply py-0.5 px-1.5;
   }
 
+  /* ===== SQUARE BUTTON VARIANT ===== */
+
+  :where(.action-btn.action-btn-square.action-btn-lg) {
+    @apply p-2;
+  }
+
+  :where(.action-btn.action-btn-square) {
+    @apply p-1.5;
+  }
+
+  :where(.action-btn.action-btn-square.action-btn-sm) {
+    @apply p-1.5;
+  }
+
+  :where(.action-btn.action-btn-square.action-btn-xs) {
+    @apply p-1;
+  }
+
   /* Kind */
 
   :where(.action-btn-primary) {

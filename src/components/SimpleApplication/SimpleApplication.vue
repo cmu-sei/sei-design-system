@@ -163,39 +163,49 @@ const slots = defineSlots<{
   'action-bar': () => unknown
 }>()
 
+interface SimpleApplicationProps {
+  /**
+   * The app suite name's prefix (styled in red) for the layout.
+   */
+  appSuitePrefix?: string;
+  /**
+   * The app suite name for the layout.
+   */
+  appSuite?: string | null;
+  /**
+   * The app suite url for the layout.
+   */
+  appSuiteUrl?: string | null;
+  /**
+   * The app name for the layout.
+   */
+  appName?: string | null;
+  /**
+   * The page title for the layout.
+   */
+  pageTitle?: string | null;
+  /**
+   * Determines whether to hide the page header.
+   */
+  hidePageHeader?: boolean;
+  /**
+   * Determines whether to hide the action bar slot.
+   */
+  hideActionBar?: boolean;
+}
+
 defineOptions({
   name: 'SdsSimpleApplication'
 })
 
-defineProps({
-  /**
-   * The app suite name's prefix (styled in red) for the layout.
-   */
-  appSuitePrefix: { type: String, default: 'SEI' },
-  /**
-   * The app suite name for the layout.
-   */
-  appSuite: { type: String, default: null },
-  /**
-   * The app suite url for the layout.
-   */
-  appSuiteUrl: { type: String, default: null },
-  /**
-   * The app name for the layout.
-   */
-  appName: { type: String, default: null },
-  /**
-   * The page title for the layout.
-   */
-  pageTitle: { type: String, default: null },
-  /**
-   * Determines whether to hide the page header.
-   */
-  hidePageHeader: { type: Boolean, default: false },
-  /**
-   * Determines whether to hide the action bar slot.
-   */
-  hideActionBar: { type: Boolean, default: false },
+withDefaults(defineProps<SimpleApplicationProps>(), {
+  appSuitePrefix: 'SEI',
+  appSuite: null,
+  appSuiteUrl: null,
+  appName: null,
+  pageTitle: null,
+  hidePageHeader: false,
+  hideActionBar: false
 })
 
 const emit = defineEmits(['navigate'])
