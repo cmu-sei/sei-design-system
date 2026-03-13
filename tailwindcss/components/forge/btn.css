@@ -597,17 +597,6 @@
     @apply bg-gray-900;
   }
 
-  /* CTA Overrides - Tertiary White - No Border */
-  :where(.sds-theme-forge .btn.btn-tertiary.btn-white.btn-cta) {
-    @apply border-transparent;
-    @apply hover:border-transparent;
-  }
-
-  :where(:is(.dark.sds-theme-forge, .dark .sds-theme-forge) .btn.btn-tertiary.btn-white.btn-cta) {
-    @apply border-transparent;
-    @apply hover:border-transparent;
-  }
-
   /* Default CTA Chevrons Colors - Ghost Buttons */
   :where(.sds-theme-forge .btn.btn-cta.btn-ghost:not(.btn-gray):not(.btn-red):not(.btn-white))::after {
     @apply bg-blue-600;
