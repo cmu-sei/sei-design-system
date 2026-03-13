@@ -12,7 +12,7 @@ exports[`Tag > should match its default snapshot 1`] = `
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -37,7 +37,7 @@ exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` pr
     <!--v-if-->
     <!--v-if-->
     <a
-      class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 active:underline active:text-black dark:active:text-white"
+      class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 active:underline active:text-black dark:active:text-white overflow-hidden text-nowrap text-ellipsis max-w-60"
       href="https://www.google.com/"
       rel="noopener noreferrer"
       target="_blank"
@@ -65,7 +65,7 @@ exports[`Tag > should match its snapshot with assigned \`id\` prop 1`] = `
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -89,7 +89,7 @@ exports[`Tag > should match its snapshot with assigned \`readonly\` prop 1`] = `
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -113,7 +113,7 @@ exports[`Tag > should match its snapshot with assigned \`size\` prop 1`] = `
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -137,7 +137,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = 
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -146,7 +146,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-[1.375rem] w-6"
+      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -187,7 +187,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = 
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -196,7 +196,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-[1.375rem] w-6"
+      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -237,7 +237,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = 
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       
@@ -246,7 +246,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50 h-[1.375rem] w-6"
+      class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -287,7 +287,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`disabled\` prop 1`] 
     <!--v-if-->
     <!--v-if-->
     <span
-      class=""
+      class="overflow-hidden text-nowrap text-ellipsis max-w-60"
     >
       <!-- @slot Label content. -->
       

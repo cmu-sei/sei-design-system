@@ -249,6 +249,7 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
     const dropdown = wrapper.find('[data-id="sds-combo-box-dropdown"]')
     expect(dropdown.exists()).toBe(true)
     const active = wrapper.find('button[data-active="true"]')
@@ -273,8 +274,6 @@ describe('ComboBox', () => {
     })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.down')
     const active = wrapper.find('button[data-active="true"]')
     expect(active.text()).toEqual('Apple')
     await input.trigger('keyup.enter')
@@ -322,7 +321,6 @@ describe('ComboBox', () => {
     await input.trigger('click')
     const dropdown = wrapper.find('[data-id="sds-combo-box-dropdown"]')
     expect(dropdown.exists()).toBe(true)
-    await input.trigger('keydown.down')
     const active = dropdown.find('button[data-active="true"]')
     expect(active.text()).toBe('Apple')
     await input.trigger('keydown.down')
@@ -412,6 +410,7 @@ describe('ComboBox', () => {
         suggestions,
         type: 'select',
         multiple: true,
+        enableSelectAll: true,
         selected,
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
           wrapper.setProps({ selected: val })
@@ -421,7 +420,7 @@ describe('ComboBox', () => {
     })
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
-    await input.trigger('keydown.down')
+    await input.trigger('keydown.up')
     const active = wrapper.find('button[data-active="true"]')
     expect(active.text()).toEqual('Select all')
     await input.trigger('keyup.enter')
@@ -581,6 +580,7 @@ describe('ComboBox', () => {
         suggestions,
         type: 'select',
         multiple: true,
+        enableSelectAll: true,
         selected,
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
           wrapper.setProps({ selected: val })
@@ -659,13 +659,7 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await nextTick()
-    // Focus should be on input, now ArrowDown to move to tab
-    await input.trigger('keydown.down')
-    await nextTick()
-    // ArrowDown again to move to first suggestion
-    await input.trigger('keydown.down')
-    await nextTick()
-    // The first suggestion should be active
+    // Dropdown opens with first suggestion auto-focused
     const active = wrapper.find('button[data-active="true"]')
     expect(active.exists()).toBe(true)
     // ArrowUp should move focus back to tab (no suggestion active)
