@@ -28,6 +28,7 @@
           :key="index"
           :disabled="disabled"
           :readonly="readonly || disabled"
+          :size="(size === 'sm' || size === 'md') ? size : 'md'"
           action="remove"
           class="grow-0"
           :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
@@ -64,10 +65,12 @@
         </div>
         <span
           v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
-          class="input-group-addon absolute z-0"
+          class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap"
           :class="{
             'py-1 left-7': size === 'sm',
             'py-2 left-8': size !== 'sm',
+            'max-w-[calc(100%-3.5rem)]': showClearButton || isFocused,
+            'max-w-[calc(100%-5.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled
           }"
         >
           {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
@@ -196,12 +199,12 @@
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
-          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 0 && type !== 'text',
+          'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 0 && type !== 'text' && enableSelectAll,
         }"
       >
         <!-- Select all option for multiselect -->
         <template
-          v-if="(type === 'taggable-select' || type === 'select') && multiple && allCount > 1 && countVisibleOptions(suggestionOptions) > 1"
+          v-if="(type === 'taggable-select' || type === 'select') && enableSelectAll && multiple && allCount > 1 && countVisibleOptions(suggestionOptions) > 1"
         >
           <button
             ref="selectAllRef"
@@ -262,7 +265,7 @@
             class="flex flex-col gap-y-1 pb-2 mb-0"
             :class="{
               'first:[&>div]:border-t-0': !multiple,
-              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1
+              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1 && enableSelectAll
             }"
           >
             <div
@@ -580,6 +583,11 @@ interface ComboBoxProps {
    */
   disableGroupTabs?: boolean;
   /**
+   * Determines whether to show the "Select All" option given when `multiple` is true and `type`
+   * is equal to "select" or "taggable-select".
+   */
+  enableSelectAll?: boolean;
+  /**
    * The max amount of characters that can be entered into the input.
    */
   maxlength?: number;
@@ -677,6 +685,7 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   clickToSelect: false,
   debounceComplete: 250,
   disableGroupTabs: false,
+  enableSelectAll: false,
   maxlength: undefined,
   multiple: false,
   id: undefined,
@@ -711,6 +720,10 @@ const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as 
 const showDropdown = ref(false)
 const forceShowDropdown = ref(false)
 const arrowCounter = ref(-1)
+// True when arrowCounter was set automatically (on dropdown open/query change) rather than by
+// explicit arrow-key navigation. In this state the input shows the user's query, not the
+// highlighted item's label.
+const autoFocused = ref(false)
 const defaultOptionLabel = ref('label')
 const groups = ref(), activeGroup = ref(), activeGroupKey = ref(-1)
 const allSuggestions = ref(), allSuggestionOptions = ref(), allCount = ref(0)
@@ -927,7 +940,7 @@ const isFlatArray = computed(() => {
 // Helper to get the dropdown index of an item as rendered, including new suggestion if present
 const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
   // For type='taggable-select' with "Select all" present, offset by 1 only if Select all is rendered
-  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0
+  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1 && props.enableSelectAll) ? 1 : 0
   const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined
   if (!options) return null
   // Flatten options for group/ungrouped
@@ -1006,8 +1019,10 @@ const matchesSuggestion = computed(() => {
 
 // Computed property for input display value
 const inputDisplayValue = computed(() => {
-  // If a suggestion is highlighted, show its label
-  if (arrowCounter.value !== -1 && suggestionOptions.value && suggestionOptions.value.length > 0) {
+  // If a suggestion is highlighted via explicit arrow-key navigation, show its label.
+  // When autoFocused is true the highlight was set automatically (on dropdown open/query change)
+  // and we intentionally keep showing the user's typed query instead.
+  if (arrowCounter.value !== -1 && !autoFocused.value && suggestionOptions.value && suggestionOptions.value.length > 0) {
     // Find the suggestion with the current arrowCounter
     const found: ComboBoxSuggestion | null | undefined = getCurrentSuggestion()
     if (found) {
@@ -1239,7 +1254,7 @@ const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
     };
   }
   // If "Select all" is focused, return sentinel value (only if rendered)
-  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && arrowCounter.value === 0 && allCount.value > 1) {
+  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && arrowCounter.value === 0 && allCount.value > 1) {
     return null;
   }
   // If "Add" option is focused, return custom sentinel
@@ -1259,7 +1274,7 @@ const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
   let option: ComboBoxSuggestion | undefined = undefined;
   const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
   if (!opts) return undefined;
-  const startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) ? 1 : 0;
+  const startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && allCount.value > 1) ? 1 : 0;
   let idx = startIdx;
   opts.forEach((i: ComboBoxSuggestion) => {
     if (typeof i !== 'string') {
@@ -1338,7 +1353,12 @@ const handleInput = async () => {
   // If user input occurs, always reset dropdown suppression
   suppressShowDropdownNext = false
   await nextTick()
-  if (showDropdown.value) arrowCounter.value = -1
+  // When the dropdown is already open and the query changes, keep the first item auto-focused
+  // so the user can press Enter without having to navigate down first.
+  if (showDropdown.value) {
+    arrowCounter.value = firstItemIndex.value
+    autoFocused.value = true
+  }
 }
 
 const commitSelection = () => {
@@ -1420,7 +1440,7 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     inputDisplayValue.value !== '' &&
     !getCurrentSuggestion()
   ) {
-    if (arrowCounter.value === 0) {
+    if (arrowCounter.value === 0 && props.enableSelectAll) {
       toggleSelectAll();
     } else {
       shake()
@@ -1549,7 +1569,7 @@ const lastDropdownItemIndex = () => {
   // Start with 0
   let count = 0;
   // If "Select all" is present (multiple), add 1
-  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1) {
+  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1 && props.enableSelectAll) {
     count += 1;
   }
   // Add number of visible suggestions
@@ -1624,7 +1644,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       inputField.value.focus()
       /* Increment arrowCounter +1 to step over the "Select all" option.
        * It won't be visible when only one option is available and props.multiple === true */
-      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.multiple)
+      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.multiple && props.enableSelectAll)
         arrowCounter.value++
       arrowCounter.value++
       return
@@ -1651,6 +1671,8 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
 
   switch (direction) {
     case 'down': {
+      // User is explicitly navigating — disable auto-focus so input shows the highlighted label
+      autoFocused.value = false
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === -1) { // Input should be focused
           if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
@@ -1670,6 +1692,8 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       break
     }
     case 'up': {
+      // User is explicitly navigating — disable auto-focus so input shows the highlighted label
+      autoFocused.value = false
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === 0) { // First suggestion is focused
           if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
@@ -1682,7 +1706,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
 
       const lastIdx = lastDropdownItemIndex()
       if (arrowCounter.value > -1) {
-        if (arrowCounter.value === 1 && hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1) {
+        if (arrowCounter.value === 1 && hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.enableSelectAll) {
           arrowCounter.value--
           activeTab?.focus()
         }
@@ -1783,13 +1807,27 @@ const shouldShowDropdown = computed(() => {
   return true
 })
 
-watch(shouldShowDropdown, async () => {
+// Returns the index of the first selectable item in the dropdown (skipping "Select all" if visible)
+const firstItemIndex = computed(() => {
+  return ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && allCount.value > 1) ? 1 : 0
+})
+
+watch(shouldShowDropdown, async (val) => {
   await nextTick()
-  arrowCounter.value = -1
+  // When the dropdown opens, auto-focus the first item so the user can press Enter immediately.
+  // autoFocused keeps the typed query visible in the input (no label substitution).
+  if (val) {
+    arrowCounter.value = firstItemIndex.value
+    autoFocused.value = true
+  } else {
+    arrowCounter.value = -1
+    autoFocused.value = false
+  }
   activeGroupKey.value = -1
 })
 
 watch(activeGroupKey, () => {
-  arrowCounter.value = -1
+  arrowCounter.value = firstItemIndex.value
+  autoFocused.value = true
 })
 </script>
