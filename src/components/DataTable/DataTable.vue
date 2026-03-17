@@ -76,7 +76,7 @@
             @click="setSearchActiveState(true)"
           >
             <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
-            <span>Filter</span>
+            <span>Search</span>
           </SdsActionButton>
           <SdsComboBox
             v-if="isSearchActive"
