@@ -60,42 +60,58 @@
           </SdsActionButton>
         </div>
         <div 
-          v-if="hasFilterSearch"
-          class="flex flex-row items-center justify-end gap-x-4 px-2 py-4"
+          v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
+          class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
             'absolute top-0 left-0 z-10 w-full': isSearchActive
           }"
         >
-          <SdsActionButton
-            v-if="!isSearchActive"
-            kind="secondary"
+          <template v-if="hasFilterSearch">
+            <SdsActionButton
+              v-if="!isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              @click="setSearchActiveState(true)"
+            >
+              <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+              <span>Search</span>
+            </SdsActionButton>
+            <SdsComboBox
+              v-if="isSearchActive"
+              v-model="searchQuery"
+              :autofocus="isSearchActive"
+              :pending="isSearchLoading"
+              size="sm"
+              class="w-full"
+            />
+            <SdsActionButton
+              v-if="isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              class="ml-2"
+              @click="setSearchActiveState(false)"
+            >
+              <span>Cancel</span>
+            </SdsActionButton>
+          </template>
+          <SdsActionDropdown
+            v-if="$slots['ellipsis-menu-items']"
+            :hide-arrow="true"
+            :icon-only="true"
+            kind="ghost"
             variant="gray"
             size="sm"
-            type="button"
-            @click="setSearchActiveState(true)"
           >
-            <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
-            <span>Search</span>
-          </SdsActionButton>
-          <SdsComboBox
-            v-if="isSearchActive"
-            v-model="searchQuery"
-            :autofocus="isSearchActive"
-            :pending="isSearchLoading"
-            size="sm"
-            class="w-full"
-          />
-          <SdsActionButton
-            v-if="isSearchActive"
-            kind="secondary"
-            variant="gray"
-            size="sm"
-            type="button"
-            @click="setSearchActiveState(false)"
-          >
-            <span>Cancel</span>
-          </SdsActionButton>
+            <template #icon>
+              <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
+            </template>
+            <slot name="ellipsis-menu-items" />
+          </SdsActionDropdown>
         </div>
       </div>
     </div>

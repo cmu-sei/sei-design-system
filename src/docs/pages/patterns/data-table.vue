@@ -47,6 +47,26 @@
           {{ item.status }}
         </SdsBadge>
       </template>
+      <template #ellipsis-menu-items>
+        <SdsDropdownItem 
+          tag="button" 
+          @click="handleActionClick('Action 1')"
+        >
+          Action 1
+        </SdsDropdownItem>
+        <SdsDropdownItem 
+          tag="button" 
+          @click="handleActionClick('Action 2')"
+        >
+          Action 2
+        </SdsDropdownItem>
+        <SdsDropdownItem 
+          tag="button" 
+          @click="handleActionClick('Action 3')"
+        >
+          Action 3
+        </SdsDropdownItem>
+      </template>
     </SdsDataTable>
   </div>
 </template>
@@ -514,5 +534,9 @@ function getUniqueBy<T>(arr: T[], prop: keyof T): T[] {
     seen.add(value)
     return true
   })
+}
+
+function handleActionClick(action: string) {
+  alert(action)
 }
 </script>
