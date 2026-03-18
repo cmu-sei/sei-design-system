@@ -60,6 +60,7 @@
           active:underline
           active:text-black
           dark:active:text-white
+          overflow-hidden text-nowrap text-ellipsis max-w-60
         "
         :class="counter ? 'pl-1' : ''"
         :href="href"
@@ -73,6 +74,7 @@
       </a>
       <span
         v-else
+        class="overflow-hidden text-nowrap text-ellipsis max-w-60"
         :class="counter ? 'pl-1' : ''"
       >
         <!-- @slot Label content. -->
@@ -316,8 +318,8 @@ const tagClasses = computed(() => {
 
   const buttonSize = (() => {
     switch (size) {
-      case 'sm': return 'h-[1.375rem] w-6'
-      case 'md': return 'h-[1.875rem] w-8'
+      case 'sm': return 'h-5.5 w-6'
+      case 'md': return 'h-7.5 w-8'
       default: return ''
     }
   })()

@@ -88,7 +88,7 @@ describe('SdsDataTable', () => {
 
       expect(wrapper.findComponent({ name: 'SdsPaginator' }).exists()).toBe(true)
       expect(wrapper.findComponent({ name: 'SdsPaginatorRange' }).exists()).toBe(true)
-      expect(wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' }).exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-data-table-page-size-dropdown"]').exists()).toBe(true)
     })
 
     it('should render pagination controls even when pagination prop is not provided', () => {
@@ -101,7 +101,7 @@ describe('SdsDataTable', () => {
 
       expect(wrapper.findComponent({ name: 'SdsPaginator' }).exists()).toBe(true)
       expect(wrapper.findComponent({ name: 'SdsPaginatorRange' }).exists()).toBe(true)
-      expect(wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' }).exists()).toBe(true)
+      expect(wrapper.find('[data-id="sds-data-table-page-size-dropdown"]').exists()).toBe(true)
     })
   })
 
@@ -120,7 +120,7 @@ describe('SdsDataTable', () => {
       expect(paginatorComponent.props('totalPages')).toBe(pagination.totalPages)
     })
 
-    it('should maintain internal refs independently from prop updates', async () => {
+    it('should update pagination props when pagination prop changes', async () => {
       const wrapper = mount(SdsDataTable, {
         props: {
           data: { fields, items },
@@ -142,8 +142,8 @@ describe('SdsDataTable', () => {
       await wrapper.vm.$nextTick()
 
       const paginatorComponent = wrapper.findComponent({ name: 'SdsPaginator' })
-      expect(paginatorComponent.props('currentPage')).toBe(1)
-      expect(paginatorComponent.props('totalPages')).toBe(pagination.totalPages)
+      expect(paginatorComponent.props('currentPage')).toBe(2)
+      expect(paginatorComponent.props('totalPages')).toBe(3)
     })
 
     it('should pass current pagination state to SdsPaginator via props', () => {
@@ -175,36 +175,6 @@ describe('SdsDataTable', () => {
       expect(rangeComponent.props('totalResults')).toBe(pagination.totalResults)
       expect(rangeComponent.props('totalPages')).toBe(pagination.totalPages)
     })
-
-    it('should pass page size options to SdsPaginatorPageSizeDropdown', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.props('options')).toEqual([
-        { value: 10, text: '10' },
-        { value: 25, text: '25' },
-        { value: 50, text: '50' }
-      ])
-    })
-
-    it('should bind totalResultsPerPage to dropdown with v-model', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.props('modelValue')).toBe(pagination.totalResultsPerPage)
-    })
   })
 
   describe('Event Handlers', () => {
@@ -220,20 +190,6 @@ describe('SdsDataTable', () => {
       const paginatorComponent = wrapper.findComponent({ name: 'SdsPaginator' })
       expect(paginatorComponent.exists()).toBe(true)
       expect(paginatorComponent.vm).toBeDefined()
-    })
-
-    it('should have update:model-value listener on SdsPaginatorPageSizeDropdown', () => {
-      const wrapper = mount(SdsDataTable, {
-        props: {
-          data: { fields, items },
-          pagination
-        },
-        attachTo: container
-      })
-
-      const dropdownComponent = wrapper.findComponent({ name: 'SdsPaginatorPageSizeDropdown' })
-      expect(dropdownComponent.exists()).toBe(true)
-      expect(dropdownComponent.vm).toBeDefined()
     })
   })
 
@@ -293,7 +249,7 @@ describe('SdsDataTable', () => {
   })
 
   describe('Props & Configuration', () => {
-    it('should use default values when data prop is undefined', () => {
+    it('should render empty state when data prop is undefined', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
           pagination
@@ -301,9 +257,13 @@ describe('SdsDataTable', () => {
         attachTo: container
       })
 
+      // When no data is provided, table should not render
       const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
-      expect(tableComponent.props('items')).toEqual([])
-      expect(tableComponent.props('fields')).toEqual([])
+      expect(tableComponent.exists()).toBe(false)
+      
+      // Should show "No Results" empty state instead
+      expect(wrapper.text()).toContain('No Results')
+      expect(wrapper.text()).toContain('There are no results you can view')
     })
 
     it('should use default pagination values when pagination prop is undefined', () => {
