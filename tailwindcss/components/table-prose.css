@@ -46,7 +46,11 @@
   }
 
   :where(.table-prose tfoot) {
-    @apply bg-gray-600/2 dark:bg-gray-400/2;
+    @apply bg-gray-600/2;
+  }
+
+  :where(.dark .table-prose tfoot) {
+    @apply bg-gray-400/2;
   }
 
   :where(.table-prose tfoot tr) {
@@ -54,8 +58,12 @@
   }
 
   :where(.table-prose tfoot td) {
-    @apply border-t border-gray-100 dark:border-gray-800;
+    @apply border-t border-gray-100;
     @apply px-2 py-4;
+  }
+
+  :where(.dark .table-prose tfoot td) {
+    @apply border-gray-800;
   }
 }
 

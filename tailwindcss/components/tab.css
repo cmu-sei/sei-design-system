@@ -1,5 +1,5 @@
 @layer components {
-  /* Legacy */
+  /* @deprecated — Legacy tab-pill styles. Migrate to tab-block/tab-folder/tab-underline in tabs.css. */
 
   :where(.tab.tab-pill) {
     @apply select-none whitespace-nowrap flex items-center text-sm py-3 px-4 w-full font-semibold cursor-pointer;

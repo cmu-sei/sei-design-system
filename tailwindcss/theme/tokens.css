@@ -1,0 +1,381 @@
+/* ===== DESIGN SYSTEM THEME TOKENS ===== */
+/* CSS custom properties scoped to each theme. These are consumed by
+   universal component utilities, enabling a single set of component
+   stylesheets that work across all supported themes. */
+
+@layer base {
+  /* ─────────────────────────────── BUTTON ─────────────────────────────── */
+
+  .sds-theme-forge {
+    /* Shape */
+    --btn-radius: var(--radius-sm);
+
+    /* CTA icon — forge uses double chevrons */
+    --btn-cta-icon-sm: var(--chevrons-right-sm);
+    --btn-cta-icon-md: var(--chevrons-right-md);
+    --btn-cta-icon-lg: var(--chevrons-right-lg);
+    --btn-cta-w-sm: 0.75rem;    /* w-3  = 12px */
+    --btn-cta-w-md: 0.875rem;   /* w-3.5 = 14px */
+    --btn-cta-w-lg: 1rem;       /* w-4  = 16px */
+  }
+
+  .sds-theme-plaid {
+    /* Shape */
+    --btn-radius: 0;
+
+    /* CTA icon — plaid uses single arrows, wider widths */
+    --btn-cta-icon-sm: var(--arrow-right-sm);
+    --btn-cta-icon-md: var(--arrow-right-md);
+    --btn-cta-icon-lg: var(--arrow-right-lg);
+    --btn-cta-w-sm: 15px;
+    --btn-cta-w-md: 17px;
+    --btn-cta-w-lg: 19px;
+  }
+
+  /* ─────────────────────────────── LINK ───────────────────────────────── */
+
+  .sds-theme-forge {
+    /* White variant text colors */
+    --link-primary-white-text: oklch(1 0 0 / 0.95);    /* text-white/95 */
+    --link-secondary-white-text: var(--color-gray-100);
+
+    /* CTA icon — forge uses double chevrons, narrower widths */
+    --link-cta-default-w: 0.75rem;      /* w-3 */
+    --link-cta-default-icon: var(--chevrons-right-sm);
+
+    --link-cta-w-xs: 0.625rem;          /* w-2.5 */
+    --link-cta-icon-xs: var(--chevrons-right-xs);
+    --link-cta-top-xs: 1px;
+
+    --link-cta-w-sm: 0.75rem;           /* w-3 */
+    --link-cta-icon-sm: var(--chevrons-right-sm);
+    --link-cta-top-sm: 1px;
+
+    --link-cta-w-base: 0.875rem;        /* w-3.5 */
+    --link-cta-icon-base: var(--chevrons-right-md);
+    --link-cta-top-base: 1px;
+
+    --link-cta-w-lg: 1rem;              /* w-4 */
+    --link-cta-icon-lg: var(--chevrons-right-lg);
+    --link-cta-top-lg: 1px;
+
+    --link-cta-w-xl: 1.125rem;          /* w-4.5 */
+    --link-cta-icon-xl: var(--chevrons-right-xl);
+    --link-cta-top-xl: 0.125rem;        /* top-0.5 */
+
+    /* Directional modifier (link-cta-down / link-cta-up) vertical offset */
+    --link-cta-dir-top: 0px;
+
+    /* Tertiary dark mode CTA icon colors */
+    --link-tertiary-cta-dark-icon: var(--color-gray-400);
+    --link-tertiary-cta-dark-hover-icon: var(--color-gray-100);
+  }
+
+  .sds-theme-plaid {
+    /* White variant text colors */
+    --link-primary-white-text: var(--color-white);
+    --link-secondary-white-text: var(--color-gray-900);
+
+    /* CTA icon — plaid uses single arrows, wider widths */
+    --link-cta-default-w: 0.9375rem;    /* w-3.75 */
+    --link-cta-default-icon: var(--arrow-right-sm);
+
+    --link-cta-w-xs: 0.8125rem;         /* w-3.25 */
+    --link-cta-icon-xs: var(--arrow-right-xs);
+    --link-cta-top-xs: 1px;
+
+    --link-cta-w-sm: 0.9375rem;         /* w-3.75 */
+    --link-cta-icon-sm: var(--arrow-right-sm);
+    --link-cta-top-sm: 1px;
+
+    --link-cta-w-base: 1.0625rem;       /* w-4.25 */
+    --link-cta-icon-base: var(--arrow-right-md);
+    --link-cta-top-base: 0px;           /* top-0 */
+
+    --link-cta-w-lg: 1.1875rem;         /* w-4.75 */
+    --link-cta-icon-lg: var(--arrow-right-lg);
+    --link-cta-top-lg: 0.125rem;        /* top-0.5 */
+
+    --link-cta-w-xl: 1.3125rem;         /* w-5.25 */
+    --link-cta-icon-xl: var(--arrow-right-xl);
+    --link-cta-top-xl: 0.1875rem;       /* top-0.75 */
+
+    /* Directional modifier (link-cta-down / link-cta-up) vertical offset */
+    --link-cta-dir-top: -0.125rem;      /* -top-0.5 */
+
+    /* Tertiary dark mode CTA icon colors */
+    --link-tertiary-cta-dark-icon: var(--color-white);
+    --link-tertiary-cta-dark-hover-icon: var(--color-white);
+  }
+
+  /* ──────────────────────────────── TAB ───────────────────────────────── */
+
+  .sds-theme-forge {
+    /* Indicator shape */
+    --tab-indicator-radius: var(--radius-md);
+
+    /* Block radius */
+    --tab-block-radius: var(--radius-lg);
+
+    /* Folder tab radius (top-left, top-right corners only) */
+    --tab-folder-radius: var(--radius-md);
+
+    /* tab-lg padding */
+    --tab-lg-block-py: 0.75rem;         /* py-3 */
+    --tab-lg-folder-py: 0.8125rem;      /* py-3.25 */
+
+    /* Block active dark-mode background colors */
+    --tab-block-blue-dark-active-bg: var(--color-blue-300);
+    --tab-block-gray-dark-active-bg: var(--color-gray-200);
+  }
+
+  .sds-theme-plaid {
+    /* Indicator shape */
+    --tab-indicator-radius: 0;
+
+    /* Folder tab radius */
+    --tab-folder-radius: 0;
+
+    /* tab-lg padding */
+    --tab-lg-block-py: 0.8125rem;       /* py-3.25 */
+    --tab-lg-folder-py: 0.8125rem;      /* py-3.25 */
+
+    /* Block radius */
+    --tab-block-radius: 0;
+
+    /* Block active dark-mode background colors */
+    --tab-block-blue-dark-active-bg: var(--color-blue-400);
+    --tab-block-gray-dark-active-bg: var(--color-gray-300);
+  }
+
+  /* ─────────────────────────────── BUTTON COLORS ─────────────────────────────── */
+
+  /* Shared light-mode defaults (forge and plaid share the same button colors) */
+  :root {
+    /* Base */
+    --btn-focus-ring: var(--color-blue-300);
+
+    /* Primary / accent — blue for both themes in light */
+    --btn-accent-bg: var(--color-blue-600);
+    --btn-accent-bg-hover: var(--color-blue-500);
+    --btn-accent-text: var(--color-white);
+
+    /* Secondary */
+    --btn-secondary-text: var(--color-blue-600);
+    --btn-secondary-text-hover: var(--color-blue-600);
+    --btn-secondary-bg: var(--color-white);
+    --btn-secondary-bg-hover: var(--color-gray-50);
+    --btn-secondary-border: var(--color-gray-500);
+    --btn-secondary-text-active: var(--color-blue-600);
+    --btn-secondary-bg-active: var(--color-gray-100);
+
+    /* Tertiary */
+    --btn-tertiary-text: var(--color-blue-600);
+    --btn-tertiary-border: var(--color-blue-600);
+    --btn-tertiary-text-hover: var(--color-white);
+    --btn-tertiary-bg-hover: var(--color-blue-500);
+    --btn-tertiary-border-hover: var(--color-blue-500);
+    --btn-tertiary-text-active: var(--color-white);
+    --btn-tertiary-bg-active: var(--color-blue-600);
+    --btn-tertiary-border-active: var(--color-blue-600);
+
+    /* Ghost */
+    --btn-ghost-text: var(--color-blue-600);
+    --btn-ghost-text-hover: var(--color-blue-600);
+    --btn-ghost-bg-hover: var(--color-gray-50);
+    --btn-ghost-text-active: var(--color-blue-600);
+    --btn-ghost-bg-active: var(--color-gray-100);
+
+    /* Blue variant tokens — used by btn-blue for explicit blue assignment and cascade resets */
+    --btn-blue-accent-bg: var(--color-blue-600);
+    --btn-blue-accent-bg-hover: var(--color-blue-500);
+    --btn-blue-secondary-text: var(--color-blue-600);
+    --btn-blue-secondary-text-hover: var(--color-blue-600);
+    --btn-blue-secondary-text-active: var(--color-blue-600);
+    --btn-blue-tertiary-text: var(--color-blue-600);
+    --btn-blue-tertiary-border: var(--color-blue-600);
+    --btn-blue-tertiary-text-hover: var(--color-white);
+    --btn-blue-tertiary-bg-hover: var(--color-blue-500);
+    --btn-blue-tertiary-border-hover: var(--color-blue-500);
+    --btn-blue-tertiary-text-active: var(--color-white);
+    --btn-blue-tertiary-bg-active: var(--color-blue-600);
+    --btn-blue-tertiary-border-active: var(--color-blue-600);
+    --btn-blue-ghost-text: var(--color-blue-600);
+    --btn-blue-ghost-text-hover: var(--color-blue-600);
+    --btn-blue-ghost-bg-hover: var(--color-gray-50);
+    --btn-blue-ghost-text-active: var(--color-blue-600);
+    --btn-blue-ghost-bg-active: var(--color-gray-100);
+
+    /* Gray variant tokens — used by btn-gray for late-binding cascade */
+    --btn-gray-accent-bg: var(--color-gray-800);
+    --btn-gray-accent-bg-hover: var(--color-gray-700);
+    --btn-gray-secondary-text: var(--color-gray-800);
+    --btn-gray-secondary-text-hover: var(--color-gray-800);
+    --btn-gray-secondary-text-active: var(--color-gray-800);
+    --btn-gray-tertiary-text: var(--color-gray-800);
+    --btn-gray-tertiary-border: var(--color-gray-800);
+    --btn-gray-tertiary-text-hover: var(--color-white);
+    --btn-gray-tertiary-bg-hover: var(--color-gray-700);
+    --btn-gray-tertiary-border-hover: var(--color-gray-700);
+    --btn-gray-tertiary-text-active: var(--color-white);
+    --btn-gray-tertiary-bg-active: var(--color-gray-800);
+    --btn-gray-tertiary-border-active: var(--color-gray-800);
+    --btn-gray-ghost-text: var(--color-gray-800);
+    --btn-gray-ghost-text-hover: var(--color-gray-800);
+    --btn-gray-ghost-bg-hover: var(--color-gray-100);
+    --btn-gray-ghost-text-active: var(--color-gray-800);
+    --btn-gray-ghost-bg-active: var(--color-gray-100);
+
+    /* Red variant tokens */
+    --btn-red-accent-bg: var(--color-red-600);
+    --btn-red-accent-bg-hover: var(--color-red-500);
+    --btn-red-secondary-text: var(--color-red-600);
+    --btn-red-secondary-text-hover: var(--color-red-600);
+    --btn-red-secondary-text-active: var(--color-red-600);
+    --btn-red-tertiary-text: var(--color-red-600);
+    --btn-red-tertiary-border: var(--color-red-600);
+    --btn-red-tertiary-text-hover: var(--color-white);
+    --btn-red-tertiary-bg-hover: var(--color-red-500);
+    --btn-red-tertiary-border-hover: var(--color-red-500);
+    --btn-red-tertiary-text-active: var(--color-white);
+    --btn-red-tertiary-bg-active: var(--color-red-600);
+    --btn-red-tertiary-border-active: var(--color-red-600);
+    --btn-red-ghost-text: var(--color-red-600);
+    --btn-red-ghost-text-hover: var(--color-red-600);
+    --btn-red-ghost-bg-hover: var(--color-gray-50);
+    --btn-red-ghost-text-active: var(--color-red-600);
+    --btn-red-ghost-bg-active: var(--color-gray-100);
+  }
+
+  /* Dark mode overrides — both themes share the same dark button colors */
+  :is(.dark .sds-theme-forge, .dark.sds-theme-forge),
+  :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) {
+    --btn-focus-ring: var(--color-blue-700);
+
+    --btn-accent-bg: var(--color-blue-400);
+    --btn-accent-bg-hover: var(--color-blue-300);
+    --btn-accent-text: var(--color-black);
+
+    --btn-secondary-text: var(--color-blue-300);
+    --btn-secondary-text-hover: var(--color-blue-200);
+    --btn-secondary-bg: var(--color-gray-900);
+    --btn-secondary-bg-hover: var(--color-gray-850);
+    --btn-secondary-text-active: var(--color-blue-300);
+    --btn-secondary-bg-active: var(--color-gray-900);
+
+    --btn-tertiary-text: var(--color-blue-300);
+    --btn-tertiary-border: var(--color-blue-300);
+    --btn-tertiary-text-hover: var(--color-black);
+    --btn-tertiary-bg-hover: var(--color-blue-300);
+    --btn-tertiary-border-hover: var(--color-blue-300);
+    --btn-tertiary-text-active: var(--color-black);
+    --btn-tertiary-bg-active: var(--color-blue-400);
+    --btn-tertiary-border-active: var(--color-blue-400);
+
+    --btn-ghost-text: var(--color-blue-300);
+    --btn-ghost-text-hover: var(--color-blue-200);
+    --btn-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-ghost-text-active: var(--color-blue-200);
+    --btn-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+
+    --btn-gray-accent-bg: var(--color-gray-400);
+    --btn-gray-accent-bg-hover: var(--color-gray-300);
+    --btn-gray-secondary-text: var(--color-gray-300);
+    --btn-gray-secondary-text-hover: var(--color-gray-200);
+    --btn-gray-secondary-text-active: var(--color-gray-300);
+    --btn-gray-tertiary-text: var(--color-gray-300);
+    --btn-gray-tertiary-border: var(--color-gray-300);
+    --btn-gray-tertiary-text-hover: var(--color-black);
+    --btn-gray-tertiary-bg-hover: var(--color-gray-300);
+    --btn-gray-tertiary-border-hover: var(--color-gray-300);
+    --btn-gray-tertiary-text-active: var(--color-black);
+    --btn-gray-tertiary-bg-active: var(--color-gray-400);
+    --btn-gray-tertiary-border-active: var(--color-gray-400);
+    --btn-gray-ghost-text: var(--color-gray-300);
+    --btn-gray-ghost-text-hover: var(--color-gray-200);
+    --btn-gray-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-gray-ghost-text-active: var(--color-gray-200);
+    --btn-gray-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+
+    --btn-red-accent-bg: var(--color-red-400);
+    --btn-red-accent-bg-hover: var(--color-red-300);
+    --btn-red-secondary-text: var(--color-red-300);
+    --btn-red-secondary-text-hover: var(--color-red-200);
+    --btn-red-secondary-text-active: var(--color-red-300);
+    --btn-red-tertiary-text: var(--color-red-300);
+    --btn-red-tertiary-border: var(--color-red-300);
+    --btn-red-tertiary-text-hover: var(--color-black);
+    --btn-red-tertiary-bg-hover: var(--color-red-300);
+    --btn-red-tertiary-border-hover: var(--color-red-300);
+    --btn-red-tertiary-text-active: var(--color-black);
+    --btn-red-tertiary-bg-active: var(--color-red-400);
+    --btn-red-tertiary-border-active: var(--color-red-400);
+    --btn-red-ghost-text: var(--color-red-300);
+    --btn-red-ghost-text-hover: var(--color-red-200);
+    --btn-red-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-red-ghost-text-active: var(--color-red-200);
+    --btn-red-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+
+    --btn-blue-accent-bg: var(--color-blue-400);
+    --btn-blue-accent-bg-hover: var(--color-blue-300);
+    --btn-blue-secondary-text: var(--color-blue-300);
+    --btn-blue-secondary-text-hover: var(--color-blue-200);
+    --btn-blue-secondary-text-active: var(--color-blue-300);
+    --btn-blue-tertiary-text: var(--color-blue-300);
+    --btn-blue-tertiary-border: var(--color-blue-300);
+    --btn-blue-tertiary-text-hover: var(--color-black);
+    --btn-blue-tertiary-bg-hover: var(--color-blue-300);
+    --btn-blue-tertiary-border-hover: var(--color-blue-300);
+    --btn-blue-tertiary-text-active: var(--color-black);
+    --btn-blue-tertiary-bg-active: var(--color-blue-400);
+    --btn-blue-tertiary-border-active: var(--color-blue-400);
+    --btn-blue-ghost-text: var(--color-blue-300);
+    --btn-blue-ghost-text-hover: var(--color-blue-200);
+    --btn-blue-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-blue-ghost-text-active: var(--color-blue-200);
+    --btn-blue-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+  }
+
+  /* ─────────────────────────────── LINK COLORS ────────────────────────────────── */
+
+  /* Shared light-mode defaults (both themes share the same link colors) */
+  :root {
+    --link-primary-text: var(--color-blue-600);
+    --link-primary-text-hover: var(--color-blue-500);
+    --link-secondary-text: var(--color-gray-900);
+    --link-secondary-text-hover: var(--color-blue-500);
+    --link-tertiary-text: var(--color-gray-600);
+    --link-tertiary-text-hover: var(--color-gray-900);
+    --link-tertiary-disabled-text: var(--color-gray-900);
+    --link-red-primary-text: var(--color-red-600);
+    --link-red-primary-text-hover: var(--color-red-500);
+    --link-red-secondary-text-hover: var(--color-red-500);
+    --link-red-disabled-secondary-cta-text: var(--color-red-500);
+
+    /* Blue variant tokens — used by link-blue for explicit blue assignment and cascade resets */
+    --link-blue-primary-text: var(--color-blue-600);
+    --link-blue-primary-text-hover: var(--color-blue-500);
+    --link-blue-secondary-text-hover: var(--color-blue-500);
+  }
+
+  :is(.dark .sds-theme-forge, .dark.sds-theme-forge),
+  :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) {
+    --link-primary-text: var(--color-blue-300);
+    --link-primary-text-hover: var(--color-blue-200);
+    --link-secondary-text: var(--color-gray-100);
+    --link-secondary-text-hover: var(--color-blue-200);
+    --link-tertiary-text: var(--color-gray-400);
+    --link-tertiary-text-hover: var(--color-gray-100);
+    --link-tertiary-disabled-text: var(--color-gray-100);
+    --link-red-primary-text: var(--color-red-300);
+    --link-red-primary-text-hover: var(--color-red-200);
+    --link-red-secondary-text-hover: var(--color-red-200);
+    --link-red-disabled-secondary-cta-text: var(--color-red-200);
+
+    --link-secondary-white-text: var(--color-gray-100);
+
+    --link-blue-primary-text: var(--color-blue-300);
+    --link-blue-primary-text-hover: var(--color-blue-200);
+    --link-blue-secondary-text-hover: var(--color-blue-200);
+  }
+}

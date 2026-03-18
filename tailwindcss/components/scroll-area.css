@@ -1,0 +1,103 @@
+/* ===== SCROLL AREA UTILITIES (responsive-ready) ===== */
+/* Using @utility makes these classes work with responsive variants,
+   e.g. lg:scroll-area-y to only enable vertical scroll above lg.
+   WebKit scrollbar styles are duplicated across utilities because each must be
+   self-contained for independent responsive variant support.
+   Note: only WebKit pseudo-elements are used (no scrollbar-width/scrollbar-color)
+   to ensure the thumb stays persistently visible on macOS/overlay-scrollbar OSes. */
+
+@utility scroll-area {
+  @apply overflow-auto;
+
+  &::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-800;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-thumb {
+      @apply bg-gray-600;
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-400;
+  }
+}
+
+@utility scroll-area-x {
+  @apply overflow-x-auto;
+
+  &::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-800;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-thumb {
+      @apply bg-gray-600;
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-400;
+  }
+}
+
+@utility scroll-area-y {
+  @apply overflow-y-auto;
+
+  &::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-800;
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
+
+  :where(.dark &) {
+    &::-webkit-scrollbar-thumb {
+      @apply bg-gray-600;
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-400;
+  }
+}
