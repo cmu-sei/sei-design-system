@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Component from './Indicator.vue'
+import { getIndicatorMaskSpec, getIndicatorMaskAlign } from '@/helpers/indicatorMask'
 
 describe('Indicator', () => {
   it('should match its default snapshot', () => {
@@ -486,175 +487,75 @@ describe('Indicator', () => {
 
   describe('maskSpec and maskAlign computed properties', () => {
     it('should compute maskSpec for xs size with circle placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'xs',
-          placementOver: 'circle',
-          placement: 'top-right'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('100% 0')
+      expect(getIndicatorMaskSpec('xs', 'top-right', 'circle', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('top-right')).toBe('100% 0')
     })
 
     it('should compute maskSpec for sm size with square placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'sm',
-          placementOver: 'square',
-          placement: 'top-left'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('0 0')
+      expect(getIndicatorMaskSpec('sm', 'top-left', 'square', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('top-left')).toBe('0 0')
     })
 
     it('should compute maskSpec for md size with portrait placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<button class="btn">Button</button>' },
-        props: {
-          size: 'md',
-          placementOver: 'portrait',
-          placement: 'bottom-right'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('100% 100%')
+      expect(getIndicatorMaskSpec('md', 'bottom-right', 'portrait', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('bottom-right')).toBe('100% 100%')
     })
 
     it('should compute maskSpec for lg size with circle placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'lg',
-          placementOver: 'circle',
-          placement: 'bottom-left'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('0 100%')
+      expect(getIndicatorMaskSpec('lg', 'bottom-left', 'circle', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('bottom-left')).toBe('0 100%')
     })
 
     it('should compute maskSpec for xl size with square placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'xl',
-          placementOver: 'square',
-          placement: 'top-right'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('100% 0')
+      expect(getIndicatorMaskSpec('xl', 'top-right', 'square', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('top-right')).toBe('100% 0')
     })
 
     it('should compute maskSpec for 2xl size with portrait placement', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<button class="btn">Button</button>' },
-        props: {
-          size: '2xl',
-          placementOver: 'portrait',
-          placement: 'bottom-left'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('0 100%')
+      expect(getIndicatorMaskSpec('2xl', 'bottom-left', 'portrait', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('bottom-left')).toBe('0 100%')
     })
 
     it('should compute maskSpec for circle placement with top-left', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'md',
-          placementOver: 'circle',
-          placement: 'top-left'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('0 0')
+      expect(getIndicatorMaskSpec('md', 'top-left', 'circle', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('top-left')).toBe('0 0')
     })
 
     it('should compute maskSpec for circle placement with bottom-right', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'lg',
-          placementOver: 'circle',
-          placement: 'bottom-right'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('url(')
-      expect(wrapper.vm.maskAlign).toBe('100% 100%')
+      expect(getIndicatorMaskSpec('lg', 'bottom-right', 'circle', false)).toContain('url(')
+      expect(getIndicatorMaskAlign('bottom-right')).toBe('100% 100%')
     })
 
     it('should compute maskSpec for square placement with all sizes', () => {
       const sizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl'] as const
       sizes.forEach(size => {
-        const wrapper = mount(Component, {
-          slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-          props: {
-            size,
-            placementOver: 'square',
-            placement: 'bottom-right'
-          }
-        })
-        expect(wrapper.vm.maskSpec).toContain('url(')
+        expect(getIndicatorMaskSpec(size, 'bottom-right', 'square', false)).toContain('url(')
       })
     })
 
     it('should compute maskSpec for portrait placement with all placements', () => {
       const placements = ['top-left', 'top-right', 'bottom-left', 'bottom-right'] as const
       placements.forEach(placement => {
-        const wrapper = mount(Component, {
-          slots: { default: '<button class="btn">Button</button>' },
-          props: {
-            size: 'md',
-            placementOver: 'portrait',
-            placement
-          }
-        })
-        expect(wrapper.vm.maskSpec).toContain('url(')
-        expect(wrapper.vm.maskAlign).toBeTruthy()
+        expect(getIndicatorMaskSpec('md', placement, 'portrait', false)).toContain('url(')
+        expect(getIndicatorMaskAlign(placement)).toBeTruthy()
       })
     })
 
     it('should return "none" for maskSpec when hideIndicator is true', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          hideIndicator: true
-        }
-      })
-      expect(wrapper.vm.maskSpec).toBe('none')
+      expect(getIndicatorMaskSpec('md', 'top-right', 'portrait', true)).toBe('none')
     })
 
     it('should compute maskSpec with correct SVG data for circle over circle', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'xs',
-          placementOver: 'circle',
-          placement: 'top-left'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('data:image/svg+xml')
-      expect(wrapper.vm.maskSpec).toContain('<svg viewBox="0 0 1000 1000"')
-      expect(wrapper.vm.maskSpec).toContain('<circle cx=')
+      const mask = getIndicatorMaskSpec('xs', 'top-left', 'circle', false)
+      expect(mask).toContain('data:image/svg+xml')
+      expect(mask).toContain('<svg viewBox="0 0 1000 1000"')
+      expect(mask).toContain('<circle cx=')
     })
 
     it('should compute maskSpec with correct SVG data for circle over square', () => {
-      const wrapper = mount(Component, {
-        slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-        props: {
-          size: 'sm',
-          placementOver: 'square',
-          placement: 'bottom-right'
-        }
-      })
-      expect(wrapper.vm.maskSpec).toContain('data:image/svg+xml')
-      expect(wrapper.vm.maskSpec).toContain('linear-gradient(#fff, #fff)')
+      const mask = getIndicatorMaskSpec('sm', 'bottom-right', 'square', false)
+      expect(mask).toContain('data:image/svg+xml')
+      expect(mask).toContain('linear-gradient(#fff, #fff)')
     })
 
     it('should compute maskAlign for all placement values', () => {
@@ -664,13 +565,9 @@ describe('Indicator', () => {
         { placement: 'bottom-right' as const, expected: '100% 100%' },
         { placement: 'bottom-left' as const, expected: '0 100%' }
       ]
-      
+
       placements.forEach(({ placement, expected }) => {
-        const wrapper = mount(Component, {
-          slots: { default: '<div data-id="sds-avatar">Avatar</div>' },
-          props: { placement }
-        })
-        expect(wrapper.vm.maskAlign).toBe(expected)
+        expect(getIndicatorMaskAlign(placement)).toBe(expected)
       })
     })
   })
