@@ -33,15 +33,18 @@
     @apply bg-gray-950;
   }
   
-  :where(.table-prose tbody td) {
+  :where(.table-prose tbody td),
+  :where(.table-prose tbody th) {
     @apply align-top p-2 relative border-b border-gray-100;
   }
 
-  :where(.table-prose tbody tr:last-child td) {
+  :where(.table-prose tbody tr:last-child td),
+  :where(.table-prose tbody tr:last-child th) {
     @apply border-b-0;
   }
 
-  :where(.dark .table-prose tbody td) {
+  :where(.dark .table-prose tbody td),
+  :where(.dark .table-prose tbody th) {
     @apply border-gray-800;
   }
 
@@ -81,7 +84,8 @@
 /* sm */
 
 @utility table-prose-sm {
-  & tbody td {
+  & tbody td,
+  & tbody th {
     @apply py-1;
   }
 }
@@ -89,7 +93,8 @@
 /* lg */
 
 @utility table-prose-lg {
-  & tbody td {
+  & tbody td,
+  & tbody th {
     @apply py-4;
   }
 }

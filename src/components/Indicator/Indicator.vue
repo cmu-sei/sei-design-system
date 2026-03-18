@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import { getIndicatorMaskSpec, getIndicatorMaskAlign } from '@/helpers/indicatorMask'
 defineOptions({
   name: 'SdsIndicator'
 })
@@ -180,121 +181,13 @@ const variantClass = computed(() => {
   }
 })
 
-const maskSpec = computed(() => {
-  const vbWidth = 1000
-  const vbHeight = 1000
+const maskSpec = computed(() =>
+  getIndicatorMaskSpec(props.size, props.placement, props.placementOver, props.hideIndicator)
+)
 
-  let maskX = 0
-  let maskY = 0
-
-  let maskRadius = 0
-  let offset = 0
-
-  switch (props.size) {
-    case 'xs':
-      offset = props.placementOver === 'circle' ? -3 : -2
-      maskRadius = 5
-      break
-    case 'sm':
-      offset = props.placementOver === 'circle' ? -5 : -2
-      maskRadius = 7.5
-      break
-    case 'md':
-      offset = props.placementOver === 'circle' ? -4 : -4
-      maskRadius = 10
-      break
-    case 'lg':
-      offset = props.placementOver === 'circle' ? -7 : -4
-      maskRadius = 15
-      break
-    case 'xl':
-      offset = props.placementOver === 'circle' ? -8 : -4
-      maskRadius = 19.5
-      break
-    case '2xl':
-      offset = props.placementOver === 'circle' ? 1 : -2
-      maskRadius = 25
-      break
-  }
-
-  if (props.placementOver === 'circle') {
-    switch (props.placement) {
-      case 'top-left':
-        maskX = maskRadius + offset
-        maskY = maskRadius + offset
-        break
-      case 'top-right':
-        maskX = vbWidth - maskRadius - offset
-        maskY = maskRadius + offset
-        break
-      case 'bottom-right':
-        maskX = vbWidth - maskRadius - offset
-        maskY = vbHeight - maskRadius - offset
-        break
-      case 'bottom-left':
-        maskX = maskRadius + offset
-        maskY = vbHeight - maskRadius - offset
-    }
-  } else if (props.placementOver === 'square') {
-    switch (props.placement) {
-      case 'top-left':
-        maskX = maskRadius/2 + offset
-        maskY = maskRadius/2 + offset
-        break
-      case 'top-right':
-        maskX = vbWidth - maskRadius/2 - offset
-        maskY = maskRadius/2 + offset
-        break
-      case 'bottom-right':
-        maskX = vbWidth - maskRadius/2 - offset
-        maskY = vbHeight - maskRadius/2 - offset
-        break
-      case 'bottom-left':
-        maskX = maskRadius/2 + offset
-        maskY = vbHeight - maskRadius/2 - offset
-    }
-  } else {
-    switch (props.placement) {
-      case 'top-left':
-        maskX = maskRadius/2 + offset
-        maskY = maskRadius/2 + offset
-        break
-      case 'top-right':
-        maskX = vbWidth - maskRadius/2 - offset
-        maskY = maskRadius/2 + offset
-        break
-      case 'bottom-right':
-        maskX = vbWidth - maskRadius/2 - offset
-        maskY = vbHeight - maskRadius/2 - offset
-        break
-      case 'bottom-left':
-        maskX = maskRadius/2 + offset
-        maskY = vbHeight - maskRadius/2 - offset
-    }
-  }
-
-  return props.hideIndicator ? 'none' : `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
-})
-
-const maskAlign = computed(() => {
-  switch (props.placement) {
-    case 'top-left':
-      return '0 0'
-    case 'top-right':
-      return '100% 0'
-    case 'bottom-right':
-      return '100% 100%'
-    case 'bottom-left':
-      return '0 100%'
-    default:
-      return null
-  }
-})
-
-defineExpose({
-  maskSpec,
-  maskAlign
-})
+const maskAlign = computed(() =>
+  getIndicatorMaskAlign(props.placement)
+)
 </script>
 
 <style scoped>

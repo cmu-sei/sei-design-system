@@ -1164,7 +1164,8 @@ const fields_simple = ref<TableField[]>([
   {
     key: "id",
     label: "ID",
-    sortable: true
+    sortable: true,
+    header: true
   },
   {
     key: "fruit",

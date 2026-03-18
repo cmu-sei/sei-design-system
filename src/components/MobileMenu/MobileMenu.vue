@@ -69,6 +69,7 @@
 import SdsPanel from '../Panel/Panel.vue';
 import { computed, ref } from "vue";
 import { MegaMenuItem } from '../MegaMenu/MegaMenu.vue';
+import { navigateMobileMenu } from '@/helpers/mobileMenuNavigate';
 
 /**
  * Right now, this is the same interface as Mega Menu's ITopLink, with the addition of "type"
@@ -142,29 +143,15 @@ const mobileMenus = ref(props.mobileMenus);
  */
 const navigate = (value: string | null = null) => {
   if (typeof document === "undefined") return null  // Only accept client-side calls
-  mobileMenus.value.map(i => {
-    /**
-     * If menu item is already selected (true), deselect it (false).
-     * Otherwise, check if the panel key argument matches any of the panel keys in the mobile menu's data.
-     * If it matches, set that item's "selected" value to "true".
-     */
-    i.selected = i.selected ? false : value === i.key;
-    if (i.selected && value) {
-      panel.value = value;
-    }
-  });
+  const result = navigateMobileMenu(mobileMenus.value, panel.value, value)
+  result.menus.forEach((updatedItem, i) => {
+    mobileMenus.value[i].selected = updatedItem.selected
+  })
+  panel.value = result.panel
 }
 
 const activePanel = computed(() => {
   /* Don't change the activePanel for 'expand' type NavigationItem. */
   return mobileMenus.value.find(i => i.selected && i.type !== 'expand')
-})
-
-defineExpose({
-  activePanel,
-  mobileMenus,
-  navigate,
-  panel,
-  showPanel
 })
 </script>
