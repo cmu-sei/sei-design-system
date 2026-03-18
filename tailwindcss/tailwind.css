@@ -13,24 +13,18 @@
 @import './theme/fonts';
 @import './theme/radius';
 @import './theme/prose';
+@import './theme/tokens';
 
-/* Universal theme components */
-@import './components/universal/action-btn';
-@import './components/universal/form-control';
-@import './components/universal/input-group';
-@import './components/universal/scroll-area';
-@import './components/universal/tab';
-@import './components/universal/table-prose';
-
-/* Forge components */
-@import './components/forge/btn';
-@import './components/forge/link';
-@import './components/forge/tabs';
-
-/* Plaid components */
-@import './components/plaid/btn';
-@import './components/plaid/link';
-@import './components/plaid/tabs';
+/* Components */
+@import './components/action-btn';
+@import './components/btn';
+@import './components/form-control';
+@import './components/input-group';
+@import './components/link';
+@import './components/scroll-area';
+@import './components/tab';
+@import './components/table-prose';
+@import './components/tabs';
 
 /* Plugins */
 @plugin '@tailwindcss/forms';
@@ -87,6 +81,15 @@
  * Used for Calendar component.
  */
  @source inline("col-start-{1,2,3,4,5,6,7}");
+
+/**
+ * Safelist all action-btn and btn variant utilities.
+ * These classes are assembled dynamically in useButtonClasses.ts via string
+ * concatenation, so Tailwind's static scanner cannot detect them. Without
+ * this safelist their @utility CSS blocks are never emitted.
+ */
+@source inline("action-btn-{primary,secondary,ghost,gray,red,blue,white,block,square,xs,sm,lg,dark}");
+@source inline("btn-{primary,secondary,tertiary,ghost,gray,red,blue,white,block,cta,square,xs,sm,lg,xl,dark}");
 
 /**
  * Automatically look into the src directory for CSS classes

@@ -129,9 +129,7 @@ describe('Dropdown', () => {
       it('applies dark type classes when specified', () => {
         const wrapper = createWrapper({ type: 'dark' })
         const button = wrapper.find('button')
-        expect(button.classes()).toContain('hover:bg-gray-800')
-        expect(button.classes()).toContain('text-white')
-        expect(button.classes()).toContain('border-0')
+         expect(button.classes()).toContain('btn-dark')
       })
     })
 
@@ -473,8 +471,7 @@ describe('Dropdown', () => {
       const button = wrapper.find('button')
 
       expect(button.classes()).toContain('btn-primary')
-      expect(button.classes()).toContain('hover:bg-gray-800')
-      expect(button.classes()).toContain('text-white')
+      expect(button.classes()).toContain('btn-dark')
     })
 
     it('applies all variant and kind classes correctly', () => {
