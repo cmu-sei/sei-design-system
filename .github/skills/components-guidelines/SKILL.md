@@ -1,6 +1,19 @@
 ---
 name: components-guidelines
-description: Guidelines and best practices for writing and modifying Vue 3 components. Use this when creating new components or updating existing components.
+description: |
+  **PRIMARY SKILL FOR CREATING AND UPDATING COMPONENTS** — Guidelines and best practices for writing and modifying Vue 3 components.
+
+  USE FOR:
+  - Creating new .vue component files
+  - Modifying existing component implementation
+  - Understanding component structure, props, emits, defineModel
+  - Questions about how components should be architected
+
+  DO NOT USE FOR:
+  - Writing or improving unit tests (use unit-testing-guidelines)
+  - Understanding testing patterns or assertions
+
+  WHEN TO COMBINE: Load unit-testing-guidelines if you're adding a new component and need to write tests for it.
 ---
 
 ## General Component Structure

@@ -1,6 +1,19 @@
 ---
 name: unit-testing-guidelines
-description: Guidelines and best practices for writing unit tests for Vue 3 components, composables, and utilities. Use this when creating new unit tests or updating existing test files.
+description: |
+  **PRIMARY SKILL FOR TESTING** — Guidelines and best practices for writing unit tests for Vue 3 components, composables, and utilities. 
+
+  USE FOR:
+  - Writing new test files or updating existing tests
+  - Understanding testing patterns (AAA, mocking, async testing)
+  - Testing defineModel(), props, emits, and slots
+  - Debugging test failures or improving test coverage
+
+  DO NOT USE FOR:
+  - Understanding how components should be implemented (use components-guidelines)
+  - Writing or modifying component .vue files (use components-guidelines)
+
+  WHEN TO COMBINE: Only load components-guidelines if you have read the component file and need additional context with specific Vue patterns that aren't covered in the test examples or derrived from the component.
 ---
 
 # Unit Testing Guidelines for Vue 3
