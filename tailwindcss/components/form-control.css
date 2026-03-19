@@ -73,6 +73,10 @@
 
   :where(.form-control) {
     @apply min-w-0 py-2 px-3 text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full;
+
+    &::placeholder {
+      @apply text-gray-300 italic;
+    }
   }
 
   :where(.form-control.valid) {
@@ -83,18 +87,12 @@
     @apply border-red-500;
   }
 
-  :where(.form-control) {
-    &::placeholder {
-      @apply text-gray-300 italic;
-    }
-  }
-
-  :where(.form-control.form-control-sm) {
-    @apply py-1 px-2 text-sm;
-  }
-
   :where(.dark .form-control) {
     @apply text-gray-50 bg-gray-900;
+
+    &::placeholder {
+      @apply text-gray-700;
+    }
   }
 
   :where(.dark .form-control.valid) {
@@ -105,12 +103,6 @@
     @apply border-red-300;
   }
 
-  :where(.dark .form-control) {
-    &::placeholder {
-      @apply text-gray-700;
-    }
-  }
-
   :where(select:not([multiple]).form-control option) {
     @apply text-gray-900 bg-white;
   }
@@ -119,7 +111,18 @@
     @apply text-gray-50 bg-gray-700;
   }
 
-  :where(select:not([multiple]).form-control-sm) {
+}
+
+/* ===== FORM CONTROL SIZE UTILITIES (responsive-ready) ===== */
+/* Using @utility makes form-control-sm work with responsive variants,
+   e.g. lg:form-control-sm */
+
+@utility form-control-sm {
+  :where(.form-control&) {
+    @apply py-1 px-2 text-sm;
+  }
+
+  :where(select:not([multiple])&) {
     @apply pr-5 bg-right;
   }
 }

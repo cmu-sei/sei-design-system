@@ -112,6 +112,7 @@ import SdsAvatar from '../Avatar/Avatar.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsDropdown from '../Dropdown/Dropdown.vue'
 import SdsDropdownItem from '../DropdownItem/DropdownItem.vue'
+import { getAvatarGroupMaskAlign, getAvatarGroupMaskSpec } from '@/helpers/avatarGroupMask'
 
 defineOptions({
   name: 'SdsAvatarGroup'
@@ -220,88 +221,11 @@ const maxWidthClass = (index: number, length: number) => {
   }
 }
 
-const maskAlign = computed(() => {
-  return '99% 50%'
-})
+const maskAlign = computed(() => getAvatarGroupMaskAlign())
 
-const maskSpec = (theme='forge') => {
-  const vbWidth = 1000
-  const vbHeight = 1000
+const maskSpecForge = computed(() => getAvatarGroupMaskSpec(props.shape, props.size, props.density, 'forge'))
 
-  let maskX = 0
-  let maskY = 0
-
-  let maskSize = 0
-  let maskRadius = 0
-  let offset = 0
-
-
-  switch (props.shape) {
-    case 'circle':
-      switch (props.size) {
-        case 'xs':
-          maskRadius = 1
-          maskSize = 13.5
-          offset = props.density === 'condensed' ? -11 : -4
-          break
-        case 'sm':
-          maskRadius = 1
-          maskSize = 17
-          offset = props.density === 'condensed' ? -8 : 0
-          break
-        case 'md':
-          maskRadius = 1
-          maskSize = 26
-          offset = props.density === 'condensed' ? -12 : 0
-          break
-      }
-      maskX = vbWidth + offset
-      maskY = vbHeight/2
-      break
-    case 'square':
-      switch (props.size) {
-        case 'xs':
-          maskRadius = theme === 'plaid' ? 0 : 4
-          maskSize = 26
-          maskX = props.density === 'condensed' ? 976 : 983
-          maskY = 487
-          break
-        case 'sm':
-          maskRadius = theme === 'plaid' ? 0 : 4
-          maskSize = 34
-          maskX = props.density === 'condensed' ? 975 : 983
-          maskY = 483
-          break
-        case 'md':
-          maskRadius = theme === 'plaid' ? 0 : 6
-          maskSize = 50
-          maskX = props.density === 'condensed' ? 963 : 975
-          maskY = 475
-          break
-      }
-      break
-  }
-
-  const circleMask = `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><circle cx="${maskX}" cy="${maskY}" r="${maskSize}" /></svg>'), linear-gradient(#fff, #fff)`
-  const squareMask = `url('data:image/svg+xml,<svg viewBox="0 0 ${vbWidth} ${vbHeight}" xmlns="http://www.w3.org/2000/svg"><rect x="${maskX}" y="${maskY}" width="${maskSize}" height="${maskSize}" rx="${maskRadius}" /></svg>'), linear-gradient(#fff, #fff)`
-
-  return props.shape === 'circle' ? circleMask : squareMask
-}
-
-const maskSpecForge = computed(() => {
-  return maskSpec('forge')
-})
-
-const maskSpecPlaid = computed(() => {
-  return maskSpec('plaid')
-})
-
-defineExpose({
-  maskAlign,
-  maskSpec,
-  maskSpecForge,
-  maskSpecPlaid
-})
+const maskSpecPlaid = computed(() => getAvatarGroupMaskSpec(props.shape, props.size, props.density, 'plaid'))
 </script>
 
 <style lang="postcss" scoped>

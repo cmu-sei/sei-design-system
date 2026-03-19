@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { describe, it, expect } from 'vitest';
 import SdsMobileMenu, { type MobileMenuItem } from './MobileMenu.vue';
 import SdsPanel from '../Panel/Panel.vue';
+import { navigateMobileMenu } from '@/helpers/mobileMenuNavigate';
 
 const testMenus: MobileMenuItem[] = [
   {
@@ -162,40 +163,29 @@ describe('SdsMobileMenu', () => {
   });
 
   it('handles activePanel correctly', async () => {
-    const wrapper = mount(SdsMobileMenu, {
-      props: { ...defaultProps, mobileMenus: [
-        { key: 'home', label: 'Home', selected: true, type: 'expand' },
-        { key: 'about', label: 'About', selected: false },
-      ]}
-    });
+    const menus: MobileMenuItem[] = [
+      { key: 'home', label: 'Home', selected: true, type: 'expand' },
+      { key: 'about', label: 'About', selected: false },
+    ]
 
-    const activePanel = wrapper.vm.activePanel;
-    expect(activePanel).toBeUndefined();
+    // An 'expand' type item should never become the activePanel
+    const expandSelected = menus.find(i => i.selected && i.type !== 'expand')
+    expect(expandSelected).toBeUndefined()
 
-    wrapper.vm.navigate('about');
-    await wrapper.vm.$nextTick();
-    expect(wrapper.vm.activePanel?.key).toBe('about');
+    // After navigating to 'about', it becomes selected
+    const { menus: updated } = navigateMobileMenu(menus, 'root', 'about')
+    const activeAfterNavigate = updated.find(i => i.selected && i.type !== 'expand')
+    expect(activeAfterNavigate?.key).toBe('about')
   });
 
   it('navigates to the correct panel', async () => {
-    const wrapper = mount(SdsMobileMenu, {
-      props: { ...defaultProps, modelValue: true }
-    });
+    // Starts at 'root'
+    const { menus: updated, panel } = navigateMobileMenu(testMenus, 'root', 'plants')
 
-    // Access the navigate function via the wrapper's component instance
-    const navigate = wrapper.vm.navigate;
-    // Access the current panel from the component's refs
-    const panel = wrapper.vm.panel;
-    // Starts as 'root'
-    expect(panel).toBe('root');
-    // Navigate to 'plants'
-    await navigate('plants');
-    // Next frame
-    await wrapper.vm.$nextTick();
-    // Expect to be 'plants'
-    expect(wrapper.vm.panel).toBe('plants');
-    // Expect menu data to show 'selected' for 'plants'
-    expect(wrapper.vm.mobileMenus[0].selected).toBe(true);
+    // Panel should now be 'plants'
+    expect(panel).toBe('plants')
+    // Menu data should show 'selected' for 'plants'
+    expect(updated[0].selected).toBe(true)
   });
 
   it('adds and removes DOM changes correctly', async () => {

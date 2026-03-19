@@ -320,16 +320,12 @@
     font-weight: 600;
     letter-spacing: -0.02em;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
       font-size: var(--text-5xl);
       font-weight: 400;
       letter-spacing: 0;
     }
-  }
-
-  & :where(h1:not(:last-child):not(.not-prose, .not-prose *)) {
-    margin-bottom: --spacing(8);
   }
 
   & :where(h2:not(.not-prose, .not-prose *)) {
@@ -338,7 +334,7 @@
     font-weight: 600;
     letter-spacing: -0.02em;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
       font-size: var(--text-4xl);
       font-weight: 400;
@@ -356,7 +352,7 @@
     font-weight: 600;
     letter-spacing: -0.02em;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
       font-size: var(--text-3xl);
       font-weight: 400;
@@ -375,7 +371,7 @@
     text-transform: uppercase;
     letter-spacing: -0.03px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
       font-weight: 400;
       letter-spacing: 0.05em;
@@ -445,7 +441,7 @@
     line-height: 32px;
     margin-block: --spacing(5);
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
     }
   }
@@ -483,7 +479,7 @@
     border: 1px solid var(--color-gray-200);
     border-radius: var(--radius-md);
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       border-radius: var(--radius-none);
     }
 
@@ -493,10 +489,6 @@
       letter-spacing: normal;
       margin-inline: inherit;
     }
-  }
-
-  & :where(code:not(:last-child):not(.not-prose, .not-prose *)) {
-    margin-block: --spacing(6);
   }
 
   & :where(ol:not(.not-prose, .not-prose *)) {
@@ -512,7 +504,7 @@
     list-style-type: disc;
     padding-left: --spacing(4);
     margin-bottom: --spacing(2);
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       list-style-type: square;
     }
   }
@@ -626,7 +618,7 @@
     font-size: var(--text-3xl);
     line-height: 38px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-4xl);
     }
   }
@@ -639,7 +631,7 @@
     font-size: var(--text-2xl);
     line-height: 28px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-3xl);
     }
   }
@@ -648,7 +640,7 @@
     font-size: var(--text-xl);
     line-height: 26px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-2xl);
     }
   }
@@ -661,7 +653,7 @@
     font-size: var(--text-lg);
     line-height: 20px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-lg);
     }
   }
@@ -674,7 +666,7 @@
     font-size: var(--text-xs);
     line-height: 20px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-xs);
     }
   }
@@ -683,7 +675,7 @@
     font-size: var(--text-xs);
     line-height: 20px;
 
-    .sds-theme-plaid & {
+    :where(.sds-theme-plaid) & {
       font-size: var(--text-xs);
     }
   }
@@ -729,7 +721,7 @@
   --tw-prose-invert-bullets: var(--color-gray-400);
 
   /* Plaid theme: bullets/quotes ARE colored */
-  .sds-theme-plaid & {
+  :where(.sds-theme-plaid) & {
     --tw-prose-quote-borders: var(--color-blue-600);
     /* --tw-prose-bullets: var(--color-blue-600); */
     --tw-prose-invert-quote-borders: var(--color-blue-400);
@@ -749,7 +741,7 @@
   --tw-prose-invert-bullets: var(--color-gray-400);
 
   /* Plaid theme: bullets/quotes ARE colored */
-  .sds-theme-plaid & {
+  :where(.sds-theme-plaid) & {
     --tw-prose-quote-borders: var(--color-green-600);
     /* --tw-prose-bullets: var(--color-green-600); */
     --tw-prose-invert-quote-borders: var(--color-green-400);
@@ -769,7 +761,7 @@
   --tw-prose-invert-bullets: var(--color-gray-400);
 
   /* Plaid theme: bullets/quotes ARE colored */
-  .sds-theme-plaid & {
+  :where(.sds-theme-plaid) & {
     --tw-prose-quote-borders: var(--color-teal-600);
     /* --tw-prose-bullets: var(--color-teal-600); */
     --tw-prose-invert-quote-borders: var(--color-teal-400);
@@ -789,7 +781,7 @@
   --tw-prose-invert-bullets: var(--color-gray-400);
 
   /* Plaid theme: bullets/quotes ARE colored */
-  .sds-theme-plaid & {
+  :where(.sds-theme-plaid) & {
     --tw-prose-quote-borders: var(--color-orange-600);
     /* --tw-prose-bullets: var(--color-orange-600); */
     --tw-prose-invert-quote-borders: var(--color-orange-400);
@@ -809,7 +801,7 @@
   --tw-prose-invert-bullets: var(--color-gray-400);
 
   /* Plaid theme: bullets/quotes ARE colored */
-  .sds-theme-plaid & {
+  :where(.sds-theme-plaid) & {
     --tw-prose-quote-borders: var(--color-red-600);
     /* --tw-prose-bullets: var(--color-red-600); */
     --tw-prose-invert-quote-borders: var(--color-red-400);
@@ -823,6 +815,9 @@
  */
 
 @utility prose-invert {
+  /* !important is intentional: prose-invert must override the custom property
+     values set by sibling color utilities (prose-blue, prose-green, etc.) that
+     may appear later in the DOM class list but earlier in source order. */
   --tw-prose-links: var(--tw-prose-invert-links, var(--color-white)) !important;
   --tw-prose-links-hover: var(--tw-prose-invert-links-hover, var(--color-gray-400)) !important;
   --tw-prose-quote-borders: var(--tw-prose-invert-quote-borders, var(--color-gray-700)) !important;
@@ -874,4 +869,24 @@
   & :where(tbody tr:not(:last-child):not(.not-prose, .not-prose *)) {
     border-bottom-color: var(--color-gray-800);
   }
+}
+
+/**
+ * not-prose — blocks inherited prose styles from leaking into excluded regions
+ *
+ * .prose / .prose-invert / .prose-sm set several inherited CSS properties
+ * (color, font-size, text-wrap, text-rendering) directly on the container
+ * element. CSS inheritance carries those values into every descendant —
+ * including .not-prose — regardless of the :not(.not-prose, .not-prose *)
+ * exclusions used in the descendant selectors below.
+ *
+ * Setting these to `initial` on a .not-prose element introduces a direct
+ * (non-inherited) author value, which takes precedence over any inherited
+ * value from an ancestor .prose container per the CSS cascade algorithm.
+ */
+@utility not-prose {
+  color: initial;
+  font-size: initial;
+  text-wrap: initial;
+  text-rendering: initial;
 }

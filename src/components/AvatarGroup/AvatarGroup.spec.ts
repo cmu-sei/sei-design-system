@@ -6,6 +6,7 @@ import SdsAvatar from '../Avatar/Avatar.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsDropdown from '../Dropdown/Dropdown.vue'
 import SdsDropdownItem from '../DropdownItem/DropdownItem.vue'
+import { getAvatarGroupMaskAlign, getAvatarGroupMaskSpec } from '@/helpers/avatarGroupMask'
 
 describe('AvatarGroup', () => {
   const srcset = [
@@ -388,118 +389,102 @@ describe('AvatarGroup', () => {
   })
 
   it('returns correct maskAlign value', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3) } })
-    expect(wrapper.vm.maskAlign).toBe('99% 50%')
+    expect(getAvatarGroupMaskAlign()).toBe('99% 50%')
   })
 
   it('generates correct circle mask for xs size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'xs', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'xs', 'default', 'forge')
     expect(mask).toContain('circle cx="996" cy="500" r="13.5"')
     expect(mask).toContain('linear-gradient(#fff, #fff)')
   })
 
   it('generates correct circle mask for xs size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'xs', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'xs', 'condensed', 'forge')
     expect(mask).toContain('circle cx="989" cy="500" r="13.5"')
   })
 
   it('generates correct circle mask for sm size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'sm', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'sm', 'default', 'forge')
     expect(mask).toContain('circle cx="1000" cy="500" r="17"')
   })
 
   it('generates correct circle mask for sm size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'sm', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'sm', 'condensed', 'forge')
     expect(mask).toContain('circle cx="992" cy="500" r="17"')
   })
 
   it('generates correct circle mask for md size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'md', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'md', 'default', 'forge')
     expect(mask).toContain('circle cx="1000" cy="500" r="26"')
   })
 
   it('generates correct circle mask for md size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'md', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('circle', 'md', 'condensed', 'forge')
     expect(mask).toContain('circle cx="988" cy="500" r="26"')
   })
 
   it('generates correct square mask for xs size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'xs', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'xs', 'default', 'forge')
     expect(mask).toContain('rect x="983" y="487" width="26" height="26" rx="4"')
   })
 
   it('generates correct square mask for xs size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'xs', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'xs', 'condensed', 'forge')
     expect(mask).toContain('rect x="976" y="487" width="26" height="26" rx="4"')
   })
 
   it('generates correct square mask for xs size with default density and plaid theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'xs', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('plaid')
+    const mask = getAvatarGroupMaskSpec('square', 'xs', 'default', 'plaid')
     expect(mask).toContain('rect x="983" y="487" width="26" height="26" rx="0"')
   })
 
   it('generates correct square mask for sm size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'sm', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'sm', 'default', 'forge')
     expect(mask).toContain('rect x="983" y="483" width="34" height="34" rx="4"')
   })
 
   it('generates correct square mask for sm size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'sm', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'sm', 'condensed', 'forge')
     expect(mask).toContain('rect x="975" y="483" width="34" height="34" rx="4"')
   })
 
   it('generates correct square mask for sm size with plaid theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'sm' } })
-    const mask = wrapper.vm.maskSpec('plaid')
+    const mask = getAvatarGroupMaskSpec('square', 'sm', 'default', 'plaid')
     expect(mask).toContain('rect x="983" y="483" width="34" height="34" rx="0"')
   })
 
   it('generates correct square mask for md size with default density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'md', density: 'default' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'md', 'default', 'forge')
     expect(mask).toContain('rect x="975" y="475" width="50" height="50" rx="6"')
   })
 
   it('generates correct square mask for md size with condensed density and forge theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'md', density: 'condensed' } })
-    const mask = wrapper.vm.maskSpec('forge')
+    const mask = getAvatarGroupMaskSpec('square', 'md', 'condensed', 'forge')
     expect(mask).toContain('rect x="963" y="475" width="50" height="50" rx="6"')
   })
 
   it('generates correct square mask for md size with plaid theme', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'md' } })
-    const mask = wrapper.vm.maskSpec('plaid')
+    const mask = getAvatarGroupMaskSpec('square', 'md', 'default', 'plaid')
     expect(mask).toContain('rect x="975" y="475" width="50" height="50" rx="0"')
   })
 
   it('returns forge theme mask for circle shape', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'md' } })
-    expect(wrapper.vm.maskSpecForge).toContain('circle cx="1000" cy="500" r="26"')
+    const mask = getAvatarGroupMaskSpec('circle', 'md', 'default', 'forge')
+    expect(mask).toContain('circle cx="1000" cy="500" r="26"')
   })
 
   it('returns forge theme mask for square shape', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'md' } })
-    expect(wrapper.vm.maskSpecForge).toContain('rect x="975" y="475" width="50" height="50" rx="6"')
+    const mask = getAvatarGroupMaskSpec('square', 'md', 'default', 'forge')
+    expect(mask).toContain('rect x="975" y="475" width="50" height="50" rx="6"')
   })
 
   it('returns plaid theme mask for circle shape', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'circle', size: 'md' } })
-    expect(wrapper.vm.maskSpecPlaid).toContain('circle cx="1000" cy="500" r="26"')
+    const mask = getAvatarGroupMaskSpec('circle', 'md', 'default', 'plaid')
+    expect(mask).toContain('circle cx="1000" cy="500" r="26"')
   })
 
   it('returns plaid theme mask for square shape with rx="0"', () => {
-    const wrapper = mount(Component, { props: { srcset: srcset.slice(0, 3), shape: 'square', size: 'md' } })
-    expect(wrapper.vm.maskSpecPlaid).toContain('rect x="975" y="475" width="50" height="50" rx="0"')
+    const mask = getAvatarGroupMaskSpec('square', 'md', 'default', 'plaid')
+    expect(mask).toContain('rect x="975" y="475" width="50" height="50" rx="0"')
   })
 })

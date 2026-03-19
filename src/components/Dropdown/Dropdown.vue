@@ -43,9 +43,7 @@
               :disabled="disabled"
               :class="[
                 btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, iconOnlyClasses,
-                type && 'hover:bg-gray-800 text-white border-0',
-                (!isOpen && type) && 'bg-gray-900',
-                (isOpen && type) && 'active bg-gray-800',
+                darkTypeClass,
                 isOpen && 'active'
               ]"
               @click="handleClick(isOpen, open, close)"
@@ -71,9 +69,7 @@
           :disabled="disabled"
           :class="[
             btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, iconOnlyClasses,
-            type && 'hover:bg-gray-800 text-white border-0',
-            (!isOpen && type) && 'bg-gray-900',
-            (isOpen && type) && 'active bg-gray-800',
+            darkTypeClass,
             isOpen && 'active'
           ]"
           @click="handleClick(isOpen, open, close)"
@@ -96,9 +92,7 @@
           :disabled="disabled"
           :class="[
             btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass,
-            type && 'hover:bg-gray-800 text-white border-0',
-            (!isOpen && type) && 'bg-gray-900',
-            (isOpen && type) && 'active bg-gray-800',
+            darkTypeClass,
             isOpen && 'active'
           ]"
           @click="handleClick(isOpen, open, close)"
@@ -339,4 +333,10 @@ const effectiveIconOnly = computed(() => props.iconOnly)
 
 // Dynamic data-id based on buttonStyle
 const dataId = computed(() => props.buttonStyle === 'action' ? 'sds-action-dropdown' : 'sds-dropdown')
+
+// Compute the appropriate dark-type class based on button prefix
+const darkTypeClass = computed(() => {
+  if (!props.type || props.type !== 'dark') return ''
+  return props.buttonStyle === 'action' ? 'action-btn-dark' : 'btn-dark'
+})
 </script>

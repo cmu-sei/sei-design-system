@@ -98,7 +98,7 @@
                 v-else
                 :key="f.key"
                 type="button"
-                class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
+                class="inline-flex items-center align-middle after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
                 :class="{
                   'cursor-default after:mr-0.5': !f.sortable,
                   'after:mr-4' : f.sortable,
@@ -182,7 +182,7 @@
               >{{ field.label }}</span>
               <button
                 v-else
-                class="inline-flex items-center"
+                class="inline-flex items-center align-middle"
                 :class="{
                   'cursor-default': !field.sortable,
                   'flex-row-reverse': field.align === 'right'

@@ -31,11 +31,6 @@
       @apply border-0 rounded-none;
     }
 
-    & .btn,
-    & .action-btn {
-      @apply border-0 rounded-none;
-    }
-
     & :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control) {
       @apply px-1.5;
     }
@@ -48,37 +43,11 @@
       @apply pr-3;
     }
 
-    &:where(.btn-group-sm) :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control), &:where(.input-group-sm) :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control) {
-      @apply p-1 text-sm;
-    }
-
-    &:where(.btn-group-sm) :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child), &:where(.input-group-sm) :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child) {
-      @apply pl-2;
-    }
-
-    &:where(.btn-group-sm) :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child), &:where(.input-group-sm) :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child) {
-      @apply pr-2;
-    }
-
-    &:where(.btn-group-sm) :where(select:not([multiple]).form-control), &:where(.input-group-sm) :where(select:not([multiple]).form-control) {
-      @apply pr-5 bg-right;
-    }
-
     & :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child) {
       @apply rounded-l-theme-sm;
     }
 
-    & .btn:first-child,
-    & .action-btn:first-child {
-      @apply rounded-l-theme-sm;
-    }
-
     & :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child) {
-      @apply rounded-r-theme-sm;
-    }
-
-    & .btn:last-child,
-    & .action-btn:last-child {
       @apply rounded-r-theme-sm;
     }
 
@@ -101,5 +70,69 @@
 
   :where(.btn-toolbar, .input-toolbar) {
     @apply flex flex-wrap justify-start;
+  }
+}
+
+/* ===== BUTTON/ACTION-BTN GROUP CHILD OVERRIDES ===== */
+/* UNLAYERED — must beat @utility-level .btn and .action-btn declarations
+   (utilities layer) which set border-width and border-radius. Component-layer
+   rules cannot override utility-layer rules, so these live outside any layer. */
+
+:where(.btn-group, .input-group) {
+  & .btn,
+  & .action-btn {
+    @apply border-0 rounded-none;
+  }
+
+  & .btn:first-child,
+  & .action-btn:first-child {
+    @apply rounded-l-theme-sm;
+  }
+
+  & .btn:last-child,
+  & .action-btn:last-child {
+    @apply rounded-r-theme-sm;
+  }
+}
+
+/* ===== INPUT/BTN GROUP SIZE UTILITIES (responsive-ready) ===== */
+/* Using @utility makes btn-group-sm and input-group-sm work with responsive
+   variants, e.g. lg:btn-group-sm, md:input-group-sm.
+   Styles are intentionally duplicated: each @utility must be self-contained
+   for independent responsive variant support (they cannot compose each other). */
+
+@utility btn-group-sm {
+  :where(&) :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control) {
+    @apply p-1 text-sm;
+  }
+
+  :where(&) :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child) {
+    @apply pl-2;
+  }
+
+  :where(&) :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child) {
+    @apply pr-2;
+  }
+
+  :where(&) :where(select:not([multiple]).form-control) {
+    @apply pr-5 bg-right;
+  }
+}
+
+@utility input-group-sm {
+  :where(&) :where(.input-group-addon, [data-id^='sds-'] .form-control, .form-control) {
+    @apply p-1 text-sm;
+  }
+
+  :where(&) :where(.input-group-addon:first-child, [data-id^='sds-']:first-child .form-control, .form-control:first-child) {
+    @apply pl-2;
+  }
+
+  :where(&) :where(.input-group-addon:last-child, [data-id^='sds-']:last-child .form-control, .form-control:last-child) {
+    @apply pr-2;
+  }
+
+  :where(&) :where(select:not([multiple]).form-control) {
+    @apply pr-5 bg-right;
   }
 }

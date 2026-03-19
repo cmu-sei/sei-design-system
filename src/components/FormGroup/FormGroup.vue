@@ -105,7 +105,7 @@
       <p
         v-if="(helperText || $slots.helperText) && !disabled"
         :aria-hidden="disabled ? true : undefined"
-        class="block text-xs italic text-gray-600 dark:text-gray-400 pt-1"
+        class="block text-sm italic text-gray-600 dark:text-gray-400 pt-2"
       >
         <!-- @slot Helper Text slot content. This will override the `helperText` prop. @binding helperText. -->
         <slot
@@ -117,7 +117,11 @@
       </p>
       <p
         v-if="(state && (validFeedback || $slots.validFeedback)) && !disabled"
-        class="block text-xs italic text-green-700 dark:text-green-300 pt-1"
+        class="block text-sm italic text-green-700 dark:text-green-300"
+        :class="{
+          'pt-1': (helperText || $slots.helperText),
+          'pt-2': !(helperText || $slots.helperText),
+        }"
       >
         <!-- @slot Valid Feedback slot content. This will override the `validFeedback` prop. @binding validFeedback. -->
         <slot
@@ -129,7 +133,11 @@
       </p>
       <p
         v-if="(state === false && (invalidFeedback || $slots.invalidFeedback)) && !disabled"
-        class="block text-xs italic text-red-500 dark:text-red-300 pt-1"
+        class="block text-sm italic text-red-500 dark:text-red-300"
+        :class="{
+          'pt-1': (helperText || $slots.helperText),
+          'pt-2': !(helperText || $slots.helperText),
+        }"
       >
         <!-- @slot Invalid Feedback slot content. This will override the `invalidFeedback` prop. @binding invalidFeedback. -->
         <slot
