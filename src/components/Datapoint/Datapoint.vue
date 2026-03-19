@@ -80,71 +80,52 @@ const modelValueDisplay = computed(() =>  {
 })
 
 const sizeClass = computed(() => {
-  let textSizeClass = ''
-
   switch(props.size) {
     case 'sm':
-      textSizeClass = 'text-lg'
+      return 'text-lg'
       break
     case 'md':
-      textSizeClass = 'text-3xl'
+      return 'text-3xl'
       break
     default:
-      textSizeClass = 'text-5xl'
+      return 'text-5xl'
   }
-
-  return textSizeClass
 })
 
 const variantClass = computed(() => {
-  let textClass = ''
-
   switch(props.variant) {
     case 'blue':
-      textClass = 'text-blue-600 dark:text-blue-400'
-      break
+      return 'text-blue-600 dark:text-blue-400'
     case 'green':
-      textClass = 'text-green-600 dark:text-green-400'
-      break
+      return 'text-green-600 dark:text-green-400'
     case 'teal':
-      textClass = 'text-teal-600 dark:text-teal-400'
-      break
+      return 'text-teal-600 dark:text-teal-400'
     case 'orange':
       if (props.size === 'lg') {
-        textClass = 'text-orange-400 dark:text-orange-300'
+        return 'text-orange-400 dark:text-orange-300'
       } else if (props.size === 'md') {
-        textClass = 'text-orange-500 dark:text-orange-300'
+        return 'text-orange-500 dark:text-orange-300'
       } else {
-        textClass = 'text-orange-600 dark:text-orange-300'
+        return 'text-orange-600 dark:text-orange-300'
       }
-      break
     case 'red':
-      textClass = 'text-red-600 dark:text-red-400'
-      break
+      return 'text-red-600 dark:text-red-400'
     case 'tan':
-      textClass = 'text-tan-600 dark:text-tan-400'
-      break
+      return 'text-tan-600 dark:text-tan-400'
     case 'yellow':
       if (props.size === 'sm') {
-        textClass = 'text-yellow-600 dark:text-yellow-300'
+        return 'text-yellow-600 dark:text-yellow-300'
       } else {
-        textClass = 'text-yellow-500 dark:text-yellow-300'
+        return 'text-yellow-500 dark:text-yellow-300'
       }
-      break
     case 'purple':
-      textClass = 'text-purple-600 dark:text-purple-400'
-      break
+      return 'text-purple-600 dark:text-purple-400'
     case 'indigo':
-      textClass = 'text-indigo-600 dark:text-indigo-400'
-      break
+      return 'text-indigo-600 dark:text-indigo-400'
     case 'gray':
-      textClass = 'text-gray-600 dark:text-gray-300'
-      break
+      return 'text-gray-600 dark:text-gray-300'
     default:
-      textClass = 'text-black dark:text-white'
-      break
+      return 'text-black dark:text-white'
   }
-
-  return textClass
 })
 </script>
