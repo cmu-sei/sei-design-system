@@ -8,13 +8,13 @@
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
-        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none 
-        min-h-14.5 w-full min-w-full
+        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none overflow-hidden
+        min-h-16.5 w-full min-w-full
       "
     >
-      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
+      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-16.5">
         <div 
-          v-if="hasFilters"
+          v-if="hasFilters && !isSearchActive"
           class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
         >
           <template 
@@ -58,6 +58,23 @@
             <IconFa7SolidFilterCircleXmark class="h-4 w-4" />
             <span>Clear filters</span>
           </SdsActionButton>
+        </div>
+        <div
+          v-if="hasSelectionActive"
+          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
+        >
+          <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
+            {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
+          </span>
+          <div 
+            v-if="$slots['batch-selection-actions']"
+            class="flex flex-row flex-nowrap items-center gap-x-2 ml-auto"
+          >
+            <slot
+              name="batch-selection-actions"
+              :selected-ids="selectedIds"
+            />
+          </div>
         </div>
         <div 
           v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
@@ -149,8 +166,9 @@
             <span class="sr-only">Select {{ item.id }}</span>
             <input
               :id="`select-${item.id}`"
-              v-model="item.selected"
+              :checked="(item.selected as boolean)"
               type="checkbox"
+              @change="toggleItemSelection(item)"
             >
           </label>
         </template>
@@ -363,7 +381,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination', 'update:selectedItems'])
 
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
@@ -375,11 +393,13 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     : undefined
 )
 
-const selectAll = ref(false) // Batch selection state for "Select all" checkbox in the header
+const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.filterSearchQuery ?? '')
 
 const hasBatchSelection = computed(() => props.enableBatchSelection)
+const selectedCount = computed(() => selectedIds.value.length)
+const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCount.value > 0)
 
 const tableFields = computed(() => {
   const baseFields = props.data?.fields ?? []
@@ -397,10 +417,29 @@ const tableItems = computed(() => {
   if (hasBatchSelection.value) {
     return baseItems.map((item) => ({
       ...item,
-      selected: item.selected ?? false
+      selected: selectedIds.value.includes(item.id)
     }))
   }
   return baseItems
+})
+
+/**
+ * Two-way computed for the "Select all" header checkbox.
+ * Getter returns true when every item is selected; setter selects or clears all.
+ */
+const selectAll = computed({
+  get() {
+    const baseItems = props.data?.items ?? []
+    return baseItems.length > 0 && baseItems.every((item) => selectedIds.value.includes(item.id))
+  },
+  set(value: boolean) {
+    const currentPageIds = (props.data?.items ?? []).map((item) => item.id)
+    if (value) {
+      selectedIds.value = [...new Set([...selectedIds.value, ...currentPageIds])]
+    } else {
+      selectedIds.value = selectedIds.value.filter((id) => !currentPageIds.includes(id))
+    }
+  }
 })
 
 const tableProps = computed(() => {
@@ -534,6 +573,18 @@ function setPageSize(page: number) {
   })
 }
 
+/**
+ * Toggles the selected state of a single row item.
+ * @param item - The table item to toggle.
+ */
+function toggleItemSelection(item: TableItem) {
+  if (selectedIds.value.includes(item.id)) {
+    selectedIds.value = selectedIds.value.filter((id) => id !== item.id)
+  } else {
+    selectedIds.value = [...selectedIds.value, item.id]
+  }
+}
+
 function setSearchActiveState(active: boolean) {
   isSearchActive.value = active
   if (!active) {
@@ -554,5 +605,16 @@ const debouncedEmitSearch = useDebounce((query) => {
  */
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
+})
+
+/**
+ * Emit all items with their current selected state whenever the selection changes.
+ */
+watch(selectedIds, (ids) => {
+  const allItems = (props.data?.items ?? []).map((item) => ({
+    ...item,
+    selected: ids.includes(item.id)
+  }))
+  emit('update:selectedItems', allItems)
 })
 </script>

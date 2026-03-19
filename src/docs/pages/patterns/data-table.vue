@@ -11,6 +11,7 @@
       @update:filters="handleFilterUpdate"
       @update:filter-search-query="handleFilterSearchUpdate"
       @update:pagination="handlePaginationUpdate"
+      @update:selected-items="handleSelectedItems"
     >
       <template #cell(task)="{ item }: { item: TableItem }">
         <SdsLink 
@@ -40,6 +41,38 @@
         <SdsBadge v-bind="getBadgeVariant((item.status as string))">
           {{ item.status }}
         </SdsBadge>
+      </template>
+      <template #batch-selection-actions="{ selectedIds }: { selectedIds: number[] }">
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="xs"
+          type="button"
+          @click="duplicateItems(selectedIds)"
+        >
+          <IconFa7SolidCopy class="w-4 h-4" />
+          <span>Duplicate</span>
+        </SdsActionButton>
+        <SdsActionButton
+          kind="ghost"
+          variant="gray"
+          size="xs"
+          type="button"
+          @click="editItems(selectedIds)"
+        >
+          <IconFa7SolidPencil class="w-4 h-4" />
+          <span>Edit</span>
+        </SdsActionButton>
+        <SdsActionButton 
+          kind="ghost"
+          variant="red"
+          size="xs"
+          type="button"
+          @click="deleteItems(selectedIds)"
+        >
+          <IconFa7SolidTrashCan class="w-4 h-4" />
+          <span>Delete</span>
+        </SdsActionButton>
       </template>
       <template #ellipsis-menu-items>
         <SdsDropdownItem 
@@ -521,6 +554,22 @@ function getUniqueBy<T>(arr: T[], prop: keyof T): T[] {
     seen.add(value)
     return true
   })
+}
+
+function handleSelectedItems(items: TableItem[]) {
+  console.log('Selected items:', items)
+}
+
+function duplicateItems(ids: number[]) {
+  alert(`Duplicating items with IDs: ${ids.join(', ')}`)
+}
+
+function editItems(ids: number[]) {
+  alert(`Editing items with IDs: ${ids.join(', ')}`)
+}
+
+function deleteItems(ids: number[]) {
+  alert(`Deleting items with IDs: ${ids.join(', ')}`)
 }
 
 function handleActionClick(action: string) {
