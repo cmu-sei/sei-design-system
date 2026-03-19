@@ -14,7 +14,7 @@
     >
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
-          v-if="hasFilters && !isSearchActive"
+          v-if="hasFilters"
           class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
         >
           <template 
@@ -64,7 +64,7 @@
           class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
-            'absolute top-0 left-0 z-10 w-full': isSearchActive
+            'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
           }"
         >
           <template v-if="hasFilterSearch">
@@ -74,6 +74,7 @@
               variant="gray"
               size="sm"
               type="button"
+              class="max-h-7.5"
               @click="setSearchActiveState(true)"
             >
               <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
