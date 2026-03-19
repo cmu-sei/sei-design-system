@@ -78,8 +78,19 @@
               }"
               class="whitespace-nowrap select-none group"
             >
+              <template v-if="field.custom">
+                <slot
+                  :name="`head(${field.key})`"
+                  :field="field"
+                  :active="sortField === field.key"
+                >
+                  <span class="font-normal cursor-default">
+                    {{ field.label }}
+                  </span>
+                </slot>
+              </template>
               <span
-                v-if="field.srOnly"
+                v-else-if="field.srOnly"
                 class="sr-only"
               >{{ field.label }}</span>
               <button
@@ -154,8 +165,19 @@
               }"
               class="whitespace-nowrap space-x-1 select-none group"
             >
+              <template v-if="field.custom">
+                <slot
+                  :name="`head(${field.key})`"
+                  :field="field"
+                  :active="sortField === field.key"
+                >
+                  <span class="font-normal cursor-default">
+                    {{ field.label }}
+                  </span>
+                </slot>
+              </template>
               <span
-                v-if="field.srOnly"
+                v-else-if="field.srOnly"
                 class="sr-only"
               >{{ field.label }}</span>
               <button
@@ -382,6 +404,7 @@ export interface TableField {
   key: string;
   label?: string;
   srOnly?: boolean;
+  custom?: boolean;
   format?: GenericFunctionType;
   sortable?: boolean;
   hidden?: boolean;

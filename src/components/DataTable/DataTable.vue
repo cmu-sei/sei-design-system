@@ -121,6 +121,38 @@
         v-bind="{ ...tableProps, ...$attrs }"
         class="table-prose-td:align-middle w-full min-w-5xl"
       >
+        <template #col(selected)>
+          <col 
+            v-if="hasBatchSelection"
+            class="w-8"
+          >
+        </template>
+        <template #head(selected)>
+          <label 
+            for="select-all"
+            class="relative -top-px"
+          >
+            <span class="sr-only">Select all</span>
+            <input
+              id="select-all"
+              v-model="selectAll"
+              type="checkbox"
+            >
+          </label>
+        </template>
+        <template #cell(selected)="{ item }: { item: TableItem }">
+          <label 
+            :for="`select-${item.id}`"
+            class="relative -top-px"
+          >
+            <span class="sr-only">Select {{ item.id }}</span>
+            <input
+              :id="`select-${item.id}`"
+              v-model="item.selected"
+              type="checkbox"
+            >
+          </label>
+        </template>
         <template
           v-for="(_, name) in $slots"
           #[name]="slotProps"
@@ -251,7 +283,7 @@
 <script lang="ts" setup>
 import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
-import type { TableProps } from '../Table/Table.vue'
+import type { TableItem, TableProps } from '../Table/Table.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
@@ -290,6 +322,10 @@ interface DataTableProps {
     totalResults: number; 
   };
   /**
+   * Enables batch selection for the table.
+   */
+  enableBatchSelection?: boolean;
+  /**
    * Array of filter configurations for the table.
    */
   filters?: DataTableFilterConfig[];
@@ -318,6 +354,7 @@ defineOptions({
 const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
+  enableBatchSelection: false,
   filters: undefined,
   filterSearch: false,
   filterSearchQuery: undefined,
@@ -337,14 +374,41 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     : undefined
 )
 
+const selectAll = ref(false) // Batch selection state for "Select all" checkbox in the header
 const isSearchActive = ref(false)
 const searchQuery = ref(props.filterSearchQuery ?? '')
 
-const tableProps = computed(() => ({
-  items: [],
-  fields: [],
-  ...props.data
-}))
+const hasBatchSelection = computed(() => props.enableBatchSelection)
+
+const tableFields = computed(() => {
+  const baseFields = props.data?.fields ?? []
+  if (hasBatchSelection.value) {
+    return [
+      { key: 'selected', custom: true, sortable: false, align: 'center' as const },
+      ...baseFields
+    ]
+  }
+  return baseFields
+})
+
+const tableItems = computed(() => {
+  const baseItems = props.data?.items ?? []
+  if (hasBatchSelection.value) {
+    return baseItems.map((item) => ({
+      ...item,
+      selected: item.selected ?? false
+    }))
+  }
+  return baseItems
+})
+
+const tableProps = computed(() => {
+  return {
+    ...props.data,
+    fields: tableFields.value,
+    items: tableItems.value
+  }
+})
 
 const paginatorProps = computed(() => ({
   loading: isLoading.value,
