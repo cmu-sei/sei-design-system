@@ -689,18 +689,16 @@ const setModelValueDate = async (day: number, isNextMonth = false) => {
       }
     } else if (!date.value.start && date.value.end) {
       const newDate = props.useCurrentTimeForToday && isToday(setDate(month, day)) ? new Date() : setHours(setMinutes(setSeconds(setMilliseconds(setDate(month, day), 0), 0), 0), 0)
-      let start = null
-      let end = null
       if (date.value.end && isBefore(date.value.end, newDate)) {
-        start = date.value.end
-        end = newDate
+        date.value = {
+          start: date.value.end,
+          end: newDate
+        }
       } else {
-        start = newDate
-        end = date.value.end
-      }
-      date.value = {
-        start,
-        end
+        date.value = {
+          start: newDate,
+          end: date.value.end
+        }
       }
     } else if (date.value.start && !date.value.end) {
       const start = date.value.start
