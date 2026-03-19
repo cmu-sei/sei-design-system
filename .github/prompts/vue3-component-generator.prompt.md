@@ -93,4 +93,4 @@ Documentation & Comments:
 
 Generate the complete Vue 3 SFC code using the Composition API, ensuring it adheres to best practices for performance, maintainability, and accessibility. Include setup function, props validation, event emission, slots handling, reactive state management, lifecycle hooks, and Tailwind CSS classes for styling.
 
-For implementation guidelines and best practices, please refer to `.github/instructions/vue-3-components.instructions.md`.
+For implementation guidelines and best practices, please refer to `.github/skills/components-guidelines/SKILL.md`.
