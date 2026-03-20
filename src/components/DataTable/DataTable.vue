@@ -66,15 +66,55 @@
           <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
             {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
           </span>       
-          <slot
-            v-if="$slots['batch-selection-actions']"
-            name="batch-selection-actions"
-            :selected-ids="selectedIds"
-          >
-            <div class="flex flex-row flex-nowrap items-center gap-x-2">
-              <!-- Batch selection actions will be rendered here -->
+          <template v-if="hasBatchSelectionActions">
+            <div class="hidden lg:flex flex-row flex-nowrap items-center gap-x-2">
+              <SdsActionButton
+                v-for="(batchAction, index) in batchSelectionActions"
+                :key="index"
+                :kind="batchAction.kind ?? 'ghost'"
+                :variant="batchAction.variant ?? 'gray'"
+                :size="batchAction.size ?? 'xs'"
+                type="button"
+                @click="executeBatchAction(batchAction)"
+              >
+                <component
+                  :is="batchAction.icon"
+                  v-if="batchAction.icon"
+                  class="w-4 h-4"
+                />
+                <span>{{ batchAction.label }}</span>
+              </SdsActionButton>
             </div>
-          </slot>
+            <SdsActionDropdown
+              v-if="batchSelectionActions.length > 0"
+              class="lg:hidden"
+              :hide-arrow="true"
+              :icon-only="true"
+              kind="ghost"
+              variant="gray"
+              size="sm"
+            >
+              <template #icon>
+                <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
+              </template>
+              <SdsDropdownItem
+                v-for="(batchAction, index) in batchSelectionActions"
+                :key="index"
+                tag="button"
+                :variant="batchAction.variant ?? 'gray'"
+                @click="executeBatchAction(batchAction)"
+              >
+                <div class="flex items-center gap-x-2">
+                  <component
+                    :is="batchAction.icon"
+                    v-if="batchAction.icon"
+                    class="w-4 h-4"
+                  />
+                  <span>{{ batchAction.label }}</span>
+                </div>
+              </SdsDropdownItem>
+            </SdsActionDropdown>
+          </template>
         </div>
         <div 
           v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
@@ -300,9 +340,11 @@
 </template>
 
 <script lang="ts" setup>
+import type { Component } from 'vue'
 import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableItem, TableProps } from '../Table/Table.vue'
+import type { ActionButtonSize, ButtonKind, ButtonVariant } from '@/composables'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
@@ -328,6 +370,15 @@ export interface DataTableFilterConfig {
   options?: FilterByDropdownOption[]; // For dropdowns
 }
 
+export interface BatchSelectionAction {
+  label: string; // Display text for the action button
+  action: GenericFunctionType; // Function to execute when action is clicked (receives selectedIds)
+  kind?: Exclude<ButtonKind, 'tertiary'>; // Button kind; defaults to 'ghost'
+  variant?: ButtonVariant; // Button variant; defaults to 'gray'
+  size?: ActionButtonSize; // Button size; defaults to 'xs'
+  icon?: Component; // Optional icon component to render before the label
+}
+
 interface DataTableProps {
   /**
    * Table data and configuration.
@@ -344,6 +395,11 @@ interface DataTableProps {
    * Enables batch selection for the table.
    */
   enableBatchSelection?: boolean;
+  /**
+   * Array of default batch selection actions to render when items are selected.
+   * Slot 'batch-selection-actions' will override these defaults if provided.
+   */
+  batchSelectionActions?: BatchSelectionAction[];
   /**
    * Array of filter configurations for the table.
    */
@@ -374,6 +430,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
   enableBatchSelection: false,
+  batchSelectionActions: () => [],
   filters: undefined,
   filterSearch: false,
   filterSearchQuery: undefined,
@@ -400,7 +457,12 @@ const searchQuery = ref(props.filterSearchQuery ?? '')
 const hasBatchSelection = computed(() => props.enableBatchSelection)
 const selectedCount = computed(() => selectedIds.value.length)
 const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCount.value > 0)
+const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
 
+/**
+ * Styling properties from the first batch action for the desktop buttons.
+ * Falls back to defaults if not specified on the action.
+ */
 const tableFields = computed(() => {
   const baseFields = props.data?.fields ?? []
   if (hasBatchSelection.value) {
@@ -506,6 +568,16 @@ function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilt
 
 function isDropdownFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'dropdown'; options: FilterByDropdownOption[] } {
   return filter.type === 'dropdown' && Array.isArray(filter.options) && filter.options.length > 0
+}
+
+/**
+ * Executes a batch selection action with the current selected IDs.
+ * @param action - The action configuration containing the callback function.
+ */
+function executeBatchAction(action: BatchSelectionAction) {
+  if (typeof action.action === 'function') {
+    action.action(selectedIds.value)
+  }
 }
 
 function clearFilters() {

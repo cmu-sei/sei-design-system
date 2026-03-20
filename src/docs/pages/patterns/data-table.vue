@@ -4,6 +4,7 @@
       :data="data"
       :pagination="pagination"
       :enable-batch-selection="true"
+      :batch-selection-actions="batchSelectionActions"
       :filters="filters"
       :filter-search="true"
       :filter-search-query="searchTerm"
@@ -42,82 +43,6 @@
           {{ item.status }}
         </SdsBadge>
       </template>
-      <template #batch-selection-actions="{ selectedIds }: { selectedIds: number[] }">
-        <SdsActionDropdown
-          :hide-arrow="true"
-          :icon-only="true"
-          kind="ghost"
-          variant="gray"
-          size="sm"
-          class="lg:hidden"
-        >
-          <template #icon>
-            <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
-          </template>
-          <template #default>
-            <SdsDropdownItem 
-              tag="button" 
-              @click="duplicateItems(selectedIds)"
-            >
-              <div class="flex items-center gap-x-2">
-                <IconFa7SolidCopy class="w-4 h-4" />
-                <span>Duplicate</span>
-              </div>
-            </SdsDropdownItem>
-            <SdsDropdownItem 
-              tag="button" 
-              @click="editItems(selectedIds)"
-            >
-              <div class="flex items-center gap-x-2">
-                <IconFa7SolidPencil class="w-4 h-4" />
-                <span>Edit</span>
-              </div>
-            </SdsDropdownItem>
-            <SdsDropdownItem 
-              tag="button" 
-              variant="red"
-              @click="deleteItems(selectedIds)"
-            >
-              <div class="flex items-center gap-x-2">
-                <IconFa7SolidTrashCan class="w-4 h-4" />
-                <span>Delete</span>
-              </div>
-            </SdsDropdownItem>
-          </template>
-        </SdsActionDropdown>
-        <div class="hidden lg:flex flex-row flex-nowrap items-center gap-x-2">
-          <SdsActionButton
-            kind="ghost"
-            variant="gray"
-            size="xs"
-            type="button"
-            @click="duplicateItems(selectedIds)"
-          >
-            <IconFa7SolidCopy class="w-4 h-4" />
-            <span>Duplicate</span>
-          </SdsActionButton>
-          <SdsActionButton
-            kind="ghost"
-            variant="gray"
-            size="xs"
-            type="button"
-            @click="editItems(selectedIds)"
-          >
-            <IconFa7SolidPencil class="w-4 h-4" />
-            <span>Edit</span>
-          </SdsActionButton>
-          <SdsActionButton 
-            kind="ghost"
-            variant="red"
-            size="xs"
-            type="button"
-            @click="deleteItems(selectedIds)"
-          >
-            <IconFa7SolidTrashCan class="w-4 h-4" />
-            <span>Delete</span>
-          </SdsActionButton>
-        </div>
-      </template>
       <template #ellipsis-menu-items>
         <SdsDropdownItem 
           tag="button" 
@@ -143,12 +68,20 @@
 </template>
 
 <script setup lang="ts">
-import type { DataTableFilterConfig } from '../../../components/DataTable/DataTable.vue'
+import { defineAsyncComponent } from 'vue'
+import type { DataTableFilterConfig, BatchSelectionAction } from '../../../components/DataTable/DataTable.vue'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue'
 import SdsAvatar from '../../../components/Avatar/Avatar.vue'
 import SdsBadge from '../../../components/Badge/Badge.vue'
 import SdsDataTable from '../../../components/DataTable/DataTable.vue'
 import SdsLink from '../../../components/Link/Link.vue'
+
+// @ts-expect-error - Icon alias is configured in Vite but not in TypeScript
+const IconCopy = defineAsyncComponent(() => import('~icons/fa7-solid/copy'))
+// @ts-expect-error - Icon alias is configured in Vite but not in TypeScript
+const IconEdit = defineAsyncComponent(() => import('~icons/fa7-solid/pencil'))
+// @ts-expect-error - Icon alias is configured in Vite but not in TypeScript
+const IconDelete = defineAsyncComponent(() => import('~icons/fa7-solid/trash-can'))
 
 defineOptions({
   name: 'DataTablePage'
@@ -268,6 +201,38 @@ const currentPage = ref(1)
 const totalResults = ref(tableItems.value.length)
 const totalResultsPerPage = ref(10)
 const totalPages = ref(Math.ceil(totalResults.value / totalResultsPerPage.value))
+
+/**
+ * Batch selection actions
+ * Note: You can optionally add an `icon` property to render an icon component before the label.
+ * Pass any Vue component: icon: SomeIconComponent
+ */
+const batchSelectionActions = computed<BatchSelectionAction[]>(() => [
+  {
+    label: 'Duplicate',
+    action: duplicateItems,
+    kind: 'ghost',
+    variant: 'gray',
+    size: 'xs',
+    icon: IconCopy
+  },
+  {
+    label: 'Edit',
+    action: editItems,
+    kind: 'ghost',
+    variant: 'gray',
+    size: 'xs',
+    icon: IconEdit
+  },
+  {
+    label: 'Delete',
+    action: deleteItems,
+    kind: 'ghost',
+    variant: 'red',
+    size: 'xs',
+    icon: IconDelete
+  }
+])
 
 // Filters setup
 const filters = ref<DataTableFilterConfig[]>([
