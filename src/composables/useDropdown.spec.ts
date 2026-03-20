@@ -234,7 +234,7 @@ describe('useDropdown', () => {
       })
 
       if (size === 'md') {
-        expect(dropdown.sizeClass.value).toBe('') // md is default
+        expect(dropdown.sizeClass.value).toBe('btn-md') // md is default
       } else {
         expect(dropdown.sizeClass.value).toBe(`btn-${size}`)
       }

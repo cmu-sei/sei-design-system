@@ -272,27 +272,32 @@
 /* Using @utility makes these variant-prefixable: lg:btn-lg, md:btn-sm, etc. */
 
 @utility btn-square {
-  :where(.btn&) { @apply p-2; }
+  .btn& { @apply p-2; }
 }
 
 @utility btn-xs {
-  :where(.btn&)              { @apply py-0.5 px-2 text-xs; }
-  :where(.btn.btn-square&)   { @apply p-0.5; }
+  .btn&              { @apply py-0.5 px-2 text-xs; }
+  .btn.btn-square&   { @apply p-0.5; }
 }
 
 @utility btn-sm {
-  :where(.btn&)              { @apply py-1 px-4 text-sm; }
-  :where(.btn.btn-square&)   { @apply p-1; }
+  .btn&              { @apply py-1 px-4 text-sm; }
+  .btn.btn-square&   { @apply p-1; }
+}
+
+@utility btn-md {
+  .btn&              { @apply py-2 px-8 text-base; }
+  .btn.btn-square&   { @apply p-2; }
 }
 
 @utility btn-lg {
-  :where(.btn&)              { @apply py-3 px-12 text-lg; }
-  :where(.btn.btn-square&)   { @apply p-3; }
+  .btn&              { @apply py-3 px-12 text-lg; }
+  .btn.btn-square&   { @apply p-3; }
 }
 
 @utility btn-xl {
-  :where(.btn&)              { @apply py-4 px-16 text-xl; }
-  :where(.btn.btn-square&)   { @apply p-4; }
+  .btn&              { @apply py-4 px-16 text-xl; }
+  .btn.btn-square&   { @apply p-4; }
 }
 
 /* ===== DARK TYPE VARIANT (type="dark" darkly colored version, not dark mode) ===== */

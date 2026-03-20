@@ -182,7 +182,7 @@ interface DatepickerProps {
   /**
    * The z-index for the popover.
    */
-  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto';
   /**
    * Determines whether to display or hide the arrow for range selection.
    */
@@ -190,7 +190,7 @@ interface DatepickerProps {
   /**
    * Determines the sizing of the component.
    */
-  size?: 'md' | 'sm' | '';
+  size?: 'md' | 'sm';
   /**
    * Determines the mode of the component.
    */
@@ -241,7 +241,7 @@ defineOptions({
 const props = withDefaults(defineProps<DatepickerProps>(), {
   zIndex: '50',
   hideArrow: false,
-  size: '',
+  size: 'md',
   mode: 'date',
   placement: 'bottom',
   max: null,
@@ -296,7 +296,7 @@ const zIndexClass = computed(() => {
     case 'auto':
       return 'z-auto'
     default:
-      return ''
+      return 'z-50'
   }
 })
 

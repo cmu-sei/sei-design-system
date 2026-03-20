@@ -14,7 +14,7 @@ exports[`ActionDropdown > should be block styling 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red action-btn-block"
+      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md action-btn-block"
       id="v-0"
       type="button"
     >
@@ -187,7 +187,7 @@ exports[`ActionDropdown > should have a md size 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red"
+      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md"
       id="v-0"
       type="button"
     >
@@ -402,7 +402,7 @@ exports[`ActionDropdown > should hide the arrow 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x action-btn action-btn-secondary action-btn-red"
+      class="space-x action-btn action-btn-secondary action-btn-red action-btn-md"
       id="v-0"
       type="button"
     >

@@ -16,7 +16,7 @@ export default {
   component: SdsModal,
   argTypes: {
     size: {
-      options: ['sm', 'md', 'lg', 'xl'],
+      options: ['sm', 'md', 'lg', 'xl', '2xl'],
       control: { type: 'select' }
     },
     zIndex: {

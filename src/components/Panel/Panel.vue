@@ -133,11 +133,11 @@ interface PanelProps {
   /**
    * Determines the location of the panel.
    */
-  side?: 'left' | 'right' | 'bottom' | '';
+  side?: 'left' | 'right' | 'bottom';
   /**
    * The z-index for the popover.
    */
-  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto';
 }
 
 defineOptions({

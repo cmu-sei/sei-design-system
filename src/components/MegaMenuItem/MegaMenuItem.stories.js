@@ -15,6 +15,15 @@ export default {
       options: ['simple', 'landing-page', 'descriptive'],
       control: { type: 'select' },
       description: 'Choose the link type to display.',
+    },
+    cta: {
+      control: { type: 'boolean' }
+    },
+    disabled: {
+      control: { type: 'boolean' }
+    },
+    external: {
+      control: { type: 'boolean' }
     }
   }
 };

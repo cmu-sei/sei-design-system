@@ -5,7 +5,7 @@ import { computed, type ComputedRef } from 'vue'
  */
 export type ButtonKind = 'primary' | 'secondary' | 'tertiary' | 'ghost'
 export type ButtonVariant = 'gray' | 'blue' | 'red' | 'white'
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | ''
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type ActionButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 export interface ButtonClassConfig {
@@ -146,14 +146,10 @@ export function useButtonClasses(
   const sizeClass = computed(() => {
     if (!size.value) return ''
     
-    // For regular buttons (btn), 'md' is the default size and has no class
-    // For action buttons (action-btn), 'md' also has no explicit class
-    // (sm is the default for action buttons, but md when used also has no class)
-    if (size.value === 'md') return ''
-    
     const sizeMap: Record<string, string> = {
       xs: `${prefix.value}-xs`,
       sm: `${prefix.value}-sm`,
+      md: `${prefix.value}-md`,
       lg: `${prefix.value}-lg`
     }
     

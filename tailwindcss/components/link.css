@@ -176,7 +176,7 @@
 }
 
 @utility link-cta-down {
-  :where(.link&)::after {
+  .link&::after {
     @apply rotate-90;
     top: var(--link-cta-dir-top, 0px);
   }
@@ -184,13 +184,13 @@
 }
 
 @utility link-cta-left {
-  :where(.link&)        { @apply flex-row-reverse; }
-  :where(.link&)::after { @apply rotate-180; margin-left: 0; margin-right: --spacing(2); }
+  :where(.link&)    { @apply flex-row-reverse; }
+  .link&::after     { @apply rotate-180; margin-left: 0; margin-right: --spacing(2); }
   .link&:where(:hover)::after { @apply -translate-x-1; }
 }
 
 @utility link-cta-up {
-  :where(.link&)::after {
+  .link&::after {
     @apply -rotate-90;
     top: var(--link-cta-dir-top, 0px);
   }

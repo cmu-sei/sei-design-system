@@ -98,11 +98,11 @@ interface MobileMenuProps {
   /**
    * Determines the location of the panel.
    */
-  side?: 'left' | 'right' | '';
+  side?: 'left' | 'right';
   /**
    * The z-index for the popover.
    */
-  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto';
   /**
    * Sets the aria-label for the component
    */

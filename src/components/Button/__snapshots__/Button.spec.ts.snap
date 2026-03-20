@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Button > should click 1`] = `
-"<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->0
 </button>"
 `;
@@ -10,7 +10,7 @@ exports[`Button > should match its active snapshot 1`] = `
 <button
   aria-busy="false"
   aria-disabled="false"
-  class="active"
+  class="btn-md active"
   data-id="sds-button"
   type="button"
 >
@@ -27,7 +27,7 @@ exports[`Button > should match its block snapshot 1`] = `
 <button
   aria-busy="false"
   aria-disabled="false"
-  class="btn-block flex items-center justify-center"
+  class="btn-md btn-block flex items-center justify-center"
   data-id="sds-button"
   type="button"
 >
@@ -41,7 +41,7 @@ exports[`Button > should match its block snapshot 1`] = `
 `;
 
 exports[`Button > should match its default snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button
 </button>"
 `;
@@ -50,7 +50,7 @@ exports[`Button > should match its disabled snapshot 1`] = `
 <button
   aria-busy="false"
   aria-disabled="true"
-  class="disabled"
+  class="btn-md disabled"
   data-id="sds-button"
   disabled=""
   type="button"
@@ -65,25 +65,25 @@ exports[`Button > should match its disabled snapshot 1`] = `
 `;
 
 exports[`Button > should match its kind (ghost) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn btn-ghost" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn btn-ghost btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button ghost
 </button>"
 `;
 
 exports[`Button > should match its kind (primary) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn btn-primary" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn btn-primary btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button primary
 </button>"
 `;
 
 exports[`Button > should match its kind (secondary) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn btn-secondary" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn btn-secondary btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button secondary
 </button>"
 `;
 
 exports[`Button > should match its kind (tertiary) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn btn-tertiary" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn btn-tertiary btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button tertiary
 </button>"
 `;
@@ -92,7 +92,7 @@ exports[`Button > should match its pending snapshot 1`] = `
 <button
   aria-busy="true"
   aria-disabled="false"
-  class="active active pointer-events-none"
+  class="btn-md active active pointer-events-none"
   data-id="sds-button"
   data-pending="true"
   type="button"
@@ -147,7 +147,7 @@ exports[`Button > should match its size (lg) snapshot 1`] = `
 `;
 
 exports[`Button > should match its size (md) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button md
 </button>"
 `;
@@ -165,43 +165,43 @@ exports[`Button > should match its size (xs) snapshot 1`] = `
 `;
 
 exports[`Button > should match its type (button) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button button
 </button>"
 `;
 
 exports[`Button > should match its type (cta) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn-cta" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md btn-cta" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button cta
 </button>"
 `;
 
 exports[`Button > should match its type (submit) snapshot 1`] = `
-"<button data-id="sds-button" type="submit" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="submit" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button submit
 </button>"
 `;
 
 exports[`Button > should match its variant (blue) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn-blue" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-blue btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button blue
 </button>"
 `;
 
 exports[`Button > should match its variant (gray) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn-gray" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-gray btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button gray
 </button>"
 `;
 
 exports[`Button > should match its variant (red) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn-red" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-red btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button red
 </button>"
 `;
 
 exports[`Button > should match its variant (white) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="btn-white" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-white btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button white
 </button>"
 `;

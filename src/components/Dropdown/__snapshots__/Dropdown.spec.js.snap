@@ -14,7 +14,7 @@ exports[`Dropdown > Snapshots > should match its default snapshot 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="true"
-      class="space-x btn btn-secondary"
+      class="space-x btn btn-secondary btn-md"
       id="v-0"
       type="button"
     >

@@ -15,7 +15,14 @@ export default {
     },
   },
   component: SdsStructuredPage,
-  argTypes: {}
+  argTypes: {
+    stickyHeader: {
+      control: { type: 'boolean' }
+    },
+    stickyFooter: {
+      control: { type: 'boolean' }
+    }
+  }
 };
 
 const Template = (args) => ({

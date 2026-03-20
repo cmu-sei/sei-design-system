@@ -41,7 +41,7 @@ interface LoadingSpinnerProps {
   /**
    * Sets the size of the spinner.
    */
-  size?: 'lg' | 'md' | 'sm' | 'auto' | ''
+  size?: 'lg' | 'md' | 'sm' | 'auto'
   /**
    * Sets the accessiblity label for the spinner.
    */

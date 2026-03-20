@@ -12,7 +12,6 @@ export default {
   component: SdsResizer,
   argTypes: {
     clamp: {
-      options: [true, false],
       control: { type: 'boolean' }
     },
     initial: {
