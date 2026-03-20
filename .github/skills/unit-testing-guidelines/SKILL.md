@@ -1,11 +1,34 @@
 ---
-applyTo: "src/components/**/*.{spec.js,spec.ts}"
+name: unit-testing-guidelines
+description: |
+  **PRIMARY SKILL FOR TESTING** — Guidelines and best practices for writing unit tests for Vue 3 components, composables, and utilities. 
+
+  USE FOR:
+  - Writing new test files or updating existing tests
+  - Understanding testing patterns (AAA, mocking, async testing)
+  - Testing defineModel(), props, emits, and slots
+  - Debugging test failures or improving test coverage
+
+  DO NOT USE FOR:
+  - Understanding how components should be implemented (use components-guidelines)
+  - Writing or modifying component .vue files (use components-guidelines)
+
+  WHEN TO COMBINE: Only load components-guidelines if you have read the component file and need additional context with specific Vue patterns that aren't covered in the test examples or derrived from the component.
 ---
 
-# Context & Purpose:
-You are assisting with writing unit tests for Vue 3 applications using the Vitest testing framework and the Vue Test Utils library. The code will typically run in a Vite-powered Vue environment, targeting components, composables, and related utilities. Tests should aim to be clear, maintainable, and leverage best practices for Vue component testing and mocking.
+# Unit Testing Guidelines for Vue 3
 
----
+**IMPORTANT**: This skill contains critical guidelines for writing unit tests in this codebase. Read this file completely before creating or modifying any test files.
+
+## Context & Purpose
+
+This skill provides best practices for writing unit tests for Vue 3 applications using:
+- **Vitest** testing framework
+- **Vue Test Utils** for component testing  
+- **Composition API** (not Options API)
+- **Vite** build tooling
+
+Tests should be clear, maintainable, and follow established patterns for Vue component testing, mocking, and asynchronous behavior.
 
 ## Writing Tests and Test Descriptions
 
@@ -30,18 +53,21 @@ This section outlines best practices and key points for writing unit tests and t
 - Consistency helps readability and maintainability for team members and tools like Copilot.
 
 ### Structure and Organization
-- Organize test files and suites logically by feature or component
-- Group related tests using `describe` blocks
-- Order tests from simple to complex scenarios
-- Use `beforeEach` and `afterEach` or `beforeAll` and `afterAll` for common setup and teardown
-- Keep individual tests focused on a single behavior (see AAA Pattern below)
+- Organize test files and suites logically by feature or component.
+- Group related tests using `describe` blocks.
+- Order tests from simple to complex scenarios.
+- Use `beforeEach` and `afterEach` or `beforeAll` and `afterAll` for common setup and teardown.
+- Keep individual tests focused on a single behavior (see AAA Pattern below).
 
 ### Adapt to Testing Frameworks and Tools
 - For Vue, use Vue Test Utils best practices including shallow mounting, stubbing, and interaction testing.
 - Document the reactive model considerations for Vue component testing.
 
 ### Writing Tests with Maintainability in Mind
-- Avoid overly complex or brittle tests.
+- Write enough tests to improve coverage and test thoroughly.
+- Do not repeat tests or make tests so long that they are no longer easy to read/understand.
+- Avoid excessively long unit test files.
+- Determine if another test is testing multiple scenarios. If so, you do not need to test that scenario.
 - Strive for tests to be:
   - Self-contained
   - Idempotent (no side effects)
@@ -53,12 +79,7 @@ This section outlines best practices and key points for writing unit tests and t
   - `renders [component/element] correctly with [props/state]`
   - `emits [event name] when [condition]`
   - `calls [method/function] with [parameters] when [condition]`
-- Keep descriptions concise but specific enough to understand the test without reading the code
-
-### Updating and Maintaining Documentation
-- Keep test documentation synchronized with code changes.
-- Note the status of tests.
-- Maintain traceability to requirements or user stories when possible.
+- Keep descriptions concise but specific enough to understand the test without reading the code.
 
 ### The AAA Pattern (Arrange-Act-Assert)
 
@@ -81,15 +102,6 @@ Verify the expected outcome:
 - Check component output or state
 - Validate emitted events
 - Confirm expected behavior occurred
-
-#### Relationship to BDD (Given-When-Then)
-
-The AAA pattern aligns closely with BDD's Given-When-Then style:
-- **Arrange** = **Given** (setup/preconditions)
-- **Act** = **When** (action/trigger)
-- **Assert** = **Then** (expected outcome)
-
-Both patterns achieve the same goal: clear, readable tests that follow a logical flow.
 
 #### Vue-Specific AAA Examples
 
@@ -557,6 +569,7 @@ All test and coverage scripts are defined in your `package.json` file.
 - Mock external dependencies and asynchronous calls to isolate unit tests.
 - Consider snapshot testing for components to ensure UI consistency.
 
- ## JavaScript with TypeScript Best Practices
-- Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](./typescript.instructions.md) for type safety, code style, and best practices.
-- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../eslint.config.js) for linting rules and configuration.
+## JavaScript with TypeScript Best Practices
+- Follow the TypeScript guidelines defined in [typescript.instructions.md](../../instructions/typescript.instructions.md) for type safety, code style, and best practices.
+- Code style and quality are enforced using ESLint. Refer to [eslint.config.js](../../../eslint.config.js) for linting rules and configuration.
+- When writing tests, ensure proper TypeScript types are used for wrapper instances, props, and emitted events.

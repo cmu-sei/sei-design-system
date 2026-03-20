@@ -1026,13 +1026,11 @@ const inputDisplayValue = computed(() => {
     // Find the suggestion with the current arrowCounter
     const found: ComboBoxSuggestion | null | undefined = getCurrentSuggestion()
     if (found) {
-      let label = ''
       if (typeof found === 'object') {
-        label = String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? '')
+        return removeHtmlFromString(String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? ''))
       } else {
-        label = String(found)
+        return removeHtmlFromString(String(found))
       }
-      return removeHtmlFromString(label)
     }
   }
   // If there are selections (and query is empty), use the first selected value for form validation
@@ -1370,7 +1368,7 @@ const commitSelection = () => {
 const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   // Find the original suggestion from props.suggestions, if it exists
   let normalizedOption: ComboBoxSuggestion = option
-  let original: ComboBoxSuggestion | undefined = undefined
+  let original: ComboBoxSuggestion | undefined
   if (typeof option === 'object' && option !== null) {
     const val = props.optionLabel ? option[props.optionLabel as string] : option[defaultOptionLabel.value]
     original = findOriginalSuggestion(val as string)

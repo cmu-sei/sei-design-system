@@ -191,12 +191,6 @@
     &:where(:hover) { @apply bg-white/20; }
     &:where(:active, .active) { @apply shadow-inner text-white bg-white/20; }
   }
-
-  /* Tertiary white: override border-transparent for CTA */
-  &.btn-tertiary.btn-cta {
-    border-color: transparent;
-    &:where(:hover) { border-color: transparent; }
-  }
 }
 
 /* ===== CTA (CALL-TO-ACTION) UTILITY ===== */

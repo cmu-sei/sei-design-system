@@ -230,7 +230,7 @@ Wait for explicit confirmation before proceeding to Step 4.
 
 Once you receive confirmation (user says "yes", "go ahead", "proceed", or similar):
 
-1. Reference the unit testing guidelines from `#file:unit-testing-guidelines.instructions.md`
+1. Reference the unit testing guidelines from `.github/skills/unit-testing-guidelines/SKILL.md`
 2. Generate the complete test file following Vue 3 + Vitest + Vue Test Utils best practices
 3. **Implement all tests using the AAA (Arrange-Act-Assert) pattern** as defined in the guidelines
 4. Structure each test with clear separation between Arrange, Act, and Assert phases
