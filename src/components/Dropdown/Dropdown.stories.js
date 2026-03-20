@@ -33,7 +33,7 @@ export default {
       control: { type: 'select' }
     },
     size: {
-      options: ['xs', 'sm', 'md', 'lg', ''],
+      options: ['xs', 'sm', 'md', 'lg'],
       control: {type: 'select'}
     },
     type: {

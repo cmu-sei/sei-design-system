@@ -5,7 +5,7 @@ import { computed, type ComputedRef } from 'vue'
  */
 export type ButtonKind = 'primary' | 'secondary' | 'tertiary' | 'ghost'
 export type ButtonVariant = 'gray' | 'blue' | 'red' | 'white'
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | ''
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 export type ActionButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
 export interface ButtonClassConfig {
