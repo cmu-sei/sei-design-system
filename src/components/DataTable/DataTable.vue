@@ -61,20 +61,20 @@
         </div>
         <div
           v-if="hasSelectionActive"
-          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
+          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
         >
           <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
             {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
-          </span>
-          <div 
+          </span>       
+          <slot
             v-if="$slots['batch-selection-actions']"
-            class="flex flex-row flex-nowrap items-center gap-x-2 ml-auto"
+            name="batch-selection-actions"
+            :selected-ids="selectedIds"
           >
-            <slot
-              name="batch-selection-actions"
-              :selected-ids="selectedIds"
-            />
-          </div>
+            <div class="flex flex-row flex-nowrap items-center gap-x-2">
+              <!-- Batch selection actions will be rendered here -->
+            </div>
+          </slot>
         </div>
         <div 
           v-if="hasFilterSearch || $slots['ellipsis-menu-items']"

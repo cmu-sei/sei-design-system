@@ -43,36 +43,80 @@
         </SdsBadge>
       </template>
       <template #batch-selection-actions="{ selectedIds }: { selectedIds: number[] }">
-        <SdsActionButton
+        <SdsActionDropdown
+          :hide-arrow="true"
+          :icon-only="true"
           kind="ghost"
           variant="gray"
-          size="xs"
-          type="button"
-          @click="duplicateItems(selectedIds)"
+          size="sm"
+          class="lg:hidden"
         >
-          <IconFa7SolidCopy class="w-4 h-4" />
-          <span>Duplicate</span>
-        </SdsActionButton>
-        <SdsActionButton
-          kind="ghost"
-          variant="gray"
-          size="xs"
-          type="button"
-          @click="editItems(selectedIds)"
-        >
-          <IconFa7SolidPencil class="w-4 h-4" />
-          <span>Edit</span>
-        </SdsActionButton>
-        <SdsActionButton 
-          kind="ghost"
-          variant="red"
-          size="xs"
-          type="button"
-          @click="deleteItems(selectedIds)"
-        >
-          <IconFa7SolidTrashCan class="w-4 h-4" />
-          <span>Delete</span>
-        </SdsActionButton>
+          <template #icon>
+            <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
+          </template>
+          <template #default>
+            <SdsDropdownItem 
+              tag="button" 
+              @click="duplicateItems(selectedIds)"
+            >
+              <div class="flex items-center gap-x-2">
+                <IconFa7SolidCopy class="w-4 h-4" />
+                <span>Duplicate</span>
+              </div>
+            </SdsDropdownItem>
+            <SdsDropdownItem 
+              tag="button" 
+              @click="editItems(selectedIds)"
+            >
+              <div class="flex items-center gap-x-2">
+                <IconFa7SolidPencil class="w-4 h-4" />
+                <span>Edit</span>
+              </div>
+            </SdsDropdownItem>
+            <SdsDropdownItem 
+              tag="button" 
+              variant="red"
+              @click="deleteItems(selectedIds)"
+            >
+              <div class="flex items-center gap-x-2">
+                <IconFa7SolidTrashCan class="w-4 h-4" />
+                <span>Delete</span>
+              </div>
+            </SdsDropdownItem>
+          </template>
+        </SdsActionDropdown>
+        <div class="hidden lg:flex flex-row flex-nowrap items-center gap-x-2">
+          <SdsActionButton
+            kind="ghost"
+            variant="gray"
+            size="xs"
+            type="button"
+            @click="duplicateItems(selectedIds)"
+          >
+            <IconFa7SolidCopy class="w-4 h-4" />
+            <span>Duplicate</span>
+          </SdsActionButton>
+          <SdsActionButton
+            kind="ghost"
+            variant="gray"
+            size="xs"
+            type="button"
+            @click="editItems(selectedIds)"
+          >
+            <IconFa7SolidPencil class="w-4 h-4" />
+            <span>Edit</span>
+          </SdsActionButton>
+          <SdsActionButton 
+            kind="ghost"
+            variant="red"
+            size="xs"
+            type="button"
+            @click="deleteItems(selectedIds)"
+          >
+            <IconFa7SolidTrashCan class="w-4 h-4" />
+            <span>Delete</span>
+          </SdsActionButton>
+        </div>
       </template>
       <template #ellipsis-menu-items>
         <SdsDropdownItem 
