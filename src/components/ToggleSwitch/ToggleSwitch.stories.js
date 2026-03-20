@@ -10,7 +10,11 @@ export default {
     },
   },
   component: SdsToggleSwitch,
-  argTypes: {}
+  argTypes: {
+    disabled: {
+      control: { type: 'boolean' }
+    }
+  }
 };
 
 const Template = (args) => ({

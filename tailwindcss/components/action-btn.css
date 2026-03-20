@@ -208,51 +208,63 @@
    the cascade and their square-specific overrides take precedence. */
 
 @utility action-btn-square {
-  :where(.action-btn&) {
+  .action-btn& {
     @apply p-1.5;
   }
 }
 
-/* Default size (md) - no additional classes needed */
-
 @utility action-btn-xs {
-  :where(.action-btn&) {
+  .action-btn& {
     @apply py-1 px-1 text-sm gap-1;
   }
 
-  :where(.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))) {
+  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
     @apply py-0.5 px-1.5;
   }
 
-  :where(.action-btn.action-btn-square&) {
+  .action-btn.action-btn-square& {
     @apply p-1;
   }
 }
 
 @utility action-btn-sm {
-  :where(.action-btn&) {
+  .action-btn& {
     @apply py-1.5 px-1.5 text-sm;
   }
 
-  :where(.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))) {
+  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
     @apply px-2 py-1;
   }
 
-  :where(.action-btn.action-btn-square&) {
+  .action-btn.action-btn-square& {
+    @apply p-1.5;
+  }
+}
+
+@utility action-btn-md {
+  .action-btn& {
+    @apply py-1.5 px-1.5;
+  }
+
+  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
+    @apply py-1;
+  }
+
+  .action-btn.action-btn-square& {
     @apply p-1.5;
   }
 }
 
 @utility action-btn-lg {
-  :where(.action-btn&) {
+  .action-btn& {
     @apply py-2 px-2;
   }
 
-  :where(.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))) {
+  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
     @apply px-3 py-1.5;
   }
 
-  :where(.action-btn.action-btn-square&) {
+  .action-btn.action-btn-square& {
     @apply p-2;
   }
 }

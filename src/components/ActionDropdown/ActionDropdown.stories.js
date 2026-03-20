@@ -29,15 +29,11 @@ export default {
       control: { type: 'select' }
     },
     variant: {
-      options: ['blue', 'red', 'blue'],
+      options: ['gray', 'blue', 'red', 'white'],
       control: { type: 'select' }
     },
     size: {
-      options: ['sm', 'md'],
-      control: {type: 'select'}
-    },
-    type: {
-      options: ['dark'],
+      options: ['xs', 'sm', 'md', 'lg'],
       control: {type: 'select'}
     },
     zIndex: {

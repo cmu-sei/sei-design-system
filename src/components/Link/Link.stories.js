@@ -20,11 +20,15 @@ export default {
       control: { type: 'select' }
     },
     variant: {
-      options: ['blue', 'red'],
+      options: ['blue', 'red', 'white'],
       control: { type: 'select' }
     },
     decoration: {
       options: ['underline'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
       control: { type: 'select' }
     },
   }

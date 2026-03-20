@@ -21,7 +21,7 @@ export default {
       control: {type: 'select'}
     },
     size: {
-      options: ['sm', 'lg', 'auto'],
+      options: ['sm', 'md', 'lg', 'auto'],
       control: {type: 'select'}
     },
     zIndex: {

@@ -22,11 +22,11 @@ export default {
       control: { type: 'select' }
     },
     type: {
-      options: ['button', 'submit'],
+      options: ['button', 'cta', 'submit'],
       control: { type: 'select' }
     },
     size: {
-      options: ['sm', 'md'],
+      options: ['xs', 'sm', 'md', 'lg', ''],
       control: { type: 'select' }
     },
   }

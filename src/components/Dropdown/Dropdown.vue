@@ -168,8 +168,9 @@ interface DropdownProps {
   tooltip?: string;
   /**
    * Determines the purpose and particular function of the button trigger.
+   * Note: 'tertiary' is only available when buttonStyle is 'default'.
    */
-  kind?: Exclude<ButtonKind, 'tertiary'>;
+  kind?: ButtonKind;
   /**
    * Styling for the button trigger.
    */

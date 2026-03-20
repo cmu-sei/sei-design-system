@@ -147,7 +147,7 @@ exports[`Button > should match its size (lg) snapshot 1`] = `
 `;
 
 exports[`Button > should match its size (md) snapshot 1`] = `
-"<button data-id="sds-button" type="button" class="" aria-disabled="false" aria-busy="false">
+"<button data-id="sds-button" type="button" class="btn-md" aria-disabled="false" aria-busy="false">
   <!-- @slot Button content. -->Button md
 </button>"
 `;
