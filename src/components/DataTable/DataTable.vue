@@ -2,6 +2,7 @@
   <div 
     data-id="sds-data-table"
     class="w-full min-w-full"
+    :data-has-footer="!!pagination || undefined"
   >
     <div 
       v-if="hasFilters || hasFilterSearch"
@@ -15,7 +16,7 @@
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-16.5">
         <div 
           v-if="hasFilters && !isSearchActive"
-          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2"
         >
           <template 
             v-for="(filter, filterIndex) in filters"
@@ -226,40 +227,6 @@
             v-bind="slotProps ?? {}"
           />
         </template>
-        <template #footer>
-          <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
-            <SdsPaginatorRange 
-              v-bind="{ ...paginatorRangeProps, ...$attrs }"
-              class="w-full md:w-auto"
-            />
-            <SdsPaginator 
-              v-bind="{ ...paginatorProps, ...$attrs }"
-              @go-to-page="setCurrentPage"
-            />
-            <SdsActionDropdown
-              v-model="options"
-              data-id="sds-data-table-page-size-dropdown"
-              kind="secondary"
-              variant="gray"
-              class="justify-self-end"
-            >
-              <template #title>
-                {{ totalRowsPerPage }}
-              </template>
-              <template 
-                v-for="option in options" 
-                :key="JSON.stringify(option)"
-              >
-                <SdsDropdownItem
-                  tag="button"
-                  @click="setPageSize(option.value)"
-                >
-                  {{ option.text }}
-                </SdsDropdownItem>
-              </template>
-            </SdsActionDropdown>
-          </div>
-        </template>
       </SdsTable>
       <template v-else>
         <div 
@@ -340,6 +307,48 @@
           </p>
         </div>
       </template>
+    </div>
+    <div
+      v-if="pagination && (tableProps.items && tableProps.items.length > 0)"
+      class="
+        bg-gray-600/2 dark:bg-gray-400/2
+        border border-gray-100 dark:border-gray-800
+        rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
+        px-2 py-4 md:overflow-x-auto
+      "
+    >
+      <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
+        <SdsPaginatorRange 
+          v-bind="{ ...paginatorRangeProps, ...$attrs }"
+          class="w-full md:w-auto shrink-0"
+        />
+        <SdsPaginator 
+          v-bind="{ ...paginatorProps, ...$attrs }"
+          @go-to-page="setCurrentPage"
+        />
+        <SdsActionDropdown
+          v-model="options"
+          data-id="sds-data-table-page-size-dropdown"
+          kind="secondary"
+          variant="gray"
+          class="justify-self-end"
+        >
+          <template #title>
+            {{ totalRowsPerPage }}
+          </template>
+          <template 
+            v-for="option in options" 
+            :key="JSON.stringify(option)"
+          >
+            <SdsDropdownItem
+              tag="button"
+              @click="setPageSize(option.value)"
+            >
+              {{ option.text }}
+            </SdsDropdownItem>
+          </template>
+        </SdsActionDropdown>
+      </div>
     </div>
   </div>
 </template>

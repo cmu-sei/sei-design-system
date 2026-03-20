@@ -75,6 +75,11 @@
     @apply rounded-tl-none rounded-tr-none;
   }
 
+  /* Remove bottom border and rounding when a faux footer follows outside the scroll container */
+  :where([data-id="sds-data-table"][data-has-footer] .table-prose) {
+    @apply rounded-bl-none rounded-br-none border-b-0;
+  }
+
   /* Sticky column: match section background */
   :where(.table-prose thead th.sticky) {
     @apply bg-gray-25;
