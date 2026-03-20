@@ -1,10 +1,19 @@
 ---
-applyTo: "src/components/**/*.vue"
----
+name: components-guidelines
+description: |
+  **PRIMARY SKILL FOR CREATING AND UPDATING COMPONENTS** — Guidelines and best practices for writing and modifying Vue 3 components.
 
-# Context & Purpose
-Automate the creation of modular, maintainable, and well-structured Vue 3 components using the Composition API and `<script setup>`. Emphasize flexibility and adherence to Vue 3 best practices.
+  USE FOR:
+  - Creating new .vue component files
+  - Modifying existing component implementation
+  - Understanding component structure, props, emits, defineModel
+  - Questions about how components should be architected
 
+  DO NOT USE FOR:
+  - Writing or improving unit tests (use unit-testing-guidelines)
+  - Understanding testing patterns or assertions
+
+  WHEN TO COMBINE: Load unit-testing-guidelines if you're adding a new component and need to write tests for it.
 ---
 
 ## General Component Structure
@@ -20,8 +29,8 @@ Automate the creation of modular, maintainable, and well-structured Vue 3 compon
  - All Vue objects are imported globally; explicit imports are not needed.
 
  ## JavaScript with TypeScript Best Practices
-- Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](./typescript.instructions.md) for type safety, code style, and best practices.
-- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../eslint.config.js) for linting rules and configuration.
+- Follow the TypeScript guidelines and rules defined in [`typescript.instructions.md`](../../instructions/typescript.instructions.md) for type safety, code style, and best practices.
+- Code style and quality are enforced using ESLint. Refer to [`eslint.config.js`](../../../eslint.config.js) for linting rules and configuration.
 
 ## Component and File Naming Conventions
 - Name Vue components using PascalCase (e.g., `MyComponent`).
