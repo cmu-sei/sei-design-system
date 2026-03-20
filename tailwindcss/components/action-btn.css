@@ -257,11 +257,11 @@
 
 @utility action-btn-lg {
   .action-btn& {
-    @apply py-2 px-2;
+    @apply px-1.5 py-2;
   }
 
   .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
-    @apply px-3 py-1.5;
+    @apply px-1.5 py-2;
   }
 
   .action-btn.action-btn-square& {
