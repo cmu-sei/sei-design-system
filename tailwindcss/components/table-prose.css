@@ -1,6 +1,6 @@
 @layer components {
   :where(.table-prose) {
-    @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-hidden sds-theme-plaid:rounded-none;
+    @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-clip sds-theme-plaid:rounded-none;
     border-collapse: separate;
     border-spacing: 0;
   }
@@ -73,6 +73,36 @@
   :where([data-id="sds-data-table"] .table-prose),
   :where([data-id="sds-data-table"] .table-prose > thead) {
     @apply rounded-tl-none rounded-tr-none;
+  }
+
+  /* Sticky column: match section background */
+  :where(.table-prose thead th.sticky) {
+    @apply bg-gray-25;
+  }
+
+  :where(.dark .table-prose thead th.sticky) {
+    @apply bg-gray-900;
+  }
+
+  :where(.table-prose tbody td.sticky),
+  :where(.table-prose tbody th.sticky) {
+    @apply bg-white;
+  }
+
+  :where(.dark .table-prose tbody td.sticky),
+  :where(.dark .table-prose tbody th.sticky) {
+    @apply bg-gray-950;
+  }
+
+  /* Sticky column: right border — only on the last sticky column when table is scrollable */
+  :where([data-scrollable] .table-prose th.sticky-end),
+  :where([data-scrollable] .table-prose td.sticky-end) {
+    @apply border-r border-gray-100;
+  }
+
+  :where(.dark [data-scrollable] .table-prose th.sticky-end),
+  :where(.dark [data-scrollable] .table-prose td.sticky-end) {
+    @apply border-r border-gray-800;
   }
 }
 

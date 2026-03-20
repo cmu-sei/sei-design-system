@@ -173,7 +173,12 @@
         </div>
       </div>
     </div>
-    <div class="overflow-x-auto max-w-full">
+    <div
+      ref="scrollContainerRef"
+      class="overflow-x-auto max-w-full"
+      :data-scrollable="isTableScrollable || undefined"
+      @scroll.passive="onTableScroll"
+    >
       <SdsTable 
         v-if="tableProps.items && tableProps.items.length"
         v-bind="{ ...tableProps, ...$attrs }"
@@ -440,6 +445,10 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 
 const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination', 'update:selectedItems'])
 
+/**
+ * State
+ */
+
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
     ? props.filters.map((f) => ({ 
@@ -453,25 +462,57 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.filterSearchQuery ?? '')
+const scrollContainerRef = ref<HTMLElement | null>(null)
+const isTableScrollable = ref(false)
+
+/**
+ * Computed
+ */
+
+const isLoading = computed(() => props.loading ?? false)
+const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
 
 const hasBatchSelection = computed(() => props.enableBatchSelection)
 const selectedCount = computed(() => selectedIds.value.length)
 const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCount.value > 0)
 const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
 
-/**
- * Styling properties from the first batch action for the desktop buttons.
- * Falls back to defaults if not specified on the action.
- */
+const hasFilters = computed(() => !!(props.filters && props.filters.length))
+const hasFilterSearch = computed(() => !!props.filterSearch)
+
+const hasActiveFilters = computed(() => {
+  if (!filters.value) return false
+  return filters.value.some((filter) => {
+    if (isSegmentFilter(filter)) {
+      // Check if any segment other than "All" (first) is selected
+      return filter.segments.some((segment, index) => index !== 0 && segment.selected)
+    } else if (isDropdownFilter(filter)) {
+      // Check if any options are selected
+      return filter.options.some((option) => option.selected)
+    }
+    return false
+  })
+})
+
 const tableFields = computed(() => {
   const baseFields = props.data?.fields ?? []
   if (hasBatchSelection.value) {
     return [
-      { key: 'selected', custom: true, sortable: false, align: 'center' as const },
-      ...baseFields
+      { key: 'selected', custom: true, sortable: false, align: 'center' as const, stickyPosition: 0, stickyLeftClass: 'left-0' },
+      ...baseFields.map((field, index) => ({
+        ...field,
+        stickyPosition: index === 0 ? 1 : undefined,
+        stickyLeftClass: index === 0 ? 'left-8' : undefined,  // left-8 = 2rem = width of the selected (w-8) column
+        stickyEnd: index === 0  // only the last sticky column gets the border
+      }))
     ]
   }
-  return baseFields
+  return baseFields.map((field, index) => ({
+    ...field,
+    stickyPosition: index === 0 ? 0 : undefined,
+    stickyLeftClass: index === 0 ? 'left-0' : undefined,
+    stickyEnd: index === 0  // only sticky column, so it's always the last
+  }))
 })
 
 const tableItems = computed(() => {
@@ -504,13 +545,11 @@ const selectAll = computed({
   }
 })
 
-const tableProps = computed(() => {
-  return {
-    ...props.data,
-    fields: tableFields.value,
-    items: tableItems.value
-  }
-})
+const tableProps = computed(() => ({
+  ...props.data,
+  fields: tableFields.value,
+  items: tableItems.value
+}))
 
 const paginatorProps = computed(() => ({
   loading: isLoading.value,
@@ -533,34 +572,9 @@ const options = computed(() => [
 
 const totalRowsPerPage = computed(() => `${props.pagination?.totalResultsPerPage ?? 0} rows`)
 
-const hasFilters = computed(() => {
-  const { filters } = props
-  return !!(filters && filters.length)
-})
-
-const hasFilterSearch = computed(() => !!props.filterSearch)
-
-const hasActiveFilters = computed(() => {
-  if (!filters.value) return false
-  return filters.value.some((filter) => {
-    if (isSegmentFilter(filter)) {
-      // Check if any segment other than "All" (first) is selected
-      return filter.segments.some((segment, index) => 
-        index !== 0 && segment.selected
-      )
-    } else if (isDropdownFilter(filter)) {
-      // Check if any options are selected
-      return filter.options.some((option) => option.selected)
-    }
-    return false
-  })
-})
-
 /**
- * Loading state(s) for the data table.
+ * Type guards
  */
-const isLoading = computed(() => props.loading ?? false)
-const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
 
 function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'segment'; segments: DataTableSegments[] } {
   return filter.type === 'segment' && Array.isArray(filter.segments) && filter.segments.length > 0
@@ -569,6 +583,10 @@ function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilt
 function isDropdownFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'dropdown'; options: FilterByDropdownOption[] } {
   return filter.type === 'dropdown' && Array.isArray(filter.options) && filter.options.length > 0
 }
+
+/**
+ * Functions
+ */
 
 /**
  * Executes a batch selection action with the current selected IDs.
@@ -597,10 +615,7 @@ function clearFilters() {
     })
   }
 
-  if (
-    searchQuery.value && 
-    searchQuery.value.length > 0
-  ) {
+  if (searchQuery.value && searchQuery.value.length > 0) {
     searchQuery.value = ''
   }
 
@@ -621,7 +636,6 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   }
 
   // For dropdown filters, options are already updated via v-model. Just emit!
-
   emit('update:filters', filters.value)
 }
 
@@ -664,24 +678,45 @@ function setSearchActiveState(active: boolean) {
   }
 }
 
-/**
- * Debounced function to emit search query changes.
- * Delays emission to avoid excessive updates while typing.
- */
+function checkScrollable() {
+  const el = scrollContainerRef.value
+  if (el) {
+    isTableScrollable.value = el.scrollWidth > el.clientWidth
+  }
+}
+
+function onTableScroll(event: Event) {
+  const el = event.target as HTMLElement
+  isTableScrollable.value = el.scrollWidth > el.clientWidth
+}
+
 const debouncedEmitSearch = useDebounce((query) => {
   emit('update:filterSearchQuery', query)
 }, props.filterSearchDebounce)
 
 /**
- * Watch for changes to the search query and emit debounced updates.
+ * Lifecycle hooks
  */
+
+onMounted(() => {
+  const el = scrollContainerRef.value
+  if (!el) return
+  checkScrollable()
+  const observer = new ResizeObserver(checkScrollable)
+  observer.observe(el)
+  onUnmounted(() => observer.disconnect())
+})
+
+/**
+ * Watchers
+ */
+
+watch(() => props.data?.items, checkScrollable, { flush: 'post' })
+
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
 })
 
-/**
- * Emit all items with their current selected state whenever the selection changes.
- */
 watch(selectedIds, (ids) => {
   const allItems = (props.data?.items ?? []).map((item) => ({
     ...item,
