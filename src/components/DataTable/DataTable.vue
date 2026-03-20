@@ -367,6 +367,7 @@ import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
 import { useDebounce } from '@/composables'
+import { useResizeObserver } from '@vueuse/core'
 
 export type DataTableFilterType = 'segment' | 'dropdown';
 
@@ -703,18 +704,7 @@ const debouncedEmitSearch = useDebounce((query) => {
   emit('update:filterSearchQuery', query)
 }, props.filterSearchDebounce)
 
-/**
- * Lifecycle hooks
- */
-
-onMounted(() => {
-  const el = scrollContainerRef.value
-  if (!el) return
-  checkScrollable()
-  const observer = new ResizeObserver(checkScrollable)
-  observer.observe(el)
-  onUnmounted(() => observer.disconnect())
-})
+useResizeObserver(scrollContainerRef, checkScrollable)
 
 /**
  * Watchers
