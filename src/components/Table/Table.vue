@@ -415,6 +415,9 @@ export interface TableField {
   header?: boolean;
   align?: 'left' | 'center' | 'right';
   fields?: TableField[];
+  stickyPosition?: number;
+  stickyLeftClass?: string;
+  stickyEnd?: boolean;
   [key: string]: unknown;
 }
 
@@ -641,7 +644,7 @@ const getStickyClasses = (key: string) => {
     return {}
   }
 
-  const leftClass = (field.stickyLeftClass as string) || 'left-0'
+  const leftClass = field.stickyLeftClass || 'left-0'
 
   return {
     'sticky': true,

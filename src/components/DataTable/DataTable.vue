@@ -10,10 +10,10 @@
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
         rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none overflow-hidden
-        min-h-16.5 w-full min-w-full
+        min-h-15.5 w-full min-w-full
       "
     >
-      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-16.5">
+      <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
           v-if="hasFilters && !isSearchActive"
           class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2"
