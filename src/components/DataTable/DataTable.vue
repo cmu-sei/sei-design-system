@@ -390,7 +390,7 @@ export interface BatchSelectionAction {
   kind?: Exclude<ButtonKind, 'tertiary'>; // Button kind; defaults to 'ghost'
   variant?: ButtonVariant; // Button variant; defaults to 'gray'
   size?: ActionButtonSize; // Button size; defaults to 'xs'
-  icon?: Component; // Optional icon component to render before the label
+  icon?: Component; // Optional icon component: use library icons (e.g., IconFa7SolidTrash), FontAwesome Pro's FaIcon, or any custom Vue component that renders an icon
 }
 
 interface DataTableProps {
