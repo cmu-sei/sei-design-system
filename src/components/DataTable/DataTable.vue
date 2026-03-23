@@ -314,10 +314,10 @@
         bg-gray-600/2 dark:bg-gray-400/2
         border border-gray-100 dark:border-gray-800
         rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
-        px-2 py-4 md:overflow-x-auto
+        px-2 py-4
       "
     >
-      <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
+      <div class="md:overflow-x-auto flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
         <SdsPaginatorRange 
           v-bind="{ ...paginatorRangeProps, ...$attrs }"
           class="w-full md:w-auto shrink-0"
