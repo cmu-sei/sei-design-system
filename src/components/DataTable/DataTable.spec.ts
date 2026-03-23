@@ -1,8 +1,8 @@
-import type { TableItem } from '../Table/Table.vue'
+import type { DataTableFilterConfig } from './DataTable.vue'
+import type { TableField, TableItem } from '../Table/Table.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import SdsDataTable from './DataTable.vue'
-import type { DataTableFilterConfig } from './DataTable.vue'
 
 interface CellSlotProps {
   item: TableItem
@@ -75,7 +75,7 @@ describe('SdsDataTable', () => {
       const table = wrapper.findComponent({ name: 'SdsTable' })
       expect(table.exists()).toBe(true)
 
-      const renderedFields = table.props('fields') as Array<Record<string, unknown>>
+      const renderedFields = table.props('fields') as Array<TableField>
       expect(renderedFields).toHaveLength(fields.length)
       expect(renderedFields.map((field) => field.key)).toEqual(fields.map((field) => field.key))
       expect(renderedFields[0]).toMatchObject({
@@ -152,7 +152,6 @@ describe('SdsDataTable', () => {
       expect(wrapper.findComponent({ name: 'SdsPaginatorRange' }).exists()).toBe(false)
       expect(wrapper.find('[data-id="sds-data-table-page-size-dropdown"]').exists()).toBe(false)
     })
-
   })
 
   describe('Pagination State Management', () => {
@@ -396,7 +395,7 @@ describe('SdsDataTable', () => {
 
       expect(onUpdateSelectedItems).toHaveBeenCalled()
 
-      const latestPayload = onUpdateSelectedItems.mock.calls.at(-1)?.[0] as Array<Record<string, unknown>>
+      const latestPayload = onUpdateSelectedItems.mock.calls.at(-1)?.[0] as Array<TableItem>
       const firstItem = latestPayload.find((item) => item.id === 1)
 
       expect(firstItem).toBeDefined()
@@ -425,7 +424,7 @@ describe('SdsDataTable', () => {
 
       expect(onUpdateSelectedItems).toHaveBeenCalled()
 
-      const latestPayload = onUpdateSelectedItems.mock.calls.at(-1)?.[0] as Array<Record<string, unknown>>
+      const latestPayload = onUpdateSelectedItems.mock.calls.at(-1)?.[0] as Array<TableItem>
       const allSelected = latestPayload.every((item) => item.selected === true)
       expect(allSelected).toBe(true)
     })
@@ -485,7 +484,7 @@ describe('SdsDataTable', () => {
           label: 'Assignee',
           type: 'dropdown',
           options: [
-            { text: 'Jamie Carter', value: 'Jamie Carter', selected: true }
+            { id: 'jamie-carter-1', text: 'Jamie Carter', value: 'Jamie Carter', selected: true }
           ]
         }
       ]
@@ -537,7 +536,7 @@ describe('SdsDataTable', () => {
           label: 'Assignee',
           type: 'dropdown',
           options: [
-            { text: 'Jamie Carter', value: 'Jamie Carter', selected: false }
+            { id: 'jamie-carter-2', text: 'Jamie Carter', value: 'Jamie Carter', selected: false }
           ]
         }
       ]
@@ -681,11 +680,9 @@ describe('SdsDataTable', () => {
         attachTo: container
       })
 
-      // When no data is provided, table should not render
       const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
       expect(tableComponent.exists()).toBe(false)
       
-      // Should show "No Results" empty state instead
       expect(wrapper.text()).toContain('No Results')
       expect(wrapper.text()).toContain('There are no results you can view')
     })
@@ -729,7 +726,7 @@ describe('SdsDataTable', () => {
       })
 
       const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
-      const renderedFields = tableComponent.props('fields') as Array<Record<string, unknown>>
+      const renderedFields = tableComponent.props('fields') as Array<TableField>
 
       expect(renderedFields[0]).toMatchObject({
         key: 'selected',
