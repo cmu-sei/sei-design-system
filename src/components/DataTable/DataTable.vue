@@ -366,8 +366,7 @@ import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
-import { useDebounce } from '@/composables'
-import { useResizeObserver } from '@vueuse/core'
+import { useDebounce, useResizeObserver } from '@/composables'
 
 export type DataTableFilterType = 'segment' | 'dropdown';
 
@@ -472,7 +471,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.filterSearchQuery ?? '')
-const scrollContainerRef = ref<HTMLElement | null>(null)
+const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
 const isTableScrollable = ref(false)
 
 /**

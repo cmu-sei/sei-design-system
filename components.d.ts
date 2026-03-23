@@ -82,7 +82,6 @@ declare module 'vue' {
     IconFa7SolidPencil: typeof import('~icons/fa7-solid/pencil')['default']
     IconFa7SolidPlus: typeof import('~icons/fa7-solid/plus')['default']
     IconFa7SolidRotateLeft: typeof import('~icons/fa7-solid/rotate-left')['default']
-    IconFa7SolidTrash: typeof import('~icons/fa7-solid/trash')['default']
     IconFa7SolidTrashCan: typeof import('~icons/fa7-solid/trash-can')['default']
     IconFa7SolidTriangleExclamation: typeof import('~icons/fa7-solid/triangle-exclamation')['default']
     IconFa7SolidUpDown: typeof import('~icons/fa7-solid/up-down')['default']
