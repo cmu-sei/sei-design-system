@@ -17,11 +17,11 @@ export default {
       control: { type: 'select' }
     },
     placementOver: {
-      options: ['portrait', 'circle'],
+      options: ['portrait', 'circle', 'square'],
       control: { type: 'select' }
     },
     size: {
-      options: ['sm', 'md', 'lg'],
+      options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl'],
       control: { type: 'select' }
     },
     variant: {

@@ -219,7 +219,7 @@ interface FilterByDropdownProps {
   /**
    * The z-index for the popover.
    */
-  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto' | '';
+  zIndex?: '0' | '10' | '20' | '30' | '40' | '50' | 'auto';
   /**
    * The title for the toggle button.
    */

@@ -12,7 +12,7 @@ export default {
   component: SdsDatapoint,
   argTypes: {
     variant: {
-      options: ['', 'gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
+      options: ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green'],
       control: { type: 'select' }
     },
     size: {

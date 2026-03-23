@@ -107,8 +107,8 @@
             :class="buttonStyle === 'action' 
               ? 'w-4 h-4' 
               : {
-                'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm' || size === '',
-                'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm' && size !== '',
+                'w-4 h-4 -mt-0.5 ml-1 -mr-1': size === 'sm',
+                'w-5 h-5 ml-2 -mt-1 -mr-2': size !== 'sm',
               }"
           />
         </button>
@@ -168,8 +168,9 @@ interface DropdownProps {
   tooltip?: string;
   /**
    * Determines the purpose and particular function of the button trigger.
+   * Note: 'tertiary' is only available when buttonStyle is 'default'.
    */
-  kind?: Exclude<ButtonKind, 'tertiary'>;
+  kind?: ButtonKind;
   /**
    * Styling for the button trigger.
    */
@@ -197,7 +198,7 @@ interface DropdownProps {
   /**
    * Determines the size of the trigger button.
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg' | '';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   /**
    * Determines if the arrow should display or not.
    */

@@ -16,6 +16,14 @@ export default {
     type: {
       options: ['folder', 'underline', 'block'],
       control: { type: 'select' }
+    },
+    size: {
+      options: ['sm', 'lg'],
+      control: { type: 'select' }
+    },
+    variant: {
+      options: ['red', 'blue', 'gray'],
+      control: { type: 'select' }
     }
   }
 };

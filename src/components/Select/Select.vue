@@ -55,7 +55,7 @@ interface SelectProps {
   /**
    * Determines the size of the component.
    */
-  size?: 'md' | 'sm' | ''
+  size?: 'md' | 'sm'
   /**
    * Determines the label key used for options
    */
@@ -90,7 +90,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   id: undefined,
   name: null,
   options: () => [],
-  size: '',
+  size: 'md',
   labelKey: 'text',
   valueKey: 'value',
   disabled: false,

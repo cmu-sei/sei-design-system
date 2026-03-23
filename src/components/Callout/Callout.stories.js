@@ -1,4 +1,3 @@
-import { timestamp } from '@vueuse/core';
 import SdsCallout from './Callout.vue';
 
 import { action } from 'storybook/actions';
@@ -23,7 +22,7 @@ export default {
       control: { type: 'select' }
     },
     size: {
-      options: ['sm', 'md'],
+      options: ['xs', 'sm', 'md', 'lg'],
       control: { type: 'select' }
     }
   }
