@@ -82,65 +82,64 @@
                 v-if="field.srOnly"
                 class="sr-only"
               >{{ field.label }}</span>
-              <button
+              <template 
                 v-for="f, index in field.fields"
                 v-else
                 :key="f.key"
-                type="button"
-                class="inline-flex items-center align-middle after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden"
-                :class="{
-                  'cursor-default after:mr-0.5': !f.sortable,
-                  'after:mr-4' : f.sortable,
-                  'flex-row-reverse': field.align === 'right'
-                }"
-                @click="f.sortable ? handleSortBy(f) : undefined"
               >
-                <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
-                <slot
-                  :name="`head(${f.key})`"
-                  :field="f"
-                  :active="sortField === f.key"
+                <button
+                  type="button"
+                  class="inline-flex items-center align-middle"
+                  :class="{
+                    'cursor-default': !f.sortable,
+                    'flex-row-reverse': field.align === 'right'
+                  }"
+                  @click="f.sortable ? handleSortBy(f) : undefined"
                 >
-                  <span
-                    :class="{
-                      'text-gray-900 dark:text-gray-100 font-bold': sortField === f.key,
-                      'font-normal': sortField !== f.key && index !== 0 
-                    }"
-                  >{{ f.label }}</span>
-                  <template v-if="f.sortable">
-                    <IconFa7SolidUpDown
-                      v-if="sortField !== f.key"
-                      class="inline-block text-gray-900 dark:text-gray-100"
+                  <!-- @slot Head content. Allows for the customization of field titles. @binding field, active -->
+                  <slot
+                    :name="`head(${f.key})`"
+                    :field="f"
+                    :active="sortField === f.key"
+                  >
+                    <span
                       :class="{
-                        'opacity-100': sortField === f.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
-                        'ml-2': f.align !== 'right',
-                        'mr-2': f.align === 'right',
+                        'text-gray-900 dark:text-gray-100 font-bold': sortField === f.key,
+                        'font-normal': sortField !== f.key && index !== 0 
                       }"
-                    />
-                    <IconFa7SolidArrowUp
-                      v-else-if="sortOrder > 0"
-                      class="inline-block text-gray-900 dark:text-gray-100"
-                      :class="{
-                        'opacity-100': sortField === f.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
-                        'ml-2': f.align !== 'right',
-                        'mr-2': f.align === 'right',
-                      }"
-                    />
-                    <IconFa7SolidArrowDown
-                      v-else
-                      class="inline-block text-gray-900 dark:text-gray-100"
-                      :class="{
-                        'opacity-100': sortField === f.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== f.key,
-                        'ml-2': f.align !== 'right',
-                        'mr-2': f.align === 'right',
-                      }"
-                    />
-                  </template>
-                </slot>
-              </button>
+                    >{{ f.label }}</span>
+                  </slot>
+                </button>
+                <!-- Add separator when we are less than 1 away. -->
+                <span
+                  v-if="index < field.fields.length - 1"
+                  class="font-normal mx-2 inline-flex items-center align-middle"
+                >/</span>
+              </template>
+              <IconFa7SolidUpDown
+                v-if="!field.fields.some((f: TableField) => sortField === f.key)"
+                class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50"
+                :class="{
+                  'ml-2': field.align !== 'right',
+                  'mr-2': field.align === 'right',
+                }"
+              />
+              <IconFa7SolidArrowUp
+                v-else-if="sortOrder > 0"
+                class="inline-block text-gray-900 dark:text-gray-100 opacity-100"
+                :class="{
+                  'ml-2': field.align !== 'right',
+                  'mr-2': field.align === 'right',
+                }"
+              />
+              <IconFa7SolidArrowDown
+                v-else
+                class="inline-block text-gray-900 dark:text-gray-100 opacity-100"
+                :class="{
+                  'ml-2': field.align !== 'right',
+                  'mr-2': field.align === 'right',
+                }"
+              />
             </th>
           </template>
           <template v-else>
@@ -179,40 +178,40 @@
                       'text-gray-900 dark:text-gray-100 font-bold': sortField === field.key
                     }"
                   >{{ field.label }}</span>
-                  <template v-if="field.sortable">
-                    <IconFa7SolidUpDown
-                      v-if="sortField !== field.key"
-                      class="inline-block text-gray-900 dark:text-gray-100"
-                      :class="{
-                        'opacity-100': sortField === field.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                        'ml-2': field.align !== 'right',
-                        'mr-2': field.align === 'right',
-                      }"
-                    />
-                    <IconFa7SolidArrowUp
-                      v-else-if="sortOrder > 0"
-                      class="inline-block text-gray-900 dark:text-gray-100"
-                      :class="{
-                        'opacity-100': sortField === field.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                        'ml-2': field.align !== 'right',
-                        'mr-2': field.align === 'right',
-                      }"
-                    />
-                    <IconFa7SolidArrowDown
-                      v-else
-                      class="inline-block text-gray-900 dark:text-gray-100"
-                      :class="{
-                        'opacity-100': sortField === field.key,
-                        'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                        'ml-2': field.align !== 'right',
-                        'mr-2': field.align === 'right',
-                      }"
-                    />
-                  </template>
                 </slot>
               </button>
+              <template v-if="field.sortable">
+                <IconFa7SolidUpDown
+                  v-if="sortField !== field.key"
+                  class="inline-block text-gray-900 dark:text-gray-100"
+                  :class="{
+                    'opacity-100': sortField === field.key,
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                    'ml-2': field.align !== 'right',
+                    'mr-2': field.align === 'right',
+                  }"
+                />
+                <IconFa7SolidArrowUp
+                  v-else-if="sortOrder > 0"
+                  class="inline-block text-gray-900 dark:text-gray-100"
+                  :class="{
+                    'opacity-100': sortField === field.key,
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                    'ml-2': field.align !== 'right',
+                    'mr-2': field.align === 'right',
+                  }"
+                />
+                <IconFa7SolidArrowDown
+                  v-else
+                  class="inline-block text-gray-900 dark:text-gray-100"
+                  :class="{
+                    'opacity-100': sortField === field.key,
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
+                    'ml-2': field.align !== 'right',
+                    'mr-2': field.align === 'right',
+                  }"
+                />
+              </template>
             </th>
           </template>
         </template>
