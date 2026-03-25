@@ -358,7 +358,7 @@ import type { Component } from 'vue'
 import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableItem, TableProps } from '../Table/Table.vue'
-import type { ActionButtonSize, ButtonKind, ButtonVariant } from '@/composables'
+import type { ActionButtonSize, ButtonKind } from '@/composables'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
@@ -388,7 +388,7 @@ export interface BatchSelectionAction {
   label: string; // Display text for the action button
   action: GenericFunctionType; // Function to execute when action is clicked (receives selectedIds)
   kind?: Exclude<ButtonKind, 'tertiary'>; // Button kind; defaults to 'ghost'
-  variant?: ButtonVariant; // Button variant; defaults to 'gray'
+  variant?: 'gray' | 'red'; // Button variant; defaults to 'gray'
   size?: ActionButtonSize; // Button size; defaults to 'xs'
   icon?: Component; // Optional icon component: use library icons (e.g., IconFa7SolidTrash), FontAwesome Pro's FaIcon, or any custom Vue component that renders an icon
 }
