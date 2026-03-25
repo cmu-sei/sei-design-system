@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tooltip > matches snapshot 1`] = `
+<div
+  class="inline-block"
+  data-id="sds-tooltip"
+>
+  <div
+    class="inline-block w-full"
+  >
+    
+    <div>
+      <!-- @slot Trigger content. -->
+      
+      
+    </div>
+    
+  </div>
+  <!--v-if-->
+</div>
+`;
+
+exports[`Tooltip > matches snapshot with no props assigned 1`] = `
+"<div class="inline-block" data-id="sds-tooltip">
+  <div class="inline-block w-full">
+    <div>
+      <!-- @slot Trigger content. -->
+    </div>
+  </div>
+  <!--v-if-->
+</div>"
+`;
+
+exports[`Tooltip > matches snapshot with prop assigned 1`] = `
+"<div class="inline-block" data-id="sds-tooltip" tooltipclass="test" triggerclass="test">
+  <div class="inline-block w-full">
+    <div>
+      <!-- @slot Trigger content. -->
+    </div>
+  </div>
+  <!--v-if-->
+</div>"
+`;
