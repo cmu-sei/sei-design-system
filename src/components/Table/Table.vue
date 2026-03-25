@@ -67,6 +67,7 @@
           </button>
         </th>
         <template v-for="field in displayedFields">
+          <!-- Multiple fields -->
           <template v-if="field.fields">
             <th
               :key="field.key"
@@ -79,6 +80,20 @@
               }"
               class="whitespace-nowrap select-none group"
             >
+              <template v-if="field.align === 'right'">
+                <IconFa7SolidUpDown
+                  v-if="!field.fields.some((f: TableField) => sortField === f.key)"
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 mr-2"
+                />
+                <IconFa7SolidArrowUp
+                  v-else-if="sortOrder > 0"
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-100 mr-2"
+                />
+                <IconFa7SolidArrowDown
+                  v-else
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-100 mr-2"
+                />
+              </template>
               <template v-if="field.custom">
                 <slot
                   :name="`head(${field.key})`"
@@ -128,32 +143,23 @@
                   class="font-normal mx-2 inline-flex items-center align-middle"
                 >/</span>
               </template>
-              <IconFa7SolidUpDown
-                v-if="!field.fields.some((f: TableField) => sortField === f.key)"
-                class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50"
-                :class="{
-                  'ml-2': field.align !== 'right',
-                  'mr-2': field.align === 'right',
-                }"
-              />
-              <IconFa7SolidArrowUp
-                v-else-if="sortOrder > 0"
-                class="inline-block text-gray-900 dark:text-gray-100 opacity-100"
-                :class="{
-                  'ml-2': field.align !== 'right',
-                  'mr-2': field.align === 'right',
-                }"
-              />
-              <IconFa7SolidArrowDown
-                v-else
-                class="inline-block text-gray-900 dark:text-gray-100 opacity-100"
-                :class="{
-                  'ml-2': field.align !== 'right',
-                  'mr-2': field.align === 'right',
-                }"
-              />
+              <template v-if="field.align !== 'right'">
+                <IconFa7SolidUpDown
+                  v-if="!field.fields.some((f: TableField) => sortField === f.key)"
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2"
+                />
+                <IconFa7SolidArrowUp
+                  v-else-if="sortOrder > 0"
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2"
+                />
+                <IconFa7SolidArrowDown
+                  v-else
+                  class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2"
+                />
+              </template>
             </th>
           </template>
+          <!-- Single field -->
           <template v-else>
             <th
               :key="field.key"
@@ -166,6 +172,28 @@
               }"
               class="whitespace-nowrap space-x-1 select-none group"
             >
+              <template v-if="field.sortable && field.align === 'right'">
+                <IconFa7SolidUpDown
+                  v-if="sortField !== field.key"
+                  class="inline-block text-gray-900 dark:text-gray-100 mr-2"
+                  :class="{
+                    'opacity-100': sortField === field.key,
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key
+                  }"
+                />
+                <IconFa7SolidArrowUp
+                  v-else-if="sortOrder > 0"
+                  class="inline-block text-gray-900 dark:text-gray-100 mr-2"
+                />
+                <IconFa7SolidArrowDown
+                  v-else
+                  class="inline-block text-gray-900 dark:text-gray-100 mr-2"
+                  :class="{
+                    'opacity-100': sortField === field.key,
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key
+                  }"
+                />
+              </template>
               <template v-if="field.custom">
                 <slot
                   :name="`head(${field.key})`"
@@ -204,35 +232,25 @@
                   >{{ field.label }}</span>
                 </slot>
               </button>
-              <template v-if="field.sortable">
+              <template v-if="field.sortable && field.align !== 'right'">
                 <IconFa7SolidUpDown
                   v-if="sortField !== field.key"
-                  class="inline-block text-gray-900 dark:text-gray-100"
+                  class="inline-block text-gray-900 dark:text-gray-100 ml-2"
                   :class="{
                     'opacity-100': sortField === field.key,
-                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                    'ml-2': field.align !== 'right',
-                    'mr-2': field.align === 'right',
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key
                   }"
                 />
                 <IconFa7SolidArrowUp
                   v-else-if="sortOrder > 0"
-                  class="inline-block text-gray-900 dark:text-gray-100"
-                  :class="{
-                    'opacity-100': sortField === field.key,
-                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                    'ml-2': field.align !== 'right',
-                    'mr-2': field.align === 'right',
-                  }"
+                  class="inline-block text-gray-900 dark:text-gray-100 ml-2"
                 />
                 <IconFa7SolidArrowDown
                   v-else
-                  class="inline-block text-gray-900 dark:text-gray-100"
+                  class="inline-block text-gray-900 dark:text-gray-100 ml-2"
                   :class="{
                     'opacity-100': sortField === field.key,
-                    'opacity-0 group-hover:opacity-50': sortField !== field.key,
-                    'ml-2': field.align !== 'right',
-                    'mr-2': field.align === 'right',
+                    'opacity-0 group-hover:opacity-50': sortField !== field.key
                   }"
                 />
               </template>
