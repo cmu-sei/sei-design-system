@@ -70,6 +70,7 @@
     "@vue/compiler-sfc": "^3.5.13",
     "@vue/test-utils": "^2.4.6",
     "@vueuse/core": "^14.2.1",
+    "axe-core": "^4.11.1",
     "beautify": "^0.0.8",
     "date-fns": "^4.1.0",
     "esbuild": "^0.27.4",
