@@ -75,11 +75,23 @@
                 'text-left': !field.align || field.align === 'left',
                 'text-center': field.align === 'center',
                 'text-right': field.align === 'right',
+                ...getStickyClasses(field.key)
               }"
               class="whitespace-nowrap select-none group"
             >
+              <template v-if="field.custom">
+                <slot
+                  :name="`head(${field.key})`"
+                  :field="field"
+                  :active="sortField === field.key"
+                >
+                  <span class="font-normal cursor-default">
+                    {{ field.label }}
+                  </span>
+                </slot>
+              </template>
               <span
-                v-if="field.srOnly"
+                v-else-if="field.srOnly"
                 class="sr-only"
               >{{ field.label }}</span>
               <template 
@@ -150,11 +162,23 @@
                 'text-left': !field.align || field.align === 'left',
                 'text-center': field.align === 'center',
                 'text-right': field.align === 'right',
+                ...getStickyClasses(field.key)
               }"
               class="whitespace-nowrap space-x-1 select-none group"
             >
+              <template v-if="field.custom">
+                <slot
+                  :name="`head(${field.key})`"
+                  :field="field"
+                  :active="sortField === field.key"
+                >
+                  <span class="font-normal cursor-default">
+                    {{ field.label }}
+                  </span>
+                </slot>
+              </template>
               <span
-                v-if="field.srOnly"
+                v-else-if="field.srOnly"
                 class="sr-only"
               >{{ field.label }}</span>
               <button
@@ -282,7 +306,8 @@
                 'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
-                'border-b-0': isToggled(item)
+                'border-b-0': isToggled(item),
+                ...getStickyClasses(key)
               }"
             >
               <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -324,7 +349,8 @@
                     'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                     'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                     'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
-                    'border-b-0': rIndex !== (item.nestedRows.length - 1)
+                    'border-b-0': rIndex !== (item.nestedRows.length - 1),
+                    ...getStickyClasses(key)
                   }"
                 >
                   <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->
@@ -381,12 +407,16 @@ export interface TableField {
   key: string;
   label?: string;
   srOnly?: boolean;
+  custom?: boolean;
   format?: GenericFunctionType;
   sortable?: boolean;
   hidden?: boolean;
   header?: boolean;
   align?: 'left' | 'center' | 'right';
   fields?: TableField[];
+  stickyPosition?: number;
+  stickyLeftClass?: string;
+  stickyEnd?: boolean;
   [key: string]: unknown;
 }
 
@@ -600,6 +630,27 @@ const paddingClass = computed(() => {
 const cellElement = (key: string) => {
   const field = props.fields.find((f) => f.key === key)
   return field && field.header ? 'th' : 'td'
+}
+
+/**
+ * Returns sticky positioning classes for a cell based on the field's stickyPosition property.
+ * @param key - The field key
+ * @returns Object with sticky classes
+ */
+const getStickyClasses = (key: string) => {
+  const field = props.fields.find((f) => f.key === key)
+  if (!field || field.stickyPosition === undefined) {
+    return {}
+  }
+
+  const leftClass = field.stickyLeftClass || 'left-0'
+
+  return {
+    'sticky': true,
+    'z-10': true,
+    'sticky-end': !!field.stickyEnd,
+    [leftClass]: true
+  }
 }
 
 const format = (item: TableItem, key: string = '') => {
