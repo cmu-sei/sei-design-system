@@ -2,20 +2,21 @@
   <div 
     data-id="sds-data-table"
     class="w-full min-w-full"
+    :data-has-footer="!!pagination || undefined"
   >
     <div 
       v-if="hasFilters || hasFilterSearch"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
-        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none 
-        min-h-14.5 w-full min-w-full
+        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none overflow-hidden
+        min-h-15.5 w-full min-w-full
       "
     >
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
           v-if="hasFilters && !isSearchActive"
-          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2 py-4"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2"
         >
           <template 
             v-for="(filter, filterIndex) in filters"
@@ -59,52 +60,164 @@
             <span>Clear filters</span>
           </SdsActionButton>
         </div>
+        <div
+          v-if="hasSelectionActive"
+          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
+        >
+          <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
+            {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
+          </span>       
+          <template v-if="hasBatchSelectionActions">
+            <div class="hidden lg:flex flex-row flex-nowrap items-center gap-x-2">
+              <SdsActionButton
+                v-for="(batchAction, index) in batchSelectionActions"
+                :key="index"
+                :kind="batchAction.kind ?? 'ghost'"
+                :variant="batchAction.variant ?? 'gray'"
+                :size="batchAction.size ?? 'xs'"
+                type="button"
+                @click="executeBatchAction(batchAction)"
+              >
+                <component
+                  :is="batchAction.icon"
+                  v-if="batchAction.icon"
+                  class="w-4 h-4"
+                />
+                <span>{{ batchAction.label }}</span>
+              </SdsActionButton>
+            </div>
+            <SdsActionDropdown
+              v-if="batchSelectionActions.length > 0"
+              class="lg:hidden"
+              :hide-arrow="true"
+              :icon-only="true"
+              kind="ghost"
+              variant="gray"
+              size="sm"
+            >
+              <template #icon>
+                <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
+              </template>
+              <SdsDropdownItem
+                v-for="(batchAction, index) in batchSelectionActions"
+                :key="index"
+                tag="button"
+                :variant="batchAction.variant ?? 'gray'"
+                @click="executeBatchAction(batchAction)"
+              >
+                <div class="flex items-center gap-x-2">
+                  <component
+                    :is="batchAction.icon"
+                    v-if="batchAction.icon"
+                    class="w-4 h-4"
+                  />
+                  <span>{{ batchAction.label }}</span>
+                </div>
+              </SdsDropdownItem>
+            </SdsActionDropdown>
+          </template>
+        </div>
         <div 
-          v-if="hasFilterSearch"
-          class="flex flex-row items-center justify-end gap-x-4 px-2 py-4"
+          v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
+          class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
-            'absolute top-0 left-0 z-10 w-full': isSearchActive
+            'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
           }"
         >
-          <SdsActionButton
-            v-if="!isSearchActive"
-            kind="secondary"
+          <template v-if="hasFilterSearch">
+            <SdsActionButton
+              v-if="!isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              class="max-h-7.5"
+              @click="setSearchActiveState(true)"
+            >
+              <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
+              <span>Search</span>
+            </SdsActionButton>
+            <SdsComboBox
+              v-if="isSearchActive"
+              v-model="searchQuery"
+              :autofocus="isSearchActive"
+              :pending="isSearchLoading"
+              size="sm"
+              class="w-full"
+            />
+            <SdsActionButton
+              v-if="isSearchActive"
+              kind="secondary"
+              variant="gray"
+              size="sm"
+              type="button"
+              class="ml-2"
+              @click="setSearchActiveState(false)"
+            >
+              <span>Cancel</span>
+            </SdsActionButton>
+          </template>
+          <SdsActionDropdown
+            v-if="$slots['ellipsis-menu-items']"
+            :hide-arrow="true"
+            :icon-only="true"
+            kind="ghost"
             variant="gray"
             size="sm"
-            type="button"
-            @click="setSearchActiveState(true)"
           >
-            <IconFa7SolidMagnifyingGlass class="h-4 w-4" />
-            <span>Filter</span>
-          </SdsActionButton>
-          <SdsComboBox
-            v-if="isSearchActive"
-            v-model="searchQuery"
-            :autofocus="isSearchActive"
-            :pending="isSearchLoading"
-            size="sm"
-            class="w-full"
-          />
-          <SdsActionButton
-            v-if="isSearchActive"
-            kind="secondary"
-            variant="gray"
-            size="sm"
-            type="button"
-            @click="setSearchActiveState(false)"
-          >
-            <span>Cancel</span>
-          </SdsActionButton>
+            <template #icon>
+              <IconFa7SolidEllipsis class="h-4 w-4 rotate-90" />
+            </template>
+            <slot name="ellipsis-menu-items" />
+          </SdsActionDropdown>
         </div>
       </div>
     </div>
-    <div class="overflow-x-auto max-w-full">
+    <div
+      ref="scrollContainerRef"
+      class="overflow-x-auto max-w-full"
+      :data-scrollable="isTableScrollable || undefined"
+      @scroll.passive="onTableScroll"
+    >
       <SdsTable 
         v-if="tableProps.items && tableProps.items.length"
         v-bind="{ ...tableProps, ...$attrs }"
         class="table-prose-td:align-middle w-full min-w-5xl"
       >
+        <template #col(selected)>
+          <col 
+            v-if="hasBatchSelection"
+            class="w-8"
+          >
+        </template>
+        <template #head(selected)>
+          <label 
+            for="select-all"
+            class="relative -top-px"
+          >
+            <span class="sr-only">Select all</span>
+            <input
+              id="select-all"
+              v-model="selectAll"
+              type="checkbox"
+            >
+          </label>
+        </template>
+        <template #cell(selected)="{ item }: { item: TableItem }">
+          <label 
+            :for="`select-${item.id}`"
+            class="relative -top-px"
+          >
+            <span class="sr-only">Select {{ item.id }}</span>
+            <input
+              :id="`select-${item.id}`"
+              :checked="(item.selected as boolean)"
+              type="checkbox"
+              @change="toggleItemSelection(item)"
+            >
+          </label>
+        </template>
         <template
           v-for="(_, name) in $slots"
           #[name]="slotProps"
@@ -113,40 +226,6 @@
             :name="name"
             v-bind="slotProps ?? {}"
           />
-        </template>
-        <template #footer>
-          <div class="flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
-            <SdsPaginatorRange 
-              v-bind="{ ...paginatorRangeProps, ...$attrs }"
-              class="w-full md:w-auto"
-            />
-            <SdsPaginator 
-              v-bind="{ ...paginatorProps, ...$attrs }"
-              @go-to-page="setCurrentPage"
-            />
-            <SdsActionDropdown
-              v-model="options"
-              data-id="sds-data-table-page-size-dropdown"
-              kind="secondary"
-              variant="gray"
-              class="justify-self-end"
-            >
-              <template #title>
-                {{ totalRowsPerPage }}
-              </template>
-              <template 
-                v-for="option in options" 
-                :key="JSON.stringify(option)"
-              >
-                <SdsDropdownItem
-                  tag="button"
-                  @click="setPageSize(option.value)"
-                >
-                  {{ option.text }}
-                </SdsDropdownItem>
-              </template>
-            </SdsActionDropdown>
-          </div>
         </template>
       </SdsTable>
       <template v-else>
@@ -229,13 +308,57 @@
         </div>
       </template>
     </div>
+    <div
+      v-if="pagination && (tableProps.items && tableProps.items.length > 0)"
+      class="
+        bg-gray-600/2 dark:bg-gray-400/2
+        border border-gray-100 dark:border-gray-800
+        rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
+        px-2 py-4
+      "
+    >
+      <div class="md:overflow-x-auto flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
+        <SdsPaginatorRange 
+          v-bind="{ ...paginatorRangeProps, ...$attrs }"
+          class="w-full md:w-auto shrink-0"
+        />
+        <SdsPaginator 
+          v-bind="{ ...paginatorProps, ...$attrs }"
+          @go-to-page="setCurrentPage"
+        />
+        <SdsActionDropdown
+          v-model="options"
+          data-id="sds-data-table-page-size-dropdown"
+          kind="secondary"
+          variant="gray"
+          class="justify-self-end"
+        >
+          <template #title>
+            {{ totalRowsPerPage }}
+          </template>
+          <template 
+            v-for="option in options" 
+            :key="JSON.stringify(option)"
+          >
+            <SdsDropdownItem
+              tag="button"
+              @click="setPageSize(option.value)"
+            >
+              {{ option.text }}
+            </SdsDropdownItem>
+          </template>
+        </SdsActionDropdown>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { Component } from 'vue'
 import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdown.vue'
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
-import type { TableProps } from '../Table/Table.vue'
+import type { TableItem, TableProps } from '../Table/Table.vue'
+import type { ActionButtonSize, ButtonKind, ButtonVariant } from '@/composables'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
@@ -243,7 +366,7 @@ import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
 import SdsTable from '../Table/Table.vue'
-import { useDebounce } from '@/composables'
+import { useDebounce, useResizeObserver } from '@/composables'
 
 export type DataTableFilterType = 'segment' | 'dropdown';
 
@@ -261,6 +384,15 @@ export interface DataTableFilterConfig {
   options?: FilterByDropdownOption[]; // For dropdowns
 }
 
+export interface BatchSelectionAction {
+  label: string; // Display text for the action button
+  action: GenericFunctionType; // Function to execute when action is clicked (receives selectedIds)
+  kind?: Exclude<ButtonKind, 'tertiary'>; // Button kind; defaults to 'ghost'
+  variant?: ButtonVariant; // Button variant; defaults to 'gray'
+  size?: ActionButtonSize; // Button size; defaults to 'xs'
+  icon?: Component; // Optional icon component: use library icons (e.g., IconFa7SolidTrash), FontAwesome Pro's FaIcon, or any custom Vue component that renders an icon
+}
+
 interface DataTableProps {
   /**
    * Table data and configuration.
@@ -273,6 +405,15 @@ interface DataTableProps {
     totalResultsPerPage: number; 
     totalResults: number; 
   };
+  /**
+   * Enables batch selection for the table.
+   */
+  enableBatchSelection?: boolean;
+  /**
+   * Array of default batch selection actions to render when items are selected.
+   * Slot 'batch-selection-actions' will override these defaults if provided.
+   */
+  batchSelectionActions?: BatchSelectionAction[];
   /**
    * Array of filter configurations for the table.
    */
@@ -302,6 +443,8 @@ defineOptions({
 const props = withDefaults(defineProps<DataTableProps>(), {
   data: undefined,
   pagination: undefined,
+  enableBatchSelection: false,
+  batchSelectionActions: () => [],
   filters: undefined,
   filterSearch: false,
   filterSearchQuery: undefined,
@@ -309,7 +452,11 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination'])
+const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination', 'update:selectedItems'])
+
+/**
+ * State
+ */
 
 const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
@@ -321,13 +468,96 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
     : undefined
 )
 
+const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.filterSearchQuery ?? '')
+const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
+const isTableScrollable = ref(false)
+
+/**
+ * Computed
+ */
+
+const isLoading = computed(() => props.loading ?? false)
+const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
+
+const hasBatchSelection = computed(() => props.enableBatchSelection)
+const selectedCount = computed(() => selectedIds.value.length)
+const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCount.value > 0)
+const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
+
+const hasFilters = computed(() => !!(props.filters && props.filters.length))
+const hasFilterSearch = computed(() => !!props.filterSearch)
+
+const hasActiveFilters = computed(() => {
+  if (!filters.value) return false
+  return filters.value.some((filter) => {
+    if (isSegmentFilter(filter)) {
+      // Check if any segment other than "All" (first) is selected
+      return filter.segments.some((segment, index) => index !== 0 && segment.selected)
+    } else if (isDropdownFilter(filter)) {
+      // Check if any options are selected
+      return filter.options.some((option) => option.selected)
+    }
+    return false
+  })
+})
+
+const tableFields = computed(() => {
+  const baseFields = props.data?.fields ?? []
+  if (hasBatchSelection.value) {
+    return [
+      { key: 'selected', custom: true, sortable: false, align: 'center' as const, stickyPosition: 0, stickyLeftClass: 'left-0' },
+      ...baseFields.map((field, index) => ({
+        ...field,
+        stickyPosition: index === 0 ? 1 : undefined,
+        stickyLeftClass: index === 0 ? 'left-8' : undefined,  // left-8 = 2rem = width of the selected (w-8) column
+        stickyEnd: index === 0  // only the last sticky column gets the border
+      }))
+    ]
+  }
+  return baseFields.map((field, index) => ({
+    ...field,
+    stickyPosition: index === 0 ? 0 : undefined,
+    stickyLeftClass: index === 0 ? 'left-0' : undefined,
+    stickyEnd: index === 0  // only sticky column, so it's always the last
+  }))
+})
+
+const tableItems = computed(() => {
+  const baseItems = props.data?.items ?? []
+  if (hasBatchSelection.value) {
+    return baseItems.map((item) => ({
+      ...item,
+      selected: selectedIds.value.includes(item.id)
+    }))
+  }
+  return baseItems
+})
+
+/**
+ * Two-way computed for the "Select all" header checkbox.
+ * Getter returns true when every item is selected; setter selects or clears all.
+ */
+const selectAll = computed({
+  get() {
+    const baseItems = props.data?.items ?? []
+    return baseItems.length > 0 && baseItems.every((item) => selectedIds.value.includes(item.id))
+  },
+  set(value: boolean) {
+    const currentPageIds = (props.data?.items ?? []).map((item) => item.id)
+    if (value) {
+      selectedIds.value = [...new Set([...selectedIds.value, ...currentPageIds])]
+    } else {
+      selectedIds.value = selectedIds.value.filter((id) => !currentPageIds.includes(id))
+    }
+  }
+})
 
 const tableProps = computed(() => ({
-  items: [],
-  fields: [],
-  ...props.data
+  ...props.data,
+  fields: tableFields.value,
+  items: tableItems.value
 }))
 
 const paginatorProps = computed(() => ({
@@ -351,34 +581,9 @@ const options = computed(() => [
 
 const totalRowsPerPage = computed(() => `${props.pagination?.totalResultsPerPage ?? 0} rows`)
 
-const hasFilters = computed(() => {
-  const { filters } = props
-  return !!(filters && filters.length)
-})
-
-const hasFilterSearch = computed(() => !!props.filterSearch)
-
-const hasActiveFilters = computed(() => {
-  if (!filters.value) return false
-  return filters.value.some((filter) => {
-    if (isSegmentFilter(filter)) {
-      // Check if any segment other than "All" (first) is selected
-      return filter.segments.some((segment, index) => 
-        index !== 0 && segment.selected
-      )
-    } else if (isDropdownFilter(filter)) {
-      // Check if any options are selected
-      return filter.options.some((option) => option.selected)
-    }
-    return false
-  })
-})
-
 /**
- * Loading state(s) for the data table.
+ * Type guards
  */
-const isLoading = computed(() => props.loading ?? false)
-const isSearchLoading = computed(() => isLoading.value && searchQuery.value.length > 0)
 
 function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'segment'; segments: DataTableSegments[] } {
   return filter.type === 'segment' && Array.isArray(filter.segments) && filter.segments.length > 0
@@ -386,6 +591,20 @@ function isSegmentFilter(filter: DataTableFilterConfig): filter is DataTableFilt
 
 function isDropdownFilter(filter: DataTableFilterConfig): filter is DataTableFilterConfig & { type: 'dropdown'; options: FilterByDropdownOption[] } {
   return filter.type === 'dropdown' && Array.isArray(filter.options) && filter.options.length > 0
+}
+
+/**
+ * Functions
+ */
+
+/**
+ * Executes a batch selection action with the current selected IDs.
+ * @param action - The action configuration containing the callback function.
+ */
+function executeBatchAction(action: BatchSelectionAction) {
+  if (typeof action.action === 'function') {
+    action.action(selectedIds.value)
+  }
 }
 
 function clearFilters() {
@@ -405,10 +624,7 @@ function clearFilters() {
     })
   }
 
-  if (
-    searchQuery.value && 
-    searchQuery.value.length > 0
-  ) {
+  if (searchQuery.value && searchQuery.value.length > 0) {
     searchQuery.value = ''
   }
 
@@ -429,7 +645,6 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   }
 
   // For dropdown filters, options are already updated via v-model. Just emit!
-
   emit('update:filters', filters.value)
 }
 
@@ -453,6 +668,18 @@ function setPageSize(page: number) {
   })
 }
 
+/**
+ * Toggles the selected state of a single row item.
+ * @param item - The table item to toggle.
+ */
+function toggleItemSelection(item: TableItem) {
+  if (selectedIds.value.includes(item.id)) {
+    selectedIds.value = selectedIds.value.filter((id) => id !== item.id)
+  } else {
+    selectedIds.value = [...selectedIds.value, item.id]
+  }
+}
+
 function setSearchActiveState(active: boolean) {
   isSearchActive.value = active
   if (!active) {
@@ -460,18 +687,39 @@ function setSearchActiveState(active: boolean) {
   }
 }
 
-/**
- * Debounced function to emit search query changes.
- * Delays emission to avoid excessive updates while typing.
- */
+function checkScrollable() {
+  const el = scrollContainerRef.value
+  if (el) {
+    isTableScrollable.value = el.scrollWidth > el.clientWidth
+  }
+}
+
+function onTableScroll(event: Event) {
+  const el = event.target as HTMLElement
+  isTableScrollable.value = el.scrollWidth > el.clientWidth
+}
+
 const debouncedEmitSearch = useDebounce((query) => {
   emit('update:filterSearchQuery', query)
 }, props.filterSearchDebounce)
 
+useResizeObserver(scrollContainerRef, checkScrollable)
+
 /**
- * Watch for changes to the search query and emit debounced updates.
+ * Watchers
  */
+
+watch(() => props.data?.items, checkScrollable, { flush: 'post' })
+
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
+})
+
+watch(selectedIds, (ids) => {
+  const allItems = (props.data?.items ?? []).map((item) => ({
+    ...item,
+    selected: ids.includes(item.id)
+  }))
+  emit('update:selectedItems', allItems)
 })
 </script>

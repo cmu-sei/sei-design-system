@@ -970,7 +970,7 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
-    <tr id="sds-table_tr_0" class="">
+    <tr id="sds-table_tr_3" class="">
       <td aria-label="No value" class="[.table-prose_tbody_&amp;]:px-2 w-10"></td>
       <td class="">
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->C title

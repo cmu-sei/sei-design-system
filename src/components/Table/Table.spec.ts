@@ -162,6 +162,7 @@ describe('Table', () => {
           toggled: true,
           nestedRows: [
             {
+              id: 3,
               name: 'C title',
               fruit: 'Avocados',
               vegetable: 'Cauliflower',
@@ -231,5 +232,91 @@ describe('Table', () => {
   it('matches snapshot with assigned `rowHighlight` prop', async () => {
     await wrapper.setProps({ ...props, rowHighlight: true })
     expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  describe('Sticky columns', () => {
+    const stickyFields: TableField[] = [
+      { key: 'name', label: 'Title', sortable: true, stickyPosition: 0, stickyLeftClass: 'left-0', stickyEnd: true },
+      { key: 'fruit', label: 'Fruit', sortable: true },
+      { key: 'vegetable', label: 'Vegetable', sortable: true }
+    ]
+
+    it('should apply sticky class to th and td when stickyPosition is defined', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFields }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.exists()).toBe(true)
+
+      const stickyTds = wrapper.findAll('tbody td.sticky')
+      expect(stickyTds.length).toBe(items.length)
+    })
+
+    it('should apply default left-0 class when stickyLeftClass is not provided', () => {
+      const fieldsWithoutLeftClass: TableField[] = [
+        { key: 'name', label: 'Title', sortable: true, stickyPosition: 0 },
+        { key: 'fruit', label: 'Fruit', sortable: true }
+      ]
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: fieldsWithoutLeftClass }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).toContain('left-0')
+    })
+
+    it('should apply custom stickyLeftClass when provided', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFields }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).toContain('left-0')
+    })
+
+    it('should apply sticky-end class when stickyEnd is true', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFields }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).toContain('sticky-end')
+    })
+
+    it('should not apply sticky-end class when stickyEnd is false', () => {
+      const fieldsNoStickyEnd: TableField[] = [
+        { key: 'name', label: 'Title', sortable: true, stickyPosition: 0, stickyEnd: false },
+        { key: 'fruit', label: 'Fruit', sortable: true }
+      ]
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: fieldsNoStickyEnd }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).not.toContain('sticky-end')
+    })
+
+    it('should not apply sticky classes to fields without stickyPosition', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFields }
+      })
+
+      const allThs = wrapper.findAll('thead th')
+      const nonStickyThs = allThs.filter((th) => !th.classes().includes('sticky'))
+      expect(nonStickyThs.length).toBe(stickyFields.length - 1)
+    })
+
+    it('should apply z-10 class to sticky cells', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFields }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).toContain('z-10')
+
+      const firstStickyTd = wrapper.find('tbody td.sticky')
+      expect(firstStickyTd.classes()).toContain('z-10')
+    })
   })
 })
