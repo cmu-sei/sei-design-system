@@ -31,7 +31,7 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   id: 1,
-  variant: 'success',
+  type: 'success',
   title: 'Title',
   text: 'Text of the toast'
 };

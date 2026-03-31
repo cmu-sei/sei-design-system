@@ -14,6 +14,10 @@ export default {
     tag: {
       options: ['a', 'button'],
       control: { type: 'radio' }
+    },
+    variant: {
+      options: ['gray', 'red'],
+      control: { type: 'select' }
     }
   }
 };

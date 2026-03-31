@@ -1,0 +1,248 @@
+/* ===== UNIVERSAL LINK UTILITIES ===== */
+/* Uses CSS custom property tokens from tailwindcss/theme/tokens.css.
+   No theme class names appear here — token inheritance handles all
+   theme and dark-mode variation. Plaid-specific structural differences
+   are in the unlayered block at the bottom of this file. */
+
+@utility link {
+  @apply inline-block wrap-break-word cursor-pointer;
+
+  &:where(:hover) { @apply underline; }
+
+  /* Disabled */
+  &:is(.disabled, [disabled]) { @apply opacity-50 pointer-events-none; }
+  &:is(.disabled, [disabled]).link-tertiary {
+    color: var(--link-tertiary-disabled-text, var(--color-gray-900));
+  }
+}
+
+/* ===== LINK KIND UTILITIES ===== */
+
+@utility link-primary {
+  color: var(--link-primary-text);
+  &:where(:hover) { color: var(--link-primary-text-hover); }
+}
+
+@utility link-secondary {
+  color: var(--link-secondary-text);
+  &:where(:hover) { color: var(--link-secondary-text-hover); }
+}
+
+@utility link-tertiary {
+  color: var(--link-tertiary-text);
+  &:where(:hover) { color: var(--link-tertiary-text-hover); }
+}
+
+/* ===== COLOR VARIANT UTILITIES ===== */
+
+@utility link-red {
+  &.link-primary {
+    color: var(--link-red-primary-text);
+    &:where(:hover) { color: var(--link-red-primary-text-hover); }
+  }
+  &.link-secondary:where(:hover) { color: var(--link-red-secondary-text-hover); }
+  /* tertiary red: inherits base tertiary text, only hover changes */
+}
+
+@utility link-blue {
+  &.link-primary {
+    color: var(--link-blue-primary-text);
+    &:where(:hover) { color: var(--link-blue-primary-text-hover); }
+  }
+  &.link-secondary:where(:hover) { color: var(--link-blue-secondary-text-hover); }
+  /* tertiary blue: inherits base tertiary text, only hover changes */
+}
+
+@utility link-white {
+  &.link-primary {
+    color: var(--link-primary-white-text, oklch(1 0 0 / 0.95));
+    &:where(:hover) { color: var(--color-white); }
+  }
+  .dark &.link-primary {
+    color: var(--link-primary-white-text, var(--color-white));
+    &:where(:hover) { color: var(--color-white); }
+  }
+  &.link-secondary {
+    color: var(--link-secondary-white-text, var(--color-gray-100));
+    &:where(:hover) { color: var(--color-white); }
+  }
+  .dark &.link-secondary {
+    color: var(--link-secondary-white-text, var(--color-gray-100));
+    &:where(:hover) { color: var(--color-white); }
+  }
+}
+
+/* ===== LINK CTA (CALL-TO-ACTION) UTILITY ===== */
+
+@utility link-cta {
+  @apply font-semibold text-sm transition-all duration-100 ease-linear;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: 1px;
+    height: 0.6875rem;                         /* h-2.75 */
+    width: var(--link-cta-default-w, 0.75rem);
+    mask-image: var(--link-cta-default-icon, var(--chevrons-right-sm));
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    background-color: currentColor;
+    margin-left: --spacing(2);
+    @apply transition-transform;
+  }
+
+  &.text-xs::after {
+    height: 0.5625rem;                         /* h-2.25 */
+    width: var(--link-cta-w-xs, 0.625rem);
+    top: var(--link-cta-top-xs, 1px);
+    mask-image: var(--link-cta-icon-xs, var(--chevrons-right-xs));
+  }
+  &.text-sm::after {
+    height: 0.6875rem;                         /* h-2.75 */
+    width: var(--link-cta-w-sm, 0.75rem);
+    top: var(--link-cta-top-sm, 1px);
+    mask-image: var(--link-cta-icon-sm, var(--chevrons-right-sm));
+  }
+  &.text-base::after {
+    height: 0.8125rem;                         /* h-3.25 */
+    width: var(--link-cta-w-base, 0.875rem);
+    top: var(--link-cta-top-base, 1px);
+    mask-image: var(--link-cta-icon-base, var(--chevrons-right-md));
+  }
+  &.text-lg::after {
+    height: 0.9375rem;                         /* h-3.75 */
+    width: var(--link-cta-w-lg, 1rem);
+    top: var(--link-cta-top-lg, 1px);
+    mask-image: var(--link-cta-icon-lg, var(--chevrons-right-lg));
+  }
+  &.text-xl::after {
+    height: 1.0625rem;                         /* h-4.25 */
+    width: var(--link-cta-w-xl, 1.125rem);
+    top: var(--link-cta-top-xl, 0.125rem);
+    mask-image: var(--link-cta-icon-xl, var(--chevrons-right-xl));
+  }
+
+  &:where(:hover)::after { @apply translate-x-1; }
+
+  /* Tertiary dark-mode icon: diverges between themes (token in tokens.css) */
+  .dark &.link-tertiary::after          { background-color: var(--link-tertiary-cta-dark-icon, var(--color-gray-400)); }
+  .dark &.link-tertiary:where(:hover)::after    { background-color: var(--link-tertiary-cta-dark-hover-icon, var(--color-gray-100)); }
+
+  /* Secondary blue disabled: show blue text + icon even while dimmed */
+  &:is(.disabled, [disabled]).link-secondary.link-blue {
+    color: var(--link-primary-text, var(--color-blue-600));
+  }
+  &:is(.disabled, [disabled]).link-secondary.link-blue::after {
+    background-color: var(--link-primary-text, var(--color-blue-600));
+  }
+  .dark &:is(.disabled, [disabled]).link-secondary.link-blue {
+    color: var(--link-primary-text, var(--color-blue-300));
+  }
+  .dark &:is(.disabled, [disabled]).link-secondary.link-blue::after {
+    background-color: var(--link-primary-text, var(--color-blue-300));
+  }
+
+  /* Secondary red disabled */
+  &:is(.disabled, [disabled]).link-secondary.link-red {
+    color: var(--link-red-disabled-secondary-cta-text, var(--color-red-500));
+  }
+  &:is(.disabled, [disabled]).link-secondary.link-red::after {
+    background-color: var(--link-red-disabled-secondary-cta-text, var(--color-red-500));
+  }
+  .dark &:is(.disabled, [disabled]).link-secondary.link-red {
+    color: var(--link-red-disabled-secondary-cta-text, var(--color-red-200));
+  }
+  .dark &:is(.disabled, [disabled]).link-secondary.link-red::after {
+    background-color: var(--link-red-disabled-secondary-cta-text, var(--color-red-200));
+  }
+
+  /* Secondary white disabled */
+  &:is(.disabled, [disabled]).link-secondary.link-white {
+    color: var(--color-gray-100);
+    &::after { background-color: var(--color-gray-100); }
+  }
+
+  /* Primary white CTA: white icon */
+  &.link-primary.link-white::after { background-color: var(--color-white); }
+  &.link-secondary.link-white::after { background-color: var(--link-secondary-white-text, var(--color-gray-100)); }
+  &.link-secondary.link-white:where(:hover)::after { background-color: var(--color-white); }
+}
+
+/* ===== LINK MODIFIER UTILITIES (responsive-ready) ===== */
+
+@utility link-inline {
+  :where(.link&) { @apply underline; }
+}
+
+@utility link-cta-down {
+  .link&::after {
+    @apply rotate-90;
+    top: var(--link-cta-dir-top, 0px);
+  }
+  .link&:where(:hover)::after { @apply translate-x-0 translate-y-1; }
+}
+
+@utility link-cta-left {
+  :where(.link&)    { @apply flex-row-reverse; }
+  .link&::after     { @apply rotate-180; margin-left: 0; margin-right: --spacing(2); }
+  .link&:where(:hover)::after { @apply -translate-x-1; }
+}
+
+@utility link-cta-up {
+  .link&::after {
+    @apply -rotate-90;
+    top: var(--link-cta-dir-top, 0px);
+  }
+  .link&:where(:hover)::after { @apply translate-x-0 -translate-y-1; }
+}
+
+/* ===== PLAID-SPECIFIC LINK CTA STRUCTURAL OVERRIDES ===== */
+/* The plaid theme has additional text-color and arrow-color semantics on
+   link-cta.link-primary that do not exist in forge. These are UNLAYERED
+   so they beat the @utility rules (which live in the utilities layer).
+   All selectors use :where() to keep specificity at zero. */
+
+/* Plaid: link-cta primary-blue has explicit text colors */
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)           { color: var(--color-black); }
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-blue:hover)     { color: var(--link-primary-text-hover); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-blue)       { color: var(--color-white); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover) { color: var(--link-primary-text-hover); }
+
+/* Plaid: link-cta primary-blue arrow stays accent-colored (not currentColor) */
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-blue)::after           { background-color: var(--color-blue-600); }
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-blue:hover)::after     { background-color: var(--color-blue-500); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-blue)::after       { background-color: var(--color-blue-300); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-blue:hover)::after { background-color: var(--color-blue-200); }
+
+/* Plaid: link-cta primary-red has explicit text colors */
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-red)            { color: var(--color-black); }
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-red:hover)      { color: var(--link-red-primary-text-hover); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-red)        { color: var(--color-white); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-red:hover)  { color: var(--link-red-primary-text-hover); }
+
+/* Plaid: link-cta primary-red arrow stays accent-colored (not currentColor) */
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-red)::after           { background-color: var(--color-red-600); }
+:where(.sds-theme-plaid .link.link-cta.link-primary.link-red:hover)::after     { background-color: var(--color-red-500); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-red)::after       { background-color: var(--color-red-300); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-primary.link-red:hover)::after { background-color: var(--color-red-200); }
+
+/* Plaid: secondary-blue CTA hover icon is blue-600 (not blue-500 like forge) */
+:where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover)::after { background-color: var(--color-blue-600); }
+:where(.sds-theme-plaid .link.link-cta.link-secondary.link-blue:hover)        { color: var(--color-blue-600); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-secondary.link-blue:hover) { color: var(--link-primary-text-hover); }
+
+/* Plaid: secondary-red CTA hover text */
+:where(.sds-theme-plaid .link.link-cta.link-secondary.link-red:hover)         { color: var(--link-red-secondary-text-hover); }
+
+/* Plaid: tertiary dark-mode CTA blue/red text is white */
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-blue),
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-red) { color: var(--color-white); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-blue:hover),
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-red:hover) { color: var(--color-white); }
+
+/* Plaid: tertiary white CTA text is gray-100 */
+:where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white), :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover) { color: var(--color-gray-100); }
+:where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white)::after, :where(.sds-theme-plaid .link.link-cta.link-tertiary.link-white:hover)::after { background-color: var(--color-gray-100); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-white), :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover) { color: var(--color-white); }
+:where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-white)::after, :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .link.link-cta.link-tertiary.link-white:hover)::after { background-color: var(--color-white); }

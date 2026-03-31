@@ -101,7 +101,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   kind: '' as ButtonKind,
   variant: '' as ButtonVariant,
   type: 'button',
-  size: '',
+  size: 'md',
   active: false,
   disabled: false,
   block: false,

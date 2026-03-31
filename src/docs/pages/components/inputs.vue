@@ -232,6 +232,7 @@
           <SdsComboBox
             v-model="comboBox4.modelValue"
             v-model:selected="comboBox4.selected"
+            enable-select-all
             placeholder="Search"
             :disabled="false"
             :autofocus="false"
@@ -630,7 +631,7 @@ const comboBox2_1 = reactive({
   suggestions: [
     'Apple',
     'Banana',
-    'Blueberry',
+    'Blueberry super long super duper long label that goes wayyyy over the edge of the space that is available',
     'Cantaloupe',
     'Kiwi',
     'Strawberry',
@@ -726,7 +727,7 @@ const comboBox4 = reactive({
       items: [
         { name: 'Apple', test: 'cool' },
         { name: 'Banana' },
-        { name: 'Blueberry' },
+        { name: 'Blueberry super long super duper long label that goes wayyyy over the edge of the space that is available' },
         { name: 'Cantaloupe' },
         { name: 'Kiwi' },
         { name: 'Strawberry' }

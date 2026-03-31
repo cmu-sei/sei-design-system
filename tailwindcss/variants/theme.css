@@ -6,7 +6,7 @@
   return `&:is(.sds-theme-${value} *)`;
 }) */
 
-@layer components {
+@layer base {
   .sds-theme-plaid {
     --color-gray-25: #f9f8f8;
     --color-gray-50: #f2f1f1;

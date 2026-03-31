@@ -1,0 +1,135 @@
+@layer components {
+  :where(.table-prose) {
+    @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-clip sds-theme-plaid:rounded-none;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  :where(.dark .table-prose) {
+    @apply border border-gray-800;
+  }
+
+  :where(.table-prose thead) {
+    @apply border-y border-gray-100 rounded-lg sds-theme-plaid:rounded-none;
+  }
+
+  :where(.dark .table-prose thead) {
+    @apply border-gray-800;
+  }
+  
+  :where(.table-prose thead th) {
+    @apply text-gray-600 bg-gray-25/50 font-semibold text-sm align-middle p-2 relative select-none border-b border-gray-100;
+  }
+
+  :where(.dark .table-prose thead th) {
+    @apply text-gray-400 bg-gray-900/85 border-b border-gray-800;
+  }
+  
+  :where(.table-prose tbody tr) {
+    @apply bg-white px-2;
+  }
+
+  :where(.dark .table-prose tbody tr) {
+    @apply bg-gray-950;
+  }
+  
+  :where(.table-prose tbody td),
+  :where(.table-prose tbody th) {
+    @apply align-top p-2 relative border-b border-gray-100;
+  }
+
+  :where(.table-prose tbody tr:last-child td),
+  :where(.table-prose tbody tr:last-child th) {
+    @apply border-b-0;
+  }
+
+  :where(.dark .table-prose tbody td),
+  :where(.dark .table-prose tbody th) {
+    @apply border-gray-800;
+  }
+
+  :where(.table-prose tfoot) {
+    @apply bg-gray-600/2;
+  }
+
+  :where(.dark .table-prose tfoot) {
+    @apply bg-gray-400/2;
+  }
+
+  :where(.table-prose tfoot tr) {
+    @apply px-2;
+  }
+
+  :where(.table-prose tfoot td) {
+    @apply border-t border-gray-100;
+    @apply px-2 py-4;
+  }
+
+  :where(.dark .table-prose tfoot td) {
+    @apply border-gray-800;
+  }
+
+  /* Style when [data-id="sds-data-table"] is the parent of .table-prose */
+  :where([data-id="sds-data-table"] .table-prose),
+  :where([data-id="sds-data-table"] .table-prose > thead) {
+    @apply rounded-tl-none rounded-tr-none;
+  }
+
+  /* Remove bottom border and rounding when a faux footer follows outside the scroll container */
+  :where([data-id="sds-data-table"][data-has-footer] .table-prose) {
+    @apply rounded-bl-none rounded-br-none border-b-0;
+  }
+
+  /* Sticky column: match section background */
+  :where(.table-prose thead th.sticky) {
+    @apply bg-gray-25;
+  }
+
+  :where(.dark .table-prose thead th.sticky) {
+    @apply bg-gray-900;
+  }
+
+  :where(.table-prose tbody td.sticky),
+  :where(.table-prose tbody th.sticky) {
+    @apply bg-white;
+  }
+
+  :where(.dark .table-prose tbody td.sticky),
+  :where(.dark .table-prose tbody th.sticky) {
+    @apply bg-gray-950;
+  }
+
+  /* Sticky column: right border — only on the last sticky column when table is scrollable */
+  :where([data-scrollable] .table-prose th.sticky-end),
+  :where([data-scrollable] .table-prose td.sticky-end) {
+    @apply border-r border-gray-100;
+  }
+
+  :where(.dark [data-scrollable] .table-prose th.sticky-end),
+  :where(.dark [data-scrollable] .table-prose td.sticky-end) {
+    @apply border-r border-gray-800;
+  }
+}
+
+/* th/td-based variants */
+
+@custom-variant table-prose-th (:is(& th, & thead th));
+@custom-variant table-prose-td (:is(& td, & tbody td));
+
+/* sm */
+
+@utility table-prose-sm {
+  & tbody td,
+  & tbody th {
+    @apply py-1;
+  }
+}
+
+/* lg */
+
+@utility table-prose-lg {
+  & tbody td,
+  & tbody th {
+    @apply py-4;
+  }
+}

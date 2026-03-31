@@ -61,7 +61,7 @@ interface InputProps {
   /**
    * Determines the size of the input field. Options are "sm" and "md".
    */
-  size?: 'sm' | 'md' | ''
+  size?: 'sm' | 'md'
   /**
    * Determines whether to autofocus the input or not.
    */
@@ -98,7 +98,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   id: undefined,
   placeholder: '',
   type: 'text',
-  size: '',
+  size: 'md',
   autofocus: false,
   pattern: '',
   disabled: false,

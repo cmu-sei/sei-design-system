@@ -15,32 +15,47 @@ exports[`Table > emits when toggling a table drawer 1`] = `
     <tr>
       <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
-          </svg><span class="sr-only">Expand all drawers</span></button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+          </svg><span class="sr-only">Expand all drawers</span></button></th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -110,32 +125,47 @@ exports[`Table > emits when toggling all table drawers 1`] = `
     <tr>
       <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
-          </svg><span class="sr-only">Collapse all drawers</span></button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+          </svg><span class="sr-only">Collapse all drawers</span></button></th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -208,31 +238,47 @@ exports[`Table > matches default snapshot 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -295,31 +341,47 @@ exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -380,31 +442,47 @@ exports[`Table > matches snapshot with assigned \`density\` prop 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -465,31 +543,47 @@ exports[`Table > matches snapshot with assigned \`density\` prop 2`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -551,32 +645,47 @@ exports[`Table > matches snapshot with assigned \`enableDrawer\` prop 1`] = `
     <tr>
       <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M9.59375 1.71094L5.4375 5.62109C5.30078 5.75781 5.13672 5.8125 5 5.8125C4.83594 5.8125 4.67188 5.75781 4.53516 5.64844L0.378906 1.71094C0.105469 1.46484 0.105469 1.05469 0.351562 0.78125C0.597656 0.507812 1.00781 0.507812 1.28125 0.753906L5 4.25391L8.69141 0.753906C8.96484 0.507812 9.375 0.507812 9.62109 0.78125C9.86719 1.05469 9.86719 1.46484 9.59375 1.71094Z" fill="currentColor"></path>
-          </svg><span class="sr-only">Expand all drawers</span></button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+          </svg><span class="sr-only">Expand all drawers</span></button></th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -641,31 +750,47 @@ exports[`Table > matches snapshot with assigned \`rowHighlight\` prop 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -725,30 +850,41 @@ exports[`Table > matches snapshot with multisort columns 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap select-none group"><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="font-normal">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <th class="text-left whitespace-nowrap select-none group">
+        <!--v-if--><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><!-- Add separator when we are less than 1 away. --><span class="font-normal mx-2 inline-flex items-center align-middle">/</span><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="font-normal">Vegetable</span>
+        </button><!-- Add separator when we are less than 1 away. -->
+        <!--v-if--><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -804,32 +940,47 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
     <tr>
       <th class="in-[.table-prose_&amp;]:px-2 w-10"><button class="flex items-center justify-center w-6 h-6" type="button"><svg width="10" height="6" viewBox="0 0 10 6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400" fill="none" preserveAspectRatio="xMidYMid meet" role="img">
             <path d="M0.378906 4.81641L4.53516 0.90625C4.67188 0.769531 4.83594 0.6875 5 0.6875C5.13672 0.6875 5.30078 0.769531 5.4375 0.878906L9.59375 4.78906C9.86719 5.03516 9.86719 5.44531 9.62109 5.71875C9.375 5.99219 8.96484 5.99219 8.69141 5.74609L4.97266 2.24609L1.28125 5.74609C1.00781 5.99219 0.597656 5.99219 0.351562 5.71875C0.105469 5.47266 0.105469 5.0625 0.378906 4.81641Z" fill="currentColor"></path>
-          </svg><span class="sr-only">Collapse all drawers</span></button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+          </svg><span class="sr-only">Collapse all drawers</span></button></th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -874,7 +1025,7 @@ exports[`Table > matches snapshot with nested rows and columns 1`] = `
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->11/10/2013
       </td>
     </tr>
-    <tr id="sds-table_tr_0" class="">
+    <tr id="sds-table_tr_3" class="">
       <td aria-label="No value" class="[.table-prose_tbody_&amp;]:px-2 w-10"></td>
       <td class="">
         <!-- @slot Cell content. Allow for styling table cell content. @binding value, item, and format -->C title
@@ -911,31 +1062,47 @@ exports[`Table > sorts table by field (column) 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-100">
+          <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -995,30 +1162,41 @@ exports[`Table > sorts table by fields (multisort columns) 1`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap select-none group"><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
-          </svg>
-        </button><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="font-normal">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <th class="text-left whitespace-nowrap select-none group">
+        <!--v-if--><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Fruit</span>
+        </button><!-- Add separator when we are less than 1 away. --><span class="font-normal mx-2 inline-flex items-center align-middle">/</span><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="font-normal">Vegetable</span>
+        </button><!-- Add separator when we are less than 1 away. -->
+        <!--v-if--><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
+          <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -1072,30 +1250,41 @@ exports[`Table > sorts table by fields (multisort columns) 2`] = `
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap select-none group"><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button><button type="button" class="inline-flex items-center after:content-['/'] after:font-normal after:inline-block after:ml-0.5 last:after:hidden after:mr-4">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <th class="text-left whitespace-nowrap select-none group">
+        <!--v-if--><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><!-- Add separator when we are less than 1 away. --><span class="font-normal mx-2 inline-flex items-center align-middle">/</span><button type="button" class="inline-flex items-center align-middle">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Vegetable</span>
+        </button><!-- Add separator when we are less than 1 away. -->
+        <!--v-if--><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
+          <path fill="currentColor" d="M342.6 73.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L288 173.3V544c0 17.7 14.3 32 32 32s32-14.3 32-32V173.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -1150,31 +1339,47 @@ exports[`Table > sorts table using an external source as its sorting behavior 1`
   <thead>
     <tr>
       <!--v-if-->
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Title</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-100 ml-2">
-            <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
-      <th class="text-left whitespace-nowrap space-x-1 select-none group"><button class="inline-flex items-center" type="button">
-          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 opacity-0 group-hover:opacity-50 ml-2">
-            <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
-          </svg>
-        </button></th>
+      <!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="text-gray-900 dark:text-gray-100 font-bold">Title</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-100">
+          <path fill="currentColor" d="M297.4 566.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L352 466.7V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v370.7L182.6 361.3c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Fruit</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Vegetable</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Created</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th><!-- Multiple fields -->
+      <!-- Single field -->
+      <th class="text-left whitespace-nowrap space-x-1 select-none group">
+        <!--v-if--><button class="inline-flex items-center align-middle" type="button">
+          <!-- @slot Head content. Allows for the customization of field titles. @binding field, active --><span class="">Last modified</span>
+        </button><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="inline-block text-gray-900 dark:text-gray-100 ml-2 opacity-0 group-hover:opacity-50">
+          <path fill="currentColor" d="m470.6 566.6l96-96c9.2-9.2 11.9-22.9 6.9-34.9S556.9 416 544 416h-64V96c0-17.7-14.3-32-32-32s-32 14.3-32 32v320h-64c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l96 96c12.5 12.5 32.8 12.5 45.3 0zm-256-493.2c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-9.2 9.2-11.9 22.9-6.9 34.9S83.1 224 96 224h64v320c0 17.7 14.3 32 32 32s32-14.3 32-32V224h64c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-96-96z"></path>
+        </svg>
+      </th>
     </tr>
   </thead>
   <tbody>

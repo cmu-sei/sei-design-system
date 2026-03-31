@@ -15,7 +15,7 @@ describe('useButtonClasses', () => {
       expect(allClasses.value).toContain('btn')
       expect(allClasses.value).toContain('btn-primary')
       expect(allClasses.value).toContain('btn-blue')
-      expect(allClasses.value).not.toContain('btn-md') // md is default, no class
+      expect(allClasses.value).toContain('btn-md')
     })
 
     it('should handle all size variants', () => {
@@ -28,7 +28,7 @@ describe('useButtonClasses', () => {
         })
 
         if (size === 'md') {
-          expect(sizeClass.value).toBe('') // No class for default size
+          expect(sizeClass.value).toBe('btn-md') // md is default, should still return class for consistency
         } else {
           expect(sizeClass.value).toBe(`btn-${size}`)
         }
@@ -137,7 +137,7 @@ describe('useButtonClasses', () => {
         size: 'md'
       })
 
-      expect(allClasses.value).toEqual([])
+      expect(allClasses.value).toEqual(['btn-md'])
     })
 
     it('should handle all variant types', () => {

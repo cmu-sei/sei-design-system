@@ -791,7 +791,7 @@
           <li>
             <SdsTag>
               <template #label>
-                Default
+                Super duper long title that is so so long it cannot be stopped
               </template>
             </SdsTag>
           </li>
@@ -801,7 +801,7 @@
               :external="true"
             >
               <template #label>
-                Link
+                Super duper long title that is so so long it cannot be stopped
               </template>
             </SdsTag>
           </li>
@@ -1164,7 +1164,8 @@ const fields_simple = ref<TableField[]>([
   {
     key: "id",
     label: "ID",
-    sortable: true
+    sortable: true,
+    header: true
   },
   {
     key: "fruit",

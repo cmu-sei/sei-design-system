@@ -1,10 +1,96 @@
 <template>
   <div class="grid gap-12">
+    <button class="btn btn-primary btn-sm btn-blue lg:btn-secondary lg:btn-xl lg:btn-red">
+      Crazy Variant Button!
+    </button>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
+        Button Sizes
+      </h2>
+      <div class="flex flex-wrap gap-2 items-center">
+        <SdsActionButton
+          kind="primary"
+          size="xs"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="sm"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="md"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="lg"
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="flex flex-wrap gap-2 items-center">
+        <SdsButton
+          kind="primary"
+          size="xs"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          size="sm"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          size="md"
+        >
+          Button
+        </SdsButton>
+        <SdsButton
+          kind="primary"
+          size="lg"
+        >
+          Button
+        </SdsButton>
+      </div>
+    </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Action Button
       </h2>
-      <div class="flex gap-2 items-center">
+      <div class="flex flex-wrap gap-2 items-center">
+        <SdsActionButton
+          kind="primary"
+          size="xs"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="sm"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="md"
+        >
+          Action Button
+        </SdsActionButton>
+        <SdsActionButton
+          kind="primary"
+          size="lg"
+        >
+          Action Button
+        </SdsActionButton>
+      </div>
+      <div class="flex flex-wrap gap-2 items-center">
         <SdsActionButton
           kind="ghost"
           variant="gray"
@@ -108,7 +194,7 @@
           Action Button
         </SdsActionButton>
       </div>
-      <div class="flex gap-2 items-center">
+      <div class="flex flex-wrap gap-2 items-center">
         <SdsActionButton pending>
           Action Button
         </SdsActionButton>
@@ -133,7 +219,7 @@
           Action Button
         </SdsActionButton>
       </div>
-      <div class="flex gap-2 items-center">
+      <div class="flex flex-wrap gap-2 items-center">
         <SdsActionButton
           kind="ghost"
           variant="gray"
@@ -248,7 +334,7 @@
           Action Button
         </SdsActionButton>
       </div>
-      <div class="flex gap-2 items-center">
+      <div class="flex flex-wrap gap-2 items-center">
         <SdsActionButton
           kind="primary"
           size="xs"
