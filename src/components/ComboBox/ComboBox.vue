@@ -28,7 +28,7 @@
           :key="index"
           :disabled="disabled"
           :readonly="readonly || disabled"
-          :size="(size === 'sm' || size === 'md') ? size : 'md'"
+          :size="size === 'sm' ? 'sm' : 'md'"
           action="remove"
           class="grow-0"
           :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
@@ -38,15 +38,17 @@
       <div
         class="flex flex-row"
         :class="{
-          'h-7': size === 'sm',
-          'h-10': size !== 'sm',
+          'h-7 gap-x-2 pr-2': size === 'sm',
+          'h-10 gap-x-3 pr-3': size !== 'sm' && size !== 'lg',
+          'h-12 gap-x-4 pr-4': size === 'lg',
         }"
       >
         <div
           class="input-group-addon absolute z-0"
           :class="{
             'py-1.75': size === 'sm',
-            'py-3': size !== 'sm',
+            'py-3': size !== 'sm' && size !== 'lg',
+            'py-3.5': size === 'lg',
           }"
         >
           <span class="sr-only">Combo box</span>
@@ -65,10 +67,11 @@
         </div>
         <span
           v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
-          class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap"
+          class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap pr-0"
           :class="{
             'py-1 left-7': size === 'sm',
-            'py-2 left-8': size !== 'sm',
+            'py-2 left-8': size !== 'sm' && size !== 'lg',
+            'py-3 left-10': size === 'lg',
             'max-w-[calc(100%-3.5rem)]': showClearButton || isFocused,
             'max-w-[calc(100%-5.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled
           }"
@@ -85,11 +88,12 @@
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
-          class="form-control border-none focus-visible:ring-0 z-1"
+          class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0!"
           :class="{
             'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
             'pl-8': size === 'sm',
-            'pl-10': size !== 'sm',
+            'pl-10': size !== 'sm' && size !== 'lg',
+            'pl-12': size === 'lg',
             'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
           }"
           :placeholder="placeholder || undefined"
@@ -126,8 +130,9 @@
           type="button"
           class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
           :class="{
-            'px-2': size === 'sm',
-            'px-3': size !== 'sm'
+            'px-0!': size === 'sm',
+            'px-0.25!': size !== 'sm' && size !== 'lg',
+            'px-0.5!': size === 'lg',
           }"
           @mousedown.prevent="clearQuery"
         >
@@ -136,7 +141,7 @@
         </button>
         <div
           v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
-          class="input-group-addon"
+          class="input-group-addon px-0!"
         >
           <SdsTooltip>
             <template #trigger>
@@ -264,6 +269,7 @@
             v-if="optionGroupChildren && s[optionGroupChildren]?.length"
             class="flex flex-col gap-y-1 pb-2 mb-0"
             :class="{
+              'pt-2': !enableSelectAll,
               'first:[&>div]:border-t-0': !multiple,
               'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1 && enableSelectAll
             }"
@@ -616,10 +622,6 @@ interface ComboBoxProps {
    */
   hideFocusIndicator?: boolean;
   /**
-   * Determines whether to hide empty groups from the tabbed group suggestions.
-   */
-  hideEmptyGroups?: boolean;
-  /**
    * The label key used for each non-group suggestion.
    */
   optionLabel?: string;
@@ -645,9 +647,9 @@ interface ComboBoxProps {
    */
   placeholder?: string;
   /**
-   * Determines the size of the input field. Options are "sm" and "md".
+   * Determines the size of the input field. Options are "sm", "md", and "lg".
    */
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
   /**
    * The suggestions used for autosuggest.
    */
@@ -692,7 +694,6 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   focusOnKeyPress: false,
   filterSuggestions: false,
   hideFocusIndicator: false,
-  hideEmptyGroups: false,
   optionLabel: undefined,
   optionGroupLabel: undefined,
   optionGroupChildren: undefined,
@@ -907,12 +908,8 @@ const reduceList = (arr: ComboBoxSuggestion[]) => {
       const newItem = { ...item }
       if (props.optionGroupChildren && item[props.optionGroupChildren]) {
         newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
-        if (props.hideEmptyGroups) {
-          if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length)
-            acc.push(newItem)
-        } else {
+        if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length)
           acc.push(newItem)
-        }
       } else {
         if (
           removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string)
@@ -1784,7 +1781,7 @@ watchEffect(() => {
         label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
         count
       }
-    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && props.hideEmptyGroups ? i.count > 0 : true)
+    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && i.count > 0)
   ] : []
   activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => typeof i !== 'string' && i?.key === activeGroupKey.value)
   groupSuggestions.value = props.suggestions?.filter(i => typeof i !== 'string' && props.optionGroupChildren &&
