@@ -2,10 +2,11 @@
   <div 
     data-id="sds-data-table"
     class="w-full min-w-full"
+    :data-has-header="(hasFilters || hasSearch) || undefined"
     :data-has-footer="!!pagination || undefined"
   >
     <div 
-      v-if="hasFilters || hasFilterSearch"
+      v-if="hasFilters || hasSearch"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -118,14 +119,14 @@
           </template>
         </div>
         <div 
-          v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
+          v-if="hasSearch || $slots['ellipsis-menu-items']"
           class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
             'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
           }"
         >
-          <template v-if="hasFilterSearch">
+          <template v-if="hasSearch">
             <SdsActionButton
               v-if="!isSearchActive"
               kind="secondary"
@@ -295,7 +296,10 @@
               There are no results you can view.
             </span>
           </p>
-          <p class="mt-4">
+          <p 
+            v-if="hasFilters && hasActiveFilters"
+            class="mt-4"
+          >
             <SdsButton
               kind="primary"
               variant="blue"
@@ -421,15 +425,15 @@ interface DataTableProps {
   /**
    * Enables a search input for filtering table data.
    */
-  filterSearch?: boolean;
+  search?: boolean;
   /**
    * Current search query for filtering table data.
    */
-  filterSearchQuery?: string;
+  searchQuery?: string;
   /**
    * Debounce wait time (ms) for filter search input.
    */
-  filterSearchDebounce?: number;
+  searchDebounce?: number;
   /**
    * Loading state for the table and its controls.
    */
@@ -446,13 +450,13 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   enableBatchSelection: false,
   batchSelectionActions: () => [],
   filters: undefined,
-  filterSearch: false,
-  filterSearchQuery: undefined,
-  filterSearchDebounce: 300,
+  search: false,
+  searchQuery: undefined,
+  searchDebounce: 300,
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination', 'update:selectedItems'])
+const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:pagination', 'update:selectedItems'])
 
 /**
  * State
@@ -470,7 +474,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
-const searchQuery = ref(props.filterSearchQuery ?? '')
+const searchQuery = ref(props.searchQuery ?? '')
 const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
 const isTableScrollable = ref(false)
 
@@ -487,7 +491,7 @@ const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCou
 const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
-const hasFilterSearch = computed(() => !!props.filterSearch)
+const hasSearch = computed(() => !!props.search)
 
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
@@ -700,8 +704,8 @@ function onTableScroll(event: Event) {
 }
 
 const debouncedEmitSearch = useDebounce((query) => {
-  emit('update:filterSearchQuery', query)
-}, props.filterSearchDebounce)
+  emit('update:searchQuery', query)
+}, props.searchDebounce)
 
 useResizeObserver(scrollContainerRef, checkScrollable)
 

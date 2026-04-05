@@ -6,11 +6,11 @@
       :enable-batch-selection="true"
       :batch-selection-actions="batchSelectionActions"
       :filters="filters"
-      :filter-search="true"
-      :filter-search-query="searchTerm"
+      :search="true"
+      :search-query="searchTerm"
       :loading="loading"
       @update:filters="handleFilterUpdate"
-      @update:filter-search-query="handleFilterSearchUpdate"
+      @update:search-query="handleSearchUpdate"
       @update:pagination="handlePaginationUpdate"
       @update:selected-items="handleSelectedItems"
     >
@@ -382,8 +382,8 @@ function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
   totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
 }
 
-// Filtered search update handler
-async function handleFilterSearchUpdate(searchQuery: string | null) {
+// Search update handler
+async function handleSearchUpdate(searchQuery: string | null) {
   loading.value = true
   await delay(1000) // Simulate async operation
 

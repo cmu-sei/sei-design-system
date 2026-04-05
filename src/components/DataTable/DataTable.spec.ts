@@ -436,7 +436,7 @@ describe('SdsDataTable', () => {
         props: {
           data: { fields, items },
           pagination,
-          filterSearch: true,
+          search: true,
           enableBatchSelection: true,
           batchSelectionActions: [
             {
@@ -567,15 +567,15 @@ describe('SdsDataTable', () => {
       vi.useFakeTimers()
 
       try {
-        const onUpdateFilterSearchQuery = vi.fn()
+        const onUpdateSearchQuery = vi.fn()
 
         const wrapper = mount(SdsDataTable, {
           props: {
             data: { fields, items },
             pagination,
-            filterSearch: true,
-            filterSearchDebounce: 50,
-            ['onUpdate:filterSearchQuery']: onUpdateFilterSearchQuery
+            search: true,
+            searchDebounce: 50,
+            ['onUpdate:searchQuery']: onUpdateSearchQuery
           },
           attachTo: container
         })
@@ -596,8 +596,8 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery).toHaveBeenCalled()
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
+        expect(onUpdateSearchQuery).toHaveBeenCalled()
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
 
         const cancelButton = wrapper.findAll('button').find((button) => button.text().includes('Cancel'))
         expect(cancelButton).toBeDefined()
@@ -609,7 +609,7 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
       } finally {
         vi.useRealTimers()
       }
