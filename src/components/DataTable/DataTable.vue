@@ -159,7 +159,6 @@
               <span>Cancel</span>
             </SdsActionButton>
           </template>
-
           <SdsSortByDropdown
             v-if="hasSortBy"
             v-model="sortByModel"
@@ -169,9 +168,8 @@
             :icon-only="true"
             kind="ghost"
             variant="gray"
-            size="md"
+            size="sm"
           />
-
           <SdsActionDropdown
             v-if="$slots['ellipsis-menu-items']"
             :hide-arrow="true"
@@ -454,7 +452,7 @@ interface DataTableProps {
    */
   sortBy?: {
     options: SortByDropdownOption[];
-    modelValue?: SortByDropdownModel | null;
+    value?: SortByDropdownModel | null;
     title?: string;
   };
   /**
@@ -499,7 +497,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.searchQuery ?? '')
-const sortByModel = ref<SortByDropdownModel | null>(props.sortBy?.modelValue ?? null)
+const sortByModel = ref<SortByDropdownModel | null>(props.sortBy?.value ?? null)
 const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
 const isTableScrollable = ref(false)
 

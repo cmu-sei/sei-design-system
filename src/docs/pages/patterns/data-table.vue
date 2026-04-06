@@ -317,7 +317,7 @@ const sortByModel = ref<SortByDropdownModel | null>(null)
 
 const sortByConfig = computed(() => ({
   options: sortByOptions,
-  modelValue: sortByModel.value,
+  value: sortByModel.value,
   title: 'Sort by'
 }))
 
