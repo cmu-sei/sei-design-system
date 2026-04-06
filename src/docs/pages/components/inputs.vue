@@ -142,7 +142,7 @@
         @submit.prevent="handleSubmit"
       >
         <div class="space-y-4">
-          <code class="text-xs">type="text" no autosuggest</code>
+          <code class="text-xs">size="md" type="text" no autosuggest</code>
           <SdsComboBox
             v-model="comboBox0.modelValue"
             size="md"
@@ -150,7 +150,7 @@
             focus-on-key-press
             @enter="comboBox0.onEnter"
           />
-          <code class="text-xs">type="taggable-select" multiple simulated request</code>
+          <code class="text-xs">type="taggable-select" multiple required simulated request</code>
           <SdsComboBox
             v-model="comboBox1.modelValue"
             v-model:selected="comboBox1.selected"
@@ -167,7 +167,7 @@
           />
           <SdsFormGroup
             for="comboBox2_1"
-            label="type='select' :multiple='false' :click-to-select='true'"
+            label="size='sm' type='select' :click-to-select='true' required"
             helper-text="Select items to add to your grocery list"
           >
             <SdsComboBox
@@ -187,7 +187,7 @@
               @enter="comboBox2_1.onEnter"
             />
           </SdsFormGroup>
-          <code class="text-xs">type="select" :multiple="true" required</code>
+          <code class="text-xs">size="sm" type="select" :multiple="true" required</code>
           <SdsComboBox
             v-model="comboBox2_2.modelValue"
             v-model:selected="comboBox2_2.selected"
@@ -207,7 +207,7 @@
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
           />
-          <code class="text-xs">type="taggable-select" :multiple="false" :click-to-select="true"</code>
+          <code class="text-xs">size="sm" type="taggable-select" :click-to-select="true"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
             v-model:selected="comboBox3.selected"
@@ -228,7 +228,7 @@
             @result="comboBox3.onResult"
             @enter="comboBox3.onEnter"
           />
-          <code class="text-xs">type="taggable-select" :multiple="true"</code>
+          <code class="text-xs">size="sm" type="taggable-select" :multiple="true" enable-select-all</code>
           <SdsComboBox
             v-model="comboBox4.modelValue"
             v-model:selected="comboBox4.selected"
@@ -250,7 +250,7 @@
             @result="comboBox4.onResult"
             @enter="comboBox4.onEnter"
           />
-          <code class="text-xs">type="text" option-type="custom"</code>
+          <code class="text-xs">size="sm" type="text" option-type="custom"</code>
           <SdsComboBox
             v-model="comboBox5.modelValue"
             v-model:selected="comboBox5.selected"
@@ -289,7 +289,7 @@
               </a>
             </template>
           </SdsComboBox>
-          <code class="text-xs">type="select" option-type="custom" multiple with Avatar, Badge, and Indicator</code>
+          <code class="text-xs">size="sm" type="select" option-type="custom" multiple with Avatar, Badge, and Indicator</code>
           <SdsComboBox
             v-model="comboBox6.modelValue"
             v-model:selected="comboBox6.selected"
@@ -349,6 +349,31 @@
               </button>
             </template>
           </SdsComboBox>
+          <code class="text-xs">size="lg" type="text" no autosuggest</code>
+          <SdsComboBox
+            v-model="comboBox7.modelValue"
+            size="lg"
+            placeholder="Search..."
+            focus-on-key-press
+            @enter="comboBox7.onEnter"
+          />
+          <code class="text-xs">size="lg" type="select" filter-suggestions :click-to-select="true"</code>
+          <SdsComboBox
+            v-model="comboBox8.modelValue"
+            v-model:selected="comboBox8.selected"
+            size="lg"
+            type="select"
+            placeholder="Search..."
+            :suggestions="comboBox8.suggestions"
+            filter-suggestions
+            click-to-select
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @complete="comboBox8.onComplete"
+            @result="comboBox8.onResult"
+            @enter="comboBox8.onEnter"
+          />
         </div>
         <SdsButton
           type="submit"
@@ -380,6 +405,9 @@
             </tr>
             <tr>
               <td>(select, custom, multiple):</td><td>{{ formData.comboBox6 }}</td>
+            </tr>
+            <tr>
+              <td>(lg, select, grouped):</td><td>{{ formData.comboBox8 }}</td>
             </tr>
           </tbody>
         </table>
@@ -847,6 +875,51 @@ const comboBox6 = reactive({
   }
 })
 
+const comboBox7 = reactive({
+  modelValue: '',
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  }
+})
+
+const comboBox8 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    {
+      section: 'Fruits',
+      items: [
+        { name: 'Apple' },
+        { name: 'Banana' },
+        { name: 'Blueberry' },
+        { name: 'Cantaloupe' },
+        { name: 'Kiwi' },
+        { name: 'Strawberry' }
+      ]
+    },
+    {
+      section: 'Vegetables',
+      items: [
+        { name: 'Artichoke' },
+        { name: 'Avocado' },
+        { name: 'Beetroot' },
+        { name: 'Celery' },
+        { name: 'Cucumber' },
+        { name: 'Daikon' }
+      ]
+    }
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  }
+})
+
 const formData = reactive({
   comboBox1: ([] as ComboBoxSuggestion[]),
   comboBox2_1: ([] as ComboBoxSuggestion[]),
@@ -854,7 +927,8 @@ const formData = reactive({
   comboBox3: ([] as ComboBoxSuggestion[]),
   comboBox4: ([] as ComboBoxSuggestion[]),
   comboBox5: ([] as ComboBoxSuggestion[]),
-  comboBox6: ([] as ComboBoxSuggestion[])
+  comboBox6: ([] as ComboBoxSuggestion[]),
+  comboBox8: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {
@@ -865,6 +939,7 @@ watchEffect(() => {
   formData.comboBox4 = comboBox4.selected
   formData.comboBox5 = comboBox5.selected
   formData.comboBox6 = comboBox6.selected
+  formData.comboBox8 = comboBox8.selected
 })
 
 const handleSubmit = () => {

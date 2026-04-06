@@ -6,6 +6,7 @@ coverage
 dist
 dist-ssr
 .cache
+.name
 build
 *.local
 

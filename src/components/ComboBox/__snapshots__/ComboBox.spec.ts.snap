@@ -4,11 +4,11 @@ exports[`ComboBox > should match its default snapshot 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -23,11 +23,11 @@ exports[`ComboBox > should match its snapshot with required prop assigned 1`] = 
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col required">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" required="" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" required="" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -42,11 +42,11 @@ exports[`ComboBox > should match snapshot for grouped options 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -61,11 +61,11 @@ exports[`ComboBox > should match snapshot for optionType="a" 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -80,11 +80,11 @@ exports[`ComboBox > should match snapshot for optionType="custom" 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -116,11 +116,11 @@ exports[`ComboBox > should match snapshot for type="select" (multiple) 1`] = `
         </div>
       </div>
     </div>
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
+      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-0.25!"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
           <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
         </svg></button>
       <!--v-if-->
@@ -135,11 +135,11 @@ exports[`ComboBox > should match snapshot for type="select" (single) 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
       <!--v-if-->
       <!--v-if-->
       <!-- @slot Default content. Good for adding content to the end of the input group -->
@@ -170,11 +170,11 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (multiple) 
         </div>
       </div>
     </div>
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
+      <!--v-if--><input type="text" multiple="" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="selected"><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-0.25!"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
           <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
         </svg></button>
       <!--v-if-->
@@ -189,11 +189,11 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (single) 1`
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
       <!--v-if-->
       <!--v-if-->
       <!-- @slot Default content. Good for adding content to the end of the input group -->
@@ -207,11 +207,11 @@ exports[`ComboBox > should match snapshot when autofocus is true 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -226,11 +226,11 @@ exports[`ComboBox > should match snapshot when disabled 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col disabled">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" disabled="" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" disabled="" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -245,11 +245,11 @@ exports[`ComboBox > should match snapshot when loading 1`] = `
 "<div data-id="sds-combo-box" class="relative" loading="true">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
@@ -264,11 +264,11 @@ exports[`ComboBox > should match snapshot with clearable (showClearButton) 1`] =
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value="e"><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value=""><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-3"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value="e"><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value=""><button tabindex="-1" type="button" class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-0.25!"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
           <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
         </svg></button>
       <!--v-if-->
@@ -283,11 +283,11 @@ exports[`ComboBox > should match snapshot with custom value/label keys 1`] = `
 "<div data-id="sds-combo-box" class="relative">
   <div class="input-group flex flex-col">
     <!--v-if-->
-    <div class="flex flex-row h-10">
+    <div class="flex flex-row h-10 gap-x-3 pr-3">
       <div class="input-group-addon absolute z-0 py-3"><span class="sr-only">Combo box</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em" class="-mt-px w-5 h-5">
           <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
         </svg></div>
-      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
+      <!--v-if--><input type="text" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0! pl-10" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items -->
       <!--v-if-->
       <!--v-if-->
       <!--v-if-->
