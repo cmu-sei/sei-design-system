@@ -2,11 +2,11 @@
   <div 
     data-id="sds-data-table"
     class="w-full min-w-full"
-    :data-has-header="(hasFilters || hasSearch) || undefined"
+    :data-has-header="(hasFilters || hasSearch || hasSortBy) || undefined"
     :data-has-footer="!!pagination || undefined"
   >
     <div 
-      v-if="hasFilters || hasSearch"
+      v-if="hasFilters || hasSearch || hasSortBy"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -119,7 +119,7 @@
           </template>
         </div>
         <div 
-          v-if="hasSearch || $slots['ellipsis-menu-items']"
+          v-if="hasSearch || hasSortBy || $slots['ellipsis-menu-items']"
           class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
@@ -159,6 +159,19 @@
               <span>Cancel</span>
             </SdsActionButton>
           </template>
+
+          <SdsSortByDropdown
+            v-if="hasSortBy"
+            v-model="sortByModel"
+            :options="sortBy!.options"
+            :title="sortBy!.title ?? 'Sort by'"
+            :disabled="isSortByDisabled"
+            :icon-only="true"
+            kind="ghost"
+            variant="gray"
+            size="md"
+          />
+
           <SdsActionDropdown
             v-if="$slots['ellipsis-menu-items']"
             :hide-arrow="true"
@@ -363,12 +376,14 @@ import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdow
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableItem, TableProps } from '../Table/Table.vue'
 import type { ActionButtonSize, ButtonKind } from '@/composables'
+import type { SortByDropdownModel, SortByDropdownOption } from '../SortByDropdown/SortByDropdown.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
 import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
+import SdsSortByDropdown from '../SortByDropdown/SortByDropdown.vue'
 import SdsTable from '../Table/Table.vue'
 import { useDebounce, useResizeObserver } from '@/composables'
 
@@ -435,6 +450,14 @@ interface DataTableProps {
    */
   searchDebounce?: number;
   /**
+   * Configuration for the sort by dropdown.
+   */
+  sortBy?: {
+    options: SortByDropdownOption[];
+    modelValue?: SortByDropdownModel | null;
+    title?: string;
+  };
+  /**
    * Loading state for the table and its controls.
    */
   loading?: boolean;
@@ -453,10 +476,11 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   search: false,
   searchQuery: undefined,
   searchDebounce: 300,
+  sortBy: undefined,
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:pagination', 'update:selectedItems'])
+const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:pagination', 'update:selectedItems'])
 
 /**
  * State
@@ -475,6 +499,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
 const searchQuery = ref(props.searchQuery ?? '')
+const sortByModel = ref<SortByDropdownModel | null>(props.sortBy?.modelValue ?? null)
 const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
 const isTableScrollable = ref(false)
 
@@ -492,6 +517,8 @@ const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelecti
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
+const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
+const isSortByDisabled = computed(() => !tableItems.value.length)
 
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
@@ -717,6 +744,10 @@ watch(() => props.data?.items, checkScrollable, { flush: 'post' })
 
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
+})
+
+watch(sortByModel, (newValue) => {
+  emit('update:sortBy', newValue)
 })
 
 watch(selectedIds, (ids) => {
