@@ -119,7 +119,7 @@
           </template>
         </div>
         <div 
-          v-if="hasSearch || hasSortBy || $slots['ellipsis-menu-items']"
+          v-if="hasSearch || hasSortBy || hasEllipsisMenuItems"
           class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
@@ -164,16 +164,17 @@
             v-model="sortByModel"
             :options="sortBy!.options"
             :title="sortBy!.title ?? 'Sort by'"
-            :disabled="isSortByDisabled"
+            :disabled="isHeaderActionsDisabled"
             :icon-only="true"
             kind="ghost"
             variant="gray"
             size="sm"
           />
           <SdsActionDropdown
-            v-if="$slots['ellipsis-menu-items']"
+            v-if="hasEllipsisMenuItems"
             :hide-arrow="true"
             :icon-only="true"
+            :disabled="isHeaderActionsDisabled"
             kind="ghost"
             variant="gray"
             size="sm"
@@ -478,6 +479,8 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   loading: false
 })
 
+const slots = useSlots()
+
 const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:pagination', 'update:selectedItems'])
 
 /**
@@ -516,7 +519,8 @@ const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelecti
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
 const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
-const isSortByDisabled = computed(() => !tableItems.value.length)
+const hasEllipsisMenuItems = computed(() => !!(slots['ellipsis-menu-items'] || slots.ellipsisMenuItems))
+const isHeaderActionsDisabled = computed(() => !tableItems.value.length)
 
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
