@@ -481,7 +481,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 
 const slots = useSlots()
 
-const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:pagination', 'update:selectedItems'])
+const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:selectedItems', 'update:pagination'])
 
 /**
  * State
