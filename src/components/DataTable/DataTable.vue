@@ -2,10 +2,11 @@
   <div 
     data-id="sds-data-table"
     class="w-full min-w-full"
+    :data-has-header="(hasFilters || hasSearch || hasSortBy) || undefined"
     :data-has-footer="!!pagination || undefined"
   >
     <div 
-      v-if="hasFilters || hasFilterSearch"
+      v-if="hasFilters || hasSearch || hasSortBy"
       class="
         bg-white dark:bg-gray-950
         border border-b-0 border-gray-100 dark:border-gray-800 
@@ -118,14 +119,14 @@
           </template>
         </div>
         <div 
-          v-if="hasFilterSearch || $slots['ellipsis-menu-items']"
+          v-if="hasSearch || hasSortBy || hasEllipsisMenuItems"
           class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
             'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
           }"
         >
-          <template v-if="hasFilterSearch">
+          <template v-if="hasSearch">
             <SdsActionButton
               v-if="!isSearchActive"
               kind="secondary"
@@ -158,10 +159,22 @@
               <span>Cancel</span>
             </SdsActionButton>
           </template>
+          <SdsSortByDropdown
+            v-if="hasSortBy"
+            v-model="sortByModel"
+            :options="sortBy!.options"
+            :title="sortBy!.title ?? 'Sort by'"
+            :disabled="isHeaderActionsDisabled"
+            :icon-only="true"
+            kind="ghost"
+            variant="gray"
+            size="sm"
+          />
           <SdsActionDropdown
-            v-if="$slots['ellipsis-menu-items']"
+            v-if="hasEllipsisMenuItems"
             :hide-arrow="true"
             :icon-only="true"
+            :disabled="isHeaderActionsDisabled"
             kind="ghost"
             variant="gray"
             size="sm"
@@ -295,7 +308,10 @@
               There are no results you can view.
             </span>
           </p>
-          <p class="mt-4">
+          <p 
+            v-if="hasFilters && hasActiveFilters"
+            class="mt-4"
+          >
             <SdsButton
               kind="primary"
               variant="blue"
@@ -359,12 +375,14 @@ import type { FilterByDropdownOption } from '../FilterByDropdown/FilterByDropdow
 import type { PaginatorProps } from '../Paginator/Paginator.vue'
 import type { TableItem, TableProps } from '../Table/Table.vue'
 import type { ActionButtonSize, ButtonKind } from '@/composables'
+import type { SortByDropdownModel, SortByDropdownOption } from '../SortByDropdown/SortByDropdown.vue'
 import SdsActionButton from '../ActionButton/ActionButton.vue'
 import SdsActionDropdown from '../ActionDropdown/ActionDropdown.vue'
 import SdsComboBox from '../ComboBox/ComboBox.vue'
 import SdsFilterByDropdown from '../FilterByDropdown/FilterByDropdown.vue'
 import SdsPaginator from '../Paginator/Paginator.vue'
 import SdsPaginatorRange from '../PaginatorRange/PaginatorRange.vue'
+import SdsSortByDropdown from '../SortByDropdown/SortByDropdown.vue'
 import SdsTable from '../Table/Table.vue'
 import { useDebounce, useResizeObserver } from '@/composables'
 
@@ -421,15 +439,23 @@ interface DataTableProps {
   /**
    * Enables a search input for filtering table data.
    */
-  filterSearch?: boolean;
+  search?: boolean;
   /**
    * Current search query for filtering table data.
    */
-  filterSearchQuery?: string;
+  searchQuery?: string;
   /**
    * Debounce wait time (ms) for filter search input.
    */
-  filterSearchDebounce?: number;
+  searchDebounce?: number;
+  /**
+   * Configuration for the sort by dropdown.
+   */
+  sortBy?: {
+    options: SortByDropdownOption[];
+    value?: SortByDropdownModel | null;
+    title?: string;
+  };
   /**
    * Loading state for the table and its controls.
    */
@@ -446,13 +472,16 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   enableBatchSelection: false,
   batchSelectionActions: () => [],
   filters: undefined,
-  filterSearch: false,
-  filterSearchQuery: undefined,
-  filterSearchDebounce: 300,
+  search: false,
+  searchQuery: undefined,
+  searchDebounce: 300,
+  sortBy: undefined,
   loading: false
 })
 
-const emit = defineEmits(['update:filters', 'update:filterSearchQuery', 'update:pagination', 'update:selectedItems'])
+const slots = useSlots()
+
+const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:selectedItems', 'update:pagination'])
 
 /**
  * State
@@ -470,7 +499,8 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
 
 const selectedIds = ref<number[]>([]) // IDs of currently selected rows
 const isSearchActive = ref(false)
-const searchQuery = ref(props.filterSearchQuery ?? '')
+const searchQuery = ref(props.searchQuery ?? '')
+const sortByModel = ref<SortByDropdownModel | null>(props.sortBy?.value ?? null)
 const scrollContainerRef = ref<HTMLElement | undefined>(undefined)
 const isTableScrollable = ref(false)
 
@@ -487,7 +517,10 @@ const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCou
 const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
-const hasFilterSearch = computed(() => !!props.filterSearch)
+const hasSearch = computed(() => !!props.search)
+const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
+const hasEllipsisMenuItems = computed(() => !!(slots['ellipsis-menu-items'] || slots.ellipsisMenuItems))
+const isHeaderActionsDisabled = computed(() => !tableItems.value.length)
 
 const hasActiveFilters = computed(() => {
   if (!filters.value) return false
@@ -607,6 +640,9 @@ function executeBatchAction(action: BatchSelectionAction) {
   }
 }
 
+/**
+ * Resets all filters and clears the search query, then emits the updated filter state.
+ */
 function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
@@ -631,6 +667,11 @@ function clearFilters() {
   emit('update:filters', filters.value)
 }
 
+/**
+ * Updates the selected state for a filter and emits the updated filter state.
+ * @param filterKey - The key of the filter to update.
+ * @param segment - The segment to select (for segment filters).
+ */
 function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filters.value) return
 
@@ -648,6 +689,10 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   emit('update:filters', filters.value)
 }
 
+/**
+ * Navigates to the specified page and emits the updated pagination state.
+ * @param param0 - The new page number and the event that triggered the change.
+ */
 function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
   event.preventDefault()
   const newPage = typeof page === 'string' ? Number(page) : page
@@ -659,6 +704,10 @@ function setCurrentPage({ page, event }: { page: number | string; event: Keyboar
   })
 }
 
+/**
+ * Updates the page size and resets to page 1, then emits the updated pagination state.
+ * @param page - The new number of results per page.
+ */
 function setPageSize(page: number) {
   emit('update:pagination', {
     ...paginatorProps.value,
@@ -680,6 +729,10 @@ function toggleItemSelection(item: TableItem) {
   }
 }
 
+/**
+ * Toggles the search input active state and clears the query when deactivated.
+ * @param active - Whether the search input should be active.
+ */
 function setSearchActiveState(active: boolean) {
   isSearchActive.value = active
   if (!active) {
@@ -687,6 +740,9 @@ function setSearchActiveState(active: boolean) {
   }
 }
 
+/**
+ * Updates the scrollability state based on the scroll container's overflow.
+ */
 function checkScrollable() {
   const el = scrollContainerRef.value
   if (el) {
@@ -694,14 +750,21 @@ function checkScrollable() {
   }
 }
 
+/**
+ * Handles the scroll event and updates the scrollability state.
+ * @param event - The scroll event from the table container.
+ */
 function onTableScroll(event: Event) {
   const el = event.target as HTMLElement
   isTableScrollable.value = el.scrollWidth > el.clientWidth
 }
 
+/**
+ * Debounced emit for search query updates.
+ */
 const debouncedEmitSearch = useDebounce((query) => {
-  emit('update:filterSearchQuery', query)
-}, props.filterSearchDebounce)
+  emit('update:searchQuery', query)
+}, props.searchDebounce)
 
 useResizeObserver(scrollContainerRef, checkScrollable)
 
@@ -713,6 +776,10 @@ watch(() => props.data?.items, checkScrollable, { flush: 'post' })
 
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
+})
+
+watch(sortByModel, (newValue) => {
+  emit('update:sortBy', newValue)
 })
 
 watch(selectedIds, (ids) => {

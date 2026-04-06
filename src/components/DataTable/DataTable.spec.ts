@@ -1,5 +1,6 @@
 import type { DataTableFilterConfig } from './DataTable.vue'
 import type { TableField, TableItem } from '../Table/Table.vue'
+import type { SortByDropdownModel, SortByDropdownOption } from '../SortByDropdown/SortByDropdown.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import SdsDataTable from './DataTable.vue'
@@ -36,6 +37,18 @@ const pagination = {
   totalPages: 2,
   totalResultsPerPage: 5,
   totalResults: 10
+}
+
+const sortByOptions: SortByDropdownOption[] = [
+  { id: 'task', value: 'task', label: 'Task', type: 'alpha' },
+  { id: 'assignee', value: 'assignee', label: 'Assignee', type: 'alpha' },
+  { id: 'status', value: 'status', label: 'Status', type: 'alpha' },
+  { id: 'priority', value: 'priority', label: 'Priority', type: 'numerical' }
+]
+
+const sortByModel: SortByDropdownModel = {
+  sortBy: 'assignee',
+  orderBy: 'alpha:descending'
 }
 
 describe('SdsDataTable', () => {
@@ -436,7 +449,7 @@ describe('SdsDataTable', () => {
         props: {
           data: { fields, items },
           pagination,
-          filterSearch: true,
+          search: true,
           enableBatchSelection: true,
           batchSelectionActions: [
             {
@@ -567,15 +580,15 @@ describe('SdsDataTable', () => {
       vi.useFakeTimers()
 
       try {
-        const onUpdateFilterSearchQuery = vi.fn()
+        const onUpdateSearchQuery = vi.fn()
 
         const wrapper = mount(SdsDataTable, {
           props: {
             data: { fields, items },
             pagination,
-            filterSearch: true,
-            filterSearchDebounce: 50,
-            ['onUpdate:filterSearchQuery']: onUpdateFilterSearchQuery
+            search: true,
+            searchDebounce: 50,
+            ['onUpdate:searchQuery']: onUpdateSearchQuery
           },
           attachTo: container
         })
@@ -596,8 +609,8 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery).toHaveBeenCalled()
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
+        expect(onUpdateSearchQuery).toHaveBeenCalled()
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
 
         const cancelButton = wrapper.findAll('button').find((button) => button.text().includes('Cancel'))
         expect(cancelButton).toBeDefined()
@@ -609,11 +622,112 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
       } finally {
         vi.useRealTimers()
       }
     })
+  })
+
+  describe('Sort By', () => {
+    it('should render sort by dropdown when sortBy options are provided', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          data: { fields, items },
+          pagination,
+          sortBy: {
+            options: sortByOptions,
+            value: sortByModel,
+            title: 'Sort by'
+          }
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      expect(sortByDropdown.exists()).toBe(true)
+      expect(sortByDropdown.props('title')).toBe('Sort by')
+      expect(sortByDropdown.props('options')).toEqual(sortByOptions)
+      expect(sortByDropdown.props('disabled')).toBe(false)
+    })
+
+    it('should not render sort by dropdown when sortBy options are empty', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          data: { fields, items },
+          pagination,
+          sortBy: {
+            options: []
+          }
+        },
+        attachTo: container
+      })
+
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(false)
+    })
+
+    it('should disable sort by dropdown when there are no table rows', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          data: { fields, items: [] },
+          pagination,
+          sortBy: {
+            options: sortByOptions
+          }
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      expect(sortByDropdown.exists()).toBe(true)
+      expect(sortByDropdown.props('disabled')).toBe(true)
+    })
+
+    it('should emit update:sortBy when sort by dropdown model changes', async () => {
+      const onUpdateSortBy = vi.fn()
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          data: { fields, items },
+          pagination,
+          sortBy: {
+            options: sortByOptions,
+            value: null
+          },
+          ['onUpdate:sortBy']: onUpdateSortBy
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      const nextSortBy: SortByDropdownModel = {
+        sortBy: 'priority',
+        orderBy: 'numerical:ascending'
+      }
+
+      sortByDropdown.vm.$emit('update:modelValue', nextSortBy)
+      await wrapper.vm.$nextTick()
+      await flushPromises()
+
+      expect(onUpdateSortBy).toHaveBeenCalledTimes(1)
+      expect(onUpdateSortBy).toHaveBeenCalledWith(nextSortBy)
+    })
+
+    it('should set data-has-header when sortBy is the only header control', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          data: { fields, items },
+          sortBy: {
+            options: sortByOptions
+          }
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+      expect(dataTable.attributes('data-has-header')).toBe('true')
+    })
+
   })
 
   describe('Slot Pass-Through', () => {

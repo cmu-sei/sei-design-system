@@ -69,9 +69,9 @@
     @apply border-gray-800;
   }
 
-  /* Style when [data-id="sds-data-table"] is the parent of .table-prose */
-  :where([data-id="sds-data-table"] .table-prose),
-  :where([data-id="sds-data-table"] .table-prose > thead) {
+  /* Style when [data-id="sds-data-table"] is the parent of .table-prose, only in Forge theme and when a filter/search/sort by header is present */
+  :where(.sds-theme-forge [data-id="sds-data-table"][data-has-header] .table-prose),
+  :where(.sds-theme-forge [data-id="sds-data-table"][data-has-header] .table-prose > thead) {
     @apply rounded-tl-none rounded-tr-none;
   }
 
