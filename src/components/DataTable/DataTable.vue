@@ -640,6 +640,9 @@ function executeBatchAction(action: BatchSelectionAction) {
   }
 }
 
+/**
+ * Resets all filters and clears the search query, then emits the updated filter state.
+ */
 function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
@@ -664,6 +667,11 @@ function clearFilters() {
   emit('update:filters', filters.value)
 }
 
+/**
+ * Updates the selected state for a filter and emits the updated filter state.
+ * @param filterKey - The key of the filter to update.
+ * @param segment - The segment to select (for segment filters).
+ */
 function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filters.value) return
 
@@ -681,6 +689,10 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   emit('update:filters', filters.value)
 }
 
+/**
+ * Navigates to the specified page and emits the updated pagination state.
+ * @param param0 - The new page number and the event that triggered the change.
+ */
 function setCurrentPage({ page, event }: { page: number | string; event: KeyboardEvent | MouseEvent }) {
   event.preventDefault()
   const newPage = typeof page === 'string' ? Number(page) : page
@@ -692,6 +704,10 @@ function setCurrentPage({ page, event }: { page: number | string; event: Keyboar
   })
 }
 
+/**
+ * Updates the page size and resets to page 1, then emits the updated pagination state.
+ * @param page - The new number of results per page.
+ */
 function setPageSize(page: number) {
   emit('update:pagination', {
     ...paginatorProps.value,
@@ -713,6 +729,10 @@ function toggleItemSelection(item: TableItem) {
   }
 }
 
+/**
+ * Toggles the search input active state and clears the query when deactivated.
+ * @param active - Whether the search input should be active.
+ */
 function setSearchActiveState(active: boolean) {
   isSearchActive.value = active
   if (!active) {
@@ -720,6 +740,9 @@ function setSearchActiveState(active: boolean) {
   }
 }
 
+/**
+ * Updates the scrollability state based on the scroll container's overflow.
+ */
 function checkScrollable() {
   const el = scrollContainerRef.value
   if (el) {
@@ -727,11 +750,18 @@ function checkScrollable() {
   }
 }
 
+/**
+ * Handles the scroll event and updates the scrollability state.
+ * @param event - The scroll event from the table container.
+ */
 function onTableScroll(event: Event) {
   const el = event.target as HTMLElement
   isTableScrollable.value = el.scrollWidth > el.clientWidth
 }
 
+/**
+ * Debounced emit for search query updates.
+ */
 const debouncedEmitSearch = useDebounce((query) => {
   emit('update:searchQuery', query)
 }, props.searchDebounce)

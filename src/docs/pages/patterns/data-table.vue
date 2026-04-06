@@ -528,7 +528,7 @@ function getLastName(fullName: string): string {
   return rawLast
 }
 
-// Sorts tableItems by priority (1=High is highest, 3=Low is lowest).
+// Sorts tableItems by priority (1=High, 2=Medium, 3=Low).
 function sortByPriority(desc: boolean) {
   tableItems.value.sort((a: TableItem, b: TableItem) => {
     const aVal = a.priority as number
