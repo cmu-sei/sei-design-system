@@ -415,7 +415,7 @@ interface DataTableProps {
   /**
    * Table data and configuration.
    */
-  data?: TableProps;
+  tableData?: TableProps;
   /**
    * Pagination configuration and state.
    */
@@ -467,7 +467,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<DataTableProps>(), {
-  data: undefined,
+  tableData: undefined,
   pagination: undefined,
   enableBatchSelection: false,
   batchSelectionActions: () => [],
@@ -537,7 +537,7 @@ const hasActiveFilters = computed(() => {
 })
 
 const tableFields = computed(() => {
-  const baseFields = props.data?.fields ?? []
+  const baseFields = props.tableData?.fields ?? []
   if (hasBatchSelection.value) {
     return [
       { key: 'selected', custom: true, sortable: false, align: 'center' as const, stickyPosition: 0, stickyLeftClass: 'left-0' },
@@ -558,7 +558,7 @@ const tableFields = computed(() => {
 })
 
 const tableItems = computed(() => {
-  const baseItems = props.data?.items ?? []
+  const baseItems = props.tableData?.items ?? []
   if (hasBatchSelection.value) {
     return baseItems.map((item) => ({
       ...item,
@@ -574,11 +574,11 @@ const tableItems = computed(() => {
  */
 const selectAll = computed({
   get() {
-    const baseItems = props.data?.items ?? []
+    const baseItems = props.tableData?.items ?? []
     return baseItems.length > 0 && baseItems.every((item) => selectedIds.value.includes(item.id))
   },
   set(value: boolean) {
-    const currentPageIds = (props.data?.items ?? []).map((item) => item.id)
+    const currentPageIds = (props.tableData?.items ?? []).map((item) => item.id)
     if (value) {
       selectedIds.value = [...new Set([...selectedIds.value, ...currentPageIds])]
     } else {
@@ -588,7 +588,7 @@ const selectAll = computed({
 })
 
 const tableProps = computed(() => ({
-  ...props.data,
+  ...props.tableData,
   fields: tableFields.value,
   items: tableItems.value
 }))
@@ -772,7 +772,7 @@ useResizeObserver(scrollContainerRef, checkScrollable)
  * Watchers
  */
 
-watch(() => props.data?.items, checkScrollable, { flush: 'post' })
+watch(() => props.tableData?.items, checkScrollable, { flush: 'post' })
 
 watch(searchQuery, (newQuery) => {
   debouncedEmitSearch(newQuery)
@@ -783,7 +783,7 @@ watch(sortByModel, (newValue) => {
 })
 
 watch(selectedIds, (ids) => {
-  const allItems = (props.data?.items ?? []).map((item) => ({
+  const allItems = (props.tableData?.items ?? []).map((item) => ({
     ...item,
     selected: ids.includes(item.id)
   }))

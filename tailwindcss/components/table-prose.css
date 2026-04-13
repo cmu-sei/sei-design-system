@@ -89,13 +89,11 @@
     @apply bg-gray-900;
   }
 
-  :where(.table-prose tbody td.sticky),
-  :where(.table-prose tbody th.sticky) {
+  :where(.table-prose tbody td.sticky) {
     @apply bg-white;
   }
 
-  :where(.dark .table-prose tbody td.sticky),
-  :where(.dark .table-prose tbody th.sticky) {
+  :where(.dark .table-prose tbody td.sticky) {
     @apply bg-gray-950;
   }
 
