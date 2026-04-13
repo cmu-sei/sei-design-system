@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-8">
     <SdsDataTable
-      :data="data"
+      :table-data="data"
       :pagination="pagination"
       :enable-batch-selection="true"
       :batch-selection-actions="batchSelectionActions"
