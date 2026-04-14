@@ -135,7 +135,7 @@ interface TooltipProps {
 }
 
 defineOptions({
-  name: 'SdsPopover'
+  name: 'SdsTooltip'
 })
 
 const props = withDefaults(defineProps<TooltipProps>(), {
