@@ -95,4 +95,60 @@ describe('Avatar', () => {
     })
     expect(wrapper.element).toMatchSnapshot()
   })
+
+  describe('orange variant', () => {
+    it('applies orange background and border classes when type is subtle (default)', () => {
+      const wrapper = mount(Component, { props: { variant: 'orange' } })
+      expect(wrapper.classes()).toContain('bg-orange-50')
+      expect(wrapper.classes()).toContain('border-orange-50')
+    })
+
+    it('applies orange text color class to initials span', () => {
+      const wrapper = mount(Component, { props: { variant: 'orange', name: 'Jane Doe' } })
+      expect(wrapper.find('span').classes()).toContain('text-orange-600')
+    })
+
+    it('applies white background and orange border classes when type is outline', () => {
+      const wrapper = mount(Component, { props: { variant: 'orange', type: 'outline' } })
+      expect(wrapper.classes()).toContain('bg-white')
+      expect(wrapper.classes()).toContain('border-orange-100')
+    })
+
+    it('matches snapshot with orange variant and subtle type', () => {
+      const wrapper = mount(Component, { props: { variant: 'orange', name: 'Jane Doe' } })
+      expect(wrapper.element).toMatchSnapshot()
+    })
+
+    it('matches snapshot with orange variant and outline type', () => {
+      const wrapper = mount(Component, { props: { variant: 'orange', type: 'outline', name: 'Jane Doe' } })
+      expect(wrapper.element).toMatchSnapshot()
+    })
+  })
+
+  describe('outline type', () => {
+    it('applies white background class when type is outline', () => {
+      const wrapper = mount(Component, { props: { variant: 'blue', type: 'outline' } })
+      expect(wrapper.classes()).toContain('bg-white')
+    })
+
+    it('applies colored border class based on variant when type is outline', () => {
+      const wrapper = mount(Component, { props: { variant: 'blue', type: 'outline' } })
+      expect(wrapper.classes()).toContain('border-blue-200')
+    })
+
+    it('applies colored background class based on variant when type is subtle', () => {
+      const wrapper = mount(Component, { props: { variant: 'blue', type: 'subtle' } })
+      expect(wrapper.classes()).toContain('bg-blue-50')
+    })
+
+    it('outline type does not apply colored background class', () => {
+      const wrapper = mount(Component, { props: { variant: 'blue', type: 'outline' } })
+      expect(wrapper.classes()).not.toContain('bg-blue-50')
+    })
+
+    it('matches snapshot with outline type and blue variant', () => {
+      const wrapper = mount(Component, { props: { variant: 'blue', type: 'outline', name: 'Jane Doe' } })
+      expect(wrapper.element).toMatchSnapshot()
+    })
+  })
 })
