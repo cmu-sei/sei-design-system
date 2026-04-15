@@ -1,9 +1,7 @@
 <template>
-  <div
+  <li
     data-id="sds-dropdown-checkbox-item"
     class="leading-5 px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
-    role="menuitemcheckbox"
-    :aria-checked="modelValue"
   >
     <label
       :for="computedId"
@@ -25,7 +23,7 @@
         <slot>{{ label }}</slot>
       </span>
     </label>
-  </div>
+  </li>
 </template>
 
 <script setup lang="ts">

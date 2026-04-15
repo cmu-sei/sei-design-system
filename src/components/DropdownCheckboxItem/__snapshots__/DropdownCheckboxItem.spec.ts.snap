@@ -1,11 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`DropdownCheckboxItem > Snapshots > should match its default snapshot 1`] = `
-<div
-  aria-checked="false"
+<li
   class="leading-5 px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
   data-id="sds-dropdown-checkbox-item"
-  role="menuitemcheckbox"
 >
   <label
     class="flex gap-2 items-start cursor-pointer"
@@ -25,15 +23,13 @@ exports[`DropdownCheckboxItem > Snapshots > should match its default snapshot 1`
       
     </span>
   </label>
-</div>
+</li>
 `;
 
 exports[`DropdownCheckboxItem > Snapshots > should match snapshot when checked 1`] = `
-<div
-  aria-checked="true"
+<li
   class="leading-5 px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
   data-id="sds-dropdown-checkbox-item"
-  role="menuitemcheckbox"
 >
   <label
     class="flex gap-2 items-start cursor-pointer"
@@ -54,15 +50,13 @@ exports[`DropdownCheckboxItem > Snapshots > should match snapshot when checked 1
       
     </span>
   </label>
-</div>
+</li>
 `;
 
 exports[`DropdownCheckboxItem > Snapshots > should match snapshot when disabled 1`] = `
-<div
-  aria-checked="false"
+<li
   class="leading-5 px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
   data-id="sds-dropdown-checkbox-item"
-  role="menuitemcheckbox"
 >
   <label
     class="flex gap-2 items-start cursor-pointer cursor-not-allowed opacity-50"
@@ -83,15 +77,13 @@ exports[`DropdownCheckboxItem > Snapshots > should match snapshot when disabled 
       
     </span>
   </label>
-</div>
+</li>
 `;
 
 exports[`DropdownCheckboxItem > Snapshots > should match snapshot when indeterminate 1`] = `
-<div
-  aria-checked="false"
+<li
   class="leading-5 px-2 mx-2 py-1.5 rounded-lg sds-theme-plaid:rounded-none hover:bg-gray-50 dark:hover:bg-gray-700"
   data-id="sds-dropdown-checkbox-item"
-  role="menuitemcheckbox"
 >
   <label
     class="flex gap-2 items-start cursor-pointer"
@@ -111,5 +103,5 @@ exports[`DropdownCheckboxItem > Snapshots > should match snapshot when indetermi
       
     </span>
   </label>
-</div>
+</li>
 `;

@@ -2,10 +2,8 @@
 
 exports[`DropdownRadioItem > Snapshots > should match its default snapshot 1`] = `
 <li
-  aria-checked="false"
   class="group px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750"
   data-id="sds-dropdown-radio-item"
-  role="menuitemradio"
 >
   <label
     class="flex flex-row gap-2 items-center cursor-pointer"
@@ -34,10 +32,8 @@ exports[`DropdownRadioItem > Snapshots > should match its default snapshot 1`] =
 
 exports[`DropdownRadioItem > Snapshots > should match snapshot when checked 1`] = `
 <li
-  aria-checked="true"
   class="group px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750"
   data-id="sds-dropdown-radio-item"
-  role="menuitemradio"
 >
   <label
     class="flex flex-row gap-2 items-center cursor-pointer"
@@ -67,10 +63,8 @@ exports[`DropdownRadioItem > Snapshots > should match snapshot when checked 1`] 
 
 exports[`DropdownRadioItem > Snapshots > should match snapshot when disabled 1`] = `
 <li
-  aria-checked="false"
   class="group px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750 opacity-50 cursor-not-allowed"
   data-id="sds-dropdown-radio-item"
-  role="menuitemradio"
 >
   <label
     class="flex flex-row gap-2 items-center cursor-pointer cursor-not-allowed"
