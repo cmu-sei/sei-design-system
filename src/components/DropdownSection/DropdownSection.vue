@@ -15,25 +15,17 @@
     >
       {{ title }}
     </span>
-    <div
+    <ul
+      class="flex flex-col"
       :class="[
         scrollable ? 'scroll-area' : '',
         scrollable && maxHeight ? '' : scrollable ? 'max-h-56' : ''
       ]"
       :style="scrollable && maxHeight ? { maxHeight } : undefined"
     >
-      <ul
-        v-if="!scrollable || title"
-        class="flex flex-col"
-      >
-        <!-- @slot Dropdown section content (items). -->
-        <slot />
-      </ul>
-      <template v-else>
-        <!-- @slot Dropdown section content (items). -->
-        <slot />
-      </template>
-    </div>
+      <!-- @slot Dropdown section content (items). -->
+      <slot />
+    </ul>
   </div>
 </template>
 

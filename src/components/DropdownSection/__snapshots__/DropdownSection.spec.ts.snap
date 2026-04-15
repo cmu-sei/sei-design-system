@@ -6,20 +6,16 @@ exports[`DropdownSection > Snapshots > should match its default snapshot 1`] = `
   data-id="sds-dropdown-section"
 >
   <!--v-if-->
-  <div
-    class=""
+  <ul
+    class="flex flex-col"
   >
-    <ul
-      class="flex flex-col"
-    >
-      <!-- @slot Dropdown section content (items). -->
-      
-      <div>
-        Content
-      </div>
-      
-    </ul>
-  </div>
+    <!-- @slot Dropdown section content (items). -->
+    
+    <div>
+      Content
+    </div>
+    
+  </ul>
 </div>
 `;
 
@@ -29,18 +25,16 @@ exports[`DropdownSection > Snapshots > should match snapshot as scrollable 1`] =
   data-id="sds-dropdown-section"
 >
   <!--v-if-->
-  <div
-    class="scroll-area max-h-56"
+  <ul
+    class="flex flex-col scroll-area max-h-56"
   >
-    
     <!-- @slot Dropdown section content (items). -->
     
     <div>
       Content
     </div>
     
-    
-  </div>
+  </ul>
 </div>
 `;
 
@@ -50,20 +44,16 @@ exports[`DropdownSection > Snapshots > should match snapshot with divider 1`] = 
   data-id="sds-dropdown-section"
 >
   <!--v-if-->
-  <div
-    class=""
+  <ul
+    class="flex flex-col"
   >
-    <ul
-      class="flex flex-col"
-    >
-      <!-- @slot Dropdown section content (items). -->
-      
-      <div>
-        Content
-      </div>
-      
-    </ul>
-  </div>
+    <!-- @slot Dropdown section content (items). -->
+    
+    <div>
+      Content
+    </div>
+    
+  </ul>
 </div>
 `;
 
@@ -79,19 +69,15 @@ exports[`DropdownSection > Snapshots > should match snapshot with title 1`] = `
   >
     Section Title
   </span>
-  <div
-    class=""
+  <ul
+    class="flex flex-col"
   >
-    <ul
-      class="flex flex-col"
-    >
-      <!-- @slot Dropdown section content (items). -->
-      
-      <div>
-        Content
-      </div>
-      
-    </ul>
-  </div>
+    <!-- @slot Dropdown section content (items). -->
+    
+    <div>
+      Content
+    </div>
+    
+  </ul>
 </div>
 `;

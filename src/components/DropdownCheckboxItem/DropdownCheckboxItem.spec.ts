@@ -173,7 +173,7 @@ describe('DropdownCheckboxItem', () => {
   })
 
   describe('Accessibility', () => {
-    it('has proper ARIA role', () => {
+    it('has no ARIA role on the list item to avoid nesting interactive roles', () => {
       const wrapper = mount(Component, {
         props: {
           modelValue: false,
@@ -181,10 +181,10 @@ describe('DropdownCheckboxItem', () => {
         }
       })
 
-      expect(wrapper.attributes('role')).toBe('menuitemcheckbox')
+      expect(wrapper.attributes('role')).toBeUndefined()
     })
 
-    it('has proper aria-checked attribute', () => {
+    it('reflects checked state via the native input checked attribute', () => {
       const wrapper = mount(Component, {
         props: {
           modelValue: true,
@@ -192,7 +192,7 @@ describe('DropdownCheckboxItem', () => {
         }
       })
 
-      expect(wrapper.attributes('aria-checked')).toBe('true')
+      expect(wrapper.find('input').element.checked).toBe(true)
     })
 
     it('associates label with input', () => {
