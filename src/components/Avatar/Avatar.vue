@@ -28,7 +28,7 @@ defineOptions({
 
 interface AvatarProps {
   /**
-   * Determines the background color of the avatar when no image is present.
+   * Determines the stylistic type of the avatar
    */
   type?: 'subtle' | 'outline'
   /**
