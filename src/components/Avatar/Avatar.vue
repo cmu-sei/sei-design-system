@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-avatar"
-    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, roundClass, borderClass]"
+    :class="['inline-flex items-center justify-center overflow-clip', variantOuterClass, sizeClass, roundClass, borderClass]"
     role="img"
     :aria-label="name || 'Avatar'"
   >
@@ -129,7 +129,7 @@ const avatarClasses = computed(() => {
   const borderOuter = (() => {
     if (props.type !== 'outline' && props.variant) return ''
 
-    const borderWidth = props.size == 'xs' || props.size == 'sm' || props.size == 'md' ? 'overflow-clip border ' : 'overflow-clip border-2 '
+    const borderWidth = props.size == 'xs' || props.size == 'sm' || props.size == 'md' ? 'border ' : 'border-2 '
     const borderVariants = [
       borderWidth + 'border-gray-200 dark:border-gray-600 bg-white dark:bg-black',
       borderWidth + 'border-red-200 dark:border-red-700 bg-white dark:bg-black',
