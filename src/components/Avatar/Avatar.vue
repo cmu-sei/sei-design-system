@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-avatar"
-    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, shapeClass, borderClass]"
+    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, roundClass, borderClass]"
     role="img"
     :aria-label="name || 'Avatar'"
   >
@@ -14,9 +14,9 @@
     <span
       v-else
       :title="name"
-      :class="['leading-none text-black cursor-default uppercase', textClass, variantInnerClass]"
+      :class="['flex items-center justify-center leading-none text-black cursor-default uppercase', textClass, variantInnerClass, sizeClass, shapeClass]"
     >
-      {{ initials }}
+      <span>{{ initials }}</span>
     </span>
   </div>
 </template>
@@ -107,16 +107,22 @@ const avatarClasses = computed(() => {
     }
   })()
 
-  const shape = (() => {
+  const roundness = (() => {
     const classes = []
-    if (props.shape === 'circle') classes.push('rounded-full aspect-square')
-    if (props.shape === 'portrait') classes.push('aspect-[4/5]')
-    if (props.shape === 'square') classes.push('aspect-square')
+    if (props.shape === 'circle') classes.push('rounded-full')
     if (props.shape === 'square' || props.shape === 'portrait') {
       if (['xs', 'sm'].includes(props.size)) classes.push('rounded-theme-sm')
       if (['md', 'lg'].includes(props.size)) classes.push('rounded-theme-md')
       if (['xl', '2xl'].includes(props.size)) classes.push('rounded-theme-lg')
     }
+    return classes.join(' ')
+  })()
+
+  const shape = (() => {
+    const classes = []
+    if (props.shape === 'circle') classes.push('aspect-square')
+    if (props.shape === 'portrait') classes.push('aspect-[4/5]')
+    if (props.shape === 'square') classes.push('aspect-square')
     return classes.join(' ')
   })()
 
@@ -169,6 +175,7 @@ const avatarClasses = computed(() => {
     position,
     size,
     text,
+    roundness,
     shape,
     variantOuter,
     variantInner,
@@ -180,6 +187,7 @@ const avatarClasses = computed(() => {
 const positionClass = computed(() => avatarClasses.value.position)
 const sizeClass = computed(() => avatarClasses.value.size)
 const textClass = computed(() => avatarClasses.value.text)
+const roundClass = computed(() => avatarClasses.value.roundness)
 const shapeClass = computed(() => avatarClasses.value.shape)
 const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
 const variantInnerClass = computed(() => avatarClasses.value.variantInner)
