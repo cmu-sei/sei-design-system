@@ -1,43 +1,43 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`AvatarGroup > matches snapshot with 3 avatars and specific props (shape: square, size: sm, density: condensed) 1`] = `
-"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0  [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-8 h-8"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-5" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
+"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0  [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-8 h-8"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-5" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-8 rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-8 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
     <a
     href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
         <div class="inline-block overflow-x-visible max-w-5" data-id="sds-tooltip">
             <div class="inline-block w-full">
                 <div>
                     <!-- @slot Trigger content. -->
-                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined"
+                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  undefined"
                     role="img" aria-label="Avatar Name2">
-                        <div title="Avatar Name2" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm"
+                        <div title="Avatar Name2" class="bg-cover bg-center w-8 aspect-square"
                         style="background-image: url(&quot;https://picsum.photos/seed/2/200/200&quot;);"></div>
                     </div>
                 </div>
             </div>
         </div>
-        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 aspect-square rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  mask-none mask-none!" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-8 aspect-square rounded-theme-sm" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
+        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-8 rounded-theme-sm relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20  size-8  mask-none mask-none!" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-8 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
         <!--v-if-->
 </div>"
 `;
 
 exports[`AvatarGroup > matches snapshot with 7 avatars and specific props (shape: square, size: xs, density: condensed) 1`] = `
-"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0   [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-6 h-6"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-6 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-6 rounded-full aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
+"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0   [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-6 h-6"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-6 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-6 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
     <a
     href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
         <div class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip">
             <div class="inline-block w-full">
                 <div>
                     <!-- @slot Trigger content. -->
-                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined"
+                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined"
                     role="img" aria-label="Avatar Name2">
-                        <div title="Avatar Name2" class="bg-cover bg-center w-6 rounded-full aspect-square"
+                        <div title="Avatar Name2" class="bg-cover bg-center w-6 aspect-square"
                         style="background-image: url(&quot;https://picsum.photos/seed/2/200/200&quot;);"></div>
                     </div>
                 </div>
             </div>
         </div>
-        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-6 rounded-full aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
+        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-3" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20   size-6 undefined" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-6 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
         <div
         class="inline-block" data-id="sds-dropdown">
             <div class="inline-block w-full">
@@ -50,22 +50,22 @@ exports[`AvatarGroup > matches snapshot with 7 avatars and specific props (shape
 `;
 
 exports[`AvatarGroup > matches snapshot with default props 1`] = `
-"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0 [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-12 h-12"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-9" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-12 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-12 rounded-full aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
+"<div data-id="sds-avatargroup" class="flex flex-row [&amp;_[data-id=&quot;sds-dropdown&quot;]]:relative [&amp;_[data-id=&quot;sds-dropdown&quot;]_div]:right-0 [&amp;_[data-id=&quot;sds-dropdown&quot;]]:size-12 h-12"><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-9" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-12 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   undefined" role="img" aria-label="Avatar Name1"><div title="Avatar Name1" class="bg-cover bg-center w-12 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/1/200/200&quot;);"></div></div></div></div></div></a>
     <a
     href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer">
         <div class="inline-block overflow-x-visible max-w-9" data-id="sds-tooltip">
             <div class="inline-block w-full">
                 <div>
                     <!-- @slot Trigger content. -->
-                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-12 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   undefined"
+                    <div data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-12 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   undefined"
                     role="img" aria-label="Avatar Name2">
-                        <div title="Avatar Name2" class="bg-cover bg-center w-12 rounded-full aspect-square"
+                        <div title="Avatar Name2" class="bg-cover bg-center w-12 aspect-square"
                         style="background-image: url(&quot;https://picsum.photos/seed/2/200/200&quot;);"></div>
                     </div>
                 </div>
             </div>
         </div>
-        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-12 rounded-full aspect-square relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   mask-none mask-none!" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-12 rounded-full aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
+        </a><a href="https://designsystem.sei.cmu.edu" target="_blank" rel="noopener noreferrer"><div  class="inline-block overflow-x-visible max-w-fit" data-id="sds-tooltip"><div class="inline-block w-full"><div><!-- @slot Trigger content. --><div  data-id="sds-avatar" class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-12 rounded-full relative cursor-pointer [&amp;>span]:cursor-pointer relative z-0 left-0 hover:z-20 focus:z-20 size-12   mask-none mask-none!" role="img" aria-label="Avatar Name3"><div title="Avatar Name3" class="bg-cover bg-center w-12 aspect-square" style="background-image: url(&quot;https://picsum.photos/seed/3/200/200&quot;);"></div></div></div></div></div></a>
         <!--v-if-->
 </div>"
 `;

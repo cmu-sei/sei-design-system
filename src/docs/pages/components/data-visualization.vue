@@ -30,6 +30,28 @@
           v-for="size in avatarSizes"
           :key="size"
         >
+          <div
+            v-for="shape in avatarShapes"
+            :key="shape"
+            class="flex flex-col justify-center gap-4 h-auto"
+          >
+            <div>
+              <SdsAvatar
+                :size="size"
+                :shape="shape"
+                variant="gray"
+                type="outline"
+                :src="`https://picsum.photos/seed/${size}-${shape}/200/200`"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
           <div class="h-full flex-col flex justify-end">
             <SdsIndicator
               variant="green"
