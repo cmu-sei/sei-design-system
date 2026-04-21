@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-avatar"
-    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, shapeClass]"
+    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, shapeClass, borderClass]"
     role="img"
     :aria-label="name || 'Avatar'"
   >
@@ -84,14 +84,14 @@ const avatarClasses = computed(() => {
 
   const size = (() => {
     switch (props.size) {
-      case '2xl': return 'w-44 border-2'
-      case 'xl': return 'w-[88px] border-2'
-      case 'md': return 'w-12 border'
-      case 'sm': return 'w-8 border'
-      case 'xs': return 'w-6 border'
-      case 'auto': return 'w-full border'
+      case '2xl': return 'w-44'
+      case 'xl': return 'w-[88px]'
+      case 'md': return 'w-12'
+      case 'sm': return 'w-8'
+      case 'xs': return 'w-6'
+      case 'auto': return 'w-full'
       case 'lg':
-      default: return 'w-16 border-2'
+      default: return 'w-16'
     }
   })()
 
@@ -120,15 +120,34 @@ const avatarClasses = computed(() => {
     return classes.join(' ')
   })()
 
+  const borderOuter = (() => {
+    if (props.type !== 'outline' && props.variant) return ''
+
+    const borderWidth = props.size == 'xs' || props.size == 'sm' || props.size == 'md' ? 'overflow-clip border ' : 'overflow-clip border-2 '
+    const borderVariants = [
+      borderWidth + 'border-gray-200 dark:border-gray-600 bg-white dark:bg-black',
+      borderWidth + 'border-red-200 dark:border-red-700 bg-white dark:bg-black',
+      borderWidth + 'border-yellow-100 dark:border-yellow-700 bg-white dark:bg-black',
+      borderWidth + 'border-green-200 dark:border-green-700 bg-white dark:bg-black',
+      borderWidth + 'border-blue-200 dark:border-blue-700 bg-white dark:bg-black',
+      borderWidth + 'border-purple-200 dark:border-purple-700 bg-white dark:bg-black',
+      borderWidth + 'border-orange-100 dark:border-orange-700 bg-white dark:bg-black'
+    ]
+
+    return props.variant ? borderVariants.filter((color) => color.includes(props.variant))[0] : ''
+  })()
+
   const variantOuter = (() => {
+    if (props.type === 'outline' && props.variant) return 'bg-white dark:bg-black'
+
     const shapeVariants = [
-      props.type === 'outline' ? 'border-gray-200 dark:border-gray-600 bg-white dark:bg-black' : 'border-gray-100 dark:border-gray-850 bg-gray-100 dark:bg-gray-850',
-      props.type === 'outline' ? 'border-red-200 dark:border-red-700 bg-white dark:bg-black' : 'border-red-100 dark:border-red-900 bg-red-100 dark:bg-red-900',
-      props.type === 'outline' ? 'border-yellow-100 dark:border-yellow-700 bg-white dark:bg-black' : 'border-yellow-50 dark:border-yellow-900 bg-yellow-50 dark:bg-yellow-900',
-      props.type === 'outline' ? 'border-green-200 dark:border-green-700 bg-white dark:bg-black' : 'border-green-50 dark:border-green-900 bg-green-50 dark:bg-green-900',
-      props.type === 'outline' ? 'border-blue-200 dark:border-blue-700 bg-white dark:bg-black' : 'border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900',
-      props.type === 'outline' ? 'border-purple-200 dark:border-purple-700 bg-white dark:bg-black' : 'border-purple-100 dark:border-purple-900 bg-purple-100 dark:bg-purple-900',
-      props.type === 'outline' ? 'border-orange-100 dark:border-orange-700 bg-white dark:bg-black' : 'border-orange-50 dark:border-orange-900 bg-orange-50 dark:bg-orange-900'
+      'bg-gray-100 dark:bg-gray-850',
+      'bg-red-100 dark:bg-red-900',
+      'bg-yellow-50 dark:bg-yellow-900',
+      'bg-green-50 dark:bg-green-900',
+      'bg-blue-50 dark:bg-blue-900',
+      'bg-purple-100 dark:bg-purple-900',
+      'bg-orange-50 dark:bg-orange-900'
     ]
     return props.variant ? shapeVariants.filter((color) => color.includes(props.variant))[0] : ''
   })()
@@ -152,7 +171,8 @@ const avatarClasses = computed(() => {
     text,
     shape,
     variantOuter,
-    variantInner
+    variantInner,
+    borderOuter
   }
 })
 
@@ -163,6 +183,7 @@ const textClass = computed(() => avatarClasses.value.text)
 const shapeClass = computed(() => avatarClasses.value.shape)
 const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
 const variantInnerClass = computed(() => avatarClasses.value.variantInner)
+const borderClass = computed(() => avatarClasses.value.borderOuter)
 
 const initials = computed(() => {
   if (!props.name) {
