@@ -98,6 +98,29 @@
         </div>
       </div>
     </div>
+    <h2>Avatar - All Variants</h2>
+    <div class="flex flex-row gap-4">
+      <div
+        v-for="type in avatarTypes"
+        :key="type"
+      >
+        <div 
+          v-for="variant in avatarVariants"
+          :key="variant"
+        >
+          <div class="h-full flex-col flex justify-end py-1">
+            <SdsAvatar
+              :type="type"
+              size="lg"
+              shape="circle"
+              :variant="variant"
+              name="Morgan Markowski"
+              alt="Avatar"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
         Avatar Group
@@ -1116,6 +1139,8 @@ const datapointModelValue = ref(1451)
 
 const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
 const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
+const avatarVariants = ref<('gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | 'orange')[]>(['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'])
+const avatarTypes = ref<('subtle' | 'outline')[]>(['subtle', 'outline'])
 const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green' | undefined)[]>(
   ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
 )
