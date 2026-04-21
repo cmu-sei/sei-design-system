@@ -1,8 +1,52 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, beforeEach, afterEach } from 'vitest'
 import { h, nextTick } from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import Component from './ComboBox.vue'
 import type { ComboBoxSuggestion } from './ComboBox.vue'
+
+/**
+ * Stub for SdsFloatingUi that avoids teleport so wrapper.find() works normally in tests.
+ * Exposes onOpen / onClose / onToggle to match the real component's defineExpose contract.
+ * onClose guards against re-entrant calls and emits 'close' so the @close handler in
+ * ComboBox syncs showDropdown back to false — breaking any potential reactive loop.
+ */
+interface FloatingUiStub {
+  isOpen: boolean
+  onOpen(): void
+  onClose(): void
+  onToggle(): void
+  $emit(event: string): void
+}
+
+const floatingUiStub = {
+  template: `
+    <div>
+      <slot name="trigger" />
+      <div v-if="isOpen">
+        <slot />
+      </div>
+    </div>
+  `,
+  emits: ['close'],
+  data() {
+    return { isOpen: false }
+  },
+  methods: {
+    onOpen(this: FloatingUiStub) { this.isOpen = true },
+    onClose(this: FloatingUiStub) {
+      if (!this.isOpen) return
+      this.isOpen = false
+      this.$emit('close')
+    },
+    onToggle(this: FloatingUiStub) {
+      if (this.isOpen) {
+        this.onClose()
+      } else {
+        this.onOpen()
+      }
+    }
+  }
+}
 
 const suggestions = [
   'Apple',
@@ -46,6 +90,13 @@ const groupedSuggestions = [
 ]
 
 describe('ComboBox', () => {
+  beforeEach(() => {
+    config.global.stubs = { SdsFloatingUi: floatingUiStub }
+  })
+  afterEach(() => {
+    config.global.stubs = {}
+  })
+
   it('should match its default snapshot', () => {
     const wrapper = mount(Component, {
       props: { suggestions },
