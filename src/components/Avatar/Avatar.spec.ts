@@ -97,12 +97,6 @@ describe('Avatar', () => {
   })
 
   describe('orange variant', () => {
-    it('applies orange background and border classes when type is subtle (default)', () => {
-      const wrapper = mount(Component, { props: { variant: 'orange' } })
-      expect(wrapper.classes()).toContain('bg-orange-50')
-      expect(wrapper.classes()).toContain('border-orange-50')
-    })
-
     it('applies orange text color class to initials span', () => {
       const wrapper = mount(Component, { props: { variant: 'orange', name: 'Jane Doe' } })
       expect(wrapper.find('span').classes()).toContain('text-orange-600')

@@ -3,7 +3,7 @@
 exports[`Avatar > orange variant > matches snapshot with orange variant and outline type 1`] = `
 <div
   aria-label="Jane Doe"
-  class="inline-flex items-center justify-center border-orange-100 dark:border-orange-700 bg-white dark:bg-black w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-white dark:bg-black w-12 aspect-[4/5] rounded-theme-md overflow-clip border border-orange-100 dark:border-orange-700 bg-white dark:bg-black"
   data-id="sds-avatar"
   role="img"
 >
@@ -19,7 +19,7 @@ exports[`Avatar > orange variant > matches snapshot with orange variant and outl
 exports[`Avatar > orange variant > matches snapshot with orange variant and subtle type 1`] = `
 <div
   aria-label="Jane Doe"
-  class="inline-flex items-center justify-center border-orange-50 dark:border-orange-900 bg-orange-50 dark:bg-orange-900 w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-orange-50 dark:bg-orange-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
@@ -35,7 +35,7 @@ exports[`Avatar > orange variant > matches snapshot with orange variant and subt
 exports[`Avatar > outline type > matches snapshot with outline type and blue variant 1`] = `
 <div
   aria-label="Jane Doe"
-  class="inline-flex items-center justify-center border-blue-200 dark:border-blue-700 bg-white dark:bg-black w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-white dark:bg-black w-12 aspect-[4/5] rounded-theme-md overflow-clip border border-blue-200 dark:border-blue-700 bg-white dark:bg-black"
   data-id="sds-avatar"
   role="img"
 >
@@ -51,7 +51,7 @@ exports[`Avatar > outline type > matches snapshot with outline type and blue var
 exports[`Avatar > should match its default snapshot 1`] = `
 <div
   aria-label="Avatar"
-  class="inline-flex items-center justify-center border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900 w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
@@ -65,12 +65,12 @@ exports[`Avatar > should match its default snapshot 1`] = `
 exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: Matt Winwood, and src snapshot 1`] = `
 <div
   aria-label="Matt Winwood"
-  class="inline-flex items-center justify-center border-red-100 dark:border-red-900 bg-red-100 dark:bg-red-900 w-16 border-2 rounded-full aspect-square"
+  class="inline-flex items-center justify-center bg-red-100 dark:bg-red-900 w-16 rounded-full aspect-square"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-center w-16 border-2 rounded-full aspect-square"
+    class="bg-cover bg-center w-16 rounded-full aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/mrwinwood?full=true");"
     title="Matt Winwood"
   />
@@ -80,12 +80,12 @@ exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: 
 exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center border-blue-50 dark:border-blue-900 bg-blue-50 dark:bg-blue-900 w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-blue-50 dark:bg-blue-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-right w-12 border aspect-[4/5] rounded-theme-md"
+    class="bg-cover bg-right w-12 aspect-[4/5] rounded-theme-md"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
     title="Brandon Jabout"
   />
@@ -95,12 +95,12 @@ exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, nam
 exports[`Avatar > variant: gray, position: bottom, shape: circle, size: md, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center border-gray-100 dark:border-gray-850 bg-gray-100 dark:bg-gray-850 w-12 border rounded-full aspect-square"
+  class="inline-flex items-center justify-center bg-gray-100 dark:bg-gray-850 w-12 rounded-full aspect-square"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-bottom w-12 border rounded-full aspect-square"
+    class="bg-cover bg-bottom w-12 rounded-full aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
     title="Brandon Jabout"
   />
@@ -110,12 +110,12 @@ exports[`Avatar > variant: gray, position: bottom, shape: circle, size: md, name
 exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center border-green-50 dark:border-green-900 bg-green-50 dark:bg-green-900 w-6 border rounded-full aspect-square"
+  class="inline-flex items-center justify-center bg-green-50 dark:bg-green-900 w-6 rounded-full aspect-square"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-left w-6 border rounded-full aspect-square"
+    class="bg-cover bg-left w-6 rounded-full aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
     title="Brandon Jabout"
   />
@@ -125,12 +125,12 @@ exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name:
 exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center border-purple-100 dark:border-purple-900 bg-purple-100 dark:bg-purple-900 w-12 border aspect-[4/5] rounded-theme-md"
+  class="inline-flex items-center justify-center bg-purple-100 dark:bg-purple-900 w-12 aspect-[4/5] rounded-theme-md"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-top w-12 border aspect-[4/5] rounded-theme-md"
+    class="bg-cover bg-top w-12 aspect-[4/5] rounded-theme-md"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
     title="Brandon Jabout"
   />
@@ -140,12 +140,12 @@ exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, nam
 exports[`Avatar > variant: yellow, position: center, shape: circle, size: sm, name: Brandon Jabout, and src 1`] = `
 <div
   aria-label="Brandon Jabout"
-  class="inline-flex items-center justify-center border-yellow-50 dark:border-yellow-900 bg-yellow-50 dark:bg-yellow-900 w-8 border rounded-full aspect-square"
+  class="inline-flex items-center justify-center bg-yellow-50 dark:bg-yellow-900 w-8 rounded-full aspect-square"
   data-id="sds-avatar"
   role="img"
 >
   <div
-    class="bg-cover bg-center w-8 border rounded-full aspect-square"
+    class="bg-cover bg-center w-8 rounded-full aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
     title="Brandon Jabout"
   />
