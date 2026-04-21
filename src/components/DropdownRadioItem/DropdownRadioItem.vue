@@ -3,8 +3,6 @@
     data-id="sds-dropdown-radio-item"
     class="group px-2 py-1.5 rounded-lg hover:bg-gray-25 dark:hover:bg-gray-750"
     :class="{ 'opacity-50 cursor-not-allowed': disabled }"
-    role="menuitemradio"
-    :aria-checked="isChecked"
   >
     <label
       :for="computedId"

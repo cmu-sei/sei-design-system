@@ -226,7 +226,7 @@ describe('DropdownRadioItem', () => {
   })
 
   describe('Accessibility', () => {
-    it('has proper ARIA role', () => {
+    it('has no ARIA role on the list item to avoid nesting interactive roles', () => {
       const wrapper = mount(Component, {
         props: {
           modelValue: null,
@@ -235,10 +235,10 @@ describe('DropdownRadioItem', () => {
         }
       })
 
-      expect(wrapper.attributes('role')).toBe('menuitemradio')
+      expect(wrapper.attributes('role')).toBeUndefined()
     })
 
-    it('has proper aria-checked when selected', () => {
+    it('reflects checked state via native input when selected', () => {
       const wrapper = mount(Component, {
         props: {
           modelValue: 'option1',
@@ -247,10 +247,10 @@ describe('DropdownRadioItem', () => {
         }
       })
 
-      expect(wrapper.attributes('aria-checked')).toBe('true')
+      expect(wrapper.find('input').element.checked).toBe(true)
     })
 
-    it('has proper aria-checked when not selected', () => {
+    it('reflects unchecked state via native input when not selected', () => {
       const wrapper = mount(Component, {
         props: {
           modelValue: 'option2',
@@ -259,7 +259,7 @@ describe('DropdownRadioItem', () => {
         }
       })
 
-      expect(wrapper.attributes('aria-checked')).toBe('false')
+      expect(wrapper.find('input').element.checked).toBe(false)
     })
 
     it('associates label with input', () => {

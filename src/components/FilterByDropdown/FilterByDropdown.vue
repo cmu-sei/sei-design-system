@@ -100,8 +100,9 @@
     </template>
     <template #default="{ close }">
       <div
-        role="menu"
-        aria-orientation="vertical"
+        role="dialog"
+        aria-modal="false"
+        :aria-label="title"
         :aria-labelledby="button && button.id || undefined"
       >
         <SdsDropdownInputItem
@@ -128,17 +129,14 @@
           scrollable
           max-height="14rem"
         >
-          <li
+          <SdsDropdownCheckboxItem
             v-for="o in filteredTmpOptions"
+            :id="`filter_by_dropdown_selection_list_${o.id}`"
             :key="o.id"
-          >
-            <SdsDropdownCheckboxItem
-              :id="`filter_by_dropdown_selection_list_${o.id}`"
-              v-model="o.selected"
-              :label="o.text"
-              :value="o.id"
-            />
-          </li>
+            v-model="o.selected"
+            :label="o.text"
+            :value="o.id"
+          />
         </SdsDropdownSection>
         
         <SdsDropdownFooter divider>

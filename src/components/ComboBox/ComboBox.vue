@@ -38,27 +38,23 @@
       <div
         class="flex flex-row"
         :class="{
-          'h-7 gap-x-2 pr-2': size === 'sm',
-          'h-10 gap-x-3 pr-3': size !== 'sm' && size !== 'lg',
-          'h-12 gap-x-4 pr-4': size === 'lg',
+          'h-7 gap-x-2 pr-1.25': size === 'sm',
+          'h-10 gap-x-2.5 pr-2.25': size !== 'sm' && size !== 'lg',
+          'h-12 gap-x-3 pr-3': size === 'lg',
         }"
       >
         <div
           class="input-group-addon absolute z-0"
           :class="{
-            'py-1.75': size === 'sm',
-            'py-3': size !== 'sm' && size !== 'lg',
-            'py-3.5': size === 'lg',
+            'py-1.5 h-7': size === 'sm',
+            'py-2.5 h-10': size !== 'sm' && size !== 'lg',
+            'py-3.5 h-12': size === 'lg',
           }"
         >
           <span class="sr-only">Combo box</span>
           <IconFa7SolidMagnifyingGlass
             v-if="!pending"
-            :class="{
-              '-mt-px': true,
-              'w-4 h-4': size === 'sm',
-              'w-5 h-5': size !== 'sm',
-            }"
+            class="h-full w-full"
           />
           <SdsLoadingSpinner
             v-else
@@ -71,9 +67,13 @@
           :class="{
             'py-1 left-7': size === 'sm',
             'py-2 left-8': size !== 'sm' && size !== 'lg',
-            'py-3 left-10': size === 'lg',
-            'max-w-[calc(100%-3.5rem)]': showClearButton || isFocused,
-            'max-w-[calc(100%-5.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled
+            'py-3 left-9': size === 'lg',
+            'max-w-[calc(100%-3.5rem)]': (showClearButton || isFocused) && size === 'sm',
+            'max-w-[calc(100%-4.5rem)]': (showClearButton || isFocused) && size !== 'sm' && size !== 'lg',
+            'max-w-[calc(100%-5rem)]': (showClearButton || isFocused) && size === 'lg',
+            'max-w-[calc(100%-5.25rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'sm',
+            'max-w-[calc(100%-6.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size !== 'sm' && size !== 'lg',
+            'max-w-[calc(100%-7rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'lg',
           }"
         >
           {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
@@ -88,12 +88,12 @@
           autocomplete="off"
           spellcheck="false"
           autocorrect="off"
-          class="form-control border-none focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0!"
+          class="form-control border-none h-full focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0"
           :class="{
             'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
             'pl-8': size === 'sm',
             'pl-10': size !== 'sm' && size !== 'lg',
-            'pl-12': size === 'lg',
+            'pl-11': size === 'lg',
             'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
           }"
           :placeholder="placeholder || undefined"
@@ -128,11 +128,10 @@
           v-if="showClearButton"
           tabindex="-1"
           type="button"
-          class="btn-sm my-auto py-0 ml-auto btn text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+          class="my-auto py-0 ml-auto btn px-0! text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
           :class="{
-            'px-0!': size === 'sm',
-            'px-0.25!': size !== 'sm' && size !== 'lg',
-            'px-0.5!': size === 'lg',
+            'btn-sm': size === 'sm',
+            'btn-md': size === 'md' || size === 'lg',
           }"
           @mousedown.prevent="clearQuery"
         >
@@ -145,7 +144,14 @@
         >
           <SdsTooltip>
             <template #trigger>
-              <div class="border dark:border-gray-700 rounded-theme-sm shadow-sm px-1.5 py-1 leading-2.5 cursor-default">
+              <div
+                class="border dark:border-gray-700 rounded-theme-sm shadow-sm py-1 cursor-default"
+                :class="{
+                  'leading-2.5 px-1.5': size === 'sm',
+                  'leading-3.5 px-1.5': size !== 'sm' && size !== 'lg',
+                  'leading-4 px-1.75': size === 'lg'
+                }"
+              >
                 <span>/</span>
               </div>
             </template>
@@ -267,18 +273,17 @@
         >
           <div
             v-if="optionGroupChildren && s[optionGroupChildren]?.length"
-            class="flex flex-col gap-y-1 pb-2 mb-0"
+            class="flex flex-col gap-y-1 pb-2 mb-0 border-t border-gray-50 dark:border-gray-800"
             :class="{
-              'pt-2': !enableSelectAll,
-              'first:[&>div]:border-t-0': !multiple,
-              'border-t border-gray-50 dark:border-gray-800 pt-2': activeGroup.label !== 'All' && multiple && countVisibleOptions(s[optionGroupChildren]) > 1 && enableSelectAll
+              'border-t-0!': !multiple || !enableSelectAll || activeGroup.label === 'All' || countVisibleOptions(s[optionGroupChildren]) <= 1,
+              'pt-2': activeGroupKey !== -1 && countVisibleOptions(s[optionGroupChildren]) > 1,
             }"
           >
             <div
               v-if="activeGroupKey === -1"
-              class="flex w-full px-4 py-2 text-sm text-left text-black list-none dark:text-white font-semibold"
+              class="flex w-full px-4 py-2 text-sm text-left text-black dark:text-white font-semibold list-none"
               :class="{
-                'border-t border-gray-50 dark:border-gray-800': activeGroup.label === 'All'
+                'border-t border-gray-50 dark:border-gray-800': sindex !== 0 || enableSelectAll
               }"
             >
               <!-- @slot Option Group content. Good for customizing the content for each group option -->
