@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-avatar"
-    :class="['inline-flex items-center justify-center', variantOuterClass, sizeClass, shapeClass]"
+    :class="['inline-flex items-center justify-center overflow-clip', variantOuterClass, sizeClass, roundClass, borderClass]"
     role="img"
     :aria-label="name || 'Avatar'"
   >
@@ -14,9 +14,9 @@
     <span
       v-else
       :title="name"
-      :class="['leading-none text-black cursor-default uppercase', textClass, variantInnerClass]"
+      :class="['flex items-center justify-center leading-none text-black cursor-default uppercase', textClass, variantInnerClass, sizeClass, shapeClass]"
     >
-      {{ initials }}
+      <span>{{ initials }}</span>
     </span>
   </div>
 </template>
@@ -28,9 +28,13 @@ defineOptions({
 
 interface AvatarProps {
   /**
+   * Determines the stylistic type of the avatar
+   */
+  type?: 'subtle' | 'outline'
+  /**
    * Determines the background color of the avatar when no image is present.
    */
-  variant?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple'
+  variant?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | 'orange'
   /**
    * Determines the position of the image.
    */
@@ -56,6 +60,7 @@ interface AvatarProps {
 }
 
 const props = withDefaults(defineProps<AvatarProps>(), {
+  type: 'subtle',
   variant: 'gray',
   position: 'center',
   shape: 'portrait',
@@ -102,11 +107,9 @@ const avatarClasses = computed(() => {
     }
   })()
 
-  const shape = (() => {
+  const roundness = (() => {
     const classes = []
-    if (props.shape === 'circle') classes.push('rounded-full aspect-square')
-    if (props.shape === 'portrait') classes.push('aspect-[4/5]')
-    if (props.shape === 'square') classes.push('aspect-square')
+    if (props.shape === 'circle') classes.push('rounded-full')
     if (props.shape === 'square' || props.shape === 'portrait') {
       if (['xs', 'sm'].includes(props.size)) classes.push('rounded-theme-sm')
       if (['md', 'lg'].includes(props.size)) classes.push('rounded-theme-md')
@@ -115,26 +118,55 @@ const avatarClasses = computed(() => {
     return classes.join(' ')
   })()
 
+  const shape = (() => {
+    const classes = []
+    if (props.shape === 'circle') classes.push('aspect-square')
+    if (props.shape === 'portrait') classes.push('aspect-[4/5]')
+    if (props.shape === 'square') classes.push('aspect-square')
+    return classes.join(' ')
+  })()
+
+  const borderOuter = (() => {
+    if (props.type !== 'outline' && props.variant) return ''
+
+    const borderWidth = props.size == 'xs' || props.size == 'sm' || props.size == 'md' ? 'border ' : 'border-2 '
+    const borderVariants = [
+      borderWidth + 'border-gray-200 dark:border-gray-600 bg-white dark:bg-black',
+      borderWidth + 'border-red-200 dark:border-red-700 bg-white dark:bg-black',
+      borderWidth + 'border-yellow-100 dark:border-yellow-700 bg-white dark:bg-black',
+      borderWidth + 'border-green-200 dark:border-green-700 bg-white dark:bg-black',
+      borderWidth + 'border-blue-200 dark:border-blue-700 bg-white dark:bg-black',
+      borderWidth + 'border-purple-200 dark:border-purple-700 bg-white dark:bg-black',
+      borderWidth + 'border-orange-100 dark:border-orange-700 bg-white dark:bg-black'
+    ]
+
+    return props.variant ? borderVariants.filter((color) => color.includes(props.variant))[0] : ''
+  })()
+
   const variantOuter = (() => {
+    if (props.type === 'outline' && props.variant) return 'bg-white dark:bg-black'
+
     const shapeVariants = [
-      'bg-gray-100 dark:bg-gray-900',
+      'bg-gray-100 dark:bg-gray-850',
       'bg-red-100 dark:bg-red-900',
-      'bg-yellow-25 dark:bg-yellow-900',
+      'bg-yellow-50 dark:bg-yellow-900',
       'bg-green-50 dark:bg-green-900',
       'bg-blue-50 dark:bg-blue-900',
-      'bg-purple-100 dark:bg-purple-900'
+      'bg-purple-100 dark:bg-purple-900',
+      'bg-orange-50 dark:bg-orange-900'
     ]
     return props.variant ? shapeVariants.filter((color) => color.includes(props.variant))[0] : ''
   })()
 
   const variantInner = (() => {
     const textVariants = [
-      'dark:text-gray-400',
-      'dark:text-red-500',
-      'dark:text-yellow-400',
-      'dark:text-green-400',
-      'dark:text-blue-400',
-      'dark:text-purple-400'
+      'text-black dark:text-gray-300',
+      'text-red-600 dark:text-red-500',
+      'text-yellow-600 dark:text-yellow-400',
+      'text-green-600 dark:text-green-400',
+      'text-blue-600 dark:text-blue-400',
+      'text-purple-600 dark:text-purple-400',
+      'text-orange-600 dark:text-orange-400'
     ]
     return props.variant ? textVariants.filter((color) => color.includes(props.variant))[0] : ''
   })()
@@ -143,9 +175,11 @@ const avatarClasses = computed(() => {
     position,
     size,
     text,
+    roundness,
     shape,
     variantOuter,
-    variantInner
+    variantInner,
+    borderOuter
   }
 })
 
@@ -153,9 +187,11 @@ const avatarClasses = computed(() => {
 const positionClass = computed(() => avatarClasses.value.position)
 const sizeClass = computed(() => avatarClasses.value.size)
 const textClass = computed(() => avatarClasses.value.text)
+const roundClass = computed(() => avatarClasses.value.roundness)
 const shapeClass = computed(() => avatarClasses.value.shape)
 const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
 const variantInnerClass = computed(() => avatarClasses.value.variantInner)
+const borderClass = computed(() => avatarClasses.value.borderOuter)
 
 const initials = computed(() => {
   if (!props.name) {

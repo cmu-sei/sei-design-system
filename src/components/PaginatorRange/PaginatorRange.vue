@@ -10,7 +10,7 @@
       :total="total"
     >
       <span class="text-sm text-gray-800 dark:text-gray-600">
-        Showing <span class="font-semibold">{{ start !== end ? `${start}-${end}` : start }}</span> of <span class="font-semibold">{{ total }}</span>
+        Showing <span class="font-semibold">{{ start !== end ? `${start}-${end}` : start }}</span> of <span class="font-semibold">{{ formattedTotal }}</span>
       </span>
     </slot>
   </p>
@@ -48,4 +48,6 @@ const { start, end, total } = usePaginationRange(
   totalResults,
   totalPages
 )
+
+const formattedTotal = computed(() => total.value.toLocaleString('en-US'))
 </script>

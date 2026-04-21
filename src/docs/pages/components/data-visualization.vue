@@ -30,6 +30,28 @@
           v-for="size in avatarSizes"
           :key="size"
         >
+          <div
+            v-for="shape in avatarShapes"
+            :key="shape"
+            class="flex flex-col justify-center gap-4 h-auto"
+          >
+            <div>
+              <SdsAvatar
+                :size="size"
+                :shape="shape"
+                variant="gray"
+                type="outline"
+                :src="`https://picsum.photos/seed/${size}-${shape}/200/200`"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-row gap-4">
+        <div
+          v-for="size in avatarSizes"
+          :key="size"
+        >
           <div class="h-full flex-col flex justify-end">
             <SdsIndicator
               variant="green"
@@ -94,6 +116,29 @@
                 alt="Avatar"
               />
             </SdsIndicator>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2>Avatar - All Variants</h2>
+    <div class="flex flex-row gap-4">
+      <div
+        v-for="type in avatarTypes"
+        :key="type"
+      >
+        <div 
+          v-for="variant in avatarVariants"
+          :key="variant"
+        >
+          <div class="h-full flex-col flex justify-end py-1">
+            <SdsAvatar
+              :type="type"
+              size="lg"
+              shape="circle"
+              :variant="variant"
+              name="Morgan Markowski"
+              alt="Avatar"
+            />
           </div>
         </div>
       </div>
@@ -1116,6 +1161,8 @@ const datapointModelValue = ref(1451)
 
 const avatarSizes = ref<('xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl')[]>(['xs', 'sm', 'md', 'lg', 'xl', '2xl'])
 const avatarShapes = ref<('circle' | 'square' | 'portrait')[]>(['circle', 'square', 'portrait'])
+const avatarVariants = ref<('gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | 'orange')[]>(['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'])
+const avatarTypes = ref<('subtle' | 'outline')[]>(['subtle', 'outline'])
 const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purple' | 'indigo' | 'blue' | 'teal' | 'green' | undefined)[]>(
   ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
 )

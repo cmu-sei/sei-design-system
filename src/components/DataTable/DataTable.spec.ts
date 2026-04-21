@@ -1,5 +1,6 @@
 import type { DataTableFilterConfig } from './DataTable.vue'
 import type { TableField, TableItem } from '../Table/Table.vue'
+import type { SortByDropdownModel, SortByDropdownOption } from '../SortByDropdown/SortByDropdown.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import SdsDataTable from './DataTable.vue'
@@ -38,6 +39,18 @@ const pagination = {
   totalResults: 10
 }
 
+const sortByOptions: SortByDropdownOption[] = [
+  { id: 'task', value: 'task', label: 'Task', type: 'alpha' },
+  { id: 'assignee', value: 'assignee', label: 'Assignee', type: 'alpha' },
+  { id: 'status', value: 'status', label: 'Status', type: 'alpha' },
+  { id: 'priority', value: 'priority', label: 'Priority', type: 'numerical' }
+]
+
+const sortByModel: SortByDropdownModel = {
+  sortBy: 'assignee',
+  orderBy: 'alpha:descending'
+}
+
 describe('SdsDataTable', () => {
   let container: HTMLElement
 
@@ -54,7 +67,7 @@ describe('SdsDataTable', () => {
     it('should render DataTable container with data-id attribute', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -63,10 +76,10 @@ describe('SdsDataTable', () => {
       expect(wrapper.find('[data-id="sds-data-table"]').exists()).toBe(true)
     })
 
-    it('should render SdsTable with provided fields and items from data prop', () => {
+    it('should render SdsTable with provided fields and items from tableData prop', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -90,7 +103,7 @@ describe('SdsDataTable', () => {
     it('should render all three pagination components when pagination prop is provided', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -104,7 +117,7 @@ describe('SdsDataTable', () => {
     it('should not render pagination controls when pagination prop is not provided', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items }
+          tableData: { fields, items }
         },
         attachTo: container
       })
@@ -117,7 +130,7 @@ describe('SdsDataTable', () => {
     it('should set data-has-footer when pagination prop is provided', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -130,7 +143,7 @@ describe('SdsDataTable', () => {
     it('should not set data-has-footer when pagination prop is not provided', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items }
+          tableData: { fields, items }
         },
         attachTo: container
       })
@@ -142,7 +155,7 @@ describe('SdsDataTable', () => {
     it('should not render faux footer controls when there are no items', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items: [] },
+          tableData: { fields, items: [] },
           pagination
         },
         attachTo: container
@@ -158,7 +171,7 @@ describe('SdsDataTable', () => {
     it('should initialize internal state from pagination prop on mount', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -172,14 +185,14 @@ describe('SdsDataTable', () => {
     it('should update pagination props when pagination prop changes', async () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
       })
 
       await wrapper.setProps({
-        data: { fields, items },
+        tableData: { fields, items },
         pagination: {
           currentPage: 2,
           totalPages: 3,
@@ -198,7 +211,7 @@ describe('SdsDataTable', () => {
     it('should pass current pagination state to SdsPaginator via props', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -212,7 +225,7 @@ describe('SdsDataTable', () => {
     it('should pass current pagination state to SdsPaginatorRange via props', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -230,7 +243,7 @@ describe('SdsDataTable', () => {
     it('should have go-to-page listener on SdsPaginator', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -246,7 +259,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           ['onUpdate:pagination']: onUpdatePagination
         },
@@ -274,7 +287,7 @@ describe('SdsDataTable', () => {
     it('should set data-scrollable when scroll container overflows horizontally', async () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -301,7 +314,7 @@ describe('SdsDataTable', () => {
     it('should keep data-scrollable unset when scroll container does not overflow', async () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attachTo: container
@@ -330,7 +343,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           ['onUpdate:pagination']: onUpdatePagination
         },
@@ -357,7 +370,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           ['onUpdate:pagination']: onUpdatePagination
         },
@@ -378,7 +391,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           enableBatchSelection: true,
           ['onUpdate:selectedItems']: onUpdateSelectedItems
@@ -407,7 +420,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           enableBatchSelection: true,
           ['onUpdate:selectedItems']: onUpdateSelectedItems
@@ -434,9 +447,9 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
-          filterSearch: true,
+          search: true,
           enableBatchSelection: true,
           batchSelectionActions: [
             {
@@ -491,7 +504,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           filters: filtersConfig,
           ['onUpdate:filters']: onUpdateFilters
@@ -543,7 +556,7 @@ describe('SdsDataTable', () => {
 
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           filters: filtersConfig,
           ['onUpdate:filters']: onUpdateFilters
@@ -567,15 +580,15 @@ describe('SdsDataTable', () => {
       vi.useFakeTimers()
 
       try {
-        const onUpdateFilterSearchQuery = vi.fn()
+        const onUpdateSearchQuery = vi.fn()
 
         const wrapper = mount(SdsDataTable, {
           props: {
-            data: { fields, items },
+            tableData: { fields, items },
             pagination,
-            filterSearch: true,
-            filterSearchDebounce: 50,
-            ['onUpdate:filterSearchQuery']: onUpdateFilterSearchQuery
+            search: true,
+            searchDebounce: 50,
+            ['onUpdate:searchQuery']: onUpdateSearchQuery
           },
           attachTo: container
         })
@@ -596,8 +609,8 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery).toHaveBeenCalled()
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
+        expect(onUpdateSearchQuery).toHaveBeenCalled()
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('Draft')
 
         const cancelButton = wrapper.findAll('button').find((button) => button.text().includes('Cancel'))
         expect(cancelButton).toBeDefined()
@@ -609,11 +622,112 @@ describe('SdsDataTable', () => {
         await wrapper.vm.$nextTick()
         await flushPromises()
 
-        expect(onUpdateFilterSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
+        expect(onUpdateSearchQuery.mock.calls.at(-1)?.[0]).toBe('')
       } finally {
         vi.useRealTimers()
       }
     })
+  })
+
+  describe('Sort By', () => {
+    it('should render sort by dropdown when sortBy options are provided', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          sortBy: {
+            options: sortByOptions,
+            value: sortByModel,
+            title: 'Sort by'
+          }
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      expect(sortByDropdown.exists()).toBe(true)
+      expect(sortByDropdown.props('title')).toBe('Sort by')
+      expect(sortByDropdown.props('options')).toEqual(sortByOptions)
+      expect(sortByDropdown.props('disabled')).toBe(false)
+    })
+
+    it('should not render sort by dropdown when sortBy options are empty', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          sortBy: {
+            options: []
+          }
+        },
+        attachTo: container
+      })
+
+      expect(wrapper.findComponent({ name: 'SdsSortByDropdown' }).exists()).toBe(false)
+    })
+
+    it('should disable sort by dropdown when there are no table rows', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items: [] },
+          pagination,
+          sortBy: {
+            options: sortByOptions
+          }
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      expect(sortByDropdown.exists()).toBe(true)
+      expect(sortByDropdown.props('disabled')).toBe(true)
+    })
+
+    it('should emit update:sortBy when sort by dropdown model changes', async () => {
+      const onUpdateSortBy = vi.fn()
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          sortBy: {
+            options: sortByOptions,
+            value: null
+          },
+          ['onUpdate:sortBy']: onUpdateSortBy
+        },
+        attachTo: container
+      })
+
+      const sortByDropdown = wrapper.findComponent({ name: 'SdsSortByDropdown' })
+      const nextSortBy: SortByDropdownModel = {
+        sortBy: 'priority',
+        orderBy: 'numerical:ascending'
+      }
+
+      sortByDropdown.vm.$emit('update:modelValue', nextSortBy)
+      await wrapper.vm.$nextTick()
+      await flushPromises()
+
+      expect(onUpdateSortBy).toHaveBeenCalledTimes(1)
+      expect(onUpdateSortBy).toHaveBeenCalledWith(nextSortBy)
+    })
+
+    it('should set data-has-header when sortBy is the only header control', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          sortBy: {
+            options: sortByOptions
+          }
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+      expect(dataTable.attributes('data-has-header')).toBe('true')
+    })
+
   })
 
   describe('Slot Pass-Through', () => {
@@ -621,7 +735,7 @@ describe('SdsDataTable', () => {
       const customSlot = ({ item }: CellSlotProps) => `Custom: ${item.task}`
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         slots: {
@@ -637,7 +751,7 @@ describe('SdsDataTable', () => {
     it('should render custom slot content with correct item data for specific field', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         slots: {
@@ -653,7 +767,7 @@ describe('SdsDataTable', () => {
       let receivedSlotProps: CellSlotProps | null = null
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         slots: {
@@ -672,7 +786,7 @@ describe('SdsDataTable', () => {
   })
 
   describe('Props & Configuration', () => {
-    it('should render empty state when data prop is undefined', () => {
+    it('should render empty state when tableData prop is undefined', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
           pagination
@@ -690,7 +804,7 @@ describe('SdsDataTable', () => {
     it('should not render paginator when pagination prop is undefined', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items }
+          tableData: { fields, items }
         },
         attachTo: container
       })
@@ -702,7 +816,7 @@ describe('SdsDataTable', () => {
     it('should merge $attrs with child component props for proper attribute inheritance', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination
         },
         attrs: {
@@ -718,7 +832,7 @@ describe('SdsDataTable', () => {
     it('should prepend selected field and sticky metadata when batch selection is enabled', () => {
       const wrapper = mount(SdsDataTable, {
         props: {
-          data: { fields, items },
+          tableData: { fields, items },
           pagination,
           enableBatchSelection: true
         },

@@ -1,16 +1,18 @@
 <template>
   <div class="grid gap-8">
     <SdsDataTable
-      :data="data"
+      :table-data="data"
       :pagination="pagination"
       :enable-batch-selection="true"
       :batch-selection-actions="batchSelectionActions"
       :filters="filters"
-      :filter-search="true"
-      :filter-search-query="searchTerm"
+      :search="true"
+      :search-query="searchTerm"
+      :sort-by="sortByConfig"
       :loading="loading"
       @update:filters="handleFilterUpdate"
-      @update:filter-search-query="handleFilterSearchUpdate"
+      @update:search-query="handleSearchUpdate"
+      @update:sort-by="handleSortByUpdate"
       @update:pagination="handlePaginationUpdate"
       @update:selected-items="handleSelectedItems"
     >
@@ -38,10 +40,21 @@
           <span class="pt-1">{{ item.assignee }}</span>
         </div>
       </template>
-      <template #cell(status)="{ item }: { item: TableItem }">
-        <SdsBadge v-bind="getBadgeVariant((item.status as string))">
-          {{ item.status }}
-        </SdsBadge>
+      <template #cell(status_priority)="{ item }: { item: TableItem }">
+        <div class="grid gap-y-1">
+          <SdsBadge 
+            v-bind="getBadgeVariant((item.status as string))"
+            class="justify-self-start"
+          >
+            {{ item.status }}
+          </SdsBadge>
+          <span 
+            class="block text-sm"
+            :class="getPriorityTextClass((item.priority as number))"
+          >
+            {{ PRIORITY_LABELS[(item.priority as number)] }}
+          </span>
+        </div>
       </template>
       <template #ellipsis-menu-items>
         <SdsDropdownItem 
@@ -70,6 +83,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
 import type { DataTableFilterConfig, BatchSelectionAction } from '../../../components/DataTable/DataTable.vue'
+import type { SortByDropdownModel, SortByDropdownOption } from '../../../components/SortByDropdown/SortByDropdown.vue'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue'
 import SdsAvatar from '../../../components/Avatar/Avatar.vue'
 import SdsBadge from '../../../components/Badge/Badge.vue'
@@ -133,31 +147,31 @@ function useSearchFilter<T>(
 
 // Sample table data
 const tableItemsOriginal = ref<TableItem[]>([
-  { id: 1, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 2, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 3, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 4, task: 'SDS-104', description: 'Add accessibility features', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 5, task: 'SDS-105', description: 'Integrate third-party API', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 6, task: 'SDS-106', description: 'Update user profile page', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 7, task: 'SDS-107', description: 'Fix mobile layout issues', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 8, task: 'SDS-108', description: 'Implement dark mode', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 9, task: 'SDS-109', description: 'Set up CI/CD pipeline', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 10, task: 'SDS-110', description: 'Improve form validation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 11, task: 'SDS-111', description: 'Create dashboard analytics', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 12, task: 'SDS-112', description: 'Implement file uploader', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 13, task: 'SDS-113', description: 'Add multi-language support', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 14, task: 'SDS-114', description: 'Redesign landing page', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 15, task: 'SDS-115', description: 'Integrate payment gateway', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 16, task: 'SDS-116', description: 'Fix broken links', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 17, task: 'SDS-117', description: 'Add user notifications', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 18, task: 'SDS-118', description: 'Implement search functionality', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 19, task: 'SDS-119', description: 'Update documentation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 20, task: 'SDS-120', description: 'Add role-based access control', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 21, task: 'SDS-121', description: 'Improve loading performance', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 22, task: 'SDS-122', description: 'Implement drag-and-drop', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open' },
-  { id: 23, task: 'SDS-123', description: 'Add audit logging', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing' },
-  { id: 24, task: 'SDS-124', description: 'Refactor state management', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated' },
-  { id: 25, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open' }
+  { id: 1, task: 'SDS-101', description: 'Implement responsive navigation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 2 },
+  { id: 2, task: 'SDS-102', description: 'Refactor authentication module', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 1 },
+  { id: 3, task: 'SDS-103', description: 'Optimize image loading', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 3 },
+  { id: 4, task: 'SDS-104', description: 'Add accessibility features', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 1 },
+  { id: 5, task: 'SDS-105', description: 'Integrate third-party API', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 2 },
+  { id: 6, task: 'SDS-106', description: 'Update user profile page', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 3 },
+  { id: 7, task: 'SDS-107', description: 'Fix mobile layout issues', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 1 },
+  { id: 8, task: 'SDS-108', description: 'Implement dark mode', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 2 },
+  { id: 9, task: 'SDS-109', description: 'Set up CI/CD pipeline', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 1 },
+  { id: 10, task: 'SDS-110', description: 'Improve form validation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 3 },
+  { id: 11, task: 'SDS-111', description: 'Create dashboard analytics', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 2 },
+  { id: 12, task: 'SDS-112', description: 'Implement file uploader', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 1 },
+  { id: 13, task: 'SDS-113', description: 'Add multi-language support', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 3 },
+  { id: 14, task: 'SDS-114', description: 'Redesign landing page', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 1 },
+  { id: 15, task: 'SDS-115', description: 'Integrate payment gateway', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 2 },
+  { id: 16, task: 'SDS-116', description: 'Fix broken links', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 2 },
+  { id: 17, task: 'SDS-117', description: 'Add user notifications', assignee: 'Samira Hassan', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 3 },
+  { id: 18, task: 'SDS-118', description: 'Implement search functionality', assignee: 'Chris Walker', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 1 },
+  { id: 19, task: 'SDS-119', description: 'Update documentation', assignee: 'Jamie Carter', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 3 },
+  { id: 20, task: 'SDS-120', description: 'Add role-based access control', assignee: 'Morgan Lee', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 1 },
+  { id: 21, task: 'SDS-121', description: 'Improve loading performance', assignee: 'Riley Thompson', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 2 },
+  { id: 22, task: 'SDS-122', description: 'Implement drag-and-drop', assignee: 'Taylor Nguyen', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 1 },
+  { id: 23, task: 'SDS-123', description: 'Add audit logging', assignee: 'Casey Martinez', status: 'Submitted', actions: 'Edit', workflow: 'Testing', priority: 2 },
+  { id: 24, task: 'SDS-124', description: 'Refactor state management', assignee: 'Jordan Kim', status: 'Approved', actions: 'Edit', workflow: 'Recently Updated', priority: 3 },
+  { id: 25, task: 'SDS-125', description: 'Integrate maps feature', assignee: 'Alex Patel', status: 'Draft', actions: 'Edit', workflow: 'Open', priority: 2 }
 ])
 
 // Loading state
@@ -181,9 +195,11 @@ const tableFields = computed<TableField[]>(() => [
     sortable: true
   },
   {
-    key: 'status',
-    label: 'Status',
-    sortable: true
+    key: 'status_priority',
+    fields: [
+      { key: 'status', label: 'Status', sortable: true },
+      { key: 'priority', label: 'Priority', sortable: true }
+    ]
   },
   {
     key: 'actions',
@@ -287,6 +303,24 @@ const pagination = computed(() => ({
   totalResults: totalResults.value 
 }))
 
+// Sort by dropdown setup
+const PRIORITY_LABELS: Record<number, string> = Object.freeze({ 1: 'High', 2: 'Medium', 3: 'Low' } as const)
+
+const sortByOptions: SortByDropdownOption[] = [
+  { id: 'task', value: 'task', label: 'Task', type: 'alpha' },
+  { id: 'assignee', value: 'assignee', label: 'Assignee', type: 'alpha' },
+  { id: 'status', value: 'status', label: 'Status', type: 'alpha' },
+  { id: 'priority', value: 'priority', label: 'Priority', type: 'numerical' }
+]
+
+const sortByModel = ref<SortByDropdownModel | null>(null)
+
+const sortByConfig = computed(() => ({
+  options: sortByOptions,
+  value: sortByModel.value,
+  title: 'Sort by'
+}))
+
 // Search setup
 const searchFields = ['task', 'description', 'assignee'] as (keyof TableItem)[]
 const { searchTerm, searchItems } = useSearchFilter<TableItem>(tableItemsOriginal.value, searchFields, 0)
@@ -382,8 +416,8 @@ function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
   totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
 }
 
-// Filtered search update handler
-async function handleFilterSearchUpdate(searchQuery: string | null) {
+// Search update handler
+async function handleSearchUpdate(searchQuery: string | null) {
   loading.value = true
   await delay(1000) // Simulate async operation
 
@@ -416,6 +450,23 @@ async function handleFilterSearchUpdate(searchQuery: string | null) {
   totalResults.value = filtered.length
   totalPages.value = Math.ceil(totalResults.value / totalResultsPerPage.value)
   loading.value = false
+}
+
+// Sort by update handler
+function handleSortByUpdate(model: SortByDropdownModel | null) {
+  sortByModel.value = model
+  if (!model || !model.sortBy || !model.orderBy) return
+
+  const field = model.sortBy as string
+  const isDescending = model.orderBy.endsWith(':descending')
+
+  if (field === 'priority') {
+    sortByPriority(isDescending)
+  } else if (field === 'assignee') {
+    sortByAssigneeLastName(isDescending)
+  } else {
+    sortByStringField(field as keyof TableItem, isDescending)
+  }
 }
 
 // Pagination update handler
@@ -477,6 +528,15 @@ function getLastName(fullName: string): string {
   return rawLast
 }
 
+// Sorts tableItems by priority (1=High, 2=Medium, 3=Low).
+function sortByPriority(desc: boolean) {
+  tableItems.value.sort((a: TableItem, b: TableItem) => {
+    const aVal = a.priority as number
+    const bVal = b.priority as number
+    return desc ? aVal - bVal : bVal - aVal
+  })
+}
+
 // Sorts tableItems by assignee's last name.
 function sortByAssigneeLastName(desc: boolean) {
   tableItems.value.sort((a: TableItem, b: TableItem) => {
@@ -501,6 +561,9 @@ function sortTableItems({ sortBy, sortDesc }: { sortBy: string; sortDesc: boolea
       break
     case 'assignee':
       sortByAssigneeLastName(sort_desc.value)
+      break
+    case 'priority':
+      sortByPriority(sort_desc.value)
       break
   }
 }
@@ -552,6 +615,18 @@ function getBadgeVariant(status: string): {
         type: 'light-border',
         variant: 'yellow'
       }
+  }
+}
+
+function getPriorityTextClass(priority: number): string {
+  switch (priority) {
+    case 1:
+      return 'text-red-600 dark:text-red-400'
+    case 2:
+      return 'text-indigo-600 dark:text-indigo-400'
+    case 3:
+    default:
+      return 'text-gray-600 dark:text-gray-400'
   }
 }
 

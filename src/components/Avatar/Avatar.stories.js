@@ -19,8 +19,12 @@ export default {
       options: ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'auto'],
       control: {type: 'select'}
     },
+    type: {
+      options: ['subtle', 'outline'],
+      control: {type: 'select'}
+    },
     variant: {
-      options: ['gray', 'red', 'yellow', 'green', 'blue', 'purple'],
+      options: ['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'],
       control: {type: 'select'}
     },
     shape: {
