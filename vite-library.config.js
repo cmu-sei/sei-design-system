@@ -90,6 +90,14 @@ export default defineConfig({
       ...configDefaults.exclude,
       'scripts/templates/*'
     ],
-    setupFiles: ['./setup.ts']
+    setupFiles: ['./setup.ts'],
+    coverage: {
+      include: [
+        'src/components/**/*.vue',
+        'src/composables/*.{js,ts}',
+        'src/helpers/*.{js,ts}'
+      ],
+      provider: 'v8'
+    }
   },
 })
