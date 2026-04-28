@@ -1,176 +1,188 @@
 <template>
-  <div
-    ref="root"
+  <SdsFloatingUi
+    ref="floatingUiRef"
     data-id="sds-combo-box"
-    class="relative"
+    class="w-full"
+    placement="bottom-start"
+    strategy="absolute"
+    match-width
+    hide-arrow
+    shift
+    disable-animation
+    :offset="4"
+    popper-class="absolute z-50 p-0 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    @close="onFloatingUiClose"
   >
-    <div
-      class="input-group flex flex-col"
-      :class="[
-        validationClasses,
-        {
-          'input-group-sm': size === 'sm',
-          'bg-gray-50 dark:bg-gray-950': readonly
-        }
-      ]"
-    >
+    <template #trigger>
       <div
-        v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
-        class="flex flex-row flex-wrap rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
-        :class="{
-          'bg-gray-50': readonly,
-          'bg-gray-25 dark:bg-gray-950': !disabled,
-          'bg-gray-100 dark:bg-gray-850': disabled
-        }"
-      >
-        <SdsTag
-          v-for="(option, index) in selected"
-          :key="index"
-          :disabled="disabled"
-          :readonly="readonly || disabled"
-          :size="size === 'sm' ? 'sm' : 'md'"
-          action="remove"
-          class="grow-0"
-          :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
-          @remove="multiselectRemove(index)"
-        />
-      </div>
-      <div
-        class="flex flex-row"
-        :class="{
-          'h-7 gap-x-2 pr-1.25': size === 'sm',
-          'h-10 gap-x-2.5 pr-2.25': size !== 'sm' && size !== 'lg',
-          'h-12 gap-x-3 pr-3': size === 'lg',
-        }"
+        ref="root"
+        class="relative"
       >
         <div
-          class="input-group-addon absolute z-0"
-          :class="{
-            'py-1.5 h-7': size === 'sm',
-            'py-2.5 h-10': size !== 'sm' && size !== 'lg',
-            'py-3.5 h-12': size === 'lg',
-          }"
+          class="input-group flex flex-col"
+          :class="[
+            validationClasses,
+            {
+              'input-group-sm': size === 'sm',
+              'bg-gray-50 dark:bg-gray-950': readonly
+            }
+          ]"
         >
-          <span class="sr-only">Combo box</span>
-          <IconFa7SolidMagnifyingGlass
-            v-if="!pending"
-            class="h-full w-full"
-          />
-          <SdsLoadingSpinner
-            v-else
-            size="sm"
-          />
+          <div
+            v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
+            class="flex flex-row flex-wrap rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
+            :class="{
+              'bg-gray-50': readonly,
+              'bg-gray-25 dark:bg-gray-950': !disabled,
+              'bg-gray-100 dark:bg-gray-850': disabled
+            }"
+          >
+            <SdsTag
+              v-for="(option, index) in selected"
+              :key="index"
+              :disabled="disabled"
+              :readonly="readonly || disabled"
+              :size="size === 'sm' ? 'sm' : 'md'"
+              action="remove"
+              class="grow-0"
+              :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
+              @remove="multiselectRemove(index)"
+            />
+          </div>
+          <div
+            class="flex flex-row"
+            :class="{
+              'h-7 gap-x-2 pr-1.25': size === 'sm',
+              'h-10 gap-x-2.5 pr-2.25': size !== 'sm' && size !== 'lg',
+              'h-12 gap-x-3 pr-3': size === 'lg',
+            }"
+          >
+            <div
+              class="input-group-addon absolute z-0"
+              :class="{
+                'py-1.5 h-7': size === 'sm',
+                'py-2.5 h-10': size !== 'sm' && size !== 'lg',
+                'py-3.5 h-12': size === 'lg',
+              }"
+            >
+              <span class="sr-only">Combo box</span>
+              <IconFa7SolidMagnifyingGlass
+                v-if="!pending"
+                class="h-full w-full"
+              />
+              <SdsLoadingSpinner
+                v-else
+                size="sm"
+              />
+            </div>
+            <span
+              v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
+              class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap pr-0"
+              :class="{
+                'py-1 left-7': size === 'sm',
+                'py-2 left-8': size !== 'sm' && size !== 'lg',
+                'py-3 left-9': size === 'lg',
+                'max-w-[calc(100%-3.5rem)]': (showClearButton || isFocused) && size === 'sm',
+                'max-w-[calc(100%-4.5rem)]': (showClearButton || isFocused) && size !== 'sm' && size !== 'lg',
+                'max-w-[calc(100%-5rem)]': (showClearButton || isFocused) && size === 'lg',
+                'max-w-[calc(100%-5.25rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'sm',
+                'max-w-[calc(100%-6.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size !== 'sm' && size !== 'lg',
+                'max-w-[calc(100%-7rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'lg',
+              }"
+            >
+              {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
+            </span>
+            <input
+              :id="id"
+              ref="inputField"
+              :value="inputDisplayValue"
+              type="text"
+              :multiple="multiple || undefined"
+              autocapitalize="off"
+              autocomplete="off"
+              spellcheck="false"
+              autocorrect="off"
+              class="form-control border-none h-full focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0"
+              :class="{
+                'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
+                'pl-8': size === 'sm',
+                'pl-10': size !== 'sm' && size !== 'lg',
+                'pl-11': size === 'lg',
+                'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
+              }"
+              :placeholder="placeholder || undefined"
+              :disabled="disabled || undefined"
+              :readonly="isReadonly || undefined"
+              :maxlength="maxlength !== undefined ? maxlength : undefined"
+              :required="(required && !((type === 'select' || type === 'taggable-select'))) || undefined"
+              @input="onInputFieldInput"
+              @click.prevent="inputClick"
+              @keydown.delete="handleDelete"
+              @keydown.tab="showDropdown = false"
+              @keydown.up.prevent="handleArrows('up', $event)"
+              @keydown.down.prevent="handleArrows('down', $event)"
+              @keydown.left="handleArrows('left', $event)"
+              @keydown.right="handleArrows('right', $event)"
+              @keydown.enter.prevent.self
+              @keyup.enter.prevent.self="handleEnterKeyUp"
+            >
+            <!-- Validation input for select/taggable-select types - checks if selected array has items -->
+            <input
+              v-if="(type === 'select' || type === 'taggable-select')"
+              type="text"
+              :value="selected.length > 0 ? 'selected' : ''"
+              :required="required || undefined"
+              tabindex="-1"
+              class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
+              style="clip: rect(0, 0, 0, 0);"
+              @input.prevent
+              @keydown.prevent
+            >
+            <button
+              v-if="showClearButton"
+              tabindex="-1"
+              type="button"
+              class="my-auto py-0 ml-auto btn px-0! text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+              :class="{
+                'btn-sm': size === 'sm',
+                'btn-md': size === 'md' || size === 'lg',
+              }"
+              @mousedown.prevent="clearQuery"
+            >
+              <span class="sr-only">Clear query</span>
+              <IconFa7SolidXmark />
+            </button>
+            <div
+              v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
+              class="input-group-addon px-0!"
+            >
+              <SdsTooltip>
+                <template #trigger>
+                  <div
+                    class="border dark:border-gray-700 rounded-theme-sm shadow-sm py-1 cursor-default"
+                    :class="{
+                      'leading-2.5 px-1.5': size === 'sm',
+                      'leading-3.5 px-1.5': size !== 'sm' && size !== 'lg',
+                      'leading-4 px-1.75': size === 'lg'
+                    }"
+                  >
+                    <span>/</span>
+                  </div>
+                </template>
+                <p>
+                  Press "/" to focus
+                </p>
+              </SdsTooltip>
+            </div>
+            <!-- @slot Default content. Good for adding content to the end of the input group -->
+            <slot />
+          </div>
         </div>
-        <span
-          v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
-          class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap pr-0"
-          :class="{
-            'py-1 left-7': size === 'sm',
-            'py-2 left-8': size !== 'sm' && size !== 'lg',
-            'py-3 left-9': size === 'lg',
-            'max-w-[calc(100%-3.5rem)]': (showClearButton || isFocused) && size === 'sm',
-            'max-w-[calc(100%-4.5rem)]': (showClearButton || isFocused) && size !== 'sm' && size !== 'lg',
-            'max-w-[calc(100%-5rem)]': (showClearButton || isFocused) && size === 'lg',
-            'max-w-[calc(100%-5.25rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'sm',
-            'max-w-[calc(100%-6.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size !== 'sm' && size !== 'lg',
-            'max-w-[calc(100%-7rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'lg',
-          }"
-        >
-          {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
-        </span>
-        <input
-          :id="id"
-          ref="inputField"
-          :value="inputDisplayValue"
-          type="text"
-          :multiple="multiple || undefined"
-          autocapitalize="off"
-          autocomplete="off"
-          spellcheck="false"
-          autocorrect="off"
-          class="form-control border-none h-full focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0"
-          :class="{
-            'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
-            'pl-8': size === 'sm',
-            'pl-10': size !== 'sm' && size !== 'lg',
-            'pl-11': size === 'lg',
-            'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
-          }"
-          :placeholder="placeholder || undefined"
-          :disabled="disabled || undefined"
-          :readonly="isReadonly || undefined"
-          :maxlength="maxlength !== undefined ? maxlength : undefined"
-          :required="(required && !((type === 'select' || type === 'taggable-select'))) || undefined"
-          @input="onInputFieldInput"
-          @click.prevent="inputClick"
-          @keydown.delete="handleDelete"
-          @keydown.tab="showDropdown = false"
-          @keydown.up.prevent="handleArrows('up', $event)"
-          @keydown.down.prevent="handleArrows('down', $event)"
-          @keydown.left="handleArrows('left', $event)"
-          @keydown.right="handleArrows('right', $event)"
-          @keydown.enter.prevent.self
-          @keyup.enter.prevent.self="handleEnterKeyUp"
-        >
-        <!-- Validation input for select/taggable-select types - checks if selected array has items -->
-        <input
-          v-if="(type === 'select' || type === 'taggable-select')"
-          type="text"
-          :value="selected.length > 0 ? 'selected' : ''"
-          :required="required || undefined"
-          tabindex="-1"
-          class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
-          style="clip: rect(0, 0, 0, 0);"
-          @input.prevent
-          @keydown.prevent
-        >
-        <button
-          v-if="showClearButton"
-          tabindex="-1"
-          type="button"
-          class="my-auto py-0 ml-auto btn px-0! text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
-          :class="{
-            'btn-sm': size === 'sm',
-            'btn-md': size === 'md' || size === 'lg',
-          }"
-          @mousedown.prevent="clearQuery"
-        >
-          <span class="sr-only">Clear query</span>
-          <IconFa7SolidXmark />
-        </button>
-        <div
-          v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
-          class="input-group-addon px-0!"
-        >
-          <SdsTooltip>
-            <template #trigger>
-              <div
-                class="border dark:border-gray-700 rounded-theme-sm shadow-sm py-1 cursor-default"
-                :class="{
-                  'leading-2.5 px-1.5': size === 'sm',
-                  'leading-3.5 px-1.5': size !== 'sm' && size !== 'lg',
-                  'leading-4 px-1.75': size === 'lg'
-                }"
-              >
-                <span>/</span>
-              </div>
-            </template>
-            <p>
-              Press "/" to focus
-            </p>
-          </SdsTooltip>
-        </div>
-        <!-- @slot Default content. Good for adding content to the end of the input group -->
-        <slot />
       </div>
-    </div>
+    </template>
     <div
-      v-if="shouldShowDropdown"
+      ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
-      class="
-        absolute z-50 w-full p-0 mt-1 bg-white border rounded-theme-sm shadow-lg
-        dark:border-gray-700 dark:bg-gray-850
-      "
     >
       <div
         v-if="groups?.length && !disableGroupTabs && !isFlatArray"
@@ -394,7 +406,6 @@
                 'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
                 'text-black dark:text-white font-semibold': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text',
                 'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(s),
-                'last:mb-2': groups.length < 2
               }"
               :data-active="isDropdownItemActive(s)"
               :type="optionType === 'button' ? 'button' : undefined"
@@ -447,6 +458,14 @@
               </slot>
             </div>
           </template>
+        </div>
+        <!-- No matches message -->
+        <div
+          v-if="hasNoMatches && !shouldShowNewSuggestion"
+          class="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 italic"
+          data-id="sds-combo-box-no-matches"
+        >
+          No matches for "{{ query }}"
         </div>
         <!-- Show '+ Add "query"' for taggable-select when no suggestions match -->
         <hr
@@ -564,10 +583,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </SdsFloatingUi>
 </template>
 
 <script setup lang="ts">
+import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
@@ -718,6 +738,8 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
 const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
 
 const root = ref(), scrollArea = ref(), inputField = ref(), selectAllRef = ref(), dropdownOption = ref()
+const floatingUiRef = ref()
+const dropdownRef = ref()
 const isReadonly = ref(props.readonly)
 
 const { validationClasses } = useFormField(props)
@@ -1086,7 +1108,10 @@ onKeyStroke('Escape', (e: KeyboardEvent) => {
   showDropdown.value = false
 })
 
-onClickOutside(root, () => showDropdown.value = false)
+// When FloatingUi closes externally (click-outside, Escape), sync local state
+const onFloatingUiClose = () => {
+  showDropdown.value = false
+}
 
 onKeyStroke('/', (e: KeyboardEvent) => {
   if (!props.focusOnKeyPress) return
@@ -1629,8 +1654,8 @@ const hasDropdownSuggestion = computed(() => {
 })
 
 const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
-  // SSR guard: ensure root.value exists before querying
-  const activeTab = (root.value?.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
+  // SSR guard: ensure dropdownRef.value exists before querying
+  const activeTab = (dropdownRef.value?.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
   if (direction === 'tabsUp' || direction === 'tabsDown') {
     if (direction === 'tabsUp') {
       event.preventDefault()
@@ -1725,7 +1750,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value--
         }
         await nextTick()
-        const newActiveTab = root.value?.querySelector('button.tab[data-active="true"]')
+        const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView()
         arrowCounter.value = -1
@@ -1739,7 +1764,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
           activeGroupKey.value++
         }
         await nextTick()
-        const newActiveTab = root.value?.querySelector('button.tab[data-active="true"]')
+        const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
         newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
         arrowCounter.value = -1
@@ -1797,12 +1822,16 @@ watchEffect(() => {
   suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
 })
 
+// True when the user has typed a query but no options match (filterSuggestions only).
+const hasNoMatches = computed(() => {
+  return props.filterSuggestions && !hasDropdownSuggestion.value && query.value !== ''
+})
+
 const shouldShowDropdown = computed(() => {
   if (props.disabled) return false
   if (props.pending) return false
-  if (pendingQueryDebounce.value) return false
   if (!showDropdown.value) return false
-  if (!hasDropdownSuggestion.value) return false
+  if (!hasDropdownSuggestion.value && !hasNoMatches.value) return false
   if (props.type !== 'text' && selected.value.length === 1 && !props.multiple && !props.clickToSelect) return false
   return true
 })
@@ -1812,8 +1841,13 @@ const firstItemIndex = computed(() => {
   return ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && allCount.value > 1) ? 1 : 0
 })
 
-watch(shouldShowDropdown, async (val) => {
-  await nextTick()
+watch(shouldShowDropdown, (val) => {
+  // Drive FloatingUi open/close state
+  if (val) {
+    floatingUiRef.value?.onOpen()
+  } else {
+    floatingUiRef.value?.onClose()
+  }
   // When the dropdown opens, auto-focus the first item so the user can press Enter immediately.
   // autoFocused keeps the typed query visible in the input (no label substitution).
   if (val) {
