@@ -18,6 +18,9 @@ const config: StorybookConfig = {
       }),
       Components({
         dts: false, // Don't generate types in Storybook
+        directoryAsNamespace: true,
+        collapseSamePrefixes: true,
+        dirs: ['src/components'],
         resolvers: [ IconsResolver({ prefix: 'icon',
           enabledCollections: ['fa7-solid', 'fa7-regular']
         })]
