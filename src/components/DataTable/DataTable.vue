@@ -368,6 +368,7 @@
             :key="JSON.stringify(option)"
           >
             <SdsDropdownItem
+              :disabled="option.value === paginatorRangeProps.totalResultsPerPage"
               tag="button"
               @click="setPageSize(option.value)"
             >
@@ -717,14 +718,14 @@ function setCurrentPage({ page, event }: { page: number | string; event: Keyboar
 
 /**
  * Updates the page size and resets to page 1, then emits the updated pagination state.
- * @param page - The new number of results per page.
+ * @param size - The new number of results per page.
  */
-function setPageSize(page: number) {
+function setPageSize(size: number) {
   emit('update:pagination', {
     ...paginatorProps.value,
     currentPage: 1,
     totalResults: props.pagination?.totalResults ?? 0,
-    totalResultsPerPage: page
+    totalResultsPerPage: size
   })
 }
 
