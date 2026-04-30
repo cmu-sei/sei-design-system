@@ -97,6 +97,15 @@
     @apply bg-gray-950;
   }
 
+  /* Sticky column: row highlight — match hover background when rowHighlight is active */
+  :where([data-row-highlight].table-prose tbody tr:hover td.sticky) {
+    @apply bg-gray-25;
+  }
+
+  :where(.dark [data-row-highlight].table-prose tbody tr:hover td.sticky) {
+    @apply bg-gray-900/85;
+  }
+
   /* Sticky column: right border — only on the last sticky column when table is scrollable */
   :where([data-scrollable] .table-prose th.sticky-end),
   :where([data-scrollable] .table-prose td.sticky-end) {

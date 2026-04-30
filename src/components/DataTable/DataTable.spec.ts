@@ -464,10 +464,13 @@ describe('SdsDataTable', () => {
       await wrapper.find('#select-all').setValue(true)
       await wrapper.vm.$nextTick()
 
-      const archiveButton = wrapper.findAll('button').find((button) => button.text().includes('Archive'))
-      expect(archiveButton).toBeDefined()
+      const archiveActionButton = wrapper
+        .findAllComponents({ name: 'SdsActionButton' })
+        .find((button) => button.text().includes('Archive'))
 
-      await archiveButton?.trigger('click')
+      expect(archiveActionButton).toBeDefined()
+
+      await archiveActionButton?.trigger('click')
 
       expect(batchActionSpy).toHaveBeenCalledTimes(1)
 
@@ -476,6 +479,7 @@ describe('SdsDataTable', () => {
       expect(selectedIds).toContain(1)
       expect(selectedIds).toContain(10)
     })
+
   })
 
   describe('Filters And Search', () => {
@@ -854,6 +858,58 @@ describe('SdsDataTable', () => {
         stickyLeftClass: 'left-8',
         stickyEnd: true
       })
+    })
+
+    it('should render the ellipsis header action dropdown when slot content is provided', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          sortBy: {
+            options: sortByOptions
+          }
+        },
+        slots: {
+          'ellipsis-menu-items': '<SdsDropdownItem tag="button">More options</SdsDropdownItem>'
+        },
+        attachTo: container
+      })
+
+      const headerDropdown = wrapper
+        .findAllComponents({ name: 'SdsActionDropdown' })
+        .find((dropdown) => dropdown.props('iconOnly') === true)
+
+      expect(headerDropdown).toBeDefined()
+      expect(headerDropdown?.props('disabled')).toBe(false)
+    })
+
+    it('should show empty-state clear filters button when filters are active and table has no rows', async () => {
+      const onUpdateFilters = vi.fn()
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items: [] },
+          filters: [
+            {
+              key: 'assignee',
+              label: 'Assignee',
+              type: 'dropdown',
+              options: [
+                { id: 'jamie-carter-active', text: 'Jamie Carter', value: 'Jamie Carter', selected: true }
+              ]
+            }
+          ],
+          ['onUpdate:filters']: onUpdateFilters
+        },
+        attachTo: container
+      })
+
+      const clearFiltersButton = wrapper.findAll('button').find((button) => button.text().trim() === 'Clear filters')
+      expect(clearFiltersButton).toBeDefined()
+
+      await clearFiltersButton?.trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(onUpdateFilters).toHaveBeenCalled()
     })
   })
 })

@@ -245,82 +245,93 @@
         <div 
           class="
             bg-white dark:bg-gray-950 
-            border border-t-0 border-gray-100 dark:border-gray-800 
+            border border-gray-100 dark:border-gray-800 
             rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none 
             flex flex-col items-center justify-center px-2 pt-4 pb-8
           "
+          :class="{
+            'border-t-0': hasFilters || hasSearch || hasSortBy,
+            'sds-theme-forge:rounded-tl-lg sds-theme-forge:rounded-tr-lg': !(hasFilters || hasSearch || hasSortBy)
+          }"
         >
-          <svg 
-            class="mb-2"
-            width="40" 
-            height="40" 
-            viewBox="0 0 40 40" 
-            fill="currentColor" 
-            xmlns="http://www.w3.org/2000/svg"
-            role="presentation"
+          <slot 
+            name="empty-state" 
+            :clear-filters="clearFilters" 
+            :has-filters="hasFilters" 
+            :has-active-filters="hasActiveFilters" 
           >
-            <mask 
-              id="mask0_9148_72736" 
-              style="mask-type:alpha" 
-              maskUnits="userSpaceOnUse" 
-              x="0" 
-              y="0" 
+            <svg 
+              class="mb-2"
               width="40" 
-              height="40"
+              height="40" 
+              viewBox="0 0 40 40" 
+              fill="currentColor" 
+              xmlns="http://www.w3.org/2000/svg"
+              role="presentation"
             >
-              <rect 
+              <mask 
+                id="mask0_9148_72736" 
+                style="mask-type:alpha" 
+                maskUnits="userSpaceOnUse" 
+                x="0" 
+                y="0" 
                 width="40" 
-                height="40" 
-                fill="#D9D9D9"
-              />
-            </mask>
-            <g mask="url(#mask0_9148_72736)">
-              <path 
-                d="M18.7466 22.7786C19.8791 22.7786 20.8342 22.3911 21.612 21.6161C22.3898 20.8414 22.7786 19.8877 22.7786 18.7549C22.7786 17.6224 22.3911 16.6673 21.6161 15.8895C20.8414 15.1117 19.8877 14.7228 18.7549 14.7228C17.6224 14.7228 16.6673 15.1103 15.8895 15.8853C15.1117 16.66 14.7228 17.6138 14.7228 18.7466C14.7228 19.8791 15.1103 20.8342 15.8853 21.612C16.66 22.3898 17.6138 22.7786 18.7466 22.7786ZM26.7924 28.7787L22.4453 24.4311C21.8525 24.8109 21.2436 25.0934 20.6186 25.2786C19.9936 25.4636 19.3753 25.5561 18.7636 25.5561C16.8753 25.5561 15.2668 24.8918 13.9382 23.5632C12.6096 22.2346 11.9453 20.6305 11.9453 18.7507C11.9453 16.871 12.6096 15.2668 13.9382 13.9382C15.2668 12.6096 16.871 11.9453 18.7507 11.9453C20.6305 11.9453 22.2346 12.6096 23.5632 13.9382C24.8918 15.2668 25.5561 16.8753 25.5561 18.7636C25.5561 19.3753 25.4567 19.9936 25.2578 20.6186C25.0586 21.2436 24.7692 21.8525 24.3895 22.4453L28.7786 26.8341L26.7924 28.7787Z" 
-                fill="#007CBA"
-              />
-            </g>
-            <mask 
-              id="mask1_9148_72736" 
-              style="mask-type:alpha" 
-              maskUnits="userSpaceOnUse" 
-              x="0" 
-              y="0" 
-              width="40" 
-              height="40"
-            >
-              <rect 
+                height="40"
+              >
+                <rect 
+                  width="40" 
+                  height="40" 
+                  fill="#D9D9D9"
+                />
+              </mask>
+              <g mask="url(#mask0_9148_72736)">
+                <path 
+                  d="M18.7466 22.7786C19.8791 22.7786 20.8342 22.3911 21.612 21.6161C22.3898 20.8414 22.7786 19.8877 22.7786 18.7549C22.7786 17.6224 22.3911 16.6673 21.6161 15.8895C20.8414 15.1117 19.8877 14.7228 18.7549 14.7228C17.6224 14.7228 16.6673 15.1103 15.8895 15.8853C15.1117 16.66 14.7228 17.6138 14.7228 18.7466C14.7228 19.8791 15.1103 20.8342 15.8853 21.612C16.66 22.3898 17.6138 22.7786 18.7466 22.7786ZM26.7924 28.7787L22.4453 24.4311C21.8525 24.8109 21.2436 25.0934 20.6186 25.2786C19.9936 25.4636 19.3753 25.5561 18.7636 25.5561C16.8753 25.5561 15.2668 24.8918 13.9382 23.5632C12.6096 22.2346 11.9453 20.6305 11.9453 18.7507C11.9453 16.871 12.6096 15.2668 13.9382 13.9382C15.2668 12.6096 16.871 11.9453 18.7507 11.9453C20.6305 11.9453 22.2346 12.6096 23.5632 13.9382C24.8918 15.2668 25.5561 16.8753 25.5561 18.7636C25.5561 19.3753 25.4567 19.9936 25.2578 20.6186C25.0586 21.2436 24.7692 21.8525 24.3895 22.4453L28.7786 26.8341L26.7924 28.7787Z" 
+                  fill="#007CBA"
+                />
+              </g>
+              <mask 
+                id="mask1_9148_72736" 
+                style="mask-type:alpha" 
+                maskUnits="userSpaceOnUse" 
+                x="0" 
+                y="0" 
                 width="40" 
-                height="40" 
-                fill="#D9D9D9"
-              />
-            </mask>
-            <g mask="url(#mask1_9148_72736)">
-              <path 
-                d="M7.77792 35C7.02792 35 6.37736 34.7246 5.82625 34.1738C5.27542 33.6226 5 32.9721 5 32.2221V25.2221H7.77792V32.2221H14.7779V35H7.77792ZM25.2221 35V32.2221H32.2221V25.2221H35V32.2221C35 32.9721 34.7246 33.6226 34.1738 34.1738C33.6226 34.7246 32.9721 35 32.2221 35H25.2221ZM5 14.7779V7.77792C5 7.02792 5.27542 6.37736 5.82625 5.82625C6.37736 5.27542 7.02792 5 7.77792 5H14.7779V7.77792H7.77792V14.7779H5ZM32.2221 14.7779V7.77792H25.2221V5H32.2221C32.9721 5 33.6226 5.27542 34.1738 5.82625C34.7246 6.37736 35 7.02792 35 7.77792V14.7779H32.2221Z" 
-                fill="#B2D8EA"
-              />
-            </g>
-          </svg>
-          <p class="flex flex-col justify-center items-center gap-y-1 w-full">
-            <span class="block text-black dark:text-white font-semibold text-lg">No Results</span>
-            <span class="block text-gray-600 dark:text-gray-400 text-sm">
-              There are no results you can view.
-            </span>
-          </p>
-          <p 
-            v-if="hasFilters && hasActiveFilters"
-            class="mt-4"
-          >
-            <SdsButton
-              kind="primary"
-              variant="blue"
-              size="sm"
-              @click="clearFilters"
+                height="40"
+              >
+                <rect 
+                  width="40" 
+                  height="40" 
+                  fill="#D9D9D9"
+                />
+              </mask>
+              <g mask="url(#mask1_9148_72736)">
+                <path 
+                  d="M7.77792 35C7.02792 35 6.37736 34.7246 5.82625 34.1738C5.27542 33.6226 5 32.9721 5 32.2221V25.2221H7.77792V32.2221H14.7779V35H7.77792ZM25.2221 35V32.2221H32.2221V25.2221H35V32.2221C35 32.9721 34.7246 33.6226 34.1738 34.1738C33.6226 34.7246 32.9721 35 32.2221 35H25.2221ZM5 14.7779V7.77792C5 7.02792 5.27542 6.37736 5.82625 5.82625C6.37736 5.27542 7.02792 5 7.77792 5H14.7779V7.77792H7.77792V14.7779H5ZM32.2221 14.7779V7.77792H25.2221V5H32.2221C32.9721 5 33.6226 5.27542 34.1738 5.82625C34.7246 6.37736 35 7.02792 35 7.77792V14.7779H32.2221Z" 
+                  fill="#B2D8EA"
+                />
+              </g>
+            </svg>
+            <p class="flex flex-col justify-center items-center gap-y-1 w-full">
+              <span class="block text-black dark:text-white font-semibold text-lg">No Results</span>
+              <span class="block text-gray-600 dark:text-gray-400 text-sm">
+                There are no results you can view.
+              </span>
+            </p>
+            <p 
+              v-if="hasFilters && hasActiveFilters"
+              class="mt-4"
             >
-              <span>Clear filters</span>
-            </SdsButton>
-          </p>
+              <SdsButton
+                kind="primary"
+                variant="blue"
+                size="sm"
+                @click="clearFilters"
+              >
+                <span>Clear filters</span>
+              </SdsButton>
+            </p>
+          </slot>
         </div>
       </template>
     </div>

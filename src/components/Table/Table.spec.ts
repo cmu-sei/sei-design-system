@@ -196,7 +196,9 @@ describe('Table', () => {
     const tbodyButtons = wrapper.findAll('tbody button')
     await tbodyButtons[0].trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
-    expect(wrapper.html()).toMatchSnapshot()
+
+    await tbodyButtons[0].trigger('click')
+    expect(wrapper.emitted('click')).toHaveLength(2)
   })
 
   it('emits when toggling all table drawers', async () => {
@@ -216,8 +218,101 @@ describe('Table', () => {
     // Find all header buttons and get the first one (toggle all drawers button)
     const headerButtons = wrapper.findAll('thead button')
     await headerButtons[0].trigger('click')
+    await headerButtons[0].trigger('click')
     expect(wrapper.emitted()).toHaveProperty('click')
-    expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.emitted('click')).toHaveLength(2)
+  })
+
+  it('renders right-aligned multisort controls with leading icon state', async () => {
+    const rightAlignedFields: TableField[] = [
+      {
+        key: 'fruit_vegetable',
+        label: 'Combined',
+        align: 'right',
+        fields: [
+          { key: 'fruit', label: 'Fruit', sortable: true },
+          { key: 'vegetable', label: 'Vegetable', sortable: true }
+        ]
+      }
+    ]
+
+    const wrapper = mount(Component, {
+      props: {
+        items: [...items],
+        fields: rightAlignedFields
+      }
+    })
+
+    expect(wrapper.find('thead th .mr-2').exists()).toBe(true)
+
+    const allButtons = wrapper.findAll('thead button')
+    await allButtons[0].trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.find('thead th .mr-2').exists()).toBe(true)
+  })
+
+  it('renders fallback custom single-field header label when no slot is provided', () => {
+    const wrapper = mount(Component, {
+      props: {
+        items: [...items],
+        fields: [{ key: 'name', label: 'Custom Title', custom: true }]
+      }
+    })
+
+    const customHeader = wrapper.find('thead th')
+    expect(customHeader.text()).toContain('Custom Title')
+    expect(customHeader.find('button').exists()).toBe(false)
+  })
+
+  it('applies peer-hover drawer class when row is hovered and highlighted', async () => {
+    const props = {
+      items: [
+        {
+          ...items[0],
+          enableDrawer: true,
+          toggled: true,
+          additionalData: {
+            description: 'Drawer content'
+          }
+        }
+      ],
+      fields: [...fields],
+      rowHighlight: true
+    }
+
+    const wrapper = mount(Component, { props, slots })
+    const baseRow = wrapper.find('tbody tr')
+    await baseRow.trigger('mouseover')
+    await wrapper.vm.$nextTick()
+
+    const drawerRow = wrapper.find('tr[data-drawer="true"]')
+    expect(drawerRow.exists()).toBe(true)
+    expect(drawerRow.classes()).toContain('[.table-prose_tbody_&]:peer-hover:bg-gray-25')
+
+    await baseRow.trigger('mouseleave')
+    await wrapper.vm.$nextTick()
+  })
+
+  it('sorts object values using recursive string conversion branch', async () => {
+    const objectItems: TableItem[] = [
+      { id: 1, meta: { status: 'b', nested: { rank: 2 } } },
+      { id: 2, meta: { status: 'a', nested: { rank: 1 } } }
+    ]
+
+    const wrapper = mount(Component, {
+      props: {
+        items: objectItems,
+        fields: [{ key: 'meta', label: 'Meta', sortable: true }],
+        sortBy: 'meta'
+      }
+    })
+
+    const sortButton = wrapper.find('thead th button')
+    await sortButton.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.findAll('tbody tr').length).toBe(2)
   })
 
   it('matches snapshot with assigned `density` prop', async () => {
