@@ -4,6 +4,7 @@
     data-id="sds-table"
     class="table-prose dark:table-prose-invert"
     :class="[paddingClass]"
+    :data-row-highlight="rowHighlight || undefined"
   >
     <caption v-if="!!$slots.caption || caption">
       <!-- @slot Caption content. This will override the **caption** prop. -->
