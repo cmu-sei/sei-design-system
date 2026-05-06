@@ -61,7 +61,6 @@
     "@storybook/addon-docs": "^10.3.5",
     "@storybook/addon-links": "^10.3.5",
     "@storybook/vue3-vite": "^10.3.5",
-    "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/beautify": "^0.0.3",
     "@unhead/vue": "^2.1.13",

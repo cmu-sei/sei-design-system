@@ -19,15 +19,11 @@
 @import './components/action-btn';
 @import './components/btn';
 @import './components/form-control';
-@import './components/input-group';
 @import './components/link';
 @import './components/scroll-area';
 @import './components/tab';
 @import './components/table-prose';
 @import './components/tabs';
-
-/* Plugins */
-@plugin '@tailwindcss/forms';
 
 /**
  * The default border color has changed to `currentColor` in Tailwind CSS v4,
