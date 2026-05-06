@@ -15,168 +15,127 @@
   >
     <template #trigger>
       <div
-        ref="root"
         class="relative"
+        :class="{ 'focus-ring rounded-theme-sm': showTagsBar }"
       >
         <div
-          class="input-group flex flex-col"
+          v-if="showTagsBar"
+          class="form-border border-b-0 rounded-t-theme-sm bg-gray-25 dark:bg-gray-900/50 flex flex-row flex-wrap gap-1 p-2 justify-start w-full"
+          :class="validationClasses"
+        >
+          <SdsTag
+            v-for="(option, index) in selected"
+            :key="index"
+            :disabled="disabled"
+            :readonly="readonly || disabled"
+            :size="size === 'sm' ? 'sm' : 'md'"
+            action="remove"
+            class="grow-0"
+            :label="getLabel(option)"
+            @remove="multiselectRemove(index)"
+          />
+        </div>
+        <div
+          class="input-group"
           :class="[
             validationClasses,
             {
               'input-group-sm': size === 'sm',
-              'bg-gray-50 dark:bg-gray-950': readonly
+              'input-group-lg': size === 'lg',
+              'border-t-0 rounded-t-none': showTagsBar,
+              'ring-0! focus-within:ring-0!': showTagsBar,
             }
           ]"
         >
-          <div
-            v-if="((type === 'taggable-select' || type === 'select') && multiple) && Array.isArray(selected) && selected.length > 0"
-            class="flex flex-row flex-wrap rounded-t-sm gap-1 p-2 mr-auto justify-start w-full"
-            :class="{
-              'bg-gray-50': readonly,
-              'bg-gray-25 dark:bg-gray-950': !disabled,
-              'bg-gray-100 dark:bg-gray-850': disabled
-            }"
-          >
-            <SdsTag
-              v-for="(option, index) in selected"
-              :key="index"
-              :disabled="disabled"
-              :readonly="readonly || disabled"
-              :size="size === 'sm' ? 'sm' : 'md'"
-              action="remove"
-              class="grow-0"
-              :label="typeof option === 'object' ? String(option[optionLabel as string] ?? option[defaultOptionLabel as string] ?? '') : String(option)"
-              @remove="multiselectRemove(index)"
+          <div class="input-group-addon">
+            <span class="sr-only">Combo box</span>
+            <IconFa7SolidMagnifyingGlass
+              v-if="!pending"
+              :class="searchIconClass"
+            />
+            <SdsLoadingSpinner
+              v-else
+              size="sm"
             />
           </div>
-          <div
-            class="flex flex-row"
-            :class="{
-              'h-7 gap-x-2 pr-1.25': size === 'sm',
-              'h-10 gap-x-2.5 pr-2.25': size !== 'sm' && size !== 'lg',
-              'h-12 gap-x-3 pr-3': size === 'lg',
-            }"
+          <input
+            :id="id"
+            ref="inputField"
+            v-bind="validationAttrs"
+            :value="inputDisplayValue"
+            type="text"
+            :multiple="multiple || undefined"
+            autocapitalize="off"
+            autocomplete="off"
+            spellcheck="false"
+            autocorrect="off"
+            class="form-control px-0 truncate overflow-hidden text-ellipsis whitespace-nowrap"
+            :class="{ 'no-readonly-style': showSingleSelectionDisplay }"
+            :placeholder="placeholder || undefined"
+            :disabled="disabled || undefined"
+            :readonly="readonly || showSingleSelectionDisplay || undefined"
+            :maxlength="maxlength !== undefined ? maxlength : undefined"
+            :required="inputRequired || undefined"
+            @input="onInputFieldInput"
+            @focus="emit('focus')"
+            @keydown="onKeydownWhenSingleSelected"
+            @click.prevent="inputClick"
+            @keydown.delete="handleDelete"
+            @keydown.tab="showDropdown = false"
+            @keydown.up.prevent="handleArrows('up', $event)"
+            @keydown.down.prevent="handleArrows('down', $event)"
+            @keydown.left="handleArrows('left', $event)"
+            @keydown.right="handleArrows('right', $event)"
+            @keydown.enter.prevent.self
+            @keyup.enter.prevent.self="handleEnterKeyUp"
           >
-            <div
-              class="input-group-addon absolute z-0"
-              :class="{
-                'py-1.5 h-7': size === 'sm',
-                'py-2.5 h-10': size !== 'sm' && size !== 'lg',
-                'py-3.5 h-12': size === 'lg',
-              }"
-            >
-              <span class="sr-only">Combo box</span>
-              <IconFa7SolidMagnifyingGlass
-                v-if="!pending"
-                class="h-full w-full"
-              />
-              <SdsLoadingSpinner
-                v-else
-                size="sm"
-              />
-            </div>
-            <span
-              v-if="!multiple && (type === 'select' || type === 'taggable-select') && selected.length"
-              class="input-group-addon text-black absolute z-0 block! overflow-x-hidden text-ellipsis text-nowrap pr-0"
-              :class="{
-                'py-1 left-7': size === 'sm',
-                'py-2 left-8': size !== 'sm' && size !== 'lg',
-                'py-3 left-9': size === 'lg',
-                'max-w-[calc(100%-3.5rem)]': (showClearButton || isFocused) && size === 'sm',
-                'max-w-[calc(100%-4.5rem)]': (showClearButton || isFocused) && size !== 'sm' && size !== 'lg',
-                'max-w-[calc(100%-5rem)]': (showClearButton || isFocused) && size === 'lg',
-                'max-w-[calc(100%-5.25rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'sm',
-                'max-w-[calc(100%-6.5rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size !== 'sm' && size !== 'lg',
-                'max-w-[calc(100%-7rem)]': focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled && size === 'lg',
-              }"
-            >
-              {{ typeof selected[0] === 'object' ? String(selected[0][optionLabel as string] ?? selected[0][defaultOptionLabel as string] ?? '') : String(selected[0]) }}
-            </span>
-            <input
-              :id="id"
-              ref="inputField"
-              :value="inputDisplayValue"
-              type="text"
-              :multiple="multiple || undefined"
-              autocapitalize="off"
-              autocomplete="off"
-              spellcheck="false"
-              autocorrect="off"
-              class="form-control border-none h-full focus-visible:ring-0 z-1 overflow-x-scroll text-ellipsis pr-0"
-              :class="{
-                'opacity-0': !multiple && (type === 'select' || type === 'taggable-select') && selected.length,
-                'pl-8': size === 'sm',
-                'pl-10': size !== 'sm' && size !== 'lg',
-                'pl-11': size === 'lg',
-                'absolute block left-0 w-[calc(100%-4rem)]': !showDropdown && selected.length && !multiple
-              }"
-              :placeholder="placeholder || undefined"
-              :disabled="disabled || undefined"
-              :readonly="isReadonly || undefined"
-              :maxlength="maxlength !== undefined ? maxlength : undefined"
-              :required="(required && !((type === 'select' || type === 'taggable-select'))) || undefined"
-              @input="onInputFieldInput"
-              @click.prevent="inputClick"
-              @keydown.delete="handleDelete"
-              @keydown.tab="showDropdown = false"
-              @keydown.up.prevent="handleArrows('up', $event)"
-              @keydown.down.prevent="handleArrows('down', $event)"
-              @keydown.left="handleArrows('left', $event)"
-              @keydown.right="handleArrows('right', $event)"
-              @keydown.enter.prevent.self
-              @keyup.enter.prevent.self="handleEnterKeyUp"
-            >
-            <!-- Validation input for select/taggable-select types - checks if selected array has items -->
-            <input
-              v-if="(type === 'select' || type === 'taggable-select')"
-              type="text"
-              :value="selected.length > 0 ? 'selected' : ''"
-              :required="required || undefined"
-              tabindex="-1"
-              class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
-              style="clip: rect(0, 0, 0, 0);"
-              @input.prevent
-              @keydown.prevent
-            >
+          <!-- Validation input for select/taggable-select types - checks if selected array has items -->
+          <input
+            v-if="isSelectType"
+            type="text"
+            :value="selected.length > 0 ? 'selected' : ''"
+            :required="required || undefined"
+            tabindex="-1"
+            class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full"
+            style="clip: rect(0, 0, 0, 0);"
+            @input.prevent
+            @keydown.prevent
+          >
+          <div
+            v-if="showClearButton"
+            class="input-group-addon"
+          >
             <button
-              v-if="showClearButton"
               tabindex="-1"
               type="button"
-              class="my-auto py-0 ml-auto btn px-0! text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
-              :class="{
-                'btn-sm': size === 'sm',
-                'btn-md': size === 'md' || size === 'lg',
-              }"
+              class="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+              :class="clearButtonClass"
               @mousedown.prevent="clearQuery"
             >
               <span class="sr-only">Clear query</span>
               <IconFa7SolidXmark />
             </button>
-            <div
-              v-if="focusOnKeyPress && !hideFocusIndicator && !isFocused && !disabled"
-              class="input-group-addon px-0!"
-            >
-              <SdsTooltip>
-                <template #trigger>
-                  <div
-                    class="border dark:border-gray-700 rounded-theme-sm shadow-sm py-1 cursor-default"
-                    :class="{
-                      'leading-2.5 px-1.5': size === 'sm',
-                      'leading-3.5 px-1.5': size !== 'sm' && size !== 'lg',
-                      'leading-4 px-1.75': size === 'lg'
-                    }"
-                  >
-                    <span>/</span>
-                  </div>
-                </template>
-                <p>
-                  Press "/" to focus
-                </p>
-              </SdsTooltip>
-            </div>
-            <!-- @slot Default content. Good for adding content to the end of the input group -->
-            <slot />
           </div>
+          <div
+            v-if="showFocusIndicator"
+            class="input-group-addon"
+          >
+            <SdsTooltip>
+              <template #trigger>
+                <div
+                  class="border dark:border-gray-700 rounded-theme-sm shadow-sm py-1 cursor-default bg-white dark:bg-gray-900/50"
+                  :class="focusIndicatorClass"
+                >
+                  <span>/</span>
+                </div>
+              </template>
+              <p>
+                Press "/" to focus
+              </p>
+            </SdsTooltip>
+          </div>
+          <!-- @slot Default content. Good for adding content to the end of the input group -->
+          <slot />
         </div>
       </div>
     </template>
@@ -185,18 +144,18 @@
       data-id="sds-combo-box-dropdown"
     >
       <div
-        v-if="groups?.length && !disableGroupTabs && !isFlatArray"
+        v-if="hasCategories"
         class="
           overflow-x-auto overflow-y-hidden flex
           after:w-full after:h-full after:content-[''] after:mt-auto
           after:border-b after:border-b-gray-100
           dark:after:border-b-gray-800
         "
+        @focusin.capture="onComboBoxTabsFocusIn"
       >
         <SdsTabs
-          v-if="hasCategories"
-          ref="tabs"
           v-model="comboBoxTabs"
+          :focusable="false"
           type="underline"
           variant="blue"
           class="
@@ -213,8 +172,6 @@
           @click.prevent.self="handleEnterKeyUp"
           @keydown.enter.prevent.self
           @keyup.enter.prevent.self="handleEnterKeyUp"
-          @keydown.up.prevent="handleArrows('tabsUp', $event)"
-          @keydown.down.prevent="handleArrows('tabsDown', $event)"
         />
       </div>
       <SdsScrollArea
@@ -224,13 +181,11 @@
           'py-0 flex flex-col': optionType !== 'custom',
           'pt-2': !isFlatArray && allCount > 1 && countVisibleOptions(suggestionOptions) > 0 && type !== 'text' && enableSelectAll,
         }"
+        @scroll.passive="onVirtualScroll"
       >
         <!-- Select all option for multiselect -->
-        <template
-          v-if="(type === 'taggable-select' || type === 'select') && enableSelectAll && multiple && allCount > 1 && countVisibleOptions(suggestionOptions) > 1"
-        >
+        <template v-if="selectAllRendered">
           <button
-            ref="selectAllRef"
             type="button"
             class="
               flex items-center
@@ -275,99 +230,109 @@
             </label>
           </button>
           <hr
-            v-if="(type === 'taggable-select' || type === 'select') && multiple && isFlatArray"
+            v-if="isSelectType && multiple && isFlatArray"
             class="border-gray-100 dark:border-gray-700"
           >
         </template>
-        <template
-          v-for="s, sindex in suggestionOptions"
-          :key="`${s}_${sindex}`"
+        <div
+          v-if="!shouldVirtualizeOptions && optionType !== 'custom' && displayOptionRows.length"
+          class="flex flex-col gap-y-1 py-2"
         >
-          <div
-            v-if="optionGroupChildren && s[optionGroupChildren]?.length"
-            class="flex flex-col gap-y-1 pb-2 mb-0 border-t border-gray-50 dark:border-gray-800"
-            :class="{
-              'border-t-0!': !multiple || !enableSelectAll || activeGroup.label === 'All' || countVisibleOptions(s[optionGroupChildren]) <= 1,
-              'pt-2': activeGroupKey !== -1 && countVisibleOptions(s[optionGroupChildren]) > 1,
-            }"
+          <template
+            v-for="row in displayOptionRows"
+            :key="row.key"
           >
             <div
-              v-if="activeGroupKey === -1"
-              class="flex w-full px-4 py-2 text-sm text-left text-black dark:text-white font-semibold list-none"
-              :class="{
-                'border-t border-gray-50 dark:border-gray-800': sindex !== 0 || enableSelectAll
-              }"
+              v-if="row.kind === 'group'"
+              class="flex w-full px-4 py-2 text-sm text-left text-black dark:text-white font-semibold list-none border-t border-gray-50 dark:border-gray-800"
+              :class="{ 'border-t-0!': row.groupIndex === 0 && !enableSelectAll }"
             >
               <!-- @slot Option Group content. Good for customizing the content for each group option -->
               <slot
                 name="optionGroup"
-                :option="s"
-                :label="optionGroupLabel ? s[optionGroupLabel] : s"
+                :option="row.option"
+                :label="getGroupLabel(row.option)"
               >
-                {{ optionGroupLabel ? s[optionGroupLabel] : s }}
+                {{ getGroupLabel(row.option) }}
               </slot>
             </div>
-            <template
-              v-for="c, cindex in s[optionGroupChildren]"
-              :key="`${s}_${c}_${cindex}`"
+            <component
+              :is="optionType"
+              v-else
+              :href="optionType === 'a' ? getHref(row.option) : undefined"
+              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+              :class="{
+                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(row.option),
+                'text-black dark:text-white font-semibold': isSelected(getLabel(row.option)) && type !== 'text',
+                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(row.option),
+              }"
+              :data-active="isDropdownItemActive(row.option)"
+              :type="optionType === 'button' ? 'button' : undefined"
+              tabindex="-1"
+              @click.prevent="handleSuggestionClick(row.option)"
+              @mouseover="setActiveDropdownItem(row.option)"
             >
-              <component
-                :is="optionType"
-                v-if="optionType !== 'custom'"
-                ref="dropdownOption"
-                tabindex="-1"
-                :href="optionType === 'a' ? c.href : undefined"
-                class="
-                  flex flex-row
-                  w-full p-2
-                  sds-theme-forge:mx-2
-                  sds-theme-plaid:px-4
-                  sds-theme-forge:max-w-[calc(100%-1rem)]
-                  sds-theme-forge:rounded
-                  text-sm text-left list-none cursor-pointer
-                  hover:text-black dark:hover:text-white
-                  hover:bg-gray-25 dark:hover:bg-gray-750
-                "
-                :class="{
-                  'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
-                  'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(c),
-                  'text-black dark:text-white font-semibold': isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text'
-                }"
-                :data-active="isDropdownItemActive(c)"
-                :type="optionType === 'button' ? 'button' : undefined"
-                @click.prevent="handleSuggestionClick(c)"
-              >
-                <!-- @slot Option content. Good for customizing the content for each option -->
-                <template v-if="(type === 'taggable-select' || type === 'select') && multiple">
-                  <input
-                    type="checkbox"
-                    class="mr-2 my-auto"
-                    tabindex="-1"
-                    aria-label="Select option"
-                    :checked="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel])"
-                    @change.stop="handleSuggestionClick(c)"
-                  >
-                </template>
-                <slot
-                  name="option"
-                  :option="c"
-                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+              <!-- @slot Option content. Good for customizing the content for each option -->
+              <template v-if="isSelectType && multiple">
+                <input
+                  type="checkbox"
+                  class="mr-2 my-auto pointer-events-none"
+                  aria-label="Select option"
+                  tabindex="-1"
+                  :checked="isSelected(getLabel(row.option))"
                 >
-                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
-                </slot>
-                <IconFa7SolidCheck
-                  v-if="isSelected(optionLabel ? c[optionLabel] : c[defaultOptionLabel]) && type !== 'text' && !multiple"
-                  class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
-                />
-              </component>
+              </template>
+              <slot
+                name="option"
+                :option="row.option"
+                :label="getLabel(row.option)"
+              >
+                {{ getLabel(row.option) }}
+              </slot>
+              <IconFa7SolidCheck
+                v-if="isSelected(getLabel(row.option)) && type !== 'text' && !multiple"
+                class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
+              />
+            </component>
+          </template>
+        </div>
+        <template v-if="optionType === 'custom'">
+          <template
+            v-for="s, sindex in suggestionOptions"
+            :key="`${s}_${sindex}`"
+          >
+            <div
+              v-if="getChildren(s).length"
+              class="flex flex-col gap-y-1 pb-2 mb-0 border-t border-gray-50 dark:border-gray-800"
+              :class="{
+                'border-t-0!': !multiple || !enableSelectAll || activeGroupKey === -1 || countVisibleOptions(getChildren(s)) <= 1,
+                'pt-2': activeGroupKey !== -1 && countVisibleOptions(getChildren(s)) > 1,
+              }"
+            >
               <div
-                v-else
-                ref="dropdownOption"
+                v-if="activeGroupKey === -1"
+                class="flex w-full px-4 py-2 text-sm text-left text-black dark:text-white font-semibold list-none"
+                :class="{
+                  'border-t border-gray-50 dark:border-gray-800': sindex !== 0 || enableSelectAll
+                }"
+              >
+                <!-- @slot Option Group content. Good for customizing the content for each group option -->
+                <slot
+                  name="optionGroup"
+                  :option="s"
+                  :label="getGroupLabel(s)"
+                >
+                  {{ getGroupLabel(s) }}
+                </slot>
+              </div>
+              <div
+                v-for="c, cindex in getChildren(s)"
+                :key="`${s}_${c}_${cindex}`"
                 class="first:mt-2 last:mb-2"
               >
                 <slot
                   name="customOption"
-                  :href="c.href"
+                  :href="getHref(c)"
                   :class-list="{
                     'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
                     'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
@@ -376,68 +341,16 @@
                   :data-active="isDropdownItemActive(c)"
                   :tabindex="arrowCounter === 0 ? 0 : -1"
                   :option="c"
-                  :label="optionLabel ? c[optionLabel] : c[defaultOptionLabel]"
+                  :label="getLabel(c)"
                   @click.prevent="handleSuggestionClick(c)"
+                  @mouseover="setActiveDropdownItem(c)"
                 >
-                  {{ optionLabel ? c[optionLabel] : c[defaultOptionLabel] }}
+                  {{ getLabel(c) }}
                 </slot>
               </div>
-            </template>
-          </div>
-        </template>
-        <div
-          v-if="!optionGroupChildren && suggestionOptions.length"
-          class="flex flex-col gap-y-1"
-          :class="{
-            'py-2': optionType !== 'custom'
-          }"
-        >
-          <template
-            v-for="s, sindex in suggestionOptions"
-            :key="`${s}_${sindex}`"
-          >
-            <component
-              :is="optionType"
-              v-if="optionType !== 'custom'"
-              ref="dropdownOption"
-              :href="optionType === 'a' ? s.href : undefined"
-              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
-              :class="{
-                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
-                'text-black dark:text-white font-semibold': isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text',
-                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(s),
-              }"
-              :data-active="isDropdownItemActive(s)"
-              :type="optionType === 'button' ? 'button' : undefined"
-              tabindex="-1"
-              @click.prevent="handleSuggestionClick(s)"
-            >
-              <!-- @slot Option content. Good for customizing the content for each option -->
-              <template v-if="(type === 'taggable-select' || type === 'select') && multiple">
-                <input
-                  type="checkbox"
-                  class="mr-2 my-auto"
-                  aria-label="Select option"
-                  :tabindex="arrowCounter === 0 ? 0 : -1"
-                  :checked="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel])"
-                  @change.stop="handleSuggestionClick(s)"
-                >
-              </template>
-              <slot
-                name="option"
-                :option="s"
-                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
-              >
-                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
-              </slot>
-              <IconFa7SolidCheck
-                v-if="isSelected(optionLabel ? s[optionLabel] : s[defaultOptionLabel]) && type !== 'text' && !multiple"
-                class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
-              />
-            </component>
+            </div>
             <div
               v-else
-              ref="dropdownOption"
               class="first:mt-2 last:mb-2"
             >
               <slot
@@ -448,15 +361,79 @@
                   'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(s)
                 }"
                 :data-active="isDropdownItemActive(s)"
-                :href="s.href"
+                :href="getHref(s)"
                 :tabindex="arrowCounter === 0 ? 0 : -1"
                 :option="s"
-                :label="optionLabel ? s[optionLabel] : s[defaultOptionLabel]"
+                :label="getLabel(s)"
                 @click.prevent="handleSuggestionClick(s)"
+                @mouseover="setActiveDropdownItem(s)"
               >
-                {{ optionLabel ? s[optionLabel] : s[defaultOptionLabel] }}
+                {{ getLabel(s) }}
               </slot>
             </div>
+          </template>
+        </template>
+        <div
+          v-if="shouldVirtualizeOptions && suggestionOptions.length"
+          class="relative shrink-0"
+          :style="{ height: `${virtualOptionsHeight}px` }"
+        >
+          <template
+            v-for="virtualRow in virtualSuggestionRows"
+            :key="virtualRow.key"
+          >
+            <div
+              v-if="virtualRow.item.kind === 'group'"
+              class="flex w-full px-4 py-2 text-sm text-left text-black dark:text-white font-semibold list-none absolute left-0 right-0"
+              :style="{ transform: `translateY(${virtualRow.offsetTop}px)`, minHeight: `${virtualRow.height}px` }"
+            >
+              <!-- @slot Option Group content. Good for customizing the content for each group option -->
+              <slot
+                name="optionGroup"
+                :option="virtualRow.item.option"
+                :label="getGroupLabel(virtualRow.item.option)"
+              >
+                {{ getGroupLabel(virtualRow.item.option) }}
+              </slot>
+            </div>
+            <component
+              :is="optionType"
+              v-else
+              :href="optionType === 'a' ? getHref(virtualRow.item.option) : undefined"
+              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 absolute left-0 right-0"
+              :class="{
+                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(virtualRow.item.option),
+                'text-black dark:text-white font-semibold': isSelected(getLabel(virtualRow.item.option)) && type !== 'text',
+                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(virtualRow.item.option),
+              }"
+              :style="{ transform: `translateY(${virtualRow.offsetTop}px)`, minHeight: `${virtualRow.height}px` }"
+              :data-active="isDropdownItemActive(virtualRow.item.option)"
+              :type="optionType === 'button' ? 'button' : undefined"
+              tabindex="-1"
+              @click.prevent="handleSuggestionClick(virtualRow.item.option)"
+              @mouseover="setActiveDropdownItem(virtualRow.item.option)"
+            >
+              <template v-if="isSelectType && multiple">
+                <input
+                  type="checkbox"
+                  class="mr-2 my-auto pointer-events-none"
+                  aria-label="Select option"
+                  tabindex="-1"
+                  :checked="isSelected(getLabel(virtualRow.item.option))"
+                >
+              </template>
+              <slot
+                name="option"
+                :option="virtualRow.item.option"
+                :label="getLabel(virtualRow.item.option)"
+              >
+                {{ getLabel(virtualRow.item.option) }}
+              </slot>
+              <IconFa7SolidCheck
+                v-if="isSelected(getLabel(virtualRow.item.option)) && type !== 'text' && !multiple"
+                class="text-blue-700 dark:text-blue-400 ml-auto my-auto w-3 h-3"
+              />
+            </component>
           </template>
         </div>
         <!-- No matches message -->
@@ -483,7 +460,6 @@
           </template>
           <button
             v-else
-            ref="dropdownOption"
             class="
               flex flex-row
               w-full
@@ -498,31 +474,19 @@
               hover:bg-gray-25 dark:hover:bg-gray-750
             "
             :class="{
-              'text-gray-700 dark:text-gray-300': !isDropdownItemActive({ __cbxIdx: 'add' }),
-              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isDropdownItemActive({ __cbxIdx: 'add' }),
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive({ __cbxIdx: 'add' }) || arrowCounter === lastDropdownItemIndex(),
+              'text-gray-700 dark:text-gray-300': !isAddSuggestionActive,
+              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isAddSuggestionActive,
+              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isAddSuggestionActive || arrowCounter === lastDropdownItemIndex(),
             }"
-            :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
-            :data-active="isDropdownItemActive({ __cbxIdx: 'add' })"
+            :aria-selected="isAddSuggestionActive ? 'true' : 'false'"
+            :data-active="isAddSuggestionActive"
             tabindex="-1"
-            @input="onInputFieldInput"
-            @click.prevent="showDropdown = (readonly || disabled) ? false : !showDropdown"
             @keydown.delete="handleDelete"
             @keydown.tab="showDropdown = false"
             @keydown.left.prevent.stop="handleArrows('left', $event)"
             @keydown.right.prevent.stop="handleArrows('right', $event)"
-            @keydown.enter.prevent="handleSuggestionClick({
-              label: query,
-              name: query,
-              value: query,
-              __cbxIdx: 'add'
-            })"
-            @mousedown.prevent="handleSuggestionClick({
-              label: query,
-              name: query,
-              value: query,
-              __cbxIdx: 'add'
-            })"
+            @keydown.enter.prevent="handleSuggestionClick(addSuggestion)"
+            @mousedown.prevent="handleSuggestionClick(addSuggestion)"
           >
             <!-- @slot Option content. Good for customizing the content for each option -->
             <slot
@@ -591,118 +555,261 @@ import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
-import { useFormField } from '@/composables'
+import { removeHtmlFromString, useComboBoxDropdownItems, useComboBoxQuery, useComboBoxSelection, useComboBoxSuggestions, useFormField, useVirtualScroller } from '@/composables'
+import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxSuggestionObject, ComboBoxType } from '@/composables'
 
-export type ComboBoxSuggestionObject = { [id: string | number]: unknown }
-export type ComboBoxSuggestion = ComboBoxSuggestionObject | string
+export type { ComboBoxSuggestionObject, ComboBoxSuggestion } from '@/composables'
 
 interface ComboBoxProps {
   /**
-   * Determine whether to autofocus the input.
+   * Focuses the text input when the ComboBox mounts.
+   *
+   * @default false
    */
   autofocus?: boolean;
   /**
-   * Display the suggestions dropdown on click.
+   * Opens the suggestions dropdown when the user clicks the input, even before they type.
+   *
+   * Use this for select-like ComboBoxes where users should browse the full suggestion list.
+   * When false, the dropdown opens from typing or keyboard navigation instead.
+   *
+   * @default false
    */
   clickToSelect?: boolean;
   /**
-   * The debounce period before complete event is emitted.
+   * Number of milliseconds to wait after the query changes before emitting `complete`.
+   *
+   * Increase this when `complete` triggers remote search requests. Set to `0` when suggestions
+   * should react immediately, such as in tests or small local lists.
+   *
+   * @default 250
    */
   debounceComplete?: number;
   /**
-   * Determines whether to hide empty groups from the tabbed group suggestions.
+   * Hides group tabs that have no visible suggestions.
+   *
+   * This only applies when suggestions are grouped with `optionGroupLabel` and
+   * `optionGroupChildren`. It is most useful with `filterSuggestions`, where typing can empty
+   * some groups.
+   *
+   * @default false
    */
   disableGroupTabs?: boolean;
   /**
-   * Determines whether to show the "Select All" option given when `multiple` is true and `type`
-   * is equal to "select" or "taggable-select".
+   * Shows a "Select all" row for multi-select ComboBoxes.
+   *
+   * The row appears only when `multiple` is true and `type` is `select` or `taggable-select`.
+   * In grouped lists, it selects the currently visible group when a specific group tab is active.
+   *
+   * @default false
    */
   enableSelectAll?: boolean;
   /**
-   * The max amount of characters that can be entered into the input.
+   * Maximum number of characters allowed in the input query.
+   *
+   * This is passed to the native input `maxlength` attribute. Leave unset for no component-level
+   * character limit.
+   *
+   * @default undefined
    */
   maxlength?: number;
   /**
-   * Allows the user to select multiple items. This setting only works with the `type`
-   * prop set to "select" or "taggable-select", because the text type is not a selection field.
+   * Allows more than one selected value.
+   *
+   * This only affects `type="select"` and `type="taggable-select"`. Selected values render as
+   * removable tags above the input. `type="text"` is an autosuggest text field and does not use
+   * multi-selection.
+   *
+   * @default false
    */
   multiple?: boolean;
   /**
-   * Determines the id of the input.
+   * ID applied to the visible text input.
+   *
+   * Use this to connect the ComboBox to an external label or form helper text.
+   *
+   * @default undefined
    */
   id?: string;
   /**
-   * Determines whether to focus the input on "/" key press.
+   * Focuses the ComboBox input when the user presses `/` anywhere on the page.
+   *
+   * Pair with `hideFocusIndicator` when you want the keyboard shortcut without showing the visual
+   * `/` helper in the input group.
+   *
+   * @default false
    */
   focusOnKeyPress?: boolean;
   /**
-   * If enabled, the suggestions will narrow down as the user types, otherwise the suggestions
-   * will remain a static list. Setting to `false` is necessary for suggestions that are provided
-   * _and filtered_ by a secondary API.
+   * Filters the provided `suggestions` locally as the user types.
+   *
+   * Set this to true for small or already-loaded lists. Keep it false when suggestions are fetched
+   * from an API in response to the `complete` event, because the parent is already returning the
+   * filtered list.
+   *
+   * @default false
    */
   filterSuggestions?: boolean;
   /**
-   * This will hide the "/" and focus tooltip helper text,
-   * but `focusOnKeyPress` can still be enabled.
+   * Hides the visual `/` keyboard shortcut helper.
+   *
+   * This does not disable the shortcut itself. Use `focusOnKeyPress` to control whether `/` focuses
+   * the input.
+   *
+   * @default false
    */
   hideFocusIndicator?: boolean;
   /**
-   * The label key used for each non-group suggestion.
+   * Object key used as the display label for each suggestion.
+   *
+   * Use this when `suggestions` contains objects instead of strings. For example,
+   * `optionLabel="name"` displays `suggestion.name` in the dropdown and input.
+   *
+   * @default undefined
    */
   optionLabel?: string;
   /**
-   * The label key used for each group suggestion.
+   * Object key used as the display label for each suggestion group.
+   *
+   * Providing this prop tells the ComboBox that `suggestions` is grouped. Each group should also
+   * provide a children array identified by `optionGroupChildren`.
+   *
+   * @default undefined
    */
   optionGroupLabel?: string;
   /**
-   * The key used to determine the children array for each group suggestion.
+   * Object key that contains a group's child suggestions.
+   *
+   * Use with `optionGroupLabel`. For example, with
+   * `{ section: 'Fruits', items: [{ name: 'Apple' }] }`, set `optionGroupLabel="section"` and
+   * `optionGroupChildren="items"`.
+   *
+   * @default undefined
    */
   optionGroupChildren?: string;
   /**
-   * Determines the type, or tag, use for the option/component
+   * Element or rendering mode used for suggestion rows.
+   *
+   * Use `button` for standard selectable options, `a` when suggestions should render as anchors,
+   * and `custom` when option content is supplied through the option slot. Virtualization is disabled
+   * for `custom` options because custom rows can have unknown heights.
+   *
+   * @default 'button'
    */
   optionType?: 'a' | 'button' | 'custom';
   /**
-   * The pending prop allows the user to show a loading spinner in the input.
-   * This is useful when fetching suggestions from an API.
+   * Shows a loading spinner in the input and suppresses the dropdown while loading.
+   *
+   * Use this while fetching suggestions asynchronously after the `complete` event.
+   *
+   * @default false
    */
   pending?: boolean;
   /**
-   * The placeholder for the input.
+   * Placeholder text shown when the query is empty and no single selection is displayed.
+   *
+   * @default undefined
    */
   placeholder?: string;
   /**
-   * Determines the size of the input field. Options are "sm", "md", and "lg".
+   * Visual size of the input.
+   *
+   * `sm` and `lg` apply compact or large form-control styles. Leave unset for the default medium
+   * size.
+   *
+   * @default undefined
    */
   size?: 'sm' | 'md' | 'lg';
   /**
-   * The suggestions used for autosuggest.
+   * Suggestions shown in the dropdown.
+   *
+   * Items may be strings or objects. For object suggestions, use `optionLabel` to choose the
+   * display field. For grouped suggestions, provide group objects and configure
+   * `optionGroupLabel` plus `optionGroupChildren`.
+   *
+   * @default []
    */
   suggestions?: ComboBoxSuggestion[];
   /**
-   * Use combobox as text "autosuggest", selectable text, or taggable-selection.
+   * Interaction mode for the ComboBox.
+   *
+   * `text` behaves like an autosuggest input and writes the chosen label into the query.
+   * `select` requires the final value to come from `suggestions`.
+   * `taggable-select` allows both suggestions and new user-created values.
+   *
+   * @default 'text'
    */
-  type?: 'text' | 'select' | 'taggable-select';
+  type?: ComboBoxType;
   /**
-   * Disables the component to prevent user interaction.
+   * Disables the ComboBox.
+   *
+   * Disabled ComboBoxes cannot be focused, typed into, opened, cleared, or changed.
+   *
+   * @default false
    */
   disabled?: boolean;
   /**
-   * Determines whether the field is read-only.
+   * Makes the ComboBox read-only while still allowing focus.
+   *
+   * Read-only ComboBoxes cannot be edited or changed, but they can still receive focus so users can
+   * inspect the value and assistive technology can announce it.
+   *
+   * @default false
    */
   readonly?: boolean;
   /**
-   * Determines whether the field is required.
+   * Marks the field as required for native form validation.
+   *
+   * For select modes, the hidden validation input is considered valid when at least one selection
+   * exists.
+   *
+   * @default false
    */
   required?: boolean;
   /**
-   * Sets a valid styling if true.
+   * Applies valid form-control styling.
+   *
+   * This only controls presentation. It does not perform validation.
+   *
+   * @default false
    */
   valid?: boolean;
   /**
-   * Sets an invalid styling if true.
+   * Applies invalid form-control styling.
+   *
+   * This only controls presentation. It does not perform validation.
+   *
+   * @default false
    */
   invalid?: boolean;
+  /**
+   * Enables fixed-height virtualization for large standard option lists.
+   *
+   * Virtualization renders only the visible rows plus a small buffer, which keeps very large flat or
+   * grouped lists responsive. It is used only when `optionType` is not `custom` and the visible
+   * option count meets `virtualizeThreshold`.
+   *
+   * @default true
+   */
+  virtualize?: boolean;
+  /**
+   * Minimum visible option count required before virtualization turns on.
+   *
+   * Lower this for shorter lists when rendering is still expensive. Raise it when normal rendering
+   * is preferable for medium-sized lists.
+   *
+   * @default 100
+   */
+  virtualizeThreshold?: number;
+  /**
+   * Fixed row height, in pixels, used by the virtual scroller.
+   *
+   * This should match the rendered height of each standard option row. Incorrect values can make
+   * keyboard scrolling and scrollbar position feel inaccurate.
+   *
+   * @default 36
+   */
+  virtualItemHeight?: number;
 }
 
 defineOptions({ name: 'SdsComboBox' })
@@ -732,37 +839,30 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   readonly: false,
   required: false,
   valid: false,
-  invalid: false
+  invalid: false,
+  virtualize: true,
+  virtualizeThreshold: 100,
+  virtualItemHeight: 36
 })
 
-const emit = defineEmits(['update:modelValue', 'complete', 'enter', 'result'])
+const emit = defineEmits(['close', 'complete', 'enter', 'focus', 'open', 'result'])
 
-const root = ref(), scrollArea = ref(), inputField = ref(), selectAllRef = ref(), dropdownOption = ref()
+const scrollArea = ref(), inputField = ref()
+const virtualScrollContainer = ref<HTMLElement>()
 const floatingUiRef = ref()
 const dropdownRef = ref()
-const isReadonly = ref(props.readonly)
 
-const { validationClasses } = useFormField(props)
+const { validationClasses, validationAttrs } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)
-const forceShowDropdown = ref(false)
 const arrowCounter = ref(-1)
+const shouldScrollActiveItem = ref(false)
 // True when arrowCounter was set automatically (on dropdown open/query change) rather than by
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
 const autoFocused = ref(false)
-const defaultOptionLabel = ref('label')
-const groups = ref(), activeGroup = ref(), activeGroupKey = ref(-1)
-const allSuggestions = ref(), allSuggestionOptions = ref(), allCount = ref(0)
-const groupSuggestions = ref(), groupSuggestionOptions = ref(), suggestionOptions = ref()
-const firstTickQuery = ref()
-
-type ComboBoxGroup = {
-  key: string | number;
-  label: string;
-  count: number;
-}
+const activeGroupKey = ref(-1)
 
 type ComboBoxTab = {
   key: string;
@@ -772,10 +872,133 @@ type ComboBoxTab = {
   disabled: boolean
 }
 
+type ComboBoxDisplayRow =
+  | { kind: 'group'; option: ComboBoxSuggestion; key: string; groupIndex: number }
+  | { kind: 'option'; option: ComboBoxSuggestion; key: string }
+
+const {
+  labelKey,
+  getLabel,
+  getGroupLabel,
+  getChildren,
+  getHref,
+  countVisibleOptions,
+  flattenOptions,
+  allSuggestionOptions,
+  allCount,
+  groups,
+  groupSuggestionOptions,
+  suggestionOptions,
+  shouldShowNewSuggestion,
+  hasDropdownSuggestion,
+  isFlatArray,
+  hasCategories,
+  hasNoMatches
+} = useComboBoxSuggestions({
+  suggestions: () => props.suggestions,
+  query,
+  type: () => props.type,
+  filterSuggestions: () => props.filterSuggestions,
+  optionLabel: () => props.optionLabel,
+  optionGroupLabel: () => props.optionGroupLabel,
+  optionGroupChildren: () => props.optionGroupChildren,
+  disableGroupTabs: () => props.disableGroupTabs,
+  activeGroupKey
+})
+
+const {
+  findOriginalSuggestion,
+  stripIdx,
+  findSelectedIndex,
+  addSelection,
+  replaceSelection,
+  removeSelectionAt,
+  clearSelections,
+  isSelected,
+  resolveSuggestion,
+  areAllSelected,
+  areSomeSelected,
+  toggleSelections
+} = useComboBoxSelection({
+  selected,
+  suggestions: () => props.suggestions,
+  getLabel,
+  getChildren
+})
+
+const selectAllVisible = computed(() => isSelectType.value && props.multiple && props.enableSelectAll && allCount.value > 1)
+
+const selectAllRendered = computed(() => selectAllVisible.value && countVisibleOptions(suggestionOptions.value) > 1)
+
+const addSuggestion = computed<ComboBoxSuggestionObject>(() => ({
+  label: query.value,
+  name: query.value,
+  value: query.value,
+  __cbxIdx: 'add'
+}))
+
+const {
+  dropdownItems,
+  getCurrentSuggestion,
+  getDropdownItem,
+  lastDropdownItemIndex,
+  firstItemIndex,
+  isDropdownItemActive,
+  isAddSuggestionActive
+} = useComboBoxDropdownItems({
+  suggestionOptions,
+  optionGroupChildren: () => props.optionGroupChildren,
+  selectAllRendered,
+  shouldShowNewSuggestion,
+  addSuggestion,
+  arrowCounter
+})
+
+const shouldVirtualizeOptions = computed(() => {
+  return props.virtualize &&
+    props.optionType !== 'custom' &&
+    countVisibleOptions(suggestionOptions.value) >= props.virtualizeThreshold
+})
+
+const displayOptionRows = computed<ComboBoxDisplayRow[]>(() => {
+  return suggestionOptions.value.flatMap((suggestion, suggestionIndex) => {
+    const children = getChildren(suggestion)
+    if (!children.length) {
+      return [{ kind: 'option', option: suggestion, key: `option-${suggestionIndex}-${getLabel(suggestion)}` }]
+    }
+
+    const groupRows: ComboBoxDisplayRow[] = activeGroupKey.value === -1
+      ? [{ kind: 'group', option: suggestion, key: `group-${suggestionIndex}-${getGroupLabel(suggestion)}`, groupIndex: suggestionIndex }]
+      : []
+    return [
+      ...groupRows,
+      ...children.map((child, childIndex): ComboBoxDisplayRow => ({
+        kind: 'option',
+        option: child,
+        key: `option-${suggestionIndex}-${childIndex}-${getLabel(child)}`
+      }))
+    ]
+  })
+})
+
+const {
+  virtualItems: virtualSuggestionRows,
+  totalHeight: virtualOptionsHeight,
+  onScroll: onVirtualScroll,
+  scrollToIndex: scrollToVirtualIndex,
+  setScrollTop: setVirtualScrollTop
+} = useVirtualScroller<ComboBoxDisplayRow>({
+  items: displayOptionRows,
+  itemHeight: () => props.virtualItemHeight,
+  containerRef: virtualScrollContainer,
+  containerHeight: 288,
+  overscan: 6,
+  getKey: item => item.key
+})
+
 // Computed property to map ComboBox groups to SdsTabs format
 const comboBoxTabs = computed({
   get() {
-    if (!groups.value) return []
     return groups.value.map((group: ComboBoxGroup) => ({
       key: String(group.key),
       title: group.label,
@@ -793,6 +1016,38 @@ const comboBoxTabs = computed({
   }
 })
 
+// True when the component is operating in one of the selection types (select / taggable-select).
+const isSelectType = computed(() => props.type === 'select' || props.type === 'taggable-select')
+
+// True when the multiselect tag bar above the input should be rendered.
+const showTagsBar = computed(() => isSelectType.value && props.multiple && selected.value.length > 0)
+
+// True when single-select should display the selected value without editing it in place.
+const showSingleSelectionDisplay = computed(() => !props.multiple && isSelectType.value && selected.value.length > 0)
+
+// Whether the main input's required attribute should be set (select types use a hidden validation input instead).
+const inputRequired = computed(() => props.required && !isSelectType.value)
+
+// Size-based padding class for the clear button.
+const clearButtonClass = computed(() => {
+  if (props.size === 'sm') return 'px-1'
+  if (props.size === 'lg') return 'px-3'
+  return 'px-2'
+})
+
+// Size-based icon class for the search icon.
+const searchIconClass = computed(() => {
+  if (props.size === 'lg') return 'w-5 h-5'
+  return 'w-4 h-4'
+})
+
+// Size-based leading/padding class for the "/" focus-on-key-press indicator badge.
+const focusIndicatorClass = computed(() => {
+  if (props.size === 'sm') return 'leading-2.5 px-1.5'
+  if (props.size === 'lg') return 'leading-4 px-1.75'
+  return 'leading-3.5 px-1.5'
+})
+
 const showClearButton = computed(() => {
   if (props.disabled || props.readonly) return false
   if (inputDisplayValue.value !== '') return true
@@ -800,28 +1055,9 @@ const showClearButton = computed(() => {
   return false
 })
 
-// Select All logic
 const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
-  // If grouped and on a specific tab, return only that group's options
-  if (groups.value && !isFlatArray.value && activeGroupKey.value !== -1 && groupSuggestionOptions.value) {
-    // Flatten groupSuggestionOptions
-    return groupSuggestionOptions.value.flatMap((g: ComboBoxSuggestion) => {
-      if (typeof g === 'object' && props.optionGroupChildren && Array.isArray(g[props.optionGroupChildren])) {
-        return g[props.optionGroupChildren] as ComboBoxSuggestion[]
-      }
-      return [g]
-    })
-  }
-  // If grouped and on "All" tab, or ungrouped, use allSuggestionOptions
-  if (allSuggestionOptions.value) {
-    return allSuggestionOptions.value.flatMap((g: ComboBoxSuggestion) => {
-      if (typeof g === 'object' && props.optionGroupChildren && Array.isArray(g[props.optionGroupChildren])) {
-        return g[props.optionGroupChildren] as ComboBoxSuggestion[]
-      }
-      return [g]
-    })
-  }
-  return []
+  const options = !isFlatArray.value && activeGroupKey.value !== -1 ? groupSuggestionOptions.value : allSuggestionOptions.value
+  return flattenOptions(options)
 }
 
 const inputClick = () => {
@@ -831,274 +1067,44 @@ const inputClick = () => {
 }
 
 const selectAllChecked = computed(() => {
-  const options = getCurrentGroupOptions()
-  if (!options.length) return false
-  return options.every((opt: ComboBoxSuggestion) => {
-    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
-    return isSelected(label)
-  })
+  return areAllSelected(getCurrentGroupOptions())
 })
 
 const selectAllIndeterminate = computed(() => {
-  const options = getCurrentGroupOptions()
-  if (!options.length) return false
-  const selectedCount = options.filter((opt: ComboBoxSuggestion) => {
-    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
-    return isSelected(label)
-  }).length
-  return selectedCount > 0 && selectedCount < options.length
+  return areSomeSelected(getCurrentGroupOptions())
 })
 
 const toggleSelectAll = () => {
-  const options = getCurrentGroupOptions()
-  if (!options.length) return
-  const allSelected = options.every((opt: ComboBoxSuggestion) => {
-    const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
-    return isSelected(label)
-  })
-  if (allSelected) {
-    // Deselect all in scope
-    options.forEach((opt: ComboBoxSuggestion) => {
-      const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
-      const idx = selected.value.findIndex(s => getLabel(s) === label)
-      if (idx !== -1) selected.value.splice(idx, 1)
-    })
-  } else {
-    // Select all in scope
-    options.forEach((opt: ComboBoxSuggestion) => {
-      const label = typeof opt === 'object' ? String(props.optionLabel ? opt[props.optionLabel] : opt[defaultOptionLabel.value]) : String(opt)
-      if (!isSelected(label)) {
-        // Use original suggestion if possible
-        const suggestion = findOriginalSuggestion(label) ?? opt
-        if (suggestion) selected.value.push(stripIdx(suggestion))
-      }
-    })
-  }
+  toggleSelections(getCurrentGroupOptions())
 }
-
-const removeHtmlFromString = (value: string) => {
-  if (typeof document === 'undefined') return value
-  const div = document.createElement('div')
-  div.innerHTML = value
-  return div.textContent || div.innerText || ''
-}
-
-// Helper: normalize string for case-insensitive, trimmed comparison
-const normalizeString = (val: string | undefined | null): string => {
-  return (val ?? '').toString().trim().toLowerCase();
-}
-
-const flatSuggestions = computed<string[]>(() => {
-  return (props.suggestions as ComboBoxSuggestion[]).flatMap((s) => {
-    if (s && props.optionGroupChildren && typeof s === 'object')
-      return s[props.optionGroupChildren] as ComboBoxSuggestion[]
-    else if (typeof s === 'string')
-      return s
-    return []
-  }).map((s) => {
-    if (s && typeof s === 'object')
-      return String(props.optionLabel ? s[props.optionLabel] : s[defaultOptionLabel.value])
-    else if (typeof s === 'string')
-      return s
-    return ''
-  }).filter((s): s is string => typeof s === 'string' && s.length > 0)
-})
-
-const CBX_IDX = '__cbxIdx'
-const addIndexToList = (arr: ComboBoxSuggestion[]) => {
-  if (!Array.isArray(arr)) return []
-  const suggestions = flatSuggestions.value.map(normalizeString)
-  let cbxIdx = (normalizeString(query.value).length && props.type === 'taggable-select' && !suggestions.includes(normalizeString(query.value))) ? 1 : 0
-  return arr.map((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'string') {
-      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        i[props.optionGroupChildren] = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).map((x: ComboBoxSuggestion) => {
-          if (typeof x !== 'string') {
-            x[CBX_IDX] = cbxIdx
-            cbxIdx++
-          }
-          return x
-        })
-      } else {
-        i[CBX_IDX] = cbxIdx
-        cbxIdx++
-      }
-    }
-    return i
-  })
-}
-
-const reduceList = (arr: ComboBoxSuggestion[]) => {
-  if (!Array.isArray(arr)) return []
-  const cleanArray = arr.reduce((acc: ComboBoxSuggestion[], item: ComboBoxSuggestion) => {
-    if (typeof item !== 'string') {
-      const newItem = { ...item }
-      if (props.optionGroupChildren && item[props.optionGroupChildren]) {
-        newItem[props.optionGroupChildren] = reduceList(item[props.optionGroupChildren] as ComboBoxSuggestion[])
-        if ((newItem[props.optionGroupChildren] as ComboBoxSuggestion[]).length)
-          acc.push(newItem)
-      } else {
-        if (
-          removeHtmlFromString(newItem[props.optionLabel ? props.optionLabel : defaultOptionLabel.value] as string)
-            .toLowerCase()
-            .includes(query.value.toLowerCase())
-        ) {
-          acc.push(newItem)
-        }
-      }
-    }
-    return acc
-  }, [])
-  return addIndexToList(cleanArray)
-}
-
-const isFlatArray = computed(() => {
-  if (!groups.value?.length) return true
-  let count = 0
-  for (const suggestion of groups.value) {
-    if (suggestion.count > 0) count++
-  }
-  return count <= 1
-})
-
-// Helper to get the dropdown index of an item as rendered, including new suggestion if present
-const getDropdownIndex = (item: ComboBoxSuggestion): number | null => {
-  // For type='taggable-select' with "Select all" present, offset by 1 only if Select all is rendered
-  let current = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1 && props.enableSelectAll) ? 1 : 0
-  const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined
-  if (!options) return null
-  // Flatten options for group/ungrouped
-  for (const opt of options) {
-    if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
-      for (const child of opt[props.optionGroupChildren] as ComboBoxSuggestion[]) {
-        if (child === item) return current
-        current++
-      }
-    } else {
-      if (opt === item) return current
-      current++
-    }
-  }
-  // If shouldShowNewSuggestion and item is the "Add" option, return current (last)
-  if (
-    props.type === 'taggable-select' && shouldShowNewSuggestion.value &&
-    item && typeof item === 'object' && item.__cbxIdx === 'add'
-  ) {
-    return current
-  }
-
-  return null
-}
-
-const isDropdownItemActive = (item: ComboBoxSuggestion) => {
-  // "Select all" is handled separately in the template (arrowCounter === 0)
-  if (typeof item !== 'object' || item === null) return false;
-  // For "Add" option, check if arrowCounter matches last index
-  if (
-    props.type === 'taggable-select' && shouldShowNewSuggestion.value &&
-    item && typeof item === 'object' && item.__cbxIdx === 'add'
-  ) {
-    const options = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
-    let lastIdx = (props.type === 'taggable-select' && props.multiple) ? 1 : 0;
-    if (options) {
-      for (const opt of options) {
-        if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
-          lastIdx += (opt[props.optionGroupChildren] as ComboBoxSuggestion[]).length;
-        } else {
-          lastIdx++;
-        }
-      }
-    }
-
-    return arrowCounter.value === lastIdx;
-  }
-  const idx = getDropdownIndex(item);
-
-  if (idx === null) return false;
-  return arrowCounter.value === idx;
-}
-
-// Helper to recursively check for a match in groups or flat suggestions
-function suggestionMatchesQuery(suggestion: ComboBoxSuggestion, q: string): boolean {
-  if (typeof suggestion === 'object' && suggestion !== null && props.optionGroupChildren && Array.isArray(suggestion[props.optionGroupChildren])) {
-    // Recursively check children
-    return (suggestion[props.optionGroupChildren] as ComboBoxSuggestion[]).some(child => suggestionMatchesQuery(child, q));
-  }
-  let label = '';
-  if (typeof suggestion === 'object' && suggestion !== null) {
-    label = String(props.optionLabel ? suggestion[props.optionLabel] : suggestion[defaultOptionLabel.value] ?? '');
-  } else if (typeof suggestion === 'string') {
-    label = suggestion;
-  }
-  return normalizeString(label) === normalizeString(q);
-}
-
-const matchesSuggestion = computed(() => {
-  if (props.type === 'taggable-select') {
-    return (props.suggestions as ComboBoxSuggestion[]).some(s => suggestionMatchesQuery(s, query.value));
-  }
-  const normQuery = normalizeString(query.value);
-  return flatSuggestions.value.map(normalizeString).includes(normQuery);
-})
 
 // Computed property for input display value
 const inputDisplayValue = computed(() => {
   // If a suggestion is highlighted via explicit arrow-key navigation, show its label.
   // When autoFocused is true the highlight was set automatically (on dropdown open/query change)
   // and we intentionally keep showing the user's typed query instead.
-  if (arrowCounter.value !== -1 && !autoFocused.value && suggestionOptions.value && suggestionOptions.value.length > 0) {
+  if (arrowCounter.value !== -1 && !autoFocused.value && suggestionOptions.value.length > 0) {
     // Find the suggestion with the current arrowCounter
     const found: ComboBoxSuggestion | null | undefined = getCurrentSuggestion()
     if (found) {
-      if (typeof found === 'object') {
-        return removeHtmlFromString(String(props.optionLabel ? found[props.optionLabel as string] : found[defaultOptionLabel.value] ?? ''))
-      } else {
-        return removeHtmlFromString(String(found))
-      }
+      return removeHtmlFromString(getLabel(found))
     }
   }
   // If there are selections (and query is empty), use the first selected value for form validation
   // Only for single-select mode (multiselect shows selected items as tags, so input should be empty)
   if (selected.value.length > 0 && query.value === '' && !props.multiple) {
-    const firstSelected = selected.value[0]
-    if (typeof firstSelected === 'object') {
-      return String(props.optionLabel ? firstSelected[props.optionLabel as string] : firstSelected[defaultOptionLabel.value] ?? '')
-    }
-    return String(firstSelected)
+    return getLabel(selected.value[0])
   }
   // Otherwise, show the query
   return removeHtmlFromString(query.value)
 })
 
-// Dedicated suppression flags for robust event suppression
-let suppressCompleteDueToSelection = false
-let suppressCompleteDueToLabelUpdate = false
-let suppressShowDropdownNext = false // Boolean: suppress dropdown for the next query change only
-
-const pendingQueryDebounce = ref(false)
-
-watch(query, () => {
-  pendingQueryDebounce.value = true;
+const { setQuery, setUserQuery } = useComboBoxQuery({
+  query,
+  debounce: () => props.debounceComplete,
+  onComplete: value => emit('complete', value),
+  onShowDropdown: () => { showDropdown.value = true }
 })
-
-watchDebounced(query, async () => {
-  await nextTick()
-  // Show dropdown on query change, unless query is empty or suppressed due to selection (for type='text')
-  let skipDropdown = false
-  if (suppressShowDropdownNext && props.type === 'text') {
-    skipDropdown = true
-    suppressShowDropdownNext = false // Only suppress for one cycle
-  }
-  if (query.value !== '' && !skipDropdown) {
-    showDropdown.value = true
-  }
-  if (!suppressCompleteDueToSelection && !suppressCompleteDueToLabelUpdate) {
-    emit('complete', query.value)
-  }
-  suppressCompleteDueToSelection = false;
-  suppressCompleteDueToLabelUpdate = false;
-  pendingQueryDebounce.value = false;
-}, { debounce: props.debounceComplete })
 
 onMounted(() => { if (props.autofocus) inputField.value.focus() })
 
@@ -1122,10 +1128,52 @@ onKeyStroke('/', (e: KeyboardEvent) => {
   inputField.value.focus()
 })
 
+const getScrollAreaElement = (): HTMLElement | undefined => {
+  if (!scrollArea.value) return undefined
+  const element = scrollArea.value instanceof HTMLElement ? scrollArea.value : scrollArea.value.$el
+  virtualScrollContainer.value = element
+  return element
+}
+
+const onComboBoxTabsFocusIn = () => {
+  inputField.value?.focus()
+}
+
+const resetVirtualScroll = () => {
+  const parent = getScrollAreaElement()
+  if (shouldVirtualizeOptions.value) setVirtualScrollTop(0)
+  if (parent) parent.scrollTop = 0
+}
+
+const canSwitchTabsFromInputBoundary = (direction: 'left' | 'right', event: KeyboardEvent): boolean => {
+  if (!hasCategories.value || arrowCounter.value === -1) return false
+  const inputElement = inputField.value as HTMLInputElement | undefined
+  if (!inputElement || event.target !== inputElement) return true
+  if (inputElement.selectionStart === null || inputElement.selectionEnd === null) return false
+  if (inputElement.selectionStart !== inputElement.selectionEnd) return false
+  return direction === 'left'
+    ? inputElement.selectionStart === 0
+    : inputElement.selectionEnd === inputElement.value.length
+}
+
 const scrollToChild = async () => {
   await nextTick()
-  if (!scrollArea.value) return
-  const parent = scrollArea.value.$el
+  if (shouldVirtualizeOptions.value) {
+    getScrollAreaElement()
+    const activeItem = dropdownItems.value.find(item => item.index === arrowCounter.value)
+
+    if (activeItem?.kind === 'option') {
+      const virtualIndex = displayOptionRows.value.findIndex(item => item.kind === 'option' && item.option === activeItem.option)
+      if (virtualIndex === -1) return
+      const alignment = activeItem.index === lastDropdownItemIndex() ? 'end' : 'auto'
+      scrollToVirtualIndex(virtualIndex, alignment)
+    } else if (activeItem?.kind === 'add') {
+      setVirtualScrollTop(virtualOptionsHeight.value)
+      return
+    }
+    return
+  }
+  const parent = getScrollAreaElement()
   if (!parent) return
   const child = parent.querySelector('[data-active="true"]')
   if (!child) return
@@ -1139,16 +1187,21 @@ const scrollToChild = async () => {
   }
 }
 
+const setActiveDropdownItem = (option: ComboBoxSuggestion) => {
+  const item = getDropdownItem(option)
+  if (!item) return
+  shouldScrollActiveItem.value = false
+  arrowCounter.value = item.index
+  autoFocused.value = true
+}
+
 const clearQuery = () => {
-  suppressCompleteDueToSelection = true
   // For multiselect: first click clears query, second click clears selections
   // For single-select: one click clears everything
   if (inputDisplayValue.value !== '') {
-    query.value = ''
-    inputField.value.value = ''
+    setQuery('')
     // In multiselect mode, only clear query on first click (keep selections)
     if (props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
-      isReadonly.value = props.readonly || false
       showDropdown.value = false
       inputField.value.focus()
       return
@@ -1157,45 +1210,16 @@ const clearQuery = () => {
   // Clear selections for select/taggable-select types (and text type when input is empty)
   // This handles the second click in multiselect mode or any click when input is already empty
   if (props.type === 'select' || props.type === 'taggable-select' || props.type === 'text') {
-    selected.value = []
+    clearSelections()
   }
-  isReadonly.value = props.readonly || false
   showDropdown.value = false
   inputField.value.focus()
 }
 
 const shake = () => {
+  if (!inputField.value) return
   inputField.value.classList.add('animate-shake')
   setTimeout(() => inputField.value.classList.remove('animate-shake'), 500)
-}
-
-// Find the original suggestion from props.suggestions, returning the exact value (string or object)
-const findOriginalSuggestion = (val: string): ComboBoxSuggestion | undefined => {
-  if (!props.suggestions) return undefined
-  return props.suggestions.find((s: ComboBoxSuggestion) => {
-    if (typeof s === 'object') {
-      return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === val
-    }
-    return s === val
-  })
-}
-
-// Utility: Get label from suggestion (object or string)
-const getLabel = (item: ComboBoxSuggestion) => {
-  if (typeof item === 'object' && item !== null) {
-    return String(props.optionLabel ? item[props.optionLabel as string] : item[defaultOptionLabel.value] ?? '')
-  }
-  return String(item)
-}
-
-// Utility: Remove __cbxIdx from object
-const stripIdx = (obj: ComboBoxSuggestion) => {
-  if (typeof obj === 'object' && obj !== null) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [CBX_IDX]: _cbxIdx, ...rest } = obj as Record<string, unknown>
-    return { ...rest }
-  }
-  return obj
 }
 
 // Add or remove selection based on query
@@ -1204,27 +1228,23 @@ const multiselectAdd = async () => {
   let suggestion = findOriginalSuggestion(query.value)
   if (!suggestion && query.value !== '') {
     suggestion = props.type === 'text' ? query.value : {
-      [props.optionLabel ? props.optionLabel as string : defaultOptionLabel.value]: query.value
+      [labelKey.value]: query.value
     }
   }
   const normalizedObj = stripIdx(suggestion ?? {})
-  const idx = selected.value.findIndex(s => getLabel(s) === query.value)
+  const idx = findSelectedIndex(query.value)
   if (idx !== -1) {
-    selected.value.splice(idx, 1)
+    removeSelectionAt(idx)
     shake()
     return
   }
-  selected.value.push(normalizedObj as ComboBoxSuggestion)
+  addSelection(normalizedObj as ComboBoxSuggestion)
   inputField.value.focus()
   // Handle dropdown and query update for single select/text
   if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
     showDropdown.value = false
     const normalizedLabel = getLabel(normalizedObj)
-    if (props.type === 'text' && query.value !== normalizedLabel) {
-      suppressShowDropdownNext = true
-    }
-    suppressCompleteDueToLabelUpdate = true
-    query.value = normalizedLabel
+    setQuery(normalizedLabel)
   }
   await nextTick()
   arrowCounter.value = -1
@@ -1234,97 +1254,31 @@ const multiselectRemove = (index: number) => {
   if (!selected.value.length) return
   if (index < 0) {
     // Remove last item
-    selected.value.splice(selected.value.length - 1, 1)
+    removeSelectionAt(selected.value.length - 1)
   } else if (index >= 0 && index < selected.value.length) {
-    selected.value.splice(index, 1)
+    removeSelectionAt(index)
   }
   // Reset input and state if no items left
   if (selected.value.length === 0) {
-    query.value = ''
-    if (inputField.value) inputField.value.value = ''
-    isReadonly.value = props.readonly || false
+    setQuery('')
   }
   // Always update input field focus
   if (inputField.value) inputField.value.focus()
 }
 
 const handleDelete = () => {
-  if (selected.value.length && props.type === 'text') (selected.value as ComboBoxSuggestion[]).pop()
+  if (selected.value.length && props.type === 'text' && inputField.value.value === '') {
+    clearSelections()
+    return
+  }
+  if (selected.value.length && props.type === 'text') removeSelectionAt(selected.value.length - 1)
   // For single-select (select/taggable-select), pressing Delete clears the entire selection
   if (selected.value.length && !props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
     multiselectRemove(-1)
-    query.value = ''
-    if (inputField.value) inputField.value.value = ''
-    isReadonly.value = props.readonly || false
+    setQuery('')
     return
   }
   if (selected.value.length && inputField.value.value === '') multiselectRemove(-1)
-}
-
-const getCurrentSuggestion = (): ComboBoxSuggestion | null | undefined => {
-  // If "Add" option is focused and is the only option, return custom sentinel
-  if (
-    props.type === 'taggable-select' &&
-    props.multiple &&
-    shouldShowNewSuggestion.value &&
-    arrowCounter.value === 0 &&
-    (!suggestionOptions.value || suggestionOptions.value.length === 0)
-  ) {
-
-    return {
-      label: query.value,
-      name: query.value,
-      value: query.value,
-      __cbxIdx: 'add'
-    };
-  }
-  // If "Select all" is focused, return sentinel value (only if rendered)
-  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && arrowCounter.value === 0 && allCount.value > 1) {
-    return null;
-  }
-  // If "Add" option is focused, return custom sentinel
-  if (
-    props.type === 'taggable-select' &&
-    shouldShowNewSuggestion.value &&
-    arrowCounter.value === lastDropdownItemIndex()
-  ) {
-
-    return {
-      label: query.value,
-      name: query.value,
-      value: query.value,
-      __cbxIdx: 'add'
-    };
-  }
-  let option: ComboBoxSuggestion | undefined = undefined;
-  const opts = suggestionOptions.value as ComboBoxSuggestion[] | undefined;
-  if (!opts) return undefined;
-  const startIdx = ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && allCount.value > 1) ? 1 : 0;
-  let idx = startIdx;
-  opts.forEach((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'string') {
-      if (props.optionGroupChildren && i[props.optionGroupChildren]) {
-        const tmp = (i[props.optionGroupChildren] as ComboBoxSuggestion[]).find((x: ComboBoxSuggestion) => {
-          return typeof x !== 'string' && arrowCounter.value === idx++
-        })
-        if (tmp) option = tmp
-      } else {
-        if (arrowCounter.value === idx) option = i;
-        idx++;
-      }
-    }
-  });
-  return option;
-}
-
-// Helper to check if a value is selected (works for both string and object)
-const isSelected = (val: string) => {
-  return selected.value.some((s: ComboBoxSuggestion) => {
-    if (typeof s === 'object') {
-      return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === val
-    }
-    return s === val
-  })
 }
 
 const activeElement = useActiveElement()
@@ -1334,27 +1288,26 @@ const isFocused = computed(() => {
   return activeElement.value === inputField.value
 })
 
-// Watcher to force open the dropdown for one tick when requested
-watch(forceShowDropdown, (val) => {
-  if (val) {
-    showDropdown.value = true
-    forceShowDropdown.value = false
-  }
-})
+// Whether the "/" focus-on-key-press indicator badge should be shown.
+const showFocusIndicator = computed(() => props.focusOnKeyPress && !props.hideFocusIndicator && !isFocused.value && !props.disabled)
 
 const emitEnter = () => {
   if (props.type === 'text') emit('enter', query.value)
   else emit('enter', selected.value.length ? selected.value : query.value)
-  // Reset suppression so 'complete' can fire on next query change
-  suppressCompleteDueToSelection = false
-  suppressCompleteDueToLabelUpdate = false
 }
 
-// Show clear button based on inputDisplayValue, not query
-watch([query, inputDisplayValue, () => selected.value.length, () => props.multiple, () => props.disabled, () => props.type], () => {
-  const htmlRegex = /<[^>]*(>|$)/
-  if (htmlRegex.test(query.value)) query.value = removeHtmlFromString(query.value)
-})
+// When the input is readonly due to a single selection, intercept printable key presses to
+// clear the selection and begin a new query — without ever showing the caret in the field.
+const onKeydownWhenSingleSelected = async (e: KeyboardEvent) => {
+  if (!showSingleSelectionDisplay.value) return
+  if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return
+  e.preventDefault()
+  clearSelections()
+  setUserQuery(e.key)
+  await nextTick()
+  inputField.value.focus()
+  handleInput()
+}
 
 // Input handler for the input field (replaces v-model)
 const onInputFieldInput = (e: Event) => {
@@ -1362,21 +1315,18 @@ const onInputFieldInput = (e: Event) => {
   // If user starts typing with an existing single selection in select/taggable-select mode,
   // clear the selection and allow them to type a new value
   if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select') && selected.value.length > 0) {
-    selected.value = []
-    isReadonly.value = props.readonly || false
+    clearSelections()
     // Clear the input value so typing starts fresh (not concatenated to the selected value)
-    target.value = target.value.slice(-1) // Keep only the last typed character
-    query.value = target.value
+    const nextQuery = target.value.slice(-1) // Keep only the last typed character
+    setUserQuery(nextQuery)
     handleInput()
     return
   }
-  query.value = target.value
+  setUserQuery(target.value)
   handleInput()
 }
 
 const handleInput = async () => {
-  // If user input occurs, always reset dropdown suppression
-  suppressShowDropdownNext = false
   await nextTick()
   // When the dropdown is already open and the query changes, keep the first item auto-focused
   // so the user can press Enter without having to navigate down first.
@@ -1393,66 +1343,29 @@ const commitSelection = () => {
 }
 
 const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
-  // Find the original suggestion from props.suggestions, if it exists
-  let normalizedOption: ComboBoxSuggestion = option
-  let original: ComboBoxSuggestion | undefined
-  if (typeof option === 'object' && option !== null) {
-    const val = props.optionLabel ? option[props.optionLabel as string] : option[defaultOptionLabel.value]
-    original = findOriginalSuggestion(val as string)
-    if (typeof original === 'string') {
-      normalizedOption = original
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { [CBX_IDX]: _cbxIdx, ...rest } = option as Record<string, unknown>
-      normalizedOption = { ...rest }
-    }
-  } else {
-    // If it's a string, try to find the original string suggestion
-    original = findOriginalSuggestion(option as string)
-  }
+  const { normalizedOption, emitValue } = resolveSuggestion(option)
+
   // For type="text", update the query to the suggestion's label
   if (props.type === 'text') {
-    suppressCompleteDueToLabelUpdate = true;
-    suppressShowDropdownNext = true;
-    let label = '';
-    if (typeof normalizedOption === 'object' && normalizedOption !== null) {
-      label = String(props.optionLabel ? normalizedOption[props.optionLabel as string] : normalizedOption[defaultOptionLabel.value] ?? '');
-    } else if (typeof normalizedOption === 'string') {
-      label = normalizedOption;
-    }
-    query.value = label;
+    setQuery(getLabel(normalizedOption))
   }
   // Check for duplicate
-  const idx = selected.value.findIndex((s: ComboBoxSuggestion) => {
-    if (typeof s === 'object' && typeof normalizedOption === 'object') {
-      return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === (props.optionLabel ? normalizedOption[props.optionLabel as string] : normalizedOption[defaultOptionLabel.value])
-    }
-    return s === normalizedOption
-  })
+  const idx = findSelectedIndex(getLabel(normalizedOption))
   if (idx !== -1) {
-    (selected.value as ComboBoxSuggestion[]).splice(idx, 1)
+    removeSelectionAt(idx)
   } else {
     // Replace selection for single select, otherwise add to selection
     if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select'))
-      selected.value.splice(0, selected.value.length, normalizedOption)
+      replaceSelection(normalizedOption)
     else
-      (selected.value as ComboBoxSuggestion[]).push(normalizedOption)
-  }
-  // Always emit the original value from props.suggestions (object or string) for this click
-  let emitValue = original !== undefined ? original : option
-  // Strip __cbxIdx if present
-  if (typeof emitValue === 'object' && emitValue !== null && '__cbxIdx' in emitValue) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { __cbxIdx, ...rest } = emitValue as Record<string, unknown>
-    emitValue = rest
+      addSelection(normalizedOption)
   }
   await nextTick()
   emit('result', emitValue)
   // Close dropdown
   showDropdown.value = false
-  suppressCompleteDueToSelection = true
   if (props.type !== 'text') {
-    query.value = ''
+    setQuery('')
   }
   inputField.value.focus()
 }
@@ -1466,7 +1379,7 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     !getCurrentSuggestion()
   ) {
     if (arrowCounter.value === 0 && props.enableSelectAll) {
-      toggleSelectAll();
+      toggleSelectAll()
     } else {
       shake()
     }
@@ -1488,12 +1401,12 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     shake()
     return
   }
-  firstTickQuery.value = query.value
+  const initialQuery = query.value
   let suggestionObj = getCurrentSuggestion()
   // If "Select all" is focused, trigger select all
   if (suggestionObj === null) {
-    toggleSelectAll();
-    return;
+    toggleSelectAll()
+    return
   }
   // If "Add" option is focused, handle custom add
   if (
@@ -1504,37 +1417,16 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   }
   if (!suggestionObj && query.value) {
     suggestionObj = findOriginalSuggestion(query.value) || {
-      [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: query.value
+      [labelKey.value]: query.value
     }
   }
-  let emitValue: ComboBoxSuggestion | undefined = undefined
-  if (suggestionObj && typeof suggestionObj === 'object') {
-    const obj = suggestionObj as ComboBoxSuggestionObject
-    if (props.type === 'text' && query.value !== (props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value])) {
-      suppressShowDropdownNext = true // Only suppress if query is actually changing
-    }
-    suppressCompleteDueToLabelUpdate = true
-    query.value = (props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]) as string
-    // Try to find the original suggestion (object or string)
-    const val = props.optionLabel ? obj[props.optionLabel] : obj[defaultOptionLabel.value]
-    const original = findOriginalSuggestion(val as string)
-    emitValue = original !== undefined ? original : obj
-  } else if (suggestionObj && typeof suggestionObj === 'string') {
-    const original = findOriginalSuggestion(suggestionObj)
-    if (props.type === 'text' && query.value !== suggestionObj) {
-      suppressShowDropdownNext = true // Only suppress if query is actually changing
-    }
-    suppressCompleteDueToLabelUpdate = true
-    query.value = suggestionObj
-    emitValue = original !== undefined ? original : suggestionObj
+  let emitValue: ComboBoxSuggestion | undefined
+  if (suggestionObj) {
+    const resolvedSuggestion = resolveSuggestion(suggestionObj)
+    setQuery(getLabel(resolvedSuggestion.normalizedOption))
+    emitValue = resolvedSuggestion.emitValue
   } else if (props.type === 'text') {
     emitValue = query.value
-  }
-  // Strip __cbxIdx if present
-  if (typeof emitValue === 'object' && emitValue !== null && '__cbxIdx' in emitValue) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { __cbxIdx, ...rest } = emitValue as Record<string, unknown>
-    emitValue = rest
   }
   await nextTick()
   // Always emit the original value from props.suggestions (object or string), unless nothing is selected
@@ -1554,127 +1446,32 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
         multiselectRemove(0)
         multiselectAdd()
       }
-      firstTickQuery.value = ''
       break
     }
     case 'select':
     case 'taggable-select': {
-      const alreadySelectedIdx = selected.value.findIndex((s: ComboBoxSuggestion) => {
-        if (typeof s === 'object') {
-          return (props.optionLabel ? s[props.optionLabel as string] : s[defaultOptionLabel.value]) === query.value
-        }
-        return false
-      })
+      const alreadySelectedIdx = findSelectedIndex(query.value)
       if (alreadySelectedIdx !== -1) {
         multiselectRemove(alreadySelectedIdx)
       } else {
         multiselectAdd()
       }
       if (!props.multiple) {
-        if (selected.value.length === 1 && query.value === '' && !firstTickQuery.value.length) commitSelection()
-        if ((firstTickQuery.value.length && !query.value.length) || !query.value.length) shake()
+        if (selected.value.length === 1 && query.value === '' && !initialQuery.length) commitSelection()
+        if ((initialQuery.length && !query.value.length) || !query.value.length) shake()
       } else {
-        if (selected.value.length && query.value === '' && !firstTickQuery.value.length) commitSelection()
-        if ((firstTickQuery.value.length && !query.value.length) || (!query.value.length && selected.value.length === 0)) shake()
+        if (selected.value.length && query.value === '' && !initialQuery.length) commitSelection()
+        if ((initialQuery.length && !query.value.length) || (!query.value.length && selected.value.length === 0)) shake()
       }
-      firstTickQuery.value = ''
-      // Suppress 'complete' emission when clearing query due to selection
-      suppressCompleteDueToSelection = true
-      query.value = ''
+      setQuery('')
       break
     }
   }
 }
 
-const shouldShowNewSuggestion = computed(() => {
-  return query.value !== '' && props.type === 'taggable-select' && !matchesSuggestion.value
-})
-
-const lastDropdownItemIndex = () => {
-  // Start with 0
-  let count = 0;
-  // If "Select all" is present (multiple), add 1
-  if ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && allCount.value > 1 && props.enableSelectAll) {
-    count += 1;
-  }
-  // Add number of visible suggestions
-  const options = suggestionOptions.value;
-  count += countVisibleOptions(options);
-  // If "Add <custom_query>" is present, add 1
-  if (shouldShowNewSuggestion.value) {
-    count += 1;
-  }
-  // Return last index (zero-based)
-  return count - 1;
-}
-
-const hasCategories = computed(() => {
-  /* This function should check if the suggestions have categories (tabs).
-   * It should also check if the categories contain any suggestions after filtering
-   * and will only return true if there are at least 2 categories with suggestions. */
-  if (!groups.value?.length || isFlatArray.value || props.disableGroupTabs) return false
-  return allCount.value > 1
-})
-
-// Helper to deeply count all visible options in the current suggestionOptions
-function countVisibleOptions(options: ComboBoxSuggestion[] | undefined): number {
-  if (!options || !Array.isArray(options)) return 0;
-  let count = 0;
-  for (const opt of options) {
-    if (typeof opt === 'object' && props.optionGroupChildren && Array.isArray(opt[props.optionGroupChildren])) {
-      count += countVisibleOptions(opt[props.optionGroupChildren] as ComboBoxSuggestion[]);
-    } else {
-      count++;
-    }
-  }
-  return count;
-}
-
-// Computed property to check if the dropdown will have suggestions listed
-const hasDropdownSuggestion = computed(() => {
-  // Use the currently active suggestionOptions (grouped or all)
-  const options = suggestionOptions.value;
-  const visibleCount = countVisibleOptions(options);
-
-  // For type="select" (any multiple), only show dropdown if there is at least one visible option
-  if (props.type === 'select') {
-    return visibleCount > 0;
-  }
-
-  // For taggable-select, always show dropdown if query is non-empty and not a match
-  if (props.type === 'taggable-select') {
-    if (shouldShowNewSuggestion.value) {
-      return true;
-    }
-    return visibleCount > 0;
-  }
-
-  // For all other cases, only show dropdown if there are visible options
-  return visibleCount > 0;
-})
-
-const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsUp' | 'tabsDown', event: KeyboardEvent) => {
+const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
   // SSR guard: ensure dropdownRef.value exists before querying
   const activeTab = (dropdownRef.value?.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
-  if (direction === 'tabsUp' || direction === 'tabsDown') {
-    if (direction === 'tabsUp') {
-      event.preventDefault()
-      // focus input field
-      inputField.value.focus()
-      return
-    }
-    if (direction === 'tabsDown') {
-      event.preventDefault()
-      // focus first suggestion
-      inputField.value.focus()
-      /* Increment arrowCounter +1 to step over the "Select all" option.
-       * It won't be visible when only one option is available and props.multiple === true */
-      if (hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.multiple && props.enableSelectAll)
-        arrowCounter.value++
-      arrowCounter.value++
-      return
-    }
-  }
 
   if (direction === 'up' || direction === 'down') {
     // Show dropdown if not already shown and there are suggestions
@@ -1682,14 +1479,10 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       if (!inputField.value.readOnly) {
         event.preventDefault()
         showDropdown.value = true
-        // Focus the "All" tab when dropdown is shown
-        if (hasCategories.value) {
-          activeTab?.focus()
-        }
       }
       arrowCounter.value = -1
       activeTab?.blur()
-      activeGroupKey.value = -2
+      activeGroupKey.value = -1
       return
     }
   }
@@ -1698,13 +1491,11 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     case 'down': {
       // User is explicitly navigating — disable auto-focus so input shows the highlighted label
       autoFocused.value = false
+      shouldScrollActiveItem.value = true
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === -1) { // Input should be focused
-          if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
-            arrowCounter.value = -1
-            activeTab?.focus()
-            return
-          }
+          arrowCounter.value = firstItemIndex.value
+          return
         }
       }
 
@@ -1719,13 +1510,12 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     case 'up': {
       // User is explicitly navigating — disable auto-focus so input shows the highlighted label
       autoFocused.value = false
+      shouldScrollActiveItem.value = true
       if (hasCategories.value) { // Has categories?
-        if (arrowCounter.value === 0) { // First suggestion is focused
-          if (typeof document !== 'undefined' && document.activeElement !== activeTab) { // "All" tab is not focused?
-            arrowCounter.value = -1
-            activeTab?.focus()
-            return
-          }
+        if (arrowCounter.value === firstItemIndex.value) { // First option is active
+          arrowCounter.value = -1
+          inputField.value.focus()
+          return
         }
       }
 
@@ -1733,7 +1523,6 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
       if (arrowCounter.value > -1) {
         if (arrowCounter.value === 1 && hasCategories.value && countVisibleOptions(suggestionOptions.value) === 1 && props.enableSelectAll) {
           arrowCounter.value--
-          activeTab?.focus()
         }
         arrowCounter.value--
       } else {
@@ -1743,21 +1532,21 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
     }
     // Allow left/right arrow navigation only if categories are shown and input is not focused
     case 'left':
-      if (arrowCounter.value > -1) {
+      if (canSwitchTabsFromInputBoundary(direction, event)) {
+        event.preventDefault()
         if (activeGroupKey.value === -1) {
-          activeGroupKey.value = comboBoxTabs.value ? comboBoxTabs.value.length - 2 : -1
+          activeGroupKey.value = comboBoxTabs.value.length - 2
         } else {
           activeGroupKey.value--
         }
         await nextTick()
         const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
-        newActiveTab?.focus()
-        newActiveTab?.scrollIntoView()
-        arrowCounter.value = -1
+        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
       }
       break
     case 'right':
-      if (arrowCounter.value > -1) {
+      if (canSwitchTabsFromInputBoundary(direction, event)) {
+        event.preventDefault()
         if (activeGroupKey.value === comboBoxTabs.value.length - 2) {
           activeGroupKey.value = -1
         } else {
@@ -1765,9 +1554,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
         }
         await nextTick()
         const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
-        newActiveTab?.focus()
         newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
-        arrowCounter.value = -1
       }
       break
   }
@@ -1775,56 +1562,10 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right' | 'tabsU
 
 // Watch arrowCounter and scroll to the active suggestion when it changes
 watch(arrowCounter, (val, oldVal) => {
-  if (val !== oldVal && showDropdown.value) {
+  if (val !== oldVal && showDropdown.value && shouldScrollActiveItem.value) {
     scrollToChild()
   }
-})
-
-watchEffect(() => {
-  allSuggestions.value = props.suggestions?.map((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'object') {
-      i = { [props.optionLabel ? props.optionLabel : defaultOptionLabel.value]: i }
-    }
-    return i
-  })
-  allSuggestionOptions.value = props.filterSuggestions && allSuggestions.value ?
-    reduceList(allSuggestions.value) :
-    allSuggestions.value && addIndexToList(allSuggestions.value)
-  let count = 0
-  allSuggestionOptions.value?.forEach((i: ComboBoxSuggestion) => {
-    if (typeof i !== 'string' && props.optionGroupChildren && i[props.optionGroupChildren]) {
-      count += (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length
-    } else {
-      count += 1
-    }
-  })
-  allCount.value = count
-  let key = -1
-  groups.value = allSuggestionOptions.value ? [
-    { index: -1, key, label: 'All', count: allCount.value },
-    ...allSuggestionOptions.value.map((i: ComboBoxSuggestion, index: number) => {
-      const count = typeof i !== 'string' && props.optionGroupChildren && (i[props.optionGroupChildren] as ComboBoxSuggestion[]).length || 0
-      if (count > 0) key = key + 1
-      return {
-        index,
-        key,
-        label: typeof i !== 'string' && i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value],
-        count
-      }
-    }).filter((i: { index: number, key: number, label: string, count: number }) => typeof i !== 'string' && i && i.count > 0)
-  ] : []
-  activeGroup.value = groups.value?.find((i: ComboBoxSuggestion) => typeof i !== 'string' && i?.key === activeGroupKey.value)
-  groupSuggestions.value = props.suggestions?.filter(i => typeof i !== 'string' && props.optionGroupChildren &&
-    i[props.optionGroupLabel ? props.optionGroupLabel : defaultOptionLabel.value] === activeGroup.value?.label)
-  groupSuggestionOptions.value = props.filterSuggestions && groupSuggestions.value ?
-    reduceList(groupSuggestions.value) :
-    groupSuggestions.value && addIndexToList(groupSuggestions.value)
-  suggestionOptions.value = activeGroupKey.value === -1 ? allSuggestionOptions.value : groupSuggestionOptions.value
-})
-
-// True when the user has typed a query but no options match (filterSuggestions only).
-const hasNoMatches = computed(() => {
-  return props.filterSuggestions && !hasDropdownSuggestion.value && query.value !== ''
+  shouldScrollActiveItem.value = false
 })
 
 const shouldShowDropdown = computed(() => {
@@ -1836,23 +1577,22 @@ const shouldShowDropdown = computed(() => {
   return true
 })
 
-// Returns the index of the first selectable item in the dropdown (skipping "Select all" if visible)
-const firstItemIndex = computed(() => {
-  return ((props.type === 'taggable-select' || props.type === 'select') && props.multiple && props.enableSelectAll && allCount.value > 1) ? 1 : 0
-})
-
-watch(shouldShowDropdown, (val) => {
+watch(shouldShowDropdown, async (val) => {
   // Drive FloatingUi open/close state
   if (val) {
-    floatingUiRef.value?.onOpen()
+    await floatingUiRef.value?.onOpen()
+    emit('open')
   } else {
-    floatingUiRef.value?.onClose()
+    await floatingUiRef.value?.onClose()
+    emit('close')
   }
   // When the dropdown opens, auto-focus the first item so the user can press Enter immediately.
   // autoFocused keeps the typed query visible in the input (no label substitution).
   if (val) {
     arrowCounter.value = firstItemIndex.value
     autoFocused.value = true
+    await nextTick()
+    resetVirtualScroll()
   } else {
     arrowCounter.value = -1
     autoFocused.value = false
@@ -1860,8 +1600,17 @@ watch(shouldShowDropdown, (val) => {
   activeGroupKey.value = -1
 })
 
-watch(activeGroupKey, () => {
+watch(activeGroupKey, async () => {
+  if (!shouldShowDropdown.value) return
   arrowCounter.value = firstItemIndex.value
   autoFocused.value = true
+  await nextTick()
+  resetVirtualScroll()
+})
+
+watch(displayOptionRows, async () => {
+  if (!shouldShowDropdown.value) return
+  await nextTick()
+  resetVirtualScroll()
 })
 </script>

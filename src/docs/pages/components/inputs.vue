@@ -342,7 +342,7 @@
                 <SdsBadge
                   :variant="option.variant"
                   type="light"
-                  class="!text-[10px] !px-1.5 !py-0.5"
+                  class="text-[10px]! px-1.5! py-0.5!"
                 >
                   {{ option.role }}
                 </SdsBadge>
@@ -373,6 +373,24 @@
             @complete="comboBox8.onComplete"
             @result="comboBox8.onResult"
             @enter="comboBox8.onEnter"
+          />
+          <code class="text-xs">type="select" categorized virtualized list, 12,000 options</code>
+          <SdsComboBox
+            v-model="comboBox9.modelValue"
+            v-model:selected="comboBox9.selected"
+            type="select"
+            placeholder="Search very large categorized data..."
+            :suggestions="comboBox9.suggestions"
+            :debounce-complete="0"
+            :virtualize-threshold="100"
+            click-to-select
+            filter-suggestions
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            @complete="comboBox9.onComplete"
+            @result="comboBox9.onResult"
+            @enter="comboBox9.onEnter"
           />
         </div>
         <SdsButton
@@ -408,6 +426,9 @@
             </tr>
             <tr>
               <td>(lg, select, grouped):</td><td>{{ formData.comboBox8 }}</td>
+            </tr>
+            <tr>
+              <td>(select, virtualized, grouped):</td><td>{{ formData.comboBox9 }}</td>
             </tr>
           </tbody>
         </table>
@@ -920,6 +941,36 @@ const comboBox8 = reactive({
   }
 })
 
+const createVirtualizedComboBoxCategory = (section: string, count: number): ComboBoxSuggestion => ({
+  section,
+  items: Array.from({ length: count }, (_, index) => ({
+    id: `${section.toLowerCase().replaceAll(' ', '-')}-${index + 1}`,
+    name: `${section} item ${String(index + 1).padStart(4, '0')}`
+  }))
+})
+
+const comboBox9 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    createVirtualizedComboBoxCategory('Artifacts', 2000),
+    createVirtualizedComboBoxCategory('Books', 2000),
+    createVirtualizedComboBoxCategory('Courses', 2000),
+    createVirtualizedComboBoxCategory('Datasets', 2000),
+    createVirtualizedComboBoxCategory('Exercises', 2000),
+    createVirtualizedComboBoxCategory('Facilities', 2000)
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  }
+})
+
 const formData = reactive({
   comboBox1: ([] as ComboBoxSuggestion[]),
   comboBox2_1: ([] as ComboBoxSuggestion[]),
@@ -928,7 +979,8 @@ const formData = reactive({
   comboBox4: ([] as ComboBoxSuggestion[]),
   comboBox5: ([] as ComboBoxSuggestion[]),
   comboBox6: ([] as ComboBoxSuggestion[]),
-  comboBox8: ([] as ComboBoxSuggestion[])
+  comboBox8: ([] as ComboBoxSuggestion[]),
+  comboBox9: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {
@@ -940,6 +992,7 @@ watchEffect(() => {
   formData.comboBox5 = comboBox5.selected
   formData.comboBox6 = comboBox6.selected
   formData.comboBox8 = comboBox8.selected
+  formData.comboBox9 = comboBox9.selected
 })
 
 const handleSubmit = () => {

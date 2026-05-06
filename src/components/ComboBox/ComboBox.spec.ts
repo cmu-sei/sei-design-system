@@ -303,7 +303,7 @@ describe('ComboBox', () => {
   })
 
   it('should select highlighted option on Enter', async () => {
-    const selected = []
+    const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
         clickToSelect: true,
@@ -390,7 +390,7 @@ describe('ComboBox', () => {
     })
     const input = wrapper.find('input[type="text"]')
     expect(input.attributes('required')).toBeDefined()
-    expect(input.element.required).toBe(true)
+    expect((input.element as HTMLInputElement).required).toBe(true)
     expect(wrapper.html()).toMatchSnapshot()
   })
 
@@ -447,7 +447,7 @@ describe('ComboBox', () => {
 
   // --- MULTISELECT & TAGGABLE-SELECT TESTS ---
   it('should allow selecting multiple options in multiselect mode (click)', async () => {
-    const selected = []
+    const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
         clickToSelect: true,
@@ -528,6 +528,25 @@ describe('ComboBox', () => {
     // flushDropdown drains fake timers (debounced query watcher),
     // pending promises, and a tick so FloatingUi has time to teleport.
     await flushDropdown()
+    expect(dropdownInBody()).not.toBeNull()
+    wrapper.unmount()
+  })
+
+  it('sanitizes external modelValue updates, emits complete, and opens dropdown', async () => {
+    const wrapper = mountComponent({
+      props: {
+        modelValue: '',
+        suggestions,
+        debounceComplete: 0
+      }
+    })
+    await wrapper.setProps({ modelValue: '<strong>App</strong>' })
+    await flushDropdown()
+
+    const input = wrapper.find('input[type="text"]')
+    expect((input.element as HTMLInputElement).value).toBe('App')
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['App'])
+    expect(wrapper.emitted('complete')?.at(-1)).toEqual(['App'])
     expect(dropdownInBody()).not.toBeNull()
     wrapper.unmount()
   })
@@ -657,6 +676,115 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('does not switch groups or blank options when pressing Left or Right in a flat list', async () => {
+    const scrollIntoView = vi.fn()
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions,
+        type: 'select',
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(leftArrowEvent)
+    await flushDropdown()
+    const rightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(rightArrowEvent)
+    await flushDropdown()
+
+    expect(leftArrowEvent.defaultPrevented).toBe(false)
+    expect(rightArrowEvent.defaultPrevented).toBe(false)
+    expect(scrollIntoView).not.toHaveBeenCalled()
+    const optionTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
+    expect(optionTexts).toContain('Apple')
+    expect(optionTexts).toContain('Banana')
+    wrapper.unmount()
+  })
+
+  it('switches grouped tabs with Left and Right only when the input caret is at a text boundary', async () => {
+    const scrollIntoView = vi.fn()
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions: groupedSuggestions,
+        type: 'select',
+        debounceComplete: 0,
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.trigger('click')
+    await input.setValue('Apple')
+    await flushDropdown()
+
+    inputElement.setSelectionRange(2, 2)
+    const middleLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    inputElement.dispatchEvent(middleLeftEvent)
+    await flushDropdown()
+    const middleRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    inputElement.dispatchEvent(middleRightEvent)
+    await flushDropdown()
+
+    expect(middleLeftEvent.defaultPrevented).toBe(false)
+    expect(middleRightEvent.defaultPrevented).toBe(false)
+    expect(scrollIntoView).not.toHaveBeenCalled()
+
+    inputElement.setSelectionRange(0, 0)
+    const boundaryLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    inputElement.dispatchEvent(boundaryLeftEvent)
+    await flushDropdown()
+
+    expect(boundaryLeftEvent.defaultPrevented).toBe(true)
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
+    expect(text(dropdownInBody())).toContain('Beetroot')
+
+    inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length)
+    const boundaryRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    inputElement.dispatchEvent(boundaryRightEvent)
+    await flushDropdown()
+
+    expect(boundaryRightEvent.defaultPrevented).toBe(true)
+    expect(text(dropdownInBody())).toContain('Apple')
+    wrapper.unmount()
+  })
+
+  it('selects an option once when clicking a multiselect checkbox', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected: [],
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const firstCheckbox = findInBody('[data-id="sds-scroll-area"] input[type="checkbox"]') as HTMLInputElement | null
+    expect(firstCheckbox).toBeTruthy()
+    firstCheckbox!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(wrapper.emitted('update:selected')?.at(-1)).toEqual([['Apple']])
+    wrapper.unmount()
+  })
+
   it('adds a suggestion to selected when clicked, and commits selection on Enter', async () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
@@ -691,7 +819,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('navigates from tab to first suggestion with ArrowDown, and from first suggestion to tab with ArrowUp', async () => {
+  it('keeps focus on the input while keyboard navigation moves between input and options', async () => {
     const wrapper = mountComponent({
       props: {
         clickToSelect: true,
@@ -705,17 +833,31 @@ describe('ComboBox', () => {
     })
     window.HTMLElement.prototype.scrollIntoView = () => {}
     const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    inputElement.focus()
     await input.trigger('click')
     await flushDropdown()
+    const tabs = findAllInBody('button.tab')
+    tabs.forEach((tab) => {
+      expect(tab.getAttribute('tabindex')).toBe('-1')
+    })
+    expect(document.activeElement).toBe(inputElement)
+
     // Dropdown opens with first suggestion auto-focused (in teleported body)
     const active = findInBody('button[data-active="true"]')
     expect(active).toBeTruthy()
-    // ArrowUp should move focus back to tab (no suggestion active)
+    // ArrowUp should move active state back to the input, never to a tab.
     await input.trigger('keydown.up')
     await flushDropdown()
     const activeAfterUp = findInBody('button:not(.tab)[data-active="true"]')
-    // Should not find an active suggestion (focus is on tab)
     expect(activeAfterUp).toBeFalsy()
+    expect(document.activeElement).toBe(inputElement)
+
+    await input.trigger('keydown.down')
+    await flushDropdown()
+    const activeAfterDown = findInBody('button:not(.tab)[data-active="true"]')
+    expect(activeAfterDown).toBeTruthy()
+    expect(document.activeElement).toBe(inputElement)
     wrapper.unmount()
   })
 
@@ -801,18 +943,20 @@ describe('ComboBox', () => {
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('Kiw')
 
+    const findClearButton = () => wrapper.findAll('button').find(button => button.text().includes('Clear query'))
+
     // First click on the clear button: query cleared, selections retained
-    const clearBtn = wrapper.find('button.ml-auto')
-    expect(clearBtn.exists()).toBe(true)
-    await clearBtn.trigger('mousedown')
+    const clearBtn = findClearButton()
+    expect(clearBtn).toBeDefined()
+    await clearBtn?.trigger('mousedown')
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('')
     expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
 
     // Second click on the clear button: selections cleared
-    const clearBtn2 = wrapper.find('button.ml-auto')
-    expect(clearBtn2.exists()).toBe(true)
-    await clearBtn2.trigger('mousedown')
+    const clearBtn2 = findClearButton()
+    expect(clearBtn2).toBeDefined()
+    await clearBtn2?.trigger('mousedown')
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual([])
     wrapper.unmount()
@@ -943,6 +1087,19 @@ describe('ComboBox', () => {
     // investigation of handleArrows wrap-around logic. Will be covered when
     // the broader keyboard-navigation test suite is added.
     window.HTMLElement.prototype.scrollIntoView = () => {}
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        clickToSelect: true,
+        type: 'taggable-select',
+        multiple: true,
+        selected: [],
+        debounceComplete: 0,
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
     const input = wrapper.find('input[type="text"]')
     await input.setValue('NewFruit')
     await flushDropdown()
@@ -1123,23 +1280,31 @@ describe('ComboBox', () => {
         debounceComplete: 0
       }
     })
-    window.HTMLElement.prototype.scrollIntoView = () => {}
+    const scrollIntoView = vi.fn()
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await flushDropdown()
     // Down twice to enter dropdown options, then left to cycle backwards
     await input.trigger('keydown.down')
     await input.trigger('keydown.down')
-    await input.trigger('keydown.left')
+    ;(input.element as HTMLInputElement).setSelectionRange(0, 0)
+    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(leftArrowEvent)
     await flushDropdown()
+    expect(leftArrowEvent.defaultPrevented).toBe(true)
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
     // After left from "All", we should be on Vegetables (last group)
     const vegOptions = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
     expect(vegOptions).toContain('Beetroot')
     expect(vegOptions).not.toContain('Apple')
     // Left again should go to Fruits
     await input.trigger('keydown.down')
-    await input.trigger('keydown.left')
+    ;(input.element as HTMLInputElement).setSelectionRange(0, 0)
+    const secondLeftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(secondLeftArrowEvent)
     await flushDropdown()
+    expect(secondLeftArrowEvent.defaultPrevented).toBe(true)
     const fruitOptions = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
     expect(fruitOptions).toContain('Apple')
     expect(fruitOptions).not.toContain('Beetroot')
@@ -1332,6 +1497,398 @@ describe('ComboBox', () => {
     expect(checkbox).toBeTruthy()
     expect(checkbox!.indeterminate).toBe(true)
     expect(checkbox!.checked).toBe(false)
+    wrapper.unmount()
+  })
+
+  it('uses virtualization for large flat option lists', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const renderedOptions = findAllInBody('[data-id="sds-scroll-area"] button')
+    expect(renderedOptions.length).toBeLessThan(largeSuggestions.length)
+    expect(text(dropdownInBody())).toContain('Option 0')
+    expect(text(dropdownInBody())).not.toContain('Option 149')
+    wrapper.unmount()
+  })
+
+  it('resets rendered rows when filtering changes a scrolled virtualized list', async () => {
+    const largeSuggestions = Array.from({ length: 200 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        filterSuggestions: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    scrollArea!.scrollTop = 1500
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+
+    await input.setValue('Option 19')
+    await flushDropdown()
+
+    expect(scrollArea!.scrollTop).toBe(0)
+    expect(text(dropdownInBody())).toContain('Option 19')
+    expect(text(dropdownInBody())).toContain('Option 190')
+    wrapper.unmount()
+  })
+
+  it('scrolls virtualized options to the active item during keyboard navigation', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    expect((input.element as HTMLInputElement).value).toBe('')
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    expect(scrollArea!.scrollTop).toBe(0)
+
+    for (let index = 0; index < 25; index++) {
+      await input.trigger('keydown.down')
+    }
+    await flushDropdown()
+
+    expect(scrollArea!.scrollTop).toBeGreaterThan(0)
+    expect(text(dropdownInBody())).toContain('Option 25')
+    wrapper.unmount()
+  })
+
+  it('scrolls virtualized options to the last item when ArrowUp wraps from the input', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
+    await flushDropdown()
+
+    const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
+    expect(scrollArea!.scrollTop).toBeGreaterThan(0)
+    expect(text(activeOption)).toBe('Option 149')
+    expect(text(dropdownInBody())).toContain('Option 149')
+    wrapper.unmount()
+  })
+
+  it('scrolls grouped virtualized options to the final group item when ArrowUp wraps from the input', async () => {
+    const createCategory = (section: string) => ({
+      section,
+      items: Array.from({ length: 2000 }, (_, index) => ({
+        id: `${section.toLowerCase()}-${index + 1}`,
+        name: `${section} item ${String(index + 1).padStart(4, '0')}`
+      }))
+    })
+    const wrapper = mountComponent({
+      props: {
+        suggestions: [
+          createCategory('Artifacts'),
+          createCategory('Books'),
+          createCategory('Courses'),
+          createCategory('Datasets'),
+          createCategory('Exercises'),
+          createCategory('Facilities')
+        ],
+        type: 'select',
+        clickToSelect: true,
+        filterSuggestions: true,
+        debounceComplete: 0,
+        optionLabel: 'name',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
+    await flushDropdown()
+
+    const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
+    expect(scrollArea!.scrollTop).toBeGreaterThan(0)
+    expect(text(activeOption)).toBe('Facilities item 2000')
+    expect(text(dropdownInBody())).toContain('Facilities item 2000')
+    wrapper.unmount()
+  })
+
+  it('renders virtualized grouped options after replacing a selected item with typed text', async () => {
+    const createCategory = (section: string) => ({
+      section,
+      items: Array.from({ length: 2000 }, (_, index) => ({
+        id: `${section.toLowerCase()}-${index + 1}`,
+        name: `${section} item ${String(index + 1).padStart(4, '0')}`
+      }))
+    })
+    const wrapper = mountComponent({
+      props: {
+        suggestions: [
+          createCategory('Artifacts'),
+          createCategory('Books'),
+          createCategory('Courses'),
+          createCategory('Datasets'),
+          createCategory('Exercises'),
+          createCategory('Facilities')
+        ],
+        type: 'select',
+        clickToSelect: true,
+        filterSuggestions: true,
+        debounceComplete: 0,
+        optionLabel: 'name',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        selected: [],
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.setValue('art')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    scrollArea!.scrollTop = 39 * 36
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+
+    const artifactOption = findAllInBody('[data-id="sds-scroll-area"] button')
+      .find(button => text(button) === 'Artifacts item 0040')
+    expect(artifactOption).toBeTruthy()
+    artifactOption!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+    expect(dropdownInBody()).toBeNull()
+    expect(inputElement.value).toBe('Artifacts item 0040')
+
+    inputElement.setSelectionRange(0, inputElement.value.length)
+    inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+    await flushDropdown()
+
+    expect(inputElement.value).toBe('a')
+    expect(dropdownInBody()).not.toBeNull()
+    const reopenedScrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(reopenedScrollArea).toBeTruthy()
+    expect(reopenedScrollArea!.scrollTop).toBe(0)
+    expect(text(dropdownInBody())).toContain('Artifacts')
+    expect(text(dropdownInBody())).toContain('Artifacts item 0001')
+    expect(text(dropdownInBody())).not.toContain('Artifacts item 0040')
+    wrapper.unmount()
+  })
+
+  it('uses virtualization for large grouped option lists', async () => {
+    const groupedLargeSuggestions = [
+      {
+        section: 'Group A',
+        items: Array.from({ length: 150 }, (_, index) => ({ name: `Group A option ${index}` }))
+      },
+      {
+        section: 'Group B',
+        items: Array.from({ length: 150 }, (_, index) => ({ name: `Group B option ${index}` }))
+      }
+    ]
+    const wrapper = mountComponent({
+      props: {
+        suggestions: groupedLargeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0,
+        optionLabel: 'name',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const renderedOptions = findAllInBody('[data-id="sds-scroll-area"] button')
+    expect(renderedOptions.length).toBeLessThan(300)
+    expect(text(dropdownInBody())).toContain('Group A')
+    expect(text(dropdownInBody())).toContain('Group A option 0')
+    expect(text(dropdownInBody())).not.toContain('Group B option 149')
+    wrapper.unmount()
+  })
+
+  it('does not scroll virtualized options when hovering a rendered option', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    scrollArea!.scrollTop = 1000
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+
+    const renderedOption = findInBody('[data-id="sds-scroll-area"] button') as HTMLElement | null
+    expect(renderedOption).toBeTruthy()
+    renderedOption!.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }))
+    await flushDropdown()
+
+    expect(scrollArea!.scrollTop).toBe(1000)
+    expect((input.element as HTMLInputElement).value).toBe('')
+    wrapper.unmount()
+  })
+
+  it('renders virtualized options when reopened after selecting from a scrolled list', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    scrollArea!.scrollTop = 1000
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+
+    const renderedOption = findInBody('[data-id="sds-scroll-area"] button') as HTMLElement | null
+    expect(renderedOption).toBeTruthy()
+    renderedOption!.click()
+    await flushDropdown()
+    expect(dropdownInBody()).toBeNull()
+
+    await input.trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()).not.toBeNull()
+    const reopenedScrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(reopenedScrollArea).toBeTruthy()
+    expect(reopenedScrollArea!.scrollTop).toBe(0)
+    expect(text(dropdownInBody())).toContain('Option 0')
+    wrapper.unmount()
+  })
+
+  it('resets virtualized scroll position when switching grouped tabs', async () => {
+    const groupedLargeSuggestions = [
+      {
+        section: 'Group A',
+        items: Array.from({ length: 150 }, (_, index) => ({ name: `Group A option ${index}` }))
+      },
+      {
+        section: 'Group B',
+        items: Array.from({ length: 150 }, (_, index) => ({ name: `Group B option ${index}` }))
+      }
+    ]
+    const wrapper = mountComponent({
+      props: {
+        suggestions: groupedLargeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0,
+        optionLabel: 'name',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    for (let index = 0; index < 25; index++) {
+      await input.trigger('keydown.down')
+    }
+    await flushDropdown()
+    expect(scrollArea!.scrollTop).toBeGreaterThan(0)
+
+    const tabs = findAllInBody('button.tab')
+    const groupBTab = tabs.find(tab => text(tab).toLowerCase().includes('group b'))
+    expect(groupBTab).toBeTruthy()
+    groupBTab!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(scrollArea!.scrollTop).toBe(0)
+    expect(text(dropdownInBody())).toContain('Group B option 0')
+    wrapper.unmount()
+  })
+
+  it('emits the original grouped child object when a grouped option is selected', async () => {
+    const apple = { name: 'Apple', value: 'apple' }
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions: [
+          {
+            section: 'Fruits',
+            items: [apple]
+          }
+        ],
+        type: 'select',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name',
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const appleButton = findAllInBody('button').find(button => text(button) === 'Apple')
+    expect(appleButton).toBeTruthy()
+    appleButton!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.emitted('result')?.at(-1)).toEqual([apple])
     wrapper.unmount()
   })
 })

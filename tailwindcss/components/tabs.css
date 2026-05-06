@@ -71,6 +71,10 @@
 
   /* ===== BASE TAB STYLES ===== */
 
+  :where(.tab) {
+    @apply focus:outline-none;
+  }
+
   :where(
     .tab:is(.tab-block, .tab-folder, .tab-underline)
   ) {

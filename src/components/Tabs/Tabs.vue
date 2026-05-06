@@ -43,7 +43,7 @@
             :type="tab.tag === 'button' ? 'button' : undefined"
             :disabled="tab.disabled"
             :aria-disabled="tab.disabled"
-            :tabindex="tab.disabled || !tab.active ? -1 : 0"
+            :tabindex="!props.focusable || tab.disabled || !tab.active ? -1 : 0"
             :aria-selected="tab.active ? 'true' : 'false'"
             :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
             :data-active="tab.active ? true : undefined"
@@ -125,6 +125,10 @@ export interface TabItem {
 
 interface TabsProps {
   /**
+   * Determines whether tabs can receive keyboard focus.
+   */
+  focusable?: boolean;
+  /**
    * Determines the size of the tab(s).
    */
   size?: 'sm' | 'lg';
@@ -170,6 +174,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TabsProps>(), {
+  focusable: true,
   size: 'sm',
   type: 'folder',
   variant: 'red',
@@ -324,6 +329,8 @@ const changeTab = async (tab: TabItem) => {
  * - Uses Vue's `nextTick` to ensure DOM updates before focusing.
  */
 const onTabKeydown = async (event: KeyboardEvent, tab: TabItem): Promise<void> => {
+  if (!props.focusable) return
+
   const key = event.key as typeof TAB_KEYBOARD_NAV_KEYS[number]
   if (!TAB_KEYBOARD_NAV_KEYS.includes(key)) return
 

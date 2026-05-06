@@ -10,11 +10,12 @@
   @apply text-gray-900 bg-white;
   @apply placeholder:italic placeholder-gray-400;
   @apply focus:outline-none focus:ring-2 focus:ring-blue-300;
-  @apply read-only:pointer-events-none disabled:bg-gray-100 disabled:text-gray-400;
-  @apply [&[readonly]:not([disabled])]:bg-gray-50 [&[readonly]:not([disabled])]:text-gray-700;
+  @apply disabled:bg-gray-100 disabled:text-gray-400;
+  @apply disabled:pointer-events-none [[readonly]:not(.no-readonly-style)]:pointer-events-none;
+  @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-700;
   @apply dark:text-gray-100 dark:bg-gray-900/50;
   @apply dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
-  @apply dark:[&[readonly]:not([disabled])]:bg-gray-750 dark:[&[readonly]:not([disabled])]:text-gray-100;
+  @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-100;
   @apply dark:placeholder-gray-400 dark:focus:ring-blue-700;
 }
 
@@ -26,8 +27,12 @@
   @apply px-4 py-3 text-base;
 }
 
+@utility focus-ring {
+  @apply focus-within:ring-2 ring-blue-300 dark:ring-blue-700;
+}
+
 @utility input-group {
-  @apply flex items-stretch w-full overflow-clip focus-within:ring-2 ring-blue-300 dark:ring-blue-700 rounded-theme-sm;
+  @apply flex items-stretch w-full overflow-clip focus-ring rounded-theme-sm;
   @apply form-border;
   @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
   @apply *:border-y-0 *:border-x-0;
@@ -37,12 +42,17 @@
   @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:text-gray-500 dark:[&>.input-group-addon]:text-gray-300 [&>.input-group-addon]:px-1.5;
   @apply [&>.input-group-addon]:bg-white dark:[&>.input-group-addon]:bg-gray-900/50;
   @apply [&:has(:disabled)>.input-group-addon]:bg-gray-100 dark:[&:has(:disabled)>.input-group-addon]:bg-gray-900;
-  @apply [&:has([readonly])>.input-group-addon]:bg-gray-50 dark:[&:has([readonly])>.input-group-addon]:bg-gray-750;
+  @apply [&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-50 dark:[&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-750;
 }
 
 @utility input-group-sm {
   @apply *:form-control-sm;
   @apply [&>.input-group-addon]:py-1 [&>.input-group-addon]:text-sm [&>.input-group-addon]:px-1;
+}
+
+@utility input-group-lg {
+  @apply *:form-control-lg;
+  @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:px-2;
 }
 
 @utility btn-group {
