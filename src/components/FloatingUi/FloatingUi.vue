@@ -96,6 +96,11 @@ interface FloatingUiProps {
   placementLeftArrowClass?: string;
   willOpen?: GenericFunctionType;
   willClose?: GenericFunctionType;
+  /**
+   * When true, the floating element will match the width of the trigger element.
+   * Useful for dropdowns that should span the full width of their trigger.
+   */
+  matchWidth?: boolean;
 }
 
 /**
@@ -150,8 +155,16 @@ const props = withDefaults(defineProps<FloatingUiProps>(), {
   placementBottomArrowClass: undefined,
   placementLeftArrowClass: undefined,
   willOpen: undefined,
-  willClose: undefined
+  willClose: undefined,
+  matchWidth: false,
 })
+
+const emit = defineEmits<{
+  /** Emitted when the floating panel opens. */
+  open: []
+  /** Emitted when the floating panel closes. */
+  close: []
+}>()
 
 /**
  * Holds the cleanup function returned by autoUpdate.
@@ -163,7 +176,7 @@ const triggerRef = ref(null)
 const popperRef = ref(null)
 const arrowRef = ref(null)
 const open = ref(false)
-const popperPosition = ref({ left: `0px`, top: `0px` })
+const popperPosition = ref<Record<string, string>>({ left: '0px', top: '0px' })
 const arrowPosition = ref({ left: `0px`, top: `0px` })
 const currentPlacement = ref('')
 
@@ -351,7 +364,10 @@ const update = async (): Promise<void> => {
 
   popperPosition.value = {
     left: x ? `${x}px` : '',
-    top: y ? `${y}px` : ''
+    top: y ? `${y}px` : '',
+    ...(props.matchWidth && triggerRef.value
+      ? { width: `${(triggerRef.value as HTMLElement).offsetWidth}px` }
+      : {})
   }
 
   if (!props.hideArrow) {
@@ -411,15 +427,19 @@ onBeforeUnmount(() => {
  */
 watch(open, async (value) => {
   if (value) {
+    emit('open')
     await nextTick()
     update()
     if (triggerRef.value && popperRef.value) {
       cleanup = autoUpdate(triggerRef.value, popperRef.value, update)
     }
   } else {
+    emit('close')
     if (cleanup) {
       cleanup()
     }
   }
 })
+
+defineExpose({ onOpen, onClose, onToggle })
 </script>
