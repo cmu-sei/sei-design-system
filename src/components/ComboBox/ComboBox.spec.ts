@@ -533,11 +533,15 @@ describe('ComboBox', () => {
   })
 
   it('sanitizes external modelValue updates, emits complete, and opens dropdown', async () => {
+    const onUpdateModelValue = vi.fn()
+    const onComplete = vi.fn()
     const wrapper = mountComponent({
       props: {
         modelValue: '',
         suggestions,
-        debounceComplete: 0
+        debounceComplete: 0,
+        'onUpdate:modelValue': onUpdateModelValue,
+        onComplete
       }
     })
     await wrapper.setProps({ modelValue: '<strong>App</strong>' })
@@ -545,8 +549,8 @@ describe('ComboBox', () => {
 
     const input = wrapper.find('input[type="text"]')
     expect((input.element as HTMLInputElement).value).toBe('App')
-    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['App'])
-    expect(wrapper.emitted('complete')?.at(-1)).toEqual(['App'])
+    expect(onUpdateModelValue).toHaveBeenLastCalledWith('App')
+    expect(onComplete).toHaveBeenLastCalledWith('App')
     expect(dropdownInBody()).not.toBeNull()
     wrapper.unmount()
   })
@@ -759,6 +763,9 @@ describe('ComboBox', () => {
   })
 
   it('selects an option once when clicking a multiselect checkbox', async () => {
+    const onUpdateSelected = vi.fn((val: ComboBoxSuggestion[]) => {
+      wrapper.setProps({ selected: val })
+    })
     const wrapper = mountComponent({
       props: {
         clickToSelect: true,
@@ -766,9 +773,7 @@ describe('ComboBox', () => {
         type: 'select',
         multiple: true,
         selected: [],
-        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
-          wrapper.setProps({ selected: val })
-        }
+        'onUpdate:selected': onUpdateSelected
       }
     })
     const input = wrapper.find('input[type="text"]')
@@ -781,7 +786,7 @@ describe('ComboBox', () => {
     await flushDropdown()
 
     expect(wrapper.props('selected')).toEqual(['Apple'])
-    expect(wrapper.emitted('update:selected')?.at(-1)).toEqual([['Apple']])
+    expect(onUpdateSelected).toHaveBeenLastCalledWith(['Apple'])
     wrapper.unmount()
   })
 
@@ -1859,6 +1864,7 @@ describe('ComboBox', () => {
 
   it('emits the original grouped child object when a grouped option is selected', async () => {
     const apple = { name: 'Apple', value: 'apple' }
+    const onResult = vi.fn()
     const wrapper = mountComponent({
       props: {
         clickToSelect: true,
@@ -1873,6 +1879,7 @@ describe('ComboBox', () => {
         optionGroupChildren: 'items',
         optionLabel: 'name',
         debounceComplete: 0,
+        onResult,
         selected: [],
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
           wrapper.setProps({ selected: val })
@@ -1888,7 +1895,7 @@ describe('ComboBox', () => {
     appleButton!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushDropdown()
 
-    expect(wrapper.emitted('result')?.at(-1)).toEqual([apple])
+    expect(onResult).toHaveBeenLastCalledWith(apple)
     wrapper.unmount()
   })
 })
