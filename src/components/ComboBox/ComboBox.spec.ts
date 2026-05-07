@@ -384,6 +384,26 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('does not leave selected single-select text highlighted when the input receives focus', async () => {
+    const wrapper = mountComponent({
+      props: {
+        selected: ['Apple'],
+        suggestions,
+        type: 'select'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    inputElement.setSelectionRange(0, inputElement.value.length)
+
+    await input.trigger('focus')
+    await vi.runAllTimersAsync()
+
+    expect(inputElement.selectionStart).toBe(inputElement.value.length)
+    expect(inputElement.selectionEnd).toBe(inputElement.value.length)
+    wrapper.unmount()
+  })
+
   it('should match its snapshot with required prop assigned', () => {
     const wrapper = mountComponent({
       props: { required: true, suggestions }
@@ -529,6 +549,28 @@ describe('ComboBox', () => {
     // pending promises, and a tick so FloatingUi has time to teleport.
     await flushDropdown()
     expect(dropdownInBody()).not.toBeNull()
+    wrapper.unmount()
+  })
+
+  it('does not highlight a selected option when a focused ComboBox opens passively', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        debounceComplete: 0,
+        modelValue: '',
+        selected: ['Apple'],
+        suggestions,
+        type: 'select'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.trigger('focus')
+    await wrapper.setProps({ modelValue: 'A' })
+    await flushDropdown()
+
+    expect(dropdownInBody()).not.toBeNull()
+    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
     wrapper.unmount()
   })
 

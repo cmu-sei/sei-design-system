@@ -77,7 +77,7 @@
             :maxlength="maxlength !== undefined ? maxlength : undefined"
             :required="inputRequired || undefined"
             @input="onInputFieldInput"
-            @focus="emit('focus')"
+            @focus="handleInputFocus"
             @keydown="onKeydownWhenSingleSelected"
             @click.prevent="inputClick"
             @keydown.delete="handleDelete"
@@ -854,6 +854,7 @@ const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as 
 const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const shouldScrollActiveItem = ref(false)
+const shouldAutoHighlightOnOpen = ref(false)
 // True when arrowCounter was set automatically (on dropdown open/query change) rather than by
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
@@ -1057,8 +1058,10 @@ const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
 
 const inputClick = () => {
   if (props.readonly || props.disabled) return
-  if (props.clickToSelect)
+  if (props.clickToSelect) {
+    shouldAutoHighlightOnOpen.value = !showDropdown.value
     showDropdown.value = !showDropdown.value
+  }
 }
 
 const selectAllChecked = computed(() => {
@@ -1102,6 +1105,20 @@ const { setQuery, setUserQuery } = useComboBoxQuery({
 })
 
 onMounted(() => { if (props.autofocus) inputField.value.focus() })
+
+const collapseInputSelectionToEnd = () => {
+  const input = inputField.value as HTMLInputElement | undefined
+  if (!input || input.selectionStart === null || input.selectionEnd === null) return
+  const end = input.value.length
+  input.setSelectionRange(end, end)
+}
+
+const handleInputFocus = () => {
+  emit('focus')
+  if (!showSingleSelectionDisplay.value) return
+  collapseInputSelectionToEnd()
+  window.setTimeout(collapseInputSelectionToEnd, 0)
+}
 
 onKeyStroke('Escape', (e: KeyboardEvent) => {
   e.preventDefault()
@@ -1290,6 +1307,7 @@ const onKeydownWhenSingleSelected = async (e: KeyboardEvent) => {
   if (e.key.length !== 1 || e.ctrlKey || e.metaKey || e.altKey) return
   e.preventDefault()
   clearSelections()
+  shouldAutoHighlightOnOpen.value = true
   setUserQuery(e.key)
   await nextTick()
   inputField.value.focus()
@@ -1305,10 +1323,12 @@ const onInputFieldInput = (e: Event) => {
     clearSelections()
     // Clear the input value so typing starts fresh (not concatenated to the selected value)
     const nextQuery = target.value.slice(-1) // Keep only the last typed character
+    shouldAutoHighlightOnOpen.value = true
     setUserQuery(nextQuery)
     handleInput()
     return
   }
+  shouldAutoHighlightOnOpen.value = true
   setUserQuery(target.value)
   handleInput()
 }
@@ -1318,6 +1338,7 @@ const handleInput = async () => {
   // When the dropdown is already open and the query changes, keep the first item auto-focused
   // so the user can press Enter without having to navigate down first.
   if (showDropdown.value) {
+    shouldAutoHighlightOnOpen.value = true
     arrowCounter.value = firstItemIndex.value
     autoFocused.value = true
   }
@@ -1465,6 +1486,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: 
     if (!showDropdown.value && hasDropdownSuggestion.value) {
       if (!inputField.value.readOnly) {
         event.preventDefault()
+        shouldAutoHighlightOnOpen.value = false
         showDropdown.value = true
       }
       arrowCounter.value = -1
@@ -1576,13 +1598,20 @@ watch(shouldShowDropdown, async (val) => {
   // When the dropdown opens, auto-focus the first item so the user can press Enter immediately.
   // autoFocused keeps the typed query visible in the input (no label substitution).
   if (val) {
-    arrowCounter.value = firstItemIndex.value
-    autoFocused.value = true
+    if (shouldAutoHighlightOnOpen.value) {
+      arrowCounter.value = firstItemIndex.value
+      autoFocused.value = true
+    } else {
+      arrowCounter.value = -1
+      autoFocused.value = false
+    }
+    shouldAutoHighlightOnOpen.value = false
     await nextTick()
     resetVirtualScroll()
   } else {
     arrowCounter.value = -1
     autoFocused.value = false
+    shouldAutoHighlightOnOpen.value = false
   }
   activeGroupKey.value = -1
 })
