@@ -790,6 +790,32 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('does not activate an option when hovering a rendered option', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions,
+        type: 'select',
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const optionButtons = findAllInBody('[data-id="sds-scroll-area"] button')
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+
+    const bananaButton = optionButtons.find(button => text(button) === 'Banana')
+    expect(bananaButton).toBeTruthy()
+    bananaButton!.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }))
+    await flushDropdown()
+
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+    expect((input.element as HTMLInputElement).value).toBe('')
+    wrapper.unmount()
+  })
+
   it('adds a suggestion to selected when clicked, and commits selection on Enter', async () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
@@ -1773,10 +1799,12 @@ describe('ComboBox', () => {
 
     const renderedOption = findInBody('[data-id="sds-scroll-area"] button') as HTMLElement | null
     expect(renderedOption).toBeTruthy()
+    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
     renderedOption!.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }))
     await flushDropdown()
 
     expect(scrollArea!.scrollTop).toBe(1000)
+    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
     expect((input.element as HTMLInputElement).value).toBe('')
     wrapper.unmount()
   })

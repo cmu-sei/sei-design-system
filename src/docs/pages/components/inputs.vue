@@ -310,43 +310,45 @@
             @enter="comboBox6.onEnter"
           >
             <template #customOption="{ option, classList, dataActive, onClick }">
-              <button
-                type="button"
-                :class="classList"
-                :data-active="dataActive"
-                class="flex items-center gap-3 w-full"
-                @click="onClick"
-              >
-                <SdsIndicator
-                  :variant="option.status === 'online' ? 'green' : option.status === 'away' ? 'orange' : 'gray'"
-                  :hide-indicator="option.status === 'offline'"
-                  placement="bottom-right"
-                  placement-over="circle"
-                  size="sm"
+              <template v-if="isUserSuggestion(option)">
+                <button
+                  type="button"
+                  :class="classList"
+                  :data-active="dataActive"
+                  class="flex items-center gap-3 w-full"
+                  @click="onClick"
                 >
-                  <SdsAvatar
-                    :name="option.name"
-                    :variant="option.variant"
+                  <SdsIndicator
+                    :variant="getUserStatusVariant(option)"
+                    :hide-indicator="option.status === 'offline'"
+                    placement="bottom-right"
+                    placement-over="circle"
                     size="sm"
-                    shape="circle"
-                  />
-                </SdsIndicator>
-                <div class="flex-1 min-w-0 text-left">
-                  <div class="font-medium text-sm truncate">
-                    {{ option.name }}
+                  >
+                    <SdsAvatar
+                      :name="option.name"
+                      :variant="option.variant"
+                      size="sm"
+                      shape="circle"
+                    />
+                  </SdsIndicator>
+                  <div class="flex-1 min-w-0 text-left">
+                    <div class="font-medium text-sm truncate">
+                      {{ option.name }}
+                    </div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {{ option.email }}
+                    </div>
                   </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    {{ option.email }}
-                  </div>
-                </div>
-                <SdsBadge
-                  :variant="option.variant"
-                  type="light"
-                  class="text-[10px]! px-1.5! py-0.5!"
-                >
-                  {{ option.role }}
-                </SdsBadge>
-              </button>
+                  <SdsBadge
+                    :variant="option.variant"
+                    type="light"
+                    class="text-[10px]! px-1.5! py-0.5!"
+                  >
+                    {{ option.role }}
+                  </SdsBadge>
+                </button>
+              </template>
             </template>
           </SdsComboBox>
           <code class="text-xs">size="lg" type="text" no autosuggest</code>
@@ -507,6 +509,35 @@
 <script setup lang="ts">
 import type { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
 import type { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
+const USER_SUGGESTION_VARIANTS = ['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'] as const
+
+type UserSuggestionVariant = typeof USER_SUGGESTION_VARIANTS[number]
+
+type UserSuggestion = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: 'online' | 'away' | 'offline';
+  initials: string;
+  variant: UserSuggestionVariant;
+}
+
+const isUserSuggestion = (option: ComboBoxSuggestion): option is UserSuggestion => {
+  return typeof option === 'object' && option !== null &&
+    typeof option.name === 'string' &&
+    typeof option.email === 'string' &&
+    typeof option.role === 'string' &&
+    typeof option.status === 'string' &&
+    USER_SUGGESTION_VARIANTS.includes(option.variant as UserSuggestionVariant)
+}
+
+const getUserStatusVariant = (option: UserSuggestion) => {
+  if (option.status === 'online') return 'green'
+  if (option.status === 'away') return 'orange'
+  return 'gray'
+}
 
 const checkboxGroup = reactive({
   modelValue: ['option 2'],

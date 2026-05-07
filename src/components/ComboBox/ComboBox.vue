@@ -270,7 +270,6 @@
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
               @click.prevent="handleSuggestionClick(row.option)"
-              @mouseover="setActiveDropdownItem(row.option)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
               <template v-if="isSelectType && multiple">
@@ -343,7 +342,6 @@
                   :option="c"
                   :label="getLabel(c)"
                   @click.prevent="handleSuggestionClick(c)"
-                  @mouseover="setActiveDropdownItem(c)"
                 >
                   {{ getLabel(c) }}
                 </slot>
@@ -366,7 +364,6 @@
                 :option="s"
                 :label="getLabel(s)"
                 @click.prevent="handleSuggestionClick(s)"
-                @mouseover="setActiveDropdownItem(s)"
               >
                 {{ getLabel(s) }}
               </slot>
@@ -411,7 +408,6 @@
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
               @click.prevent="handleSuggestionClick(virtualRow.item.option)"
-              @mouseover="setActiveDropdownItem(virtualRow.item.option)"
             >
               <template v-if="isSelectType && multiple">
                 <input
@@ -940,7 +936,6 @@ const addSuggestion = computed<ComboBoxSuggestionObject>(() => ({
 const {
   dropdownItems,
   getCurrentSuggestion,
-  getDropdownItem,
   lastDropdownItemIndex,
   firstItemIndex,
   isDropdownItemActive,
@@ -1185,14 +1180,6 @@ const scrollToChild = async () => {
     const scrollBot = childRect.bottom - parentRect.bottom
     parent.scrollTop += Math.abs(scrollTop) < Math.abs(scrollBot) ? scrollTop : scrollBot
   }
-}
-
-const setActiveDropdownItem = (option: ComboBoxSuggestion) => {
-  const item = getDropdownItem(option)
-  if (!item) return
-  shouldScrollActiveItem.value = false
-  arrowCounter.value = item.index
-  autoFocused.value = true
 }
 
 const clearQuery = () => {
