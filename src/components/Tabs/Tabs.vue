@@ -63,7 +63,7 @@
               v-if="typeof tab.count !== 'undefined' && tab.count >= 0"
               class="tab-count"
             >
-              {{ tab.count }}
+              {{ tab.count.toLocaleString() }}
             </span>
           </component>
         </li>

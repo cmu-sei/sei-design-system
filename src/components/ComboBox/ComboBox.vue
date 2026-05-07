@@ -534,12 +534,10 @@
           <span class="sr-only">Left, right</span> to switch tabs
         </div>
         <div class="flex items-center gap-1.5">
-          <div class="inline-block p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <IconFa7SolidRotateLeft
-              class="w-3 h-3"
-            />
-          </div>
-          <span class="sr-only">Enter</span> to select
+          <span class="inline-block p-1 border text-xs font-mono border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
+            Return
+          </span>
+          to select
         </div>
       </div>
     </div>
