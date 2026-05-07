@@ -597,6 +597,51 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('emits complete for every keystroke while parent request state is pending', async () => {
+    const onComplete = vi.fn((query: string) => {
+      wrapper.setProps({ pending: true, suggestions: [] })
+      window.setTimeout(() => {
+        wrapper.setProps({
+          pending: false,
+          suggestions: suggestions.filter(suggestion => suggestion.toLowerCase().includes(query.toLowerCase()))
+        })
+      }, 1000)
+    })
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        multiple: true,
+        pending: false,
+        suggestions: [],
+        type: 'taggable-select',
+        onComplete,
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.setValue('o')
+    await flushDropdown()
+    await vi.advanceTimersByTimeAsync(1000)
+    await flushDropdown()
+    expect(text(dropdownInBody())).toContain('Orange')
+    await input.setValue('or')
+    await flushDropdown()
+    await vi.advanceTimersByTimeAsync(1000)
+    await flushDropdown()
+    expect(text(dropdownInBody())).toContain('Orange')
+    await input.setValue('ora')
+    await flushDropdown()
+    await vi.advanceTimersByTimeAsync(1000)
+    await flushDropdown()
+    expect(text(dropdownInBody())).toContain('Orange')
+
+    expect(onComplete).toHaveBeenNthCalledWith(1, 'o')
+    expect(onComplete).toHaveBeenNthCalledWith(2, 'or')
+    expect(onComplete).toHaveBeenNthCalledWith(3, 'ora')
+    wrapper.unmount()
+  })
+
   it('should allow removing a tag in taggable-select mode (click)', async () => {
     const wrapper = mountComponent({
       props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }

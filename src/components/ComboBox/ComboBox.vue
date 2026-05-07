@@ -855,6 +855,7 @@ const showDropdown = ref(false)
 const arrowCounter = ref(-1)
 const shouldScrollActiveItem = ref(false)
 const shouldAutoHighlightOnOpen = ref(false)
+const ignoreNextFloatingUiClose = ref(false)
 // True when arrowCounter was set automatically (on dropdown open/query change) rather than by
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
@@ -1128,6 +1129,10 @@ onKeyStroke('Escape', (e: KeyboardEvent) => {
 
 // When FloatingUi closes externally (click-outside, Escape), sync local state
 const onFloatingUiClose = () => {
+  if (ignoreNextFloatingUiClose.value) {
+    ignoreNextFloatingUiClose.value = false
+    return
+  }
   showDropdown.value = false
 }
 
@@ -1592,7 +1597,10 @@ watch(shouldShowDropdown, async (val) => {
     await floatingUiRef.value?.onOpen()
     emit('open')
   } else {
+    ignoreNextFloatingUiClose.value = true
     await floatingUiRef.value?.onClose()
+    await nextTick()
+    ignoreNextFloatingUiClose.value = false
     emit('close')
   }
   // When the dropdown opens, auto-focus the first item so the user can press Enter immediately.

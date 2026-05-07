@@ -670,12 +670,19 @@ const wait = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let comboBox1RequestId = 0
+
 const mockApiRequest = async (query: string) => {
+  const requestId = ++comboBox1RequestId
   comboBox1.suggestions = []
-  if (query === '') return
+  if (query === '') {
+    comboBox1.pending = false
+    return
+  }
   comboBox1.pending = true
   console.log("Waiting 1 seconds...");
   await wait(1000);
+  if (requestId !== comboBox1RequestId) return
   console.log("1 seconds passed... now return mock API data");
   comboBox1.suggestions = [
     { label: 'Apple', test: 'cool', index: 'cool2' },
