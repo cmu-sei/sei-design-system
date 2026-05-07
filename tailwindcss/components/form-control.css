@@ -41,6 +41,7 @@
   @apply [&>.input-group-addon]:text-center [&>.input-group-addon]:whitespace-nowrap;
   @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:text-gray-500 dark:[&>.input-group-addon]:text-gray-300 [&>.input-group-addon]:px-1.5;
   @apply [&>.input-group-addon]:bg-white dark:[&>.input-group-addon]:bg-gray-900/50;
+  @apply [&>.form-control:not(:only-child):not(:last-child)]:px-0 [&>.form-control:not(:only-child):last-child]:pl-0;
   @apply [&:has(:disabled)>.input-group-addon]:bg-gray-100 dark:[&:has(:disabled)>.input-group-addon]:bg-gray-900;
   @apply [&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-50 dark:[&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-750;
 }

@@ -74,7 +74,7 @@
             autocomplete="off"
             spellcheck="false"
             autocorrect="off"
-            class="form-control px-0 truncate overflow-hidden text-ellipsis whitespace-nowrap"
+            class="form-control truncate overflow-hidden text-ellipsis whitespace-nowrap"
             :class="{ 'no-readonly-style': showSingleSelectionDisplay }"
             :placeholder="placeholder || undefined"
             :disabled="disabled || undefined"
