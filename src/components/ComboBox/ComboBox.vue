@@ -854,6 +854,7 @@ const arrowCounter = ref(-1)
 const shouldScrollActiveItem = ref(false)
 const shouldAutoHighlightOnOpen = ref(false)
 const ignoreNextFloatingUiClose = ref(false)
+const openedByArrowKey = ref(false)
 // True when arrowCounter was set automatically (on dropdown open/query change) rather than by
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
@@ -1229,6 +1230,14 @@ const shake = () => {
   setTimeout(() => inputField.value.classList.remove('animate-shake'), 500)
 }
 
+const addOrReplaceSelection = (option: ComboBoxSuggestion) => {
+  if (!props.multiple) {
+    replaceSelection(option)
+    return
+  }
+  addSelection(option)
+}
+
 // Add or remove selection based on query
 const multiselectAdd = async () => {
   if (!query.value) return
@@ -1241,11 +1250,20 @@ const multiselectAdd = async () => {
   const normalizedObj = stripIdx(suggestion ?? {})
   const idx = findSelectedIndex(query.value)
   if (idx !== -1) {
+    if (!props.multiple) {
+      replaceSelection(normalizedObj as ComboBoxSuggestion)
+      inputField.value.focus()
+      showDropdown.value = false
+      setQuery(getLabel(normalizedObj))
+      await nextTick()
+      arrowCounter.value = -1
+      return
+    }
     removeSelectionAt(idx)
     shake()
     return
   }
-  addSelection(normalizedObj as ComboBoxSuggestion)
+  addOrReplaceSelection(normalizedObj as ComboBoxSuggestion)
   inputField.value.focus()
   // Handle dropdown and query update for single select/text
   if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
@@ -1363,13 +1381,13 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   // Check for duplicate
   const idx = findSelectedIndex(getLabel(normalizedOption))
   if (idx !== -1) {
-    removeSelectionAt(idx)
-  } else {
-    // Replace selection for single select, otherwise add to selection
-    if (!props.multiple && (props.type === 'select' || props.type === 'taggable-select'))
+    if (props.multiple) {
+      removeSelectionAt(idx)
+    } else {
       replaceSelection(normalizedOption)
-    else
-      addSelection(normalizedOption)
+    }
+  } else {
+    addOrReplaceSelection(normalizedOption)
   }
   await nextTick()
   emit('result', emitValue)
@@ -1462,10 +1480,10 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     case 'select':
     case 'taggable-select': {
       const alreadySelectedIdx = findSelectedIndex(query.value)
-      if (alreadySelectedIdx !== -1) {
+      if (alreadySelectedIdx !== -1 && props.multiple) {
         multiselectRemove(alreadySelectedIdx)
       } else {
-        multiselectAdd()
+        await multiselectAdd()
       }
       if (!props.multiple) {
         if (selected.value.length === 1 && query.value === '' && !initialQuery.length) commitSelection()
@@ -1487,8 +1505,9 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: 
   if (direction === 'up' || direction === 'down') {
     // Show dropdown if not already shown and there are suggestions
     if (!showDropdown.value && hasDropdownSuggestion.value) {
-      if (!inputField.value.readOnly) {
+      if (!props.disabled) {
         event.preventDefault()
+        openedByArrowKey.value = true
         shouldAutoHighlightOnOpen.value = false
         showDropdown.value = true
       }
@@ -1585,7 +1604,7 @@ const shouldShowDropdown = computed(() => {
   if (props.pending) return false
   if (!showDropdown.value) return false
   if (!hasDropdownSuggestion.value && !hasNoMatches.value) return false
-  if (props.type !== 'text' && selected.value.length === 1 && !props.multiple && !props.clickToSelect) return false
+  if (props.type !== 'text' && selected.value.length === 1 && !props.multiple && !props.clickToSelect && !openedByArrowKey.value) return false
   return true
 })
 
@@ -1618,6 +1637,7 @@ watch(shouldShowDropdown, async (val) => {
     arrowCounter.value = -1
     autoFocused.value = false
     shouldAutoHighlightOnOpen.value = false
+    openedByArrowKey.value = false
   }
   activeGroupKey.value = -1
 })

@@ -241,15 +241,17 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('should match snapshot with clearable (showClearButton)', async () => {
+  it('shows the clear query button when clearable select has a query', async () => {
     const wrapper = mountComponent({
       props: { suggestions, type: 'select', selected: ['Apple'] }
     })
-    // Simulate input value to trigger clear button
     const input = wrapper.find('input[type="text"]')
     await input.setValue('Apple')
-    wrapper.vm.$forceUpdate()
-    expect(wrapper.html()).toMatchSnapshot()
+
+    const clearButton = wrapper.findAll('button').find(button => button.text() === 'Clear query')
+    expect(clearButton).toBeTruthy()
+    expect(clearButton!.attributes('type')).toBe('button')
+    expect(clearButton!.attributes('tabindex')).toBe('-1')
   })
 
   it('should match snapshot for optionType="a"', () => {
@@ -352,6 +354,27 @@ describe('ComboBox', () => {
     // Expect the dropdown to be visible
     expect(dropdown.exists()).toBe(false)
     wrapper.unmount()
+  })
+
+  it('opens the dropdown with Up and Down when suggestions exist and a single value is selected', async () => {
+    for (const key of ['up', 'down']) {
+      const wrapper = mountComponent({
+        props: {
+          selected: ['Apple'],
+          suggestions,
+          type: 'select'
+        }
+      })
+      const input = wrapper.find('input[type="text"]')
+      expect((input.element as HTMLInputElement).readOnly).toBe(true)
+
+      await input.trigger(`keydown.${key}`)
+      await flushDropdown()
+
+      expect(dropdownInBody()).not.toBeNull()
+      expect(text(dropdownInBody())).toContain('Apple')
+      wrapper.unmount()
+    }
   })
 
   it('should allow navigation with dropdown already open', async () => {
@@ -934,6 +957,56 @@ describe('ComboBox', () => {
     await flushDropdown()
     const selectedTags = wrapper.findAll('[data-id="sds-tag"]>div>span').map(t => t.text())
     expect(selectedTags).toContain('Apple')
+    wrapper.unmount()
+  })
+
+  it('replaces previous selections when multiple is false and a suggestion is clicked', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions,
+        type: 'select',
+        multiple: false,
+        selected: ['Apple', 'Banana'],
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const kiwiButton = findAllInBody('[data-id="sds-scroll-area"] button').find(button => text(button) === 'Kiwi')
+    expect(kiwiButton).toBeTruthy()
+    kiwiButton!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Kiwi'])
+    wrapper.unmount()
+  })
+
+  it('replaces previous selections when multiple is false and a suggestion is selected with Enter', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions,
+        type: 'select',
+        multiple: false,
+        selected: ['Apple', 'Banana'],
+        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
+          wrapper.setProps({ selected: val })
+        }
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('keydown.down')
+    await flushDropdown()
+    await input.trigger('keydown.down')
+    await flushDropdown()
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Apple'])
     wrapper.unmount()
   })
 
