@@ -1162,9 +1162,11 @@ const resetVirtualScroll = () => {
 }
 
 const canSwitchTabsFromInputBoundary = (direction: 'left' | 'right', event: KeyboardEvent): boolean => {
-  if (!hasCategories.value || arrowCounter.value === -1) return false
+  if (!hasCategories.value || !shouldShowDropdown.value) return false
   const inputElement = inputField.value as HTMLInputElement | undefined
   if (!inputElement || event.target !== inputElement) return true
+  if (showSingleSelectionDisplay.value) return true
+  if (arrowCounter.value === -1) return false
   if (inputElement.selectionStart === null || inputElement.selectionEnd === null) return false
   if (inputElement.selectionStart !== inputElement.selectionEnd) return false
   return direction === 'left'

@@ -872,6 +872,55 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('switches grouped tabs with Left and Right when a single selection is displayed', async () => {
+    const scrollIntoView = vi.fn()
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoView
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions: groupedSuggestions,
+        type: 'select',
+        selected: [{ name: 'Apple' }],
+        debounceComplete: 0,
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    const rightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(rightArrowEvent)
+    await flushDropdown()
+
+    expect(rightArrowEvent.defaultPrevented).toBe(true)
+    let optionTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
+    expect(optionTexts).toContain('Blueberry')
+    expect(optionTexts).not.toContain('Beetroot')
+
+    const secondRightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(secondRightArrowEvent)
+    await flushDropdown()
+
+    expect(secondRightArrowEvent.defaultPrevented).toBe(true)
+    optionTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
+    expect(optionTexts).toContain('Beetroot')
+    expect(optionTexts).not.toContain('Apple')
+
+    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    input.element.dispatchEvent(leftArrowEvent)
+    await flushDropdown()
+
+    expect(leftArrowEvent.defaultPrevented).toBe(true)
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
+    optionTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
+    expect(optionTexts).toContain('Apple')
+    expect(optionTexts).not.toContain('Beetroot')
+    wrapper.unmount()
+  })
+
   it('selects an option once when clicking a multiselect checkbox', async () => {
     const onUpdateSelected = vi.fn((val: ComboBoxSuggestion[]) => {
       wrapper.setProps({ selected: val })
