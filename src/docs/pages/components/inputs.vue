@@ -268,8 +268,9 @@
             @complete="comboBox5.onComplete"
             @enter="comboBox5.onEnter"
           >
-            <template #customOption="{ label, classList, dataActive, href, onClick }">
+            <template #customOption="{ label, classList, dataActive, href, optionAttrs, onClick }">
               <a
+                v-bind="optionAttrs"
                 :class="classList"
                 :href="href"
                 :data-active="dataActive"
@@ -309,9 +310,10 @@
             @result="comboBox6.onResult"
             @enter="comboBox6.onEnter"
           >
-            <template #customOption="{ option, classList, dataActive, onClick }">
+            <template #customOption="{ option, classList, dataActive, optionAttrs, onClick }">
               <template v-if="isUserSuggestion(option)">
                 <button
+                  v-bind="optionAttrs"
                   type="button"
                   :class="classList"
                   :data-active="dataActive"
@@ -896,8 +898,8 @@ const comboBox5 = reactive({
   async onComplete(query: string) {
     console.info('onComplete:', query)
   },
-  onEnter(value: ComboBoxSuggestion) {
-    const suggestion = customSuggestions.find(s => (s as { term: string, href: string }).term === value[0])
+  onEnter(value: string) {
+    const suggestion = customSuggestions.find(s => (s as { term: string, href: string }).term === value)
     if (suggestion) {
       const url = (suggestion as { term: string, href: string })?.href as string || ''
       if (url.length)

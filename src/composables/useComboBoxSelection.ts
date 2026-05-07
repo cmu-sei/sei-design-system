@@ -53,11 +53,6 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     options.selected.value = options.selected.value.filter((_, selectedIndex) => selectedIndex !== index)
   }
 
-  const removeSelectionByLabel = (label: string): void => {
-    const index = findSelectedIndex(label)
-    if (index !== -1) removeSelectionAt(index)
-  }
-
   const clearSelections = (): void => {
     options.selected.value = []
   }
@@ -118,7 +113,6 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     addSelection,
     replaceSelection,
     removeSelectionAt,
-    removeSelectionByLabel,
     clearSelections,
     isSelected,
     resolveSuggestion,

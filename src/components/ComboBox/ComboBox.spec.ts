@@ -92,7 +92,7 @@ describe('ComboBox', () => {
     document.body.querySelector(selector)
   const findAllInBody = (selector: string): HTMLElement[] =>
     Array.from(document.body.querySelectorAll(selector)) as HTMLElement[]
-  const dropdownInBody = () => findInBody('[data-id="sds-combo-box-dropdown"]')
+  const dropdownInBody = () => findInBody('[role="listbox"]')
   const text = (el: HTMLElement | null): string => (el?.textContent ?? '').trim()
 
   it('should match its default snapshot', () => {
@@ -226,9 +226,9 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('should match snapshot when loading', () => {
+  it('should match snapshot when pending', () => {
     const wrapper = mountComponent({
-      props: { suggestions, loading: true }
+      props: { suggestions, pending: true }
     })
     expect(wrapper.html()).toMatchSnapshot()
   })
@@ -285,6 +285,109 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
+  it('provides combobox option props and click handler to custom options', async () => {
+    const objectSuggestions = [
+      { label: 'Custom1', value: 'c1' },
+      { label: 'Custom2', value: 'c2' }
+    ]
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        multiple: true,
+        optionLabel: 'label',
+        optionType: 'custom',
+        selected: [],
+        suggestions: objectSuggestions,
+        type: 'select',
+        'onUpdate:selected': (value: ComboBoxSuggestion[]) => wrapper.setProps({ selected: value })
+      },
+      slots: {
+        customOption: (props: {
+          dataActive: boolean;
+          label: string;
+          onClick: () => Promise<void>;
+          optionAttrs: Record<string, string | undefined>;
+        }) => h('button', {
+          ...props.optionAttrs,
+          type: 'button',
+          'data-active': props.dataActive,
+          onClick: props.onClick
+        }, props.label)
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.trigger('click')
+    await flushDropdown()
+
+    const activeDescendantId = input.attributes('aria-activedescendant')
+    expect(activeDescendantId).toBeTruthy()
+    const activeOption = document.getElementById(activeDescendantId!)
+    expect(activeOption?.getAttribute('role')).toBe('option')
+    expect(activeOption?.getAttribute('aria-selected')).toBe('true')
+
+    activeOption!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual([{ label: 'Custom1', value: 'c1' }])
+    wrapper.unmount()
+  })
+
+  it('keeps the active custom option tabindex aligned with keyboard navigation', async () => {
+    const objectSuggestions = [
+      { label: 'Custom1', value: 'c1' },
+      { label: 'Custom2', value: 'c2' }
+    ]
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        optionLabel: 'label',
+        optionType: 'custom',
+        suggestions: objectSuggestions,
+        type: 'select'
+      },
+      slots: {
+        customOption: (props: {
+          dataActive: boolean;
+          label: string;
+          optionAttrs: Record<string, string | undefined>;
+          tabindex: number;
+        }) => h('button', {
+          ...props.optionAttrs,
+          type: 'button',
+          tabindex: props.tabindex,
+          'data-active': props.dataActive
+        }, props.label)
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.trigger('click')
+    await flushDropdown()
+    await input.trigger('keydown.down')
+    await flushDropdown()
+
+    const customOptions = findAllInBody('button[role="option"]')
+    expect(customOptions.map(option => option.getAttribute('tabindex'))).toEqual(['-1', '0'])
+    expect(text(customOptions[1])).toBe('Custom2')
+    wrapper.unmount()
+  })
+
+  it('keeps footer help text outside the ARIA listbox', async () => {
+    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.trigger('click')
+    await flushDropdown()
+
+    const listbox = dropdownInBody()
+    expect(listbox).toBeTruthy()
+    expect(listbox?.id).toBe(input.attributes('aria-controls'))
+    expect(text(listbox)).not.toContain('to select')
+    expect(text(findInBody('[data-id="sds-combo-box-dropdown"]'))).toContain('to select')
+    wrapper.unmount()
+  })
+
   it('should match snapshot with custom value/label keys', () => {
     const objectSuggestions = [
       { name: 'Alpha', id: 1 },
@@ -329,7 +432,7 @@ describe('ComboBox', () => {
     await flushDropdown()
     const active = findInBody('button[data-active="true"]')
     expect(text(active)).toEqual('Apple')
-    await input.trigger('keyup.enter')
+    await input.trigger('keyup', { key: 'Enter' })
     await flushDropdown()
     // Tags live in the trigger slot of FloatingUi, which renders inline (not teleported)
     const tags = wrapper.findAll('[data-id="sds-tag"]>div>span')
@@ -533,7 +636,7 @@ describe('ComboBox', () => {
     })
     const input = wrapper.find('input[type="text"]')
     await input.setValue('NotInList')
-    await input.trigger('keyup.enter')
+    await input.trigger('keyup', { key: 'Enter' })
     await nextTick()
     // Should have shake animation class
     expect(input.classes()).toContain('animate-shake')
@@ -1507,10 +1610,12 @@ describe('ComboBox', () => {
   })
 
   it('emits enter on the first Enter key press for text input without suggestions', async () => {
+    const onEnter = vi.fn()
     const wrapper = mountComponent({
       props: {
         filterSuggestions: true,
         focusOnKeyPress: true,
+        onEnter,
         type: 'text'
       }
     })
@@ -1518,10 +1623,31 @@ describe('ComboBox', () => {
     await input.setValue('Search term')
     await flushDropdown()
 
-    await input.trigger('keyup.enter')
+    await input.trigger('keyup', { key: 'Enter' })
     await flushDropdown()
 
-    expect(wrapper.emitted('enter')).toEqual([['Search term']])
+    expect(onEnter).toHaveBeenCalledWith('Search term')
+    wrapper.unmount()
+  })
+
+  it('emits enter with the selected value when select is closed', async () => {
+    const onEnter = vi.fn()
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        onEnter,
+        selected: ['Apple'],
+        suggestions,
+        type: 'select'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.trigger('keyup', { key: 'Enter' })
+    await flushDropdown()
+
+    expect(onEnter).toHaveBeenCalledWith(['Apple'])
+    expect(input.classes()).not.toContain('animate-shake')
     wrapper.unmount()
   })
 
@@ -1877,7 +2003,7 @@ describe('ComboBox', () => {
     await input.trigger('click')
     await flushDropdown()
     // Find select-all checkbox input
-    const checkbox = findInBody('input#select-all') as HTMLInputElement | null
+    const checkbox = findInBody('input[id$="-select-all"]') as HTMLInputElement | null
     expect(checkbox).toBeTruthy()
     expect(checkbox!.indeterminate).toBe(true)
     expect(checkbox!.checked).toBe(false)

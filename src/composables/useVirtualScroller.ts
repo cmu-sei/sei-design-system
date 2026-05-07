@@ -77,9 +77,6 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
     })
   })
 
-  const beforeHeight = computed(() => startIndex.value * itemHeight.value)
-  const afterHeight = computed(() => Math.max(0, totalHeight.value - endIndex.value * itemHeight.value))
-
   const setScrollTop = (value: number): void => {
     scrollTop.value = Math.max(0, Math.min(value, Math.max(0, totalHeight.value - containerHeight.value)))
     if (options.containerRef?.value) {
@@ -126,8 +123,6 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
     totalHeight,
     startIndex,
     endIndex,
-    beforeHeight,
-    afterHeight,
     virtualItems,
     onScroll,
     scrollToIndex,

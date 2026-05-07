@@ -65,7 +65,7 @@
             :value="inputDisplayValue"
             type="text"
             role="combobox"
-            :aria-autocomplete="type === 'text' ? 'list' : 'none'"
+            aria-autocomplete="list"
             :aria-controls="dropdownId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :aria-activedescendant="activeDescendantId"
@@ -145,10 +145,8 @@
       </div>
     </template>
     <div
-      :id="dropdownId"
       ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
-      role="listbox"
     >
       <div
         v-if="hasCategories"
@@ -182,7 +180,9 @@
         />
       </div>
       <SdsScrollArea
+        :id="dropdownId"
         ref="scrollArea"
+        role="listbox"
         class="max-h-72"
         :class="{
           'py-0 flex flex-col': optionType !== 'custom',
@@ -222,7 +222,7 @@
             @keydown.enter.prevent="toggleSelectAll"
           >
             <input
-              id="select-all"
+              :id="`${componentId}-select-all`"
               type="checkbox"
               :checked="selectAllChecked"
               :indeterminate="selectAllIndeterminate"
@@ -231,7 +231,7 @@
               tabindex="-1"
             >
             <label
-              for="select-all"
+              :for="`${componentId}-select-all`"
               class="cursor-pointer select-none pointer-events-none"
             >
               <span>Select all</span>
@@ -342,6 +342,7 @@
               >
                 <slot
                   name="customOption"
+                  :option-attrs="getCustomOptionAttrs(c)"
                   :href="getHref(c)"
                   :class-list="{
                     'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
@@ -349,9 +350,10 @@
                     'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(c)
                   }"
                   :data-active="isDropdownItemActive(c)"
-                  :tabindex="arrowCounter === 0 ? 0 : -1"
+                  :tabindex="getCustomOptionTabindex(c)"
                   :option="c"
                   :label="getLabel(c)"
+                  :on-click="() => handleSuggestionClick(c)"
                   @click.prevent="handleSuggestionClick(c)"
                 >
                   {{ getLabel(c) }}
@@ -364,6 +366,7 @@
             >
               <slot
                 name="customOption"
+                :option-attrs="getCustomOptionAttrs(s)"
                 :class-list="{
                   'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
                   'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
@@ -371,9 +374,10 @@
                 }"
                 :data-active="isDropdownItemActive(s)"
                 :href="getHref(s)"
-                :tabindex="arrowCounter === 0 ? 0 : -1"
+                :tabindex="getCustomOptionTabindex(s)"
                 :option="s"
                 :label="getLabel(s)"
+                :on-click="() => handleSuggestionClick(s)"
                 @click.prevent="handleSuggestionClick(s)"
               >
                 {{ getLabel(s) }}
@@ -492,6 +496,7 @@
             :aria-selected="isAddSuggestionActive ? 'true' : 'false'"
             :data-active="isAddSuggestionActive"
             tabindex="-1"
+            role="option"
             @keydown.delete="handleDelete"
             @keydown.tab="closeDropdown"
             @keydown.left.prevent.stop="handleArrows('left', $event)"
@@ -550,7 +555,7 @@
         </div>
         <div class="flex items-center gap-1.5">
           <span class="inline-block p-1 border text-xs font-mono border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            Return
+            Enter
           </span>
           to select
         </div>
@@ -567,6 +572,7 @@ import SdsTabs from '../Tabs/Tabs.vue'
 import SdsTag from '../Tag/Tag.vue'
 import { removeHtmlFromString, useComboBoxDropdownItems, useComboBoxQuery, useComboBoxSelection, useComboBoxSuggestions, useFormField, useVirtualScroller } from '@/composables'
 import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxSuggestionObject, ComboBoxType } from '@/composables'
+import type { VNodeChild } from 'vue'
 
 export type { ComboBoxSuggestionObject, ComboBoxSuggestion } from '@/composables'
 
@@ -822,6 +828,38 @@ interface ComboBoxProps {
   virtualItemHeight?: number;
 }
 
+type ComboBoxOptionSlotProps = {
+  option: ComboBoxSuggestion;
+  label: string;
+}
+
+type ComboBoxOptionGroupSlotProps = {
+  option: ComboBoxSuggestion | ComboBoxGroup;
+  label: string;
+}
+
+type ComboBoxCustomOptionSlotProps = ComboBoxOptionSlotProps & {
+  optionAttrs: ComboBoxCustomOptionAttrs;
+  href: string | undefined;
+  classList: Record<string, boolean>;
+  dataActive: boolean;
+  tabindex: number;
+  onClick: () => Promise<void>;
+}
+
+type ComboBoxCustomOptionAttrs = {
+  id: string | undefined;
+  role: 'option';
+  'aria-selected': 'true' | 'false';
+}
+
+defineSlots<{
+  default?: () => VNodeChild;
+  option?: (props: ComboBoxOptionSlotProps) => VNodeChild;
+  optionGroup?: (props: ComboBoxOptionGroupSlotProps) => VNodeChild;
+  customOption?: (props: ComboBoxCustomOptionSlotProps) => VNodeChild;
+}>()
+
 defineOptions({ name: 'SdsComboBox' })
 
 const props = withDefaults(defineProps<ComboBoxProps>(), {
@@ -982,6 +1020,12 @@ const getAddSuggestionId = () => {
   const item = getDropdownItem(addSuggestion.value)
   return item ? getDropdownItemId(item.index) : undefined
 }
+const getCustomOptionAttrs = (option: ComboBoxSuggestion): ComboBoxCustomOptionAttrs => ({
+  id: getOptionId(option),
+  role: 'option',
+  'aria-selected': isDropdownItemActive(option) ? 'true' : 'false'
+})
+const getCustomOptionTabindex = (option: ComboBoxSuggestion): 0 | -1 => isDropdownItemActive(option) ? 0 : -1
 const activeDescendantId = computed(() => {
   return arrowCounter.value === -1 ? undefined : getDropdownItemId(arrowCounter.value)
 })
@@ -1170,11 +1214,19 @@ const resetSelectDisplayOnClose = () => {
   if (isSelectType.value) setQuery('')
 }
 
-const closeDropdown = () => {
+type CloseDropdownOptions = {
+  resetActiveState?: boolean;
+  resetSelectDisplay?: boolean;
+}
+
+const closeDropdown = (options: CloseDropdownOptions = {}) => {
+  const { resetActiveState = true, resetSelectDisplay = true } = options
   showDropdown.value = false
-  resetSelectDisplayOnClose()
-  arrowCounter.value = -1
-  autoFocused.value = false
+  if (resetSelectDisplay) resetSelectDisplayOnClose()
+  if (resetActiveState) {
+    arrowCounter.value = -1
+    autoFocused.value = false
+  }
 }
 
 onKeyStroke('Escape', (e: KeyboardEvent) => {
@@ -1270,7 +1322,7 @@ const clearQuery = () => {
     setQuery('')
     // In multiselect mode, only clear query on first click (keep selections)
     if (props.multiple && (props.type === 'select' || props.type === 'taggable-select')) {
-      showDropdown.value = false
+      closeDropdown({ resetSelectDisplay: false })
       inputField.value.focus()
       return
     }
@@ -1280,7 +1332,7 @@ const clearQuery = () => {
   if (props.type === 'select' || props.type === 'taggable-select' || props.type === 'text') {
     clearSelections()
   }
-  showDropdown.value = false
+  closeDropdown({ resetSelectDisplay: false })
   inputField.value.focus()
 }
 
@@ -1317,7 +1369,7 @@ const multiselectAdd = async () => {
     if (!props.multiple) {
       replaceSelection(normalizedObj as ComboBoxSuggestion)
       inputField.value.focus()
-      showDropdown.value = false
+      closeDropdown({ resetSelectDisplay: false })
       setQuery(getLabel(normalizedObj))
       await nextTick()
       arrowCounter.value = -1
@@ -1331,7 +1383,7 @@ const multiselectAdd = async () => {
   inputField.value.focus()
   // Handle dropdown and query update for single select/text
   if ((!props.multiple && (props.type === 'select' || props.type === 'taggable-select')) || props.type === 'text') {
-    showDropdown.value = false
+    closeDropdown({ resetSelectDisplay: false })
     const normalizedLabel = getLabel(normalizedObj)
     setQuery(normalizedLabel)
   }
@@ -1431,7 +1483,7 @@ const handleInput = async () => {
 
 const commitSelection = () => {
   selected.value = selected.value.length ? selected.value : [query.value]
-  showDropdown.value = false
+  closeDropdown({ resetSelectDisplay: isSelectType.value })
   emitEnter()
 }
 
@@ -1455,17 +1507,20 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   }
   await nextTick()
   emit('result', emitValue)
-  // Close dropdown
-  showDropdown.value = false
   if (props.type !== 'text') {
     setQuery('')
   }
+  closeDropdown({ resetSelectDisplay: false })
   inputField.value.focus()
 }
 
 const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   if (props.disabled) return
   const currentSuggestion = getCurrentSuggestion()
+  if (props.type === 'select' && !showDropdown.value && selected.value.length > 0) {
+    emitEnter()
+    return
+  }
   if (props.type === 'text' && currentSuggestion === undefined) {
     commitSelection()
     return
@@ -1534,8 +1589,7 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
       emit('result', emitValue)
     }
   }
-  // Close dropdown
-  showDropdown.value = false
+  closeDropdown({ resetActiveState: false, resetSelectDisplay: false })
   switch (props.type) {
     case 'text': {
       if (arrowCounter.value === -1) {
