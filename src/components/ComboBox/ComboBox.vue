@@ -59,11 +59,16 @@
             />
           </div>
           <input
-            :id="id"
+            :id="inputId"
             ref="inputField"
             v-bind="validationAttrs"
             :value="inputDisplayValue"
             type="text"
+            role="combobox"
+            :aria-autocomplete="type === 'text' ? 'list' : 'none'"
+            :aria-controls="dropdownId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :aria-activedescendant="activeDescendantId"
             :multiple="multiple || undefined"
             autocapitalize="off"
             autocomplete="off"
@@ -81,7 +86,7 @@
             @keydown="onKeydownWhenSingleSelected"
             @click.prevent="inputClick"
             @keydown.delete="handleDelete"
-            @keydown.tab="showDropdown = false"
+            @keydown.tab="closeDropdown"
             @keydown.up.prevent="handleArrows('up', $event)"
             @keydown.down.prevent="handleArrows('down', $event)"
             @keydown.left="handleArrows('left', $event)"
@@ -140,8 +145,10 @@
       </div>
     </template>
     <div
+      :id="dropdownId"
       ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
+      role="listbox"
     >
       <div
         v-if="hasCategories"
@@ -186,6 +193,7 @@
         <!-- Select all option for multiselect -->
         <template v-if="selectAllRendered">
           <button
+            :id="getDropdownItemId(0)"
             type="button"
             class="
               flex items-center
@@ -259,6 +267,7 @@
             <component
               :is="optionType"
               v-else
+              :id="getOptionId(row.option)"
               :href="optionType === 'a' ? getHref(row.option) : undefined"
               class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
               :class="{
@@ -269,6 +278,8 @@
               :data-active="isDropdownItemActive(row.option)"
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
+              role="option"
+              :aria-selected="isDropdownItemActive(row.option) ? 'true' : 'false'"
               @click.prevent="handleSuggestionClick(row.option)"
             >
               <!-- @slot Option content. Good for customizing the content for each option -->
@@ -276,7 +287,7 @@
                 <input
                   type="checkbox"
                   class="mr-2 my-auto pointer-events-none"
-                  aria-label="Select option"
+                  :aria-label="`Select ${getLabel(row.option)}`"
                   tabindex="-1"
                   :checked="isSelected(getLabel(row.option))"
                 >
@@ -396,6 +407,7 @@
             <component
               :is="optionType"
               v-else
+              :id="getOptionId(virtualRow.item.option)"
               :href="optionType === 'a' ? getHref(virtualRow.item.option) : undefined"
               class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 absolute left-0 right-0"
               :class="{
@@ -407,13 +419,15 @@
               :data-active="isDropdownItemActive(virtualRow.item.option)"
               :type="optionType === 'button' ? 'button' : undefined"
               tabindex="-1"
+              role="option"
+              :aria-selected="isDropdownItemActive(virtualRow.item.option) ? 'true' : 'false'"
               @click.prevent="handleSuggestionClick(virtualRow.item.option)"
             >
               <template v-if="isSelectType && multiple">
                 <input
                   type="checkbox"
                   class="mr-2 my-auto pointer-events-none"
-                  aria-label="Select option"
+                  :aria-label="`Select ${getLabel(virtualRow.item.option)}`"
                   tabindex="-1"
                   :checked="isSelected(getLabel(virtualRow.item.option))"
                 >
@@ -456,6 +470,7 @@
           </template>
           <button
             v-else
+            :id="getAddSuggestionId()"
             class="
               flex flex-row
               w-full
@@ -478,7 +493,7 @@
             :data-active="isAddSuggestionActive"
             tabindex="-1"
             @keydown.delete="handleDelete"
-            @keydown.tab="showDropdown = false"
+            @keydown.tab="closeDropdown"
             @keydown.left.prevent.stop="handleArrows('left', $event)"
             @keydown.right.prevent.stop="handleArrows('right', $event)"
             @keydown.enter.prevent="handleSuggestionClick(addSuggestion)"
@@ -549,6 +564,7 @@ import SdsFloatingUi from '../FloatingUi/FloatingUi.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
+import SdsTag from '../Tag/Tag.vue'
 import { removeHtmlFromString, useComboBoxDropdownItems, useComboBoxQuery, useComboBoxSelection, useComboBoxSuggestions, useFormField, useVirtualScroller } from '@/composables'
 import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxSuggestionObject, ComboBoxType } from '@/composables'
 
@@ -845,6 +861,7 @@ const scrollArea = ref(), inputField = ref()
 const virtualScrollContainer = ref<HTMLElement>()
 const floatingUiRef = ref()
 const dropdownRef = ref()
+const componentId = useId()
 
 const { validationClasses, validationAttrs } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
@@ -855,11 +872,16 @@ const shouldScrollActiveItem = ref(false)
 const shouldAutoHighlightOnOpen = ref(false)
 const ignoreNextFloatingUiClose = ref(false)
 const openedByArrowKey = ref(false)
+const shakeTimeout = ref<ReturnType<typeof window.setTimeout>>()
+const collapseSelectionTimeout = ref<ReturnType<typeof window.setTimeout>>()
 // True when arrowCounter was set automatically (on dropdown open/query change) rather than by
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
 const autoFocused = ref(false)
 const activeGroupKey = ref(-1)
+
+const inputId = computed(() => props.id ?? `${componentId}-input`)
+const dropdownId = computed(() => `${componentId}-listbox`)
 
 type ComboBoxTab = {
   key: string;
@@ -936,6 +958,7 @@ const addSuggestion = computed<ComboBoxSuggestionObject>(() => ({
 
 const {
   dropdownItems,
+  getDropdownItem,
   getCurrentSuggestion,
   lastDropdownItemIndex,
   firstItemIndex,
@@ -948,6 +971,19 @@ const {
   shouldShowNewSuggestion,
   addSuggestion,
   arrowCounter
+})
+
+const getDropdownItemId = (index: number) => `${componentId}-option-${index}`
+const getOptionId = (option: ComboBoxSuggestion) => {
+  const item = getDropdownItem(option)
+  return item ? getDropdownItemId(item.index) : undefined
+}
+const getAddSuggestionId = () => {
+  const item = getDropdownItem(addSuggestion.value)
+  return item ? getDropdownItemId(item.index) : undefined
+}
+const activeDescendantId = computed(() => {
+  return arrowCounter.value === -1 ? undefined : getDropdownItemId(arrowCounter.value)
 })
 
 const shouldVirtualizeOptions = computed(() => {
@@ -1059,8 +1095,12 @@ const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
 const inputClick = () => {
   if (props.readonly || props.disabled) return
   if (props.clickToSelect) {
+    if (showDropdown.value) {
+      closeDropdown()
+      return
+    }
     shouldAutoHighlightOnOpen.value = !showDropdown.value
-    showDropdown.value = !showDropdown.value
+    showDropdown.value = true
   }
 }
 
@@ -1081,7 +1121,7 @@ const inputDisplayValue = computed(() => {
   // If a suggestion is highlighted via explicit arrow-key navigation, show its label.
   // When autoFocused is true the highlight was set automatically (on dropdown open/query change)
   // and we intentionally keep showing the user's typed query instead.
-  if (arrowCounter.value !== -1 && !autoFocused.value && suggestionOptions.value.length > 0) {
+  if (showDropdown.value && arrowCounter.value !== -1 && !autoFocused.value && suggestionOptions.value.length > 0) {
     // Find the suggestion with the current arrowCounter
     const found: ComboBoxSuggestion | null | undefined = getCurrentSuggestion()
     if (found) {
@@ -1104,7 +1144,12 @@ const { setQuery, setUserQuery } = useComboBoxQuery({
   onShowDropdown: () => { showDropdown.value = true }
 })
 
-onMounted(() => { if (props.autofocus) inputField.value.focus() })
+onMounted(() => { if (props.autofocus) inputField.value?.focus() })
+
+onBeforeUnmount(() => {
+  if (shakeTimeout.value) window.clearTimeout(shakeTimeout.value)
+  if (collapseSelectionTimeout.value) window.clearTimeout(collapseSelectionTimeout.value)
+})
 
 const collapseInputSelectionToEnd = () => {
   const input = inputField.value as HTMLInputElement | undefined
@@ -1117,13 +1162,26 @@ const handleInputFocus = () => {
   emit('focus')
   if (!showSingleSelectionDisplay.value) return
   collapseInputSelectionToEnd()
-  window.setTimeout(collapseInputSelectionToEnd, 0)
+  if (collapseSelectionTimeout.value) window.clearTimeout(collapseSelectionTimeout.value)
+  collapseSelectionTimeout.value = window.setTimeout(collapseInputSelectionToEnd, 0)
+}
+
+const resetSelectDisplayOnClose = () => {
+  if (isSelectType.value) setQuery('')
+}
+
+const closeDropdown = () => {
+  showDropdown.value = false
+  resetSelectDisplayOnClose()
+  arrowCounter.value = -1
+  autoFocused.value = false
 }
 
 onKeyStroke('Escape', (e: KeyboardEvent) => {
+  if (!showDropdown.value && !isFocused.value) return
   e.preventDefault()
-  if (!showDropdown.value) inputField.value.blur()
-  showDropdown.value = false
+  if (!showDropdown.value) inputField.value?.blur()
+  closeDropdown()
 })
 
 // When FloatingUi closes externally (click-outside, Escape), sync local state
@@ -1132,7 +1190,7 @@ const onFloatingUiClose = () => {
     ignoreNextFloatingUiClose.value = false
     return
   }
-  showDropdown.value = false
+  closeDropdown()
 }
 
 onKeyStroke('/', (e: KeyboardEvent) => {
@@ -1141,7 +1199,7 @@ onKeyStroke('/', (e: KeyboardEvent) => {
   const tagName = (e.target as HTMLElement).tagName.toLowerCase()
   if (["textarea", "input", "select"].includes(tagName)) return
   e.preventDefault()
-  inputField.value.focus()
+  inputField.value?.focus()
 })
 
 const getScrollAreaElement = (): HTMLElement | undefined => {
@@ -1229,7 +1287,11 @@ const clearQuery = () => {
 const shake = () => {
   if (!inputField.value) return
   inputField.value.classList.add('animate-shake')
-  setTimeout(() => inputField.value.classList.remove('animate-shake'), 500)
+  if (shakeTimeout.value) window.clearTimeout(shakeTimeout.value)
+  shakeTimeout.value = window.setTimeout(() => {
+    inputField.value?.classList.remove('animate-shake')
+    shakeTimeout.value = undefined
+  }, 500)
 }
 
 const addOrReplaceSelection = (option: ComboBoxSuggestion) => {
@@ -1403,6 +1465,11 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
 
 const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   if (props.disabled) return
+  const currentSuggestion = getCurrentSuggestion()
+  if (props.type === 'text' && currentSuggestion === undefined) {
+    commitSelection()
+    return
+  }
   // Prevent adding to selected if type is 'select' and there are no suggestions
   if (
     props.type === 'select' &&
@@ -1433,7 +1500,7 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
     return
   }
   const initialQuery = query.value
-  let suggestionObj = getCurrentSuggestion()
+  let suggestionObj = currentSuggestion
   // If "Select all" is focused, trigger select all
   if (suggestionObj === null) {
     toggleSelectAll()
@@ -1611,6 +1678,7 @@ const shouldShowDropdown = computed(() => {
 })
 
 watch(shouldShowDropdown, async (val) => {
+  const preserveQueryWhilePending = !val && props.pending
   // Drive FloatingUi open/close state
   if (val) {
     await floatingUiRef.value?.onOpen()
@@ -1638,8 +1706,9 @@ watch(shouldShowDropdown, async (val) => {
   } else {
     arrowCounter.value = -1
     autoFocused.value = false
-    shouldAutoHighlightOnOpen.value = false
+    if (!preserveQueryWhilePending) shouldAutoHighlightOnOpen.value = false
     openedByArrowKey.value = false
+    if (!preserveQueryWhilePending) resetSelectDisplayOnClose()
   }
   activeGroupKey.value = -1
 })

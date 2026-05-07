@@ -121,6 +121,12 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await flushDropdown()
+    expect(input.attributes('role')).toBe('combobox')
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(input.attributes('aria-controls')).toBe(dropdownInBody()?.id)
+    expect(input.attributes('aria-activedescendant')).toBeTruthy()
+    expect(document.getElementById(input.attributes('aria-activedescendant')!)).toBeTruthy()
+    expect(dropdownInBody()?.getAttribute('role')).toBe('listbox')
     // Tabs are inside the teleported dropdown
     const tabs = findAllInBody('button.tab')
     expect(tabs.length).toBeGreaterThan(1)
@@ -342,6 +348,55 @@ describe('ComboBox', () => {
     await input.trigger('keydown.tab')
     await flushDropdown()
     expect(dropdownInBody()).toBeNull()
+    wrapper.unmount()
+  })
+
+  it('restores the selected item text when the dropdown closes after navigation', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        clickToSelect: true,
+        selected: ['Apple'],
+        type: 'select'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    await input.trigger('keydown.down')
+    await flushDropdown()
+
+    expect((input.element as HTMLInputElement).value).toBe('Banana')
+
+    await input.trigger('keydown.tab')
+    await flushDropdown()
+
+    expect(dropdownInBody()).toBeNull()
+    expect((input.element as HTMLInputElement).value).toBe('Apple')
+    wrapper.unmount()
+  })
+
+  it('clears stale query text when the dropdown closes without a selection', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        clickToSelect: true,
+        selected: [],
+        type: 'select',
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('App')
+    await flushDropdown()
+
+    expect((input.element as HTMLInputElement).value).toBe('App')
+
+    await input.trigger('keydown.tab')
+    await flushDropdown()
+
+    expect(dropdownInBody()).toBeNull()
+    expect((input.element as HTMLInputElement).value).toBe('')
     wrapper.unmount()
   })
 
@@ -665,6 +720,45 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('keeps taggable-select query text while async requests are pending', async () => {
+    const onComplete = vi.fn(() => {
+      wrapper.setProps({ pending: true, suggestions: [] })
+    })
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        multiple: true,
+        pending: false,
+        suggestions: [],
+        type: 'taggable-select',
+        onComplete,
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+
+    await input.setValue('a')
+    await flushDropdown()
+
+    expect((input.element as HTMLInputElement).value).toBe('a')
+
+    await wrapper.setProps({ pending: false, suggestions: ['Apple', 'Banana'] })
+    await flushDropdown()
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+
+    await input.setValue('ab')
+    await flushDropdown()
+
+    expect((input.element as HTMLInputElement).value).toBe('ab')
+    await wrapper.setProps({ pending: false, suggestions: ['Apple'] })
+    await flushDropdown()
+
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+    expect(onComplete).toHaveBeenNthCalledWith(1, 'a')
+    expect(onComplete).toHaveBeenNthCalledWith(2, 'ab')
+    wrapper.unmount()
+  })
+
   it('should allow removing a tag in taggable-select mode (click)', async () => {
     const wrapper = mountComponent({
       props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
@@ -941,6 +1035,7 @@ describe('ComboBox', () => {
 
     const firstCheckbox = findInBody('[data-id="sds-scroll-area"] input[type="checkbox"]') as HTMLInputElement | null
     expect(firstCheckbox).toBeTruthy()
+    expect(firstCheckbox!.getAttribute('aria-label')).toBe('Select Apple')
     firstCheckbox!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushDropdown()
 
@@ -1321,11 +1416,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it.skip('taggable-select adds a new tag via Enter on Add option', async () => {
-    // TODO: This requires arrowCounter to land on the Add option's index.
-    // ArrowUp from initial state doesn't wrap to it as expected — needs deeper
-    // investigation of handleArrows wrap-around logic. Will be covered when
-    // the broader keyboard-navigation test suite is added.
+  it('taggable-select adds a new tag via Enter on Add option', async () => {
     window.HTMLElement.prototype.scrollIntoView = () => {}
     const wrapper = mountComponent({
       props: {
@@ -1343,12 +1434,13 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.setValue('NewFruit')
     await flushDropdown()
-    // Navigate up to wrap to the Add option (last item in dropdown)
+
+    await input.trigger('keydown.up')
     await input.trigger('keydown.up')
     await flushDropdown()
-    // Press Enter to commit
     await input.trigger('keyup.enter')
     await flushDropdown()
+
     const sel = wrapper.props('selected') as ComboBoxSuggestion[]
     expect(sel.length).toBe(1)
     const added = sel[0] as Record<string, unknown> | string
@@ -1372,6 +1464,64 @@ describe('ComboBox', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     await flushDropdown()
     expect(dropdownInBody()).toBeFalsy()
+    wrapper.unmount()
+  })
+
+  it('Escape key restores selected item text after highlighting a different option', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        clickToSelect: true,
+        selected: ['Apple'],
+        type: 'select'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    await input.trigger('keydown.down')
+    await nextTick()
+
+    expect((input.element as HTMLInputElement).value).toBe('Banana')
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await nextTick()
+
+    expect((input.element as HTMLInputElement).value).toBe('Apple')
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    wrapper.unmount()
+  })
+
+  it('Escape key is ignored when the ComboBox is closed and unfocused', async () => {
+    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
+    const input = wrapper.find('input[type="text"]').element as HTMLInputElement
+    input.blur()
+
+    const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })
+    window.dispatchEvent(escapeEvent)
+    await flushDropdown()
+
+    expect(escapeEvent.defaultPrevented).toBe(false)
+    expect(dropdownInBody()).toBeFalsy()
+    wrapper.unmount()
+  })
+
+  it('emits enter on the first Enter key press for text input without suggestions', async () => {
+    const wrapper = mountComponent({
+      props: {
+        filterSuggestions: true,
+        focusOnKeyPress: true,
+        type: 'text'
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('Search term')
+    await flushDropdown()
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.emitted('enter')).toEqual([['Search term']])
     wrapper.unmount()
   })
 
@@ -1551,7 +1701,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it.skip('ArrowDown wraps from last item back to input (-1)', async () => {
+  it('ArrowDown wraps from last item back to input (-1)', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions: ['Apple', 'Banana'],
@@ -1563,19 +1713,17 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await flushDropdown()
-    // Press down through all options, then once more to wrap
-    await input.trigger('keydown.down')
+
     await input.trigger('keydown.down')
     await input.trigger('keydown.down')
     await flushDropdown()
-    // After wrapping, no item should be data-active
+
     const active = findInBody('button[data-active="true"]')
-    // arrowCounter = -1 means no item active
     expect(active).toBeFalsy()
     wrapper.unmount()
   })
 
-  it.skip('ArrowUp from input wraps to last item', async () => {
+  it('ArrowUp from input wraps to last item', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions: ['Apple', 'Banana', 'Kiwi'],
@@ -1587,15 +1735,11 @@ describe('ComboBox', () => {
     const input = wrapper.find('input[type="text"]')
     await input.trigger('click')
     await flushDropdown()
-    // The "should open dropdown and highlight last option on ArrowUp" test
-    // already covers initial up-from-closed. Here we verify wrap-around from
-    // the open state when arrowCounter is at -1.
-    // Press down to focus first item, then up twice to wrap to last
-    await input.trigger('keydown.down')
+
     await input.trigger('keydown.up')
     await input.trigger('keydown.up')
     await flushDropdown()
-    // Last item (Kiwi) should be active
+
     const buttons = findAllInBody('[data-id="sds-scroll-area"] button')
     const activeBtn = buttons.find(b => b.getAttribute('data-active') === 'true')
     expect(activeBtn).toBeTruthy()
