@@ -2,6 +2,8 @@
   @apply border border-gray-300 dark:border-gray-600;
   @apply [&.valid]:border-green-500;
   @apply [&.invalid]:border-red-500;
+  @apply dark:[&.valid]:border-green-400;
+  @apply dark:[&.invalid]:border-red-300;
 }
 
 @utility form-control {
@@ -9,18 +11,20 @@
   @apply block min-w-0 w-full py-2 px-3 text-base rounded-theme-sm;
   @apply text-gray-900 bg-white;
   @apply placeholder:italic placeholder-gray-400;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-300;
-  @apply disabled:bg-gray-100 disabled:text-gray-400;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
+  @apply disabled:bg-gray-100 disabled:text-gray-400 disabled:select-none;
   @apply disabled:pointer-events-none [[readonly]:not(.no-readonly-style)]:pointer-events-none;
   @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-700;
   @apply dark:text-gray-100 dark:bg-gray-900/50;
   @apply dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
   @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-100;
-  @apply dark:placeholder-gray-400 dark:focus:ring-blue-700;
+  @apply dark:placeholder-gray-400 dark:focus-visible:ring-blue-700;
 }
 
 @utility form-control-sm {
   @apply px-2 py-1 text-sm;
+  @apply [[type=checkbox]]:size-3.5 [[type=radio]]:size-3.5;
+  @apply [select:not([multiple])]:pr-5 [select:not([multiple])]:bg-position-[right_0.5rem_center];
 }
 
 @utility form-control-lg {
@@ -28,38 +32,82 @@
 }
 
 @utility focus-ring {
-  @apply focus-within:ring-2 ring-blue-300 dark:ring-blue-700;
+  @apply has-focus-visible:ring-2 ring-blue-300 dark:ring-blue-700;
 }
 
 @utility input-group {
-  @apply flex items-stretch w-full overflow-clip focus-ring rounded-theme-sm;
+  @apply relative flex items-stretch w-full overflow-clip focus-ring rounded-theme-sm;
   @apply form-border;
-  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
-  @apply *:border-y-0 *:border-x-0;
-  @apply *:focus:ring-0;
+  @apply sds-disabled:pointer-events-none sds-disabled:select-none sds-disabled:text-gray-400 sds-disabled:bg-gray-100 sds-disabled:border-gray-300;
+  @apply dark:sds-disabled:text-gray-600 dark:sds-disabled:bg-gray-900 dark:sds-disabled:border-gray-600;
+  @apply [&.readonly]:bg-gray-50 dark:[&.readonly]:bg-gray-750;
+  @apply *:data-[id^='sds-']:grow [&>.form-control]:grow;
+  @apply *:rounded-none! *:first:rounded-l-theme-sm! *:last:rounded-r-theme-sm!;
+  @apply *:border-0!;
+  @apply *:focus:outline-none! *:focus:ring-0! *:focus-visible:outline-none! *:focus-visible:ring-0!;
+  @apply [&>[data-id^='sds-']_.form-control]:border-0! [&>[data-id^='sds-']_.form-control]:rounded-none!;
+  @apply [&>[data-id^='sds-']_.form-control:focus]:outline-none! [&>[data-id^='sds-']_.form-control:focus]:ring-0!;
+  @apply [&>[data-id^='sds-']_.form-control:focus-visible]:outline-none! [&>[data-id^='sds-']_.form-control:focus-visible]:ring-0!;
+  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-sm! [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-sm!;
   @apply [&>.input-group-addon]:flex [&>.input-group-addon]:items-center;
   @apply [&>.input-group-addon]:text-center [&>.input-group-addon]:whitespace-nowrap;
   @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:text-gray-500 dark:[&>.input-group-addon]:text-gray-300 [&>.input-group-addon]:px-1.5;
   @apply [&>.input-group-addon]:bg-white dark:[&>.input-group-addon]:bg-gray-900/50;
-  @apply [&>.form-control:not(:only-child):not(:last-child)]:px-0 [&>.form-control:not(:only-child):last-child]:pl-0;
+  @apply [&>.form-control]:px-1.5 [&>[data-id^='sds-']_.form-control]:px-1.5;
+  @apply [&>.input-group-addon+.form-control]:pl-1 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-1;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
+  @apply sds-disabled:[&>.input-group-addon]:text-gray-400 dark:sds-disabled:[&>.input-group-addon]:text-gray-600;
+  @apply sds-disabled:[&>.input-group-addon]:bg-gray-100 dark:sds-disabled:[&>.input-group-addon]:bg-gray-900;
+  @apply sds-disabled:[&>.form-control]:bg-gray-100 sds-disabled:[&>.form-control]:text-gray-400;
+  @apply dark:sds-disabled:[&>.form-control]:bg-gray-900 dark:sds-disabled:[&>.form-control]:text-gray-600;
+  @apply sds-disabled:[&>.btn]:bg-gray-100 sds-disabled:[&>.btn]:text-gray-400 sds-disabled:[&>.btn]:border-gray-300;
+  @apply dark:sds-disabled:[&>.btn]:bg-gray-900 dark:sds-disabled:[&>.btn]:text-gray-600 dark:sds-disabled:[&>.btn]:border-gray-600;
+  @apply sds-disabled:[&>.action-btn]:bg-gray-100 sds-disabled:[&>.action-btn]:text-gray-400 sds-disabled:[&>.action-btn]:border-gray-300;
+  @apply dark:sds-disabled:[&>.action-btn]:bg-gray-900 dark:sds-disabled:[&>.action-btn]:text-gray-600 dark:sds-disabled:[&>.action-btn]:border-gray-600;
+  @apply [&.readonly>.input-group-addon]:bg-gray-50 dark:[&.readonly>.input-group-addon]:bg-gray-750;
+  @apply [&.readonly>.form-control]:bg-gray-50 [&.readonly>.form-control]:text-gray-700;
+  @apply dark:[&.readonly>.form-control]:bg-gray-750 dark:[&.readonly>.form-control]:text-gray-100;
   @apply [&:has(:disabled)>.input-group-addon]:bg-gray-100 dark:[&:has(:disabled)>.input-group-addon]:bg-gray-900;
   @apply [&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-50 dark:[&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-750;
 }
 
 @utility input-group-sm {
-  @apply *:form-control-sm;
+  @apply [&>.input-group-addon]:form-control-sm [&>.form-control]:form-control-sm [&>[data-id^='sds-']_.form-control]:form-control-sm;
+  @apply [&>.form-control]:px-1 [&>[data-id^='sds-']_.form-control]:px-1;
+  @apply [&>.input-group-addon+.form-control]:pl-0.5 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-0.5;
   @apply [&>.input-group-addon]:py-1 [&>.input-group-addon]:text-sm [&>.input-group-addon]:px-1;
+  @apply [&>.form-control:first-child]:pl-1.5 [&>[data-id^='sds-']:first-child_.form-control]:pl-1.5 [&>.input-group-addon:first-child]:pl-1.5;
+  @apply [&>.form-control:last-child]:pr-1.5 [&>[data-id^='sds-']:last-child_.form-control]:pr-1.5 [&>.input-group-addon:last-child]:pr-1.5;
 }
 
 @utility input-group-lg {
-  @apply *:form-control-lg;
-  @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:px-2;
+  @apply [&>.input-group-addon]:form-control-lg [&>.form-control]:form-control-lg [&>[data-id^='sds-']_.form-control]:form-control-lg;
+  @apply [&>.form-control]:px-1.5 [&>[data-id^='sds-']_.form-control]:px-1.5;
+  @apply [&>.input-group-addon+.form-control]:pl-1 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-1;
+  @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:px-1.5;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
 }
 
 @utility btn-group {
-  @apply flex items-stretch w-fit rounded-theme-sm;
-  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
-  @apply *:border-l-0 *:first:border-l-2;
+  @apply relative flex items-stretch w-fit rounded-theme-sm;
+  @apply *:rounded-none! *:first:rounded-l-theme-sm! *:last:rounded-r-theme-sm!;
+  @apply *:border-l-0! *:first:border-l-2!;
+}
+
+@utility btn-group-sm {
+  @apply [&>.input-group-addon]:form-control-sm [&>.form-control]:form-control-sm [&>[data-id^='sds-']_.form-control]:form-control-sm;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
+}
+
+@utility btn-toolbar {
+  @apply flex flex-wrap justify-start;
+}
+
+@utility input-toolbar {
+  @apply flex flex-wrap justify-start;
 }
 
 @layer components {
@@ -67,10 +115,17 @@
   :where(input[type="radio"]) {
     @apply form-border appearance-none w-4 h-4 bg-white rounded-theme-sm cursor-pointer;
     @apply dark:bg-gray-900/50;
-    @apply focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-700;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
+    @apply disabled:pointer-events-none disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-default;
+    @apply dark:disabled:bg-gray-900 dark:disabled:border-gray-600;
+    @apply [[readonly]:not([disabled]):not(.no-readonly-style)]:pointer-events-none;
+    @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-300;
+    @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-600;
     @apply bg-no-repeat bg-center bg-contain;
-    @apply checked:border-blue-500 checked:bg-blue-500 dark:checked:border-blue-700 dark:checked:bg-blue-700;
+    @apply checked:border-blue-500 checked:bg-blue-500 indeterminate:border-blue-500 indeterminate:bg-blue-500;
+    @apply dark:checked:border-blue-700 dark:checked:bg-blue-700 dark:indeterminate:border-blue-700 dark:indeterminate:bg-blue-700;
     @apply [[type=checkbox]]:checked:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M3.5%208l3%203%206-6%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
+    @apply [[type=checkbox]]:indeterminate:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%208h8%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E")];
     @apply [[type="radio"]]:rounded-full;
     @apply [[type="radio"]]:checked:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Ccircle%20cx%3D%278%27%20cy%3D%278%27%20r%3D%273.5%27%20fill%3D%27white%27/%3E%3C/svg%3E")];
   }
@@ -81,9 +136,14 @@
   :where(input[type="password"]),
   :where(input[type="number"]),
   :where(input[type="search"]),
-  :where(textarea), 
+  :where(textarea),
   :where(select) {
     @apply form-control;
+  }
+
+  :where(select:not([multiple]).form-control option) {
+    @apply text-gray-900 bg-white;
+    @apply dark:text-gray-50 dark:bg-gray-700;
   }
 
   :where(select:not([multiple])) {
@@ -94,3 +154,4 @@
     @apply dark:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
   }
 }
+

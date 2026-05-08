@@ -10,7 +10,7 @@
     shift
     disable-animation
     :offset="4"
-    popper-class="absolute z-50 p-0 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-850"
+    popper-class="absolute z-50 p-0 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-950"
     @close="onFloatingUiClose"
   >
     <template #trigger>
@@ -200,7 +200,7 @@
               py-2
               px-2
               text-sm
-              text-gray-600 dark:text-gray-300
+              text-gray-600 dark:text-gray-100
               mb-2
               focus:outline-none
               sds-theme-forge:mx-2
@@ -208,11 +208,11 @@
               sds-theme-forge:max-w-[calc(100%-1rem)]
               sds-theme-forge:rounded
               w-full text-left cursor-pointer
-              hover:bg-gray-25 dark:hover:bg-gray-750
+              hover:bg-gray-25 dark:hover:bg-gray-900
             "
             :class="{
               'mt-2': isFlatArray,
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': arrowCounter === 0
+              'text-black dark:text-gray-100 bg-gray-25 dark:bg-gray-900': arrowCounter === 0
             }"
             :aria-selected="arrowCounter === 0 ? 'true' : 'false'"
             :data-active="arrowCounter === 0 ? 'true' : 'false'"
@@ -269,11 +269,11 @@
               v-else
               :id="getOptionId(row.option)"
               :href="optionType === 'a' ? getHref(row.option) : undefined"
-              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750"
+              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-gray-100 hover:bg-gray-25 dark:hover:bg-gray-900"
               :class="{
-                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(row.option),
-                'text-black dark:text-white font-semibold': isSelected(getLabel(row.option)) && type !== 'text',
-                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(row.option),
+                'text-gray-700 dark:text-gray-100': !isDropdownItemActive(row.option),
+                'text-black dark:text-gray-100 font-semibold': isSelected(getLabel(row.option)) && type !== 'text',
+                'text-black dark:text-gray-100 bg-gray-25 dark:bg-gray-900': isDropdownItemActive(row.option),
               }"
               :data-active="isDropdownItemActive(row.option)"
               :type="optionType === 'button' ? 'button' : undefined"
@@ -345,9 +345,9 @@
                   :option-attrs="getCustomOptionAttrs(c)"
                   :href="getHref(c)"
                   :class-list="{
-                    'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
-                    'text-gray-700 dark:text-gray-300': !isDropdownItemActive(c),
-                    'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(c)
+                    'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-900': true,
+                    'text-gray-700 dark:text-gray-100': !isDropdownItemActive(c),
+                    'text-black dark:text-gray-100 bg-gray-50 dark:bg-gray-900': isDropdownItemActive(c)
                   }"
                   :data-active="isDropdownItemActive(c)"
                   :tabindex="getCustomOptionTabindex(c)"
@@ -368,9 +368,9 @@
                 name="customOption"
                 :option-attrs="getCustomOptionAttrs(s)"
                 :class-list="{
-                  'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800': true,
-                  'text-gray-700 dark:text-gray-300': !isDropdownItemActive(s),
-                  'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isDropdownItemActive(s)
+                  'flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-900': true,
+                  'text-gray-700 dark:text-gray-100': !isDropdownItemActive(s),
+                  'text-black dark:text-gray-100 bg-gray-50 dark:bg-gray-900': isDropdownItemActive(s)
                 }"
                 :data-active="isDropdownItemActive(s)"
                 :href="getHref(s)"
@@ -413,11 +413,11 @@
               v-else
               :id="getOptionId(virtualRow.item.option)"
               :href="optionType === 'a' ? getHref(virtualRow.item.option) : undefined"
-              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-white hover:bg-gray-25 dark:hover:bg-gray-750 absolute left-0 right-0"
+              class="flex w-full sds-theme-forge:mx-2 sds-theme-plaid:px-4 p-2 sds-theme-forge:max-w-[calc(100%-1rem)] sds-theme-forge:rounded text-sm text-left list-none cursor-pointer hover:text-black dark:hover:text-gray-100 hover:bg-gray-25 dark:hover:bg-gray-900 absolute left-0 right-0"
               :class="{
-                'text-gray-700 dark:text-gray-300': !isDropdownItemActive(virtualRow.item.option),
-                'text-black dark:text-white font-semibold': isSelected(getLabel(virtualRow.item.option)) && type !== 'text',
-                'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isDropdownItemActive(virtualRow.item.option),
+                'text-gray-700 dark:text-gray-100': !isDropdownItemActive(virtualRow.item.option),
+                'text-black dark:text-gray-100 font-semibold': isSelected(getLabel(virtualRow.item.option)) && type !== 'text',
+                'text-black dark:text-gray-100 bg-gray-25 dark:bg-gray-900': isDropdownItemActive(virtualRow.item.option),
               }"
               :style="{ transform: `translateY(${virtualRow.offsetTop}px)`, minHeight: `${virtualRow.height}px` }"
               :data-active="isDropdownItemActive(virtualRow.item.option)"
@@ -485,13 +485,13 @@
               sds-theme-forge:rounded
               text-sm text-left list-none
               cursor-pointer
-              hover:text-black dark:hover:text-white
-              hover:bg-gray-25 dark:hover:bg-gray-750
+              hover:text-black dark:hover:text-gray-100
+              hover:bg-gray-25 dark:hover:bg-gray-900
             "
             :class="{
-              'text-gray-700 dark:text-gray-300': !isAddSuggestionActive,
-              'text-black dark:text-white bg-gray-50 dark:bg-gray-800': isSelected(query) && !isAddSuggestionActive,
-              'text-black dark:text-white bg-gray-25 dark:bg-gray-750': isAddSuggestionActive || arrowCounter === lastDropdownItemIndex(),
+              'text-gray-700 dark:text-gray-100': !isAddSuggestionActive,
+              'text-black dark:text-gray-100 bg-gray-50 dark:bg-gray-900': isSelected(query) && !isAddSuggestionActive,
+              'text-black dark:text-gray-100 bg-gray-25 dark:bg-gray-900': isAddSuggestionActive || arrowCounter === lastDropdownItemIndex(),
             }"
             :aria-selected="isAddSuggestionActive ? 'true' : 'false'"
             :data-active="isAddSuggestionActive"
@@ -526,7 +526,7 @@
       <!-- Footer section -->
       <div
         v-if="!isSelected(query)"
-        class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-800 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+        class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
       >
         <div class="ml-auto flex items-center gap-1.5">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">

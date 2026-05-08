@@ -1,362 +1,137 @@
-/* ===== BASE ACTION BUTTON UTILITY ===== */
+/* Public action-btn-* classes remain as compatibility aliases, backed by a shared tokenized primitive. */
 
 @utility action-btn {
   @apply border py-1.5 px-1.5 rounded-theme-sm select-none whitespace-nowrap cursor-pointer;
   @apply inline-flex gap-1.5 items-center text-left;
-
-  &:focus         { @apply outline-none; }
-  &:focus-visible { @apply outline-none ring-2 ring-blue-300; }
-  .dark &:focus-visible { @apply ring-blue-700; }
-
-  /* Icon-only text-content padding reduction */
-  &:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) { @apply py-1; }
-
-  /* ===== DISABLED ===== */
-  &:is(.disabled, [disabled]) { @apply pointer-events-none opacity-50; }
-
-  &:is(.disabled, [disabled]).action-btn-primary {
-    @apply text-gray-100/50 bg-gray-600/50;
-  }
-  .dark &:is(.disabled, [disabled]).action-btn-primary {
-    @apply text-gray-900/50 bg-gray-400/50;
-  }
-
-  &:is(.disabled, [disabled]):is(.action-btn-secondary, .action-btn-ghost) {
-    @apply text-gray-600/50;
-  }
-  .dark &:is(.disabled, [disabled]):is(.action-btn-secondary, .action-btn-ghost) {
-    @apply text-gray-400/50;
-  }
-
-  &:is(.disabled, [disabled]).action-btn-secondary {
-    @apply border-gray-600/10;
-  }
-  .dark &:is(.disabled, [disabled]).action-btn-secondary {
-    @apply border-gray-400/10;
-  }
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
+  @apply [&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-1;
+  @apply sds-disabled:pointer-events-none sds-disabled:opacity-50;
+  @apply sds-disabled:[&.action-btn-primary]:text-gray-100/50 sds-disabled:[&.action-btn-primary]:bg-gray-600/50;
+  @apply dark:sds-disabled:[&.action-btn-primary]:text-gray-900/50 dark:sds-disabled:[&.action-btn-primary]:bg-gray-400/50;
+  @apply sds-disabled:[&.action-btn-secondary]:text-gray-600/50 sds-disabled:[&.action-btn-ghost]:text-gray-600/50;
+  @apply dark:sds-disabled:[&.action-btn-secondary]:text-gray-400/50 dark:sds-disabled:[&.action-btn-ghost]:text-gray-400/50;
+  @apply sds-disabled:[&.action-btn-secondary]:border-gray-600/10;
+  @apply dark:sds-disabled:[&.action-btn-secondary]:border-gray-400/10;
+  @apply [--ab-p-text:var(--color-gray-50)] [--ab-p-text-hover:var(--color-white)] [--ab-p-text-active:var(--color-white)];
+  @apply [--ab-p-bg:var(--color-gray-800)] [--ab-p-bg-hover:var(--color-gray-500)] [--ab-p-bg-active:var(--color-gray-700)];
+  @apply [--ab-s-text:var(--color-gray-600)] [--ab-s-text-hover:var(--color-gray-700)] [--ab-s-text-active:var(--color-gray-600)];
+  @apply [--ab-s-bg:--alpha(var(--color-gray-600)/0%)] [--ab-s-bg-hover:--alpha(var(--color-gray-600)/10%)] [--ab-s-bg-active:--alpha(var(--color-gray-600)/20%)];
+  @apply [--ab-s-border:--alpha(var(--color-gray-600)/20%)];
+  @apply [--ab-g-text:var(--color-gray-600)] [--ab-g-text-hover:var(--color-gray-700)] [--ab-g-text-active:var(--color-gray-600)];
+  @apply [--ab-g-bg:--alpha(var(--color-gray-600)/0%)] [--ab-g-bg-hover:--alpha(var(--color-gray-600)/10%)] [--ab-g-bg-active:--alpha(var(--color-gray-600)/20%)];
 }
 
-/* ===== KIND UTILITIES ===== */
-
 @utility action-btn-primary {
-  @apply border-transparent text-gray-50 bg-gray-800;
-  &:where(:hover)                    { @apply text-white bg-gray-500; }
-  &:where(:active, .active)     { @apply text-white bg-gray-700; }
-
-  .dark & {
-    @apply text-gray-900 bg-gray-400;
-    &:where(:hover)                  { @apply text-black bg-gray-500; }
-    &:where(:active, .active)   { @apply text-black bg-gray-300; }
-  }
+  @apply text-(--ab-p-text) bg-(--ab-p-bg) border-transparent;
+  @apply where-hover:text-(--ab-p-text-hover) where-hover:bg-(--ab-p-bg-hover);
+  @apply where-active:text-(--ab-p-text-active) where-active:bg-(--ab-p-bg-active);
+  @apply dark:[--ab-p-text:var(--color-gray-900)] dark:[--ab-p-text-hover:var(--color-black)] dark:[--ab-p-text-active:var(--color-black)];
+  @apply dark:[--ab-p-bg:var(--color-gray-400)] dark:[--ab-p-bg-hover:var(--color-gray-500)] dark:[--ab-p-bg-active:var(--color-gray-300)];
 }
 
 @utility action-btn-secondary {
-  @apply text-gray-600 bg-gray-600/0 border-gray-600/20;
-  &:where(:hover)                    { @apply text-gray-700 bg-gray-600/10 }
-  &:where(:active, .active)     { @apply text-gray-600 bg-gray-600/20; }
-
-  .dark & {
-    @apply text-gray-400 bg-gray-400/0 border-gray-400/20;
-    &:where(:hover)                  { @apply text-gray-300 bg-gray-400/10; }
-    &:where(:active, .active)   { @apply text-gray-400 bg-gray-400/20; }
-  }
+  @apply text-(--ab-s-text) bg-(--ab-s-bg) border-(--ab-s-border);
+  @apply where-hover:text-(--ab-s-text-hover) where-hover:bg-(--ab-s-bg-hover);
+  @apply where-active:text-(--ab-s-text-active) where-active:bg-(--ab-s-bg-active);
+  @apply dark:[--ab-s-text:var(--color-gray-400)] dark:[--ab-s-text-hover:var(--color-gray-300)] dark:[--ab-s-text-active:var(--color-gray-400)];
+  @apply dark:[--ab-s-border:--alpha(var(--color-gray-400)/20%)];
+  @apply dark:[--ab-s-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-s-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-s-bg-active:--alpha(var(--color-gray-400)/20%)];
 }
 
 @utility action-btn-ghost {
-  @apply border-transparent text-gray-600 bg-gray-600/0;
-  &:where(:hover)                    { @apply text-gray-700 bg-gray-600/10; }
-  &:where(:active, .active)     { @apply text-gray-600 bg-gray-600/20; }
-
-  .dark & {
-    @apply text-gray-400 bg-gray-400/0;
-    &:where(:hover)                  { @apply text-gray-300 bg-gray-400/10; }
-    &:where(:active, .active)   { @apply text-gray-400 bg-transparent; }
-  }
+  @apply text-(--ab-g-text) bg-(--ab-g-bg) border-transparent;
+  @apply where-hover:text-(--ab-g-text-hover) where-hover:bg-(--ab-g-bg-hover);
+  @apply where-active:text-(--ab-g-text-active) where-active:bg-(--ab-g-bg-active);
+  @apply dark:[--ab-g-text:var(--color-gray-400)] dark:[--ab-g-text-hover:var(--color-gray-300)] dark:[--ab-g-text-active:var(--color-gray-400)];
+  @apply dark:[--ab-g-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-g-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-g-bg-active:transparent];
 }
 
-/* ===== COLOR VARIANT UTILITIES ===== */
-
 @utility action-btn-gray {
-  &.action-btn-primary {
-    @apply border-transparent text-gray-50 bg-gray-800;
-    &:where(:hover)                  { @apply text-white bg-gray-500; }
-    &:where(:active, .active)   { @apply text-white bg-gray-700; }
-  }
-  .dark &.action-btn-primary {
-    @apply text-gray-900 bg-gray-400;
-    &:where(:hover)                  { @apply text-black bg-gray-500; }
-    &:where(:active, .active)   { @apply text-black bg-gray-300; }
-  }
-
-  &.action-btn-secondary {
-    @apply text-gray-600 bg-gray-600/0 border-gray-600/20;
-    &:where(:hover)                  { @apply text-gray-700 bg-gray-600/10; }
-    &:where(:active, .active)   { @apply text-gray-600 bg-gray-600/20; }
-  }
-  .dark &.action-btn-secondary {
-    @apply text-gray-400 bg-gray-400/0 border-gray-400/20;
-    &:where(:hover)                  { @apply text-gray-300 bg-gray-400/10; }
-    &:where(:active, .active)   { @apply text-gray-400 bg-gray-400/20; }
-  }
-
-  &.action-btn-ghost {
-    @apply border-transparent text-gray-600 bg-gray-600/0;
-    &:where(:hover)                  { @apply text-gray-700 bg-gray-600/10; }
-    &:where(:active, .active)   { @apply text-gray-600 bg-gray-600/20; }
-  }
-  .dark &.action-btn-ghost {
-    @apply text-gray-400 bg-gray-400/0;
-    &:where(:hover)                  { @apply text-gray-300 bg-gray-400/10; }
-    &:where(:active, .active)   { @apply text-gray-400 bg-transparent; }
-  }
+  @apply dark:[--ab-p-text:var(--color-gray-900)] dark:[--ab-p-text-hover:var(--color-black)] dark:[--ab-p-text-active:var(--color-black)];
+  @apply dark:[--ab-p-bg:var(--color-gray-400)] dark:[--ab-p-bg-hover:var(--color-gray-500)] dark:[--ab-p-bg-active:var(--color-gray-300)];
+  @apply dark:[--ab-s-text:var(--color-gray-400)] dark:[--ab-s-text-hover:var(--color-gray-300)] dark:[--ab-s-text-active:var(--color-gray-400)];
+  @apply dark:[--ab-s-border:--alpha(var(--color-gray-400)/20%)];
+  @apply dark:[--ab-s-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-s-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-s-bg-active:--alpha(var(--color-gray-400)/20%)];
+  @apply dark:[--ab-g-text:var(--color-gray-400)] dark:[--ab-g-text-hover:var(--color-gray-300)] dark:[--ab-g-text-active:var(--color-gray-400)];
+  @apply dark:[--ab-g-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-g-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-g-bg-active:transparent];
 }
 
 @utility action-btn-red {
-  &.action-btn-primary {
-    @apply text-red-50 bg-red-600;
-    &:where(:hover)                  { @apply text-white bg-red-500; }
-    &:where(:active, .active)   { @apply text-white bg-red-700; }
-  }
-  .dark &.action-btn-primary {
-    @apply text-red-900 bg-red-400;
-    &:where(:hover)                  { @apply text-black bg-red-500; }
-    &:where(:active, .active)   { @apply text-black bg-red-300; }
-  }
-
-  &.action-btn-secondary {
-    @apply text-red-600 bg-red-600/0 border-red-600/20;
-    &:where(:hover)                  { @apply text-red-700 bg-red-600/10; }
-    &:where(:active, .active)   { @apply text-red-600 bg-red-600/20; }
-  }
-  .dark &.action-btn-secondary {
-    @apply text-red-300 bg-red-400/0 border-red-400/20;
-    &:where(:hover)                  { @apply text-red-300 bg-red-400/10; }
-    &:where(:active, .active)   { @apply text-red-400 bg-red-400/20; }
-  }
-
-  &.action-btn-ghost {
-    @apply text-red-600 bg-red-600/0;
-    &:where(:hover)                  { @apply text-red-700 bg-red-600/10; }
-    &:where(:active, .active)   { @apply text-red-600 bg-red-600/20; }
-  }
-  .dark &.action-btn-ghost {
-    @apply text-red-300 bg-red-400/0;
-    &:where(:hover)                  { @apply text-red-300 bg-red-400/10; }
-    &:where(:active, .active)   { @apply text-red-400 bg-transparent; }
-  }
+  @apply [--ab-p-text:var(--color-red-50)] [--ab-p-bg:var(--color-red-600)] [--ab-p-bg-hover:var(--color-red-500)] [--ab-p-bg-active:var(--color-red-700)];
+  @apply [--ab-s-text:var(--color-red-600)] [--ab-s-text-hover:var(--color-red-700)] [--ab-s-text-active:var(--color-red-600)];
+  @apply [--ab-s-border:--alpha(var(--color-red-600)/20%)];
+  @apply [--ab-s-bg:--alpha(var(--color-red-600)/0%)] [--ab-s-bg-hover:--alpha(var(--color-red-600)/10%)] [--ab-s-bg-active:--alpha(var(--color-red-600)/20%)];
+  @apply [--ab-g-text:var(--color-red-600)] [--ab-g-text-hover:var(--color-red-700)] [--ab-g-text-active:var(--color-red-600)];
+  @apply [--ab-g-bg:--alpha(var(--color-red-600)/0%)] [--ab-g-bg-hover:--alpha(var(--color-red-600)/10%)] [--ab-g-bg-active:--alpha(var(--color-red-600)/20%)];
+  @apply dark:[--ab-p-text:var(--color-red-900)] dark:[--ab-p-bg:var(--color-red-400)] dark:[--ab-p-bg-hover:var(--color-red-500)] dark:[--ab-p-bg-active:var(--color-red-300)];
+  @apply dark:[--ab-s-text:var(--color-red-300)] dark:[--ab-s-text-hover:var(--color-red-300)] dark:[--ab-s-text-active:var(--color-red-400)];
+  @apply dark:[--ab-s-border:--alpha(var(--color-red-400)/20%)];
+  @apply dark:[--ab-s-bg:--alpha(var(--color-red-400)/0%)] dark:[--ab-s-bg-hover:--alpha(var(--color-red-400)/10%)] dark:[--ab-s-bg-active:--alpha(var(--color-red-400)/20%)];
+  @apply dark:[--ab-g-text:var(--color-red-300)] dark:[--ab-g-text-hover:var(--color-red-300)] dark:[--ab-g-text-active:var(--color-red-400)];
+  @apply dark:[--ab-g-bg:--alpha(var(--color-red-400)/0%)] dark:[--ab-g-bg-hover:--alpha(var(--color-red-400)/10%)] dark:[--ab-g-bg-active:transparent];
 }
 
 @utility action-btn-blue {
-  &.action-btn-primary {
-    @apply text-blue-50 bg-blue-600;
-    &:where(:hover)                  { @apply text-white bg-blue-500; }
-    &:where(:active, .active)   { @apply text-white bg-blue-700; }
-  }
-  .dark &.action-btn-primary {
-    @apply text-blue-900 bg-blue-400;
-    &:where(:hover)                  { @apply text-black bg-blue-500; }
-    &:where(:active, .active)   { @apply text-black bg-blue-300; }
-  }
-
-  &.action-btn-secondary {
-    @apply text-blue-600 bg-blue-600/0 border-blue-600/20;
-    &:where(:hover)                  { @apply text-blue-700 bg-blue-600/10; }
-    &:where(:active, .active)   { @apply text-blue-600 bg-blue-600/20; }
-  }
-  .dark &.action-btn-secondary {
-    @apply text-blue-300 bg-blue-400/0 border-blue-400/20;
-    &:where(:hover)                  { @apply text-blue-300 bg-blue-400/10; }
-    &:where(:active, .active)   { @apply text-blue-400 bg-blue-400/20; }
-  }
-
-  &.action-btn-ghost {
-    @apply text-blue-600 bg-blue-600/0;
-    &:where(:hover)                  { @apply text-blue-700 bg-blue-600/10; }
-    &:where(:active, .active)   { @apply text-blue-600 bg-blue-600/20; }
-  }
-  .dark &.action-btn-ghost {
-    @apply text-blue-300 bg-blue-400/0;
-    &:where(:hover)                  { @apply text-blue-300 bg-blue-400/10; }
-    &:where(:active, .active)   { @apply text-blue-400 bg-transparent; }
-  }
+  @apply [--ab-p-text:var(--color-blue-50)] [--ab-p-bg:var(--color-blue-600)] [--ab-p-bg-hover:var(--color-blue-500)] [--ab-p-bg-active:var(--color-blue-700)];
+  @apply [--ab-s-text:var(--color-blue-600)] [--ab-s-text-hover:var(--color-blue-700)] [--ab-s-text-active:var(--color-blue-600)];
+  @apply [--ab-s-border:--alpha(var(--color-blue-600)/20%)];
+  @apply [--ab-s-bg:--alpha(var(--color-blue-600)/0%)] [--ab-s-bg-hover:--alpha(var(--color-blue-600)/10%)] [--ab-s-bg-active:--alpha(var(--color-blue-600)/20%)];
+  @apply [--ab-g-text:var(--color-blue-600)] [--ab-g-text-hover:var(--color-blue-700)] [--ab-g-text-active:var(--color-blue-600)];
+  @apply [--ab-g-bg:--alpha(var(--color-blue-600)/0%)] [--ab-g-bg-hover:--alpha(var(--color-blue-600)/10%)] [--ab-g-bg-active:--alpha(var(--color-blue-600)/20%)];
+  @apply dark:[--ab-p-text:var(--color-blue-900)] dark:[--ab-p-bg:var(--color-blue-400)] dark:[--ab-p-bg-hover:var(--color-blue-500)] dark:[--ab-p-bg-active:var(--color-blue-300)];
+  @apply dark:[--ab-s-text:var(--color-blue-300)] dark:[--ab-s-text-hover:var(--color-blue-300)] dark:[--ab-s-text-active:var(--color-blue-400)];
+  @apply dark:[--ab-s-border:--alpha(var(--color-blue-400)/20%)];
+  @apply dark:[--ab-s-bg:--alpha(var(--color-blue-400)/0%)] dark:[--ab-s-bg-hover:--alpha(var(--color-blue-400)/10%)] dark:[--ab-s-bg-active:--alpha(var(--color-blue-400)/20%)];
+  @apply dark:[--ab-g-text:var(--color-blue-300)] dark:[--ab-g-text-hover:var(--color-blue-300)] dark:[--ab-g-text-active:var(--color-blue-400)];
+  @apply dark:[--ab-g-bg:--alpha(var(--color-blue-400)/0%)] dark:[--ab-g-bg-hover:--alpha(var(--color-blue-400)/10%)] dark:[--ab-g-bg-active:transparent];
 }
 
 @utility action-btn-white {
-  &.action-btn-primary {
-    @apply text-gray-800 bg-gray-50;
-    &:where(:hover)                  { @apply text-black bg-white; }
-    &:where(:active, .active)   { @apply text-black bg-gray-100; }
-  }
-
-  &.action-btn-secondary {
-    @apply text-gray-100 bg-gray-50/0 border-white/20;
-    &:where(:hover)                  { @apply text-white bg-gray-50/10; }
-    &:where(:active, .active)   { @apply text-white bg-gray-50/20; }
-  }
-
-  &.action-btn-ghost {
-    @apply text-gray-100 bg-gray-50/0;
-    &:where(:hover)                  { @apply text-white bg-gray-50/10; }
-    &:where(:active, .active)   { @apply text-white bg-gray-50/20; }
-  }
+  @apply [--ab-p-text:var(--color-gray-800)] [--ab-p-text-hover:var(--color-black)] [--ab-p-text-active:var(--color-black)];
+  @apply [--ab-p-bg:var(--color-gray-50)] [--ab-p-bg-hover:var(--color-white)] [--ab-p-bg-active:var(--color-gray-100)];
+  @apply [--ab-s-text:var(--color-gray-100)] [--ab-s-text-hover:var(--color-white)] [--ab-s-text-active:var(--color-white)];
+  @apply [--ab-s-border:--alpha(var(--color-white)/20%)];
+  @apply [--ab-s-bg:--alpha(var(--color-gray-50)/0%)] [--ab-s-bg-hover:--alpha(var(--color-gray-50)/10%)] [--ab-s-bg-active:--alpha(var(--color-gray-50)/20%)];
+  @apply [--ab-g-text:var(--color-gray-100)] [--ab-g-text-hover:var(--color-white)] [--ab-g-text-active:var(--color-white)];
+  @apply [--ab-g-bg:--alpha(var(--color-gray-50)/0%)] [--ab-g-bg-hover:--alpha(var(--color-gray-50)/10%)] [--ab-g-bg-active:--alpha(var(--color-gray-50)/20%)];
 }
 
-/* ===== ACTION BUTTON SIZE & VARIANT UTILITIES (responsive-ready) ===== */
-/* Using @utility makes these classes work with responsive variants,
-   e.g. lg:action-btn-lg, md:action-btn-sm, xl:action-btn-square, etc.
-   action-btn-square is defined first so the size utilities appear later in
-   the cascade and their square-specific overrides take precedence. */
-
-@utility action-btn-square {
-  .action-btn& {
-    @apply p-1.5;
-  }
-}
+@utility action-btn-square { @apply [.action-btn&]:p-1.5; }
 
 @utility action-btn-xs {
-  .action-btn& {
-    @apply py-1 px-1 text-sm gap-1;
-  }
-
-  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
-    @apply py-0.5 px-1.5;
-  }
-
-  .action-btn.action-btn-square& {
-    @apply p-1;
-  }
+  @apply [.action-btn&]:py-1 [.action-btn&]:px-1 [.action-btn&]:text-sm [.action-btn&]:gap-1;
+  @apply [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-0.5 [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:px-1.5;
+  @apply [.action-btn.action-btn-square&]:p-1;
 }
 
 @utility action-btn-sm {
-  .action-btn& {
-    @apply py-1.5 px-1.5 text-sm;
-  }
-
-  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
-    @apply px-2 py-1;
-  }
-
-  .action-btn.action-btn-square& {
-    @apply p-1.5;
-  }
+  @apply [.action-btn&]:py-1.5 [.action-btn&]:px-1.5 [.action-btn&]:text-sm;
+  @apply [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:px-2 [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-1;
+  @apply [.action-btn.action-btn-square&]:p-1.5;
 }
 
 @utility action-btn-md {
-  .action-btn& {
-    @apply py-1.5 px-1.5;
-  }
-
-  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
-    @apply py-1;
-  }
-
-  .action-btn.action-btn-square& {
-    @apply p-1.5;
-  }
+  @apply [.action-btn&]:py-1.5 [.action-btn&]:px-1.5;
+  @apply [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-1;
+  @apply [.action-btn.action-btn-square&]:p-1.5;
 }
 
 @utility action-btn-lg {
-  .action-btn& {
-    @apply px-1.5 py-2;
-  }
-
-  .action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar'])) {
-    @apply px-1.5 py-2;
-  }
-
-  .action-btn.action-btn-square& {
-    @apply p-2;
-  }
+  @apply [.action-btn&]:px-1.5 [.action-btn&]:py-2;
+  @apply [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:px-1.5 [.action-btn&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-2;
+  @apply [.action-btn.action-btn-square&]:p-2;
 }
-
-/* ===== DARK TYPE VARIANT (type="dark" darkly colored version, not dark mode) ===== */
-/* This provides a darkly colored variant that allows utility class overrides */
-/* while maintaining consistent dark type styling across all kinds and variants */
 
 @utility action-btn-dark {
   @apply border-0 text-white;
-  
-  /* Primary kind */
-  &.action-btn-primary {
-    @apply text-white bg-gray-900;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800; }
-  }
-
-  /* Secondary kind */
-  &.action-btn-secondary {
-    @apply text-white bg-gray-900 border-0;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800; }
-  }
-
-  /* Ghost kind */
-  &.action-btn-ghost {
-    @apply text-white bg-gray-900;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800; }
-  }
-
-  /* Gray variant overrides */
-  &.action-btn-gray {
-    &.action-btn-primary {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800; }
-    }
-    &.action-btn-secondary {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800; }
-    }
-    &.action-btn-ghost {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800; }
-    }
-  }
-
-  /* Red variant */
-  &.action-btn-red {
-    &.action-btn-primary {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700; }
-    }
-    &.action-btn-secondary {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700; }
-    }
-    &.action-btn-ghost {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700; }
-    }
-  }
-
-  /* Blue variant */
-  &.action-btn-blue {
-    &.action-btn-primary {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700; }
-    }
-    &.action-btn-secondary {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700; }
-    }
-    &.action-btn-ghost {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700; }
-    }
-  }
+  @apply [--ab-dark-bg:var(--color-gray-900)] [--ab-dark-bg-hover:var(--color-gray-800)] [--ab-dark-bg-active:var(--color-gray-800)];
+  @apply [&.action-btn-red]:[--ab-dark-bg:var(--color-red-800)] [&.action-btn-red]:[--ab-dark-bg-hover:var(--color-red-700)] [&.action-btn-red]:[--ab-dark-bg-active:var(--color-red-700)];
+  @apply [&.action-btn-blue]:[--ab-dark-bg:var(--color-blue-800)] [&.action-btn-blue]:[--ab-dark-bg-hover:var(--color-blue-700)] [&.action-btn-blue]:[--ab-dark-bg-active:var(--color-blue-700)];
+  @apply [.action-btn-primary,.action-btn-secondary,.action-btn-ghost]:text-white;
+  @apply [.action-btn-primary,.action-btn-secondary,.action-btn-ghost]:bg-(--ab-dark-bg);
+  @apply [.action-btn-primary,.action-btn-secondary,.action-btn-ghost]:border-transparent;
+  @apply where-hover:[.action-btn-primary,.action-btn-secondary,.action-btn-ghost]:bg-(--ab-dark-bg-hover);
+  @apply where-active:[.action-btn-primary,.action-btn-secondary,.action-btn-ghost]:bg-(--ab-dark-bg-active);
 }
 
-@utility action-btn-block {
-  :where(.action-btn&) {
-    @apply w-full;
-  }
-}
+@utility action-btn-block { @apply [.action-btn&]:w-full; }

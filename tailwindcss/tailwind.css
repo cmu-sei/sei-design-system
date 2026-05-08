@@ -2,6 +2,7 @@
 
 /* Variants */
 @import './variants/dark-mode';
+@import './variants/state';
 @import './variants/theme';
 
 /* Overall theme */
@@ -77,15 +78,6 @@
  * Used for Calendar component.
  */
  @source inline("col-start-{1,2,3,4,5,6,7}");
-
-/**
- * Safelist all action-btn and btn variant utilities.
- * These classes are assembled dynamically in useButtonClasses.ts via string
- * concatenation, so Tailwind's static scanner cannot detect them. Without
- * this safelist their @utility CSS blocks are never emitted.
- */
-@source inline("action-btn-{primary,secondary,ghost,gray,red,blue,white,block,square,xs,sm,lg,dark}");
-@source inline("btn-{primary,secondary,tertiary,ghost,gray,red,blue,white,block,cta,square,xs,sm,lg,xl,dark}");
 
 /**
  * Automatically look into the src directory for CSS classes

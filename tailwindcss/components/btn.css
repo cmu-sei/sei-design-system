@@ -5,83 +5,41 @@
 
 @utility btn {
   @apply border-2 border-transparent inline-block py-2 px-8 select-none whitespace-nowrap font-semibold cursor-pointer;
-  border-radius: var(--btn-radius, 0);
-
-  &:focus         { outline: none; }
-  &:focus-visible { outline: none; @apply ring-2; --tw-ring-color: var(--btn-focus-ring, var(--color-blue-300)); }
-
-  /* ===== DISABLED BASE ===== */
-  &:is(.disabled, [disabled]) {
-    @apply pointer-events-none opacity-50;
-    color: var(--color-gray-500);
-  }
-
-  /* Disabled — primary / secondary / tertiary border */
-  &:is(.disabled, [disabled]):is(.btn-primary, .btn-secondary, .btn-tertiary) {
-    border-color: var(--color-gray-500);
-  }
-
-  /* Disabled — primary fill */
-  &:is(.disabled, [disabled]).btn-primary:not(.btn-white) {
-    background-color: var(--color-gray-500);
-    color: var(--color-gray-100);
-  }
-
-  /* Disabled — white variant overrides */
-  &:is(.disabled, [disabled]).btn-white {
-    opacity: 1;
-    border-color: transparent;
-  }
-  &:is(.disabled, [disabled]).btn-white.btn-primary {
-    background-color: color-mix(in srgb, var(--color-gray-50) 75%, transparent);
-    color: color-mix(in srgb, var(--color-gray-900) 60%, transparent);
-  }
-  &:is(.disabled, [disabled]).btn-white.btn-secondary {
-    background-color: color-mix(in srgb, var(--color-white) 45%, transparent);
-    color: color-mix(in srgb, var(--color-gray-900) 50%, transparent);
-    border-color: color-mix(in srgb, var(--color-white) 55%, transparent);
-  }
-  &:is(.disabled, [disabled]).btn-white.btn-tertiary {
-    color: color-mix(in srgb, var(--color-white) 75%, transparent);
-    border-color: color-mix(in srgb, var(--color-white) 75%, transparent);
-  }
-  &:is(.disabled, [disabled]).btn-white.btn-ghost {
-    color: color-mix(in srgb, var(--color-white) 75%, transparent);
-  }
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2;
+  @apply sds-disabled:pointer-events-none sds-disabled:opacity-50 sds-disabled:text-gray-500;
+  @apply sds-disabled:[&.btn-primary]:border-gray-500 sds-disabled:[&.btn-secondary]:border-gray-500 sds-disabled:[&.btn-tertiary]:border-gray-500;
+  @apply sds-disabled:[&.btn-primary:not(.btn-white)]:bg-gray-500 sds-disabled:[&.btn-primary:not(.btn-white)]:text-gray-100;
+  @apply sds-disabled:[&.btn-white]:opacity-100 sds-disabled:[&.btn-white]:border-transparent;
+  @apply sds-disabled:[&.btn-white.btn-primary]:bg-gray-50/75 sds-disabled:[&.btn-white.btn-primary]:text-gray-900/60;
+  @apply sds-disabled:[&.btn-white.btn-secondary]:bg-white/45 sds-disabled:[&.btn-white.btn-secondary]:text-gray-900/50 sds-disabled:[&.btn-white.btn-secondary]:border-white/55;
+  @apply sds-disabled:[&.btn-white.btn-tertiary]:text-white/75 sds-disabled:[&.btn-white.btn-tertiary]:border-white/75 sds-disabled:[&.btn-white.btn-ghost]:text-white/75;
+  @apply rounded-(--btn-radius,0) ring-(--btn-focus-ring,var(--color-blue-300));
 }
 
 /* ===== BUTTON KIND UTILITIES ===== */
 
 @utility btn-primary {
-  color:            var(--btn-accent-text);
-  background-color: var(--btn-accent-bg);
-
-  &:where(:hover)                        { background-color: var(--btn-accent-bg-hover); }
-  &:where(:active, .active)         { background-color: var(--btn-accent-bg); @apply shadow-inner; }
+  @apply text-(--btn-accent-text) bg-(--btn-accent-bg);
+  @apply where-hover:bg-(--btn-accent-bg-hover);
+  @apply where-active:bg-(--btn-accent-bg) where-active:shadow-inner;
 }
 
 @utility btn-secondary {
-  color:            var(--btn-secondary-text);
-  background-color: var(--btn-secondary-bg);
-  border-color:     var(--btn-secondary-border);
-
-  &:where(:hover)                        { color: var(--btn-secondary-text-hover); background-color: var(--btn-secondary-bg-hover); }
-  &:where(:active, .active)         { color: var(--btn-secondary-text-active); background-color: var(--btn-secondary-bg-active); @apply shadow-inner; }
+  @apply text-(--btn-secondary-text) bg-(--btn-secondary-bg) border-(--btn-secondary-border);
+  @apply where-hover:text-(--btn-secondary-text-hover) where-hover:bg-(--btn-secondary-bg-hover);
+  @apply where-active:text-(--btn-secondary-text-active) where-active:bg-(--btn-secondary-bg-active) where-active:shadow-inner;
 }
 
 @utility btn-tertiary {
-  color:        var(--btn-tertiary-text);
-  border-color: var(--btn-tertiary-border);
-
-  &:where(:hover)                        { color: var(--btn-tertiary-text-hover); background-color: var(--btn-tertiary-bg-hover); border-color: var(--btn-tertiary-border-hover); }
-  &:where(:active, .active)         { color: var(--btn-tertiary-text-active); background-color: var(--btn-tertiary-bg-active); border-color: var(--btn-tertiary-border-active); @apply shadow-inner; }
+  @apply text-(--btn-tertiary-text) border-(--btn-tertiary-border);
+  @apply where-hover:text-(--btn-tertiary-text-hover) where-hover:bg-(--btn-tertiary-bg-hover) where-hover:border-(--btn-tertiary-border-hover);
+  @apply where-active:text-(--btn-tertiary-text-active) where-active:bg-(--btn-tertiary-bg-active) where-active:border-(--btn-tertiary-border-active) where-active:shadow-inner;
 }
 
 @utility btn-ghost {
-  color: var(--btn-ghost-text);
-
-  &:where(:hover)                        { color: var(--btn-ghost-text-hover); background-color: var(--btn-ghost-bg-hover); }
-  &:where(:active, .active)         { color: var(--btn-ghost-text-active); background-color: var(--btn-ghost-bg-active); @apply shadow-inner; }
+  @apply text-(--btn-ghost-text);
+  @apply where-hover:text-(--btn-ghost-text-hover) where-hover:bg-(--btn-ghost-bg-hover);
+  @apply where-active:text-(--btn-ghost-text-active) where-active:bg-(--btn-ghost-bg-active) where-active:shadow-inner;
 }
 
 /* ===== COLOR VARIANT UTILITIES (cascade token trick) ===== */
@@ -90,176 +48,97 @@
 
 @utility btn-gray {
   /* Primary kind: override accent tokens */
-  --btn-accent-bg: var(--btn-gray-accent-bg);
-  --btn-accent-bg-hover: var(--btn-gray-accent-bg-hover);
+  @apply [--btn-accent-bg:var(--btn-gray-accent-bg)] [--btn-accent-bg-hover:var(--btn-gray-accent-bg-hover)];
   /* Secondary kind: override text tokens */
-  --btn-secondary-text: var(--btn-gray-secondary-text);
-  --btn-secondary-text-hover: var(--btn-gray-secondary-text-hover);
-  --btn-secondary-text-active: var(--btn-gray-secondary-text-active);
+  @apply [--btn-secondary-text:var(--btn-gray-secondary-text)] [--btn-secondary-text-hover:var(--btn-gray-secondary-text-hover)] [--btn-secondary-text-active:var(--btn-gray-secondary-text-active)];
   /* Tertiary kind: override text, border, hover, active tokens */
-  --btn-tertiary-text: var(--btn-gray-tertiary-text);
-  --btn-tertiary-border: var(--btn-gray-tertiary-border);
-  --btn-tertiary-text-hover: var(--btn-gray-tertiary-text-hover);
-  --btn-tertiary-bg-hover: var(--btn-gray-tertiary-bg-hover);
-  --btn-tertiary-border-hover: var(--btn-gray-tertiary-border-hover);
-  --btn-tertiary-text-active: var(--btn-gray-tertiary-text-active);
-  --btn-tertiary-bg-active: var(--btn-gray-tertiary-bg-active);
-  --btn-tertiary-border-active: var(--btn-gray-tertiary-border-active);
+  @apply [--btn-tertiary-text:var(--btn-gray-tertiary-text)] [--btn-tertiary-border:var(--btn-gray-tertiary-border)];
+  @apply [--btn-tertiary-text-hover:var(--btn-gray-tertiary-text-hover)] [--btn-tertiary-bg-hover:var(--btn-gray-tertiary-bg-hover)] [--btn-tertiary-border-hover:var(--btn-gray-tertiary-border-hover)];
+  @apply [--btn-tertiary-text-active:var(--btn-gray-tertiary-text-active)] [--btn-tertiary-bg-active:var(--btn-gray-tertiary-bg-active)] [--btn-tertiary-border-active:var(--btn-gray-tertiary-border-active)];
   /* Ghost kind: override text and hover tokens */
-  --btn-ghost-text: var(--btn-gray-ghost-text);
-  --btn-ghost-text-hover: var(--btn-gray-ghost-text-hover);
-  --btn-ghost-bg-hover: var(--btn-gray-ghost-bg-hover);
-  --btn-ghost-text-active: var(--btn-gray-ghost-text-active);
-  --btn-ghost-bg-active: var(--btn-gray-ghost-bg-active);
+  @apply [--btn-ghost-text:var(--btn-gray-ghost-text)] [--btn-ghost-text-hover:var(--btn-gray-ghost-text-hover)] [--btn-ghost-bg-hover:var(--btn-gray-ghost-bg-hover)];
+  @apply [--btn-ghost-text-active:var(--btn-gray-ghost-text-active)] [--btn-ghost-bg-active:var(--btn-gray-ghost-bg-active)];
 }
 
 @utility btn-red {
-  --btn-accent-bg: var(--btn-red-accent-bg);
-  --btn-accent-bg-hover: var(--btn-red-accent-bg-hover);
-  --btn-secondary-text: var(--btn-red-secondary-text);
-  --btn-secondary-text-hover: var(--btn-red-secondary-text-hover);
-  --btn-secondary-text-active: var(--btn-red-secondary-text-active);
-  --btn-tertiary-text: var(--btn-red-tertiary-text);
-  --btn-tertiary-border: var(--btn-red-tertiary-border);
-  --btn-tertiary-text-hover: var(--btn-red-tertiary-text-hover);
-  --btn-tertiary-bg-hover: var(--btn-red-tertiary-bg-hover);
-  --btn-tertiary-border-hover: var(--btn-red-tertiary-border-hover);
-  --btn-tertiary-text-active: var(--btn-red-tertiary-text-active);
-  --btn-tertiary-bg-active: var(--btn-red-tertiary-bg-active);
-  --btn-tertiary-border-active: var(--btn-red-tertiary-border-active);
-  --btn-ghost-text: var(--btn-red-ghost-text);
-  --btn-ghost-text-hover: var(--btn-red-ghost-text-hover);
-  --btn-ghost-bg-hover: var(--btn-red-ghost-bg-hover);
-  --btn-ghost-text-active: var(--btn-red-ghost-text-active);
-  --btn-ghost-bg-active: var(--btn-red-ghost-bg-active);
+  @apply [--btn-accent-bg:var(--btn-red-accent-bg)] [--btn-accent-bg-hover:var(--btn-red-accent-bg-hover)];
+  @apply [--btn-secondary-text:var(--btn-red-secondary-text)] [--btn-secondary-text-hover:var(--btn-red-secondary-text-hover)] [--btn-secondary-text-active:var(--btn-red-secondary-text-active)];
+  @apply [--btn-tertiary-text:var(--btn-red-tertiary-text)] [--btn-tertiary-border:var(--btn-red-tertiary-border)];
+  @apply [--btn-tertiary-text-hover:var(--btn-red-tertiary-text-hover)] [--btn-tertiary-bg-hover:var(--btn-red-tertiary-bg-hover)] [--btn-tertiary-border-hover:var(--btn-red-tertiary-border-hover)];
+  @apply [--btn-tertiary-text-active:var(--btn-red-tertiary-text-active)] [--btn-tertiary-bg-active:var(--btn-red-tertiary-bg-active)] [--btn-tertiary-border-active:var(--btn-red-tertiary-border-active)];
+  @apply [--btn-ghost-text:var(--btn-red-ghost-text)] [--btn-ghost-text-hover:var(--btn-red-ghost-text-hover)] [--btn-ghost-bg-hover:var(--btn-red-ghost-bg-hover)];
+  @apply [--btn-ghost-text-active:var(--btn-red-ghost-text-active)] [--btn-ghost-bg-active:var(--btn-red-ghost-bg-active)];
 }
 
 @utility btn-blue {
-  --btn-accent-bg: var(--btn-blue-accent-bg);
-  --btn-accent-bg-hover: var(--btn-blue-accent-bg-hover);
-  --btn-secondary-text: var(--btn-blue-secondary-text);
-  --btn-secondary-text-hover: var(--btn-blue-secondary-text-hover);
-  --btn-secondary-text-active: var(--btn-blue-secondary-text-active);
-  --btn-tertiary-text: var(--btn-blue-tertiary-text);
-  --btn-tertiary-border: var(--btn-blue-tertiary-border);
-  --btn-tertiary-text-hover: var(--btn-blue-tertiary-text-hover);
-  --btn-tertiary-bg-hover: var(--btn-blue-tertiary-bg-hover);
-  --btn-tertiary-border-hover: var(--btn-blue-tertiary-border-hover);
-  --btn-tertiary-text-active: var(--btn-blue-tertiary-text-active);
-  --btn-tertiary-bg-active: var(--btn-blue-tertiary-bg-active);
-  --btn-tertiary-border-active: var(--btn-blue-tertiary-border-active);
-  --btn-ghost-text: var(--btn-blue-ghost-text);
-  --btn-ghost-text-hover: var(--btn-blue-ghost-text-hover);
-  --btn-ghost-bg-hover: var(--btn-blue-ghost-bg-hover);
-  --btn-ghost-text-active: var(--btn-blue-ghost-text-active);
-  --btn-ghost-bg-active: var(--btn-blue-ghost-bg-active);
+  @apply [--btn-accent-bg:var(--btn-blue-accent-bg)] [--btn-accent-bg-hover:var(--btn-blue-accent-bg-hover)];
+  @apply [--btn-secondary-text:var(--btn-blue-secondary-text)] [--btn-secondary-text-hover:var(--btn-blue-secondary-text-hover)] [--btn-secondary-text-active:var(--btn-blue-secondary-text-active)];
+  @apply [--btn-tertiary-text:var(--btn-blue-tertiary-text)] [--btn-tertiary-border:var(--btn-blue-tertiary-border)];
+  @apply [--btn-tertiary-text-hover:var(--btn-blue-tertiary-text-hover)] [--btn-tertiary-bg-hover:var(--btn-blue-tertiary-bg-hover)] [--btn-tertiary-border-hover:var(--btn-blue-tertiary-border-hover)];
+  @apply [--btn-tertiary-text-active:var(--btn-blue-tertiary-text-active)] [--btn-tertiary-bg-active:var(--btn-blue-tertiary-bg-active)] [--btn-tertiary-border-active:var(--btn-blue-tertiary-border-active)];
+  @apply [--btn-ghost-text:var(--btn-blue-ghost-text)] [--btn-ghost-text-hover:var(--btn-blue-ghost-text-hover)] [--btn-ghost-bg-hover:var(--btn-blue-ghost-bg-hover)];
+  @apply [--btn-ghost-text-active:var(--btn-blue-ghost-text-active)] [--btn-ghost-bg-active:var(--btn-blue-ghost-bg-active)];
 }
 
 @utility btn-white {
   /* Primary white: fixed colors, same light and dark */
-  &.btn-primary {
-    @apply bg-white/90 text-gray-900;
-    &:where(:hover)         { @apply text-gray-900 bg-white; }
-    &:where(:active, .active) { @apply text-gray-900 bg-white/90 shadow-inner; }
-  }
+  @apply [&.btn-primary]:bg-white/90 [&.btn-primary]:text-gray-900;
+  @apply where-hover:[&.btn-primary]:text-gray-900 where-hover:[&.btn-primary]:bg-white;
+  @apply where-active:[&.btn-primary]:text-gray-900 where-active:[&.btn-primary]:bg-white/90 where-active:[&.btn-primary]:shadow-inner;
 
   /* Secondary white: fixed colors */
-  &.btn-secondary {
-    @apply text-gray-900 bg-white/55 border-white;
-    &:where(:hover)         { @apply text-gray-900 bg-white border-white; }
-    &:where(:active, .active) { @apply text-gray-900 bg-white/55 border-white shadow-inner; }
-  }
-  .dark &.btn-secondary {
-    @apply text-gray-900 bg-white/55 border-white;
-    &:where(:hover)         { @apply text-gray-900 bg-white/65 border-white; }
-  }
+  @apply [&.btn-secondary]:text-gray-900 [&.btn-secondary]:bg-white/55 [&.btn-secondary]:border-white;
+  @apply where-hover:[&.btn-secondary]:text-gray-900 where-hover:[&.btn-secondary]:bg-white where-hover:[&.btn-secondary]:border-white;
+  @apply where-active:[&.btn-secondary]:text-gray-900 where-active:[&.btn-secondary]:bg-white/55 where-active:[&.btn-secondary]:border-white where-active:[&.btn-secondary]:shadow-inner;
+  @apply dark:[&.btn-secondary]:text-gray-900 dark:[&.btn-secondary]:bg-white/55 dark:[&.btn-secondary]:border-white;
+  @apply dark:where-hover:[&.btn-secondary]:text-gray-900 dark:where-hover:[&.btn-secondary]:bg-white/65 dark:where-hover:[&.btn-secondary]:border-white;
 
   /* Tertiary white: fixed colors */
-  &.btn-tertiary {
-    @apply text-white border-white;
-    &:where(:hover)         { @apply text-gray-900 bg-white border-white; }
-    &:where(:active, .active) { @apply text-gray-900 bg-white shadow-inner; }
-  }
+  @apply [&.btn-tertiary]:text-white [&.btn-tertiary]:border-white;
+  @apply where-hover:[&.btn-tertiary]:text-gray-900 where-hover:[&.btn-tertiary]:bg-white where-hover:[&.btn-tertiary]:border-white;
+  @apply where-active:[&.btn-tertiary]:text-gray-900 where-active:[&.btn-tertiary]:bg-white where-active:[&.btn-tertiary]:shadow-inner;
 
   /* Ghost white: fixed colors */
-  &.btn-ghost {
-    @apply text-white;
-    &:where(:hover)         { @apply bg-white/10; }
-    &:where(:active, .active) { @apply text-white bg-white/20; }
-  }
-  .dark &.btn-ghost {
-    &:where(:hover) { @apply bg-white/20; }
-    &:where(:active, .active) { @apply shadow-inner text-white bg-white/20; }
-  }
+  @apply [&.btn-ghost]:text-white where-hover:[&.btn-ghost]:bg-white/10;
+  @apply where-active:[&.btn-ghost]:text-white where-active:[&.btn-ghost]:bg-white/20;
+  @apply dark:where-hover:[&.btn-ghost]:bg-white/20;
+  @apply dark:where-active:[&.btn-ghost]:shadow-inner dark:where-active:[&.btn-ghost]:text-white dark:where-active:[&.btn-ghost]:bg-white/20;
 }
 
 /* ===== CTA (CALL-TO-ACTION) UTILITY ===== */
 
 @utility btn-cta {
   /* Base ::after pseudo-element (icon shape, position, and color) */
-  &::after {
-    content: '';
-    display: inline-flex;
-    position: relative;
-    top: 1px;
-    margin-left: --spacing(2);
-    height: 13px;
-    width: var(--btn-cta-w-md, 0.875rem);
-    mask-image: var(--btn-cta-icon-md, var(--chevrons-right-md));
-    mask-repeat: no-repeat;
-    mask-size: contain;
-    background-color: currentColor;  /* inherits from button's text color */
-    @apply transition-transform;
-  }
+  @apply after:content-[''] after:inline-flex after:relative after:top-px after:ml-2;
+  @apply after:h-3.25 after:w-(--btn-cta-w-md,0.875rem) after:bg-current after:transition-transform;
+  @apply after:mask-(--btn-cta-icon-md,var(--chevrons-right-md)) after:mask-no-repeat after:mask-contain;
+  @apply [&.btn-sm]:after:h-2.75 [&.btn-sm]:after:w-(--btn-cta-w-sm,0.75rem) [&.btn-sm]:after:mask-(--btn-cta-icon-sm,var(--chevrons-right-sm));
+  @apply [&.btn-lg]:after:h-3.75 [&.btn-lg]:after:w-(--btn-cta-w-lg,1rem) [&.btn-lg]:after:mask-(--btn-cta-icon-lg,var(--chevrons-right-lg));
 
-  &.btn-sm::after {
-    height: 11px;
-    width: var(--btn-cta-w-sm, 0.75rem);
-    mask-image: var(--btn-cta-icon-sm, var(--chevrons-right-sm));
-  }
-
-  &.btn-lg::after {
-    height: 15px;
-    width: var(--btn-cta-w-lg, 1rem);
-    mask-image: var(--btn-cta-icon-lg, var(--chevrons-right-lg));
-  }
-
-  &:where(:hover)::after { @apply translate-x-1; }
+  @apply where-hover:after:translate-x-1;
 
   /* Primary-white exception: icon is gray-950, not white */
-  &.btn-primary.btn-white::after { background-color: var(--color-gray-950); }
+  @apply [&.btn-primary.btn-white]:after:bg-gray-950;
   /* Secondary-white: icon is gray-900 */
-  &.btn-secondary.btn-white::after { background-color: var(--color-gray-900); }
-  .dark &.btn-secondary.btn-white::after { background-color: var(--color-gray-900); }
+  @apply [&.btn-secondary.btn-white]:after:bg-gray-900 dark:[&.btn-secondary.btn-white]:after:bg-gray-900;
 
   /* Secondary-white: suppress hover background change (keep white/55 or white/65) */
-  &.btn-secondary.btn-white:where(:hover) { background-color: color-mix(in srgb, var(--color-white) 55%, transparent); }
-  .dark &.btn-secondary.btn-white:where(:hover) { background-color: color-mix(in srgb, var(--color-white) 65%, transparent); }
+  @apply where-hover:[&.btn-secondary.btn-white]:bg-white/55 dark:where-hover:[&.btn-secondary.btn-white]:bg-white/65;
 
   /* ===== DISABLED CTA ICON COLORS ===== */
   /* Primary (non-white) disabled */
-  &:is(.disabled, [disabled]).btn-primary:not(.btn-white)::after {
-    background-color: var(--color-gray-100);
-  }
+  @apply sds-disabled:[&.btn-primary:not(.btn-white)]:after:bg-gray-100;
   /* Primary white disabled */
-  &:is(.disabled, [disabled]).btn-primary.btn-white::after {
-    background-color: color-mix(in srgb, var(--color-gray-900) 60%, transparent);
-  }
+  @apply sds-disabled:[&.btn-primary.btn-white]:after:bg-gray-900/60;
   /* Secondary, tertiary, ghost (non-white) disabled */
-  &:is(.disabled, [disabled]):is(.btn-secondary, .btn-tertiary, .btn-ghost):not(.btn-white)::after {
-    background-color: var(--color-gray-500);
-  }
+  @apply sds-disabled:[&.btn-secondary:not(.btn-white)]:after:bg-gray-500 sds-disabled:[&.btn-tertiary:not(.btn-white)]:after:bg-gray-500 sds-disabled:[&.btn-ghost:not(.btn-white)]:after:bg-gray-500;
   /* Secondary white disabled */
-  &:is(.disabled, [disabled]).btn-secondary.btn-white::after {
-    background-color: color-mix(in srgb, var(--color-gray-900) 50%, transparent);
-  }
+  @apply sds-disabled:[&.btn-secondary.btn-white]:after:bg-gray-900/50;
   /* Tertiary + ghost white disabled */
-  &:is(.disabled, [disabled]):is(.btn-tertiary, .btn-ghost).btn-white::after {
-    background-color: color-mix(in srgb, var(--color-white) 75%, transparent);
-  }
+  @apply sds-disabled:[&.btn-tertiary.btn-white]:after:bg-white/75 sds-disabled:[&.btn-ghost.btn-white]:after:bg-white/75;
 
   /* Pending: hide icon */
-  &[data-pending="true"]::after { display: none; }
+  @apply data-[pending=true]:after:hidden;
 }
 
 /* ===== BLOCK VARIANT ===== */
@@ -272,32 +151,32 @@
 /* Using @utility makes these variant-prefixable: lg:btn-lg, md:btn-sm, etc. */
 
 @utility btn-square {
-  .btn& { @apply p-2; }
+  @apply [.btn&]:p-2;
 }
 
 @utility btn-xs {
-  .btn&              { @apply py-0.5 px-2 text-xs; }
-  .btn.btn-square&   { @apply p-0.5; }
+  @apply [.btn&]:py-0.5 [.btn&]:px-2 [.btn&]:text-xs;
+  @apply [.btn.btn-square&]:p-0.5;
 }
 
 @utility btn-sm {
-  .btn&              { @apply py-1 px-4 text-sm; }
-  .btn.btn-square&   { @apply p-1; }
+  @apply [.btn&]:py-1 [.btn&]:px-4 [.btn&]:text-sm;
+  @apply [.btn.btn-square&]:p-1;
 }
 
 @utility btn-md {
-  .btn&              { @apply py-2 px-8 text-base; }
-  .btn.btn-square&   { @apply p-2; }
+  @apply [.btn&]:py-2 [.btn&]:px-8 [.btn&]:text-base;
+  @apply [.btn.btn-square&]:p-2;
 }
 
 @utility btn-lg {
-  .btn&              { @apply py-3 px-12 text-lg; }
-  .btn.btn-square&   { @apply p-3; }
+  @apply [.btn&]:py-3 [.btn&]:px-12 [.btn&]:text-lg;
+  @apply [.btn.btn-square&]:p-3;
 }
 
 @utility btn-xl {
-  .btn&              { @apply py-4 px-16 text-xl; }
-  .btn.btn-square&   { @apply p-4; }
+  @apply [.btn&]:py-4 [.btn&]:px-16 [.btn&]:text-xl;
+  @apply [.btn.btn-square&]:p-4;
 }
 
 /* ===== DARK TYPE VARIANT (type="dark" darkly colored version, not dark mode) ===== */
@@ -306,128 +185,13 @@
 
 @utility btn-dark {
   @apply border-0 text-white;
-  
-  /* Primary kind */
-  &.btn-primary {
-    @apply text-white bg-gray-900;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-  }
+  @apply [--btn-dark-bg:var(--color-gray-900)] [--btn-dark-bg-hover:var(--color-gray-800)] [--btn-dark-bg-active:var(--color-gray-800)];
+  @apply [&.btn-red]:[--btn-dark-bg:var(--color-red-800)] [&.btn-red]:[--btn-dark-bg-hover:var(--color-red-700)] [&.btn-red]:[--btn-dark-bg-active:var(--color-red-700)];
+  @apply [&.btn-blue]:[--btn-dark-bg:var(--color-blue-800)] [&.btn-blue]:[--btn-dark-bg-hover:var(--color-blue-700)] [&.btn-blue]:[--btn-dark-bg-active:var(--color-blue-700)];
 
-  /* Secondary kind */
-  &.btn-secondary {
-    @apply text-white bg-gray-900 border-0;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-  }
-
-  /* Tertiary kind */
-  &.btn-tertiary {
-    @apply text-white bg-gray-900 border-0;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-  }
-
-  /* Ghost kind */
-  &.btn-ghost {
-    @apply text-white bg-gray-900;
-    &:where(:hover)    { @apply bg-gray-800; }
-    &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-  }
-
-  /* Gray variant overrides */
-  &.btn-gray {
-    &.btn-primary {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-secondary {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-tertiary {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-ghost {
-      @apply text-white bg-gray-900;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-  }
-
-  /* Red variant */
-  &.btn-red {
-    &.btn-primary {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700 shadow-inner; }
-    }
-    &.btn-secondary {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700 shadow-inner; }
-    }
-    &.btn-tertiary {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700 shadow-inner; }
-    }
-    &.btn-ghost {
-      @apply text-white bg-red-800;
-      &:where(:hover)    { @apply bg-red-700; }
-      &:where(:active, .active) { @apply bg-red-700 shadow-inner; }
-    }
-  }
-
-  /* Blue variant */
-  &.btn-blue {
-    &.btn-primary {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700 shadow-inner; }
-    }
-    &.btn-secondary {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700 shadow-inner; }
-    }
-    &.btn-tertiary {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700 shadow-inner; }
-    }
-    &.btn-ghost {
-      @apply text-white bg-blue-800;
-      &:where(:hover)    { @apply bg-blue-700; }
-      &:where(:active, .active) { @apply bg-blue-700 shadow-inner; }
-    }
-  }
-
-  /* White variant */
-  &.btn-white {
-    &.btn-primary {
-      @apply bg-gray-900 text-white;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-secondary {
-      @apply bg-gray-900 text-white;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-tertiary {
-      @apply bg-gray-900 text-white;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-    &.btn-ghost {
-      @apply bg-gray-900 text-white;
-      &:where(:hover)    { @apply bg-gray-800; }
-      &:where(:active, .active) { @apply bg-gray-800 shadow-inner; }
-    }
-  }
+  @apply [.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:text-white;
+  @apply [.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:bg-(--btn-dark-bg);
+  @apply [.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:border-transparent;
+  @apply where-hover:[.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:bg-(--btn-dark-bg-hover);
+  @apply where-active:[.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:bg-(--btn-dark-bg-active) where-active:[.btn-primary,.btn-secondary,.btn-tertiary,.btn-ghost]:shadow-inner;
 }
