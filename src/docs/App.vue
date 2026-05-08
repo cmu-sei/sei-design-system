@@ -10,7 +10,7 @@
     :sidebar-navigation-items="(sidebarNavigationItems as ApplicationSidebarNavItem[])"
     @navigate="navigate"
   >
-    <template #user-section>
+    <!-- <template #user-section>
       <sds-dropdown
         title="Ghost"
         kind="ghost"
@@ -51,7 +51,7 @@
           </sds-dropdown-item>
         </form>
       </sds-dropdown>
-    </template>
+    </template> -->
     <template #page-header>
       <SdsActionButton
         kind="ghost"

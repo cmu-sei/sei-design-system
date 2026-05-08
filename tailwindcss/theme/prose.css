@@ -509,7 +509,7 @@
     }
   }
 
-  & :where(ul li:not(.not-prose, .not-prose *)::marker) {
+  & :where(ul li:not(.not-prose, .not-prose *))::marker {
     color: var(--tw-prose-bullets, var(--color-gray-600));
     font-size: var(--text-sm);
   }
