@@ -1,8 +1,7 @@
 /* ===== UNIVERSAL LINK UTILITIES ===== */
 /* Uses CSS custom property tokens from tailwindcss/theme/tokens.css.
-   No theme class names appear here — token inheritance handles all
-   theme and dark-mode variation. Plaid-specific structural differences
-   are in the unlayered block at the bottom of this file. */
+  No theme class names appear here — token inheritance handles all
+  theme and dark-mode variation. */
 
 @utility link {
   @apply inline-block wrap-break-word cursor-pointer;

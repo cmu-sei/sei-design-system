@@ -1,9 +1,9 @@
-/* Public action-btn-* classes remain as compatibility aliases, backed by a shared tokenized primitive. */
+/* Public action-btn-* classes are compact compatibility aliases backed by sds-btn. */
 
 @utility action-btn {
-  @apply border py-1.5 px-1.5 rounded-theme-sm select-none whitespace-nowrap cursor-pointer;
+  @apply sds-btn border py-1.5 px-1.5 rounded-theme-sm;
   @apply inline-flex gap-1.5 items-center text-left;
-  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
+  @apply focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
   @apply [&:not(:has(svg)):not(:has(img)):not(:has([data-id='sds-avatar']))]:py-1;
   @apply sds-disabled:pointer-events-none sds-disabled:opacity-50;
   @apply sds-disabled:[&.action-btn-primary]:text-gray-100/50 sds-disabled:[&.action-btn-primary]:bg-gray-600/50;
@@ -19,29 +19,26 @@
   @apply [--ab-s-border:--alpha(var(--color-gray-600)/20%)];
   @apply [--ab-g-text:var(--color-gray-600)] [--ab-g-text-hover:var(--color-gray-700)] [--ab-g-text-active:var(--color-gray-600)];
   @apply [--ab-g-bg:--alpha(var(--color-gray-600)/0%)] [--ab-g-bg-hover:--alpha(var(--color-gray-600)/10%)] [--ab-g-bg-active:--alpha(var(--color-gray-600)/20%)];
+  @apply [--sds-btn-primary-text:var(--ab-p-text)] [--sds-btn-primary-text-hover:var(--ab-p-text-hover)] [--sds-btn-primary-text-active:var(--ab-p-text-active)] [--sds-btn-primary-bg:var(--ab-p-bg)] [--sds-btn-primary-bg-hover:var(--ab-p-bg-hover)] [--sds-btn-primary-bg-active:var(--ab-p-bg-active)];
+  @apply [--sds-btn-secondary-text:var(--ab-s-text)] [--sds-btn-secondary-text-hover:var(--ab-s-text-hover)] [--sds-btn-secondary-text-active:var(--ab-s-text-active)] [--sds-btn-secondary-bg:var(--ab-s-bg)] [--sds-btn-secondary-bg-hover:var(--ab-s-bg-hover)] [--sds-btn-secondary-bg-active:var(--ab-s-bg-active)] [--sds-btn-secondary-border:var(--ab-s-border)];
+  @apply [--sds-btn-ghost-text:var(--ab-g-text)] [--sds-btn-ghost-text-hover:var(--ab-g-text-hover)] [--sds-btn-ghost-text-active:var(--ab-g-text-active)] [--sds-btn-ghost-bg:var(--ab-g-bg)] [--sds-btn-ghost-bg-hover:var(--ab-g-bg-hover)] [--sds-btn-ghost-bg-active:var(--ab-g-bg-active)];
 }
 
 @utility action-btn-primary {
-  @apply text-(--ab-p-text) bg-(--ab-p-bg) border-transparent;
-  @apply where-hover:text-(--ab-p-text-hover) where-hover:bg-(--ab-p-bg-hover);
-  @apply where-active:text-(--ab-p-text-active) where-active:bg-(--ab-p-bg-active);
+  @apply sds-btn-primary;
   @apply dark:[--ab-p-text:var(--color-gray-900)] dark:[--ab-p-text-hover:var(--color-black)] dark:[--ab-p-text-active:var(--color-black)];
   @apply dark:[--ab-p-bg:var(--color-gray-400)] dark:[--ab-p-bg-hover:var(--color-gray-500)] dark:[--ab-p-bg-active:var(--color-gray-300)];
 }
 
 @utility action-btn-secondary {
-  @apply text-(--ab-s-text) bg-(--ab-s-bg) border-(--ab-s-border);
-  @apply where-hover:text-(--ab-s-text-hover) where-hover:bg-(--ab-s-bg-hover);
-  @apply where-active:text-(--ab-s-text-active) where-active:bg-(--ab-s-bg-active);
+  @apply sds-btn-secondary;
   @apply dark:[--ab-s-text:var(--color-gray-400)] dark:[--ab-s-text-hover:var(--color-gray-300)] dark:[--ab-s-text-active:var(--color-gray-400)];
   @apply dark:[--ab-s-border:--alpha(var(--color-gray-400)/20%)];
   @apply dark:[--ab-s-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-s-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-s-bg-active:--alpha(var(--color-gray-400)/20%)];
 }
 
 @utility action-btn-ghost {
-  @apply text-(--ab-g-text) bg-(--ab-g-bg) border-transparent;
-  @apply where-hover:text-(--ab-g-text-hover) where-hover:bg-(--ab-g-bg-hover);
-  @apply where-active:text-(--ab-g-text-active) where-active:bg-(--ab-g-bg-active);
+  @apply sds-btn-ghost;
   @apply dark:[--ab-g-text:var(--color-gray-400)] dark:[--ab-g-text-hover:var(--color-gray-300)] dark:[--ab-g-text-active:var(--color-gray-400)];
   @apply dark:[--ab-g-bg:--alpha(var(--color-gray-400)/0%)] dark:[--ab-g-bg-hover:--alpha(var(--color-gray-400)/10%)] dark:[--ab-g-bg-active:transparent];
 }

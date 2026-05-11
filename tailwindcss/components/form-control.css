@@ -42,13 +42,16 @@
   @apply dark:sds-disabled:text-gray-600 dark:sds-disabled:bg-gray-900 dark:sds-disabled:border-gray-600;
   @apply [&.readonly]:bg-gray-50 dark:[&.readonly]:bg-gray-750;
   @apply *:data-[id^='sds-']:grow [&>.form-control]:grow;
-  @apply *:rounded-none! *:first:rounded-l-theme-sm! *:last:rounded-r-theme-sm!;
-  @apply *:border-0!;
-  @apply *:focus:outline-none! *:focus:ring-0! *:focus-visible:outline-none! *:focus-visible:ring-0!;
-  @apply [&>[data-id^='sds-']_.form-control]:border-0! [&>[data-id^='sds-']_.form-control]:rounded-none!;
-  @apply [&>[data-id^='sds-']_.form-control:focus]:outline-none! [&>[data-id^='sds-']_.form-control:focus]:ring-0!;
-  @apply [&>[data-id^='sds-']_.form-control:focus-visible]:outline-none! [&>[data-id^='sds-']_.form-control:focus-visible]:ring-0!;
-  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-sm! [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-sm!;
+  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
+  @apply *:border-0 *:border-transparent;
+  @apply *:focus:outline-none *:focus:ring-0 *:focus-visible:outline-none *:focus-visible:ring-0;
+  @apply [&>.form-control]:border-0 [&>.form-control]:border-transparent;
+  @apply [&>[data-id^='sds-']_.form-control]:border-0 [&>[data-id^='sds-']_.form-control]:border-transparent [&>[data-id^='sds-']_.form-control]:rounded-none;
+  @apply [&>.form-control:focus]:outline-none [&>.form-control:focus]:ring-0;
+  @apply [&>.form-control:focus-visible]:outline-none [&>.form-control:focus-visible]:ring-0;
+  @apply [&>[data-id^='sds-']_.form-control:focus]:outline-none [&>[data-id^='sds-']_.form-control:focus]:ring-0;
+  @apply [&>[data-id^='sds-']_.form-control:focus-visible]:outline-none [&>[data-id^='sds-']_.form-control:focus-visible]:ring-0;
+  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-sm [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-sm;
   @apply [&>.input-group-addon]:flex [&>.input-group-addon]:items-center;
   @apply [&>.input-group-addon]:text-center [&>.input-group-addon]:whitespace-nowrap;
   @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:text-gray-500 dark:[&>.input-group-addon]:text-gray-300 [&>.input-group-addon]:px-1.5;
@@ -92,8 +95,8 @@
 
 @utility btn-group {
   @apply relative flex items-stretch w-fit rounded-theme-sm;
-  @apply *:rounded-none! *:first:rounded-l-theme-sm! *:last:rounded-r-theme-sm!;
-  @apply *:border-l-0! *:first:border-l-2!;
+  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
+  @apply *:border-l-0 *:first:border-l-2;
 }
 
 @utility btn-group-sm {

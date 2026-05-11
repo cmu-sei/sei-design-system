@@ -1,11 +1,7 @@
-/* ===== BASE BUTTON UTILITY ===== */
-/* Uses CSS custom property tokens from tailwindcss/theme/tokens.css.
-   No theme class names appear here — token inheritance through the DOM
-   handles all theme and dark-mode variation. */
+/* Public btn-* classes are compatibility aliases backed by the shared sds-btn primitive. */
 
 @utility btn {
-  @apply border-2 border-transparent inline-block py-2 px-8 select-none whitespace-nowrap font-semibold cursor-pointer;
-  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2;
+  @apply sds-btn border-2 border-transparent inline-block py-2 px-8 font-semibold;
   @apply sds-disabled:pointer-events-none sds-disabled:opacity-50 sds-disabled:text-gray-500;
   @apply sds-disabled:[&.btn-primary]:border-gray-500 sds-disabled:[&.btn-secondary]:border-gray-500 sds-disabled:[&.btn-tertiary]:border-gray-500;
   @apply sds-disabled:[&.btn-primary:not(.btn-white)]:bg-gray-500 sds-disabled:[&.btn-primary:not(.btn-white)]:text-gray-100;
@@ -13,33 +9,33 @@
   @apply sds-disabled:[&.btn-white.btn-primary]:bg-gray-50/75 sds-disabled:[&.btn-white.btn-primary]:text-gray-900/60;
   @apply sds-disabled:[&.btn-white.btn-secondary]:bg-white/45 sds-disabled:[&.btn-white.btn-secondary]:text-gray-900/50 sds-disabled:[&.btn-white.btn-secondary]:border-white/55;
   @apply sds-disabled:[&.btn-white.btn-tertiary]:text-white/75 sds-disabled:[&.btn-white.btn-tertiary]:border-white/75 sds-disabled:[&.btn-white.btn-ghost]:text-white/75;
-  @apply rounded-(--btn-radius,0) ring-(--btn-focus-ring,var(--color-blue-300));
+  @apply rounded-(--btn-radius,0);
+  @apply [--sds-btn-focus-ring:var(--btn-focus-ring,var(--color-blue-300))];
+  @apply [--sds-btn-primary-text:var(--btn-accent-text)] [--sds-btn-primary-bg:var(--btn-accent-bg)] [--sds-btn-primary-bg-hover:var(--btn-accent-bg-hover)] [--sds-btn-primary-bg-active:var(--btn-accent-bg)];
+  @apply [--sds-btn-secondary-text:var(--btn-secondary-text)] [--sds-btn-secondary-bg:var(--btn-secondary-bg)] [--sds-btn-secondary-border:var(--btn-secondary-border)];
+  @apply [--sds-btn-secondary-text-hover:var(--btn-secondary-text-hover)] [--sds-btn-secondary-bg-hover:var(--btn-secondary-bg-hover)] [--sds-btn-secondary-text-active:var(--btn-secondary-text-active)] [--sds-btn-secondary-bg-active:var(--btn-secondary-bg-active)];
+  @apply [--sds-btn-tertiary-text:var(--btn-tertiary-text)] [--sds-btn-tertiary-border:var(--btn-tertiary-border)];
+  @apply [--sds-btn-tertiary-text-hover:var(--btn-tertiary-text-hover)] [--sds-btn-tertiary-bg-hover:var(--btn-tertiary-bg-hover)] [--sds-btn-tertiary-border-hover:var(--btn-tertiary-border-hover)];
+  @apply [--sds-btn-tertiary-text-active:var(--btn-tertiary-text-active)] [--sds-btn-tertiary-bg-active:var(--btn-tertiary-bg-active)] [--sds-btn-tertiary-border-active:var(--btn-tertiary-border-active)];
+  @apply [--sds-btn-ghost-text:var(--btn-ghost-text)] [--sds-btn-ghost-text-hover:var(--btn-ghost-text-hover)] [--sds-btn-ghost-bg-hover:var(--btn-ghost-bg-hover)] [--sds-btn-ghost-text-active:var(--btn-ghost-text-active)] [--sds-btn-ghost-bg-active:var(--btn-ghost-bg-active)];
 }
 
 /* ===== BUTTON KIND UTILITIES ===== */
 
 @utility btn-primary {
-  @apply text-(--btn-accent-text) bg-(--btn-accent-bg);
-  @apply where-hover:bg-(--btn-accent-bg-hover);
-  @apply where-active:bg-(--btn-accent-bg) where-active:shadow-inner;
+  @apply sds-btn-primary;
 }
 
 @utility btn-secondary {
-  @apply text-(--btn-secondary-text) bg-(--btn-secondary-bg) border-(--btn-secondary-border);
-  @apply where-hover:text-(--btn-secondary-text-hover) where-hover:bg-(--btn-secondary-bg-hover);
-  @apply where-active:text-(--btn-secondary-text-active) where-active:bg-(--btn-secondary-bg-active) where-active:shadow-inner;
+  @apply sds-btn-secondary;
 }
 
 @utility btn-tertiary {
-  @apply text-(--btn-tertiary-text) border-(--btn-tertiary-border);
-  @apply where-hover:text-(--btn-tertiary-text-hover) where-hover:bg-(--btn-tertiary-bg-hover) where-hover:border-(--btn-tertiary-border-hover);
-  @apply where-active:text-(--btn-tertiary-text-active) where-active:bg-(--btn-tertiary-bg-active) where-active:border-(--btn-tertiary-border-active) where-active:shadow-inner;
+  @apply sds-btn-tertiary;
 }
 
 @utility btn-ghost {
-  @apply text-(--btn-ghost-text);
-  @apply where-hover:text-(--btn-ghost-text-hover) where-hover:bg-(--btn-ghost-bg-hover);
-  @apply where-active:text-(--btn-ghost-text-active) where-active:bg-(--btn-ghost-bg-active) where-active:shadow-inner;
+  @apply sds-btn-ghost;
 }
 
 /* ===== COLOR VARIANT UTILITIES (cascade token trick) ===== */

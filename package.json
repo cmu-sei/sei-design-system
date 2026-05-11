@@ -8,6 +8,7 @@
     "lint": "NODE_OPTIONS='--trace-warnings' npx eslint .",
     "lint:fix": "NODE_OPTIONS='--trace-warnings' npx eslint . --fix",
     "lint:ci": "npm run lint && npm run typecheck",
+    "check:tailwindcss": "node scripts/check-tailwind-components.js",
     "typecheck": "vue-tsc --noEmit",
     "test": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vitest run -c vite-library.config.js",
     "test:watch": "LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vitest -c vite-library.config.js",

@@ -17,6 +17,7 @@
 @import './theme/tokens';
 
 /* Components */
+@import './components/primitives/sds-btn';
 @import './components/action-btn';
 @import './components/btn';
 @import './components/form-control';
