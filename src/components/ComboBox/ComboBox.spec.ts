@@ -1351,6 +1351,44 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('renders trailing slot controls inside the input group', () => {
+    const wrapper = mountComponent({
+      props: {
+        focusOnKeyPress: true,
+        placeholder: 'Search (Press "/" to focus)',
+        suggestions
+      },
+      slots: {
+        default: () => [
+          h('div', {
+            class: 'border-l border-gray-200 dark:border-gray-700 rounded-l-none my-2 mx-1',
+            'data-id': 'command-palette-divider'
+          }),
+          h('div', {
+            class: 'inline-block my-auto mr-1',
+            'data-id': 'command-palette-tooltip'
+          }, [
+            h('button', {
+              class: 'action-btn action-btn-ghost action-btn-sm',
+              'data-id': 'command-palette-btn',
+              type: 'button'
+            }, 'Command Palette')
+          ])
+        ]
+      }
+    })
+
+    const inputGroup = wrapper.find('.input-group')
+    const divider = wrapper.find('[data-id="command-palette-divider"]')
+    const button = wrapper.find('[data-id="command-palette-btn"]')
+    expect(inputGroup.exists()).toBe(true)
+    expect(divider.exists()).toBe(true)
+    expect(button.exists()).toBe(true)
+    expect(divider.element.parentElement).toBe(inputGroup.element)
+    expect(button.element.closest('[data-id="command-palette-tooltip"]')?.parentElement).toBe(inputGroup.element)
+    wrapper.unmount()
+  })
+
   it('replaces existing single-select selection when user starts typing', async () => {
     const wrapper = mountComponent({
       props: {

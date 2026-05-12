@@ -38,10 +38,12 @@
 @utility input-group {
   @apply relative flex items-stretch w-full overflow-clip focus-ring rounded-theme-sm;
   @apply form-border;
+  @apply bg-white dark:bg-gray-900/50;
   @apply sds-disabled:pointer-events-none sds-disabled:select-none sds-disabled:text-gray-400 sds-disabled:bg-gray-100 sds-disabled:border-gray-300;
   @apply dark:sds-disabled:text-gray-600 dark:sds-disabled:bg-gray-900 dark:sds-disabled:border-gray-600;
   @apply [&.readonly]:bg-gray-50 dark:[&.readonly]:bg-gray-750;
   @apply *:data-[id^='sds-']:grow [&>.form-control]:grow;
+  @apply [&>*:not(.form-control):not(.input-group-addon)]:bg-inherit;
   @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
   @apply *:border-0 *:border-transparent;
   @apply *:focus:outline-none *:focus:ring-0 *:focus-visible:outline-none *:focus-visible:ring-0;
