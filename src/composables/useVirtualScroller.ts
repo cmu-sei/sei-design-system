@@ -16,6 +16,7 @@ interface UseVirtualScrollerOptions<T> {
   itemHeight: MaybeRefOrGetter<number>;
   containerRef?: Ref<HTMLElement | undefined>;
   containerHeight?: MaybeRefOrGetter<number | undefined>;
+  scrollOffset?: MaybeRefOrGetter<number | undefined>;
   overscan?: MaybeRefOrGetter<number>;
   getKey?: (item: T, index: number) => string | number;
 }
@@ -32,6 +33,7 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
   const itemHeight = computed(() => Math.max(1, toValue(options.itemHeight)))
   const overscan = computed(() => Math.max(0, toValue(options.overscan) ?? 0))
   const items = computed(() => [...toValue(options.items)])
+  const scrollOffset = computed(() => Math.max(0, toValue(options.scrollOffset) ?? 0))
 
   if (options.containerRef) {
     useResizeObserver(options.containerRef, (entry) => {
@@ -80,7 +82,7 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
   const setScrollTop = (value: number): void => {
     scrollTop.value = Math.max(0, Math.min(value, Math.max(0, totalHeight.value - containerHeight.value)))
     if (options.containerRef?.value) {
-      options.containerRef.value.scrollTop = scrollTop.value
+      options.containerRef.value.scrollTop = scrollTop.value + scrollOffset.value
     }
   }
 
@@ -91,7 +93,7 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
 
   const onScroll = (event: Event): void => {
     const target = event.target as HTMLElement | null
-    scrollTop.value = target?.scrollTop ?? 0
+    scrollTop.value = Math.max(0, (target?.scrollTop ?? 0) - scrollOffset.value)
   }
 
   const scrollToIndex = (index: number, align: VirtualScrollAlignment = 'auto'): void => {
