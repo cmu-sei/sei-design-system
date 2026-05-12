@@ -2014,6 +2014,7 @@ describe('ComboBox', () => {
     const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
         clickToSelect: true,
@@ -2035,6 +2036,7 @@ describe('ComboBox', () => {
     const largeSuggestions = Array.from({ length: 200 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
         clickToSelect: true,
@@ -2064,6 +2066,7 @@ describe('ComboBox', () => {
     const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
         clickToSelect: true,
@@ -2092,6 +2095,7 @@ describe('ComboBox', () => {
     const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
         clickToSelect: true,
@@ -2136,6 +2140,7 @@ describe('ComboBox', () => {
         type: 'select',
         clickToSelect: true,
         filterSuggestions: true,
+        virtualize: true,
         debounceComplete: 0,
         optionLabel: 'name',
         optionGroupLabel: 'section',
@@ -2169,6 +2174,7 @@ describe('ComboBox', () => {
     })
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: [
           createCategory('Artifacts'),
           createCategory('Books'),
@@ -2240,6 +2246,7 @@ describe('ComboBox', () => {
         type: 'select',
         clickToSelect: true,
         debounceComplete: 0,
+        virtualize: true,
         optionLabel: 'name',
         optionGroupLabel: 'section',
         optionGroupChildren: 'items'
@@ -2261,6 +2268,7 @@ describe('ComboBox', () => {
     const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
         clickToSelect: true,
@@ -2337,6 +2345,7 @@ describe('ComboBox', () => {
     ]
     const wrapper = mountComponent({
       props: {
+        virtualize: true,
         suggestions: groupedLargeSuggestions,
         type: 'select',
         clickToSelect: true,

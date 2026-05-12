@@ -805,7 +805,7 @@ interface ComboBoxProps {
    * grouped lists responsive. It is used only when `optionType` is not `custom` and the visible
    * option count meets `virtualizeThreshold`.
    *
-   * @default true
+   * @default false
    */
   virtualize?: boolean;
   /**
@@ -888,7 +888,7 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   required: false,
   valid: false,
   invalid: false,
-  virtualize: true,
+  virtualize: false,
   virtualizeThreshold: 100,
   virtualItemHeight: 36
 })
