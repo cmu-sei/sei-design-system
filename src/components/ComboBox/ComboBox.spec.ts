@@ -94,6 +94,17 @@ describe('ComboBox', () => {
     Array.from(document.body.querySelectorAll(selector)) as HTMLElement[]
   const dropdownInBody = () => findInBody('[role="listbox"]')
   const text = (el: HTMLElement | null): string => (el?.textContent ?? '').trim()
+  const findOptionInBody = (label: string): HTMLElement | undefined =>
+    findAllInBody('[data-id="sds-scroll-area"] button').find(button => text(button) === label)
+  const getTranslateY = (element: HTMLElement): number => {
+    const match = element.style.transform.match(/translateY\((-?\d+(?:\.\d+)?)px\)/)
+    return match ? Number(match[1]) : 0
+  }
+  const expectOptionVisibleInScrollArea = (scrollArea: HTMLElement, option: HTMLElement, height: number) => {
+    const optionTop = getTranslateY(option)
+    expect(optionTop).toBeGreaterThanOrEqual(scrollArea.scrollTop)
+    expect(optionTop + height).toBeLessThanOrEqual(scrollArea.scrollTop + 288)
+  }
 
   it('should match its default snapshot', () => {
     const wrapper = mountComponent({
@@ -2150,6 +2161,101 @@ describe('ComboBox', () => {
     const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
     expect(scrollArea!.scrollTop).toBe((largeSuggestions.length * 36) - 288 + 36)
     expect(text(activeOption)).toBe('Option 149')
+    wrapper.unmount()
+  })
+
+  it('shows the last virtualized option inside the scroll viewport when manually scrolled to the bottom of an extremely large list', async () => {
+    const largeSuggestions = Array.from({ length: 300000 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        virtualize: true,
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    scrollArea!.scrollTop = 10000000 - 288
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+
+    const lastOption = findOptionInBody('Option 299999')
+    expect(lastOption).toBeTruthy()
+    expectOptionVisibleInScrollArea(scrollArea!, lastOption!, 36)
+    wrapper.unmount()
+  })
+
+  it('resets capped virtualized scrolling when filtering changes an extremely large list', async () => {
+    const largeSuggestions = Array.from({ length: 35000 }, (_, index) => `Option ${index}`)
+    const virtualItemHeight = 288
+    const wrapper = mountComponent({
+      props: {
+        virtualize: true,
+        suggestions: largeSuggestions,
+        type: 'select',
+        clickToSelect: true,
+        filterSuggestions: true,
+        virtualItemHeight,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    scrollArea!.scrollTop = 10000000 - 288
+    scrollArea!.dispatchEvent(new Event('scroll'))
+    await flushDropdown()
+    const lastOption = findOptionInBody('Option 34999')
+    expect(lastOption).toBeTruthy()
+    expectOptionVisibleInScrollArea(scrollArea!, lastOption!, virtualItemHeight)
+
+    await input.setValue('Option 12')
+    await flushDropdown()
+
+    expect(scrollArea!.scrollTop).toBe(0)
+    const firstFilteredOption = findOptionInBody('Option 12')
+    expect(firstFilteredOption).toBeTruthy()
+    expectOptionVisibleInScrollArea(scrollArea!, firstFilteredOption!, virtualItemHeight)
+    expect(text(dropdownInBody())).toContain('Option 120')
+    expect(text(dropdownInBody())).not.toContain('Option 34999')
+    wrapper.unmount()
+  })
+
+  it('scrolls to the Add row after a virtualized option list during keyboard navigation', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    const wrapper = mountComponent({
+      props: {
+        virtualize: true,
+        suggestions: largeSuggestions,
+        type: 'taggable-select',
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.setValue('Dragonfruit')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+    Object.defineProperty(scrollArea!, 'scrollHeight', { value: (largeSuggestions.length + 1) * 36, configurable: true })
+    Object.defineProperty(scrollArea!, 'clientHeight', { value: 288, configurable: true })
+
+    await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
+    await flushDropdown()
+
+    const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
+    expect(text(activeOption)).toBe('Add "Dragonfruit"')
+    expect(scrollArea!.scrollTop).toBe(((largeSuggestions.length + 1) * 36) - 288)
     wrapper.unmount()
   })
 
