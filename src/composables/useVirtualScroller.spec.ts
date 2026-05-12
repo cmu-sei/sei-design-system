@@ -71,6 +71,35 @@ describe('useVirtualScroller', () => {
     expect(virtualScroller.scrollTop.value).toBe(0)
   })
 
+  it('maps very large virtual lists into a capped physical scroll range', () => {
+    const container = ref(document.createElement('div'))
+    const virtualScroller = useVirtualScroller({
+      items: Array.from({ length: 1000000 }, (_, index) => index),
+      itemHeight: 20,
+      containerHeight: 100,
+      containerRef: container,
+      maxScrollHeight: 1000,
+      overscan: 0
+    })
+
+    expect(virtualScroller.totalHeight.value).toBe(20000000)
+    expect(virtualScroller.scrollHeight.value).toBe(1000)
+
+    virtualScroller.setScrollTop(19999900)
+    expect(container.value.scrollTop).toBe(900)
+    expect(virtualScroller.virtualItems.value.map(item => item.index)).toContain(999999)
+    expect(virtualScroller.virtualItems.value.at(-1)).toMatchObject({
+      index: 999999,
+      offsetTop: 980,
+      height: 20
+    })
+
+    container.value.scrollTop = 900
+    virtualScroller.onScroll({ target: container.value } as unknown as Event)
+    expect(virtualScroller.scrollTop.value).toBe(19999900)
+    expect(virtualScroller.virtualItems.value.map(item => item.index)).toContain(999999)
+  })
+
   it('updates scrollTop from scroll events', () => {
     const virtualScroller = useVirtualScroller({
       items: ['A', 'B', 'C'],

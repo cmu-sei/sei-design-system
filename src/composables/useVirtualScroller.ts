@@ -17,9 +17,12 @@ interface UseVirtualScrollerOptions<T> {
   containerRef?: Ref<HTMLElement | undefined>;
   containerHeight?: MaybeRefOrGetter<number | undefined>;
   scrollOffset?: MaybeRefOrGetter<number | undefined>;
+  maxScrollHeight?: MaybeRefOrGetter<number | undefined>;
   overscan?: MaybeRefOrGetter<number>;
   getKey?: (item: T, index: number) => string | number;
 }
+
+const DEFAULT_MAX_SCROLL_HEIGHT = 10000000
 
 /**
  * Calculates a fixed-height virtual scrolling window for large lists.
@@ -34,6 +37,7 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
   const overscan = computed(() => Math.max(0, toValue(options.overscan) ?? 0))
   const items = computed(() => [...toValue(options.items)])
   const scrollOffset = computed(() => Math.max(0, toValue(options.scrollOffset) ?? 0))
+  const maxScrollHeight = computed(() => Math.max(containerHeight.value, toValue(options.maxScrollHeight) ?? DEFAULT_MAX_SCROLL_HEIGHT))
 
   if (options.containerRef) {
     useResizeObserver(options.containerRef, (entry) => {
@@ -55,6 +59,19 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
 
   const containerHeight = computed(() => Math.max(0, measuredContainerHeight.value))
   const totalHeight = computed(() => items.value.length * itemHeight.value)
+  const scrollHeight = computed(() => Math.min(totalHeight.value, maxScrollHeight.value))
+  const maxScrollTop = computed(() => Math.max(0, totalHeight.value - containerHeight.value))
+  const maxPhysicalScrollTop = computed(() => Math.max(0, scrollHeight.value - containerHeight.value))
+
+  const toPhysicalScrollTop = (value: number): number => {
+    if (maxScrollTop.value === 0 || maxPhysicalScrollTop.value === 0) return 0
+    return value / maxScrollTop.value * maxPhysicalScrollTop.value
+  }
+
+  const toVirtualScrollTop = (value: number): number => {
+    if (maxPhysicalScrollTop.value === 0) return 0
+    return value / maxPhysicalScrollTop.value * maxScrollTop.value
+  }
 
   const startIndex = computed(() => {
     const firstVisibleIndex = Math.floor(scrollTop.value / itemHeight.value)
@@ -67,33 +84,35 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
   })
 
   const virtualItems = computed<VirtualListItem<T>[]>(() => {
+    const physicalScrollTop = toPhysicalScrollTop(scrollTop.value)
     return items.value.slice(startIndex.value, endIndex.value).map((item, offset) => {
       const index = startIndex.value + offset
+      const virtualOffsetTop = index * itemHeight.value
       return {
         item,
         index,
         key: options.getKey?.(item, index) ?? index,
-        offsetTop: index * itemHeight.value,
+        offsetTop: physicalScrollTop + virtualOffsetTop - scrollTop.value,
         height: itemHeight.value
       }
     })
   })
 
   const setScrollTop = (value: number): void => {
-    scrollTop.value = Math.max(0, Math.min(value, Math.max(0, totalHeight.value - containerHeight.value)))
+    scrollTop.value = Math.max(0, Math.min(value, maxScrollTop.value))
     if (options.containerRef?.value) {
-      options.containerRef.value.scrollTop = scrollTop.value + scrollOffset.value
+      options.containerRef.value.scrollTop = toPhysicalScrollTop(scrollTop.value) + scrollOffset.value
     }
   }
 
   watchEffect(() => {
-    const maxScrollTop = Math.max(0, totalHeight.value - containerHeight.value)
-    if (scrollTop.value > maxScrollTop) setScrollTop(maxScrollTop)
+    if (scrollTop.value > maxScrollTop.value) setScrollTop(maxScrollTop.value)
   })
 
   const onScroll = (event: Event): void => {
     const target = event.target as HTMLElement | null
-    scrollTop.value = Math.max(0, (target?.scrollTop ?? 0) - scrollOffset.value)
+    const physicalScrollTop = Math.max(0, Math.min((target?.scrollTop ?? 0) - scrollOffset.value, maxPhysicalScrollTop.value))
+    scrollTop.value = toVirtualScrollTop(physicalScrollTop)
   }
 
   const scrollToIndex = (index: number, align: VirtualScrollAlignment = 'auto'): void => {
@@ -123,6 +142,7 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
     scrollTop,
     containerHeight,
     totalHeight,
+    scrollHeight,
     startIndex,
     endIndex,
     virtualItems,

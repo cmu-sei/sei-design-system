@@ -389,7 +389,7 @@
           v-if="shouldVirtualizeOptions && suggestionOptions.length"
           ref="virtualOptionsContainer"
           class="relative shrink-0"
-          :style="{ height: `${virtualOptionsHeight}px` }"
+          :style="{ height: `${virtualOptionsScrollHeight}px` }"
         >
           <template
             v-for="virtualRow in virtualSuggestionRows"
@@ -1062,6 +1062,7 @@ const displayOptionRows = computed<ComboBoxDisplayRow[]>(() => {
 const {
   virtualItems: virtualSuggestionRows,
   totalHeight: virtualOptionsHeight,
+  scrollHeight: virtualOptionsScrollHeight,
   onScroll: onVirtualScroll,
   scrollToIndex: scrollToVirtualIndex,
   setScrollTop: setVirtualScrollTop
@@ -1283,6 +1284,10 @@ const resetVirtualScroll = () => {
   if (parent) parent.scrollTop = 0
 }
 
+const scrollToScrollAreaBottom = (parent: HTMLElement) => {
+  parent.scrollTop = Math.max(parent.scrollTop, parent.scrollHeight - (parent.clientHeight || 288))
+}
+
 const canSwitchTabsFromInputBoundary = (direction: 'left' | 'right', event: KeyboardEvent): boolean => {
   if (!hasCategories.value || !shouldShowDropdown.value) return false
   const inputElement = inputField.value as HTMLInputElement | undefined
@@ -1309,6 +1314,8 @@ const scrollToChild = async () => {
       scrollToVirtualIndex(virtualIndex, alignment)
     } else if (activeItem?.kind === 'add') {
       setVirtualScrollTop(virtualOptionsHeight.value)
+      const parent = getScrollAreaElement()
+      if (parent) scrollToScrollAreaBottom(parent)
       return
     }
     return
