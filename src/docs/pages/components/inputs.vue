@@ -392,6 +392,7 @@
             option-label="name"
             option-group-label="section"
             option-group-children="items"
+            virtualize
             @complete="comboBox9.onComplete"
             @result="comboBox9.onResult"
             @enter="comboBox9.onEnter"

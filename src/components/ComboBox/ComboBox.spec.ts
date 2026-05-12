@@ -2119,6 +2119,40 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('scrolls virtualized options to the last item when Select All renders above the list', async () => {
+    const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
+    vi.spyOn(window.HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      const top = this.classList.contains('relative') && this.style.height === `${largeSuggestions.length * 36}px` ? 36 : 0
+      return new DOMRect(0, top, 0, 36)
+    })
+    const wrapper = mountComponent({
+      props: {
+        virtualize: true,
+        suggestions: largeSuggestions,
+        type: 'select',
+        multiple: true,
+        enableSelectAll: true,
+        clickToSelect: true,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
+    expect(scrollArea).toBeTruthy()
+
+    await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
+    await input.trigger('keydown.up')
+    await flushDropdown()
+
+    const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
+    expect(scrollArea!.scrollTop).toBe((largeSuggestions.length * 36) - 288 + 36)
+    expect(text(activeOption)).toBe('Option 149')
+    wrapper.unmount()
+  })
+
   it('scrolls grouped virtualized options to the final group item when ArrowUp wraps from the input', async () => {
     const createCategory = (section: string) => ({
       section,

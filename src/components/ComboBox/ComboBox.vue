@@ -387,6 +387,7 @@
         </template>
         <div
           v-if="shouldVirtualizeOptions && suggestionOptions.length"
+          ref="virtualOptionsContainer"
           class="relative shrink-0"
           :style="{ height: `${virtualOptionsHeight}px` }"
         >
@@ -897,6 +898,7 @@ const emit = defineEmits(['close', 'complete', 'enter', 'focus', 'open', 'result
 
 const scrollArea = ref(), inputField = ref()
 const virtualScrollContainer = ref<HTMLElement>()
+const virtualOptionsContainer = ref<HTMLElement>()
 const floatingUiRef = ref()
 const dropdownRef = ref()
 const componentId = useId()
@@ -1068,6 +1070,7 @@ const {
   itemHeight: () => props.virtualItemHeight,
   containerRef: virtualScrollContainer,
   containerHeight: 288,
+  scrollOffset: getVirtualOptionsOffset,
   overscan: 6,
   getKey: item => item.key
 })
@@ -1259,6 +1262,15 @@ const getScrollAreaElement = (): HTMLElement | undefined => {
   const element = scrollArea.value instanceof HTMLElement ? scrollArea.value : scrollArea.value.$el
   virtualScrollContainer.value = element
   return element
+}
+
+function getVirtualOptionsOffset(): number {
+  const parent = getScrollAreaElement()
+  const child = virtualOptionsContainer.value
+  if (!parent || !child) return 0
+  const parentTop = parent.getBoundingClientRect().top
+  const childTop = child.getBoundingClientRect().top
+  return Math.max(0, childTop - parentTop + parent.scrollTop)
 }
 
 const onComboBoxTabsFocusIn = () => {

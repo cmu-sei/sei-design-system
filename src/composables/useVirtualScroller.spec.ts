@@ -47,6 +47,30 @@ describe('useVirtualScroller', () => {
     expect(virtualScroller.scrollTop.value).toBe(80)
   })
 
+  it('accounts for scroll content above the virtual list', () => {
+    const container = ref(document.createElement('div'))
+    const virtualScroller = useVirtualScroller({
+      items: Array.from({ length: 20 }, (_, index) => index),
+      itemHeight: 10,
+      containerHeight: 50,
+      containerRef: container,
+      scrollOffset: 20,
+      overscan: 0
+    })
+
+    virtualScroller.scrollToIndex(19, 'end')
+    expect(virtualScroller.scrollTop.value).toBe(150)
+    expect(container.value.scrollTop).toBe(170)
+
+    container.value.scrollTop = 170
+    virtualScroller.onScroll({ target: container.value } as unknown as Event)
+    expect(virtualScroller.scrollTop.value).toBe(150)
+
+    container.value.scrollTop = 10
+    virtualScroller.onScroll({ target: container.value } as unknown as Event)
+    expect(virtualScroller.scrollTop.value).toBe(0)
+  })
+
   it('updates scrollTop from scroll events', () => {
     const virtualScroller = useVirtualScroller({
       items: ['A', 'B', 'C'],
