@@ -52,6 +52,16 @@ export { formFieldProps, useFormField } from './useFormProps'
 export type { DropdownPlacement } from './types'
 export type { FormFieldProps, ComponentPropsWithFormFields } from './useFormProps'
 
+export { removeHtmlFromString, normalizeString, useComboBoxSuggestions } from './useComboBoxSuggestions'
+export type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxSuggestionObject, ComboBoxType } from './useComboBoxSuggestions'
+
+export { useComboBoxQuery } from './useComboBoxQuery'
+
+export { useComboBoxSelection } from './useComboBoxSelection'
+
+export { useComboBoxDropdownItems } from './useComboBoxDropdownItems'
+export type { ComboBoxDropdownItem } from './useComboBoxDropdownItems'
+
 export { useDebounce } from './useDebounce'
 
 export { useThrottle } from './useThrottle'
@@ -61,6 +71,9 @@ export { useThrottleAndDebounce } from './useThrottleAndDebounce'
 export { useClickOutside } from './useClickOutside'
 
 export { useResizeObserver } from './useResizeObserver'
+
+export { useVirtualScroller } from './useVirtualScroller'
+export type { VirtualListItem, VirtualScrollAlignment } from './useVirtualScroller'
 
 export { useLocalStorage, useSessionStorage } from './useStorage'
 

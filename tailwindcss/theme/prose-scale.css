@@ -1,0 +1,112 @@
+/**
+ * Responsive Size Variants
+ */
+
+@utility prose-md {
+  @apply prose;
+}
+
+@utility prose-sm {
+  max-width: 75ch;
+  font-size: var(--text-sm);
+
+  & :where(h1:not(:first-child):not(.not-prose, .not-prose *)),
+  & :where(h2:not(:first-child):not(.not-prose, .not-prose *)),
+  & :where(h3:not(:first-child):not(.not-prose, .not-prose *)),
+  & :where(h4:not(:first-child):not(.not-prose, .not-prose *)),
+  & :where(h5:not(:first-child):not(.not-prose, .not-prose *)),
+  & :where(h6:not(:first-child):not(.not-prose, .not-prose *)) {
+    margin-top: --spacing(6);
+  }
+
+  & :where(h1:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-3xl);
+    line-height: 38px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-4xl);
+    }
+  }
+
+  & :where(h1:not(:last-child):not(.not-prose, .not-prose *)) {
+    margin-bottom: --spacing(4);
+  }
+
+  & :where(h2:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-2xl);
+    line-height: 28px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  & :where(h3:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xl);
+    line-height: 26px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-2xl);
+    }
+  }
+
+  & :where(h3:not(:last-child):not(.not-prose, .not-prose *)) {
+    margin-bottom: --spacing(5);
+  }
+
+  & :where(h4:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-lg);
+    line-height: 20px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-lg);
+    }
+  }
+
+  & :where(h4:not(:last-child):not(.not-prose, .not-prose *)) {
+    margin-bottom: --spacing(4);
+  }
+
+  & :where(h5:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xs);
+    line-height: 20px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-xs);
+    }
+  }
+
+  & :where(h6:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xs);
+    line-height: 20px;
+
+    :where(.sds-theme-plaid) & {
+      font-size: var(--text-xs);
+    }
+  }
+
+  & :where([class~="lead"]:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xl);
+    line-height: 24px;
+    margin-block: --spacing(5);
+  }
+
+  & :where(blockquote:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-lg);
+    line-height: 24px;
+  }
+
+  & :where(pre:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xs);
+  }
+
+  & :where(figcaption:not(.not-prose, .not-prose *)) {
+    font-size: var(--text-xs);
+    line-height: 20px;
+  }
+
+  & :where(li:not(.not-prose, .not-prose *)) {
+    margin-left: --spacing(3);
+  }
+}
+
