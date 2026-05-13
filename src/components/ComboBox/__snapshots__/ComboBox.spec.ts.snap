@@ -275,6 +275,7 @@ exports[`ComboBox > should match snapshot when pending 1`] = `
       </div>
     </div>
   </div>
+  <!--v-if-->
 </div>"
 `;
 
