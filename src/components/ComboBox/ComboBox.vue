@@ -459,14 +459,6 @@
         >
           No matches for "{{ query }}"
         </div>
-        <!-- No matches message -->
-        <div
-          v-if="hasNoMatches && !shouldShowNewSuggestion"
-          class="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 italic"
-          data-id="sds-combo-box-no-matches"
-        >
-          No matches for "{{ query }}"
-        </div>
         <!-- Show '+ Add "query"' for taggable-select when no suggestions match -->
         <hr
           v-if="shouldShowNewSuggestion && type === 'taggable-select' && allCount"
