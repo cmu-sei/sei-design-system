@@ -1,5 +1,11 @@
 import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3-vite'
+import SdsComponents from '../src/components'
 import "../tailwindcss/tailwind.css"
+
+setup((app) => {
+  app.use(SdsComponents)
+})
 
 const preview: Preview = {
   globalTypes: {

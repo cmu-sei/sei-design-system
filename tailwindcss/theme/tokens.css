@@ -274,9 +274,9 @@
 
     --btn-ghost-text: var(--color-blue-300);
     --btn-ghost-text-hover: var(--color-blue-200);
-    --btn-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-ghost-bg-hover: --alpha(var(--color-gray-700)/40%);
     --btn-ghost-text-active: var(--color-blue-200);
-    --btn-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+    --btn-ghost-bg-active: --alpha(var(--color-gray-800)/40%);
 
     --btn-gray-accent-bg: var(--color-gray-400);
     --btn-gray-accent-bg-hover: var(--color-gray-300);
@@ -293,9 +293,9 @@
     --btn-gray-tertiary-border-active: var(--color-gray-400);
     --btn-gray-ghost-text: var(--color-gray-300);
     --btn-gray-ghost-text-hover: var(--color-gray-200);
-    --btn-gray-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-gray-ghost-bg-hover: --alpha(var(--color-gray-700)/40%);
     --btn-gray-ghost-text-active: var(--color-gray-200);
-    --btn-gray-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+    --btn-gray-ghost-bg-active: --alpha(var(--color-gray-800)/40%);
 
     --btn-red-accent-bg: var(--color-red-400);
     --btn-red-accent-bg-hover: var(--color-red-300);
@@ -312,9 +312,9 @@
     --btn-red-tertiary-border-active: var(--color-red-400);
     --btn-red-ghost-text: var(--color-red-300);
     --btn-red-ghost-text-hover: var(--color-red-200);
-    --btn-red-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-red-ghost-bg-hover: --alpha(var(--color-gray-700)/40%);
     --btn-red-ghost-text-active: var(--color-red-200);
-    --btn-red-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+    --btn-red-ghost-bg-active: --alpha(var(--color-gray-800)/40%);
 
     --btn-blue-accent-bg: var(--color-blue-400);
     --btn-blue-accent-bg-hover: var(--color-blue-300);
@@ -331,9 +331,9 @@
     --btn-blue-tertiary-border-active: var(--color-blue-400);
     --btn-blue-ghost-text: var(--color-blue-300);
     --btn-blue-ghost-text-hover: var(--color-blue-200);
-    --btn-blue-ghost-bg-hover: color-mix(in srgb, var(--color-gray-700) 40%, transparent);
+    --btn-blue-ghost-bg-hover: --alpha(var(--color-gray-700)/40%);
     --btn-blue-ghost-text-active: var(--color-blue-200);
-    --btn-blue-ghost-bg-active: color-mix(in srgb, var(--color-gray-800) 40%, transparent);
+    --btn-blue-ghost-bg-active: --alpha(var(--color-gray-800)/40%);
   }
 
   /* ─────────────────────────────── LINK COLORS ────────────────────────────────── */

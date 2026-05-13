@@ -33,6 +33,67 @@ export interface ButtonClasses {
   allClasses: ComputedRef<string[]>
 }
 
+type ButtonPrefix = 'btn' | 'action-btn'
+
+type ButtonClassMap = {
+  base: string
+  kind: Record<ButtonKind, string>
+  variant: Record<ButtonVariant, string>
+  size: Record<string, string>
+  block: string
+  cta: string
+}
+
+const buttonClassMaps: Record<ButtonPrefix, ButtonClassMap> = {
+  btn: {
+    base: 'btn',
+    kind: {
+      primary: 'btn-primary',
+      secondary: 'btn-secondary',
+      tertiary: 'btn-tertiary',
+      ghost: 'btn-ghost'
+    },
+    variant: {
+      gray: 'btn-gray',
+      blue: 'btn-blue',
+      red: 'btn-red',
+      white: 'btn-white'
+    },
+    size: {
+      xs: 'btn-xs',
+      sm: 'btn-sm',
+      md: 'btn-md',
+      lg: 'btn-lg',
+      xl: 'btn-xl'
+    },
+    block: 'btn-block flex items-center justify-center',
+    cta: 'btn-cta'
+  },
+  'action-btn': {
+    base: 'action-btn',
+    kind: {
+      primary: 'action-btn-primary',
+      secondary: 'action-btn-secondary',
+      tertiary: '',
+      ghost: 'action-btn-ghost'
+    },
+    variant: {
+      gray: 'action-btn-gray',
+      blue: 'action-btn-blue',
+      red: 'action-btn-red',
+      white: 'action-btn-white'
+    },
+    size: {
+      xs: 'action-btn-xs',
+      sm: 'action-btn-sm',
+      md: 'action-btn-md',
+      lg: 'action-btn-lg'
+    },
+    block: 'action-btn-block',
+    cta: ''
+  }
+}
+
 /**
  * Composable for generating standardized button CSS classes across components.
  * 
@@ -112,48 +173,28 @@ export function useButtonClasses(
   const block = computed(() => getValue(config.block ?? false))
   const pending = computed(() => getValue(config.pending ?? false))
   const cta = computed(() => getValue(config.cta ?? false))
+  const classMap = computed(() => buttonClassMaps[prefix.value])
 
   const btnClass = computed(() => {
-    return kind.value ? prefix.value : ''
+    return kind.value ? classMap.value.base : ''
   })
 
   const kindClass = computed(() => {
     if (!kind.value) return ''
-    
-    const kindMap: Record<ButtonKind, string> = {
-      primary: `${prefix.value}-primary`,
-      secondary: `${prefix.value}-secondary`,
-      tertiary: `${prefix.value}-tertiary`,
-      ghost: `${prefix.value}-ghost`
-    }
-    
-    return kindMap[kind.value as ButtonKind] || ''
+
+    return classMap.value.kind[kind.value as ButtonKind] || ''
   })
 
   const variantClass = computed(() => {
     if (!variant.value) return ''
-    
-    const variantMap: Record<ButtonVariant, string> = {
-      gray: `${prefix.value}-gray`,
-      blue: `${prefix.value}-blue`,
-      red: `${prefix.value}-red`,
-      white: `${prefix.value}-white`
-    }
-    
-    return variantMap[variant.value as ButtonVariant] || ''
+
+    return classMap.value.variant[variant.value as ButtonVariant] || ''
   })
 
   const sizeClass = computed(() => {
     if (!size.value) return ''
-    
-    const sizeMap: Record<string, string> = {
-      xs: `${prefix.value}-xs`,
-      sm: `${prefix.value}-sm`,
-      md: `${prefix.value}-md`,
-      lg: `${prefix.value}-lg`
-    }
-    
-    return sizeMap[size.value] || ''
+
+    return classMap.value.size[size.value] || ''
   })
 
   const disabledClass = computed(() => {
@@ -171,10 +212,8 @@ export function useButtonClasses(
 
   const blockClass = computed(() => {
     if (!block.value) return ''
-    
-    return prefix.value === 'btn' 
-      ? 'btn-block flex items-center justify-center'
-      : 'action-btn-block'
+
+    return classMap.value.block
   })
 
   const pendingClass = computed(() => {
@@ -183,7 +222,7 @@ export function useButtonClasses(
 
   const ctaClass = computed(() => {
     // CTA only applies to regular buttons
-    return cta.value && prefix.value === 'btn' ? 'btn-cta' : ''
+    return cta.value ? classMap.value.cta : ''
   })
 
   const allClasses = computed(() => {

@@ -166,7 +166,7 @@ exports[`Datepicker > Snapshots > should show disabled 1`] = `
         class="w-full input-group disabled"
       >
         <button
-          class="input-group-addon fill-current pointer-events-none text-gray-300 border-gray-200 border-none"
+          class="input-group-addon fill-current"
           disabled=""
           tabindex="-1"
           type="button"
@@ -222,7 +222,7 @@ exports[`Datepicker > Snapshots > should show disabled 1`] = `
         class="w-full input-group disabled"
       >
         <button
-          class="input-group-addon fill-current pointer-events-none opacity-50"
+          class="input-group-addon fill-current"
           disabled=""
           tabindex="-1"
           type="button"
@@ -390,7 +390,7 @@ exports[`Datepicker > Snapshots > should show readonly 1`] = `
         class="w-full input-group readonly"
       >
         <button
-          class="input-group-addon fill-current pointer-events-none text-gray-300 border-gray-200"
+          class="input-group-addon fill-current"
           disabled=""
           tabindex="-1"
           type="button"
@@ -446,7 +446,7 @@ exports[`Datepicker > Snapshots > should show readonly 1`] = `
         class="w-full input-group readonly"
       >
         <button
-          class="input-group-addon fill-current pointer-events-none opacity-50"
+          class="input-group-addon fill-current"
           disabled=""
           tabindex="-1"
           type="button"

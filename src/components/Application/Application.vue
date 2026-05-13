@@ -380,8 +380,7 @@
                     :title="
                       collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
                     "
-                    class="btn btn-ghost btn-sm px-1 py-1 text-gray-700 dark:text-gray-300"
-                    :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
+                    class="action-btn action-btn-ghost action-btn-sm"
                     @click="toggleCollapse"
                   >
                     <IconFa7SolidAnglesRight

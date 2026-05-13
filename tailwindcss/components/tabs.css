@@ -1,451 +1,168 @@
 /* ===== UNIVERSAL TABS UTILITIES ===== */
-/* Uses CSS custom property tokens from tailwindcss/theme/tokens.css.
-   No theme class names appear here except in the bottom @layer components block,
-   which contains plaid-specific structural overrides that cannot be tokenized. */
+/* Uses CSS custom property tokens from tailwindcss/theme/tokens.css. */
 
-@layer components {
-  /* Tablist gap for block and folder types */
-  :where(
-    .tabs [role="tablist"]:has(.tab-block),
-    .tabs [role="tablist"]:has(.tab-folder)
-  ) {
-    @apply gap-x-1;
-  }
+@utility tabs {
+  @apply [&_[role="tablist"]:has(.tab-block)]:gap-x-1 [&_[role="tablist"]:has(.tab-folder)]:gap-x-1;
+  @apply [&:has(.tab-folder)_[role="tabpanel"]]:border-t [&:has(.tab-folder)_[role="tabpanel"]]:border-gray-100 [&:has(.tab-folder)_[role="tabpanel"]]:-mt-px;
+  @apply [&:has(.tab-underline)_[role="tabpanel"]]:border-t [&:has(.tab-underline)_[role="tabpanel"]]:border-gray-100 [&:has(.tab-underline)_[role="tabpanel"]]:-mt-px;
+  @apply dark:[&:has(.tab-folder)_[role="tabpanel"]]:border-gray-800 dark:[&:has(.tab-underline)_[role="tabpanel"]]:border-gray-800;
+  @apply [&:has(.tab-folder)_[role="tabpanel"]]:relative [&:has(.tab-folder)_[role="tabpanel"]]:z-1;
+  @apply sds-theme-plaid:[&_[role="tablist"]:has(.tab-block)]:gap-0 sds-theme-plaid:[&_[role="tablist"]:has(.tab-folder)]:gap-0;
+  @apply sds-theme-plaid:[&_[role="tablist"]:has(.tab-block)]:border sds-theme-plaid:[&_[role="tablist"]:has(.tab-block)]:border-gray-100;
+  @apply dark:sds-theme-plaid:[&_[role="tablist"]:has(.tab-block)]:border-gray-800;
+  @apply sds-theme-plaid:[&_[role="tablist"]:has(.tab-block)_.tab-block]:-my-px;
+  @apply sds-theme-plaid:[&_[role="tablist"]:has(.tab-folder)>li:not(:first-of-type)]:-ml-px;
+}
 
-  /* Tabpanel border separator for folder + underline types */
-  :where(
-    .tabs:has(.tab-folder) [role="tabpanel"],
-    .tabs:has(.tab-underline) [role="tabpanel"]
-  ) {
-    @apply border-t border-gray-100 -mt-px;
-  }
+/* ===== TAB INDICATOR ===== */
 
-  :where(
-    .dark .tabs:has(.tab-folder) [role="tabpanel"],
-    .dark .tabs:has(.tab-underline) [role="tabpanel"]
-  ) {
-    @apply border-gray-800;
-  }
+@utility tab-indicator {
+  @apply block absolute bottom-0 transition-all delay-50 duration-250;
+  @apply rounded-(--tab-indicator-radius,var(--radius-md));
+  @apply bg-(--tab-indicator-bg) dark:bg-(--tab-indicator-bg-dark);
+}
 
-  :where(.tabs:has(.tab-folder) [role="tabpanel"]) {
-    @apply relative z-1;
-  }
+@utility tab-indicator-blue {
+  @apply [--tab-indicator-bg:var(--color-blue-600)] [--tab-indicator-bg-dark:var(--color-blue-300)];
+}
 
-  /* ===== TAB INDICATOR ===== */
+@utility tab-indicator-gray {
+  @apply [--tab-indicator-bg:var(--color-gray-900)] [--tab-indicator-bg-dark:var(--color-gray-200)];
+}
 
-  :where(.tabs .tab-indicator) {
-    @apply block absolute bottom-0 transition-all delay-50 duration-250;
-    border-radius: var(--tab-indicator-radius, var(--radius-md));
-  }
+@utility tab-indicator-red {
+  @apply [--tab-indicator-bg:var(--color-red-600)] [--tab-indicator-bg-dark:var(--color-red-300)];
+}
 
-  :where(.tabs .tab-indicator.tab-indicator-blue) {
-    @apply bg-blue-600;
-  }
-  :where(.dark .tabs .tab-indicator.tab-indicator-blue) {
-    @apply bg-blue-300;
-  }
+/* ===== TAB GROUP ===== */
 
-  :where(.tabs .tab-indicator.tab-indicator-gray) {
-    @apply bg-gray-900;
-  }
-  :where(.dark .tabs .tab-indicator.tab-indicator-gray) {
-    @apply bg-gray-200;
-  }
+@utility tab-group {
+  @apply grid grid-flow-col auto-cols-min;
+  @apply [&:has(.tab-block)]:py-2 sds-theme-plaid:[&:has(.tab-block)]:py-0;
+}
 
-  :where(.tabs .tab-indicator.tab-indicator-red) {
-    @apply bg-red-600;
-  }
-  :where(.dark .tabs .tab-indicator.tab-indicator-red) {
-    @apply bg-red-300;
-  }
+/* ===== BASE TAB STYLES ===== */
 
-  /* ===== TAB GROUP ===== */
+@utility tab {
+  @apply focus:outline-none;
+}
 
-  :where(.tab-group) {
-    @apply grid grid-flow-col auto-cols-min;
-  }
+@utility tab-kind {
+  @apply [--tab-accent:var(--color-gray-900)] [--tab-accent-dark:var(--color-gray-200)];
+  @apply [--tab-accent-active:var(--color-black)] [--tab-accent-active-dark:var(--color-gray-100)];
+  @apply [--tab-block-active-bg:var(--tab-accent)] [--tab-block-active-bg-dark:var(--tab-accent-dark)];
+  @apply [--tab-block-active-text:var(--color-white)] [--tab-block-active-text-dark:var(--color-black)];
+  @apply [--tab-block-active-count-bg:var(--color-white)] [--tab-block-active-count-bg-dark:var(--color-black)];
+  @apply [--tab-block-active-count-text:var(--tab-accent)] [--tab-block-active-count-text-dark:var(--tab-accent-dark)];
+  @apply inline-flex items-center gap-x-2 text-gray-600 font-semibold cursor-pointer select-none whitespace-nowrap;
+  @apply dark:text-gray-400;
+  @apply sds-disabled:opacity-50 sds-disabled:pointer-events-none;
+  @apply not-[.tab-lg]:text-sm;
+  @apply [&_.tab-count]:bg-gray-600 [&_.tab-count]:text-white [&_.tab-count]:inline-flex [&_.tab-count]:items-center [&_.tab-count]:justify-center;
+  @apply [&_.tab-count]:rounded-full [&_.tab-count]:py-0.5 [&_.tab-count]:px-1.75;
+  @apply dark:[&_.tab-count]:bg-gray-400 dark:[&_.tab-count]:text-black;
+  @apply where-hover:text-(--tab-accent) [&.active]:text-(--tab-accent);
+  @apply dark:where-hover:text-(--tab-accent-dark) dark:[&.active]:text-(--tab-accent-dark);
+  @apply where-hover:[&_.tab-count]:bg-(--tab-accent) [&.active_.tab-count]:bg-(--tab-accent);
+  @apply dark:where-hover:[&_.tab-count]:bg-(--tab-accent-dark) dark:[&.active_.tab-count]:bg-(--tab-accent-dark);
+  @apply active:not-[.active]:text-(--tab-accent-active) dark:active:not-[.active]:text-(--tab-accent-active-dark);
+  @apply active:not-[.active]:[&_.tab-count]:bg-(--tab-accent-active) dark:active:not-[.active]:[&_.tab-count]:bg-(--tab-accent-active-dark);
+}
 
-  :where(.tab-group:has(.tab-block)) {
-    @apply py-2;
-  }
+/* ===== BLOCK TYPE ===== */
 
-  /* ===== BASE TAB STYLES ===== */
+@utility tab-block {
+  @apply tab-kind;
+  @apply rounded-(--tab-block-radius,var(--radius-lg));
+  @apply where-hover:bg-gray-25 dark:where-hover:bg-gray-850;
+  @apply active:bg-gray-50 dark:active:bg-gray-800;
+  @apply [&.active]:bg-(--tab-block-active-bg) [&.active]:text-(--tab-block-active-text);
+  @apply dark:[&.active]:bg-(--tab-block-active-bg-dark) dark:[&.active]:text-(--tab-block-active-text-dark);
+  @apply [&.active_.tab-count]:bg-(--tab-block-active-count-bg) [&.active_.tab-count]:text-(--tab-block-active-count-text);
+  @apply dark:[&.active_.tab-count]:bg-(--tab-block-active-count-bg-dark) dark:[&.active_.tab-count]:text-(--tab-block-active-count-text-dark);
+  @apply not-[.tab-lg]:py-2.5 not-[.tab-lg]:px-4;
+  @apply sds-theme-plaid:border sds-theme-plaid:border-gray-100/0 sds-theme-plaid:relative sds-theme-plaid:-mx-px sds-theme-plaid:z-1;
+  @apply dark:sds-theme-plaid:border-gray-800/0;
+  @apply sds-theme-plaid:where-hover:not-[.active]:border-gray-100 sds-theme-plaid:active:not-[.active]:border-gray-100;
+  @apply dark:sds-theme-plaid:where-hover:not-[.active]:border-gray-800 dark:sds-theme-plaid:active:not-[.active]:border-gray-800;
+  @apply sds-theme-plaid:[&.active]:relative sds-theme-plaid:[&.active]:z-10;
+}
 
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline)
-  ) {
-    @apply inline-flex items-center gap-x-2 text-gray-600 font-semibold cursor-pointer select-none whitespace-nowrap;
-  }
+/* ===== FOLDER TYPE ===== */
 
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline)
-  ) {
-    @apply text-gray-400;
-  }
+@utility tab-folder {
+  @apply tab-kind;
+  @apply bg-gray-600/2 border-t border-r border-l border-gray-50 border-b border-b-gray-50/0;
+  @apply rounded-[var(--tab-folder-radius,var(--radius-md))_var(--tab-folder-radius,var(--radius-md))_0_0];
+  @apply dark:bg-gray-400/4 dark:border-gray-850 dark:border-b-gray-850/0;
+  @apply active:bg-white/0 dark:active:bg-white/2;
+  @apply [&.active]:bg-white/0 [&.active]:border-gray-100 [&.active]:border-b-gray-100/0 [&.active]:relative [&.active]:z-2 [&.active]:backdrop-blur-lg;
+  @apply dark:[&.active]:bg-white/0 dark:[&.active]:border-gray-800 dark:[&.active]:border-b-gray-800/0;
+  @apply not-[.tab-lg]:py-2.25 not-[.tab-lg]:px-4;
+  @apply sds-theme-plaid:[&.active]:border-t-gray-100/0 sds-theme-plaid:[&.active]:border-b-gray-100/0;
+  @apply dark:sds-theme-plaid:[&.active]:border-t-gray-800/0 dark:sds-theme-plaid:[&.active]:border-b-gray-800/0;
+  @apply sds-theme-plaid:[&.active]:bg-white/0 sds-theme-plaid:active:bg-white/0;
+  @apply dark:sds-theme-plaid:[&.active]:bg-white/2 dark:sds-theme-plaid:active:bg-white/2;
+  @apply sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:content-[''] sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:block sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:bg-(--tab-accent);
+  @apply sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:absolute sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:-top-px;
+  @apply sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:-left-px sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:w-[calc(100%+0.125rem)];
+  @apply sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:h-0.5 sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:z-1;
+  @apply dark:sds-theme-plaid:[&.active:is(.tab-blue,.tab-gray,.tab-red)]:before:bg-(--tab-accent-dark);
+}
 
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline):is(.disabled, [disabled])
-  ) {
-    @apply opacity-50 pointer-events-none;
-  }
+/* ===== UNDERLINE TYPE ===== */
 
-  /* Text size: sm unless .tab-lg */
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline):not(.tab-lg)
-  ) {
-    @apply text-sm;
-  }
+@utility tab-underline {
+  @apply tab-kind;
+  @apply bg-white/0 py-3.5 px-4 relative;
+  @apply after:content-[''] after:block after:absolute after:bottom-0 after:left-0 after:w-full after:rounded-md after:h-0.5;
+  @apply [&.active]:after:bg-(--tab-accent) dark:[&.active]:after:bg-(--tab-accent-dark);
+}
 
-  /* ===== TAB COUNT BADGE ===== */
+@utility tab-underline-no-rule {
+  @apply static;
+  @apply after:content-none after:hidden after:static after:w-0 after:h-0;
+}
 
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline) .tab-count
-  ) {
-    @apply bg-gray-600 text-white inline-flex items-center justify-center rounded-full py-0.5 px-1.75;
-  }
+/* ===== COLOR VARIANTS ===== */
 
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline) .tab-count
-  ) {
-    @apply bg-gray-400 text-black;
-  }
+@utility tab-blue {
+  @apply [--tab-accent:var(--color-blue-600)] [--tab-accent-dark:var(--color-blue-300)];
+  @apply [--tab-accent-active:var(--color-blue-700)] [--tab-accent-active-dark:var(--color-blue-200)];
+  @apply [--tab-block-active-bg-dark:var(--tab-block-blue-dark-active-bg,var(--color-blue-300))];
+}
 
-  /* ===== BLOCK TYPE ===== */
+@utility tab-gray {
+  @apply [--tab-accent:var(--color-gray-900)] [--tab-accent-dark:var(--color-gray-200)];
+  @apply [--tab-accent-active:var(--color-black)] [--tab-accent-active-dark:var(--color-gray-100)];
+  @apply [--tab-block-active-bg-dark:var(--tab-block-gray-dark-active-bg,var(--color-gray-200))];
+}
 
-  :where(.tab.tab-block) {
-    border-radius: var(--tab-block-radius, var(--radius-lg));
-  }
-
-  :where(.tab.tab-block:hover) {
-    @apply bg-gray-25;
-  }
-  :where(.dark .tab.tab-block:hover) {
-    @apply bg-gray-850;
-  }
-  :where(.tab.tab-block:active) {
-    @apply bg-gray-50;
-  }
-  :where(.dark .tab.tab-block:active) {
-    @apply bg-gray-800;
-  }
-
-  /* Block default size padding */
-  :where(.tab.tab-block:not(.tab-lg)) {
-    @apply py-2.5 px-4;
-  }
-
-  /* ===== COLOR VARIANTS — APPLIES TO ALL TYPES ===== */
-  /* Selectors use :is() to apply across block/folder/underline types. */
-
-  /* Blue variant */
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:is(:hover, .active)
-  ) { @apply text-blue-600; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:is(:hover, .active)
-  ) { @apply text-blue-300; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:is(:hover, .active) .tab-count
-  ) { @apply bg-blue-600; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:is(:hover, .active) .tab-count
-  ) { @apply bg-blue-300; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:active:not(.active)
-  ) { @apply text-blue-700; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:active:not(.active)
-  ) { @apply text-blue-200; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:active:not(.active) .tab-count
-  ) { @apply bg-blue-700; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-blue:active:not(.active) .tab-count
-  ) { @apply bg-blue-200; }
-
-  /* Gray variant */
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:is(:hover, .active)
-  ) { @apply text-gray-900; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:is(:hover, .active)
-  ) { @apply text-gray-200; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:is(:hover, .active) .tab-count
-  ) { @apply bg-gray-900; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:is(:hover, .active) .tab-count
-  ) { @apply bg-gray-200; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:active:not(.active)
-  ) { @apply text-black; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:active:not(.active)
-  ) { @apply text-gray-100; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:active:not(.active) .tab-count
-  ) { @apply bg-black; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-gray:active:not(.active) .tab-count
-  ) { @apply bg-gray-100; }
-
-  /* Red variant */
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:is(:hover, .active)
-  ) { @apply text-red-600; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:is(:hover, .active)
-  ) { @apply text-red-300; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:is(:hover, .active) .tab-count
-  ) { @apply bg-red-600; }
-
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:is(:hover, .active) .tab-count
-  ) { @apply bg-red-300; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:active:not(.active)
-  ) { @apply text-red-700; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:active:not(.active)
-  ) { @apply text-red-200; }
-
-  :where(
-    .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:active:not(.active) .tab-count
-  ) { @apply bg-red-700; }
-  :where(
-    .dark .tab:is(.tab-block, .tab-folder, .tab-underline).tab-red:active:not(.active) .tab-count
-  ) { @apply bg-red-200; }
-
-  /* ===== BLOCK ACTIVE VARIANT FILLS ===== */
-  /* Blue */
-  :where(.tab.tab-block.tab-blue.active) {
-    @apply bg-blue-600 text-white;
-  }
-  :where(.dark .tab.tab-block.tab-blue.active) {
-    background-color: var(--tab-block-blue-dark-active-bg, var(--color-blue-300));
-    @apply text-black;
-  }
-  :where(.tab.tab-block.tab-blue.active .tab-count) {
-    @apply bg-white text-blue-600;
-  }
-  :where(.dark .tab.tab-block.tab-blue.active .tab-count) {
-    @apply bg-black text-blue-300;
-  }
-
-  /* Gray */
-  :where(.tab.tab-block.tab-gray.active) {
-    @apply bg-gray-900 text-white;
-  }
-  :where(.dark .tab.tab-block.tab-gray.active) {
-    background-color: var(--tab-block-gray-dark-active-bg, var(--color-gray-200));
-    @apply text-black;
-  }
-  :where(.tab.tab-block.tab-gray.active .tab-count) {
-    @apply bg-white text-gray-900;
-  }
-  :where(.dark .tab.tab-block.tab-gray.active .tab-count) {
-    @apply bg-black text-gray-200;
-  }
-
-  /* Red */
-  :where(.tab.tab-block.tab-red.active) {
-    @apply bg-red-600 text-white;
-  }
-  :where(.dark .tab.tab-block.tab-red.active) {
-    @apply bg-red-300 text-black;
-  }
-  :where(.tab.tab-block.tab-red.active .tab-count) {
-    @apply bg-white text-red-600;
-  }
-  :where(.dark .tab.tab-block.tab-red.active .tab-count) {
-    @apply bg-black text-red-300;
-  }
-
-  /* ===== FOLDER TYPE ===== */
-
-  :where(.tab.tab-folder) {
-    @apply bg-gray-600/2 border-t border-r border-l border-gray-50 border-b border-b-gray-50/0;
-    border-radius: var(--tab-folder-radius, var(--radius-md)) var(--tab-folder-radius, var(--radius-md)) 0 0;
-  }
-  :where(.dark .tab.tab-folder) {
-    @apply bg-gray-400/4 border-gray-850 border-b-gray-850/0;
-  }
-
-  :where(.tab.tab-folder:active) {
-    @apply bg-white/0;
-  }
-  :where(.dark .tab.tab-folder:active) {
-    @apply bg-white/2;
-  }
-
-  :where(.tab.tab-folder.active) {
-    @apply bg-white/0 border-gray-100 border-b-gray-100/0 relative z-2 backdrop-blur-lg;
-  }
-  :where(.dark .tab.tab-folder.active) {
-    @apply bg-white/0 border-gray-800 border-b-gray-800/0;
-  }
-
-  /* Folder default size padding */
-  :where(.tab.tab-folder:not(.tab-lg)) {
-    @apply py-2.25 px-4;
-  }
-
-  /* ===== UNDERLINE TYPE ===== */
-
-  :where(.tab.tab-underline) {
-    @apply bg-white/0 py-3.5 px-4 relative;
-  }
-
-  :where(.tab.tab-underline)::after {
-    @apply content-[''] block absolute bottom-0 left-0 w-full rounded-md h-0.5;
-  }
-
-  :where(.tab.tab-underline-no-rule) {
-    @apply static;
-  }
-  :where(.tab.tab-underline-no-rule)::after {
-    @apply content-none hidden static w-0 h-0;
-  }
-
-  /* Underline active color */
-  :where(.tab.tab-blue.active.tab-underline)::after  { @apply bg-blue-600; }
-  :where(.dark .tab.tab-blue.active.tab-underline)::after  { @apply bg-blue-300; }
-  :where(.tab.tab-gray.active.tab-underline)::after  { @apply bg-gray-900; }
-  :where(.dark .tab.tab-gray.active.tab-underline)::after  { @apply bg-gray-200; }
-  :where(.tab.tab-red.active.tab-underline)::after   { @apply bg-red-600; }
-  :where(.dark .tab.tab-red.active.tab-underline)::after   { @apply bg-red-300; }
+@utility tab-red {
+  @apply [--tab-accent:var(--color-red-600)] [--tab-accent-dark:var(--color-red-300)];
+  @apply [--tab-accent-active:var(--color-red-700)] [--tab-accent-active-dark:var(--color-red-200)];
+  @apply [--tab-block-active-bg-dark:var(--color-red-300)];
 }
 
 /* ===== TABS SIZE UTILITIES (responsive-ready) ===== */
 
 @utility tab-indicator-sm {
-  :where(.tabs .tab-indicator&) { @apply h-0.5; }
+  @apply [.tabs_.tab-indicator&]:h-0.5;
 }
 
 @utility tab-indicator-lg {
-  :where(.tabs .tab-indicator&) { @apply h-0.75; }
+  @apply [.tabs_.tab-indicator&]:h-0.75;
 }
 
 @utility tab-sm {
-  :where(.tab.tab-underline&)::after { @apply h-0.5; }
-  :where(&) .tab-count { @apply text-xs min-h-5 min-w-5; }
+  @apply [.tab.tab-underline&]:after:h-0.5;
+  @apply [&_.tab-count]:text-xs [&_.tab-count]:min-h-5 [&_.tab-count]:min-w-5;
 }
 
 @utility tab-lg {
-  :where(.tab.tab-block&),
-  :where(.tab.tab-folder&),
-  :where(.tab.tab-underline&) { @apply text-lg; }
-
-  :where(.tab.tab-block&) {
-    padding-block: var(--tab-lg-block-py, 0.75rem);
-    @apply px-4;
-  }
-  :where(.tab.tab-folder&) {
-    padding-block: var(--tab-lg-folder-py, 0.75rem);
-    @apply px-4;
-  }
-  :where(.tab.tab-underline&)::after { @apply h-0.75; }
-  :where(&) .tab-count { @apply text-sm min-h-6 min-w-6; }
-}
-
-/* ===== PLAID-SPECIFIC STRUCTURAL OVERRIDES ===== */
-/* These tab-folder border patterns cannot be expressed as token values.
-   The outer tablist gets a visible box on plaid; block tabs sit flush
-   against that border; folder tabs add a top-edge colored stripe on active.
-   Must be in @layer components (same layer as universal rules) so that
-   source-order wins — @layer base would lose to components. */
-
-@layer components {
-  /* Plaid tabulists: no gap (forge-only) */
-  :where(
-    .sds-theme-plaid .tabs [role="tablist"]:has(.tab-block),
-    .sds-theme-plaid .tabs [role="tablist"]:has(.tab-folder)
-  ) {
-    gap: 0;
-  }
-
-  /* Plaid tab-group with block tabs: no vertical padding (forge-only) */
-  :where(.sds-theme-plaid .tab-group:has(.tab-block)) {
-    padding-block: 0;
-  }
-
-  /* Plaid block tablist: outer border */
-  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-block)) {
-    @apply border border-gray-100;
-  }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tabs [role="tablist"]:has(.tab-block)) {
-    @apply border-gray-800;
-  }
-
-  /* Plaid block tabs: counter the tablist border */
-  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-block) .tab-block) {
-    @apply -my-px;
-  }
-
-  /* Plaid folder tabs: negative margin overlap */
-  :where(.sds-theme-plaid .tabs [role="tablist"]:has(.tab-folder) > li:not(:first-of-type)) {
-    @apply -ml-px;
-  }
-
-  /* Plaid block tabs: border ring (hidden by default, shown on hover/active) */
-  :where(.sds-theme-plaid .tab.tab-block) {
-    @apply border border-gray-100/0 relative -mx-px z-1;
-  }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-block) {
-    @apply border-gray-800/0;
-  }
-  :where(
-    .sds-theme-plaid .tab.tab-block:hover:not(.active),
-    .sds-theme-plaid .tab.tab-block:active:not(.active)
-  ) { @apply border-gray-100; }
-  :where(
-    :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-block:hover:not(.active),
-    :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-block:active:not(.active)
-  ) { @apply border-gray-800; }
-  :where(.sds-theme-plaid .tab.tab-block.active) { @apply relative z-10; }
-
-  /* Plaid folder active: top border stripe + clear top/bottom borders */
-  :where(.sds-theme-plaid .tab.tab-folder.active) {
-    @apply border-t-gray-100/0 border-b-gray-100/0;
-  }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder.active) {
-    @apply border-t-gray-800/0 border-b-gray-800/0;
-  }
-  :where(
-    .sds-theme-plaid .tab.tab-folder:active,
-    .sds-theme-plaid .tab.tab-folder.active
-  ) { @apply bg-white/0; }
-  :where(
-    :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder:active,
-    :is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder.active
-  ) { @apply bg-white/2; }
-
-  /* Plaid folder active: ::before top-edge accent stripe */
-  :where(
-    .sds-theme-plaid .tab.tab-folder.tab-blue.active,
-    .sds-theme-plaid .tab.tab-folder.tab-gray.active,
-    .sds-theme-plaid .tab.tab-folder.tab-red.active
-  )::before {
-    @apply content-[''] block absolute -top-px -left-px w-[calc(100%+0.125rem)] h-0.5 z-1;
-  }
-  :where(.sds-theme-plaid .tab.tab-folder.tab-blue.active)::before { @apply bg-blue-600; }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder.tab-blue.active)::before { @apply bg-blue-300; }
-  :where(.sds-theme-plaid .tab.tab-folder.tab-gray.active)::before { @apply bg-gray-900; }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder.tab-gray.active)::before { @apply bg-gray-200; }
-  :where(.sds-theme-plaid .tab.tab-folder.tab-red.active)::before  { @apply bg-red-600; }
-  :where(:is(.dark .sds-theme-plaid, .dark.sds-theme-plaid) .tab.tab-folder.tab-red.active)::before  { @apply bg-red-300; }
+  @apply [.tab.tab-block&,.tab.tab-folder&,.tab.tab-underline&]:text-lg;
+  @apply [.tab.tab-block&]:py-(--tab-lg-block-py,0.75rem) [.tab.tab-block&]:px-4;
+  @apply [.tab.tab-folder&]:py-(--tab-lg-folder-py,0.75rem) [.tab.tab-folder&]:px-4;
+  @apply [.tab.tab-underline&]:after:h-0.75;
+  @apply [&_.tab-count]:text-sm [&_.tab-count]:min-h-6 [&_.tab-count]:min-w-6;
 }

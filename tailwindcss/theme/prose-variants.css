@@ -1,0 +1,244 @@
+/**
+ * PROSE TYPOGRAPHY STYLES WITH ZERO-SPECIFICITY OVERRIDE SUPPORT
+ * 
+ * This file uses :where() pseudo-class to achieve 0,0,0 specificity, allowing
+ * custom variants and Tailwind utilities to easily override prose styles.
+ * 
+ * CRITICAL PATTERNS:
+ * 
+ * ✅ CORRECT - Flattened selector with modifiers inside :where():
+ *    & :where(h1:not(:last-child):not(.not-prose)) { margin-bottom: 32px; }
+ *    Compiles to: .prose :where(h1:not(:last-child):not(.not-prose))
+ *    Specificity: 0,0,0 ✓
+ * 
+ * ❌ WRONG - Nested & with bare :not() outside :where():
+ *    & :where(h1) { &:not(:last-child) { margin-bottom: 32px; } }
+ *    Compiles to: .prose :where(h1):not(:last-child)
+ *    Specificity: 0,1,1 ✗ - The :not() escapes :where() and adds specificity!
+ * 
+ * 📝 ALTERNATIVE - Nested &:where() (works but unnecessarily verbose):
+ *    & :where(h1) { &:where(:not(:last-child)) { margin-bottom: 32px; } }
+ *    Compiles to: .prose :where(h1):where(:not(:last-child))
+ *    Specificity: 0,0,0 ✓ (but prefer flattened approach above)
+ * 
+ * CSS CASCADE RULE ORDER:
+ * When selectors have equal specificity, SOURCE ORDER matters - later rules win.
+ * Example: General link underline MUST come BEFORE heading link overrides.
+ */
+
+/* Element Variants - Using @custom-variant with @slot for descendant targeting */
+@custom-variant prose-headings {
+  & :is(:where(h1, h2, h3, h4, h5, h6, th):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-lead {
+  & :is(:where([class~="lead"]):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h1 {
+  & :is(:where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h2 {
+  & :is(:where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h3 {
+  & :is(:where(h3):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h4 {
+  & :is(:where(h4):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h5 {
+  & :is(:where(h5):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-h6 {
+  & :is(:where(h6):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-p {
+  & :is(:where(p):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-a {
+  & :is(:where(a):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-blockquote {
+  & :is(:where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-figure {
+  & :is(:where(figure):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-figcaption {
+  & :is(:where(figcaption):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-strong {
+  & :is(:where(strong):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-b {
+  & :is(:where(b):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-em {
+  & :is(:where(em):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-kbd {
+  & :is(:where(kbd):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-code {
+  & :is(:where(code):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-pre {
+  & :is(:where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-ol {
+  & :is(:where(ol):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-ul {
+  & :is(:where(ul):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-li {
+  & :is(:where(li):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-dl {
+  & :is(:where(dl):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-dt {
+  & :is(:where(dt):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-dd {
+  & :is(:where(dd):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-table {
+  & :is(:where(table):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-thead {
+  & :is(:where(thead):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-tbody {
+  & :is(:where(tbody):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-tr {
+  & :is(:where(tr):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-th {
+  & :is(:where(th):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-td {
+  & :is(:where(td):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-img {
+  & :is(:where(img):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-picture {
+  & :is(:where(picture):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-video {
+  & :is(:where(video):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-svg {
+  & :is(:where(svg):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
+
+@custom-variant prose-hr {
+  & :is(:where(hr):not(:where([class~="not-prose"], [class~="not-prose"] *))) {
+    @slot;
+  }
+}
