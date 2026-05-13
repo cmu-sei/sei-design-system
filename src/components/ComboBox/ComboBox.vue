@@ -1749,11 +1749,6 @@ watch(arrowCounter, (val, oldVal) => {
   shouldScrollActiveItem.value = false
 })
 
-// True when the user has typed a query but no options match (filterSuggestions only).
-const hasNoMatches = computed(() => {
-  return props.filterSuggestions && !hasDropdownSuggestion.value && query.value !== ''
-})
-
 const shouldShowDropdown = computed(() => {
   if (props.disabled) return false
   if (props.pending) return false
