@@ -259,7 +259,7 @@
                             <kbd
                               v-for="(kbdSc, index) in subitem.keyboardShortcut"
                               :key="index"
-                              class="inline-flex gap-x-0.5 bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
+                              class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                               v-html="kbdSc"
                             />
                           </span>
@@ -315,7 +315,7 @@
                         <kbd
                           v-for="(kbdSc, index) in item.keyboardShortcut"
                           :key="index"
-                          class="inline-flex gap-x-0.5 bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
+                          class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                           v-html="kbdSc"
                         />
                       </span>
@@ -609,7 +609,7 @@
                           <kbd
                             v-for="(kbdSc, index) in subitem.keyboardShortcut"
                             :key="index"
-                            class="inline-flex gap-x-0.5 bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
+                            class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                             v-html="kbdSc"
                           />
                         </span>
@@ -682,7 +682,7 @@
                           <kbd
                             v-for="(kbdSc, index) in item.keyboardShortcut"
                             :key="index"
-                            class="inline-flex gap-x-0.5 bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
+                            class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                             v-html="kbdSc"
                           />
                         </span>
