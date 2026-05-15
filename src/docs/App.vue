@@ -149,8 +149,8 @@ const sidebarNavigationItems = computed(() => [
       {id: 3, title: 'Data Visualization', active: route.fullPath === '/components/data-visualization', href: '/components/data-visualization'},
       {id: 4, title: 'Date & Time', active: route.fullPath === '/components/date-and-time', href: '/components/date-and-time'},
       {id: 4, title: 'Feedback', active: route.fullPath === '/components/feedback', href: '/components/feedback'},
-      {id: 4, title: 'Inputs', active: route.fullPath === '/components/inputs', href: '/components/inputs'},
-      {id: 4, title: 'Navigation', active: route.fullPath === '/components/navigation', href: '/components/navigation'},
+      {id: 4, title: 'Inputs', active: route.fullPath === '/components/inputs', href: '/components/inputs', keyboardShortcut: '⌘K' },
+      {id: 4, title: 'Navigation', active: route.fullPath === '/components/navigation', href: '/components/navigation', keyboardShortcut: '/' },
       {id: 4, title: 'Utility', active: route.fullPath === '/components/utility', href: '/components/utility'},
     ]
   },
