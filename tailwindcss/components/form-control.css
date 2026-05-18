@@ -127,8 +127,10 @@
     @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-300;
     @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-600;
     @apply bg-no-repeat bg-center bg-contain;
-    @apply checked:border-blue-500 checked:bg-blue-500 indeterminate:border-blue-500 indeterminate:bg-blue-500;
-    @apply dark:checked:border-blue-700 dark:checked:bg-blue-700 dark:indeterminate:border-blue-700 dark:indeterminate:bg-blue-700;
+    @apply checked:border-blue-500 checked:bg-blue-500;
+    @apply dark:checked:border-blue-700 dark:checked:bg-blue-700;
+    @apply [[type=checkbox]]:indeterminate:border-blue-500 [[type=checkbox]]:indeterminate:bg-blue-500;
+    @apply dark:[[type=checkbox]]:indeterminate:border-blue-700 dark:[[type=checkbox]]:indeterminate:bg-blue-700;
     @apply [[type=checkbox]]:checked:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M3.5%208l3%203%206-6%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
     @apply [[type=checkbox]]:indeterminate:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%208h8%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E")];
     @apply [[type="radio"]]:rounded-full;
