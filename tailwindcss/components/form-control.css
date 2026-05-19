@@ -28,7 +28,7 @@
 }
 
 @utility form-control-lg {
-  @apply px-4 py-3 text-base;
+  @apply px-4 py-3 text-base rounded-theme-lg;
 }
 
 @utility focus-ring {
@@ -87,6 +87,9 @@
 }
 
 @utility input-group-lg {
+  @apply rounded-theme-lg;
+  @apply *:first:rounded-l-theme-lg *:last:rounded-r-theme-lg;
+  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-lg [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-lg;
   @apply [&>.input-group-addon]:form-control-lg [&>.form-control]:form-control-lg [&>[data-id^='sds-']_.form-control]:form-control-lg;
   @apply [&>.form-control]:px-1.5 [&>[data-id^='sds-']_.form-control]:px-1.5;
   @apply [&>.input-group-addon+.form-control]:pl-1 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-1;
