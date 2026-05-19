@@ -98,7 +98,12 @@
 @utility btn-group {
   @apply relative flex items-stretch w-fit rounded-theme-sm;
   @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
-  @apply *:border-l-0 *:first:border-l-2;
+  @apply [&>[data-id^='sds-']_.btn]:rounded-none [&>[data-id^='sds-']_.action-btn]:rounded-none;
+  @apply [&>[data-id^='sds-']:first-child_.btn]:rounded-l-theme-sm [&>[data-id^='sds-']:first-child_.action-btn]:rounded-l-theme-sm;
+  @apply [&>[data-id^='sds-']:last-child_.btn]:rounded-r-theme-sm [&>[data-id^='sds-']:last-child_.action-btn]:rounded-r-theme-sm;
+  @apply *:border-l-0 *:first:border-l [&>.btn:first-child]:border-l-2;
+  @apply [&>[data-id^='sds-']_.btn]:border-l-0 [&>[data-id^='sds-']_.action-btn]:border-l-0;
+  @apply [&>[data-id^='sds-']:first-child_.btn]:border-l-2 [&>[data-id^='sds-']:first-child_.action-btn]:border-l;
 }
 
 @utility btn-group-sm {

@@ -261,6 +261,107 @@
     </template>
 
     <section>
+      <h3>SEINet examples for btn-group</h3>
+      <div class="mb-4">
+        <div class="flex gap-2">
+          <div
+            class="inline-block"
+            data-id="sds-action-dropdown"
+          >
+            <div class="inline-block w-full">
+              <button
+                id="v-0-0-11"
+                type="button"
+                class="space-x action-btn action-btn-secondary action-btn-gray action-btn-sm"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Wednesday May 20, 2026<svg
+                  viewBox="0 0 640 640"
+                  aria-hidden="true"
+                  role="img"
+                  width="1.2em"
+                  height="1.2em"
+                  class="inline-block self-center w-4 h-4"
+                ><path
+                  fill="currentColor"
+                  d="M297.4 470.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320 402.7L150.6 233.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                /></svg>
+              </button>
+            </div><!--teleport start--><!--teleport end-->
+          </div><div class="ml-auto btn-group">
+            <button
+              type="button"
+              class="action-btn action-btn-secondary action-btn-sm"
+              title="Previous Day"
+            >
+              <span>Prev</span>
+            </button><button
+              type="button"
+              class="action-btn action-btn-secondary action-btn-sm"
+              title="Next Day"
+            >
+              <span>Next</span>
+            </button>
+          </div>
+        </div>
+
+        <p>Second Version:</p>
+
+        <div class="w-full btn-group">
+          <button
+            type="button"
+            class="btn btn-secondary btn-sm"
+          >
+            <span>Prev</span>
+          </button><div
+            class="inline-block w-full"
+            data-id="sds-dropdown"
+          >
+            <div class="inline-block w-full">
+              <button
+                class="btn-sm btn btn-secondary w-full rounded-none"
+                type="button"
+              >
+                Wednesday May 20, 2026
+              </button>
+            </div><!--teleport start--><!--teleport end-->
+          </div><button
+            type="button"
+            class="btn btn-secondary btn-sm"
+          >
+            <span>Next</span>
+          </button>
+        </div>
+
+        <p>Third Version:</p>
+
+        <div class="w-full btn-group">
+          <button
+            type="button"
+            class="action-btn action-btn-secondary action-btn-sm action-btn-blue"
+          >
+            <span>Prev</span>
+          </button><div
+            class="inline-block w-full"
+            data-id="sds-dropdown"
+          >
+            <div class="inline-block w-full">
+              <button
+                class="action-btn-sm action-btn action-btn-secondary action-btn-blue w-full rounded-none items-center justify-center"
+                type="button"
+              >
+                Wednesday May 20, 2026
+              </button>
+            </div><!--teleport start--><!--teleport end-->
+          </div><button
+            type="button"
+            class="action-btn action-btn-secondary action-btn-sm action-btn-blue"
+          >
+            <span>Next</span>
+          </button>
+        </div>
+      </div>
       <h3>Button: Without Variant</h3>
       <div class="mb-4 btn-group">
         <button class="btn">
