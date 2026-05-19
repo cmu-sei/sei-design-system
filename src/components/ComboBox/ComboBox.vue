@@ -56,6 +56,8 @@
             <SdsLoadingSpinner
               v-else
               size="sm"
+              class="inline-flex shrink-0 items-center justify-center"
+              :class="searchIconClass"
             />
           </div>
           <input
@@ -1115,7 +1117,7 @@ const clearButtonClass = computed(() => {
   return 'px-2'
 })
 
-// Size-based icon class for the search icon.
+// Size-based icon class for the search/loading indicator.
 const searchIconClass = computed(() => {
   if (props.size === 'lg') return 'w-5 h-5'
   return 'w-4 h-4'
