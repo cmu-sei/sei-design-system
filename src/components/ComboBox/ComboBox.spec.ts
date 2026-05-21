@@ -220,6 +220,46 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
+  it('renders the select caret only for select modes when the focus indicator is hidden', () => {
+    const selectWrapper = mountComponent({
+      props: { suggestions, type: 'select' }
+    })
+    const taggableSelectWrapper = mountComponent({
+      props: { suggestions, type: 'taggable-select' }
+    })
+    const textWrapper = mountComponent({
+      props: { suggestions, type: 'text' }
+    })
+    const focusIndicatorWrapper = mountComponent({
+      props: { suggestions, type: 'select', focusOnKeyPress: true }
+    })
+
+    expect(selectWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
+    expect(taggableSelectWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
+    expect(textWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
+    expect(focusIndicatorWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
+  })
+
+  it('keeps the select caret vertically centered for every size', () => {
+    const sizes = ['sm', undefined, 'lg'] as const
+
+    sizes.forEach(size => {
+      const wrapper = mountComponent({
+        props: { suggestions, type: 'select', size }
+      })
+      const caret = wrapper.find('[data-id="sds-combo-box-select-caret"]')
+      const caretIcon = caret.find('span')
+
+      expect(caret.classes()).toEqual(expect.arrayContaining([
+        'input-group-addon',
+        'pointer-events-none',
+      ]))
+      expect(caretIcon.classes()).toContain('shrink-0')
+
+      wrapper.unmount()
+    })
+  })
+
   it('should match snapshot for grouped options', () => {
     const groupSuggestions = [
       { label: 'A', group: 'Fruits', value: 'A' },
@@ -1389,6 +1429,55 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it('focuses the input when non-action trigger chrome is pressed', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'select'
+      },
+      slots: {
+        default: () => h('div', {
+          class: 'mx-1 my-2',
+          'data-id': 'decorative-divider'
+        })
+      }
+    })
+    const inputElement = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const leadingAddon = wrapper.find('.input-group-addon')
+    const decorativeDivider = wrapper.find('[data-id="decorative-divider"]')
+
+    await leadingAddon.trigger('mousedown')
+    expect(document.activeElement).toBe(inputElement)
+
+    inputElement.blur()
+    await decorativeDivider.trigger('mousedown')
+    expect(document.activeElement).toBe(inputElement)
+    wrapper.unmount()
+  })
+
+  it('does not focus the input when a trigger action is pressed', async () => {
+    const outsideButton = document.createElement('button')
+    document.body.appendChild(outsideButton)
+    const wrapper = mountComponent({
+      props: { suggestions },
+      slots: {
+        default: () => h('button', {
+          'data-id': 'trailing-action',
+          type: 'button'
+        }, 'Action')
+      }
+    })
+    const inputElement = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const trailingAction = wrapper.find('[data-id="trailing-action"]')
+    outsideButton.focus()
+
+    await trailingAction.trigger('mousedown')
+
+    expect(document.activeElement).not.toBe(inputElement)
+    wrapper.unmount()
+    outsideButton.remove()
+  })
+
   it('replaces existing single-select selection when user starts typing', async () => {
     const wrapper = mountComponent({
       props: {
@@ -1617,6 +1706,109 @@ describe('ComboBox', () => {
     await flushDropdown()
     expect(dropdownInBody()).toBeFalsy()
     wrapper.unmount()
+  })
+
+  it('clears the select query when Escape is pressed', async () => {
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        modelValue: '',
+        suggestions,
+        type: 'select',
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.setValue('App')
+    await flushDropdown()
+    inputElement.focus()
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await flushDropdown()
+
+    expect(wrapper.props('modelValue')).toBe('')
+    expect(inputElement.value).toBe('')
+    wrapper.unmount()
+  })
+
+  it('clears the select query when tabbing away', async () => {
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        modelValue: '',
+        suggestions,
+        type: 'select',
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.setValue('App')
+    await flushDropdown()
+
+    await input.trigger('keydown.tab')
+    await flushDropdown()
+
+    expect(wrapper.props('modelValue')).toBe('')
+    expect(inputElement.value).toBe('')
+    wrapper.unmount()
+  })
+
+  it('clears the select query when clicking outside the ComboBox', async () => {
+    const outsideButton = document.createElement('button')
+    document.body.appendChild(outsideButton)
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        modelValue: '',
+        suggestions,
+        type: 'taggable-select',
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.setValue('App')
+    await flushDropdown()
+    inputElement.focus()
+
+    outsideButton.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, composed: true }))
+    outsideButton.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.props('modelValue')).toBe('')
+    expect(inputElement.value).toBe('')
+    wrapper.unmount()
+    outsideButton.remove()
+  })
+
+  it('keeps text query when clicking outside the ComboBox', async () => {
+    const outsideButton = document.createElement('button')
+    document.body.appendChild(outsideButton)
+    const wrapper = mountComponent({
+      props: {
+        debounceComplete: 0,
+        modelValue: '',
+        suggestions,
+        type: 'text',
+        'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
+      }
+    })
+    const input = wrapper.find('input[type="text"]')
+    const inputElement = input.element as HTMLInputElement
+    await input.setValue('App')
+    await flushDropdown()
+    inputElement.focus()
+
+    outsideButton.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, composed: true }))
+    outsideButton.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    await flushDropdown()
+
+    expect(wrapper.props('modelValue')).toBe('App')
+    expect(inputElement.value).toBe('App')
+    wrapper.unmount()
+    outsideButton.remove()
   })
 
   it('Escape key restores selected item text after highlighting a different option', async () => {
