@@ -529,6 +529,10 @@ const hasBatchSelection = computed(() => props.enableBatchSelection)
 const selectedCount = computed(() => selectedIds.value.length)
 const hasSelectionActive = computed(() => hasBatchSelection.value && selectedCount.value > 0)
 const hasBatchSelectionActions = computed(() => Array.isArray(props.batchSelectionActions) && props.batchSelectionActions.length > 0)
+const hasDrawerColumn = computed(() => {
+  if (props.tableData?.enableDrawer) return true
+  return (props.tableData?.items ?? []).some((item) => !!item.enableDrawer)
+})
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
@@ -550,24 +554,68 @@ const hasActiveFilters = computed(() => {
   })
 })
 
+const offsetLeftClass = (leftClass: string | undefined, offset: number) => {
+  if (!leftClass || offset === 0) {
+    return leftClass
+  }
+
+  const match = /^left-(\d+)$/.exec(leftClass)
+  if (!match) {
+    return leftClass
+  }
+
+  return `left-${Number(match[1]) + offset}`
+}
+
+const getEffectiveStickyLeftClass = (leftClass?: string, hasBatchOffset: boolean = false) => {
+  const drawerOffset = hasDrawerColumn.value ? 10 : 0
+  const batchOffset = hasBatchOffset ? 8 : 0
+  const totalOffset = drawerOffset + batchOffset
+
+  if (!leftClass) {
+    return totalOffset > 0 ? `left-${totalOffset}` : undefined
+  }
+
+  return offsetLeftClass(leftClass, totalOffset)
+}
+
 const tableFields = computed(() => {
   const baseFields = props.tableData?.fields ?? []
+  const hasCustomStickyConfig = baseFields.some((field) => field.stickyPosition !== undefined)
+
   if (hasBatchSelection.value) {
     return [
-      { key: 'selected', custom: true, sortable: false, align: 'center' as const, stickyPosition: 0, stickyLeftClass: 'left-0' },
+      {
+        key: 'selected',
+        custom: true,
+        sortable: false,
+        align: 'center' as const,
+        stickyPosition: 0,
+        stickyLeftClass: getEffectiveStickyLeftClass('left-0'),
+        stickyEnd: false
+      },
       ...baseFields.map((field, index) => ({
         ...field,
-        stickyPosition: index === 0 ? 1 : undefined,
-        stickyLeftClass: index === 0 ? 'left-8' : undefined,  // left-8 = 2rem = width of the selected (w-8) column
-        stickyEnd: index === 0  // only the last sticky column gets the border
+        stickyPosition: field.stickyPosition !== undefined
+          ? field.stickyPosition + 1
+          : (!hasCustomStickyConfig && index === 0 ? 1 : undefined),
+        stickyLeftClass: field.stickyPosition !== undefined
+          ? (field.stickyLeftClass ?? getEffectiveStickyLeftClass(undefined, true))
+          : (!hasCustomStickyConfig && index === 0 ? getEffectiveStickyLeftClass('left-0', true) : field.stickyLeftClass),
+        stickyEnd: field.stickyPosition !== undefined ? field.stickyEnd : (!hasCustomStickyConfig && index === 0)
       }))
     ]
   }
+
   return baseFields.map((field, index) => ({
     ...field,
-    stickyPosition: index === 0 ? 0 : undefined,
-    stickyLeftClass: index === 0 ? 'left-0' : undefined,
-    stickyEnd: index === 0  // only sticky column, so it's always the last
+    stickyPosition: field.stickyPosition !== undefined
+      ? field.stickyPosition
+      : (!hasCustomStickyConfig && index === 0 ? 0 : undefined),
+    stickyLeftClass: field.stickyPosition !== undefined
+      ? (field.stickyLeftClass ?? getEffectiveStickyLeftClass())
+      : (!hasCustomStickyConfig && index === 0 ? getEffectiveStickyLeftClass('left-0') : field.stickyLeftClass),
+    stickyEnd: field.stickyPosition !== undefined ? field.stickyEnd : (!hasCustomStickyConfig && index === 0)
   }))
 })
 

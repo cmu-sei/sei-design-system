@@ -293,7 +293,10 @@ const data = computed(() => ({
   items: items.value[currentPage.value - 1],
   sortBy: sort_by.value,
   sortDesc: sort_desc.value,
-  onSort: sortTableItems
+  onSort: sortTableItems,
+
+  rowHighlight: true,
+  enableDrawer: true
 }))
 
 const pagination = computed(() => ({ 
