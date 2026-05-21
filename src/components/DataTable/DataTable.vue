@@ -207,26 +207,28 @@
         <template #head(selected)>
           <label 
             for="select-all"
-            class="relative -top-px"
+            class="flex items-center justify-center"
           >
             <span class="sr-only">Select all</span>
             <input
               id="select-all"
               v-model="selectAll"
               type="checkbox"
+              class="block"
             >
           </label>
         </template>
         <template #cell(selected)="{ item }: { item: TableItem }">
           <label 
             :for="`select-${item.id}`"
-            class="relative -top-px"
+            class="flex items-center justify-center"
           >
             <span class="sr-only">Select {{ item.id }}</span>
             <input
               :id="`select-${item.id}`"
               :checked="(item.selected as boolean)"
               type="checkbox"
+              class="block"
               @change="toggleItemSelection(item)"
             >
           </label>
