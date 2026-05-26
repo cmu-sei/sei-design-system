@@ -115,6 +115,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/css/typography-scale': RouteRecordInfo<
+      '/css/typography-scale',
+      '/css/typography-scale',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/patterns/data-table': RouteRecordInfo<
       '/patterns/data-table',
       '/patterns/data-table',
@@ -218,6 +225,12 @@ declare module 'vue-router/auto-routes' {
     'src/docs/pages/css/typography.vue': {
       routes:
         | '/css/typography'
+      views:
+        | never
+    }
+    'src/docs/pages/css/typography-scale.vue': {
+      routes:
+        | '/css/typography-scale'
       views:
         | never
     }
