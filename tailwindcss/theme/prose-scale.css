@@ -12,7 +12,7 @@
 
 @utility text-h2 {
   @apply mt-0 tracking-normal;
-  @apply sds-theme-forge:text-[36px] sds-theme-forge:font-bold sds-theme-forge:leading-10 sds-theme-forge:mb-3;
+  @apply sds-theme-forge:text-[24px] sds-theme-forge:font-bold sds-theme-forge:leading-10 sds-theme-forge:mb-3;
   @apply sds-theme-forge:max-w-120 md:sds-theme-forge:text-[30px] md:sds-theme-forge:leading-9 md:sds-theme-forge:mb-6 md:sds-theme-forge:max-w-140;
   @apply sds-theme-plaid:font-serif sds-theme-plaid:text-[24px] sds-theme-plaid:font-semibold sds-theme-plaid:leading-8 sds-theme-plaid:mb-3;
   @apply sds-theme-plaid:max-w-120 md:sds-theme-plaid:text-[48px] md:sds-theme-plaid:leading-14 md:sds-theme-plaid:mb-6 md:sds-theme-plaid:max-w-170;
@@ -59,7 +59,7 @@
   @apply sds-theme-forge:text-[14px] sds-theme-forge:leading-5 sds-theme-forge:max-w-120 sds-theme-forge:[&_p]:my-0;
   @apply md:sds-theme-forge:text-[16px] md:sds-theme-forge:leading-6 md:sds-theme-forge:max-w-140 md:sds-theme-forge:[&_p]:my-2;
   @apply sds-theme-plaid:text-[14px] sds-theme-plaid:leading-5 sds-theme-plaid:max-w-120 sds-theme-plaid:[&_p]:my-3;
-  @apply md:sds-theme-plaid:text-[20px] md:sds-theme-plaid:leading-7 md:sds-theme-plaid:max-w-170 md:sds-theme-plaid:[&_p]:my-4;
+  @apply md:sds-theme-plaid:text-[16px] md:sds-theme-plaid:leading-7 md:sds-theme-plaid:max-w-170 md:sds-theme-plaid:[&_p]:my-4;
 }
 
 @utility text-caption1 {
