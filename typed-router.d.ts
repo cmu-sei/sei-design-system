@@ -14,11 +14,15 @@ import type {
   ParamValueZeroOrMore,
   ParamValueZeroOrOne,
 } from 'vue-router'
+import type {
+  _ExtractParamParserType,
+} from 'vue-router/experimental'
 
 declare module 'vue-router' {
   interface TypesConfig {
     ParamParsers:
       | never
+    RouteNamedMap: import('vue-router/auto-routes').RouteNamedMap
   }
 }
 
@@ -107,6 +111,13 @@ declare module 'vue-router/auto-routes' {
     '/css/typography': RouteRecordInfo<
       '/css/typography',
       '/css/typography',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/css/typography-scale': RouteRecordInfo<
+      '/css/typography-scale',
+      '/css/typography-scale',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -214,6 +225,12 @@ declare module 'vue-router/auto-routes' {
     'src/docs/pages/css/typography.vue': {
       routes:
         | '/css/typography'
+      views:
+        | never
+    }
+    'src/docs/pages/css/typography-scale.vue': {
+      routes:
+        | '/css/typography-scale'
       views:
         | never
     }

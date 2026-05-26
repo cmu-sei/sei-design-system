@@ -17,6 +17,7 @@
       <div
         class="relative"
         :class="{ 'focus-ring rounded-theme-sm': showTagsBar }"
+        @mousedown="handleTriggerMouseDown"
       >
         <div
           v-if="showTagsBar"
@@ -56,6 +57,8 @@
             <SdsLoadingSpinner
               v-else
               size="sm"
+              class="inline-flex shrink-0 items-center justify-center"
+              :class="searchIconClass"
             />
           </div>
           <input
@@ -138,6 +141,16 @@
                 Press "/" to focus
               </p>
             </SdsTooltip>
+          </div>
+          <div
+            v-else-if="isSelectType"
+            data-id="sds-combo-box-select-caret"
+            aria-hidden="true"
+            class="input-group-addon pointer-events-none"
+          >
+            <span
+              class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"
+            />
           </div>
           <!-- @slot Default content. Good for adding content to the end of the input group -->
           <slot />
@@ -1115,7 +1128,7 @@ const clearButtonClass = computed(() => {
   return 'px-2'
 })
 
-// Size-based icon class for the search icon.
+// Size-based icon class for the search/loading indicator.
 const searchIconClass = computed(() => {
   if (props.size === 'lg') return 'w-5 h-5'
   return 'w-4 h-4'
@@ -1212,6 +1225,16 @@ const handleInputFocus = () => {
   collapseInputSelectionToEnd()
   if (collapseSelectionTimeout.value) window.clearTimeout(collapseSelectionTimeout.value)
   collapseSelectionTimeout.value = window.setTimeout(collapseInputSelectionToEnd, 0)
+}
+
+const isTriggerableAction = (target: EventTarget | null): boolean => {
+  if (!(target instanceof HTMLElement)) return false
+  return !!target.closest('button, a[href], input, select, textarea, label, summary, [role="button"], [role="link"], [tabindex]:not([tabindex="-1"])')
+}
+
+const handleTriggerMouseDown = (event: MouseEvent) => {
+  if (props.disabled || isTriggerableAction(event.target)) return
+  inputField.value?.focus()
 }
 
 const resetSelectDisplayOnClose = () => {

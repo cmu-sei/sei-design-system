@@ -129,8 +129,7 @@ exports[`ComboBox > should match snapshot for type="select" (multiple) 1`] = `
         <div class="input-group-addon"><button tabindex="-1" type="button" class="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-2"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
               <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
             </svg></button></div>
-        <!--v-if-->
-        <!-- @slot Default content. Good for adding content to the end of the input group -->
+        <div data-id="sds-combo-box-select-caret" aria-hidden="true" class="input-group-addon pointer-events-none"><span class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"></span></div><!-- @slot Default content. Good for adding content to the end of the input group -->
       </div>
     </div>
   </div>
@@ -148,8 +147,7 @@ exports[`ComboBox > should match snapshot for type="select" (single) 1`] = `
             <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
           </svg></div><input id="v-0-input" type="text" role="combobox" aria-autocomplete="list" aria-controls="v-0-listbox" aria-expanded="false" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control truncate overflow-hidden text-ellipsis whitespace-nowrap" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
         <!--v-if-->
-        <!--v-if-->
-        <!-- @slot Default content. Good for adding content to the end of the input group -->
+        <div data-id="sds-combo-box-select-caret" aria-hidden="true" class="input-group-addon pointer-events-none"><span class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"></span></div><!-- @slot Default content. Good for adding content to the end of the input group -->
       </div>
     </div>
   </div>
@@ -186,8 +184,7 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (multiple) 
         <div class="input-group-addon"><button tabindex="-1" type="button" class="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 px-2"><span class="sr-only">Clear query</span><svg viewBox="0 0 640 640" aria-hidden="true" role="img" width="1.2em" height="1.2em">
               <path fill="currentColor" d="M183.1 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L275.2 320L137.9 457.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l137.3-137.4l137.4 137.3c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L365.8 320l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L320.5 274.7z"></path>
             </svg></button></div>
-        <!--v-if-->
-        <!-- @slot Default content. Good for adding content to the end of the input group -->
+        <div data-id="sds-combo-box-select-caret" aria-hidden="true" class="input-group-addon pointer-events-none"><span class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"></span></div><!-- @slot Default content. Good for adding content to the end of the input group -->
       </div>
     </div>
   </div>
@@ -205,8 +202,7 @@ exports[`ComboBox > should match snapshot for type="taggable-select" (single) 1`
             <path fill="currentColor" d="M480 272c0 45.9-14.9 88.3-40 122.7l126.6 126.7c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L394.7 440c-34.4 25.1-76.8 40-122.7 40c-114.9 0-208-93.1-208-208S157.1 64 272 64s208 93.1 208 208M272 416c79.5 0 144-64.5 144-144s-64.5-144-144-144s-144 64.5-144 144s64.5 144 144 144"></path>
           </svg></div><input id="v-0-input" type="text" role="combobox" aria-autocomplete="list" aria-controls="v-0-listbox" aria-expanded="false" autocapitalize="off" autocomplete="off" spellcheck="false" autocorrect="off" class="form-control truncate overflow-hidden text-ellipsis whitespace-nowrap" value=""><!-- Validation input for select/taggable-select types - checks if selected array has items --><input type="text" tabindex="-1" class="absolute h-px p-0 m-0 overflow-hidden whitespace-nowrap border-0 left-1/2 -translate-x-1/2 -translate-y-1/2 top-full w-full" style="clip: rect(0px, 0px, 0px, 0px);" value="">
         <!--v-if-->
-        <!--v-if-->
-        <!-- @slot Default content. Good for adding content to the end of the input group -->
+        <div data-id="sds-combo-box-select-caret" aria-hidden="true" class="input-group-addon pointer-events-none"><span class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"></span></div><!-- @slot Default content. Good for adding content to the end of the input group -->
       </div>
     </div>
   </div>
@@ -261,7 +257,7 @@ exports[`ComboBox > should match snapshot when pending 1`] = `
       <!--v-if-->
       <div class="input-group">
         <div class="input-group-addon"><span class="sr-only">Combo box</span>
-          <div data-id="sds-loading-spinner" role="status"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <div data-id="sds-loading-spinner" role="status" class="inline-flex shrink-0 items-center justify-center w-4 h-4"><svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>

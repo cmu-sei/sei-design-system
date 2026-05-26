@@ -156,6 +156,7 @@
             v-model:selected="comboBox1.selected"
             type="taggable-select"
             placeholder="Search"
+            size="lg"
             required
             :pending="comboBox1.pending"
             :suggestions="comboBox1.suggestions"
