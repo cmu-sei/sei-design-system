@@ -8,6 +8,20 @@ describe("Multiselect.vue", () => {
     expect(wrapper.vm).toBeTruthy();
   });
 
+  it("applies disabled and readonly states to the root and input", () => {
+    const wrapper = mount(Component, {
+      props: {
+        disabled: true,
+        readonly: true,
+      },
+    });
+
+    expect(wrapper.classes()).toContain("disabled");
+    expect(wrapper.classes()).toContain("readonly");
+    expect(wrapper.find('input[type="text"]').attributes("readonly")).toBe("");
+    expect(wrapper.find('input[type="text"]').attributes("disabled")).toBe("");
+  });
+
   it("matches snapshot with no props assigned", () => {
     const props = {};
     const wrapper = mount(Component, { props });
