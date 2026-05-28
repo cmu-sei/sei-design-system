@@ -265,7 +265,7 @@ describe('Table', () => {
     expect(customHeader.find('button').exists()).toBe(false)
   })
 
-  it('applies peer-hover drawer class when row is hovered and highlighted', async () => {
+  it('uses table-prose row-highlight attribute for drawer highlight behavior', async () => {
     const props = {
       items: [
         {
@@ -288,7 +288,8 @@ describe('Table', () => {
 
     const drawerRow = wrapper.find('tr[data-drawer="true"]')
     expect(drawerRow.exists()).toBe(true)
-    expect(drawerRow.classes()).toContain('[.table-prose_tbody_&]:peer-hover:bg-gray-25')
+    expect(wrapper.attributes('data-row-highlight')).toBe('true')
+    expect(drawerRow.classes()).not.toContain('[.table-prose_tbody_&]:peer-hover:bg-gray-25')
 
     await baseRow.trigger('mouseleave')
     await wrapper.vm.$nextTick()
@@ -412,6 +413,48 @@ describe('Table', () => {
 
       const firstStickyTd = wrapper.find('tbody td.sticky')
       expect(firstStickyTd.classes()).toContain('z-10')
+    })
+
+    it('should apply sticky left class for numeric sticky left values', () => {
+      const stickyFieldsWithOffset: TableField[] = [
+        { key: 'name', label: 'Title', sortable: true, stickyPosition: 0, stickyLeftClass: 'left-8' },
+        { key: 'fruit', label: 'Fruit', sortable: true }
+      ]
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyFieldsWithOffset }
+      })
+
+      const stickyTh = wrapper.find('thead th.sticky')
+      expect(stickyTh.classes()).toContain('left-8')
+
+      const stickyTd = wrapper.find('tbody td.sticky')
+      expect(stickyTd.classes()).toContain('left-8')
+    })
+
+    it('should make drawer control column sticky only when sticky fields exist', () => {
+      const stickyDrawerFields: TableField[] = [
+        { key: 'name', label: 'Title', sortable: true, stickyPosition: 0, stickyLeftClass: 'left-0' },
+        { key: 'fruit', label: 'Fruit', sortable: true }
+      ]
+
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: stickyDrawerFields, enableDrawer: true }
+      })
+
+      const drawerHeaderCell = wrapper.find('thead tr th')
+      expect(drawerHeaderCell.classes()).toContain('sticky')
+      expect(drawerHeaderCell.classes()).toContain('left-0')
+      expect(drawerHeaderCell.classes()).toContain('z-20')
+    })
+
+    it('should keep drawer control column non-sticky when no sticky fields exist', () => {
+      const wrapper = mount(Component, {
+        props: { items: [...items], fields: [...fields], enableDrawer: true }
+      })
+
+      const drawerHeaderCell = wrapper.find('thead tr th')
+      expect(drawerHeaderCell.classes()).not.toContain('sticky')
+      expect(drawerHeaderCell.classes()).not.toContain('z-20')
     })
   })
 })

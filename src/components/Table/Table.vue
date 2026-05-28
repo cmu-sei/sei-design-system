@@ -34,6 +34,7 @@
         <th 
           v-if="hasDrawers"
           class="in-[.table-prose_&]:px-2 w-10"
+          :class="drawerStickyClasses"
         >
           <button 
             class="flex items-center justify-center w-6 h-6"
@@ -169,6 +170,7 @@
                 'text-left': !field.align || field.align === 'left',
                 'text-center': field.align === 'center',
                 'text-right': field.align === 'right',
+                'w-8 min-w-8 max-w-8 p-0': field.key === 'selected',
                 ...getStickyClasses(field.key)
               }"
               class="whitespace-nowrap space-x-1 select-none group"
@@ -267,18 +269,13 @@
       >
         <tr
           :id="`${id || 'sds-table'}_tr_${item.id || index}`"
-          :class="{
-            'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
-            'peer has-[+tr[data-drawer]:hover]:bg-gray-25 dark:has-[+tr[data-drawer]:hover]:bg-gray-900/85': isToggled(item) && !item.nestedRows && rowHighlight
-          }"
-          @mouseover="onMouseover(item)"
-          @mouseleave="onMouseleave(item)"
         >
           <td
             v-if="hasDrawers"
             class="[.table-prose_tbody_&]:px-2 w-10"
             :class="{
-              'border-b-0': isToggled(item)
+              'border-b-0': isToggled(item),
+              ...drawerStickyClasses
             }"
             :aria-label="hasDrawers ? undefined : 'No value'"
           >
@@ -325,6 +322,7 @@
                 'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                 'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                 'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
+                'w-8 min-w-8 max-w-8 p-0': key === 'selected',
                 'border-b-0': isToggled(item),
                 ...getStickyClasses(key)
               }"
@@ -347,15 +345,13 @@
               v-if="isDrawerEnabled(item) && isToggled(item)"
               :id="`${id || 'sds-table'}_tr_${rItem.id || rIndex}`"
               :key="rIndex"
-              :class="{
-                'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight
-              }"
             >
               <td 
                 aria-label="No value"
                 class="[.table-prose_tbody_&]:px-2 w-10"
                 :class="{
-                  'border-b-0': rIndex !== (item.nestedRows.length - 1)
+                  'border-b-0': rIndex !== (item.nestedRows.length - 1),
+                  ...drawerStickyClasses
                 }"
               />
               <template
@@ -368,6 +364,7 @@
                     'text-left': displayedFields.find((i: TableField) => i.key === key)?.align === 'left',
                     'text-center': displayedFields.find((i: TableField) => i.key === key)?.align === 'center',
                     'text-right': displayedFields.find((i: TableField) => i.key === key)?.align === 'right',
+                    'w-8 min-w-8 max-w-8 p-0': key === 'selected',
                     'border-b-0': rIndex !== (item.nestedRows.length - 1),
                     ...getStickyClasses(key)
                   }"
@@ -391,10 +388,6 @@
             v-if="isDrawerEnabled(item) && isToggled(item)"
             :id="`${id || 'sds-table'}_tr_${item.id || index}_drawer`"
             data-drawer="true"
-            :class="{
-              'hover:[.table-prose_tbody_&]:bg-gray-25 dark:hover:[.table-prose_tbody_&]:bg-gray-900/85': rowHighlight,
-              '[.table-prose_tbody_&]:peer-hover:bg-gray-25 dark:[.table-prose_tbody_&]:peer-hover:bg-gray-900/85': rowHighlight && hoveredItemIds.has(item.id)
-            }"
           >
             <td :colspan="displayedFieldKeys.length + 1">
               <!-- @slot Drawer content. Allow for styling drawer and drawer content. @binding item -->
@@ -601,7 +594,6 @@ const isBatchExpanded = ref(false)
 const enableDrawer = ref(props.enableDrawer)
 const sortField = ref(props.sortBy ?? '')
 const sortOrder = ref(props.sortDesc ? -1 : 1)
-const hoveredItemIds = ref<Set<number>>(new Set())
 const toggledItemIds = ref<Set<number>>(new Set())
 
 const flatFields = computed(() => {
@@ -632,6 +624,22 @@ const displayedFields = computed(() => {
 
 const displayedFieldKeys = computed(() => {
   return Object.entries(displayedFields.value).map(([, value]) => value.key)
+})
+
+const hasStickyColumns = computed(() => {
+  return displayedFields.value.some((field) => field.stickyPosition !== undefined || !!field.stickyEnd)
+})
+
+const drawerStickyClasses = computed(() => {
+  if (!hasStickyColumns.value) {
+    return {}
+  }
+
+  return {
+    'sticky': true,
+    'left-0': true,
+    'z-20': true
+  }
 })
 
 const paddingClass = computed(() => {
@@ -689,12 +697,6 @@ const handleSortBy = (field: TableField) => {
     sortOrder.value = sortOrder.value === 0 ? 1 : sortOrder.value === 1 ? -1 : 1
   }
 }
-
-
-
-const onMouseover = (item: TableItem) => hoveredItemIds.value.add(item.id)
-const onMouseleave = (item: TableItem) => hoveredItemIds.value.delete(item.id) 
-
 const sortCompare = (aRow: TableItem, bRow: TableItem, key: string) => {
   const a = aRow[key]
   const b = bRow[key]
