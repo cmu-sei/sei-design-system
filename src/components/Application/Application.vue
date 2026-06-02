@@ -94,7 +94,7 @@
           </button>
           <div class="h-screen flex flex-col sticky top-0">
             <div class="overflow-y-auto grow overscroll-contain">
-              <div 
+              <div
                 v-if="appName"
                 class="px-3"
               >
@@ -252,14 +252,14 @@
                               class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                             >{{ subitem.badgeCount }}</span>
                           </span>
-                          <span 
+                          <span
                             v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
                             class="inline-flex gap-1 my-auto ml-auto"
                           >
-                            <kbd 
+                            <kbd
                               v-for="(kbdSc, index) in subitem.keyboardShortcut"
                               :key="index"
-                              class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                              class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                               v-html="kbdSc"
                             />
                           </span>
@@ -308,14 +308,14 @@
                           class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                         >{{ item.badgeCount }}</span>
                       </span>
-                      <span 
+                      <span
                         v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
                         class="inline-flex gap-1 my-auto ml-auto"
                       >
-                        <kbd 
+                        <kbd
                           v-for="(kbdSc, index) in item.keyboardShortcut"
                           :key="index"
-                          class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                          class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                           v-html="kbdSc"
                         />
                       </span>
@@ -380,8 +380,7 @@
                     :title="
                       collapsed ? 'Expand sidebar ( [ )' : 'Collapse sidebar ( [ )'
                     "
-                    class="btn btn-ghost btn-sm px-1 py-1 text-gray-700 dark:text-gray-300"
-                    :class="{ 'w-full': collapsed, 'w-auto': !collapsed }"
+                    class="action-btn action-btn-ghost action-btn-sm"
                     @click="toggleCollapse"
                   >
                     <IconFa7SolidAnglesRight
@@ -603,14 +602,14 @@
                             class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
                           >{{ subitem.badgeCount }}</span>
                         </span>
-                        <span 
+                        <span
                           v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
                           class="inline-flex gap-1 my-auto ml-auto"
                         >
-                          <kbd 
+                          <kbd
                             v-for="(kbdSc, index) in subitem.keyboardShortcut"
                             :key="index"
-                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                             v-html="kbdSc"
                           />
                         </span>
@@ -676,14 +675,14 @@
                             class="flex justify-center p-1 rounded-full bg-red-600 dark:bg-red-700"
                           ><span class="sr-only">{{ item.badgeCount }}</span></span>
                         </span>
-                        <span 
+                        <span
                           v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
                           class="inline-flex gap-1 my-auto ml-auto"
                         >
-                          <kbd 
+                          <kbd
                             v-for="(kbdSc, index) in item.keyboardShortcut"
                             :key="index"
-                            class="inline-block bg-white border border-gray-100 group-hover:border-gray-200 rounded-sm p-1.5 font-sans text-xs text-gray-700 group-hover:text-gray-900 font-semibold leading-none"
+                            class="inline-block bg-white dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 shadow-sm rounded-sm p-1.5 text-xs font-semibold leading-none cursor-default"
                             v-html="kbdSc"
                           />
                         </span>

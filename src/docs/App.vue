@@ -10,7 +10,7 @@
     :sidebar-navigation-items="(sidebarNavigationItems as ApplicationSidebarNavItem[])"
     @navigate="navigate"
   >
-    <template #user-section>
+    <!-- <template #user-section>
       <sds-dropdown
         title="Ghost"
         kind="ghost"
@@ -51,7 +51,7 @@
           </sds-dropdown-item>
         </form>
       </sds-dropdown>
-    </template>
+    </template> -->
     <template #page-header>
       <SdsActionButton
         kind="ghost"
@@ -149,8 +149,8 @@ const sidebarNavigationItems = computed(() => [
       {id: 3, title: 'Data Visualization', active: route.fullPath === '/components/data-visualization', href: '/components/data-visualization'},
       {id: 4, title: 'Date & Time', active: route.fullPath === '/components/date-and-time', href: '/components/date-and-time'},
       {id: 4, title: 'Feedback', active: route.fullPath === '/components/feedback', href: '/components/feedback'},
-      {id: 4, title: 'Inputs', active: route.fullPath === '/components/inputs', href: '/components/inputs'},
-      {id: 4, title: 'Navigation', active: route.fullPath === '/components/navigation', href: '/components/navigation'},
+      {id: 4, title: 'Inputs', active: route.fullPath === '/components/inputs', href: '/components/inputs', keyboardShortcut: '⌘K' },
+      {id: 4, title: 'Navigation', active: route.fullPath === '/components/navigation', href: '/components/navigation', keyboardShortcut: '/' },
       {id: 4, title: 'Utility', active: route.fullPath === '/components/utility', href: '/components/utility'},
     ]
   },
@@ -169,7 +169,8 @@ const sidebarNavigationItems = computed(() => [
     items: [
       { id: 1, title: 'CSS Components', active: route.fullPath === '/css/css-components', href: '/css/css-components'},
       { id: 2, title: 'Tailwind Typography', active: route.fullPath === '/css/typography', href: '/css/typography'},
-      { id: 3, title: 'Table Prose', active: route.fullPath === '/css/table-prose', href: '/css/table-prose'},
+      { id: 3, title: 'Typography Scale', active: route.fullPath === '/css/typography-scale', href: '/css/typography-scale'},
+      { id: 4, title: 'Table Prose', active: route.fullPath === '/css/table-prose', href: '/css/table-prose'},
     ]
   }
 ])

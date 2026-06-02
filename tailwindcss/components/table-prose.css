@@ -1,121 +1,39 @@
-@layer components {
-  :where(.table-prose) {
-    @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-clip sds-theme-plaid:rounded-none;
-    border-collapse: separate;
-    border-spacing: 0;
-  }
+@utility table-prose {
+  @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-clip border-separate border-spacing-0;
+  @apply sds-theme-plaid:rounded-none dark:border-gray-800;
 
-  :where(.dark .table-prose) {
-    @apply border border-gray-800;
-  }
+  @apply [&_thead]:border-y [&_thead]:border-gray-100 [&_thead]:rounded-lg [&_thead]:sds-theme-plaid:rounded-none;
+  @apply dark:[&_thead]:border-gray-800;
 
-  :where(.table-prose thead) {
-    @apply border-y border-gray-100 rounded-lg sds-theme-plaid:rounded-none;
-  }
+  @apply [&_thead_th]:text-gray-600 [&_thead_th]:bg-gray-25/50 [&_thead_th]:font-semibold [&_thead_th]:text-sm;
+  @apply [&_thead_th]:align-middle [&_thead_th]:p-2 [&_thead_th]:select-none [&_thead_th]:border-b [&_thead_th]:border-gray-100;
+  @apply dark:[&_thead_th]:text-gray-400 dark:[&_thead_th]:bg-gray-900/85 dark:[&_thead_th]:border-b dark:[&_thead_th]:border-gray-800;
 
-  :where(.dark .table-prose thead) {
-    @apply border-gray-800;
-  }
-  
-  :where(.table-prose thead th) {
-    @apply text-gray-600 bg-gray-25/50 font-semibold text-sm align-middle p-2 relative select-none border-b border-gray-100;
-  }
+  @apply [&_tbody_tr]:bg-white [&_tbody_tr]:px-2 dark:[&_tbody_tr]:bg-gray-950;
+  @apply [[data-row-highlight]&_tbody_tr:hover]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:hover]:bg-gray-900/85;
+  @apply [[data-row-highlight]&_tbody_tr:hover+tr[data-drawer]]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:hover+tr[data-drawer]]:bg-gray-900/85;
+  @apply [[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)]:bg-gray-900/85;
+  @apply [&_tbody_td]:align-top [&_tbody_td]:p-2 [&_tbody_td]:border-b [&_tbody_td]:border-gray-100;
+  @apply [&_tbody_th]:align-top [&_tbody_th]:p-2 [&_tbody_th]:border-b [&_tbody_th]:border-gray-100;
+  @apply [&_tbody_tr:last-child_td]:border-b-0 [&_tbody_tr:last-child_th]:border-b-0;
+  @apply dark:[&_tbody_td]:border-gray-800 dark:[&_tbody_th]:border-gray-800;
 
-  :where(.dark .table-prose thead th) {
-    @apply text-gray-400 bg-gray-900/85 border-b border-gray-800;
-  }
-  
-  :where(.table-prose tbody tr) {
-    @apply bg-white px-2;
-  }
+  @apply [&_tfoot]:bg-gray-600/2 dark:[&_tfoot]:bg-gray-400/2;
+  @apply [&_tfoot_tr]:px-2;
+  @apply [&_tfoot_td]:border-t [&_tfoot_td]:border-gray-100 [&_tfoot_td]:px-2 [&_tfoot_td]:py-4;
+  @apply dark:[&_tfoot_td]:border-gray-800;
 
-  :where(.dark .table-prose tbody tr) {
-    @apply bg-gray-950;
-  }
-  
-  :where(.table-prose tbody td),
-  :where(.table-prose tbody th) {
-    @apply align-top p-2 relative border-b border-gray-100;
-  }
+  @apply sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tl-none sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tr-none;
+  @apply sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&>thead]:rounded-tl-none sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&>thead]:rounded-tr-none;
+  @apply [[data-id=sds-data-table][data-has-footer]_&]:rounded-bl-none [[data-id=sds-data-table][data-has-footer]_&]:rounded-br-none [[data-id=sds-data-table][data-has-footer]_&]:border-b-0;
 
-  :where(.table-prose tbody tr:last-child td),
-  :where(.table-prose tbody tr:last-child th) {
-    @apply border-b-0;
-  }
-
-  :where(.dark .table-prose tbody td),
-  :where(.dark .table-prose tbody th) {
-    @apply border-gray-800;
-  }
-
-  :where(.table-prose tfoot) {
-    @apply bg-gray-600/2;
-  }
-
-  :where(.dark .table-prose tfoot) {
-    @apply bg-gray-400/2;
-  }
-
-  :where(.table-prose tfoot tr) {
-    @apply px-2;
-  }
-
-  :where(.table-prose tfoot td) {
-    @apply border-t border-gray-100;
-    @apply px-2 py-4;
-  }
-
-  :where(.dark .table-prose tfoot td) {
-    @apply border-gray-800;
-  }
-
-  /* Style when [data-id="sds-data-table"] is the parent of .table-prose, only in Forge theme and when a filter/search/sort by header is present */
-  :where(.sds-theme-forge [data-id="sds-data-table"][data-has-header] .table-prose),
-  :where(.sds-theme-forge [data-id="sds-data-table"][data-has-header] .table-prose > thead) {
-    @apply rounded-tl-none rounded-tr-none;
-  }
-
-  /* Remove bottom border and rounding when a faux footer follows outside the scroll container */
-  :where([data-id="sds-data-table"][data-has-footer] .table-prose) {
-    @apply rounded-bl-none rounded-br-none border-b-0;
-  }
-
-  /* Sticky column: match section background */
-  :where(.table-prose thead th.sticky) {
-    @apply bg-gray-25;
-  }
-
-  :where(.dark .table-prose thead th.sticky) {
-    @apply bg-gray-900;
-  }
-
-  :where(.table-prose tbody td.sticky) {
-    @apply bg-white;
-  }
-
-  :where(.dark .table-prose tbody td.sticky) {
-    @apply bg-gray-950;
-  }
-
-  /* Sticky column: row highlight — match hover background when rowHighlight is active */
-  :where([data-row-highlight].table-prose tbody tr:hover td.sticky) {
-    @apply bg-gray-25;
-  }
-
-  :where(.dark [data-row-highlight].table-prose tbody tr:hover td.sticky) {
-    @apply bg-gray-900/85;
-  }
-
-  /* Sticky column: right border — only on the last sticky column when table is scrollable */
-  :where([data-scrollable] .table-prose th.sticky-end),
-  :where([data-scrollable] .table-prose td.sticky-end) {
-    @apply border-r border-gray-100;
-  }
-
-  :where(.dark [data-scrollable] .table-prose th.sticky-end),
-  :where(.dark [data-scrollable] .table-prose td.sticky-end) {
-    @apply border-r border-gray-800;
-  }
+  @apply [&_thead_th.sticky]:bg-gray-25 dark:[&_thead_th.sticky]:bg-gray-900;
+  @apply [&_tbody_td.sticky]:bg-white dark:[&_tbody_td.sticky]:bg-gray-950;
+  @apply [[data-row-highlight]&_tbody_tr:hover_td.sticky]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:hover_td.sticky]:bg-gray-900/85;
+  @apply [[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)_td.sticky]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)_td.sticky]:bg-gray-900/85;
+  @apply [[data-scrollable]_&_th.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-100)];
+  @apply [[data-scrollable]_&_td.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-100)];
+  @apply dark:[[data-scrollable]_&_th.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-800)] dark:[[data-scrollable]_&_td.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-800)];
 }
 
 /* th/td-based variants */
@@ -126,17 +44,11 @@
 /* sm */
 
 @utility table-prose-sm {
-  & tbody td,
-  & tbody th {
-    @apply py-1;
-  }
+  @apply [&_tbody_td]:py-1 [&_tbody_th]:py-1;
 }
 
 /* lg */
 
 @utility table-prose-lg {
-  & tbody td,
-  & tbody th {
-    @apply py-4;
-  }
+  @apply [&_tbody_td]:py-4 [&_tbody_th]:py-4;
 }

@@ -527,7 +527,7 @@ const canAddItem = computed(() => {
 })
 
 const isReadonlyInput = computed(() => {
-  return !props.canSearch;
+  return props.readonly || !props.canSearch;
 })
 
 const isCleanInput = computed(() => {
@@ -1014,7 +1014,7 @@ useEventListener(window, "resize", debouncePositionDropdown)
 @reference "../../../tailwindcss/tailwind.css";
 
 .sds-multiselect {
-  @apply block relative border border-gray-200 dark:border-gray-800 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900;
+  @apply block relative border border-gray-300 dark:border-gray-600 py-0.5 min-w-0 whitespace-normal text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full dark:text-gray-50 dark:bg-gray-900/50;
 }
 
 .sds-multiselect.active,
@@ -1038,7 +1038,7 @@ useEventListener(window, "resize", debouncePositionDropdown)
 
 .sds-multiselect.disabled,
 fieldset[disabled] .sds-multiselect {
-  @apply cursor-auto shadow-none bg-gray-100 border-gray-100 text-gray-400 dark:bg-gray-850 dark:border-gray-850 dark:text-gray-600;
+  @apply cursor-auto shadow-none bg-gray-100 border-gray-300 text-gray-400 dark:bg-gray-900 dark:border-gray-600 dark:text-gray-600;
 }
 
 .sds-multiselect.disabled *,
@@ -1049,6 +1049,10 @@ fieldset[disabled] .sds-multiselect * {
 .sds-multiselect.invalid,
 fieldset[invalid] .sds-multiselect {
   @apply border-red-500 dark:border-red-300;
+}
+
+.sds-multiselect.readonly {
+  @apply bg-gray-50 border-gray-300 text-gray-700 dark:bg-gray-750 dark:border-gray-600 dark:text-gray-100;
 }
 
 .sds-multiselect.valid,

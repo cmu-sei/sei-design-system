@@ -1,0 +1,32 @@
+/* Shared control primitive for btn-* and action-btn-* compatibility aliases. */
+
+@utility sds-btn {
+  @apply select-none whitespace-nowrap cursor-pointer;
+  @apply focus:outline-none focus-visible:outline-none focus-visible:ring-2;
+  @apply sds-disabled:pointer-events-none sds-disabled:opacity-50;
+  @apply ring-(--sds-btn-focus-ring,var(--color-blue-300));
+}
+
+@utility sds-btn-primary {
+  @apply text-(--sds-btn-primary-text) bg-(--sds-btn-primary-bg) border-(--sds-btn-primary-border,transparent);
+  @apply where-hover:text-(--sds-btn-primary-text-hover,var(--sds-btn-primary-text)) where-hover:bg-(--sds-btn-primary-bg-hover);
+  @apply where-active:text-(--sds-btn-primary-text-active,var(--sds-btn-primary-text)) where-active:bg-(--sds-btn-primary-bg-active,var(--sds-btn-primary-bg)) where-active:shadow-inner;
+}
+
+@utility sds-btn-secondary {
+  @apply text-(--sds-btn-secondary-text) bg-(--sds-btn-secondary-bg) border-(--sds-btn-secondary-border);
+  @apply where-hover:text-(--sds-btn-secondary-text-hover) where-hover:bg-(--sds-btn-secondary-bg-hover) where-hover:border-(--sds-btn-secondary-border-hover,var(--sds-btn-secondary-border));
+  @apply where-active:text-(--sds-btn-secondary-text-active) where-active:bg-(--sds-btn-secondary-bg-active) where-active:border-(--sds-btn-secondary-border-active,var(--sds-btn-secondary-border)) where-active:shadow-inner;
+}
+
+@utility sds-btn-tertiary {
+  @apply text-(--sds-btn-tertiary-text) bg-(--sds-btn-tertiary-bg,transparent) border-(--sds-btn-tertiary-border);
+  @apply where-hover:text-(--sds-btn-tertiary-text-hover) where-hover:bg-(--sds-btn-tertiary-bg-hover) where-hover:border-(--sds-btn-tertiary-border-hover);
+  @apply where-active:text-(--sds-btn-tertiary-text-active) where-active:bg-(--sds-btn-tertiary-bg-active) where-active:border-(--sds-btn-tertiary-border-active) where-active:shadow-inner;
+}
+
+@utility sds-btn-ghost {
+  @apply text-(--sds-btn-ghost-text) bg-(--sds-btn-ghost-bg,transparent) border-(--sds-btn-ghost-border,transparent);
+  @apply where-hover:text-(--sds-btn-ghost-text-hover) where-hover:bg-(--sds-btn-ghost-bg-hover);
+  @apply where-active:text-(--sds-btn-ghost-text-active) where-active:bg-(--sds-btn-ghost-bg-active) where-active:shadow-inner;
+}

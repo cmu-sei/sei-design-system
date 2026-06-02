@@ -8,6 +8,11 @@ import Components from 'unplugin-vue-components/vite'
 
 console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
 
+const isVueUseInvalidAnnotation = log => (
+  log.code === 'INVALID_ANNOTATION' &&
+  log.message.includes('node_modules/@vueuse/core/dist/index.js')
+)
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -58,6 +63,13 @@ export default defineConfig({
       }
     },
     rollupOptions: {
+      onLog(level, log, defaultHandler) {
+        if (level === 'warn' && isVueUseInvalidAnnotation(log)) {
+          return
+        }
+
+        defaultHandler(level, log)
+      },
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: [

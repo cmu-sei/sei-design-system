@@ -860,6 +860,141 @@ describe('SdsDataTable', () => {
       })
     })
 
+    it('should constrain selected checkbox column width and padding when batch selection is enabled', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          enableBatchSelection: true
+        },
+        attachTo: container
+      })
+
+      const headerCells = wrapper.findAll('thead th')
+      const selectedHeaderCell = headerCells[0]
+
+      expect(selectedHeaderCell.classes()).toContain('w-8')
+      expect(selectedHeaderCell.classes()).toContain('min-w-8')
+      expect(selectedHeaderCell.classes()).toContain('max-w-8')
+      expect(selectedHeaderCell.classes()).toContain('p-0')
+    })
+
+    it('should offset sticky left classes when drawer column is enabled', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items, enableDrawer: true },
+          pagination
+        },
+        attachTo: container
+      })
+
+      const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
+      const renderedFields = tableComponent.props('fields') as Array<TableField>
+
+      expect(renderedFields[0]).toMatchObject({
+        key: 'task',
+        stickyPosition: 0,
+        stickyLeftClass: 'left-10',
+        stickyEnd: true
+      })
+    })
+
+    it('should offset sticky metadata for selected and first data column with drawer and batch selection', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items, enableDrawer: true },
+          pagination,
+          enableBatchSelection: true
+        },
+        attachTo: container
+      })
+
+      const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
+      const renderedFields = tableComponent.props('fields') as Array<TableField>
+
+      expect(renderedFields[0]).toMatchObject({
+        key: 'selected',
+        stickyPosition: 0,
+        stickyLeftClass: 'left-10',
+        stickyEnd: false
+      })
+
+      expect(renderedFields[1]).toMatchObject({
+        key: 'task',
+        stickyPosition: 1,
+        stickyLeftClass: 'left-18',
+        stickyEnd: true
+      })
+    })
+
+    it('should preserve explicit multi-sticky left classes while adjusting sticky positions for batch selection', () => {
+      const customStickyFields: TableField[] = [
+        { key: 'task', label: 'Task', sortable: true, stickyPosition: 0, stickyLeftClass: 'left-0', stickyEnd: false },
+        { key: 'description', label: 'Description', sortable: true, stickyPosition: 1, stickyLeftClass: 'left-8', stickyEnd: true },
+        { key: 'assignee', label: 'Assignee', sortable: true }
+      ]
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields: customStickyFields, items, enableDrawer: true },
+          pagination,
+          enableBatchSelection: true
+        },
+        attachTo: container
+      })
+
+      const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
+      const renderedFields = tableComponent.props('fields') as Array<TableField>
+
+      expect(renderedFields[1]).toMatchObject({
+        key: 'task',
+        stickyPosition: 1,
+        stickyLeftClass: 'left-0',
+        stickyEnd: false
+      })
+
+      expect(renderedFields[2]).toMatchObject({
+        key: 'description',
+        stickyPosition: 2,
+        stickyLeftClass: 'left-8',
+        stickyEnd: true
+      })
+    })
+
+    it('should use fallback offset only when stickyPosition is set without stickyLeftClass', () => {
+      const customStickyFieldsWithoutLeft: TableField[] = [
+        { key: 'task', label: 'Task', sortable: true, stickyPosition: 0, stickyEnd: false },
+        { key: 'description', label: 'Description', sortable: true, stickyPosition: 1, stickyEnd: true },
+        { key: 'assignee', label: 'Assignee', sortable: true }
+      ]
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields: customStickyFieldsWithoutLeft, items, enableDrawer: true },
+          pagination,
+          enableBatchSelection: true
+        },
+        attachTo: container
+      })
+
+      const tableComponent = wrapper.findComponent({ name: 'SdsTable' })
+      const renderedFields = tableComponent.props('fields') as Array<TableField>
+
+      expect(renderedFields[1]).toMatchObject({
+        key: 'task',
+        stickyPosition: 1,
+        stickyLeftClass: 'left-18',
+        stickyEnd: false
+      })
+
+      expect(renderedFields[2]).toMatchObject({
+        key: 'description',
+        stickyPosition: 2,
+        stickyLeftClass: 'left-18',
+        stickyEnd: true
+      })
+    })
+
     it('should render the ellipsis header action dropdown when slot content is provided', () => {
       const wrapper = mount(SdsDataTable, {
         props: {

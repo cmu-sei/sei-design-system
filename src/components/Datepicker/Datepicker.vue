@@ -27,10 +27,6 @@
             type="button"
             tabindex="-1"
             class="input-group-addon fill-current"
-            :class="{
-              'pointer-events-none text-gray-300 border-gray-200': disabled || readonly,
-              'border-none': disabled,
-            }"
             :disabled="disabled || readonly || undefined"
             @click="toggle(); ($refs.startDateInput as HTMLElement).focus()"
           >
@@ -94,9 +90,6 @@
               type="button"
               tabindex="-1"
               class="input-group-addon fill-current"
-              :class="{
-                'pointer-events-none opacity-50': disabled || readonly
-              }"
               :disabled="disabled || readonly || undefined"
               @click="toggle(); ($refs.endDateInput as HTMLElement).focus()"
             >

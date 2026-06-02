@@ -156,6 +156,7 @@
             v-model:selected="comboBox1.selected"
             type="taggable-select"
             placeholder="Search"
+            size="lg"
             required
             :pending="comboBox1.pending"
             :suggestions="comboBox1.suggestions"
@@ -268,8 +269,9 @@
             @complete="comboBox5.onComplete"
             @enter="comboBox5.onEnter"
           >
-            <template #customOption="{ label, classList, dataActive, href, onClick }">
+            <template #customOption="{ label, classList, dataActive, href, optionAttrs, onClick }">
               <a
+                v-bind="optionAttrs"
                 :class="classList"
                 :href="href"
                 :data-active="dataActive"
@@ -309,44 +311,47 @@
             @result="comboBox6.onResult"
             @enter="comboBox6.onEnter"
           >
-            <template #customOption="{ option, classList, dataActive, onClick }">
-              <button
-                type="button"
-                :class="classList"
-                :data-active="dataActive"
-                class="flex items-center gap-3 w-full"
-                @click="onClick"
-              >
-                <SdsIndicator
-                  :variant="option.status === 'online' ? 'green' : option.status === 'away' ? 'orange' : 'gray'"
-                  :hide-indicator="option.status === 'offline'"
-                  placement="bottom-right"
-                  placement-over="circle"
-                  size="sm"
+            <template #customOption="{ option, classList, dataActive, optionAttrs, onClick }">
+              <template v-if="isUserSuggestion(option)">
+                <button
+                  v-bind="optionAttrs"
+                  type="button"
+                  :class="classList"
+                  :data-active="dataActive"
+                  class="flex items-center gap-3 w-full"
+                  @click="onClick"
                 >
-                  <SdsAvatar
-                    :name="option.name"
-                    :variant="option.variant"
+                  <SdsIndicator
+                    :variant="getUserStatusVariant(option)"
+                    :hide-indicator="option.status === 'offline'"
+                    placement="bottom-right"
+                    placement-over="circle"
                     size="sm"
-                    shape="circle"
-                  />
-                </SdsIndicator>
-                <div class="flex-1 min-w-0 text-left">
-                  <div class="font-medium text-sm truncate">
-                    {{ option.name }}
+                  >
+                    <SdsAvatar
+                      :name="option.name"
+                      :variant="option.variant"
+                      size="sm"
+                      shape="circle"
+                    />
+                  </SdsIndicator>
+                  <div class="flex-1 min-w-0 text-left">
+                    <div class="font-medium text-sm truncate">
+                      {{ option.name }}
+                    </div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {{ option.email }}
+                    </div>
                   </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                    {{ option.email }}
-                  </div>
-                </div>
-                <SdsBadge
-                  :variant="option.variant"
-                  type="light"
-                  class="!text-[10px] !px-1.5 !py-0.5"
-                >
-                  {{ option.role }}
-                </SdsBadge>
-              </button>
+                  <SdsBadge
+                    :variant="option.variant"
+                    type="light"
+                    class="text-[10px]! px-1.5! py-0.5!"
+                  >
+                    {{ option.role }}
+                  </SdsBadge>
+                </button>
+              </template>
             </template>
           </SdsComboBox>
           <code class="text-xs">size="lg" type="text" no autosuggest</code>
@@ -373,6 +378,25 @@
             @complete="comboBox8.onComplete"
             @result="comboBox8.onResult"
             @enter="comboBox8.onEnter"
+          />
+          <code class="text-xs">type="select" categorized virtualized list, 12,000 options</code>
+          <SdsComboBox
+            v-model="comboBox9.modelValue"
+            v-model:selected="comboBox9.selected"
+            type="select"
+            placeholder="Search very large categorized data..."
+            :suggestions="comboBox9.suggestions"
+            :debounce-complete="0"
+            :virtualize-threshold="100"
+            click-to-select
+            filter-suggestions
+            option-label="name"
+            option-group-label="section"
+            option-group-children="items"
+            virtualize
+            @complete="comboBox9.onComplete"
+            @result="comboBox9.onResult"
+            @enter="comboBox9.onEnter"
           />
         </div>
         <SdsButton
@@ -408,6 +432,9 @@
             </tr>
             <tr>
               <td>(lg, select, grouped):</td><td>{{ formData.comboBox8 }}</td>
+            </tr>
+            <tr>
+              <td>(select, virtualized, grouped):</td><td>{{ formData.comboBox9 }}</td>
             </tr>
           </tbody>
         </table>
@@ -486,6 +513,35 @@
 <script setup lang="ts">
 import type { ComboBoxSuggestion } from '../../../components/ComboBox/ComboBox.vue';
 import type { MultiselectOption } from '../../../components/Multiselect/Multiselect.vue';
+
+const USER_SUGGESTION_VARIANTS = ['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'] as const
+
+type UserSuggestionVariant = typeof USER_SUGGESTION_VARIANTS[number]
+
+type UserSuggestion = {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: 'online' | 'away' | 'offline';
+  initials: string;
+  variant: UserSuggestionVariant;
+}
+
+const isUserSuggestion = (option: ComboBoxSuggestion): option is UserSuggestion => {
+  return typeof option === 'object' && option !== null &&
+    typeof option.name === 'string' &&
+    typeof option.email === 'string' &&
+    typeof option.role === 'string' &&
+    typeof option.status === 'string' &&
+    USER_SUGGESTION_VARIANTS.includes(option.variant as UserSuggestionVariant)
+}
+
+const getUserStatusVariant = (option: UserSuggestion) => {
+  if (option.status === 'online') return 'green'
+  if (option.status === 'away') return 'orange'
+  return 'gray'
+}
 
 const checkboxGroup = reactive({
   modelValue: ['option 2'],
@@ -618,12 +674,19 @@ const wait = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+let comboBox1RequestId = 0
+
 const mockApiRequest = async (query: string) => {
+  const requestId = ++comboBox1RequestId
   comboBox1.suggestions = []
-  if (query === '') return
+  if (query === '') {
+    comboBox1.pending = false
+    return
+  }
   comboBox1.pending = true
   console.log("Waiting 1 seconds...");
   await wait(1000);
+  if (requestId !== comboBox1RequestId) return
   console.log("1 seconds passed... now return mock API data");
   comboBox1.suggestions = [
     { label: 'Apple', test: 'cool', index: 'cool2' },
@@ -837,8 +900,8 @@ const comboBox5 = reactive({
   async onComplete(query: string) {
     console.info('onComplete:', query)
   },
-  onEnter(value: ComboBoxSuggestion) {
-    const suggestion = customSuggestions.find(s => (s as { term: string, href: string }).term === value[0])
+  onEnter(value: string) {
+    const suggestion = customSuggestions.find(s => (s as { term: string, href: string }).term === value)
     if (suggestion) {
       const url = (suggestion as { term: string, href: string })?.href as string || ''
       if (url.length)
@@ -920,6 +983,36 @@ const comboBox8 = reactive({
   }
 })
 
+const createVirtualizedComboBoxCategory = (section: string, count: number): ComboBoxSuggestion => ({
+  section,
+  items: Array.from({ length: count }, (_, index) => ({
+    id: `${section.toLowerCase().replaceAll(' ', '-')}-${index + 1}`,
+    name: `${section} item ${String(index + 1).padStart(4, '0')}`
+  }))
+})
+
+const comboBox9 = reactive({
+  modelValue: '',
+  selected: [] as ComboBoxSuggestion[],
+  suggestions: [
+    createVirtualizedComboBoxCategory('Artifacts', 2000),
+    createVirtualizedComboBoxCategory('Books', 2000),
+    createVirtualizedComboBoxCategory('Courses', 2000),
+    createVirtualizedComboBoxCategory('Datasets', 2000),
+    createVirtualizedComboBoxCategory('Exercises', 2000),
+    createVirtualizedComboBoxCategory('Facilities', 2000)
+  ] as ComboBoxSuggestion[],
+  async onComplete(query: string) {
+    console.info('onComplete:', query)
+  },
+  onResult(result: ComboBoxSuggestion) {
+    console.info('onResult:', result)
+  },
+  onEnter(value: string) {
+    console.info('onEnter:', value)
+  }
+})
+
 const formData = reactive({
   comboBox1: ([] as ComboBoxSuggestion[]),
   comboBox2_1: ([] as ComboBoxSuggestion[]),
@@ -928,7 +1021,8 @@ const formData = reactive({
   comboBox4: ([] as ComboBoxSuggestion[]),
   comboBox5: ([] as ComboBoxSuggestion[]),
   comboBox6: ([] as ComboBoxSuggestion[]),
-  comboBox8: ([] as ComboBoxSuggestion[])
+  comboBox8: ([] as ComboBoxSuggestion[]),
+  comboBox9: ([] as ComboBoxSuggestion[])
 })
 
 watchEffect(() => {
@@ -940,6 +1034,7 @@ watchEffect(() => {
   formData.comboBox5 = comboBox5.selected
   formData.comboBox6 = comboBox6.selected
   formData.comboBox8 = comboBox8.selected
+  formData.comboBox9 = comboBox9.selected
 })
 
 const handleSubmit = () => {

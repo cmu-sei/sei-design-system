@@ -1,128 +1,172 @@
+@utility form-border {
+  @apply border border-gray-300 dark:border-gray-600;
+  @apply [&.valid]:border-green-500;
+  @apply [&.invalid]:border-red-500;
+  @apply dark:[&.valid]:border-green-400;
+  @apply dark:[&.invalid]:border-red-300;
+}
+
+@utility form-control {
+  @apply form-border;
+  @apply block min-w-0 w-full py-2 px-3 text-base rounded-theme-sm;
+  @apply text-gray-900 bg-white;
+  @apply placeholder:italic placeholder-gray-400;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300;
+  @apply disabled:bg-gray-100 disabled:text-gray-400 disabled:select-none;
+  @apply disabled:pointer-events-none [[readonly]:not(.no-readonly-style)]:pointer-events-none;
+  @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-700;
+  @apply dark:text-gray-100 dark:bg-gray-900/50;
+  @apply dark:disabled:bg-gray-900 dark:disabled:text-gray-600;
+  @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:text-gray-100;
+  @apply dark:placeholder-gray-400 dark:focus-visible:ring-blue-700;
+}
+
+@utility form-control-sm {
+  @apply px-2 py-1 text-sm;
+  @apply [[type=checkbox]]:size-3.5 [[type=radio]]:size-3.5;
+  @apply [select:not([multiple])]:pr-5 [select:not([multiple])]:bg-position-[right_0.5rem_center];
+}
+
+@utility form-control-lg {
+  @apply px-4 py-3 text-base rounded-theme-lg;
+}
+
+@utility focus-ring {
+  @apply has-focus-visible:ring-2 ring-blue-300 dark:ring-blue-700;
+}
+
+@utility input-group {
+  @apply relative flex items-stretch w-full overflow-clip focus-ring rounded-theme-sm;
+  @apply form-border;
+  @apply bg-white dark:bg-gray-900/50;
+  @apply sds-disabled:pointer-events-none sds-disabled:select-none sds-disabled:text-gray-400 sds-disabled:bg-gray-100 sds-disabled:border-gray-300;
+  @apply dark:sds-disabled:text-gray-600 dark:sds-disabled:bg-gray-900 dark:sds-disabled:border-gray-600;
+  @apply [&.readonly]:bg-gray-50 dark:[&.readonly]:bg-gray-750;
+  @apply *:data-[id^='sds-']:grow [&>.form-control]:grow;
+  @apply [&>*:not(.form-control):not(.input-group-addon)]:bg-inherit;
+  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
+  @apply *:border-0 *:border-transparent;
+  @apply *:focus:outline-none *:focus:ring-0 *:focus-visible:outline-none *:focus-visible:ring-0;
+  @apply [&>.form-control]:border-0 [&>.form-control]:border-transparent;
+  @apply [&>[data-id^='sds-']_.form-control]:border-0 [&>[data-id^='sds-']_.form-control]:border-transparent [&>[data-id^='sds-']_.form-control]:rounded-none;
+  @apply [&>.form-control:focus]:outline-none [&>.form-control:focus]:ring-0;
+  @apply [&>.form-control:focus-visible]:outline-none [&>.form-control:focus-visible]:ring-0;
+  @apply [&>[data-id^='sds-']_.form-control:focus]:outline-none [&>[data-id^='sds-']_.form-control:focus]:ring-0;
+  @apply [&>[data-id^='sds-']_.form-control:focus-visible]:outline-none [&>[data-id^='sds-']_.form-control:focus-visible]:ring-0;
+  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-sm [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-sm;
+  @apply [&>.input-group-addon]:flex [&>.input-group-addon]:items-center;
+  @apply [&>.input-group-addon]:text-center [&>.input-group-addon]:whitespace-nowrap;
+  @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:text-gray-500 dark:[&>.input-group-addon]:text-gray-300 [&>.input-group-addon]:px-1.5;
+  @apply [&>.input-group-addon]:bg-white dark:[&>.input-group-addon]:bg-gray-900/50;
+  @apply [&>.form-control]:px-1.5 [&>[data-id^='sds-']_.form-control]:px-1.5;
+  @apply [&>.input-group-addon+.form-control]:pl-1 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-1;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
+  @apply sds-disabled:[&>.input-group-addon]:text-gray-400 dark:sds-disabled:[&>.input-group-addon]:text-gray-600;
+  @apply sds-disabled:[&>.input-group-addon]:bg-gray-100 dark:sds-disabled:[&>.input-group-addon]:bg-gray-900;
+  @apply sds-disabled:[&>.form-control]:bg-gray-100 sds-disabled:[&>.form-control]:text-gray-400;
+  @apply dark:sds-disabled:[&>.form-control]:bg-gray-900 dark:sds-disabled:[&>.form-control]:text-gray-600;
+  @apply sds-disabled:[&>.btn]:bg-gray-100 sds-disabled:[&>.btn]:text-gray-400 sds-disabled:[&>.btn]:border-gray-300;
+  @apply dark:sds-disabled:[&>.btn]:bg-gray-900 dark:sds-disabled:[&>.btn]:text-gray-600 dark:sds-disabled:[&>.btn]:border-gray-600;
+  @apply sds-disabled:[&>.action-btn]:bg-gray-100 sds-disabled:[&>.action-btn]:text-gray-400 sds-disabled:[&>.action-btn]:border-gray-300;
+  @apply dark:sds-disabled:[&>.action-btn]:bg-gray-900 dark:sds-disabled:[&>.action-btn]:text-gray-600 dark:sds-disabled:[&>.action-btn]:border-gray-600;
+  @apply [&.readonly>.input-group-addon]:bg-gray-50 dark:[&.readonly>.input-group-addon]:bg-gray-750;
+  @apply [&.readonly>.form-control]:bg-gray-50 [&.readonly>.form-control]:text-gray-700;
+  @apply dark:[&.readonly>.form-control]:bg-gray-750 dark:[&.readonly>.form-control]:text-gray-100;
+  @apply [&:has(:disabled)>.input-group-addon]:bg-gray-100 dark:[&:has(:disabled)>.input-group-addon]:bg-gray-900;
+  @apply [&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-50 dark:[&:has([readonly]:not(.no-readonly-style))>.input-group-addon]:bg-gray-750;
+}
+
+@utility input-group-sm {
+  @apply [&>.input-group-addon]:form-control-sm [&>.form-control]:form-control-sm [&>[data-id^='sds-']_.form-control]:form-control-sm;
+  @apply [&>.form-control]:px-1 [&>[data-id^='sds-']_.form-control]:px-1;
+  @apply [&>.input-group-addon+.form-control]:pl-0.5 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-0.5;
+  @apply [&>.input-group-addon]:py-1 [&>.input-group-addon]:text-sm [&>.input-group-addon]:px-1;
+  @apply [&>.form-control:first-child]:pl-1.5 [&>[data-id^='sds-']:first-child_.form-control]:pl-1.5 [&>.input-group-addon:first-child]:pl-1.5;
+  @apply [&>.form-control:last-child]:pr-1.5 [&>[data-id^='sds-']:last-child_.form-control]:pr-1.5 [&>.input-group-addon:last-child]:pr-1.5;
+}
+
+@utility input-group-lg {
+  @apply rounded-theme-lg;
+  @apply *:first:rounded-l-theme-lg *:last:rounded-r-theme-lg;
+  @apply [&>[data-id^='sds-']:first-child_.form-control]:rounded-l-theme-lg [&>[data-id^='sds-']:last-child_.form-control]:rounded-r-theme-lg;
+  @apply [&>.input-group-addon]:form-control-lg [&>.form-control]:form-control-lg [&>[data-id^='sds-']_.form-control]:form-control-lg;
+  @apply [&>.form-control]:px-1.5 [&>[data-id^='sds-']_.form-control]:px-1.5;
+  @apply [&>.input-group-addon+.form-control]:pl-1 [&>.input-group-addon+[data-id^='sds-']_.form-control]:pl-1;
+  @apply [&>.input-group-addon]:py-2 [&>.input-group-addon]:px-1.5;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
+}
+
+@utility btn-group {
+  @apply relative flex items-stretch w-fit rounded-theme-sm;
+  @apply *:rounded-none *:first:rounded-l-theme-sm *:last:rounded-r-theme-sm;
+  @apply [&>[data-id^='sds-']_.btn]:rounded-none [&>[data-id^='sds-']_.action-btn]:rounded-none;
+  @apply [&>[data-id^='sds-']:first-child_.btn]:rounded-l-theme-sm [&>[data-id^='sds-']:first-child_.action-btn]:rounded-l-theme-sm;
+  @apply [&>[data-id^='sds-']:last-child_.btn]:rounded-r-theme-sm [&>[data-id^='sds-']:last-child_.action-btn]:rounded-r-theme-sm;
+  @apply *:border-l-0 *:first:border-l [&>.btn:first-child]:border-l-2;
+  @apply [&>[data-id^='sds-']_.btn]:border-l-0 [&>[data-id^='sds-']_.action-btn]:border-l-0;
+  @apply [&>[data-id^='sds-']:first-child_.btn]:border-l-2 [&>[data-id^='sds-']:first-child_.action-btn]:border-l;
+}
+
+@utility btn-group-sm {
+  @apply [&>.input-group-addon]:form-control-sm [&>.form-control]:form-control-sm [&>[data-id^='sds-']_.form-control]:form-control-sm;
+  @apply [&>.form-control:first-child]:pl-2 [&>[data-id^='sds-']:first-child_.form-control]:pl-2 [&>.input-group-addon:first-child]:pl-2;
+  @apply [&>.form-control:last-child]:pr-2 [&>[data-id^='sds-']:last-child_.form-control]:pr-2 [&>.input-group-addon:last-child]:pr-2;
+}
+
+@utility btn-toolbar {
+  @apply flex flex-wrap justify-start;
+}
+
+@utility input-toolbar {
+  @apply flex flex-wrap justify-start;
+}
+
 @layer components {
-  :where(input[type='checkbox']) {
-    @apply rounded-theme-sm;
+  :where(input[type="checkbox"]),
+  :where(input[type="radio"]) {
+    @apply form-border appearance-none w-4 h-4 bg-white rounded-theme-sm cursor-pointer;
+    @apply dark:bg-gray-900/50;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
+    @apply disabled:pointer-events-none disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-default;
+    @apply dark:disabled:bg-gray-900 dark:disabled:border-gray-600;
+    @apply [[readonly]:not([disabled]):not(.no-readonly-style)]:pointer-events-none;
+    @apply [&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-50 [&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-300;
+    @apply dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:bg-gray-750 dark:[&[readonly]:not([disabled]):not(.no-readonly-style)]:border-gray-600;
+    @apply bg-no-repeat bg-center bg-contain;
+    @apply checked:border-blue-500 checked:bg-blue-500;
+    @apply dark:checked:border-blue-700 dark:checked:bg-blue-700;
+    @apply [[type=checkbox]]:indeterminate:border-blue-500 [[type=checkbox]]:indeterminate:bg-blue-500;
+    @apply dark:[[type=checkbox]]:indeterminate:border-blue-700 dark:[[type=checkbox]]:indeterminate:bg-blue-700;
+    @apply [[type=checkbox]]:checked:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M3.5%208l3%203%206-6%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
+    @apply [[type=checkbox]]:indeterminate:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%208h8%27%20stroke%3D%27white%27%20stroke-width%3D%272%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E")];
+    @apply [[type="radio"]]:rounded-full;
+    @apply [[type="radio"]]:checked:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%3E%3Ccircle%20cx%3D%278%27%20cy%3D%278%27%20r%3D%273.5%27%20fill%3D%27white%27/%3E%3C/svg%3E")];
   }
 
-  :where(input[type='checkbox'], input[type='radio']) {
-    @apply bg-white text-blue-500;
-  }
-
-  :where(input[type='checkbox']:checked, input[type='checkbox']:indeterminate, input[type='radio']:checked) {
-    @apply bg-blue-500;
-  }
-
-  :where(.dark input[type='checkbox'], .dark input[type='radio']) {
-    @apply bg-gray-900;
-  }
-
-  :where(.dark input[type='checkbox']:checked, .dark input[type='radio']:checked) {
-    @apply bg-blue-700;
-  }
-
-  :where(.dark input[type='checkbox'].valid, .dark input[type='radio'].valid) {
-    @apply border-green-400;
-  }
-
-  :where(.dark input[type='checkbox'].invalid, .dark input[type='radio'].invalid) {
-    @apply border-red-300;
-  }
-
-  :where(input[type='checkbox'].valid, input[type='radio'].valid) {
-    @apply border-green-500;
-  }
-
-  :where(input[type='checkbox'].invalid, input[type='radio'].invalid) {
-    @apply border-red-500;
-  }
-
-  :where(input[type='checkbox'], input[type='radio'], .form-control) {
-    @apply border-gray-200;
-  }
-
-  :where(input[type='checkbox']:focus, input[type='radio']:focus, .form-control:focus) {
-    @apply outline-none;
-  }
-
-  :where(input[type='checkbox']:focus-visible, input[type='radio']:focus-visible, .form-control:focus-visible) {
-    @apply outline-none ring-2 ring-blue-300 border-gray-500;
-  }
-
-  :where(.dark input[type='checkbox'], .dark input[type='radio'], .dark .form-control) {
-    @apply border-gray-800;
-  }
-
-  :where(.dark input[type='checkbox']:focus-visible, .dark input[type='radio']:focus-visible, .dark .form-control:focus-visible) {
-    @apply ring-blue-500;
-  }
-
-  :where(.dark input[type='checkbox'][readonly], .dark input[type='radio'][readonly], .dark .form-control[readonly]) {
-    @apply text-gray-500 border-gray-800 bg-gray-950;
-  }
-
-  :where(.dark input[type='checkbox']:disabled, .dark input[type='radio']:disabled, .dark .form-control:disabled) {
-    @apply text-gray-600 border-gray-850 bg-gray-850;
-  }
-
-  :where(input[type='checkbox'][readonly], input[type='radio'][readonly], .form-control[readonly]) {
-    @apply text-gray-700 border-gray-200 bg-gray-50 shadow-none;
-  }
-
-  :where(input[type='checkbox']:disabled, input[type='radio']:disabled, .form-control:disabled) {
-    @apply opacity-100 text-gray-400 border-gray-100 bg-gray-100 shadow-none pointer-events-none select-none;
-  }
-
-  :where(.form-control) {
-    @apply min-w-0 py-2 px-3 text-base shadow-inner text-gray-900 bg-white rounded-theme-sm w-full;
-
-    &::placeholder {
-      @apply text-gray-300 italic;
-    }
-  }
-
-  :where(.form-control.valid) {
-    @apply border-green-500;
-  }
-
-  :where(.form-control.invalid) {
-    @apply border-red-500;
-  }
-
-  :where(.dark .form-control) {
-    @apply text-gray-50 bg-gray-900;
-
-    &::placeholder {
-      @apply text-gray-700;
-    }
-  }
-
-  :where(.dark .form-control.valid) {
-    @apply border-green-400;
-  }
-
-  :where(.dark .form-control.invalid) {
-    @apply border-red-300;
+  :where(input[type="text"]),
+  :where(input[type="email"]),
+  :where(input[type="url"]),
+  :where(input[type="password"]),
+  :where(input[type="number"]),
+  :where(input[type="search"]),
+  :where(textarea),
+  :where(select) {
+    @apply form-control;
   }
 
   :where(select:not([multiple]).form-control option) {
     @apply text-gray-900 bg-white;
+    @apply dark:text-gray-50 dark:bg-gray-700;
   }
 
-  :where(.dark select:not([multiple]).form-control option) {
-    @apply text-gray-50 bg-gray-700;
-  }
-
-}
-
-/* ===== FORM CONTROL SIZE UTILITIES (responsive-ready) ===== */
-/* Using @utility makes form-control-sm work with responsive variants,
-   e.g. lg:form-control-sm */
-
-@utility form-control-sm {
-  :where(.form-control&) {
-    @apply py-1 px-2 text-sm;
-  }
-
-  :where(select:not([multiple])&) {
-    @apply pr-5 bg-right;
+  :where(select:not([multiple])) {
+    @apply appearance-none pr-8 [&.form-control-sm]:pr-6;
+    @apply bg-no-repeat bg-position-[right_1rem_center] bg-size-[1rem_1rem];
+    @apply [&.form-control-sm]:bg-position-[right_0.5rem_center];
+    @apply bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
+    @apply dark:bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E")];
   }
 }
+
