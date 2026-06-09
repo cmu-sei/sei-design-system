@@ -108,6 +108,8 @@ declare module 'vue' {
     PagesPatternsDataTable: typeof import('./src/docs/pages/patterns/data-table.vue')['default']
     PagesPatternsFormGroup: typeof import('./src/docs/pages/patterns/form-group.vue')['default']
     PagesPatternsLayoutExternal: typeof import('./src/docs/pages/patterns/layout-external.vue')['default']
+    PagesTemplatesBrochureSite: typeof import('./src/docs/pages/templates/brochure-site.vue')['default']
+    PagesTemplatesLayoutExternal: typeof import('./src/docs/pages/templates/layout-external.vue')['default']
     Paginator: typeof import('./src/components/Paginator/Paginator.vue')['default']
     PaginatorRange: typeof import('./src/components/PaginatorRange/PaginatorRange.vue')['default']
     Panel: typeof import('./src/components/Panel/Panel.vue')['default']
