@@ -676,6 +676,55 @@
         />
       </div>
     </div>
+
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Pie Chart
+        </h2>
+        <p>
+          A reusable SVG-based pie chart built with
+          <SdsLink 
+            :external="true" 
+            kind="primary" 
+            type="inline" 
+            variant="blue" 
+            href="https://d3js.org/"
+          >
+            D3
+          </SdsLink>. The component accepts a <code>slices</code> array and renders a responsive pie chart with a
+          built-in legend. An optional <code>innerRadius</code> prop turns the chart into a donut.
+        </p>
+
+        <h3>Browser Market Share 2025 - default color palette</h3>
+        <p>
+          When slices omit the <code>color</code> property, the chart automatically assigns colors from
+          the built-in <code>defaultColors</code> utility palette. Data sourced from
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
+            href="https://gs.statcounter.com/browser-market-share/all/worldwide/2025"
+          >
+            StatCounter Global Stats
+          </SdsLink>.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesNoColor"
+            :height="400"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - default palette"
+          />
+        </div>
+      </div>
+    </div>
+
     <div class="grid gap-4">
       <h2 class="text-xl">
         Table
@@ -1155,7 +1204,11 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { PieSlice } from '@/composables/usePieChart'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
+import SdsLink from '@/components/Link/Link.vue';
+import SdsPieChart from '@/components/PieChart/PieChart.vue';
+import { formatPercent } from '@/helpers/charts'
 
 const datapointModelValue = ref(1451)
 
@@ -1167,6 +1220,21 @@ const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purpl
   ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
 )
 const badgeTypes = ref<('light-border' | 'light' | 'medium' | 'dark' | undefined)[]>(['light-border', 'light', 'medium', 'dark'])
+
+/**
+ * No color — falls back to the defaultColors utility palette.
+ * Source: https://gs.statcounter.com/browser-market-share/all/worldwide/2025
+ */
+const browserSlicesNoColor: PieSlice[] = [
+  { label: 'Chrome', value: 65.8 },
+  { label: 'Safari', value: 18.2 },
+  { label: 'Edge', value: 5.0 },
+  { label: 'Firefox', value: 2.7 },
+  { label: 'Samsung Internet', value: 2.5 },
+  { label: 'Opera', value: 2.2 },
+  { label: 'Brave', value: 1.5 },
+  { label: 'Others', value: 2.1 },
+]
 
 const fields = ref<TableField[]>([
   {
