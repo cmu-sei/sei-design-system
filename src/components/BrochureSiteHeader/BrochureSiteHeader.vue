@@ -114,7 +114,7 @@
           :href="item.href ?? null"
           :external="item.external"
           :type="item.content ? 'slide' : 'simple'"
-          :onClick="(e: Event) => {
+          :on-click="(e: Event) => {
             if (item.onClick) {
               item.onClick(item, e)
             } else if (item.content) {
