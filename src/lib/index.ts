@@ -15,13 +15,16 @@ export {
   axisLeft,
   axisRight,
   axisTop,
+  easeCubicOut,
+  format,
   max,
   min,
   pie,
   scaleBand,
   scaleLinear,
+  scaleQuantize,
   select,
   stack,
-  stackOffsetNone,
   stackOrderNone,
+  stackOffsetNone
 } from './d3'

@@ -9,6 +9,7 @@ export {
 } from './colors'
 
 export { 
+  BAND_PADDING,
   DEFAULT_BAR_MARGIN, 
   DEFAULT_MARGIN, 
   MIN_LABEL_ANGLE 

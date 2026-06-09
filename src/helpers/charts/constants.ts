@@ -15,6 +15,15 @@ export interface ChartMargin {
 }
 
 /**
+ * Default band padding for heatmap cells, expressed as a fraction of the cell size.
+ * A value of 0 means no gap between cells, while a value of 1 means maximum padding (cells reduced to points).
+ * The default value of 0.1 provides a small gap for visual separation without overly shrinking the cells.
+ * @type {number}
+ * @const
+ */
+export const BAND_PADDING: number = 0.1
+
+/**
  * Default chart margin (pixels) applied when no `margin` prop is provided.
  * Provides equal spacing on all sides (20px).
  * @type {ChartMargin}

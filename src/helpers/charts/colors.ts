@@ -5,6 +5,7 @@
  * @const
  */
 export const monochromeColorScheme = Object.freeze([
+  'var(--color-white)',
   'var(--color-blue-25)',
   'var(--color-blue-50)',
   'var(--color-blue-100)',
@@ -17,28 +18,46 @@ export const monochromeColorScheme = Object.freeze([
   'var(--color-blue-800)',
   'var(--color-blue-900)',
   'var(--color-blue-950)',
+  'var(--color-black)',
 ] as const)
 
 /**
  * Default categorical color palette for charts.
  * Based on a perceptually distinguishable color scale.
+ * @const
  */
-export const defaultColors: string[] = monochromeColorScheme.slice(3)
+export const defaultColors: string[] = monochromeColorScheme.slice(4)
 
 /**
  * Dark-mode categorical color palette — the same range reversed.
+ * @const
  */
-export const defaultColorsDark: string[] = [...monochromeColorScheme].reverse().slice(3)
+export const defaultColorsDark: string[] = [...monochromeColorScheme].reverse().slice(4)
+
+/**
+ * Heatmap-specific palette with lighter tones (starts from blue-50).
+ * This is intentionally separate so only Heatmap defaults are affected.
+ * @const
+ */
+export const heatmapColors: string[] = monochromeColorScheme.slice(2)
+
+/**
+ * Dark-mode heatmap palette derived from the same base range.
+ * @const
+ */
+export const heatmapColorsDark: string[] = [...monochromeColorScheme].reverse().slice(2)
 
 /**
  * Default color used for single-series bar charts (blue-600).
+ * @const
  */
-export const defaultSingleColor = monochromeColorScheme[7] // blue-600
+export const defaultSingleColor = monochromeColorScheme[8] // blue-600
 
 /**
  * Default color used for single-series bar charts in dark mode (blue-300).
+ * @const
  */
-export const defaultSingleColorDark = monochromeColorScheme[4] // blue-300
+export const defaultSingleColorDark = monochromeColorScheme[5] // blue-300
 
 /**
  * Resolves a `color` property that is either a plain string or a `{ light, dark }` object
@@ -87,5 +106,5 @@ export function resolveColor(
   const palette = isDark
     ? (config?.colors?.dark ?? defaultColorsDark)
     : (config?.colors?.light ?? defaultColors)
-  return color ?? palette[index % palette.length] ?? defaultSingleColor
+  return color ?? palette[index % palette.length] ?? (isDark ? defaultSingleColorDark : defaultSingleColor)
 }

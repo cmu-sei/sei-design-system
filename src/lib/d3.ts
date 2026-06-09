@@ -18,7 +18,7 @@ export type {
   /** D3 stack series data. */
   Series,
   /** Individual point in a D3 stack series. */
-  SeriesPoint,
+  SeriesPoint
 } from 'd3'
 
 /**
@@ -31,6 +31,7 @@ export {
   arc,
   scaleBand,
   scaleLinear,
+  scaleQuantize,
   axisBottom,
   axisLeft,
   axisTop,
@@ -42,5 +43,5 @@ export {
   max,
   min,
   format,
-  easeCubicOut,
+  easeCubicOut
 } from 'd3'
