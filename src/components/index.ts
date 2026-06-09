@@ -138,6 +138,7 @@ import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
 import SdsPaginatorRange from "./PaginatorRange";
 import SdsPanel from "./Panel";
+import SdsPieChart from "./PieChart";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsResizer from "./Resizer";
@@ -220,6 +221,7 @@ const Components: ComponentList = {
   SdsPaginator,
   SdsPaginatorRange,
   SdsPanel,
+  SdsPieChart,
   SdsPopover,
   SdsRadioGroup,
   SdsResizer,
@@ -307,6 +309,7 @@ export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
 export { default as SdsPaginatorRange } from "./PaginatorRange";
 export { default as SdsPanel} from "./Panel";
+export { default as SdsPieChart } from "./PieChart";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsResizer } from "./Resizer";

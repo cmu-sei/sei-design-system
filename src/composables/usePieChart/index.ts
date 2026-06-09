@@ -59,7 +59,7 @@ export interface PieLegendItem {
  * @param {Ref<number> | ComputedRef<number>} [innerRadius=0] - Inner radius for donut charts. @default 0 (solid pie)
  * @param {Ref<Function> | ComputedRef<Function>} [valueFormat] - Formatter function for legend values. @default `v => \`${v}%\``
  *
- * @returns {Object} Reactive computed values:
+ * @returns {{ arcs: ComputedRef<PieArcData[]>; pieData: ComputedRef<PieArcDatum<PieSlice>[]>; legendItems: ComputedRef<PieLegendItem[]> }} Reactive computed values:
  *   - arcs: ComputedRef<PieArcData[]> rendered arcs with paths and metadata
  *   - pieData: ComputedRef<PieArcDatum<PieSlice>[]> raw D3 pie data
  *   - legendItems: ComputedRef<PieLegendItem[]> legend items with formatted values
@@ -82,7 +82,11 @@ export function usePieChart(
   valueFormat: Ref<(v: number) => string> | ComputedRef<(v: number) => string> = computed(
     () => (v: number) => `${v}%`,
   ),
-): object {
+): {
+  arcs: ComputedRef<PieArcData[]>;
+  pieData: ComputedRef<PieArcDatum<PieSlice>[]>;
+  legendItems: ComputedRef<PieLegendItem[]>;
+} {
   const pieGenerator = pie<PieSlice>()
     .value((d) => d.value)
     .sort(null)

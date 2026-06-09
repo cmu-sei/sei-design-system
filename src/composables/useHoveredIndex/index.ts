@@ -5,7 +5,7 @@
  * Can be shared across related components via v-model:hoveredIndex binding
  * while keeping components independently testable.
  *
- * @returns {Object} Hovered index state and methods:
+ * @returns {{ hoveredIndex: Ref<number | null>; setHovered: (i: number | null) => void }} Hovered index state and methods:
  *   - hoveredIndex: Ref<number | null> current hovered item index (null if none)
  *   - setHovered: Function(i: number | null) set the hovered index
  *
@@ -17,7 +17,7 @@
  * <BarChart v-model:hoveredIndex="hoveredIndex" />
  * <ChartLegend v-model:hoveredIndex="hoveredIndex" />
  */
-export function useHoveredIndex(): object {
+export function useHoveredIndex(): { hoveredIndex: Ref<number | null>; setHovered: (i: number | null) => void; } {
   const hoveredIndex = ref<number | null>(null)
 
   function setHovered(i: number | null) {
