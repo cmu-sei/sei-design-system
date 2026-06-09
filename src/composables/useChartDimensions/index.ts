@@ -13,7 +13,7 @@ import type { ChartMargin } from '@/helpers/charts'
  * @param {Ref<ChartMargin>} margin - Chart margins { top, right, bottom, left }.
  * @param {Ref<number | undefined>} [aspectRatio] - Optional width-to-height ratio for responsive sizing.
  *
- * @returns {Object} Reactive computed dimensions:
+ * @returns {{ containerWidth: Ref<number>; innerWidth: ComputedRef<number>; innerHeight: ComputedRef<number>; svgHeight: ComputedRef<number> }} Reactive computed dimensions:
  *   - containerWidth: Ref<number> outer container width in pixels
  *   - innerWidth: ComputedRef<number> width minus left and right margins
  *   - svgHeight: ComputedRef<number> SVG height (from aspectRatio or height prop)
@@ -40,7 +40,12 @@ export function useChartDimensions(
   height: Ref<string | number>,
   margin: Ref<ChartMargin>,
   aspectRatio?: Ref<number | undefined>,
-): object {
+): {
+  containerWidth: Ref<number>;
+  innerWidth: ComputedRef<number>;
+  innerHeight: ComputedRef<number>;
+  svgHeight: ComputedRef<number>;
+} {
   const containerWidth = ref(0)
 
   const innerWidth = computed(() =>
