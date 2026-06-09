@@ -2,6 +2,7 @@ import type DropdownPlacement from './Dropdown'
 import type { AvatarGroupItem } from './AvatarGroup/AvatarGroup.vue'
 import type { TagActionType, TagIconAttrs, TagIconSize, TagIconTypes } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
+import type { ChartLegendItem, ChartLegendOrientation } from './ChartLegend/ChartLegend.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
@@ -35,6 +36,8 @@ export type {
   CalendarDate,
   CalendarMode,
   CalendarRange,
+  ChartLegendItem,
+  ChartLegendOrientation,
   CheckboxGroupOption,
   CheckboxGroupOptionValue,
   ComboBoxSuggestion,
@@ -82,6 +85,9 @@ import SdsBadge from "./Badge";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCallout from "./Callout";
+import SdsChartAxis from "./ChartAxis";
+import SdsChartLegend from "./ChartLegend";
+import SdsChartTooltip from "./ChartTooltip";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
@@ -161,6 +167,9 @@ const Components: ComponentList = {
   SdsButton,
   SdsCalendar,
   SdsCallout,
+  SdsChartAxis,
+  SdsChartLegend,
+  SdsChartTooltip,
   SdsCheckboxGroup,
   SdsClientOnly,
   SdsComboBox,
@@ -243,6 +252,9 @@ export { default as SdsBadge } from "./Badge";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCallout } from "./Callout";
+export { default as SdsChartAxis } from "./ChartAxis";
+export { default as SdsChartLegend } from "./ChartLegend";
+export { default as SdsChartTooltip } from "./ChartTooltip";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
