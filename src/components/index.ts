@@ -1,5 +1,6 @@
 import type DropdownPlacement from './Dropdown'
 import type { AvatarGroupItem } from './AvatarGroup/AvatarGroup.vue'
+import type { BaseChartLegendConfig, BaseChartLegendPosition } from './BaseChart/BaseChart.vue'
 import type { TagActionType, TagIconAttrs, TagIconSize, TagIconTypes } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
 import type { ChartLegendItem, ChartLegendOrientation } from './ChartLegend/ChartLegend.vue'
@@ -29,6 +30,8 @@ import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
 export type {
   DropdownPlacement,
   AvatarGroupItem,
+  BaseChartLegendConfig,
+  BaseChartLegendPosition,
   TagActionType,
   TagIconAttrs,
   TagIconSize,
@@ -82,6 +85,7 @@ import SdsActionDropdown from "./ActionDropdown";
 import SdsAvatar from "./Avatar";
 import SdsAvatarGroup from "./AvatarGroup";
 import SdsBadge from "./Badge";
+import SdsBaseChart from "./BaseChart";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCallout from "./Callout";
@@ -164,6 +168,7 @@ const Components: ComponentList = {
   SdsAvatar,
   SdsAvatarGroup,
   SdsBadge,
+  SdsBaseChart,
   SdsButton,
   SdsCalendar,
   SdsCallout,
@@ -249,6 +254,7 @@ export { default as SdsActionDropdown } from "./ActionDropdown";
 export { default as SdsAvatar } from "./Avatar";
 export { default as SdsAvatarGroup } from "./AvatarGroup";
 export { default as SdsBadge } from "./Badge";
+export { default as SdsBaseChart } from "./BaseChart";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCallout } from "./Callout";

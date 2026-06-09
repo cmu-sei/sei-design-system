@@ -107,7 +107,7 @@ import ChartAxis from '../ChartAxis'
 import ChartTooltip from '../ChartTooltip'
 import ChartLegend from '../ChartLegend'
 
-export type LegendPosition =
+export type BaseChartLegendPosition =
   | 'top-left'
   | 'top-center'
   | 'top-right'
@@ -115,10 +115,10 @@ export type LegendPosition =
   | 'bottom-center'
   | 'bottom-right'
 
-export interface LegendConfig {
+export interface BaseChartLegendConfig {
   items: ChartLegendItem[]
   orientation?: ChartLegendOrientation
-  position?: LegendPosition
+  position?: BaseChartLegendPosition
 }
 
 interface BaseChartProps {
@@ -126,7 +126,7 @@ interface BaseChartProps {
   width?: string | number
   margin?: ChartMargin
   /** Legend configuration object containing items, orientation, and position. */
-  legend?: LegendConfig
+  legend?: BaseChartLegendConfig
   /** Whether to display the legend. @default false */
   enableLegend?: boolean
   title?: string
@@ -188,7 +188,7 @@ const { containerWidth, innerWidth, innerHeight, svgHeight } = useChartDimension
 
 function getLegendContainerClasses(): string {
   const position = props.legend?.position ?? 'bottom-left'
-  const alignmentClasses: Record<LegendPosition, string> = {
+  const alignmentClasses: Record<BaseChartLegendPosition, string> = {
     'top-left': 'justify-start',
     'top-center': 'justify-center',
     'top-right': 'justify-end',
