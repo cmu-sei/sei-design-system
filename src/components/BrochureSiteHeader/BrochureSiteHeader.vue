@@ -173,7 +173,7 @@ defineOptions({
 const props = withDefaults(defineProps<BrochureSiteHeaderProps>(), {
   organization: '',
   nav: () => [],
-  mobileBreakpoint: '2xl'
+  mobileBreakpoint: 'xl'
 })
 
 const showMobileMenu = ref(false)

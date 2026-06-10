@@ -76,6 +76,6 @@ withDefaults(defineProps<BrochureSiteProps>(), {
   nav: () => [],
   removeContentPadding: false,
   showFooter: false,
-  mobileBreakpoint: '2xl',
+  mobileBreakpoint: 'xl',
 });
 </script>
