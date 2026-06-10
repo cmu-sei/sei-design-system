@@ -9,7 +9,7 @@
       orientation: props.legendOrientation,
       position: props.legendPosition,
     }"
-    :enable-legend="props.showLegend"
+    :show-legend="props.showLegend"
     :title="props.title"
     :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
     :tooltip-x="tooltip.x.value"
@@ -105,8 +105,7 @@
 <script setup lang="ts">
 import type { PieSlice, PieArcData } from '@/composables/usePieChart'
 import type { ChartMargin } from '@/helpers/charts'
-import type { BaseChartLegendPosition } from '../BaseChart/BaseChart.vue'
-import type { ChartLegendOrientation } from '../ChartLegend/ChartLegend.vue'
+import type { ChartLegendPosition, ChartLegendOrientation } from '../ChartLegend/ChartLegend.vue'
 import { DEFAULT_MARGIN, MIN_LABEL_ANGLE } from '@/helpers/charts/constants'
 import { format } from '@/lib/d3'
 import BaseChart from '../BaseChart'
@@ -134,7 +133,7 @@ interface PieChartProps {
   /** Legend items layout direction. @default 'horizontal' */
   legendOrientation?: ChartLegendOrientation
   /** Legend position in the chart container. @default 'bottom-left' */
-  legendPosition?: BaseChartLegendPosition
+  legendPosition?: ChartLegendPosition
 }
 
 defineOptions({

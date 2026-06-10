@@ -76,10 +76,7 @@
         <slot name="tooltip" />
       </ChartTooltip>
     </div>
-    <div 
-      v-if="props.legend && props.enableLegend" 
-      :class="getLegendContainerClasses()"
-    >
+    <template v-if="props.legend && props.showLegend">
       <slot
         name="legend"
         :items="props.legend.items"
@@ -88,47 +85,32 @@
       >
         <ChartLegend
           :items="props.legend.items"
-          :orientation="props.legend.orientation ?? 'horizontal'"
           :hovered-index="props.hoveredIndex"
+          :orientation="props.legend.orientation"
+          :position="props.legend.position"
           @update:hovered-index="emit('update:hoveredIndex', $event)"
         />
       </slot>
-    </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Axis, AxisDomain } from '@/lib/d3'
-import type { ChartLegendItem, ChartLegendOrientation } from '../ChartLegend/ChartLegend.vue'
+import type { ChartLegendProps } from '../ChartLegend/ChartLegend.vue'
 import type { ChartMargin } from '@/helpers/charts'
-import { useChartDimensions } from '@/composables/useChartDimensions'
 import { DEFAULT_MARGIN } from '@/helpers/charts/constants'
 import ChartAxis from '../ChartAxis'
 import ChartTooltip from '../ChartTooltip'
 import ChartLegend from '../ChartLegend'
-
-export type BaseChartLegendPosition =
-  | 'top-left'
-  | 'top-center'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-center'
-  | 'bottom-right'
-
-export interface BaseChartLegendConfig {
-  items: ChartLegendItem[]
-  orientation?: ChartLegendOrientation
-  position?: BaseChartLegendPosition
-}
+import { useChartDimensions } from '@/composables/useChartDimensions'
 
 interface BaseChartProps {
   height?: number
   width?: string | number
   margin?: ChartMargin
-  /** Legend configuration object containing items, orientation, and position. */
-  legend?: BaseChartLegendConfig
-  /** Whether to display the legend. @default false */
-  enableLegend?: boolean
+  legend?: ChartLegendProps
+  showLegend?: boolean
   title?: string
   hoveredIndex?: number | null
   /** When provided, height is derived as containerWidth / aspectRatio (e.g. 16/9). */
@@ -157,7 +139,7 @@ const props = withDefaults(defineProps<BaseChartProps>(), {
   width: '100%',
   margin: () => DEFAULT_MARGIN,
   legend: undefined,
-  enableLegend: false,
+  showLegend: false,
   title: undefined,
   hoveredIndex: null,
   aspectRatio: undefined,
@@ -183,20 +165,6 @@ const { containerWidth, innerWidth, innerHeight, svgHeight } = useChartDimension
   containerRef,
   heightRef,
   marginRef,
-  aspectRatioRef,
+  aspectRatioRef
 )
-
-function getLegendContainerClasses(): string {
-  const position = props.legend?.position ?? 'bottom-left'
-  const alignmentClasses: Record<BaseChartLegendPosition, string> = {
-    'top-left': 'justify-start',
-    'top-center': 'justify-center',
-    'top-right': 'justify-end',
-    'bottom-left': 'justify-start',
-    'bottom-center': 'justify-center',
-    'bottom-right': 'justify-end',
-  }
-  const orderClass = position.startsWith('top-') ? 'order-first' : ''
-  return `sds-legend-container flex ${alignmentClasses[position]} ${orderClass}`
-}
 </script>
