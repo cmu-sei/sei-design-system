@@ -25,7 +25,7 @@
           :key="i"
           :d="arc.path"
           :fill="arc.color"
-          class="transition-opacity duration-150 cursor-pointer sds-pie-slice"
+          class="transition-opacity duration-150 cursor-pointer sds-pie-chart-slice"
           :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
           role="img"
           :aria-label="`${arc.data.label}: ${resolvedFormatter(arc.data.value)}`"
@@ -45,7 +45,7 @@
             fill="white"
             font-size="12"
             font-weight="600"
-            class="pointer-events-none select-none sds-pie-label"
+            class="pointer-events-none select-none sds-pie-chart-label"
           >
             <tspan
               v-if="props.labelType === 'label' || props.labelType === 'both'"

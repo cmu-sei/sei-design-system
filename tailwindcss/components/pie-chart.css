@@ -1,10 +1,10 @@
 /* Pie chart slice separators & labels */
 @layer base {
-  .sds-pie-slice {
+  .sds-pie-chart-slice {
     @apply stroke-white dark:stroke-gray-800 stroke-1;
   }
 
-  .sds-pie-label {
+  .sds-pie-chart-label {
     @apply stroke-black dark:stroke-gray-800 stroke-2;
     stroke-linejoin: round;
     paint-order: stroke;
