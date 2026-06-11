@@ -180,7 +180,7 @@ describe('SdsBrochureSiteHeader', () => {
     })
     const hamburger = wrapper.find('button[aria-label="Open mobile menu"]')
     expect(hamburger.classes()).toContain('flex')
-    expect(hamburger.classes()).toContain('2xl:hidden')
+    expect(hamburger.classes()).toContain('xl:hidden')
   })
 
   it('should respect custom mobileBreakpoint prop', () => {

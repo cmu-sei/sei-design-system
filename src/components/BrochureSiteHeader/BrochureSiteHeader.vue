@@ -161,8 +161,17 @@ import SdsNavigationItem from '../NavigationItem/NavigationItem.vue'
 import BrochureSiteWordmark from "../BrochureSiteWordmark/BrochureSiteWordmark.vue";
 
 interface BrochureSiteHeaderProps {
+  /**
+   * String matching the name of the organization to display in the header.
+   */
   organization?: string;
+  /**
+   * An array of MegaMenuItem objects to display in the header navigation.
+   */
   nav?: MegaMenuItem<Record<string, unknown>>[];
+  /**
+   * The breakpoint at which the full MegaMenu is replaced by a hamburger menu and mobile panel.
+   */
   mobileBreakpoint?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }
 
@@ -180,6 +189,36 @@ const showMobileMenu = ref(false)
 
 const megamenu = ref(props.nav ?? [])
 
+const breakpointClasses = {
+  sm: {
+    logo: 'sm:hidden',
+    megamenu: 'sm:flex',
+    hamburger: 'sm:hidden'
+  },
+  md: {
+    logo: 'md:hidden',
+    megamenu: 'md:flex',
+    hamburger: 'md:hidden'
+  },
+  lg: {
+    logo: 'lg:hidden',
+    megamenu: 'lg:flex',
+    hamburger: 'lg:hidden'
+  },
+  xl: {
+    logo: 'xl:hidden',
+    megamenu: 'xl:flex',
+    hamburger: 'xl:hidden'
+  },
+  '2xl': {
+    logo: '2xl:hidden',
+    megamenu: '2xl:flex',
+    hamburger: '2xl:hidden'
+  }
+} as const
+
+const activeBreakpointClasses = computed(() => breakpointClasses[props.mobileBreakpoint])
+
 type LinkItem = { key: string; label: string; href: string; type?: string }
 
 const getLinkColumn = (content: Record<string, unknown> | undefined, key: string): LinkItem[] => {
@@ -187,15 +226,21 @@ const getLinkColumn = (content: Record<string, unknown> | undefined, key: string
 }
 
 const logoClass = computed(() =>
-  megamenu.value.length ? `flex ${props.mobileBreakpoint}:hidden flex-col justify-center py-4` : 'flex flex-col justify-center py-4'
+  megamenu.value.length
+    ? ['flex', activeBreakpointClasses.value.logo, 'flex-col', 'justify-center', 'py-4']
+    : ['flex', 'flex-col', 'justify-center', 'py-4']
 )
 
 const megamenuClass = computed(() =>
-  megamenu.value.length ? `hidden ${props.mobileBreakpoint}:flex -mb-0.5` : 'hidden'
+  megamenu.value.length
+    ? ['hidden', activeBreakpointClasses.value.megamenu, '-mb-0.5']
+    : ['hidden']
 )
 
 const hamburgerClass = computed(() =>
-  megamenu.value.length ? `flex ${props.mobileBreakpoint}:hidden ml-auto items-center cursor-pointer p-2` : 'hidden'
+  megamenu.value.length
+    ? ['flex', activeBreakpointClasses.value.hamburger, 'ml-auto', 'items-center', 'cursor-pointer', 'p-2']
+    : ['hidden']
 )
 
 const mobileMenus = computed<MobileMenuItem[]>(() =>
