@@ -28,7 +28,7 @@ export const BAND_PADDING: number = 0.1
  * Provides equal spacing on all sides (20px).
  * @type {ChartMargin}
  */
-export const DEFAULT_MARGIN: ChartMargin = { top: 20, right: 20, bottom: 20, left: 20 }
+export const DEFAULT_CHART_MARGIN: ChartMargin = { top: 20, right: 20, bottom: 20, left: 20 }
 
 /**
  * Default margin for bar charts (pixels).
@@ -36,7 +36,7 @@ export const DEFAULT_MARGIN: ChartMargin = { top: 20, right: 20, bottom: 20, lef
  * and extra left space (72px) for value-axis tick labels.
  * @type {ChartMargin}
  */
-export const DEFAULT_BAR_MARGIN: ChartMargin = { top: 20, right: 20, bottom: 36, left: 72 }
+export const DEFAULT_BAR_CHART_MARGIN: ChartMargin = { top: 20, right: 20, bottom: 36, left: 72 }
 
 /**
  * Minimum arc angle (radians) required to render a pie-slice label.

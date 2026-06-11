@@ -7,7 +7,7 @@
     :legend="{
       items: legendItems,
       orientation: props.legendOrientation,
-      position: props.legendPosition,
+      position: props.legendPosition
     }"
     :show-legend="props.showLegend"
     :title="props.title"
@@ -106,7 +106,7 @@
 import type { PieSlice, PieArcData } from '@/composables/usePieChart'
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../ChartLegend/ChartLegend.vue'
-import { DEFAULT_MARGIN, MIN_LABEL_ANGLE } from '@/helpers/charts/constants'
+import { DEFAULT_CHART_MARGIN, MIN_LABEL_ANGLE } from '@/helpers/charts/constants'
 import { format } from '@/lib/d3'
 import BaseChart from '../BaseChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
@@ -137,12 +137,12 @@ interface PieChartProps {
 }
 
 defineOptions({
-  name: 'SdsPieChart',
+  name: 'SdsPieChart'
 })
 
 const props = withDefaults(defineProps<PieChartProps>(), {
   height: 360,
-  margin: () => DEFAULT_MARGIN,
+  margin: () => DEFAULT_CHART_MARGIN,
   innerRadius: 0,
   title: undefined,
   showLabels: false,
@@ -153,7 +153,7 @@ const props = withDefaults(defineProps<PieChartProps>(), {
   tooltipValueFormat: undefined,
   showLegend: false,
   legendOrientation: 'horizontal',
-  legendPosition: 'bottom-left',
+  legendPosition: 'bottom-left'
 })
 
 function resolveFormat(vf: string | ((v: number) => string) | undefined): (v: number) => string {
@@ -177,7 +177,7 @@ const { arcs, legendItems } = usePieChart(
   slicesRef,
   outerRadiusRef,
   innerRadiusRef,
-  legendFormatter,
+  legendFormatter
 )
 const tooltip = useTooltip<PieSlice>()
 

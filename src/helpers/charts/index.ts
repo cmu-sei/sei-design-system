@@ -10,8 +10,8 @@ export {
 
 export { 
   BAND_PADDING,
-  DEFAULT_BAR_MARGIN, 
-  DEFAULT_MARGIN, 
+  DEFAULT_BAR_CHART_MARGIN, 
+  DEFAULT_CHART_MARGIN, 
   MIN_LABEL_ANGLE 
 } from './constants'
 

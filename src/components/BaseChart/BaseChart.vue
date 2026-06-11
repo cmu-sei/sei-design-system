@@ -99,7 +99,7 @@
 import type { Axis, AxisDomain } from '@/lib/d3'
 import type { ChartLegendProps } from '../ChartLegend/ChartLegend.vue'
 import type { ChartMargin } from '@/helpers/charts'
-import { DEFAULT_MARGIN } from '@/helpers/charts/constants'
+import { DEFAULT_CHART_MARGIN } from '@/helpers/charts/constants'
 import ChartAxis from '../ChartAxis'
 import ChartTooltip from '../ChartTooltip'
 import ChartLegend from '../ChartLegend'
@@ -137,7 +137,7 @@ defineOptions({
 const props = withDefaults(defineProps<BaseChartProps>(), {
   height: 360,
   width: '100%',
-  margin: () => DEFAULT_MARGIN,
+  margin: () => DEFAULT_CHART_MARGIN,
   legend: undefined,
   showLegend: false,
   title: undefined,
