@@ -1,5 +1,5 @@
 @layer base {
-  .sds-base-chart {
+  .sds-chart-axis {
     .tick text {
        @apply dark:fill-gray-200;
     }

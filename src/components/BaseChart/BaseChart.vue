@@ -76,14 +76,15 @@
         <slot name="tooltip" />
       </ChartTooltip>
     </div>
-    <template v-if="props.legend && props.showLegend">
+    <template v-if="props.showLegend">
       <slot
         name="legend"
-        :items="props.legend.items"
+        :items="props.legend?.items ?? []"
         :hovered-index="props.hoveredIndex"
         :update-hovered-index="(i: number | null) => emit('update:hoveredIndex', i)"
       >
         <ChartLegend
+          v-if="props.legend"
           :items="props.legend.items"
           :hovered-index="props.hoveredIndex"
           :orientation="props.legend.orientation"

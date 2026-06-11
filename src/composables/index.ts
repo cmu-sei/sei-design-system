@@ -94,6 +94,17 @@ export { useChartDimensions } from './useChartDimensions'
 
 export { useDarkMode } from './useDarkMode'
 
+export { useHeatmapChart } from './useHeatmapChart'
+export type { 
+  HeatmapCell, 
+  HeatmapColors, 
+  HeatmapRect, 
+  HeatmapTooltipData, 
+  HeatmapLegendItem, 
+  HeatmapAxisOptions, 
+  HeatmapLayoutOptions 
+} from './useHeatmapChart'
+
 export { useHoveredIndex } from './useHoveredIndex'
 
 export { usePieChart } from './usePieChart'
