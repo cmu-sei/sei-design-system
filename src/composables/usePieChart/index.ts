@@ -1,3 +1,4 @@
+import type { Ref, ComputedRef } from 'vue'
 import type { PieArcDatum } from '@/lib/d3'
 import { useChartConfig } from '../useChartConfig'
 import { useDarkMode } from '../useDarkMode'

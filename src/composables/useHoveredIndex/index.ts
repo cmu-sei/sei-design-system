@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 /**
  * Composable that manages a nullable hovered item index for interactive chart components.
  *

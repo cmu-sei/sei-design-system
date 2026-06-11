@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 /**
  * Composable that reactively tracks the presence of a '.dark' class on a target element.
  *

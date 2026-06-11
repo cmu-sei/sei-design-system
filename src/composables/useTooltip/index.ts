@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 /**
  * Tooltip state object with visibility, position, and data.
  * @template T - Type of data stored in the tooltip

@@ -1,3 +1,4 @@
+import type { Ref, ComputedRef } from 'vue'
 import type { Axis, AxisDomain, ScaleBand, ScaleLinear, NumberValue } from '@/lib/d3'
 import { axisBottom, axisLeft, axisTop, axisRight, format } from '@/lib/d3'
 

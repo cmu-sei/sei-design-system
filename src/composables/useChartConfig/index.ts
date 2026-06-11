@@ -1,4 +1,4 @@
-import type { InjectionKey } from 'vue'
+import type { InjectionKey, Ref } from 'vue'
 
 /**
  * Chart-wide configuration for color palettes and dark-mode state.

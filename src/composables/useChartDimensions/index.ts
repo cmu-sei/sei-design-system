@@ -1,3 +1,4 @@
+import type { Ref, ComputedRef } from 'vue'
 import type { ChartMargin } from '@/helpers/charts'
 
 /**
