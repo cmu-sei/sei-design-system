@@ -41,7 +41,8 @@ export default defineConfig({
       include: [
         'src/components/**/*.vue',
         'src/composables/*.{js,ts}',
-        'src/helpers/*.{js,ts}'
+        'src/helpers/**/*.{js,ts}',
+        'src/lib/*.{js,ts}'
       ],
       provider: 'v8'
     },

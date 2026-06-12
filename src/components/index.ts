@@ -2,6 +2,7 @@ import type DropdownPlacement from './Dropdown'
 import type { AvatarGroupItem } from './AvatarGroup/AvatarGroup.vue'
 import type { TagActionType, TagIconAttrs, TagIconSize, TagIconTypes } from './Tag/Tag.vue'
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
+import type { ChartLegendItem, ChartLegendOrientation, ChartLegendPosition, ChartLegendProps } from './ChartLegend/ChartLegend.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
 import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
@@ -35,6 +36,10 @@ export type {
   CalendarDate,
   CalendarMode,
   CalendarRange,
+  ChartLegendItem,
+  ChartLegendOrientation,
+  ChartLegendPosition,
+  ChartLegendProps,
   CheckboxGroupOption,
   CheckboxGroupOptionValue,
   ComboBoxSuggestion,
@@ -79,9 +84,13 @@ import SdsActionDropdown from "./ActionDropdown";
 import SdsAvatar from "./Avatar";
 import SdsAvatarGroup from "./AvatarGroup";
 import SdsBadge from "./Badge";
+import SdsBaseChart from "./BaseChart";
 import SdsButton from "./Button";
 import SdsCalendar from "./Calendar";
 import SdsCallout from "./Callout";
+import SdsChartAxis from "./ChartAxis";
+import SdsChartLegend from "./ChartLegend";
+import SdsChartTooltip from "./ChartTooltip";
 import SdsCheckboxGroup from "./CheckboxGroup";
 import SdsClientOnly from "./ClientOnly";
 import SdsComboBox from "./ComboBox";
@@ -128,6 +137,7 @@ import SdsNavigationItem from "./NavigationItem";
 import SdsPaginator from "./Paginator";
 import SdsPaginatorRange from "./PaginatorRange";
 import SdsPanel from "./Panel";
+import SdsPieChart from "./PieChart";
 import SdsPopover from "./Popover";
 import SdsRadioGroup from "./RadioGroup";
 import SdsResizer from "./Resizer";
@@ -158,9 +168,13 @@ const Components: ComponentList = {
   SdsAvatar,
   SdsAvatarGroup,
   SdsBadge,
+  SdsBaseChart,
   SdsButton,
   SdsCalendar,
   SdsCallout,
+  SdsChartAxis,
+  SdsChartLegend,
+  SdsChartTooltip,
   SdsCheckboxGroup,
   SdsClientOnly,
   SdsComboBox,
@@ -206,6 +220,7 @@ const Components: ComponentList = {
   SdsPaginator,
   SdsPaginatorRange,
   SdsPanel,
+  SdsPieChart,
   SdsPopover,
   SdsRadioGroup,
   SdsResizer,
@@ -240,9 +255,13 @@ export { default as SdsActionDropdown } from "./ActionDropdown";
 export { default as SdsAvatar } from "./Avatar";
 export { default as SdsAvatarGroup } from "./AvatarGroup";
 export { default as SdsBadge } from "./Badge";
+export { default as SdsBaseChart } from "./BaseChart";
 export { default as SdsButton } from "./Button";
 export { default as SdsCalendar } from "./Calendar";
 export { default as SdsCallout } from "./Callout";
+export { default as SdsChartAxis } from "./ChartAxis";
+export { default as SdsChartLegend } from "./ChartLegend";
+export { default as SdsChartTooltip } from "./ChartTooltip";
 export { default as SdsCheckboxGroup } from "./CheckboxGroup";
 export { default as SdsClientOnly } from "./ClientOnly";
 export { default as SdsComboBox } from "./ComboBox";
@@ -289,6 +308,7 @@ export { default as SdsNavigationItem } from "./NavigationItem";
 export { default as SdsPaginator } from "./Paginator";
 export { default as SdsPaginatorRange } from "./PaginatorRange";
 export { default as SdsPanel} from "./Panel";
+export { default as SdsPieChart } from "./PieChart";
 export { default as SdsPopover } from "./Popover";
 export { default as SdsRadioGroup } from "./RadioGroup";
 export { default as SdsResizer } from "./Resizer";
