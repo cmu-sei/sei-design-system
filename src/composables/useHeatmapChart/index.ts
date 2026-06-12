@@ -1,3 +1,4 @@
+import type { ComputedRef, Ref } from 'vue'
 import type { ChartLegendItem } from '@/components'
 import type { AxisDomain } from '@/lib/d3'
 import { useChartAxis } from '@/composables/useChartAxis'
