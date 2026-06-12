@@ -676,7 +676,201 @@
         />
       </div>
     </div>
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Bar Chart
+        </h2>
+        <p>
+          A reusable SVG-based bar chart built with
+          <SdsLink :external="true" kind="primary" type="inline" variant="blue" href="https://d3js.org/"
+            >D3</SdsLink
+          >. Pass <code>:data</code> as a plain array of <code>{ label, value }</code> objects for a
+          single-series chart, or as an array of named series for grouped/stacked charts. The component
+          detects the data shape automatically. Use <code>mode="stacked"</code> to stack bars instead of
+          grouping them.
+        </p>
 
+        <!-- ─── Vertical - Single Series ─────────────────────────────────────── -->
+        <h3>Vertical - Single Series</h3>
+        <p>
+          A single-series bar chart using <code>:data</code>. Each bar is colored by position from the
+          default palette.
+        </p>
+        <div class="not-prose mt-6 max-w-3xl">
+          <SdsBarChart
+            :data="browserShare2025"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            animate
+            show-tooltip
+            title="Browser Market Share - Desktop, 2025 (Vertical)"
+          />
+        </div>
+
+        <!-- ─── Horizontal - Single Series ───────────────────────────────────── -->
+        <h3 class="mt-10">Horizontal - Single Series</h3>
+        <p>
+          Set <code>orientation="horizontal"</code> to flip the chart. Category labels appear on the
+          y-axis; values extend left-to-right.
+        </p>
+        <div class="not-prose mt-6 max-w-3xl">
+          <SdsBarChart
+            :data="sortByProperty(browserShare2025, 'value', 'desc')"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            orientation="horizontal"
+            show-tooltip
+            title="Browser Market Share - Desktop, 2025 (Horizontal)"
+          />
+        </div>
+
+        <!-- ─── Horizontal - Long Y-Axis Labels ─────────────────────────────── -->
+        <h3 class="mt-10">Horizontal - Long Y-Axis Labels</h3>
+        <p>
+          When category labels are long, a horizontal chart paired with
+          <code>orientation="horizontal"</code> wraps them automatically rather than truncating. Labels
+          are given descriptive engine or vendor names to stress-test the y-axis.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="sortByProperty(browserShare2025LongLabels, 'value', 'desc')"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            orientation="horizontal"
+            show-tooltip
+            title="Browser Market Share - Desktop, 2025 (Long Labels)"
+          />
+        </div>
+
+        <!-- ─── Vertical - Grouped ────────────────────────────────────────────── -->
+        <h3 class="mt-10">Vertical - Grouped</h3>
+        <p>
+          Use <code>mode="grouped"</code> for multi-series data. Here, each browser is an x-axis
+          category, and the grouped bars represent years (2020-2025). This view makes it easy to see how
+          each browser's market share evolved over time.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="browserShareByYearSeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            mode="grouped"
+            show-tooltip
+            show-legend
+            title="Browser Market Share by Year - Vertical Grouped (Years as Series)"
+          />
+        </div>
+
+        <!-- ─── Vertical - Stacked ────────────────────────────────────────────── -->
+        <h3 class="mt-10">Vertical - Stacked</h3>
+        <p>
+          Set <code>mode="stacked"</code> to stack year segments on top of one another, making totals
+          easy to compare while preserving per-year contributions.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="browserShareBySeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            mode="stacked"
+            show-tooltip
+            show-legend
+            title="Browser Market Share by Year - Vertical Stacked"
+          />
+        </div>
+
+        <!-- ─── Horizontal - Grouped ─────────────────────────────────────────── -->
+        <h3 class="mt-10">Horizontal - Grouped</h3>
+        <p>
+          Combine <code>orientation="horizontal"</code> with the default <code>mode="grouped"</code>.
+          Category labels on the left scale naturally with longer browser names.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :height="720"
+            :data="browserShareBySeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            mode="grouped"
+            orientation="horizontal"
+            show-tooltip
+            show-legend
+            title="Browser Market Share by Year - Horizontal Grouped"
+          />
+        </div>
+
+        <!-- ─── Horizontal - Stacked ─────────────────────────────────────────── -->
+        <h3 class="mt-10">Horizontal - Stacked</h3>
+        <p>
+          Combine <code>orientation="horizontal"</code> with <code>mode="stacked"</code> for a
+          part-to-whole view across browsers.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="browserShareBySeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            orientation="horizontal"
+            mode="stacked"
+            show-tooltip
+            show-legend
+            title="Browser Market Share by Year - Horizontal Stacked"
+          />
+        </div>
+
+        <!-- ─── Responsive aspect ratio ──────────────────────────────────────── -->
+        <h3 class="mt-10">Responsive aspect ratio</h3>
+        <p>
+          Omit <code>height</code> and pass <code>aspect-ratio</code> instead. The chart derives its
+          height from <code>containerWidth / aspectRatio</code> and updates on resize.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="browserShare2025"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            title="Browser Market Share 2025 - 16:9 Aspect Ratio"
+          />
+        </div>
+
+        <!-- ─── Single series - custom color ────────────────────────────────── -->
+        <h3 class="mt-10">Single series - custom color</h3>
+        <p>
+          Set <code>color</code> on each item in the <code>:data</code> array to override the default
+          uniform bar color for single-series charts.
+        </p>
+        <div class="not-prose mt-6 max-w-3xl">
+          <SdsBarChart
+            :data="browserShare2025CustomColor"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            show-tooltip
+            title="Browser Market Share 2025 - Custom Color"
+          />
+        </div>
+
+        <!-- ─── Multi series - per-series color override ─────────────────────── -->
+        <h3 class="mt-10">Multi series - per-series color override</h3>
+        <p>
+          Each series in the <code>:data</code> array can include a <code>color</code> property to
+          override the default palette. Colors are defined at the data level, not as a separate prop.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsBarChart
+            :data="browserShareBySeriesBrandColors"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            mode="grouped"
+            show-tooltip
+            show-legend
+            title="Browser Market Share by Year - Per-Series Brand Colors"
+          />
+        </div>
+      </div>
+    </div>
     <div class="grid gap-4">
       <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
         <h2>
@@ -1544,14 +1738,16 @@
 </template>
 <script setup lang="ts">
 import type { AxisDomain } from '@/lib/d3'
+import type { BarItem, BarSeries } from '@/composables/useBarChart'
 import type { HeatmapCell, HeatmapColors } from '@/composables/useHeatmapChart'
 import type { PieSlice } from '@/composables/usePieChart'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 import SdsLink from '@/components/Link/Link.vue';
+import SdsBarChart from '@/components/BarChart/BarChart.vue'
 import SdsHeatmapChart from '@/components/HeatmapChart/HeatmapChart.vue'
 import SdsPieChart from '@/components/PieChart/PieChart.vue';
 import { useDarkMode } from '@/composables/useDarkMode';
-import { formatPercent, resolveItemColor } from '@/helpers/charts'
+import { formatPercent, resolveItemColor, sortByProperty } from '@/helpers/charts'
 import { heatmapColors, heatmapColorsDark } from '@/helpers/charts/colors'
 
 const datapointModelValue = ref(1451)
@@ -1564,6 +1760,191 @@ const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purpl
   ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
 )
 const badgeTypes = ref<('light-border' | 'light' | 'medium' | 'dark' | undefined)[]>(['light-border', 'light', 'medium', 'dark'])
+
+/**
+ * Bar Chart(s)
+ */
+
+// ── Single-series: 2025 market share ─────────────────────────────────────────
+// Source: StatCounter Global Stats – Desktop, worldwide, 2025
+const browserShare2025: BarItem[] = [
+  { label: 'Chrome', value: 65.8 },
+  { label: 'Safari', value: 18.2 },
+  { label: 'Edge', value: 5.0 },
+  { label: 'Firefox', value: 2.7 },
+  { label: 'Others', value: 8.3 },
+]
+
+// ── Single-series with long descriptive labels (for y-axis wrapping demo) ─────
+const browserShare2025LongLabels: BarItem[] = [
+  { label: 'Google Chrome - Blink Rendering Engine', value: 65.8 },
+  { label: 'Apple Safari - WebKit Rendering Engine', value: 18.2 },
+  { label: 'Microsoft Edge - Chromium-based Browser', value: 5.0 },
+  { label: 'Mozilla Firefox - Gecko Rendering Engine', value: 2.7 },
+  { label: 'Opera, Samsung Internet & Other Browsers', value: 8.3 },
+]
+
+// ── Single-series with custom uniform color ──────────────────────────────────
+const browserShare2025CustomColor: BarItem[] = [
+  { label: 'Chrome', value: 65.8, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Safari', value: 18.2, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Edge', value: 5.0, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Firefox', value: 2.7, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Others', value: 8.3, color: { light: '#e15759', dark: '#f0a0a1' } },
+]
+
+// ── Multi-series: per-browser share across 2020 – 2025 ────────────────────────
+// Source: StatCounter Global Stats – Desktop, worldwide
+// Series = browsers; x-axis = years
+const browserShareBySeries: BarSeries[] = [
+  {
+    label: 'Chrome',
+    data: [
+      { label: '2020', value: 68.3 },
+      { label: '2021', value: 66.9 },
+      { label: '2022', value: 65.1 },
+      { label: '2023', value: 63.5 },
+      { label: '2024', value: 65.2 },
+      { label: '2025', value: 65.8 },
+    ],
+  },
+  {
+    label: 'Safari',
+    data: [
+      { label: '2020', value: 16.9 },
+      { label: '2021', value: 18.2 },
+      { label: '2022', value: 18.8 },
+      { label: '2023', value: 19.9 },
+      { label: '2024', value: 18.5 },
+      { label: '2025', value: 18.2 },
+    ],
+  },
+  {
+    label: 'Edge',
+    data: [
+      { label: '2020', value: 3.1 },
+      { label: '2021', value: 3.4 },
+      { label: '2022', value: 3.9 },
+      { label: '2023', value: 4.6 },
+      { label: '2024', value: 5.1 },
+      { label: '2025', value: 5.0 },
+    ],
+  },
+  {
+    label: 'Firefox',
+    data: [
+      { label: '2020', value: 4.1 },
+      { label: '2021', value: 3.7 },
+      { label: '2022', value: 3.2 },
+      { label: '2023', value: 2.9 },
+      { label: '2024', value: 2.8 },
+      { label: '2025', value: 2.7 },
+    ],
+  },
+  {
+    label: 'Others',
+    data: [
+      { label: '2020', value: 7.6 },
+      { label: '2021', value: 7.8 },
+      { label: '2022', value: 9.0 },
+      { label: '2023', value: 9.1 },
+      { label: '2024', value: 8.4 },
+      { label: '2025', value: 8.3 },
+    ],
+  },
+]
+
+// ── Restructure: years as series, browsers as categories ─────────────────────
+// X-axis: browsers, Grouped bars: years (2020-2025 for each browser)
+const browserShareByYearSeries = (() => {
+  // Sort browsers by their 2025 value descending → x-axis categories: Chrome, Safari, Others, Edge, Firefox
+  const browsers = browserShareBySeries
+    .slice()
+    .sort(
+      (a, b) => (b.data[b.data.length - 1]?.value ?? 0) - (a.data[a.data.length - 1]?.value ?? 0),
+    )
+    .map((s) => s.label)
+
+  // Years in chronological order
+  const years = browserShareBySeries[0]?.data.map((d) => d.label) ?? []
+
+  // Transform: create a series for each year, with browsers in the sorted order
+  return years.map((year) => ({
+    label: year,
+    data: browsers.map((browserName) => {
+      const browserSeries = browserShareBySeries.find((s) => s.label === browserName)
+      const dataPoint = browserSeries?.data.find((d) => d.label === year)
+      return {
+        label: browserName,
+        value: dataPoint?.value ?? 0,
+      }
+    }),
+  })) as BarSeries[]
+})()
+
+// ── Multi-series with per-series brand colors ─────────────────────────────────
+const browserShareBySeriesBrandColors: BarSeries[] = [
+  {
+    label: 'Chrome',
+    color: { light: '#4e79a7', dark: '#7fb3d3' },
+    data: [
+      { label: '2020', value: 68.3 },
+      { label: '2021', value: 66.9 },
+      { label: '2022', value: 65.1 },
+      { label: '2023', value: 63.5 },
+      { label: '2024', value: 65.2 },
+      { label: '2025', value: 65.8 },
+    ],
+  },
+  {
+    label: 'Safari',
+    color: { light: '#f28e2b', dark: '#f7b97e' },
+    data: [
+      { label: '2020', value: 16.9 },
+      { label: '2021', value: 18.2 },
+      { label: '2022', value: 18.8 },
+      { label: '2023', value: 19.9 },
+      { label: '2024', value: 18.5 },
+      { label: '2025', value: 18.2 },
+    ],
+  },
+  {
+    label: 'Edge',
+    color: { light: '#e15759', dark: '#f0a0a1' },
+    data: [
+      { label: '2020', value: 3.1 },
+      { label: '2021', value: 3.4 },
+      { label: '2022', value: 3.9 },
+      { label: '2023', value: 4.6 },
+      { label: '2024', value: 5.1 },
+      { label: '2025', value: 5.0 },
+    ],
+  },
+  {
+    label: 'Firefox',
+    color: { light: '#76b7b2', dark: '#aad5d2' },
+    data: [
+      { label: '2020', value: 4.1 },
+      { label: '2021', value: 3.7 },
+      { label: '2022', value: 3.2 },
+      { label: '2023', value: 2.9 },
+      { label: '2024', value: 2.8 },
+      { label: '2025', value: 2.7 },
+    ],
+  },
+  {
+    label: 'Others',
+    color: { light: '#59a14f', dark: '#96c990' },
+    data: [
+      { label: '2020', value: 7.6 },
+      { label: '2021', value: 7.8 },
+      { label: '2022', value: 9.0 },
+      { label: '2023', value: 9.1 },
+      { label: '2024', value: 8.4 },
+      { label: '2025', value: 8.3 },
+    ],
+  },
+]
 
 /**
  * Heatmap Chart(s)
