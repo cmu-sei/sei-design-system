@@ -1065,6 +1065,197 @@
       </div>
     </div>
     <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Pie Chart
+        </h2>
+        <p>
+          A reusable SVG-based pie chart built with
+          <SdsLink 
+            :external="true" 
+            kind="primary" 
+            type="inline" 
+            variant="blue" 
+            href="https://d3js.org/"
+          >
+            D3
+          </SdsLink>. The component accepts a <code>slices</code> array and renders a responsive pie chart with a
+          built-in legend. An optional <code>innerRadius</code> prop turns the chart into a donut.
+        </p>
+
+        <h3>Browser Market Share 2025 - default color palette</h3>
+        <p>
+          When slices omit the <code>color</code> property, the chart automatically assigns colors from
+          the built-in <code>defaultColors</code> utility palette. Data sourced from
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
+            href="https://gs.statcounter.com/browser-market-share/all/worldwide/2025"
+          >
+            StatCounter Global Stats
+          </SdsLink>.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesNoColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - default palette"
+          />
+        </div>
+        <h3 class="mt-10">
+          Browser Market Share 2025 - explicit brand colors
+        </h3>
+        <p>
+          When slices include a <code>color</code> property, that value is used directly, overriding the
+          default palette. This is useful when brand or category colors are meaningful to the reader.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - brand colors"
+          />
+        </div>
+        <h3 class="mt-10">
+          Donut variant
+        </h3>
+        <p>Pass an <code>innerRadius</code> (as a pixel value) to render a donut chart.</p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            :inner-radius="100"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 (Donut)"
+          />
+        </div>
+        <h3 class="mt-10">
+          Responsive aspect ratio
+        </h3>
+        <p>
+          Omit <code>height</code> and pass <code>aspect-ratio</code> instead. The chart derives its
+          height from <code>containerWidth / aspectRatio</code> and updates automatically on resize,
+          giving you a fully responsive chart without a fixed pixel height.
+        </p>
+
+        <div class="not-prose mt-6 max-w-4xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - 16:9 aspect ratio"
+          />
+        </div>
+        <h3 class="mt-10">
+          Custom legend slot
+        </h3>
+        <p>Override the <code>#legend</code> slot to provide a custom legend layout.</p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share - Custom Legend"
+          >
+            <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
+              <table class="w-full text-sm border-collapse text-gray-900 dark:text-gray-100">
+                <thead>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <th class="py-1 text-left font-semibold">
+                      Browser
+                    </th>
+                    <th class="py-1 text-right font-semibold">
+                      Share
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(item, i) in legendItems"
+                    :key="item.label"
+                    :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
+                    class="border-b border-gray-100 dark:border-gray-800 cursor-pointer"
+                    @mouseenter="updateHoveredIndex(i)"
+                    @mouseleave="updateHoveredIndex(null)"
+                  >
+                    <td class="py-1 flex items-center gap-2">
+                      <span
+                        class="inline-block h-3 w-3 rounded-md shrink-0"
+                        :style="{ backgroundColor: item.color }"
+                        aria-hidden="true"
+                      />
+                      {{ item.label }}
+                    </td>
+                    <td class="py-1 text-right tabular-nums">
+                      {{ item.value }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </template>
+          </SdsPieChart>
+        </div>
+        <h3 class="mt-10">
+          Custom tooltip slot
+        </h3>
+        <p>
+          Override the <code>#tooltip</code> slot to customize what appears on hover. The slot receives
+          the hovered slice's <code>data</code> object.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share - Custom Tooltip"
+          >
+            <template #tooltip="{ data }">
+              <div class="flex items-center gap-2">
+                <span
+                  class="inline-block h-2.5 w-2.5 rounded-full shrink-0"
+                  :style="{ backgroundColor: resolveItemColor(data?.color, isDark) }"
+                />
+                <span class="font-semibold">{{ data?.label }}</span>
+                <span class="text-gray-600">{{ data?.value }}%</span>
+              </div>
+            </template>
+          </SdsPieChart>
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
       <h2 class="text-xl">
         Table
       </h2>
@@ -1787,6 +1978,21 @@ function formatTaxiPickupTooltip(data: HeatmapCell | null | undefined): string {
  * Pie Chart(s)
  */
 
+/**
+ * Explicit brand colors override the default palette.
+ * Source: https://gs.statcounter.com/browser-market-share/all/worldwide/2025
+ */
+const browserSlicesBrandColor: PieSlice[] = [
+  { label: 'Chrome', value: 65.8, color: { light: '#4e79a7', dark: '#7fb3d3' } },
+  { label: 'Safari', value: 18.2, color: { light: '#f28e2b', dark: '#f7b97e' } },
+  { label: 'Edge', value: 5.0, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Firefox', value: 2.7, color: { light: '#76b7b2', dark: '#aad5d2' } },
+  { label: 'Samsung Internet', value: 2.5, color: { light: '#59a14f', dark: '#96c990' } },
+  { label: 'Opera', value: 2.2, color: { light: '#edc948', dark: '#f5df8e' } },
+  { label: 'Brave', value: 1.5, color: { light: '#b07aa1', dark: '#d0afc6' } },
+  { label: 'Others', value: 2.1, color: { light: '#ff9da7', dark: '#ffc8cd' } },
+]
+
 const isDark = useDarkMode()
 
 /**
@@ -1802,21 +2008,6 @@ const browserSlicesNoColor: PieSlice[] = [
   { label: 'Opera', value: 2.2 },
   { label: 'Brave', value: 1.5 },
   { label: 'Others', value: 2.1 },
-]
-
-/**
- * Explicit brand colors override the default palette.
- * Source: https://gs.statcounter.com/browser-market-share/all/worldwide/2025
- */
-const browserSlicesBrandColor: PieSlice[] = [
-  { label: 'Chrome', value: 65.8, color: { light: '#4e79a7', dark: '#7fb3d3' } },
-  { label: 'Safari', value: 18.2, color: { light: '#f28e2b', dark: '#f7b97e' } },
-  { label: 'Edge', value: 5.0, color: { light: '#e15759', dark: '#f0a0a1' } },
-  { label: 'Firefox', value: 2.7, color: { light: '#76b7b2', dark: '#aad5d2' } },
-  { label: 'Samsung Internet', value: 2.5, color: { light: '#59a14f', dark: '#96c990' } },
-  { label: 'Opera', value: 2.2, color: { light: '#edc948', dark: '#f5df8e' } },
-  { label: 'Brave', value: 1.5, color: { light: '#b07aa1', dark: '#d0afc6' } },
-  { label: 'Others', value: 2.1, color: { light: '#ff9da7', dark: '#ffc8cd' } },
 ]
 
 const fields = ref<TableField[]>([
