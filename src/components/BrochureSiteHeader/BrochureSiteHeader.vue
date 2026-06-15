@@ -26,7 +26,7 @@
         </a>
         <span
           v-if="organization"
-          class="text-sm lg:text-base font-semibold text-gray-500 wrap-break-words"
+          :class="orgClass"
         >
           {{ organization }}
         </span>
@@ -47,7 +47,7 @@
             </a>
             <span
               v-if="organization"
-              class="text-sm lg:text-base font-semibold text-gray-500 wrap-break-words"
+              :class="orgClass"
             >
               {{ organization }}
             </span>
@@ -58,20 +58,23 @@
           :key="panel.key"
           #[`panel(${panel.key})`]="slotProps"
         >
-          <div
-            v-for="colKey in ['col_1', 'col_2', 'col_3']"
-            :key="colKey"
-            class="flex flex-col"
-          >
-            <template
-              v-for="item in getLinkColumn(slotProps?.content ?? panel.content, colKey)"
-              :key="item.key"
+          <div class="flex flex-col lg:flex-row relative">
+            <div
+              v-for="colKey in ['col_1', 'col_2', 'col_3']"
+              :key="colKey"
+              class="flex flex-col lg:col-span-1 lg:w-full lg:**:[[id='sds-navigationitem']]:w-full"
             >
-              <SdsNavigationItem
-                :label="item.label"
-                :href="item.href"
-              />
-            </template>
+              <template
+                v-for="item in getLinkColumn(slotProps?.content ?? panel.content, colKey)"
+                :key="item.key"
+              >
+                <SdsMegaMenuItem
+                  :label="item.label"
+                  :href="item.href"
+                  :type="item.type ? item.type : 'simple'"
+                />
+              </template>
+            </div>
           </div>
         </template>
       </SdsMegaMenu>
@@ -100,7 +103,7 @@
           </a>
           <span
             v-if="organization"
-            class="text-sm font-semibold text-gray-500 wrap-break-words"
+            :class="orgClass"
           >
             {{ organization }}
           </span>
@@ -113,7 +116,7 @@
           :label="item.title"
           :href="item.href ?? null"
           :external="item.external"
-          :type="item.content ? 'slide' : 'simple'"
+          :type="item.type ? item.type : 'simple'"
           :on-click="(e: Event) => {
             if (item.onClick) {
               item.onClick(item, e)
@@ -158,7 +161,7 @@ import type { MegaMenuItem } from '../MegaMenu/MegaMenu.vue'
 import type { MobileMenuItem } from '../MobileMenu/MobileMenu.vue'
 import SdsMobileMenu from '../MobileMenu/MobileMenu.vue'
 import SdsNavigationItem from '../NavigationItem/NavigationItem.vue'
-import BrochureSiteWordmark from "../BrochureSiteWordmark/BrochureSiteWordmark.vue";
+import BrochureSiteWordmark from '../BrochureSiteWordmark/BrochureSiteWordmark.vue'
 
 interface BrochureSiteHeaderProps {
   /**
@@ -232,9 +235,20 @@ const logoClass = computed(() =>
 )
 
 const megamenuClass = computed(() =>
-  megamenu.value.length
-    ? ['hidden', activeBreakpointClasses.value.megamenu, '-mb-0.5']
-    : ['hidden']
+  megamenu.value.length ?
+    [
+      'hidden',
+      activeBreakpointClasses.value.megamenu,
+      '-mb-0.5',
+      '[&>div:first-child]:h-full',
+      '[&>div:first-child]:p-0',
+      '[&>div:first-child>div[role=menu]]:h-full',
+      '[&>div>div>[role=menuitem]]:my-0',
+      '[&>div>div>[role=menuitem]:first-child]:border-0',
+      '[&>div>div>[role=menuitem]:not(:first-child)]:relative',
+      '[&>div>div>[role=menuitem]:not(:first-child)]:-bottom-0.5',
+    ] :
+    ['hidden']
 )
 
 const hamburgerClass = computed(() =>
@@ -243,6 +257,8 @@ const hamburgerClass = computed(() =>
     : ['hidden']
 )
 
+const orgClass = 'text-sm lg:text-base text-left font-semibold text-gray-500 wrap-break-words'
+
 const mobileMenus = computed<MobileMenuItem[]>(() =>
   props.nav.map(item => ({
     ...item,
@@ -250,27 +266,3 @@ const mobileMenus = computed<MobileMenuItem[]>(() =>
   }))
 )
 </script>
-
-<style>
-nav[data-id="sds-megamenu"] {
-  & > div:first-child {
-    height: 100%;
-    padding: 0;
-
-    div[role="menu"] {
-      height: 100%;
-    }
-  }
-  [id^="sds-megamenu__top-link"] {
-    &:first-child {
-      border: none;
-    }
-    margin-top: 0;
-    margin-bottom: 0;
-    &:not(:first-child) {
-      position: relative;
-      bottom: -2px;
-    }
-  }
-}
-</style>

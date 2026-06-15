@@ -72,43 +72,36 @@ const nav: MegaMenuItem[] = [
           key: "buttons",
           label: "Buttons",
           href: "/components/buttons",
-          type: "landing-page",
         },
         {
           key: "containers",
           label: "Containers",
           href: "/components/containers",
-          type: "landing-page",
         },
         {
           key: "data-visualization",
           label: "Data Visualization",
           href: "/components/data-visualization",
-          type: "landing-page",
         },
         {
           key: "date-and-time",
           label: "Date & Time",
           href: "/components/date-and-time",
-          type: "landing-page",
         },
         {
           key: "feedback",
           label: "Feedback",
           href: "/components/feedback",
-          type: "landing-page",
         },
         {
           key: "inputs",
           label: "Inputs",
           href: "/components/inputs",
-          type: "landing-page",
         },
         {
           key: "navigation",
           label: "Navigation",
           href: "/components/navigation",
-          type: "landing-page",
         },
       ]
     }
@@ -122,13 +115,11 @@ const nav: MegaMenuItem[] = [
           key: "data-table",
           label: "Data Table",
           href: "/patterns/data-table",
-          type: "landing-page"
         },
         {
           key: "form-group",
           label: "Form Group",
           href: "/patterns/form-group",
-          type: "landing-page"
         }
       ]
     }
@@ -142,7 +133,6 @@ const nav: MegaMenuItem[] = [
           key: "brochure-site",
           label: "Brochure Site",
           href: "/templates/brochure-site",
-          type: "landing-page"
         }
       ]
     }

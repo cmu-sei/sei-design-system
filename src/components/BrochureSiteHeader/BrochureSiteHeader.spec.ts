@@ -7,7 +7,6 @@ describe('SdsBrochureSiteHeader', () => {
 
   afterEach(() => {
     wrapper?.unmount()
-    document.body.innerHTML = ''
   })
 
   // default rendering

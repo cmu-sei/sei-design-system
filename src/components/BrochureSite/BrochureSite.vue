@@ -1,5 +1,4 @@
 <template>
-  <!-- To set a different root-level background/text color, override with the !important flag -->
   <div
     data-id="sds-brochure-site"
     class="sds-theme-plaid flex flex-col justify-between w-full min-h-screen text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100"
@@ -29,22 +28,18 @@
     <!-- @slot Footer content. -->
     <footer v-if="showFooter || $slots.footer">
       <slot name="footer" />
-      <brochure-site-footer
-        v-if="showFooter"
-        :organization="organization"
-        :nav="nav"
-      />
+      <brochure-site-footer />
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { MegaMenuItem } from '../MegaMenu/MegaMenu.vue'
-import BrochureSiteHeader from "../BrochureSiteHeader/BrochureSiteHeader.vue";
-import BrochureSiteFooter from "../BrochureSiteFooter/BrochureSiteFooter.vue";
+import BrochureSiteHeader from '../BrochureSiteHeader/BrochureSiteHeader.vue'
+import BrochureSiteFooter from '../BrochureSiteFooter/BrochureSiteFooter.vue'
 
 defineOptions({
-  name: "SdsBrochureSite",
+  name: 'SdsBrochureSite',
 });
 
 interface BrochureSiteProps {
@@ -72,7 +67,7 @@ interface BrochureSiteProps {
 }
 
 withDefaults(defineProps<BrochureSiteProps>(), {
-  organization: "",
+  organization: '',
   nav: () => [],
   removeContentPadding: false,
   showFooter: false,
