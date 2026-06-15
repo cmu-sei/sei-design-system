@@ -71,7 +71,7 @@
                 <SdsMegaMenuItem
                   :label="item.label"
                   :href="item.href"
-                  :type="item.type ? item.type : 'simple'"
+                  :type="getMegaMenuItemType(item.type)"
                 />
               </template>
             </div>
@@ -116,7 +116,7 @@
           :label="item.title"
           :href="item.href ?? null"
           :external="item.external"
-          :type="item.type ? item.type : 'simple'"
+          :type="getNavigationItemType(item.type)"
           :on-click="(e: Event) => {
             if (item.onClick) {
               item.onClick(item, e)
@@ -143,12 +143,18 @@
             v-for="colKey in ['col_1', 'col_2', 'col_3']"
             :key="colKey"
           >
-            <SdsNavigationItem
+            <div
               v-for="link in getLinkColumn(item.content as Record<string, unknown>, colKey)"
               :key="link.key"
-              :label="link.label"
-              :href="link.href"
-            />
+              :class="{
+                'font-semibold': link.type === 'landing-page'
+              }"
+            >
+              <SdsNavigationItem
+                :label="link.label"
+                :href="link.href"
+              />
+            </div>
           </template>
         </div>
       </template>
@@ -159,9 +165,19 @@
 <script setup lang="ts">
 import type { MegaMenuItem } from '../MegaMenu/MegaMenu.vue'
 import type { MobileMenuItem } from '../MobileMenu/MobileMenu.vue'
+import type { NavigationItemType } from '../NavigationItem/NavigationItem.vue'
+import type { MegaMenuItemType } from '../MegaMenuItem/MegaMenuItem.vue'
 import SdsMobileMenu from '../MobileMenu/MobileMenu.vue'
 import SdsNavigationItem from '../NavigationItem/NavigationItem.vue'
 import BrochureSiteWordmark from '../BrochureSiteWordmark/BrochureSiteWordmark.vue'
+
+// * Navigation Item type for combined use in both MegaMenu and MobileMenu
+type LinkItem = {
+  key: string
+  label: string
+  href: string
+  type?: MegaMenuItemType | NavigationItemType
+}
 
 interface BrochureSiteHeaderProps {
   /**
@@ -222,10 +238,20 @@ const breakpointClasses = {
 
 const activeBreakpointClasses = computed(() => breakpointClasses[props.mobileBreakpoint])
 
-type LinkItem = { key: string; label: string; href: string; type?: string }
-
 const getLinkColumn = (content: Record<string, unknown> | undefined, key: string): LinkItem[] => {
   return (content?.[key] as LinkItem[] | undefined) ?? []
+}
+
+const getMegaMenuItemType = (type: unknown): MegaMenuItemType | undefined => {
+  return type as MegaMenuItemType | undefined
+}
+
+const getNavigationItemType = (type: unknown): NavigationItemType | undefined => {
+  return type as NavigationItemType | undefined
+}
+
+const isValidMobileMenuType = (type: unknown): type is Exclude<NavigationItemType, 'simple'> => {
+  return type === 'back' || type === 'expand' || type === 'slide' || type === 'title'
 }
 
 const logoClass = computed(() =>
@@ -260,9 +286,13 @@ const hamburgerClass = computed(() =>
 const orgClass = 'text-sm lg:text-base text-left font-semibold text-gray-500 wrap-break-words'
 
 const mobileMenus = computed<MobileMenuItem[]>(() =>
-  props.nav.map(item => ({
-    ...item,
-    type: item.href ? undefined : 'slide' as const,
-  }))
+  props.nav.map(item => {
+    const navType = getNavigationItemType(item.type)
+    return {
+      ...item,
+      // Only include 'type' if it's a valid MobileMenuItem type
+      type: isValidMobileMenuType(navType) ? navType : undefined,
+    }
+  })
 )
 </script>

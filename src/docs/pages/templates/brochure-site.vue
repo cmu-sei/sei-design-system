@@ -66,6 +66,7 @@ const nav: MegaMenuItem[] = [
   {
     key: "components",
     title: "Components",
+    type: "slide",
     content: {
       col_1: [
         {
@@ -109,6 +110,7 @@ const nav: MegaMenuItem[] = [
   {
     key: "patterns",
     title: "Patterns",
+    type: "slide",
     content: {
       col_1: [
         {
@@ -127,6 +129,7 @@ const nav: MegaMenuItem[] = [
   {
     key: "templates",
     title: "Templates",
+    type: "slide",
     content: {
       col_1: [
         {

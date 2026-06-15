@@ -82,6 +82,8 @@
 <script setup lang="ts">
 import { getCurrentInstance } from "vue"
 
+export type NavigationItemType = 'back' | 'expand' | 'simple' | 'slide' | 'title'
+
 interface NavigationItemProps {
   /**
    * Determines show/hide state of the panel or the open/closed state of the 'expand'-able navigation item.
@@ -106,7 +108,7 @@ interface NavigationItemProps {
   /**
    * The "type" prop determines the interaction for navigating to menu item's children.
    */
-  type?: 'back' | 'expand' | 'simple' | 'slide' | 'title';
+  type?: NavigationItemType;
   /**
    * Override the default event handler.
    */

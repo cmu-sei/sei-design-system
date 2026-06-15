@@ -25,14 +25,14 @@ const Template = (args) => ({
     <sds-brochure-site v-bind="args">
       <template #default>
         <div class="flex flex-col gap-4 w-full lg:w-2/3">
-          <h1 class="text-3xl text-gray-400">
-            Page Title
+          <h1 class="text-h1">
+            Page text-h1
           </h1>
-          <h2 class="text-xl text-gray-400">
-            Page Subtitle
+          <h2 class="text-h2">
+            Page text-h2
           </h2>
-          <p class="text-gray-900">
-            Page description
+          <p class="text-body">
+            Page text-body
           </p>
         </div>
       </template>
@@ -54,6 +54,7 @@ Default.args = {
     {
       key: 'section-1',
       title: 'Section 1',
+      type: 'slide',
       content: {
         col_1: [
           {
@@ -86,6 +87,7 @@ Default.args = {
     {
       key: 'section-2',
       title: 'Section 2',
+      type: 'slide',
       content: {
         col_1: [
           { label: 'Link label 1', href: 'https://designsystem.sei.cmu.edu' },
