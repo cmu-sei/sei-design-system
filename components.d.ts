@@ -56,6 +56,7 @@ declare module 'vue' {
     FloatingActionButton: typeof import('./src/components/FloatingActionButton/FloatingActionButton.vue')['default']
     FloatingUi: typeof import('./src/components/FloatingUi/FloatingUi.vue')['default']
     FormGroup: typeof import('./src/components/FormGroup/FormGroup.vue')['default']
+    HeatmapChart: typeof import('./src/components/HeatmapChart/HeatmapChart.vue')['default']
     IconFa7RegularCalendar: typeof import('~icons/fa7-regular/calendar')['default']
     IconFa7RegularClock: typeof import('~icons/fa7-regular/clock')['default']
     IconFa7SolidAnglesLeft: typeof import('~icons/fa7-solid/angles-left')['default']

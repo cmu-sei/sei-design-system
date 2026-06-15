@@ -20,6 +20,7 @@
 @import './components/primitives/sds-btn';
 @import './components/action-btn';
 @import './components/btn';
+@import './components/chart-axis.css';
 @import './components/form-control';
 @import './components/link';
 @import './components/pie-chart';

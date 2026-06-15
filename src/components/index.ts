@@ -114,6 +114,7 @@ import SdsFilterByDropdown from "./FilterByDropdown";
 import SdsFloatingActionButton from "./FloatingActionButton";
 import SdsFloatingUi from "./FloatingUi";
 import SdsFormGroup from "./FormGroup";
+import SdsHeatmapChart from "./HeatmapChart";
 import SdsIndicator from "./Indicator"
 import SdsInput from "./Input"
 import SdsApplication from "./Application";
@@ -197,6 +198,7 @@ const Components: ComponentList = {
   SdsFloatingActionButton,
   SdsFloatingUi,
   SdsFormGroup,
+  SdsHeatmapChart,
   SdsIndicator,
   SdsInput,
   SdsApplication,
@@ -285,6 +287,7 @@ export { default as SdsFilterByDropdown } from "./FilterByDropdown";
 export { default as SdsFloatingActionButton } from "./FloatingActionButton"
 export { default as SdsFloatingUi } from "./FloatingUi"
 export { default as SdsFormGroup } from "./FormGroup"
+export { default as SdsHeatmapChart } from "./HeatmapChart";
 export { default as SdsIndicator } from "./Indicator"
 export { default as SdsInput } from "./Input"
 export { default as SdsApplication } from "./Application";

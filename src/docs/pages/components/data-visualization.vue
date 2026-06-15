@@ -676,6 +676,394 @@
         />
       </div>
     </div>
+
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Heatmap Chart
+        </h2>
+        <p>
+          A reusable SVG-based heatmap built with
+          <SdsLink 
+            :external="true" 
+            kind="primary" 
+            type="inline" 
+            variant="blue" 
+            href="https://d3js.org/"
+          >
+            D3
+          </SdsLink>. Pass <code>:data</code> as an array of <code>{ x, y, value }</code> objects, then control axis
+          order with <code>x-tick-values</code> and <code>y-tick-values</code>.
+        </p>
+        <p>
+          Heatmaps work best for dense, discrete categories where color intensity helps reveal
+          distribution shifts. Keep labels short, align tooltip content to user questions, and pick a
+          palette with clear low-to-high contrast in both light and dark themes.
+        </p>
+
+        <h3>GitHub-style Contributions Graph: Default Palette</h3>
+        <p>
+          This synthetic dataset spans one year of contribution-style activity. Weekends are set to
+          <code>0</code>, weekdays carry most of the volume, and month labels are anchored to the first day of
+          each month.
+        </p>
+
+        <div class="not-prose mt-6 overflow-x-auto">
+          <SdsHeatmapChart
+            :data="baselineHeatmap"
+            :x-tick-values="monthTickValues"
+            :x-tick-formatter="xTickFormatter"
+            :y-tick-values="weekdayShort"
+            :y-tick-formatter="yTickFormatter"
+            square-cells
+            show-tooltip
+            show-legend
+            title="Daily Contributions by Month and Weekday"
+            class="min-w-5xl"
+          >
+            <template #tooltip="{ data }">
+              <p 
+                v-if="data" 
+                class="text-xs whitespace-nowrap font-semibold"
+              >
+                {{ formatContributionTooltip(data) }}
+              </p>
+            </template>
+          </SdsHeatmapChart>
+        </div>
+
+        <h3 class="mt-10">
+          Contributions: Custom Color Bins
+        </h3>
+        <p>
+          Use the <code>colors</code> prop to override bins with separate light and dark variants. This is
+          handy when your product brand colors differ from default chart tokens.
+        </p>
+
+        <div class="not-prose mt-6 overflow-x-auto">
+          <SdsHeatmapChart
+            :data="baselineHeatmap"
+            :colors="customBins"
+            :x-tick-values="monthTickValues"
+            :x-tick-formatter="xTickFormatter"
+            :y-tick-values="weekdayShort"
+            :y-tick-formatter="yTickFormatter"
+            square-cells
+            show-tooltip
+            show-legend
+            title="Daily Contributions with Custom Bins"
+            class="min-w-5xl"
+          >
+            <template #tooltip="{ data }">
+              <p 
+                v-if="data" 
+                class="text-xs whitespace-nowrap font-semibold"
+              >
+                {{ formatContributionTooltip(data) }}
+              </p>
+            </template>
+          </SdsHeatmapChart>
+        </div>
+
+        <h3 class="mt-10">
+          Contributions: Custom Legend Slot
+        </h3>
+        <p>
+          Use the <code>#legend</code> slot to fully control layout while keeping built-in bidirectional
+          hover behavior.
+        </p>
+
+        <div class="not-prose mt-6 overflow-x-auto">
+          <SdsHeatmapChart
+            :data="baselineHeatmap"
+            :colors="customBins"
+            :x-tick-values="monthTickValues"
+            :x-tick-formatter="xTickFormatter"
+            :y-tick-values="weekdayShort"
+            :y-tick-formatter="yTickFormatter"
+            square-cells
+            show-tooltip
+            show-legend
+            title="Daily Contributions with Custom Legend Slot"
+            class="min-w-5xl"
+          >
+            <template #tooltip="{ data }">
+              <p 
+                v-if="data" 
+                class="text-xs whitespace-nowrap font-semibold"
+              >
+                {{ formatContributionTooltip(data) }}
+              </p>
+            </template>
+            <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
+              <div class="flex flex-col items-center w-full select-none">
+                <div class="flex flex-row items-end justify-center gap-1">
+                  <template 
+                    v-for="(item, i) in legendItems" 
+                    :key="`custom-legend-bin-${i}`"
+                  >
+                    <button
+                      type="button"
+                      class="h-4 w-10 p-0 transition-opacity border border-gray-300 dark:border-gray-600"
+                      :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
+                      :style="{ backgroundColor: item.color }"
+                      :aria-label="`Range ${item.label}`"
+                      @mouseenter="updateHoveredIndex(i)"
+                      @mouseleave="updateHoveredIndex(null)"
+                    />
+                  </template>
+                </div>
+                <div class="flex flex-row items-start justify-center gap-1 mt-1">
+                  <template 
+                    v-for="(item, i) in legendItems" 
+                    :key="`custom-legend-label-${i}`"
+                  >
+                    <span class="w-10 text-center text-[11px] text-gray-900 dark:text-gray-100">
+                      >= {{ getRangeStart(item) }}
+                    </span>
+                  </template>
+                </div>
+              </div>
+            </template>
+          </SdsHeatmapChart>
+        </div>
+
+        <h3 class="mt-10">
+          NYC Ride-Share Pickups by Hour and Day
+        </h3>
+        <p>
+          This example uses real NYC TLC trip records from the
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
+            href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page"
+          >
+            NYC TLC open trip dataset
+          </SdsLink>. Values are aggregated from the NYC Open Data table
+          <code>u253-aew4</code> (2023 High Volume FHV Trip Data) for <code>2023-02</code>, grouped by
+          pickup hour and weekday.
+        </p>
+
+        <div class="not-prose mt-6 overflow-x-auto">
+          <SdsHeatmapChart
+            :data="taxiPickupsHeatmap"
+            :colors="taxiPickupsBins"
+            :x-tick-values="hourTickValues"
+            :x-tick-formatter="hourTickFormatter"
+            :y-tick-values="taxiWeekdayShort"
+            :y-tick-formatter="taxiYTickFormatter"
+            :square-cells="false"
+            show-tooltip
+            show-legend
+            title="NYC Ride-Share Pickups by Hour and Day"
+            class="min-w-5xl"
+          >
+            <template #tooltip="{ data }">
+              <p 
+                v-if="data" 
+                class="text-xs whitespace-nowrap font-semibold"
+              >
+                {{ formatTaxiPickupTooltip(data) }}
+              </p>
+            </template>
+          </SdsHeatmapChart>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Pie Chart
+        </h2>
+        <p>
+          A reusable SVG-based pie chart built with
+          <SdsLink 
+            :external="true" 
+            kind="primary" 
+            type="inline" 
+            variant="blue" 
+            href="https://d3js.org/"
+          >
+            D3
+          </SdsLink>. The component accepts a <code>slices</code> array and renders a responsive pie chart with a
+          built-in legend. An optional <code>innerRadius</code> prop turns the chart into a donut.
+        </p>
+
+        <h3>Browser Market Share 2025 - default color palette</h3>
+        <p>
+          When slices omit the <code>color</code> property, the chart automatically assigns colors from
+          the built-in <code>defaultColors</code> utility palette. Data sourced from
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
+            href="https://gs.statcounter.com/browser-market-share/all/worldwide/2025"
+          >
+            StatCounter Global Stats
+          </SdsLink>.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesNoColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - default palette"
+          />
+        </div>
+        <h3 class="mt-10">
+          Browser Market Share 2025 - explicit brand colors
+        </h3>
+        <p>
+          When slices include a <code>color</code> property, that value is used directly, overriding the
+          default palette. This is useful when brand or category colors are meaningful to the reader.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - brand colors"
+          />
+        </div>
+        <h3 class="mt-10">
+          Donut variant
+        </h3>
+        <p>Pass an <code>innerRadius</code> (as a pixel value) to render a donut chart.</p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            :inner-radius="100"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 (Donut)"
+          />
+        </div>
+        <h3 class="mt-10">
+          Responsive aspect ratio
+        </h3>
+        <p>
+          Omit <code>height</code> and pass <code>aspect-ratio</code> instead. The chart derives its
+          height from <code>containerWidth / aspectRatio</code> and updates automatically on resize,
+          giving you a fully responsive chart without a fixed pixel height.
+        </p>
+
+        <div class="not-prose mt-6 max-w-4xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share Worldwide 2025 - 16:9 aspect ratio"
+          />
+        </div>
+        <h3 class="mt-10">
+          Custom legend slot
+        </h3>
+        <p>Override the <code>#legend</code> slot to provide a custom legend layout.</p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share - Custom Legend"
+          >
+            <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
+              <table class="w-full text-sm border-collapse text-gray-900 dark:text-gray-100">
+                <thead>
+                  <tr class="border-b border-gray-200 dark:border-gray-700">
+                    <th class="py-1 text-left font-semibold">
+                      Browser
+                    </th>
+                    <th class="py-1 text-right font-semibold">
+                      Share
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(item, i) in legendItems"
+                    :key="item.label"
+                    :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
+                    class="border-b border-gray-100 dark:border-gray-800 cursor-pointer"
+                    @mouseenter="updateHoveredIndex(i)"
+                    @mouseleave="updateHoveredIndex(null)"
+                  >
+                    <td class="py-1 flex items-center gap-2">
+                      <span
+                        class="inline-block h-3 w-3 rounded-md shrink-0"
+                        :style="{ backgroundColor: item.color }"
+                        aria-hidden="true"
+                      />
+                      {{ item.label }}
+                    </td>
+                    <td class="py-1 text-right tabular-nums">
+                      {{ item.value }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </template>
+          </SdsPieChart>
+        </div>
+        <h3 class="mt-10">
+          Custom tooltip slot
+        </h3>
+        <p>
+          Override the <code>#tooltip</code> slot to customize what appears on hover. The slot receives
+          the hovered slice's <code>data</code> object.
+        </p>
+        <div class="not-prose mt-6 max-w-2xl">
+          <SdsPieChart
+            :slices="browserSlicesBrandColor"
+            :height="400"
+            :aspect-ratio="16 / 9"
+            show-labels
+            show-legend
+            show-tooltip
+            :tooltip-value-format="formatPercent"
+            label-type="both"
+            title="Browser Market Share - Custom Tooltip"
+          >
+            <template #tooltip="{ data }">
+              <div class="flex items-center gap-2">
+                <span
+                  class="inline-block h-2.5 w-2.5 rounded-full shrink-0"
+                  :style="{ backgroundColor: resolveItemColor(data?.color, isDark) }"
+                />
+                <span class="font-semibold">{{ data?.label }}</span>
+                <span class="text-gray-600">{{ data?.value }}%</span>
+              </div>
+            </template>
+          </SdsPieChart>
+        </div>
+      </div>
+    </div>
     <div class="grid gap-4">
       <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
         <h2>
@@ -1346,12 +1734,16 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { AxisDomain } from '@/lib/d3'
+import type { HeatmapCell, HeatmapColors } from '@/composables/useHeatmapChart'
 import type { PieSlice } from '@/composables/usePieChart'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 import SdsLink from '@/components/Link/Link.vue';
+import SdsHeatmapChart from '@/components/HeatmapChart/HeatmapChart.vue'
 import SdsPieChart from '@/components/PieChart/PieChart.vue';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { formatPercent, resolveItemColor } from '@/helpers/charts'
+import { heatmapColors, heatmapColorsDark } from '@/helpers/charts/colors'
 
 const datapointModelValue = ref(1451)
 
@@ -1363,6 +1755,243 @@ const badgeVariants = ref<('gray' | 'tan' | 'yellow' | 'orange' | 'red' | 'purpl
   ['gray', 'tan', 'yellow', 'orange', 'red', 'purple', 'indigo', 'blue', 'teal', 'green']
 )
 const badgeTypes = ref<('light-border' | 'light' | 'medium' | 'dark' | undefined)[]>(['light-border', 'light', 'medium', 'dark'])
+
+/**
+ * Heatmap Chart(s)
+ */
+
+interface ContributionCell extends HeatmapCell {
+	dateLabel: string
+	weekdayFull: string
+}
+
+interface ContributionDataset {
+	cells: ContributionCell[]
+	monthTickValues: string[]
+	monthLabelByWeek: Record<string, string>
+}
+
+interface TaxiPickupCell extends HeatmapCell {
+	hourLabel: string
+	weekdayFull: string
+}
+
+interface LegendBinItem {
+	label: string
+	range?: [number, number]
+}
+
+const demoYear = 2025
+const weekdayShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const weekdayFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+const taxiWeekdayShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+const taxiWeekdayFull = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const taxiHourKeys = Array.from({ length: 24 }, (_, hour) => `H${String(hour).padStart(2, '0')}`)
+
+function startOfWeekSunday(date: Date): Date {
+  const d = new Date(date)
+  d.setDate(d.getDate() - d.getDay())
+  d.setHours(0, 0, 0, 0)
+  return d
+}
+
+function endOfWeekSaturday(date: Date): Date {
+  const d = new Date(date)
+  d.setDate(d.getDate() + (6 - d.getDay()))
+  d.setHours(0, 0, 0, 0)
+  return d
+}
+
+function formatTooltipDate(date: Date): string {
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+}
+
+function getWeekKey(index: number): string {
+  return `W${String(index + 1).padStart(2, '0')}`
+}
+
+function getContributionValue(date: Date, yearStart: Date): number {
+  const weekday = date.getDay()
+  if (weekday === 0 || weekday === 6) return 0
+
+  const dayOfYear = Math.floor((date.getTime() - yearStart.getTime()) / (24 * 60 * 60 * 1000)) + 1
+  const monthIndex = date.getMonth()
+  const seasonality = Math.sin((monthIndex / 12) * Math.PI * 2 - 0.8) + 1.2
+  const weekdayWeight = [0, 0.95, 1.08, 1.22, 1.14, 1, 0][weekday] ?? 1
+  const trend = dayOfYear / 365
+  const burst = dayOfYear % 19 === 0 ? -12 : 0
+
+  return Math.max(0, Math.round(5 + seasonality * 11 + weekdayWeight * 12 + trend * 6 + burst))
+}
+
+function buildContributionDataset(year: number): ContributionDataset {
+  const yearStart = new Date(year, 0, 1)
+  const yearEnd = new Date(year, 11, 31)
+  const gridStart = startOfWeekSunday(yearStart)
+  const gridEnd = endOfWeekSaturday(yearEnd)
+
+  const cells: ContributionCell[] = []
+  const monthTickValues: string[] = []
+  const monthLabelByWeek: Record<string, string> = {}
+
+  let weekIndex = 0
+  for (let weekStart = new Date(gridStart); weekStart <= gridEnd; weekStart.setDate(weekStart.getDate() + 7)) {
+    const weekKey = getWeekKey(weekIndex)
+    for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
+      const date = new Date(weekStart)
+      date.setDate(weekStart.getDate() + dayIndex)
+
+      const inYear = date.getFullYear() === year
+      if (inYear && date.getDate() === 1) {
+        monthTickValues.push(weekKey)
+        monthLabelByWeek[weekKey] = monthLabels[date.getMonth()] ?? ''
+      }
+
+      cells.push({
+        x: weekKey,
+        y: weekdayShort[dayIndex] ?? 'Sun',
+        value: inYear ? getContributionValue(date, yearStart) : 0,
+        dateLabel: formatTooltipDate(date),
+        weekdayFull: weekdayFull[dayIndex] ?? 'Sunday'
+      })
+    }
+    weekIndex += 1
+  }
+
+  return { cells, monthTickValues, monthLabelByWeek }
+}
+
+function formatHourLabel(hour: number): string {
+  const suffix = hour >= 12 ? 'PM' : 'AM'
+  const normalizedHour = hour % 12 === 0 ? 12 : hour % 12
+  return `${normalizedHour}:00 ${suffix}`
+}
+
+const taxiPickupsByDayHour: Record<string, number[]> = {
+  Mon: [
+    70543, 40644, 27867, 22892, 29513, 42540, 71105, 106138, 129753, 111151, 96493, 91438,
+    93572, 97182, 106882, 110252, 113306, 125956, 134117, 123662, 113840, 107291, 96915,
+    77738
+  ],
+  Tue: [
+    51085, 27922, 19257, 16924, 24463, 40877, 75202, 120084, 150780, 128400, 104595, 96331,
+    96530, 100883, 111484, 116738, 123546, 142042, 153740, 144662, 135578, 128582, 119990,
+    95559
+  ],
+  Wed: [
+    60553, 34396, 22475, 18922, 25887, 41196, 73467, 118935, 149330, 127547, 103596, 95445,
+    96557, 97428, 112647, 122064, 126028, 142178, 152460, 143836, 134547, 130878, 120068,
+    96137
+  ],
+  Thu: [
+    61596, 35868, 24016, 20662, 28281, 42957, 76638, 123253, 150338, 126613, 105522, 99363,
+    100603, 105119, 118755, 129294, 134656, 150818, 163258, 156809, 144673, 140861, 135843,
+    114820
+  ],
+  Fri: [
+    80609, 51787, 35413, 28169, 33432, 45512, 76487, 122314, 148040, 131344, 113509, 109038,
+    115446, 126602, 134762, 140197, 150725, 175077, 196472, 205223, 188444, 177906, 185364,
+    183246
+  ],
+  Sat: [
+    157361, 121231, 92575, 69131, 52644, 41522, 52871, 66786, 86336, 106639, 119921, 129927,
+    136351, 140859, 140692, 142199, 149527, 167530, 192005, 201746, 186515, 178861, 190049,
+    192768
+  ],
+  Sun: [
+    171340, 138066, 106739, 80775, 60858, 42710, 48657, 56534, 66360, 84715, 105393, 116021,
+    120204, 123957, 125732, 125045, 128832, 137898, 148851, 130575, 117127, 119998, 123186,
+    106997
+  ]
+}
+
+function buildTaxiPickupDatasetFromRealData(): TaxiPickupCell[] {
+  const cells: TaxiPickupCell[] = []
+
+  for (let dayIndex = 0; dayIndex < taxiWeekdayShort.length; dayIndex += 1) {
+    const dayKey = taxiWeekdayShort[dayIndex] ?? 'Mon'
+    const dayValues = taxiPickupsByDayHour[dayKey] ?? []
+    for (let hour = 0; hour < 24; hour += 1) {
+      cells.push({
+        x: taxiHourKeys[hour] ?? 'H00',
+        y: dayKey,
+        value: dayValues[hour] ?? 0,
+        hourLabel: formatHourLabel(hour),
+        weekdayFull: taxiWeekdayFull[dayIndex] ?? 'Monday'
+      })
+    }
+  }
+
+  return cells
+}
+
+const contributionDataset = buildContributionDataset(demoYear)
+const baselineHeatmap: ContributionCell[] = contributionDataset.cells
+const monthTickValues = contributionDataset.monthTickValues
+const monthLabelByWeek = contributionDataset.monthLabelByWeek
+
+const xTickFormatter = (value: AxisDomain): string => monthLabelByWeek[String(value)] ?? ''
+const yTickFormatter = (value: AxisDomain): string => String(value)
+const hourTickValues = taxiHourKeys.filter((_, index) => index % 2 === 0)
+const hourTickFormatter = (value: AxisDomain): string => `${String(value).slice(1)}:00`
+const taxiYTickFormatter = (value: AxisDomain): string => String(value)
+
+const customBins: HeatmapColors = {
+  light: ['#fff7ec', '#fee8c8', '#fdbb84', '#fc8d59', '#d7301f'],
+  dark: ['#4a2a17', '#72401f', '#a45a22', '#d7782e', '#f39b54']
+}
+
+const taxiPickupsHeatmap = buildTaxiPickupDatasetFromRealData()
+const taxiPickupsBins: HeatmapColors = {
+  light: heatmapColors.slice(0, 5),
+  dark: heatmapColorsDark.slice(0, 5),
+}
+
+function formatRangeValue(value: number): string {
+  if (Number.isInteger(value)) return String(value)
+  const abs = Math.abs(value)
+  const fractionDigits = abs >= 10 ? 1 : 2
+  return value
+    .toFixed(fractionDigits)
+    .replace(/\.0+$/, '')
+    .replace(/(\.\d*[1-9])0+$/, '$1')
+}
+
+function getRangeStart(item: LegendBinItem): string {
+  return item.range ? formatRangeValue(item.range[0]) : item.label.split(' - ')[0] ?? item.label
+}
+
+function formatContributionTooltip(data: HeatmapCell | null | undefined): string {
+  if (!data) return ''
+  const contributionData = data as ContributionCell
+  return `${contributionData.value} contributions on ${contributionData.weekdayFull}, ${contributionData.dateLabel}`
+}
+
+function formatTaxiPickupTooltip(data: HeatmapCell | null | undefined): string {
+  if (!data) return ''
+  const taxiData = data as TaxiPickupCell
+  return `${taxiData.value.toLocaleString()} pickups on ${taxiData.weekdayFull} at ${taxiData.hourLabel} (Feb 2023)`
+}
+
+/**
+ * Pie Chart(s)
+ */
+
+/**
+ * Explicit brand colors override the default palette.
+ * Source: https://gs.statcounter.com/browser-market-share/all/worldwide/2025
+ */
+const browserSlicesBrandColor: PieSlice[] = [
+  { label: 'Chrome', value: 65.8, color: { light: '#4e79a7', dark: '#7fb3d3' } },
+  { label: 'Safari', value: 18.2, color: { light: '#f28e2b', dark: '#f7b97e' } },
+  { label: 'Edge', value: 5.0, color: { light: '#e15759', dark: '#f0a0a1' } },
+  { label: 'Firefox', value: 2.7, color: { light: '#76b7b2', dark: '#aad5d2' } },
+  { label: 'Samsung Internet', value: 2.5, color: { light: '#59a14f', dark: '#96c990' } },
+  { label: 'Opera', value: 2.2, color: { light: '#edc948', dark: '#f5df8e' } },
+  { label: 'Brave', value: 1.5, color: { light: '#b07aa1', dark: '#d0afc6' } },
+  { label: 'Others', value: 2.1, color: { light: '#ff9da7', dark: '#ffc8cd' } },
+]
 
 const isDark = useDarkMode()
 
@@ -1379,21 +2008,6 @@ const browserSlicesNoColor: PieSlice[] = [
   { label: 'Opera', value: 2.2 },
   { label: 'Brave', value: 1.5 },
   { label: 'Others', value: 2.1 },
-]
-
-/**
- * Explicit brand colors override the default palette.
- * Source: https://gs.statcounter.com/browser-market-share/all/worldwide/2025
- */
-const browserSlicesBrandColor: PieSlice[] = [
-  { label: 'Chrome', value: 65.8, color: { light: '#4e79a7', dark: '#7fb3d3' } },
-  { label: 'Safari', value: 18.2, color: { light: '#f28e2b', dark: '#f7b97e' } },
-  { label: 'Edge', value: 5.0, color: { light: '#e15759', dark: '#f0a0a1' } },
-  { label: 'Firefox', value: 2.7, color: { light: '#76b7b2', dark: '#aad5d2' } },
-  { label: 'Samsung Internet', value: 2.5, color: { light: '#59a14f', dark: '#96c990' } },
-  { label: 'Opera', value: 2.2, color: { light: '#edc948', dark: '#f5df8e' } },
-  { label: 'Brave', value: 1.5, color: { light: '#b07aa1', dark: '#d0afc6' } },
-  { label: 'Others', value: 2.1, color: { light: '#ff9da7', dark: '#ffc8cd' } },
 ]
 
 const fields = ref<TableField[]>([
