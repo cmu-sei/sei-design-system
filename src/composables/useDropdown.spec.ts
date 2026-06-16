@@ -183,6 +183,68 @@ describe('useDropdown', () => {
     expect(classes['z-30']).toBe(true)
   })
 
+  it('should default widthClass to w-56 (md)', () => {
+    const dropdown = useDropdown()
+
+    expect(dropdown.widthClass.value).toBe('w-56')
+  })
+
+  it('should map width auto to w-auto', () => {
+    const dropdown = useDropdown({ width: 'auto' })
+
+    expect(dropdown.widthClass.value).toBe('w-auto')
+  })
+
+  it('should map width sm to w-48', () => {
+    const dropdown = useDropdown({ width: 'sm' })
+
+    expect(dropdown.widthClass.value).toBe('w-48')
+  })
+
+  it('should map width md to w-56', () => {
+    const dropdown = useDropdown({ width: 'md' })
+
+    expect(dropdown.widthClass.value).toBe('w-56')
+  })
+
+  it('should map width lg to w-64', () => {
+    const dropdown = useDropdown({ width: 'lg' })
+
+    expect(dropdown.widthClass.value).toBe('w-64')
+  })
+
+  it('should map width xl to w-72', () => {
+    const dropdown = useDropdown({ width: 'xl' })
+
+    expect(dropdown.widthClass.value).toBe('w-72')
+  })
+
+  it('should map width 2xl to w-80', () => {
+    const dropdown = useDropdown({ width: '2xl' })
+
+    expect(dropdown.widthClass.value).toBe('w-80')
+  })
+
+  it('should include widthClass in dropdown classes', () => {
+    const dropdown = useDropdown({ width: 'lg' })
+
+    const classes = dropdown.dropdownClasses.value
+    expect(classes['w-64']).toBe(true)
+  })
+
+  it('should support reactive width', () => {
+    const width = ref<'sm' | 'xl'>('sm')
+    
+    const dropdown = useDropdown({
+      width: () => width.value
+    })
+
+    expect(dropdown.widthClass.value).toBe('w-48')
+
+    width.value = 'xl'
+    expect(dropdown.widthClass.value).toBe('w-72')
+  })
+
   it('should support reactive darkMode', () => {
     const darkMode = ref(false)
     

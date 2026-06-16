@@ -1,6 +1,18 @@
 import { computed, ref, toValue, type Ref, type MaybeRefOrGetter } from 'vue'
 import { useButtonClasses, useZIndex, type ButtonKind, type ButtonVariant, type ButtonSize, type ActionButtonSize, type ZIndexValue } from '@/composables'
 
+/**
+ * Available width options for the dropdown menu container.
+ * 
+ * - `auto` — Menu expands to fit content (no fixed width)
+ * - `sm` — 12rem (192px)
+ * - `md` — 14rem (224px) — default
+ * - `lg` — 16rem (256px)
+ * - `xl` — 18rem (288px)
+ * - `2xl` — 20rem (320px)
+ */
+export type DropdownWidth = 'auto' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+
 export interface UseDropdownOptions {
   prefix?: MaybeRefOrGetter<'btn' | 'action-btn'>
   title?: MaybeRefOrGetter<string>
@@ -8,6 +20,11 @@ export interface UseDropdownOptions {
   variant?: MaybeRefOrGetter<ButtonVariant>
   size?: MaybeRefOrGetter<ButtonSize | ActionButtonSize>
   zIndex?: MaybeRefOrGetter<ZIndexValue>
+  /**
+   * Controls the width of the dropdown menu container.
+   * @default 'md'
+   */
+  width?: MaybeRefOrGetter<DropdownWidth>
   disabled?: MaybeRefOrGetter<boolean>
   block?: MaybeRefOrGetter<boolean>
   active?: MaybeRefOrGetter<boolean>
@@ -21,6 +38,7 @@ export interface UseDropdownReturn {
   id: string
   buttonRef: Ref<HTMLElement | undefined>
   zIndexClass: Ref<string>
+  widthClass: Ref<string>
   btnClass: Ref<string>
   kindClass: Ref<string>
   variantClass: Ref<string>
@@ -70,6 +88,23 @@ export function useDropdown(options: UseDropdownOptions = {}): UseDropdownReturn
     return val !== undefined ? val : '50'
   })
 
+  /**
+   * Maps dropdown width prop values to Tailwind CSS width classes.
+   */
+  const widthMap: Record<DropdownWidth, string> = {
+    auto: 'w-auto',
+    sm: 'w-48',
+    md: 'w-56',
+    lg: 'w-64',
+    xl: 'w-72',
+    '2xl': 'w-80'
+  }
+
+  const widthClass = computed(() => {
+    const w = toValue(options.width) || 'md'
+    return widthMap[w] || widthMap.md
+  })
+
   const { btnClass, kindClass, variantClass, sizeClass, disabledClass, blockClass, activeClass } = useButtonClasses({
     prefix: () => toValue(prefix),
     kind: options.kind ? () => toValue(options.kind) || '' : undefined,
@@ -91,6 +126,7 @@ export function useDropdown(options: UseDropdownOptions = {}): UseDropdownReturn
   const dropdownClasses = computed(() => ({
     '[.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': toValue(darkMode),
     'bg-white absolute border shadow-lg rounded-theme-md [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
+    [widthClass.value]: true,
     [zIndexClass.value]: true
   }))
 
@@ -119,6 +155,7 @@ export function useDropdown(options: UseDropdownOptions = {}): UseDropdownReturn
     id,
     buttonRef,
     zIndexClass,
+    widthClass,
     btnClass,
     kindClass,
     variantClass,

@@ -19,7 +19,7 @@ export type {
 } from './useButtonClasses'
 
 export { useDropdown } from './useDropdown'
-export type { UseDropdownOptions, UseDropdownReturn } from './useDropdown'
+export type { UseDropdownOptions, UseDropdownReturn, DropdownWidth } from './useDropdown'
 
 export { useZIndex } from './useZIndex'
 export type { ZIndexValue } from './useZIndex'
