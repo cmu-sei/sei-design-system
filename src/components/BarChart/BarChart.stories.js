@@ -2,7 +2,7 @@ import SdsBarChart from './BarChart.vue'
 import { formatPercent, sortByProperty } from '@/helpers/charts'
 
 export default {
-  title: 'Components/Data Visualization/BarChart',
+  title: 'Components/Data Visualization/Bar Chart',
   parameters: {
     docs: {
       description: {
