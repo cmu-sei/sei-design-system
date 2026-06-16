@@ -122,8 +122,6 @@ import SdsSimpleApplication from "./SimpleApplication";
 import SdsBrochureSite from "./BrochureSite";
 import SdsBrochureSiteFooter from "./BrochureSiteFooter";
 import SdsBrochureSiteHeader from "./BrochureSiteHeader";
-import SdsBrochureSiteHeaderContent from "./BrochureSiteHeaderContent";
-import SdsBrochureSiteNav from "./BrochureSiteNav";
 import SdsBrochureSiteWordmark from "./BrochureSiteWordmark";
 import SdsStructuredPage from "./StructuredPage";
 import SdsLink from "./Link";
@@ -206,8 +204,6 @@ const Components: ComponentList = {
   SdsBrochureSite,
   SdsBrochureSiteFooter,
   SdsBrochureSiteHeader,
-  SdsBrochureSiteHeaderContent,
-  SdsBrochureSiteNav,
   SdsBrochureSiteWordmark,
   SdsStructuredPage,
   SdsLink,
@@ -295,8 +291,6 @@ export { default as SdsSimpleApplication } from "./SimpleApplication";
 export { default as SdsBrochureSite } from "./BrochureSite";
 export { default as SdsBrochureSiteFooter } from "./BrochureSiteFooter";
 export { default as SdsBrochureSiteHeader } from "./BrochureSiteHeader";
-export { default as SdsBrochureSiteHeaderContent } from "./BrochureSiteHeaderContent";
-export { default as SdsBrochureSiteNav } from "./BrochureSiteNav";
 export { default as SdsBrochureSiteWordmark } from "./BrochureSiteWordmark";
 export { default as SdsStructuredPage } from "./StructuredPage";
 export { default as SdsLink } from "./Link";

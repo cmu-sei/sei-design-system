@@ -1,5 +1,4 @@
 import SdsBrochureSite from './BrochureSite.vue';
-import SdsBrochureSiteNav from '../BrochureSiteNav/BrochureSiteNav.vue';
 
 export default {
   title: 'Templates/Layouts/Brochure Site/Brochure Site',
@@ -17,8 +16,7 @@ export default {
 
 const Template = (args) => ({
   components: {
-    SdsBrochureSite,
-    SdsBrochureSiteNav
+    SdsBrochureSite
   },
   setup() {
     return { args }
@@ -26,49 +24,16 @@ const Template = (args) => ({
   template: `
     <sds-brochure-site v-bind="args">
       <template #default>
-        <div class="flex flex-col">
-          <div class="flex flex-col-reverse lg:flex-row gap-8 container mx-auto max-w-screen-xl py-4 md:py-8">
-            <div class="flex flex-col gap-4 w-full lg:w-1/3">
-              <sds-brochure-site-nav :page="args.page" />
-            </div>
-            <div class="flex flex-col gap-4 w-full lg:w-2/3">
-              <h1 class="text-3xl text-gray-400">
-                Page Title
-              </h1>
-              <h2 class="text-xl text-gray-400">
-                Page Subtitle
-              </h2>
-              <p class="text-gray-900">
-                Page description
-              </p>
-            </div>
-          </div>
-        </div>
-      </template>
-      <template #footer>
-        <div class="py-8 text-white bg-gray-400">
-          <div class="container px-4 mx-auto max-w-screen-xl space-y-6 lg:px-8">
-            <ul class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <li>
-                <a
-                  href="https://vulcoord.cert.org/VulReport/"
-                  class="hover:underline focus:underline focus:outline-hidden"
-                >Report a Vulnerability to CERT/CC</a>
-              </li>
-              <li>
-                <a
-                  href="https://sei.cmu.edu/subscribe-to-sei-bulletin/"
-                  class="hover:underline focus:underline focus:outline-hidden"
-                >Subscribe to SEI Bulletin</a>
-              </li>
-              <li>
-                <a
-                  href="https://sei.cmu.edu/legal/request-permission-to-use-sei-material"
-                  class="hover:underline focus:underline focus:outline-hidden"
-                >Request Permission to Use SEI Materials</a>
-              </li>
-            </ul>
-          </div>
+        <div class="flex flex-col gap-4 w-full lg:w-2/3">
+          <h1 class="text-h1">
+            Page text-h1
+          </h1>
+          <h2 class="text-h2">
+            Page text-h2
+          </h2>
+          <p class="text-body">
+            Page text-body
+          </p>
         </div>
       </template>
     </sds-brochure-site>
@@ -78,41 +43,66 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   showFooter: true,
-  page: {
-    organization: 'Page Organization',
-    title: 'Page Title',
-    subtitle: 'Page Subtitle',
-    description: 'Page Description',
-    nav: [
-      {
-        title: 'Section 1',
-        items: [
-          { title: 'Link title 1', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 2', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 3', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 4', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 5', url: 'https://designsystem.sei.cmu.edu' },
+  organization: 'Organization',
+  nav: [
+    {
+      key: 'home',
+      title: 'Home',
+      alignment: 'left',
+      href: '/',
+    },
+    {
+      key: 'section-1',
+      title: 'Section 1',
+      type: 'slide',
+      content: {
+        col_1: [
+          {
+            label: 'Col 1',
+            href: 'https://designsystem.sei.cmu.edu',
+            type: 'landing-page'
+          },
+          { label: 'Link label 1', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 2', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 3', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 4', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 5', href: 'https://designsystem.sei.cmu.edu' },
         ],
-        seeAll: {
-          title: 'See All title',
-          url: 'https://designsystem.sei.cmu.edu'
-        }
-      },
-      {
-        title: 'Section 2',
-        items: [
-          { title: 'Link title 1', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 2', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 3', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 4', url: 'https://designsystem.sei.cmu.edu' },
-          { title: 'Link title 5', url: 'https://designsystem.sei.cmu.edu' },
+        col_2: [
+          {
+            label: 'Col 2',
+            href: 'https://designsystem.sei.cmu.edu',
+            type: 'landing-page'
+          }
         ],
-        seeAll: {
-          title: 'See All title',
-          url: 'https://designsystem.sei.cmu.edu'
-        }
+        col_3: [
+          {
+            label: 'Col 3',
+            href: 'https://designsystem.sei.cmu.edu',
+            type: 'landing-page'
+          }
+        ]
       }
-    ]
-  }
+    },
+    {
+      key: 'section-2',
+      title: 'Section 2',
+      type: 'slide',
+      content: {
+        col_1: [
+          { label: 'Link label 1', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 2', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 3', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 4', href: 'https://designsystem.sei.cmu.edu' },
+          { label: 'Link label 5', href: 'https://designsystem.sei.cmu.edu' },
+        ],
+        col_2: [
+          {
+            label: 'See All label',
+            href: 'https://designsystem.sei.cmu.edu'
+          }
+        ]
+      }
+    }
+  ]
 };
-

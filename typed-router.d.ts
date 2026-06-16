@@ -136,9 +136,9 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/patterns/layout-external': RouteRecordInfo<
-      '/patterns/layout-external',
-      '/patterns/layout-external',
+    '/templates/brochure-site': RouteRecordInfo<
+      '/templates/brochure-site',
+      '/templates/brochure-site',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -246,9 +246,9 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
-    'src/docs/pages/patterns/layout-external.vue': {
+    'src/docs/pages/templates/brochure-site.vue': {
       routes:
-        | '/patterns/layout-external'
+        | '/templates/brochure-site'
       views:
         | never
     }
