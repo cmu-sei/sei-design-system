@@ -79,3 +79,47 @@ export { useLocalStorage, useSessionStorage } from './useStorage'
 
 export { useTimedAction } from './useTimedAction'
 export type { UseTimedActionOptions, UseTimedActionReturn } from './useTimedAction'
+
+/**
+ * Charting Composables
+ */
+
+export { useBarChart, isBarSeries } from './useBarChart'
+export type { 
+  BarData, 
+  BarItem, 
+  BarMode, 
+  BarOrientation, 
+  BarRect, 
+  BarSeries, 
+  BarTooltipData 
+} from './useBarChart'
+
+export { useChartAxis } from './useChartAxis'
+export type { AxisDirection, ValueFormatter, TickFormatter, AnyScale } from './useChartAxis'
+
+export { useChartConfig } from './useChartConfig'
+export type { ChartConfig } from './useChartConfig'
+
+export { useChartDimensions } from './useChartDimensions'
+
+export { useDarkMode } from './useDarkMode'
+
+export { useHeatmapChart } from './useHeatmapChart'
+export type { 
+  HeatmapCell, 
+  HeatmapColors, 
+  HeatmapRect, 
+  HeatmapTooltipData, 
+  HeatmapLegendItem, 
+  HeatmapAxisOptions, 
+  HeatmapLayoutOptions 
+} from './useHeatmapChart'
+
+export { useHoveredIndex } from './useHoveredIndex'
+
+export { usePieChart } from './usePieChart'
+export type { PieArcData, PieLegendItem, PieSlice } from './usePieChart'
+
+export { useTooltip } from './useTooltip'
+export type { TooltipState } from './useTooltip'
