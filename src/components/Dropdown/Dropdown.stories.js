@@ -40,6 +40,10 @@ export default {
       options: ['dark'],
       control: {type: 'select'}
     },
+    width: {
+      options: ['auto', 'sm', 'md', 'lg', 'xl', '2xl'],
+      control: { type: 'select' }
+    },
     zIndex: {
       options: ['0', '10', '20', '30', '40', '50', 'auto'],
       control: {type: 'select'}
