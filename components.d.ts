@@ -18,6 +18,7 @@ declare module 'vue' {
     Avatar: typeof import('./src/components/Avatar/Avatar.vue')['default']
     AvatarGroup: typeof import('./src/components/AvatarGroup/AvatarGroup.vue')['default']
     Badge: typeof import('./src/components/Badge/Badge.vue')['default']
+    BarChart: typeof import('./src/components/BarChart/BarChart.vue')['default']
     BaseChart: typeof import('./src/components/BaseChart/BaseChart.vue')['default']
     BrochureSite: typeof import('./src/components/BrochureSite/BrochureSite.vue')['default']
     BrochureSiteFooter: typeof import('./src/components/BrochureSiteFooter/BrochureSiteFooter.vue')['default']

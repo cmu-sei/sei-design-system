@@ -19,7 +19,7 @@ export type {
 } from './useButtonClasses'
 
 export { useDropdown } from './useDropdown'
-export type { UseDropdownOptions, UseDropdownReturn } from './useDropdown'
+export type { UseDropdownOptions, UseDropdownReturn, DropdownWidth } from './useDropdown'
 
 export { useZIndex } from './useZIndex'
 export type { ZIndexValue } from './useZIndex'
@@ -83,6 +83,17 @@ export type { UseTimedActionOptions, UseTimedActionReturn } from './useTimedActi
 /**
  * Charting Composables
  */
+
+export { useBarChart, isBarSeries } from './useBarChart'
+export type { 
+  BarData, 
+  BarItem, 
+  BarMode, 
+  BarOrientation, 
+  BarRect, 
+  BarSeries, 
+  BarTooltipData 
+} from './useBarChart'
 
 export { useChartAxis } from './useChartAxis'
 export type { AxisDirection, ValueFormatter, TickFormatter, AnyScale } from './useChartAxis'

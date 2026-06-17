@@ -11,7 +11,7 @@
     :popper-class="{
       '[.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': type === 'dark',
       'bg-white absolute border shadow-lg rounded-theme-md bg-white [.dropdown-dark_&]:border-gray-700 [.dropdown-dark_&]:bg-gray-950 dark:border-gray-700 dark:bg-gray-950': true,
-      [auto ? 'w-auto' : 'w-56']: true,
+      [widthClass]: true,
       [zIndexClass]: true
     }"
     hide-arrow
@@ -139,7 +139,7 @@
 <script setup lang="ts">
 import SdsFloatingUi from "../FloatingUi/FloatingUi.vue";
 import SdsTooltip from "../Tooltip/Tooltip.vue";
-import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue, type DropdownPlacement } from '@/composables'
+import { useDropdown, type ButtonKind, type ButtonVariant, type ZIndexValue, type DropdownPlacement, type DropdownWidth } from '@/composables'
 
 import type { Strategy } from '@floating-ui/dom'
 
@@ -205,8 +205,22 @@ interface DropdownProps {
   hideArrow?: boolean;
   /**
    * Determines whether the content of the popper will set the width of the popper.
+   * @deprecated Use `width="auto"` instead
    */
   auto?: boolean;
+  /**
+   * Controls the width of the dropdown menu container.
+   * 
+   * - `auto` — Menu expands to fit content
+   * - `sm` — 192px (12rem)
+   * - `md` — 224px (14rem)
+   * - `lg` — 256px (16rem)
+   * - `xl` — 288px (18rem)
+   * - `2xl` — 320px (20rem)
+   * 
+   * @default 'md'
+   */
+  width?: DropdownWidth;
   /**
    * The strategy of the popover on the screen.
    */
@@ -294,6 +308,7 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   size: (props) => (props as DropdownProps).buttonStyle === 'action' ? 'sm' : 'md',
   hideArrow: false,
   auto: false,
+  width: 'md',
   strategy: 'absolute',
   placement: 'bottom-start',
   block: false,
@@ -302,11 +317,15 @@ const props = withDefaults(defineProps<DropdownProps>(), {
   willClose: undefined
 })
 
+// Compute effective width, with `auto` prop taking precedence for backward compatibility
+const effectiveWidth = computed(() => props.auto ? 'auto' : props.width)
+
 // Use unified dropdown composable
 const {
   id,
   buttonRef: button,
   zIndexClass,
+  widthClass,
   btnClass,
   kindClass,
   variantClass,
@@ -322,6 +341,7 @@ const {
   variant: () => props.variant,
   size: () => props.size,
   zIndex: () => props.zIndex,
+  width: () => effectiveWidth.value,
   disabled: () => props.disabled,
   block: () => props.block,
   iconOnly: () => props.iconOnly,
