@@ -43,7 +43,7 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   showFooter: true,
-  organization: 'Organization',
+  organization: 'CERT Coordination Center',
   nav: [
     {
       key: 'home',
