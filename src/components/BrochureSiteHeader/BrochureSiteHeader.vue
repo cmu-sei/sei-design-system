@@ -10,7 +10,7 @@
           target="_self"
           class="block w-80"
         >
-          <brochure-site-wordmark class="text-white fill-current h-5.5" />
+          <brochure-site-wordmark class="text-white fill-current h-6" />
           <span class="sr-only">Carnegie Mellon University</span>
         </a>
       </div>
@@ -20,7 +20,7 @@
         <span class="sr-only">Home</span>
         <a
           href="https://sei.cmu.edu"
-          class="text-nowrap hover:[&_span]:text-red-500 text-xl sm:text-2xl 2xl:text-3xl font-extralight"
+          :class="wordMarkClass"
         >
           Software Engineering Institute
         </a>
@@ -37,11 +37,11 @@
         :class="megamenuClass"
       >
         <template #link(home)>
-          <div class="flex flex-col justify-center py-4">
+          <div :class="baseClasses">
             <span class="sr-only">Home</span>
             <a
               href="https://sei.cmu.edu"
-              class="text-nowrap hover:[&_span]:text-red-500 text-xl sm:text-2xl 2xl:text-3xl font-extralight"
+              :class="wordMarkClass"
             >
               Software Engineering Institute
             </a>
@@ -94,15 +94,16 @@
       aria-label="Mobile navigation"
     >
       <template #title>
-        <div class="flex flex-col">
+        <div class="baseClasses">
           <a
             href="https://sei.cmu.edu"
-            class="text-nowrap hover:[&_span]:text-red-500 text-xl font-extralight"
+            :class="wordMarkClass"
           >
             Software Engineering Institute
           </a>
           <span
             v-if="organization"
+            class="w-full block"
             :class="orgClass"
           >
             {{ organization }}
@@ -254,11 +255,22 @@ const isValidMobileMenuType = (type: unknown): type is Exclude<NavigationItemTyp
   return type === 'back' || type === 'expand' || type === 'slide' || type === 'title'
 }
 
-const logoClass = computed(() =>
-  megamenu.value.length
-    ? ['flex', activeBreakpointClasses.value.logo, 'flex-col', 'justify-center', 'py-4']
-    : ['flex', 'flex-col', 'justify-center', 'py-4']
-)
+const wordMarkClass = [
+  'text-nowrap',
+  'block',
+  'w-full',
+  'hover:[&_span]:text-red-500',
+  'text-xl',
+  'sm:text-3xl',
+  '2xl:text-4xl',
+  'font-extralight'
+]
+const baseClasses = ['flex', 'flex-col', 'justify-center', 'py-4', 'gap-y-1']
+const logoClass = computed(() => {
+  return megamenu.value.length
+    ? [activeBreakpointClasses.value.logo, ...baseClasses]
+    : baseClasses
+})
 
 const megamenuClass = computed(() =>
   megamenu.value.length ?
@@ -283,7 +295,7 @@ const hamburgerClass = computed(() =>
     : ['hidden']
 )
 
-const orgClass = 'text-sm lg:text-base text-left font-semibold text-gray-500 wrap-break-words'
+const orgClass = 'text-base lg:text-lg text-left font-semibold text-gray-500 wrap-break-words'
 
 const mobileMenus = computed<MobileMenuItem[]>(() =>
   props.nav.map(item => {
