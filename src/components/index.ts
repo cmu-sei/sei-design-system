@@ -142,6 +142,7 @@ import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
 import SdsTag from "./Tag";
 import SdsTextarea from "./Textarea";
+import SdsTimeline from "./Timeline";
 import SdsToast from "./Toast";
 import SdsToaster from "./Toaster";
 import SdsToggleSwitch from "./ToggleSwitch";
@@ -220,6 +221,7 @@ const Components: ComponentList = {
   SdsTable,
   SdsTag,
   SdsTextarea,
+  SdsTimeline,
   SdsToast,
   SdsToaster,
   SdsToggleSwitch,
@@ -303,6 +305,7 @@ export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
 export { default as SdsTag } from "./Tag";
 export { default as SdsTextarea } from "./Textarea";
+export { default as SdsTimeline } from "./Timeline";
 export { default as SdsToast } from "./Toast";
 export { default as SdsToaster } from "./Toaster";
 export { default as SdsToggleSwitch } from "./ToggleSwitch";

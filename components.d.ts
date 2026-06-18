@@ -129,6 +129,8 @@ declare module 'vue' {
     Tabs: typeof import('./src/components/Tabs/Tabs.vue')['default']
     Tag: typeof import('./src/components/Tag/Tag.vue')['default']
     Textarea: typeof import('./src/components/Textarea/Textarea.vue')['default']
+    Timeline: typeof import('./src/components/Timeline/Timeline.vue')['default']
+    TimelineItem: typeof import('./src/components/TimelineItem/TimelineItem.vue')['default']
     Toast: typeof import('./src/components/Toast/Toast.vue')['default']
     Toaster: typeof import('./src/components/Toaster/Toaster.vue')['default']
     ToggleSwitch: typeof import('./src/components/ToggleSwitch/ToggleSwitch.vue')['default']

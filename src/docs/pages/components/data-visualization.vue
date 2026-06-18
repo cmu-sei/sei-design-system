@@ -1152,9 +1152,60 @@
         </ul>
       </div>
     </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
+        Timeline
+      </h2>
+      <SdsTimeline
+        :items="timelineItems"
+        @navigate="(item) => console.log('navigate', item)"
+      >
+        <template #icon="{ item }">
+          <svg 
+            v-if="item.title === 'Title ipsum dolor sit amet'" 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg" 
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <path 
+              d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" 
+              fill="#BCBEC0"
+            />
+            <path 
+              d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z" 
+              fill="url(#pattern0_11331_109934)"
+            />
+            <defs>
+              <pattern 
+                id="pattern0_11331_109934" 
+                patternContentUnits="objectBoundingBox" 
+                width="1" 
+                height="1"
+              >
+                <use 
+                  xlink:href="#image0_11331_109934" 
+                  transform="scale(0.00454545)"
+                />
+              </pattern>
+              <image 
+                id="image0_11331_109934" 
+                width="220" 
+                height="220" 
+                preserveAspectRatio="none" 
+                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADcCAYAAAAbWs+BAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAT7SURBVHgB7dw/iBxlHMfhN6JFECwEY6FFBC1EtAiYaw3YCNamE+xTinbKWVprq2CXgJ1WFqksEsFCIhYRPEGL3KFFJJdCSbxfhmX39vaSnfz5znvwPLAcN8xtc3x455133jl2a2f3dgMiHmtAjOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQY83+nflr9Z+2G7tt+ut7dxsbfvmcPzJvX/fyadae2Hv88Zzw89V6vzPfmrt579be+/l1t4+2ZjGsVs7u7cbfbr4R2vf/N7a1vX1zn/l6SGm08/Oj1VsH19aiPSJ1r56szENI1yPFkekMer8+pzZG+3eeWk4thhbufFvYzqC601dNn764/5Ixrr45zzWB/keHjrB9aTiOCy2ukyskavmbCeOD8cqzq1/Wrt8bfgsfxfdMYfrRV3qvf/9wVBqXnbutXlkh1meq93N1281pmFZoBdf/nIwlpqHfbJx79hKnbO5Mdy5pFuC60GFVvOuRRXb2Rfb2mYj3I3/Gv0SXA8uXN3/e41W9xObeVv3BNeD5dv/s1v66xLbkSG4HiyujdXoVncjxxDbkSG4HtSIVjc76lOPXo11dsSIWHc9mYxlAQgywkGQ4CBIcBDksYQp1Y6A5QXvw9zPPrba3lNPsNSWnHo8zA2TyRnhprRubOXCr220+pt68mS23YfJCe6oGDs61ei2uD5XoxyTE9xRUK9OOPfqqD85MCK+fqIxPcH1rmLbPD1uhPpixc6DM883pie4nlVkY2OrB6G/3dp/rJ5kWWeLD4+c4HpWz1iu2ie3Sp3z0aXWzi9dSo7decAjZVmgd3Unsz71QHO9ZuGZ4/PX4W3vDjsNLm8ffMVCmW1KpRuC683s0m95VJuFN+Z7NjdcSnZGcD1ZHJE+31s3uzLyNXkztYTw4SlLAR2yW2BK7343fyXCqhGpRrS6CbLufrcKrbbqeKKkW4KbUq2Vnb86zMk+OHX45d+dedq14Q3M9Wq8xUhnc7qa3wmte4KDIMsCECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQZDgIEhwECQ4CBIcBAkOggQHQYKDIMFBkOAgSHAQJDgIEhwECQ6CBAdBgoMgwUGQ4CBIcBAkOAgSHAQJDoIEB0GCgyDBQdD/uRDp5aN4XpYAAAAASUVORK5CYII=" 
+              />
+            </defs>
+          </svg>
+        </template>
+      </SdsTimeline>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
+import { SdsTimeline } from '@/components/index.js';
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 
 const datapointModelValue = ref(1451)
@@ -1381,6 +1432,27 @@ const entries = ref([
 ])
 
 const viewAllUrl = ref('https://designsystem.sei.cmu.edu')
+
+const timelineItems = ref([
+  {
+    title: 'Title ipsum dolor sit amet',
+    subtitle: 'Subtitle diam aliquet est bibendum',
+    description: 'Description enim eu urna accumsan dolor erat turpis imperdiet amet.',
+    timestamp: 'A moment ago',
+    href: 'https://designsystem.sei.cmu.edu'
+  },
+  {
+    title: 'Deployed to production',
+    subtitle: 'v2.1.0',
+    description: 'All checks passed.',
+    timestamp: '2 hours ago'
+  },
+  {
+    title: 'PR merged',
+    description: 'Merged by John Doe.',
+    timestamp: 'Yesterday'
+  }
+])
 
 defineOptions({
   name: 'DataVisualizationPage'
