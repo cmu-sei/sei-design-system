@@ -70,7 +70,7 @@ describe('SdsBrochureSiteHeader', () => {
       props: { organization: 'CERT Division' }
     })
     const org = wrapper.find('.text-gray-500')
-    expect(org.classes()).toContain('text-sm')
+    expect(org.classes()).toContain('text-base')
     expect(org.classes()).toContain('font-semibold')
   })
 
