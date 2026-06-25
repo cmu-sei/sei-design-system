@@ -18,7 +18,7 @@ exports[`BrochureSiteFooter > should match its default snapshot 1`] = `
         <a
           class="link link-primary link-cta link-red no-underline! select-none 2xl:text-lg 2xl:after:w-5 2xl:after:h-3.75"
           data-id="sds-link"
-          href="https://vulcoord.cert.org/VulReport/"
+          href="https://www.kb.cert.org/vuls/report/"
         >
           <!-- @slot Link content. -->
           
