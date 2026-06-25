@@ -446,7 +446,7 @@ const props = withDefaults(defineProps<CalendarProps>(), {
  */
 const date = defineModel<CalendarDate | CalendarRange>({
   type: [Object, Date] as PropType<CalendarDate | CalendarRange>,
-  default: new Date()
+  default: () => new Date()
 })
 
 const displayedMonth = ref(new Date())

@@ -7,6 +7,7 @@
 
   @apply [&_thead_th]:text-gray-600 [&_thead_th]:bg-gray-25/50 [&_thead_th]:font-semibold [&_thead_th]:text-sm;
   @apply [&_thead_th]:align-middle [&_thead_th]:p-2 [&_thead_th]:select-none [&_thead_th]:border-b [&_thead_th]:border-gray-100;
+  @apply [&_thead_th:first-child]:pl-4 [&_thead_th:last-child]:pr-4;
   @apply dark:[&_thead_th]:text-gray-400 dark:[&_thead_th]:bg-gray-900/85 dark:[&_thead_th]:border-b dark:[&_thead_th]:border-gray-800;
 
   @apply [&_tbody_tr]:bg-white [&_tbody_tr]:px-2 dark:[&_tbody_tr]:bg-gray-950;
@@ -15,12 +16,15 @@
   @apply [[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)]:bg-gray-900/85;
   @apply [&_tbody_td]:align-top [&_tbody_td]:p-2 [&_tbody_td]:border-b [&_tbody_td]:border-gray-100;
   @apply [&_tbody_th]:align-top [&_tbody_th]:p-2 [&_tbody_th]:border-b [&_tbody_th]:border-gray-100;
+  @apply [&_tbody_td:first-child]:pl-4 [&_tbody_td:last-child]:pr-4;
+  @apply [&_tbody_th:first-child]:pl-4 [&_tbody_th:last-child]:pr-4;
   @apply [&_tbody_tr:last-child_td]:border-b-0 [&_tbody_tr:last-child_th]:border-b-0;
   @apply dark:[&_tbody_td]:border-gray-800 dark:[&_tbody_th]:border-gray-800;
 
   @apply [&_tfoot]:bg-gray-600/2 dark:[&_tfoot]:bg-gray-400/2;
   @apply [&_tfoot_tr]:px-2;
   @apply [&_tfoot_td]:border-t [&_tfoot_td]:border-gray-100 [&_tfoot_td]:px-2 [&_tfoot_td]:py-4;
+  @apply [&_tfoot_td:first-child]:pl-4 [&_tfoot_td:last-child]:pr-4;
   @apply dark:[&_tfoot_td]:border-gray-800;
 
   @apply sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tl-none sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tr-none;

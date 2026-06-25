@@ -230,14 +230,14 @@ const props = withDefaults(defineProps<MegaMenuProps>(), {
  *
  * ```
  */
-const topLinks = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: [] })
+const topLinks = defineModel<MegaMenuItem[]>({ type: Array as PropType<MegaMenuItem[]>, default: () => [] })
 
 /* Used to track mega menu open/closed */
 const isOpen = ref(false)
 
-const root = ref()
-const menu = ref()
-const panel = ref()
+const root = ref<HTMLElement>()
+const menu = ref<HTMLElement>()
+const panel = ref<HTMLElement>()
 
 const selectedTopLink = computed(() => {
   const selected = topLinks.value.find(i => i.selected)
@@ -396,8 +396,8 @@ const panelOverflow = computed(() => {
  * Position the panel on the screen
  */
 const breakpoints = useBreakpoints(breakpointsTailwind)
-const getLeftPos = ref()
-const getRightPos = ref()
+const getLeftPos = ref<string | undefined>(undefined)
+const getRightPos = ref<string | undefined>(undefined)
 const offset = computed(() => {
   if (breakpoints.smaller('xl').value) {
     return 16
@@ -411,7 +411,7 @@ watch(topLinkEl, (value) => {
     getRightPos.value = undefined
   } else if (props.width === 'auto') {
     const left = value?.offsetLeft || 0
-    const useOffset = (value?.offsetLeft || 0) - menu.value?.offsetLeft - offset.value > 0
+    const useOffset = (value?.offsetLeft || 0) - (menu.value?.offsetLeft ?? 0) - offset.value > 0
     getLeftPos.value = `${useOffset ? left - offset.value : left}px`
     getRightPos.value = undefined
   }

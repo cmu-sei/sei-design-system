@@ -2118,6 +2118,22 @@ import type { TableField, TableItem } from '../../components/Table/Table.vue'
 import type { TabItem } from '../../components/Tabs/Tabs.vue'
 import type { ToasterToast } from '../../components/Toaster/Toaster.vue'
 
+type ExampleUploadedFile = File & {
+  invalidType?: boolean
+  invalidSize?: boolean
+  invalidFilesSize?: boolean
+}
+
+type UploadedImagePreview = {
+  src: string
+  isInvalid: boolean
+  caption: string
+  name: string
+  lastModified: number
+  size: number
+  type: string
+}
+
 interface MegaMenuContent {
   aboutLink?: {
     href: string
@@ -3181,8 +3197,8 @@ export default defineComponent({
         { key: "tab4", tabName: "Tab 4", title: "Active Tab 4", active: false }
       ],
       datapointModel: 4567,
-      fileUploaderModel: [],
-      uploadedImages: [] as { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }[],
+      fileUploaderModel: [] as ExampleUploadedFile[],
+      uploadedImages: [] as UploadedImagePreview[],
       tabs: [
         { key: "home", title: "Home", disabled: true },
         { key: "about", title: "About Us", active: true },
@@ -3370,18 +3386,18 @@ export default defineComponent({
     },
   },
   watch: {
-    async fileUploaderModel(value) {
-      this.uploadedImages = await Promise.all(value.map(async (file: { name: string; lastModified: number; size: number; type: string; invalidType?: boolean; invalidSize?: boolean }) => {
+    async fileUploaderModel(value: ExampleUploadedFile[]) {
+      this.uploadedImages = await Promise.all(value.map(async (file) => {
         return {
-          src: URL.createObjectURL(new Blob([new Uint8Array(await (file as File).arrayBuffer())], { type: file.type })),
-          isInvalid: file.invalidType || file.invalidSize,
+          src: URL.createObjectURL(new Blob([new Uint8Array(await file.arrayBuffer())], { type: file.type })),
+          isInvalid: Boolean(file.invalidType || file.invalidSize),
           caption: "",
           name: file.name,
           lastModified: file.lastModified,
           size: file.size,
           type: file.type
-        };
-      })).then(files => files.filter((file: { src: string; isInvalid: boolean; caption: string; name: string; lastModified: number; size: number; type: string }) => !file.isInvalid));
+        } satisfies UploadedImagePreview;
+      })).then(files => files.filter((file) => !file.isInvalid));
     }
   },
   methods: {

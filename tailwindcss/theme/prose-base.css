@@ -77,7 +77,7 @@
 
     :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
-      font-size: var(--text-5xl);
+      font-size: var(--text-4xl);
       font-weight: 400;
       letter-spacing: 0;
     }
@@ -91,7 +91,7 @@
 
     :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
-      font-size: var(--text-4xl);
+      font-size: var(--text-3xl);
       font-weight: 400;
       letter-spacing: 0;
     }
@@ -109,7 +109,7 @@
 
     :where(.sds-theme-plaid) & {
       font-family: var(--font-serif);
-      font-size: var(--text-3xl);
+      font-size: var(--text-2xl);
       font-weight: 400;
       letter-spacing: 0;
     }
