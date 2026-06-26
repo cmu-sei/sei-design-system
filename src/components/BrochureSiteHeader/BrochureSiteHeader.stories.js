@@ -46,7 +46,8 @@ Default.args = {
       key: 'home',
       title: 'Home',
       alignment: 'left',
-      href: 'https://sei.cmu.edu'
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
     },
     {
       key: 'work',
@@ -132,7 +133,8 @@ WithExternalLinks.args = {
       key: 'home',
       title: 'Home',
       alignment: 'left',
-      href: 'https://sei.cmu.edu'
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
     },
     {
       key: 'work',
@@ -170,7 +172,8 @@ MinimalNav.args = {
       key: 'home',
       title: 'Home',
       alignment: 'left',
-      href: 'https://sei.cmu.edu'
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
     },
     {
       key: 'about',
