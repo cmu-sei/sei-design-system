@@ -4,6 +4,9 @@ import { useComboBoxQuery } from './useComboBoxQuery'
 import { useComboBoxSelection } from './useComboBoxSelection'
 import { useComboBoxSuggestions, type ComboBoxSuggestion, type ComboBoxSuggestionObject, type ComboBoxType } from './useComboBoxSuggestions'
 
+/**
+ * Options for configuring the core ComboBox composable.
+ */
 interface UseComboBoxCoreOptions {
   suggestions: () => ComboBoxSuggestion[]
   query: Ref<string>
@@ -22,6 +25,14 @@ interface UseComboBoxCoreOptions {
   onShowDropdown: () => void
 }
 
+/**
+ * Core composable for the ComboBox component. Composes suggestion filtering,
+ * selection management, dropdown item tracking, and query handling into a
+ * unified interface consumed by the ComboBox component and its variants.
+ *
+ * @param options - Configuration for suggestions, selection state, query behavior, and callbacks.
+ * @returns Reactive state and methods for managing the full ComboBox interaction model.
+ */
 export function useComboBoxCore(options: UseComboBoxCoreOptions) {
   const activeGroupKey = ref(-1)
   const isSelectType = computed(() => options.type() === 'select' || options.type() === 'taggable-select')
