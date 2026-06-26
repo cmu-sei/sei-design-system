@@ -64,7 +64,7 @@ defineOptions({
 /**
  * The v-model for this component. It accepts an array of toasts. See the Toast component for guidance.
  */
-const toasts = defineModel<ToasterToast[]>({ type: Array as PropType<ToasterToast[]>, default: [] })
+const toasts = defineModel<ToasterToast[]>({ type: Array as PropType<ToasterToast[]>, default: () => [] })
 
 const removeToast = (id: number | string) => {
   toasts.value = toasts.value.filter((i) => id !== i.id)

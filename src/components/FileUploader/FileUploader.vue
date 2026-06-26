@@ -329,7 +329,7 @@ const props = withDefaults(defineProps<FileUploaderProps>(), {
  * and `invalidSize` boolean properties. They are only
  * present if the file is invalid
  */
-const model = defineModel({ type: Array as PropType<File[]>, default: () => [] })
+const model = defineModel<FileWithInvalidDefinitions[]>({ type: Array as PropType<FileWithInvalidDefinitions[]>, default: () => [] })
 
 const emit = defineEmits(['add', 'remove', 'remove-invalid', 'total-files-size'])
 

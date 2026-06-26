@@ -17,7 +17,7 @@
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
           v-if="hasFilters && !isSearchActive"
-          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-3"
         >
           <template 
             v-for="(filter, filterIndex) in filters"
@@ -63,7 +63,7 @@
         </div>
         <div
           v-if="hasSelectionActive"
-          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
+          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-3 py-4 bg-blue-25 dark:bg-blue-900"
         >
           <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
             {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
@@ -120,7 +120,7 @@
         </div>
         <div 
           v-if="hasSearch || hasSortBy || hasEllipsisMenuItems"
-          class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
+          class="flex flex-row items-center justify-end gap-x-2 px-3 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
             'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
@@ -249,7 +249,7 @@
             bg-white dark:bg-gray-950 
             border border-gray-100 dark:border-gray-800 
             rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none 
-            flex flex-col items-center justify-center px-2 pt-4 pb-8
+            flex flex-col items-center justify-center px-3 pt-4 pb-8
           "
           :class="{
             'border-t-0': hasFilters || hasSearch || hasSortBy,
@@ -343,7 +343,7 @@
         bg-gray-600/2 dark:bg-gray-400/2
         border border-gray-100 dark:border-gray-800
         rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
-        px-2 py-4
+        px-3 py-4
       "
     >
       <div class="md:overflow-x-auto flex flex-wrap md:flex-nowrap justify-between items-center gap-4">

@@ -1,4 +1,4 @@
-import { watch, toValue, type Ref, type MaybeRefOrGetter } from 'vue'
+import { onBeforeUnmount, watch, toValue, type Ref, type MaybeRefOrGetter } from 'vue'
 import { useZIndex, useCloseOnEscape, useFocusTrap, type ZIndexValue } from '@/composables'
 
 export interface UseOverlayOptions {
@@ -120,8 +120,63 @@ export function useOverlay(
   } = options
 
   let previousActiveElement: HTMLElement | null = null
+  let autofocusTimeout: ReturnType<typeof setTimeout> | null = null
+  let closeLifecycleTimeout: ReturnType<typeof setTimeout> | null = null
 
   const { zIndexClass } = useZIndex(() => toValue(zIndex))
+
+  const clearOverlayTimeout = (timeout: ReturnType<typeof setTimeout> | null): null => {
+    if (timeout) clearTimeout(timeout)
+    return null
+  }
+
+  const setBodyScrollLocked = (locked: boolean) => {
+    if (!lockBodyScroll || typeof document === 'undefined') return
+
+    if (locked) {
+      document.documentElement.classList.add('sds-overlay-prevent-scroll')
+      return
+    }
+
+    document.documentElement.classList.remove('sds-overlay-prevent-scroll')
+  }
+
+  const focusFirstInteractiveElement = () => {
+    if (!containerRef.value) return
+
+    const autofocusElement = containerRef.value.querySelector<HTMLElement>('[autofocus]')
+    if (autofocusElement && !autofocusElement.hasAttribute('disabled')) {
+      autofocusElement.focus()
+      return
+    }
+
+    const mainContent = containerRef.value.querySelector('main')
+    if (mainContent) {
+      const focusableElements = mainContent.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
+      )
+      if (focusableElements.length > 0) {
+        focusableElements[0].focus()
+        return
+      }
+    }
+
+    const allFocusable = containerRef.value.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
+    )
+    if (allFocusable.length > 0) {
+      allFocusable[0].focus()
+    }
+  }
+
+  const finishCloseLifecycle = () => {
+    if (restoreFocus && previousActiveElement && typeof previousActiveElement.focus === 'function') {
+      previousActiveElement.focus()
+    }
+
+    previousActiveElement = null
+    setBodyScrollLocked(false)
+  }
 
   const close = () => {
     isVisible.value = false
@@ -146,78 +201,48 @@ export function useOverlay(
     })
     : { trapFocus: () => {} }
 
-  // Body scroll lock - use CSS class for better control and to prevent layout shift
-  if (lockBodyScroll) {
-    watch(isVisible, (visible) => {
-      if (typeof document === 'undefined') return
-      
-      if (visible) {
-        document.documentElement.classList.add('sds-overlay-prevent-scroll')
-      } else {
-        document.documentElement.classList.remove('sds-overlay-prevent-scroll')
+  watch(isVisible, (visible) => {
+    if (typeof document === 'undefined') return
+
+    autofocusTimeout = clearOverlayTimeout(autofocusTimeout)
+    closeLifecycleTimeout = clearOverlayTimeout(closeLifecycleTimeout)
+
+    if (visible) {
+      if (restoreFocus) {
+        previousActiveElement = document.activeElement as HTMLElement
       }
-    }, { immediate: true })
-  }
 
-  // Focus management
-  if (autoFocus || restoreFocus) {
-    watch(isVisible, (visible) => {
-      if (typeof document === 'undefined') return
+      setBodyScrollLocked(true)
 
-      if (visible) {
-        // Store currently focused element for restoration on close
-        if (restoreFocus) {
-          previousActiveElement = document.activeElement as HTMLElement
-        }
-
-        // Auto-focus first interactive element after overlay opens
-        if (autoFocus) {
-          // Use setTimeout to handle edge cases:
-          // 1. Overlay mounted in already-open state (no transition → @after-enter won't fire)
-          // 2. Test environments with fake timers where transition events may not fire reliably
-          setTimeout(() => {
-            if (!containerRef.value) return
-
-            // Prioritize element with autofocus attribute first
-            const autofocusElement = containerRef.value.querySelector<HTMLElement>('[autofocus]')
-            if (autofocusElement && !autofocusElement.hasAttribute('disabled')) {
-              autofocusElement.focus()
-              return
-            }
-
-            // Try to find first focusable element in main content area
-            const mainContent = containerRef.value.querySelector('main')
-            if (mainContent) {
-              const focusableElements = mainContent.querySelectorAll<HTMLElement>(
-                'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
-              )
-              if (focusableElements.length > 0) {
-                focusableElements[0].focus()
-                return
-              }
-            }
-
-            // Fall back to any focusable element in container
-            const allFocusable = containerRef.value.querySelectorAll<HTMLElement>(
-              'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled])'
-            )
-            if (allFocusable.length > 0) {
-              allFocusable[0].focus()
-            }
-          }, transitionDuration)
-        }
-      } else {
-        // Restore focus to previously focused element when closing
-        if (restoreFocus && previousActiveElement && typeof previousActiveElement.focus === 'function') {
-          // Wait for leave transition to complete before restoring focus
-          setTimeout(() => {
-            previousActiveElement?.focus()
-            previousActiveElement = null
-          }, 200)
-        }
+      if (autoFocus) {
+        autofocusTimeout = setTimeout(() => {
+          focusFirstInteractiveElement()
+          autofocusTimeout = null
+        }, transitionDuration)
       }
-    }, { immediate: true })
-  }
+
+      return
+    }
+
+    const closeDelay = Math.max(transitionDuration, restoreFocus ? 200 : 0)
+
+    if (closeDelay > 0) {
+      closeLifecycleTimeout = setTimeout(() => {
+        finishCloseLifecycle()
+        closeLifecycleTimeout = null
+      }, closeDelay)
+      return
+    }
+
+    finishCloseLifecycle()
+  }, { immediate: true })
+
+  onBeforeUnmount(() => {
+    autofocusTimeout = clearOverlayTimeout(autofocusTimeout)
+    closeLifecycleTimeout = clearOverlayTimeout(closeLifecycleTimeout)
+    previousActiveElement = null
+    setBodyScrollLocked(false)
+  })
 
   return {
     zIndexClass,
