@@ -143,6 +143,7 @@
               v-if="isSearchActive"
               v-model="searchQuery"
               :autofocus="isSearchActive"
+              :focus-on-key-press="focusOnKeyPress"
               :pending="isSearchLoading"
               size="sm"
               class="w-full"
@@ -463,6 +464,10 @@ interface DataTableProps {
    */
   searchDebounce?: number;
   /**
+   * Determines whether the search input should be focused when a key is pressed.
+   */
+  focusSearchOnKeyPress?: boolean;
+  /**
    * Configuration for the sort by dropdown.
    */
   sortBy?: {
@@ -490,6 +495,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   searchQuery: undefined,
   searchDebounce: 300,
   sortBy: undefined,
+  focusSearchOnKeyPress: false,
   loading: false
 })
 
@@ -536,6 +542,7 @@ const hasDrawerColumn = computed(() => {
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
+const focusOnKeyPress = computed(() => props.focusSearchOnKeyPress)
 const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
 const hasEllipsisMenuItems = computed(() => !!(slots['ellipsis-menu-items'] || slots.ellipsisMenuItems))
 const isHeaderActionsDisabled = computed(() => !tableItems.value.length)
@@ -801,6 +808,27 @@ function setSearchActiveState(active: boolean) {
     searchQuery.value = ''
   }
 }
+
+/**
+ * Handles the key stroke event for activating the search input when '/' is pressed.
+ * Ignores the event if the search input is already active, the focus is on a typing target, or the key pressed is not '/'.
+ * @param event - The keyboard event triggered by the key press.
+ */
+function handleOnKeyStroke(event: KeyboardEvent) {
+  if (!focusOnKeyPress.value || isSearchActive.value) return
+  if (!(event.target instanceof HTMLElement)) return
+
+  const tagName = event.target.tagName.toLowerCase()
+  const isTypingTarget = ['textarea', 'input', 'select'].includes(tagName) || event.target.isContentEditable
+  if (isTypingTarget) return
+
+  if (event.key === '/') {
+    event.preventDefault()
+    setSearchActiveState(true)
+  }
+}
+
+onKeyStroke('/', handleOnKeyStroke)
 
 /**
  * Updates the scrollability state based on the scroll container's overflow.
