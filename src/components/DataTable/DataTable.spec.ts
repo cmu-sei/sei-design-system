@@ -580,6 +580,42 @@ describe('SdsDataTable', () => {
       expect(onUpdateFilters).toHaveBeenCalled()
     })
 
+    it('should open search on slash keypress only when `focusSearchOnKeyPress` is enabled', async () => {
+      const wrapperWithoutShortcut = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          search: true,
+          focusSearchOnKeyPress: false
+        },
+        attachTo: container
+      })
+
+      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: '/', bubbles: true }))
+      await wrapperWithoutShortcut.vm.$nextTick()
+
+      expect(wrapperWithoutShortcut.findComponent({ name: 'SdsComboBox' }).exists()).toBe(false)
+
+      wrapperWithoutShortcut.unmount()
+
+      const wrapperWithShortcut = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          search: true,
+          focusSearchOnKeyPress: true
+        },
+        attachTo: container
+      })
+
+      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: '/', bubbles: true }))
+      await wrapperWithShortcut.vm.$nextTick()
+
+      const component = wrapperWithShortcut.findComponent({ name: 'SdsComboBox' })
+      expect(component.exists()).toBe(true)
+      expect(component.find('input').element).toBe(document.activeElement)
+    })
+
     it('should emit debounced search updates and clear the query on cancel', async () => {
       vi.useFakeTimers()
 
