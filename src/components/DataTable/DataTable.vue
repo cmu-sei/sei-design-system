@@ -810,14 +810,15 @@ function setSearchActiveState(active: boolean) {
 }
 
 /**
- * Handles the key stroke event for activating the search input when '/' is pressed.
- * Ignores the event if the search input is already active, the focus is on a typing target, or the key pressed is not '/'.
+ * Handles the key stroke event for activating the search input when the '/' key is pressed.
+ * It ignores the event if the search input is already active, the focus is on a typing target, or the key pressed is not '/'.
  * @param event - The keyboard event triggered by the key press.
  */
 function handleOnKeyStroke(event: KeyboardEvent) {
   if (!focusOnKeyPress.value || isSearchActive.value) return
   if (!(event.target instanceof HTMLElement)) return
 
+  // Determine if the event target is a typing target (input, textarea, select, or content editable) and ignore the event if it is.
   const tagName = event.target.tagName.toLowerCase()
   const isTypingTarget = ['textarea', 'input', 'select'].includes(tagName) || event.target.isContentEditable
   if (isTypingTarget) return
