@@ -633,6 +633,114 @@ describe('SdsDataTable', () => {
     })
   })
 
+  describe('Select All Filters', () => {
+    it('should enable select-all on dropdown filters when options count meets threshold (≥6)', () => {
+      const manyOptionsFilter: DataTableFilterConfig = {
+        key: 'assignee',
+        label: 'Assignee',
+        type: 'dropdown',
+        options: [
+          { id: '1', text: 'Option 1', value: 'opt1', selected: false },
+          { id: '2', text: 'Option 2', value: 'opt2', selected: false },
+          { id: '3', text: 'Option 3', value: 'opt3', selected: false },
+          { id: '4', text: 'Option 4', value: 'opt4', selected: false },
+          { id: '5', text: 'Option 5', value: 'opt5', selected: false },
+          { id: '6', text: 'Option 6', value: 'opt6', selected: false }
+        ]
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [manyOptionsFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+    })
+
+    it('should disable select-all on dropdown filters when options count is below threshold (<6)', () => {
+      const fewOptionsFilter: DataTableFilterConfig = {
+        key: 'status',
+        label: 'Status',
+        type: 'dropdown',
+        options: [
+          { id: '1', text: 'Draft', value: 'draft', selected: false },
+          { id: '2', text: 'Submitted', value: 'submitted', selected: false }
+        ]
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [fewOptionsFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(false)
+    })
+
+    it('should enable select-all when options count exactly equals threshold (6)', () => {
+      const exactThresholdFilter: DataTableFilterConfig = {
+        key: 'department',
+        label: 'Department',
+        type: 'dropdown',
+        options: Array.from({ length: 6 }, (_, i) => ({
+          id: `dept-${i}`,
+          text: `Department ${i + 1}`,
+          value: `dept_${i}`,
+          selected: false
+        }))
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [exactThresholdFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+    })
+
+    it('should pass enable-filter and enable-select-all props to FilterByDropdown', () => {
+      const filterConfig: DataTableFilterConfig[] = [
+        {
+          key: 'assignee',
+          label: 'Assignee',
+          type: 'dropdown',
+          options: Array.from({ length: 7 }, (_, i) => ({
+            id: `assignee-${i}`,
+            text: `Person ${i + 1}`,
+            value: `person_${i}`,
+            selected: false
+          }))
+        }
+      ]
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: filterConfig
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.props('enableFilter')).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+      expect(filterDropdown.props('title')).toBe('Assignee')
+    })
+  })
+
   describe('Sort By', () => {
     it('should render sort by dropdown when sortBy options are provided', () => {
       const wrapper = mount(SdsDataTable, {

@@ -113,8 +113,9 @@
         />
         
         <SdsDropdownSection
-          v-if="!enableFilter"
+          v-if="enableSelectAll"
           divider
+          :class="{ 'pt-0': enableFilter }"
         >
           <SdsDropdownCheckboxItem
             id="filter_by_dropdown_select_all"
@@ -237,6 +238,10 @@ interface FilterByDropdownProps {
    */
   enableFilter?: boolean;
   /**
+   * Determines whether to enable the "Select All" option in the dropdown.
+   */
+  enableSelectAll?: boolean;
+  /**
    * Determines whether to alphabetically sort the options.
    */
   enableSortOptions?: boolean;
@@ -292,6 +297,7 @@ const props = withDefaults(defineProps<FilterByDropdownProps>(), {
   iconOnly: false,
   tooltip: '',
   enableFilter: false,
+  enableSelectAll: false,
   enableSortOptions: false,
   placement: 'bottom-start',
   width: 'md',
