@@ -1827,6 +1827,7 @@
           v-model="filterBy.options"
           enable-sort-options
           enable-filter
+          enable-select-all
           show-count
           @update:model-value="filtered"
         />
