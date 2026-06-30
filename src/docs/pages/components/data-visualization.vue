@@ -120,13 +120,67 @@
         </div>
       </div>
     </div>
+    <h2>Avatar - Icon Slot (All Sizes)</h2>
+    <div class="flex flex-row gap-4 mb-8">
+      <div
+        v-for="size in avatarSizes"
+        :key="size"
+        class="flex flex-col justify-center gap-4 h-auto"
+      >
+        <div
+          v-for="shape in avatarShapes"
+          :key="shape"
+        >
+          <SdsAvatar
+            :size="size"
+            :shape="shape"
+            variant="blue"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+            </svg>
+          </SdsAvatar>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row gap-4 mb-8">
+      <div
+        v-for="size in avatarSizes"
+        :key="size"
+        class="flex flex-col justify-center gap-4 h-auto"
+      >
+        <div
+          v-for="shape in avatarShapes"
+          :key="shape"
+        >
+          <SdsAvatar
+            :size="size"
+            :shape="shape"
+            variant="green"
+            type="outline"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+            </svg>
+          </SdsAvatar>
+        </div>
+      </div>
+    </div>
     <h2>Avatar - All Variants</h2>
     <div class="flex flex-row gap-4">
       <div
         v-for="type in avatarTypes"
         :key="type"
       >
-        <div 
+        <div
           v-for="variant in avatarVariants"
           :key="variant"
         >
@@ -684,11 +738,11 @@
         </h2>
         <p>
           A reusable SVG-based bar chart built with
-          <SdsLink 
-            :external="true" 
-            kind="primary" 
-            type="inline" 
-            variant="blue" 
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
             href="https://d3js.org/"
           >
             D3
@@ -697,7 +751,7 @@
           detects the data shape automatically. Use <code>mode="stacked"</code> to stack bars instead of
           grouping them.
         </p>
-        
+
         <!-- ─── Vertical - Single Series ─────────────────────────────────────── -->
         <h3>Vertical - Single Series</h3>
         <p>
@@ -903,11 +957,11 @@
         </h2>
         <p>
           A reusable SVG-based heatmap built with
-          <SdsLink 
-            :external="true" 
-            kind="primary" 
-            type="inline" 
-            variant="blue" 
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
             href="https://d3js.org/"
           >
             D3
@@ -941,8 +995,8 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p 
-                v-if="data" 
+              <p
+                v-if="data"
                 class="text-xs whitespace-nowrap font-semibold"
               >
                 {{ formatContributionTooltip(data) }}
@@ -974,8 +1028,8 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p 
-                v-if="data" 
+              <p
+                v-if="data"
                 class="text-xs whitespace-nowrap font-semibold"
               >
                 {{ formatContributionTooltip(data) }}
@@ -1007,8 +1061,8 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p 
-                v-if="data" 
+              <p
+                v-if="data"
                 class="text-xs whitespace-nowrap font-semibold"
               >
                 {{ formatContributionTooltip(data) }}
@@ -1017,8 +1071,8 @@
             <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
               <div class="flex flex-col items-center w-full select-none">
                 <div class="flex flex-row items-end justify-center gap-1">
-                  <template 
-                    v-for="(item, i) in legendItems" 
+                  <template
+                    v-for="(item, i) in legendItems"
                     :key="`custom-legend-bin-${i}`"
                   >
                     <button
@@ -1033,8 +1087,8 @@
                   </template>
                 </div>
                 <div class="flex flex-row items-start justify-center gap-1 mt-1">
-                  <template 
-                    v-for="(item, i) in legendItems" 
+                  <template
+                    v-for="(item, i) in legendItems"
                     :key="`custom-legend-label-${i}`"
                   >
                     <span class="w-10 text-center text-[11px] text-gray-900 dark:text-gray-100">
@@ -1080,8 +1134,8 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p 
-                v-if="data" 
+              <p
+                v-if="data"
                 class="text-xs whitespace-nowrap font-semibold"
               >
                 {{ formatTaxiPickupTooltip(data) }}
@@ -1099,11 +1153,11 @@
         </h2>
         <p>
           A reusable SVG-based pie chart built with
-          <SdsLink 
-            :external="true" 
-            kind="primary" 
-            type="inline" 
-            variant="blue" 
+          <SdsLink
+            :external="true"
+            kind="primary"
+            type="inline"
+            variant="blue"
             href="https://d3js.org/"
           >
             D3

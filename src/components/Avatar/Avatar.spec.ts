@@ -192,7 +192,7 @@ describe('Avatar', () => {
         props: { size: 'xs', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-4')
       expect(iconContainer.classes()).toContain('h-4')
     })
@@ -202,7 +202,7 @@ describe('Avatar', () => {
         props: { size: 'sm', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-5')
       expect(iconContainer.classes()).toContain('h-5')
     })
@@ -212,7 +212,7 @@ describe('Avatar', () => {
         props: { size: 'md', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-8')
       expect(iconContainer.classes()).toContain('h-8')
     })
@@ -222,7 +222,7 @@ describe('Avatar', () => {
         props: { size: 'lg', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-10')
       expect(iconContainer.classes()).toContain('h-10')
     })
@@ -232,7 +232,7 @@ describe('Avatar', () => {
         props: { size: 'xl', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-16')
       expect(iconContainer.classes()).toContain('h-16')
     })
@@ -242,7 +242,7 @@ describe('Avatar', () => {
         props: { size: '2xl', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
-      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div')
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
       expect(iconContainer.classes()).toContain('w-24')
       expect(iconContainer.classes()).toContain('h-24')
     })

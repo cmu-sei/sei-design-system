@@ -9,10 +9,12 @@
     <div
       v-if="$slots.default"
       :title="name"
-      :class="['flex items-center justify-center', iconSizeClass, variantInnerClass, sizeClass, shapeClass]"
+      :class="['flex items-center justify-center p-2 w-full', variantInnerClass, shapeClass]"
     >
       <!-- @slot Icon or custom content. Takes priority over src and initials. -->
-      <slot />
+      <div :class="iconSizeClass">
+        <slot />
+      </div>
     </div>
     <div
       v-else-if="src"
