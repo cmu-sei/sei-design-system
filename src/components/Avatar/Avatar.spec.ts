@@ -193,8 +193,8 @@ describe('Avatar', () => {
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-4')
-      expect(iconContainer.classes()).toContain('h-4')
+      expect(iconContainer.classes()).toContain('w-3.5')
+      expect(iconContainer.classes()).toContain('h-3.5')
     })
 
     it('applies correct icon size classes for sm size', () => {
@@ -213,8 +213,8 @@ describe('Avatar', () => {
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-8')
-      expect(iconContainer.classes()).toContain('h-8')
+      expect(iconContainer.classes()).toContain('w-7')
+      expect(iconContainer.classes()).toContain('h-7')
     })
 
     it('applies correct icon size classes for lg size', () => {
@@ -243,8 +243,8 @@ describe('Avatar', () => {
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-24')
-      expect(iconContainer.classes()).toContain('h-24')
+      expect(iconContainer.classes()).toContain('w-32')
+      expect(iconContainer.classes()).toContain('h-32')
     })
 
     it('matches snapshot with slot content and lg size', () => {

@@ -99,12 +99,12 @@ exports[`Avatar > slot content > matches snapshot with slot content and circle s
 >
   <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
-    class="flex items-center justify-center p-2 w-full text-green-600 dark:text-green-400 aspect-square"
+    class="flex items-center justify-center w-full h-full text-green-600 dark:text-green-400 aspect-square"
     title="User"
   >
     <!-- @slot Icon or custom content. Takes priority over src and initials. -->
     <div
-      class="w-8 h-8"
+      class="w-7 h-7"
     >
       
       <svg
@@ -129,7 +129,7 @@ exports[`Avatar > slot content > matches snapshot with slot content and lg size 
 >
   <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
-    class="flex items-center justify-center p-2 w-full text-blue-600 dark:text-blue-400 aspect-[4/5]"
+    class="flex items-center justify-center w-full h-full text-blue-600 dark:text-blue-400 aspect-[4/5]"
     title="User"
   >
     <!-- @slot Icon or custom content. Takes priority over src and initials. -->
