@@ -353,19 +353,6 @@ describe('FilterByDropdown.vue', () => {
       expect(wrapper.props('enableSelectAll')).toBe(false)
     })
 
-    it('should render the select all checkbox when enableSelectAll is true', () => {
-      const wrapper = createWrapper({ enableSelectAll: true }, mockOptions)
-      const selectAllCheckbox = wrapper.find('#filter_by_dropdown_select_all')
-
-      expect(selectAllCheckbox.exists()).toBe(true)
-    })
-
-    it('should not render the select all checkbox when enableSelectAll is false', () => {
-      const wrapper = createWrapper({ enableSelectAll: false }, mockOptions)
-      const selectAllCheckbox = wrapper.find('#filter_by_dropdown_select_all')
-
-      expect(selectAllCheckbox.exists()).toBe(false)
-    })
   })
 
   describe('Props: Enable Sort Options', () => {

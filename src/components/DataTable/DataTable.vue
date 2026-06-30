@@ -43,6 +43,7 @@
               :title="filter.label ?? undefined"
               :disabled="filter.disabled ?? undefined"
               :enable-filter="true"
+              :enable-select-all="enableSelectAllFilters(filter.options)"
               kind="ghost"
               variant="gray"
               size="xs"
@@ -700,6 +701,16 @@ function executeBatchAction(action: BatchSelectionAction) {
   if (typeof action.action === 'function') {
     action.action(selectedIds.value)
   }
+}
+
+/**
+ * Determines whether the "Select All" option should be enabled based on the number of dropdown options.
+ * @param options - The array of dropdown options to evaluate.
+ * @returns True if the number of options meets or exceeds the maximum allowed, false otherwise.
+ */
+function enableSelectAllFilters(options: FilterByDropdownOption[]) {
+  const MAX_OPTIONS_ALLOWED = 6
+  return options.length >= MAX_OPTIONS_ALLOWED ? true : false
 }
 
 /**
