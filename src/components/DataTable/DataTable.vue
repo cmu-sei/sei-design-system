@@ -1,7 +1,7 @@
 <template>
   <div 
     data-id="sds-data-table"
-    class="w-full min-w-full"
+    class="w-full min-w-full overflow-x-hidden relative"
     :data-has-header="(hasFilters || hasSearch || hasSortBy) || undefined"
     :data-has-footer="!!pagination || undefined"
   >
