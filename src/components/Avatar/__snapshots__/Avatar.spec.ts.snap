@@ -7,6 +7,7 @@ exports[`Avatar > orange variant > matches snapshot with orange variant and outl
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <span
     class="flex items-center justify-center leading-none text-black cursor-default uppercase text-xl font-regular text-orange-600 dark:text-orange-400 w-12 aspect-[4/5]"
     title="Jane Doe"
@@ -25,6 +26,7 @@ exports[`Avatar > orange variant > matches snapshot with orange variant and subt
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <span
     class="flex items-center justify-center leading-none text-black cursor-default uppercase text-xl font-regular text-orange-600 dark:text-orange-400 w-12 aspect-[4/5]"
     title="Jane Doe"
@@ -43,6 +45,7 @@ exports[`Avatar > outline type > matches snapshot with outline type and blue var
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <span
     class="flex items-center justify-center leading-none text-black cursor-default uppercase text-xl font-regular text-blue-600 dark:text-blue-400 w-12 aspect-[4/5]"
     title="Jane Doe"
@@ -61,6 +64,7 @@ exports[`Avatar > should match its default snapshot 1`] = `
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <span
     class="flex items-center justify-center leading-none text-black cursor-default uppercase text-xl font-regular text-blue-600 dark:text-blue-400 w-12 aspect-[4/5]"
     title=""
@@ -77,11 +81,64 @@ exports[`Avatar > should match its variant: red, size: lg, shape: circle, name: 
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-center w-16 aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/mrwinwood?full=true");"
     title="Matt Winwood"
   />
+</div>
+`;
+
+exports[`Avatar > slot content > matches snapshot with slot content and circle shape 1`] = `
+<div
+  aria-label="User"
+  class="inline-flex items-center justify-center overflow-clip bg-green-50 dark:bg-green-900 w-12 rounded-full"
+  data-id="sds-avatar"
+  role="img"
+>
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
+  <div
+    class="flex items-center justify-center w-8 h-8 text-green-600 dark:text-green-400 w-12 aspect-square"
+    title="User"
+  >
+    <!-- @slot Icon or custom content. Takes priority over src and initials. -->
+    
+    <svg
+      class="icon-user"
+    >
+      <path
+        d="M0 0"
+      />
+    </svg>
+    
+  </div>
+</div>
+`;
+
+exports[`Avatar > slot content > matches snapshot with slot content and lg size 1`] = `
+<div
+  aria-label="User"
+  class="inline-flex items-center justify-center overflow-clip bg-blue-50 dark:bg-blue-900 w-16 rounded-theme-md"
+  data-id="sds-avatar"
+  role="img"
+>
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
+  <div
+    class="flex items-center justify-center w-10 h-10 text-blue-600 dark:text-blue-400 w-16 aspect-[4/5]"
+    title="User"
+  >
+    <!-- @slot Icon or custom content. Takes priority over src and initials. -->
+    
+    <svg
+      class="icon-user"
+    >
+      <path
+        d="M0 0"
+      />
+    </svg>
+    
+  </div>
 </div>
 `;
 
@@ -92,6 +149,7 @@ exports[`Avatar > variant: blue, position: right, shape: portrait, size: md, nam
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-right w-12 aspect-[4/5]"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
@@ -107,6 +165,7 @@ exports[`Avatar > variant: gray, position: bottom, shape: circle, size: md, name
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-bottom w-12 aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
@@ -122,6 +181,7 @@ exports[`Avatar > variant: green, position: left, shape: circle, size: xs, name:
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-left w-6 aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
@@ -137,6 +197,7 @@ exports[`Avatar > variant: purple, position: top, shape: portrait, size: md, nam
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-top w-12 aspect-[4/5]"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"
@@ -152,6 +213,7 @@ exports[`Avatar > variant: yellow, position: center, shape: circle, size: sm, na
   data-id="sds-avatar"
   role="img"
 >
+  <!-- Priority: Slot content &gt; src image &gt; initials -->
   <div
     class="bg-cover bg-center w-8 aspect-square"
     style="background-image: url("https://seinet.sei.cmu.edu/api/photos/bjabout?full=true");"

@@ -5,8 +5,17 @@
     role="img"
     :aria-label="name || 'Avatar'"
   >
+    <!-- Priority: Slot content > src image > initials -->
     <div
-      v-if="src"
+      v-if="$slots.default"
+      :title="name"
+      :class="['flex items-center justify-center', iconSizeClass, variantInnerClass, sizeClass, shapeClass]"
+    >
+      <!-- @slot Icon or custom content. Takes priority over src and initials. -->
+      <slot />
+    </div>
+    <div
+      v-else-if="src"
       :title="name"
       :class="['bg-cover', positionClass, sizeClass, shapeClass]"
       :style="`background-image: url(${src})`"
@@ -107,6 +116,19 @@ const avatarClasses = computed(() => {
     }
   })()
 
+  const iconSize = (() => {
+    switch (props.size) {
+      case '2xl': return 'w-24 h-24'
+      case 'xl': return 'w-16 h-16'
+      case 'lg': return 'w-10 h-10'
+      case 'md': return 'w-8 h-8'
+      case 'sm': return 'w-5 h-5'
+      case 'xs': return 'w-4 h-4'
+      case 'auto': return 'w-full h-full'
+      default: return 'w-10 h-10'
+    }
+  })()
+
   const roundness = (() => {
     const classes = []
     if (props.shape === 'circle') classes.push('rounded-full')
@@ -175,6 +197,7 @@ const avatarClasses = computed(() => {
     position,
     size,
     text,
+    iconSize,
     roundness,
     shape,
     variantOuter,
@@ -187,6 +210,7 @@ const avatarClasses = computed(() => {
 const positionClass = computed(() => avatarClasses.value.position)
 const sizeClass = computed(() => avatarClasses.value.size)
 const textClass = computed(() => avatarClasses.value.text)
+const iconSizeClass = computed(() => avatarClasses.value.iconSize)
 const roundClass = computed(() => avatarClasses.value.roundness)
 const shapeClass = computed(() => avatarClasses.value.shape)
 const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
