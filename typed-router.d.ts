@@ -20,9 +20,9 @@ import type {
 
 declare module 'vue-router' {
   interface TypesConfig {
-    _ParamParsers: {}
+    ParamParsers:
+      | never
     RouteNamedMap: import('vue-router/auto-routes').RouteNamedMap
-    _RouteFileInfoMap: import('vue-router/auto-routes')._RouteFileInfoMap
   }
 }
 
@@ -161,15 +161,11 @@ declare module 'vue-router/auto-routes' {
         | '/'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/components/buttons.vue': {
       routes:
         | '/components/buttons'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/components/containers.vue': {
@@ -177,15 +173,11 @@ declare module 'vue-router/auto-routes' {
         | '/components/containers'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/components/data-visualization.vue': {
       routes:
         | '/components/data-visualization'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/components/date-and-time.vue': {
@@ -193,15 +185,11 @@ declare module 'vue-router/auto-routes' {
         | '/components/date-and-time'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/components/feedback.vue': {
       routes:
         | '/components/feedback'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/components/inputs.vue': {
@@ -209,15 +197,11 @@ declare module 'vue-router/auto-routes' {
         | '/components/inputs'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/components/navigation.vue': {
       routes:
         | '/components/navigation'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/components/utility.vue': {
@@ -225,15 +209,11 @@ declare module 'vue-router/auto-routes' {
         | '/components/utility'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/css/css-components.vue': {
       routes:
         | '/css/css-components'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/css/table-prose.vue': {
@@ -241,15 +221,11 @@ declare module 'vue-router/auto-routes' {
         | '/css/table-prose'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/css/typography.vue': {
       routes:
         | '/css/typography'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/css/typography-scale.vue': {
@@ -257,15 +233,11 @@ declare module 'vue-router/auto-routes' {
         | '/css/typography-scale'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/patterns/data-table.vue': {
       routes:
         | '/patterns/data-table'
       views:
-        | never
-      pathParamNames:
         | never
     }
     'src/docs/pages/patterns/form-group.vue': {
@@ -273,15 +245,11 @@ declare module 'vue-router/auto-routes' {
         | '/patterns/form-group'
       views:
         | never
-      pathParamNames:
-        | never
     }
     'src/docs/pages/templates/brochure-site.vue': {
       routes:
         | '/templates/brochure-site'
       views:
-        | never
-      pathParamNames:
         | never
     }
   }
