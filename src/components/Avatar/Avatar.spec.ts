@@ -187,64 +187,64 @@ describe('Avatar', () => {
       expect(wrapper.text()).not.toContain('JD')
     })
 
-    it('applies correct icon size classes for xs size', () => {
+    it('applies w-full h-full to icon container for xs size', () => {
       const wrapper = mount(Component, {
         props: { size: 'xs', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-3.5')
-      expect(iconContainer.classes()).toContain('h-3.5')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
-    it('applies correct icon size classes for sm size', () => {
+    it('applies w-full h-full to icon container for sm size', () => {
       const wrapper = mount(Component, {
         props: { size: 'sm', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-5')
-      expect(iconContainer.classes()).toContain('h-5')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
-    it('applies correct icon size classes for md size', () => {
+    it('applies w-full h-full to icon container for md size', () => {
       const wrapper = mount(Component, {
         props: { size: 'md', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-7')
-      expect(iconContainer.classes()).toContain('h-7')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
-    it('applies correct icon size classes for lg size', () => {
+    it('applies w-full h-full to icon container for lg size', () => {
       const wrapper = mount(Component, {
         props: { size: 'lg', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-10')
-      expect(iconContainer.classes()).toContain('h-10')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
-    it('applies correct icon size classes for xl size', () => {
+    it('applies w-full h-full to icon container for xl size', () => {
       const wrapper = mount(Component, {
         props: { size: 'xl', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-16')
-      expect(iconContainer.classes()).toContain('h-16')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
-    it('applies correct icon size classes for 2xl size', () => {
+    it('applies w-full h-full to icon container for 2xl size', () => {
       const wrapper = mount(Component, {
         props: { size: '2xl', variant: 'blue' },
         slots: { default: '<span>Icon</span>' }
       })
       const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
-      expect(iconContainer.classes()).toContain('w-32')
-      expect(iconContainer.classes()).toContain('h-32')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
     })
 
     it('matches snapshot with slot content and lg size', () => {

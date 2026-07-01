@@ -12,7 +12,7 @@
       :class="['flex items-center justify-center w-full h-full', variantInnerClass, shapeClass]"
     >
       <!-- @slot Icon or custom content. Takes priority over src and initials. -->
-      <div :class="iconSizeClass">
+      <div class="w-full h-full flex items-center justify-center object-cover">
         <slot />
       </div>
     </div>
@@ -118,19 +118,6 @@ const avatarClasses = computed(() => {
     }
   })()
 
-  const iconSize = (() => {
-    switch (props.size) {
-      case '2xl': return 'w-32 h-32'  // 182px container -> 128px icon = 70%
-      case 'xl': return 'w-16 h-16'   // 88px container -> 64px icon = 73%
-      case 'lg': return 'w-10 h-10'   // 64px container -> 40px icon = 62.5%
-      case 'md': return 'w-7 h-7'     // 48px container -> 28px icon = 58%
-      case 'sm': return 'w-5 h-5'     // 32px container -> 20px icon = 62.5%
-      case 'xs': return 'w-3.5 h-3.5' // 24px container -> 14px icon = 58%
-      case 'auto': return 'w-full h-full'
-      default: return 'w-10 h-10'
-    }
-  })()
-
   const roundness = (() => {
     const classes = []
     if (props.shape === 'circle') classes.push('rounded-full')
@@ -199,7 +186,6 @@ const avatarClasses = computed(() => {
     position,
     size,
     text,
-    iconSize,
     roundness,
     shape,
     variantOuter,
@@ -212,7 +198,6 @@ const avatarClasses = computed(() => {
 const positionClass = computed(() => avatarClasses.value.position)
 const sizeClass = computed(() => avatarClasses.value.size)
 const textClass = computed(() => avatarClasses.value.text)
-const iconSizeClass = computed(() => avatarClasses.value.iconSize)
 const roundClass = computed(() => avatarClasses.value.roundness)
 const shapeClass = computed(() => avatarClasses.value.shape)
 const variantOuterClass = computed(() => avatarClasses.value.variantOuter)
