@@ -54,11 +54,12 @@ Default.args = {
 const IconTemplate = (args) => ({
   components: {SdsAvatar, SdsSvgIcon},
   setup() {
-    return {args}
+    const userIconPath = 'M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z'
+    return {args, userIconPath}
   },
   template: `
     <sds-avatar v-bind="args">
-      <sds-svg-icon :icon="args.icon" />
+      <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
     </sds-avatar>
   `
 });
@@ -67,7 +68,6 @@ export const WithIcon = IconTemplate.bind({});
 WithIcon.args = {
   name: 'User',
   variant: 'blue',
-  icon: 'user',
   size: 'lg'
 };
 WithIcon.parameters = {
@@ -80,25 +80,29 @@ WithIcon.parameters = {
 
 export const IconSizes = () => ({
   components: {SdsAvatar, SdsSvgIcon},
+  setup() {
+    const userIconPath = 'M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z'
+    return {userIconPath}
+  },
   template: `
     <div class="flex flex-wrap items-end gap-4">
       <sds-avatar size="xs" variant="blue" name="Extra Small">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar size="sm" variant="green" name="Small">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar size="md" variant="purple" name="Medium">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar size="lg" variant="orange" name="Large">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar size="xl" variant="red" name="Extra Large">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar size="2xl" variant="gray" name="2 Extra Large">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
     </div>
   `
@@ -113,28 +117,32 @@ IconSizes.parameters = {
 
 export const IconVariants = () => ({
   components: {SdsAvatar, SdsSvgIcon},
+  setup() {
+    const userIconPath = 'M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z'
+    return {userIconPath}
+  },
   template: `
     <div class="flex flex-wrap items-center gap-4">
       <sds-avatar variant="gray" name="Gray">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="red" name="Red">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="yellow" name="Yellow">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="green" name="Green">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="blue" name="Blue">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="purple" name="Purple">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar variant="orange" name="Orange">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
     </div>
   `
@@ -149,16 +157,20 @@ IconVariants.parameters = {
 
 export const IconShapes = () => ({
   components: {SdsAvatar, SdsSvgIcon},
+  setup() {
+    const userIconPath = 'M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z'
+    return {userIconPath}
+  },
   template: `
     <div class="flex flex-wrap items-end gap-4">
       <sds-avatar shape="circle" variant="blue" name="Circle">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar shape="square" variant="green" name="Square">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
       <sds-avatar shape="portrait" variant="purple" name="Portrait">
-        <sds-svg-icon icon="user" />
+        <sds-svg-icon :path="userIconPath" viewBox="0 0 16 16" />
       </sds-avatar>
     </div>
   `
