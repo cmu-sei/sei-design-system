@@ -670,7 +670,7 @@ describe('SdsDataTable', () => {
   })
 
   describe('Select All Filters', () => {
-    it('should enable filter and select-all on dropdown filters when options count meets threshold (≥6)', () => {
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count meets threshold (≥6)', () => {
       const manyOptionsFilter: DataTableFilterConfig = {
         key: 'assignee',
         label: 'Assignee',
@@ -699,7 +699,7 @@ describe('SdsDataTable', () => {
       expect(filterDropdown.props('enableSelectAll')).toBe(true)
     })
 
-    it('should disable filter and select-all on dropdown filters when options count is below threshold (<6)', () => {
+    it('should disable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count is below threshold (<6)', () => {
       const fewOptionsFilter: DataTableFilterConfig = {
         key: 'status',
         label: 'Status',
@@ -724,7 +724,7 @@ describe('SdsDataTable', () => {
       expect(filterDropdown.props('enableSelectAll')).toBe(false)
     })
 
-    it('should enable filter and select-all when options count exactly equals threshold (6)', () => {
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count exactly equals threshold (6)', () => {
       const exactThresholdFilter: DataTableFilterConfig = {
         key: 'department',
         label: 'Department',
@@ -750,7 +750,7 @@ describe('SdsDataTable', () => {
       expect(filterDropdown.props('enableSelectAll')).toBe(true)
     })
 
-    it('should pass enable-filter and enable-select-all props to FilterByDropdown', () => {
+    it('should pass `enableFilter` and `enableSelectAll` props to FilterByDropdown', () => {
       const filterConfig: DataTableFilterConfig[] = [
         {
           key: 'assignee',
