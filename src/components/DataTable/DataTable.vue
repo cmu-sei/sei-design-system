@@ -42,7 +42,7 @@
               v-model="filter.options"
               :title="filter.label ?? undefined"
               :disabled="filter.disabled ?? undefined"
-              :enable-filter="true"
+              :enable-filter="enableSelectAllFilters(filter.options)"
               :enable-select-all="enableSelectAllFilters(filter.options)"
               kind="ghost"
               variant="gray"

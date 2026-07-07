@@ -670,7 +670,7 @@ describe('SdsDataTable', () => {
   })
 
   describe('Select All Filters', () => {
-    it('should enable select-all on dropdown filters when options count meets threshold (≥6)', () => {
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count meets threshold (≥6)', () => {
       const manyOptionsFilter: DataTableFilterConfig = {
         key: 'assignee',
         label: 'Assignee',
@@ -695,10 +695,11 @@ describe('SdsDataTable', () => {
 
       const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
       expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableFilter')).toBe(true)
       expect(filterDropdown.props('enableSelectAll')).toBe(true)
     })
 
-    it('should disable select-all on dropdown filters when options count is below threshold (<6)', () => {
+    it('should disable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count is below threshold (<6)', () => {
       const fewOptionsFilter: DataTableFilterConfig = {
         key: 'status',
         label: 'Status',
@@ -719,10 +720,11 @@ describe('SdsDataTable', () => {
 
       const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
       expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableFilter')).toBe(false)
       expect(filterDropdown.props('enableSelectAll')).toBe(false)
     })
 
-    it('should enable select-all when options count exactly equals threshold (6)', () => {
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count exactly equals threshold (6)', () => {
       const exactThresholdFilter: DataTableFilterConfig = {
         key: 'department',
         label: 'Department',
@@ -744,10 +746,11 @@ describe('SdsDataTable', () => {
       })
 
       const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.props('enableFilter')).toBe(true)
       expect(filterDropdown.props('enableSelectAll')).toBe(true)
     })
 
-    it('should pass enable-filter and enable-select-all props to FilterByDropdown', () => {
+    it('should pass `enableFilter` and `enableSelectAll` props to FilterByDropdown', () => {
       const filterConfig: DataTableFilterConfig[] = [
         {
           key: 'assignee',
