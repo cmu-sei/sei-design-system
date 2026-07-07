@@ -151,6 +151,11 @@ describe('useOverlay', () => {
       isVisible.value = false
       await nextTick()
 
+      expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true)
+
+      vi.advanceTimersByTime(250)
+      await nextTick()
+
       expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false)
     })
 
@@ -473,6 +478,12 @@ describe('useOverlay', () => {
 
       expect(isVisible.value).toBe(false)
       expect(onClose).toHaveBeenCalledTimes(1)
+
+      expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true)
+
+      vi.advanceTimersByTime(200)
+      await nextTick()
+
       expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false)
 
       document.body.removeChild(container)
@@ -512,6 +523,12 @@ describe('useOverlay', () => {
       expect(onOpen).toHaveBeenCalledTimes(2)
       expect(onClose).toHaveBeenCalledTimes(2)
       expect(isVisible.value).toBe(false)
+
+      expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true)
+
+      vi.advanceTimersByTime(250)
+      await nextTick()
+
       expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false)
     })
   })

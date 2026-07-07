@@ -39,14 +39,15 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  organization: 'CERT Division',
+  organization: 'CERT Coordination Center',
   mobileBreakpoint: 'xl',
   nav: [
     {
       key: 'home',
       title: 'Home',
       alignment: 'left',
-      href: 'https://sei.cmu.edu'
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
     },
     {
       key: 'work',
@@ -125,9 +126,16 @@ WithoutOrganization.args = {
 
 export const WithExternalLinks = Template.bind({});
 WithExternalLinks.args = {
-  organization: 'CERT Division',
+  organization: 'CERT Coordination Center',
   mobileBreakpoint: 'xl',
   nav: [
+    {
+      key: 'home',
+      title: 'Home',
+      alignment: 'left',
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
+    },
     {
       key: 'work',
       title: 'Work',
@@ -150,16 +158,23 @@ WithExternalLinks.args = {
 
 export const MobileBreakpointMedium = Template.bind({});
 MobileBreakpointMedium.args = {
-  organization: 'CERT Division',
+  organization: 'CERT Coordination Center',
   mobileBreakpoint: 'md',
   nav: Default.args.nav
 };
 
 export const MinimalNav = Template.bind({});
 MinimalNav.args = {
-  organization: 'CERT Division',
+  organization: 'CERT Coordination Center',
   mobileBreakpoint: 'xl',
   nav: [
+    {
+      key: 'home',
+      title: 'Home',
+      alignment: 'left',
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
+    },
     {
       key: 'about',
       title: 'About',

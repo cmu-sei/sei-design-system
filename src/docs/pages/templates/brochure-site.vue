@@ -1,6 +1,6 @@
 <template>
   <SdsBrochureSite
-    organization="Example Organization"
+    organization="CERT Coordination Center"
     :nav="nav"
     :show-footer="true"
   >
@@ -8,7 +8,7 @@
       <div class="flex flex-col gap-4 w-full 2xl:w-2/3 [&_p]:text-body">
         <section class="mb-4 xl:mb-6">
           <h1 class="text-h1">
-            Example Title
+            CERT/CC Vulnerability Notes Database
           </h1>
           <span class="text-lead">
             This is an example of a page using the brochure site template. The brochure site template is used for pages that are not part of the brochure site, but still want to use the brochure site's header and footer.

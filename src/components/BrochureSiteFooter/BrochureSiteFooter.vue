@@ -301,7 +301,7 @@ const footer = {
   ],
   top: [
     {
-      href: 'https://vulcoord.cert.org/VulReport/',
+      href: 'https://www.kb.cert.org/vuls/report/',
       text: 'Report a Vulnerability'
     },
     {

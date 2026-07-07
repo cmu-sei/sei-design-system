@@ -43,13 +43,14 @@ const Template = (args) => ({
 export const Default = Template.bind({});
 Default.args = {
   showFooter: true,
-  organization: 'Organization',
+  organization: 'CERT Coordination Center',
   nav: [
     {
       key: 'home',
       title: 'Home',
       alignment: 'left',
-      href: '/',
+      tag: 'a',
+      href: 'https://sei.cmu.edu',
     },
     {
       key: 'section-1',
@@ -95,12 +96,6 @@ Default.args = {
           { label: 'Link label 3', href: 'https://designsystem.sei.cmu.edu' },
           { label: 'Link label 4', href: 'https://designsystem.sei.cmu.edu' },
           { label: 'Link label 5', href: 'https://designsystem.sei.cmu.edu' },
-        ],
-        col_2: [
-          {
-            label: 'See All label',
-            href: 'https://designsystem.sei.cmu.edu'
-          }
         ]
       }
     }

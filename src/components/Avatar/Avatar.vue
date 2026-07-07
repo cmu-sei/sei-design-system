@@ -5,8 +5,19 @@
     role="img"
     :aria-label="name || 'Avatar'"
   >
+    <!-- Priority: Slot content > src image > initials -->
     <div
-      v-if="src"
+      v-if="$slots.default"
+      :title="name"
+      :class="['flex items-center justify-center w-full h-full', variantInnerClass, shapeClass]"
+    >
+      <!-- @slot Icon or custom content. Takes priority over src and initials. -->
+      <div class="w-full h-full flex items-center justify-center object-cover">
+        <slot />
+      </div>
+    </div>
+    <div
+      v-else-if="src"
       :title="name"
       :class="['bg-cover', positionClass, sizeClass, shapeClass]"
       :style="`background-image: url(${src})`"

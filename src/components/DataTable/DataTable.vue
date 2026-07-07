@@ -1,7 +1,7 @@
 <template>
   <div 
     data-id="sds-data-table"
-    class="w-full min-w-full"
+    class="w-full min-w-full overflow-x-hidden relative"
     :data-has-header="(hasFilters || hasSearch || hasSortBy) || undefined"
     :data-has-footer="!!pagination || undefined"
   >
@@ -17,7 +17,7 @@
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
           v-if="hasFilters && !isSearchActive"
-          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-2"
+          class="overflow-x-auto flex flex-row flex-nowrap items-center gap-x-2 px-3"
         >
           <template 
             v-for="(filter, filterIndex) in filters"
@@ -43,6 +43,7 @@
               :title="filter.label ?? undefined"
               :disabled="filter.disabled ?? undefined"
               :enable-filter="true"
+              :enable-select-all="enableSelectAllFilters(filter.options)"
               kind="ghost"
               variant="gray"
               size="xs"
@@ -63,7 +64,7 @@
         </div>
         <div
           v-if="hasSelectionActive"
-          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-2 py-4 bg-blue-25 dark:bg-blue-900"
+          class="absolute top-0 left-0 z-20 w-full h-full flex flex-row items-center justify-between gap-x-4 px-3 py-4 bg-blue-25 dark:bg-blue-900"
         >
           <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 shrink-0">
             {{ `${selectedCount} ${selectedCount === 1 ? 'item' : 'items'} selected` }} 
@@ -120,7 +121,7 @@
         </div>
         <div 
           v-if="hasSearch || hasSortBy || hasEllipsisMenuItems"
-          class="flex flex-row items-center justify-end gap-x-2 px-2 py-4"
+          class="flex flex-row items-center justify-end gap-x-2 px-3 py-4"
           :class="{
             'ml-auto w-auto relative': !isSearchActive,
             'absolute top-0 left-0 z-10 w-full h-full': isSearchActive
@@ -143,6 +144,7 @@
               v-if="isSearchActive"
               v-model="searchQuery"
               :autofocus="isSearchActive"
+              :focus-on-key-press="focusOnKeyPress"
               :pending="isSearchLoading"
               size="sm"
               class="w-full"
@@ -249,7 +251,7 @@
             bg-white dark:bg-gray-950 
             border border-gray-100 dark:border-gray-800 
             rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none 
-            flex flex-col items-center justify-center px-2 pt-4 pb-8
+            flex flex-col items-center justify-center px-3 pt-4 pb-8
           "
           :class="{
             'border-t-0': hasFilters || hasSearch || hasSortBy,
@@ -343,7 +345,7 @@
         bg-gray-600/2 dark:bg-gray-400/2
         border border-gray-100 dark:border-gray-800
         rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
-        px-2 py-4
+        px-3 py-4
       "
     >
       <div class="md:overflow-x-auto flex flex-wrap md:flex-nowrap justify-between items-center gap-4">
@@ -463,6 +465,10 @@ interface DataTableProps {
    */
   searchDebounce?: number;
   /**
+   * Determines whether the search input should be focused when a key is pressed.
+   */
+  focusSearchOnKeyPress?: boolean;
+  /**
    * Configuration for the sort by dropdown.
    */
   sortBy?: {
@@ -490,6 +496,7 @@ const props = withDefaults(defineProps<DataTableProps>(), {
   searchQuery: undefined,
   searchDebounce: 300,
   sortBy: undefined,
+  focusSearchOnKeyPress: false,
   loading: false
 })
 
@@ -536,6 +543,7 @@ const hasDrawerColumn = computed(() => {
 
 const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
+const focusOnKeyPress = computed(() => props.focusSearchOnKeyPress)
 const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
 const hasEllipsisMenuItems = computed(() => !!(slots['ellipsis-menu-items'] || slots.ellipsisMenuItems))
 const isHeaderActionsDisabled = computed(() => !tableItems.value.length)
@@ -703,6 +711,16 @@ function executeBatchAction(action: BatchSelectionAction) {
 }
 
 /**
+ * Determines whether the "Select All" option should be enabled based on the number of dropdown options.
+ * @param options - The array of dropdown options to evaluate.
+ * @returns True if the number of options meets or exceeds the maximum allowed, false otherwise.
+ */
+function enableSelectAllFilters(options: FilterByDropdownOption[]) {
+  const MAX_OPTIONS_ALLOWED = 6
+  return options.length >= MAX_OPTIONS_ALLOWED ? true : false
+}
+
+/**
  * Resets all filters and clears the search query, then emits the updated filter state.
  */
 function clearFilters() {
@@ -801,6 +819,28 @@ function setSearchActiveState(active: boolean) {
     searchQuery.value = ''
   }
 }
+
+/**
+ * Handles the key stroke event for activating the search input when the '/' key is pressed.
+ * It ignores the event if the search input is already active, the focus is on a typing target, or the key pressed is not '/'.
+ * @param event - The keyboard event triggered by the key press.
+ */
+function handleOnKeyStroke(event: KeyboardEvent) {
+  if (!focusOnKeyPress.value || isSearchActive.value) return
+  if (!(event.target instanceof HTMLElement)) return
+
+  // Determine if the event target is a typing target (input, textarea, select, or content editable) and ignore the event if it is.
+  const tagName = event.target.tagName.toLowerCase()
+  const isTypingTarget = ['textarea', 'input', 'select'].includes(tagName) || event.target.isContentEditable
+  if (isTypingTarget) return
+
+  if (event.key === '/') {
+    event.preventDefault()
+    setSearchActiveState(true)
+  }
+}
+
+onKeyStroke('/', handleOnKeyStroke)
 
 /**
  * Updates the scrollability state based on the scroll container's overflow.

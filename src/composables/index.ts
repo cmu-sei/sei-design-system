@@ -62,6 +62,8 @@ export { useComboBoxSelection } from './useComboBoxSelection'
 export { useComboBoxDropdownItems } from './useComboBoxDropdownItems'
 export type { ComboBoxDropdownItem } from './useComboBoxDropdownItems'
 
+export { useComboBoxCore } from './useComboBoxCore'
+
 export { useDebounce } from './useDebounce'
 
 export { useThrottle } from './useThrottle'

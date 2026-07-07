@@ -584,8 +584,8 @@ import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsScrollArea from '../ScrollArea/ScrollArea.vue'
 import SdsTabs from '../Tabs/Tabs.vue'
 import SdsTag from '../Tag/Tag.vue'
-import { removeHtmlFromString, useComboBoxDropdownItems, useComboBoxQuery, useComboBoxSelection, useComboBoxSuggestions, useFormField, useVirtualScroller } from '@/composables'
-import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxSuggestionObject, ComboBoxType } from '@/composables'
+import { removeHtmlFromString, useComboBoxCore, useFormField, useVirtualScroller } from '@/composables'
+import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxType } from '@/composables'
 import type { VNodeChild } from 'vue'
 
 export type { ComboBoxSuggestionObject, ComboBoxSuggestion } from '@/composables'
@@ -931,7 +931,6 @@ const collapseSelectionTimeout = ref<ReturnType<typeof window.setTimeout>>()
 // explicit arrow-key navigation. In this state the input shows the user's query, not the
 // highlighted item's label.
 const autoFocused = ref(false)
-const activeGroupKey = ref(-1)
 
 const inputId = computed(() => props.id ?? `${componentId}-input`)
 const dropdownId = computed(() => `${componentId}-listbox`)
@@ -949,36 +948,6 @@ type ComboBoxDisplayRow =
   | { kind: 'option'; option: ComboBoxSuggestion; key: string }
 
 const {
-  labelKey,
-  getLabel,
-  getGroupLabel,
-  getChildren,
-  getHref,
-  countVisibleOptions,
-  flattenOptions,
-  allSuggestionOptions,
-  allCount,
-  groups,
-  groupSuggestionOptions,
-  suggestionOptions,
-  shouldShowNewSuggestion,
-  hasDropdownSuggestion,
-  isFlatArray,
-  hasCategories,
-  hasNoMatches
-} = useComboBoxSuggestions({
-  suggestions: () => props.suggestions,
-  query,
-  type: () => props.type,
-  filterSuggestions: () => props.filterSuggestions,
-  optionLabel: () => props.optionLabel,
-  optionGroupLabel: () => props.optionGroupLabel,
-  optionGroupChildren: () => props.optionGroupChildren,
-  disableGroupTabs: () => props.disableGroupTabs,
-  activeGroupKey
-})
-
-const {
   findOriginalSuggestion,
   stripIdx,
   findSelectedIndex,
@@ -988,42 +957,53 @@ const {
   clearSelections,
   isSelected,
   resolveSuggestion,
-  areAllSelected,
-  areSomeSelected,
-  toggleSelections
-} = useComboBoxSelection({
-  selected,
-  suggestions: () => props.suggestions,
+  toggleSelections,
+  selectAllChecked,
+  selectAllIndeterminate,
+  selectAllRendered,
+  addSuggestion,
+  activeGroupKey,
+  isSelectType,
+  labelKey,
   getLabel,
-  getChildren
-})
-
-const selectAllVisible = computed(() => isSelectType.value && props.multiple && props.enableSelectAll && allCount.value > 1)
-
-const selectAllRendered = computed(() => selectAllVisible.value && countVisibleOptions(suggestionOptions.value) > 1)
-
-const addSuggestion = computed<ComboBoxSuggestionObject>(() => ({
-  label: query.value,
-  name: query.value,
-  value: query.value,
-  __cbxIdx: 'add'
-}))
-
-const {
+  getGroupLabel,
+  getChildren,
+  getHref,
+  countVisibleOptions,
+  allCount,
+  groups,
+  suggestionOptions,
+  shouldShowNewSuggestion,
+  hasDropdownSuggestion,
+  isFlatArray,
+  hasCategories,
+  hasNoMatches,
   dropdownItems,
   getDropdownItem,
   getCurrentSuggestion,
   lastDropdownItemIndex,
   firstItemIndex,
   isDropdownItemActive,
-  isAddSuggestionActive
-} = useComboBoxDropdownItems({
-  suggestionOptions,
+  isAddSuggestionActive,
+  getCurrentGroupOptions,
+  setQuery,
+  setUserQuery
+} = useComboBoxCore({
+  suggestions: () => props.suggestions,
+  query,
+  selected,
+  arrowCounter,
+  type: () => props.type,
+  multiple: () => props.multiple,
+  enableSelectAll: () => props.enableSelectAll,
+  filterSuggestions: () => props.filterSuggestions,
+  optionLabel: () => props.optionLabel,
+  optionGroupLabel: () => props.optionGroupLabel,
   optionGroupChildren: () => props.optionGroupChildren,
-  selectAllRendered,
-  shouldShowNewSuggestion,
-  addSuggestion,
-  arrowCounter
+  disableGroupTabs: () => props.disableGroupTabs,
+  debounceComplete: () => props.debounceComplete,
+  onComplete: value => emit('complete', value),
+  onShowDropdown: () => { showDropdown.value = true }
 })
 
 const getDropdownItemId = (index: number) => `${componentId}-option-${index}`
@@ -1109,9 +1089,6 @@ const comboBoxTabs = computed({
   }
 })
 
-// True when the component is operating in one of the selection types (select / taggable-select).
-const isSelectType = computed(() => props.type === 'select' || props.type === 'taggable-select')
-
 // True when the multiselect tag bar above the input should be rendered.
 const showTagsBar = computed(() => isSelectType.value && props.multiple && selected.value.length > 0)
 
@@ -1148,11 +1125,6 @@ const showClearButton = computed(() => {
   return false
 })
 
-const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
-  const options = !isFlatArray.value && activeGroupKey.value !== -1 ? groupSuggestionOptions.value : allSuggestionOptions.value
-  return flattenOptions(options)
-}
-
 const inputClick = () => {
   if (props.readonly || props.disabled) return
   if (props.clickToSelect) {
@@ -1164,14 +1136,6 @@ const inputClick = () => {
     showDropdown.value = true
   }
 }
-
-const selectAllChecked = computed(() => {
-  return areAllSelected(getCurrentGroupOptions())
-})
-
-const selectAllIndeterminate = computed(() => {
-  return areSomeSelected(getCurrentGroupOptions())
-})
 
 const toggleSelectAll = () => {
   toggleSelections(getCurrentGroupOptions())
@@ -1196,13 +1160,6 @@ const inputDisplayValue = computed(() => {
   }
   // Otherwise, show the query
   return removeHtmlFromString(query.value)
-})
-
-const { setQuery, setUserQuery } = useComboBoxQuery({
-  query,
-  debounce: () => props.debounceComplete,
-  onComplete: value => emit('complete', value),
-  onShowDropdown: () => { showDropdown.value = true }
 })
 
 onMounted(() => { if (props.autofocus) inputField.value?.focus() })
