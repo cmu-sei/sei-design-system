@@ -4,8 +4,8 @@
     class="block bg-white dark:bg-gray-950"
     :class="{
       'border border-gray-100 dark:border-gray-900': type === 'simple' || type === 'raised',
-      'rounded-theme-sm shadow-sm': type === 'simple',
-      'rounded-theme-lg shadow-md': type === 'raised',
+      'rounded-theme-lg shadow-sm': type === 'simple',
+      'rounded-theme-xl shadow-lg': type === 'raised',
     }"
   >
     <header
