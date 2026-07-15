@@ -52,6 +52,8 @@
 </template>
 
 <script setup lang="ts">
+export type MegaMenuItemType = "landing-page" | "descriptive" | "simple"
+
 interface MegaMenuItemProps {
   /**
    * Main MegaMenuItem text content
@@ -60,7 +62,7 @@ interface MegaMenuItemProps {
   /**
    * Determines the MegaMenuItem component type to use.
    */
-  type?: "landing-page" | "descriptive" | "simple";
+  type?: MegaMenuItemType;
   /**
    * Applies the appropriate attributes for external links and opens them in a new tab. It also creates a REL attribute that prevents browser sniffing.
    */
@@ -97,10 +99,7 @@ const linkClass = computed(() => {
 
 const typeClass = computed(() => {
   /* Apply styles based on type class */
-  const type = props.type as
-    | "landing-page"
-    | "descriptive"
-    | "simple"
+  const type = props.type as MegaMenuItemType
   switch (type) {
     case "landing-page":
       return "p-4 text-lg hover:no-underline hover:text-red-600 dark:hover:text-red-300"

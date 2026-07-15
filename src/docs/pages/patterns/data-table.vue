@@ -8,6 +8,7 @@
       :filters="filters"
       :search="true"
       :search-query="searchTerm"
+      :focus-search-on-key-press="true"
       :sort-by="sortByConfig"
       :loading="loading"
       @update:filters="handleFilterUpdate"

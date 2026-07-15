@@ -310,16 +310,88 @@ describe('Dropdown', () => {
     })
 
     describe('auto', () => {
-      it('renders with fixed width by default', () => {
+      it('renders with default md width by default', () => {
         const wrapper = mount(Component)
         const floatingUi = wrapper.findComponent(FloatingUi)
         const popperClass = floatingUi.props('popperClass')
         expect(popperClass).toHaveProperty('w-56', true)
       })
 
-      it('renders with auto width when auto is true', () => {
+      it('renders with auto width when auto is true (backward compat)', () => {
         const wrapper = mount(Component, {
           props: { auto: true }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-auto', true)
+      })
+    })
+
+    describe('width', () => {
+      it('renders with w-56 (md) by default', () => {
+        const wrapper = mount(Component)
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-56', true)
+      })
+
+      it('applies w-auto when width is auto', () => {
+        const wrapper = mount(Component, {
+          props: { width: 'auto' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-auto', true)
+      })
+
+      it('applies w-48 when width is sm', () => {
+        const wrapper = mount(Component, {
+          props: { width: 'sm' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-48', true)
+      })
+
+      it('applies w-56 when width is md', () => {
+        const wrapper = mount(Component, {
+          props: { width: 'md' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-56', true)
+      })
+
+      it('applies w-64 when width is lg', () => {
+        const wrapper = mount(Component, {
+          props: { width: 'lg' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-64', true)
+      })
+
+      it('applies w-72 when width is xl', () => {
+        const wrapper = mount(Component, {
+          props: { width: 'xl' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-72', true)
+      })
+
+      it('applies w-80 when width is 2xl', () => {
+        const wrapper = mount(Component, {
+          props: { width: '2xl' }
+        })
+        const floatingUi = wrapper.findComponent(FloatingUi)
+        const popperClass = floatingUi.props('popperClass')
+        expect(popperClass).toHaveProperty('w-80', true)
+      })
+
+      it('auto prop takes precedence over width prop', () => {
+        const wrapper = mount(Component, {
+          props: { auto: true, width: 'lg' }
         })
         const floatingUi = wrapper.findComponent(FloatingUi)
         const popperClass = floatingUi.props('popperClass')

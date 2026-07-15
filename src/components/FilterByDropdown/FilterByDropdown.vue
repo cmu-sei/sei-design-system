@@ -3,7 +3,7 @@
     data-id="sds-filter-by-dropdown"
     :offset="offset"
     :placement="placement"
-    :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 w-56 ${zIndexClass}`"
+    :popper-class="`absolute border shadow-lg rounded-theme-md bg-white border-gray-200 dark:border-gray-700 dark:bg-gray-850 ${widthClass} ${zIndexClass}`"
     hide-arrow
     shift
   >
@@ -113,8 +113,9 @@
         />
         
         <SdsDropdownSection
-          v-if="!enableFilter"
+          v-if="enableSelectAll"
           divider
+          :class="{ 'pt-0': enableFilter }"
         >
           <SdsDropdownCheckboxItem
             id="filter_by_dropdown_select_all"
@@ -172,7 +173,7 @@ import SdsDropdownCheckboxItem from '../DropdownCheckboxItem/DropdownCheckboxIte
 import SdsDropdownInputItem from '../DropdownInputItem/DropdownInputItem.vue'
 import SdsDropdownSection from '../DropdownSection/DropdownSection.vue'
 import SdsDropdownFooter from '../DropdownFooter/DropdownFooter.vue'
-import { useDropdown, type ButtonVariant, type DropdownPlacement } from '@/composables'
+import { useDropdown, type ButtonVariant, type DropdownPlacement, type DropdownWidth } from '@/composables'
 
 export interface FilterByDropdownOption {
   id: string | number
@@ -237,6 +238,10 @@ interface FilterByDropdownProps {
    */
   enableFilter?: boolean;
   /**
+   * Determines whether to enable the "Select All" option in the dropdown.
+   */
+  enableSelectAll?: boolean;
+  /**
    * Determines whether to alphabetically sort the options.
    */
   enableSortOptions?: boolean;
@@ -244,6 +249,19 @@ interface FilterByDropdownProps {
    * Determines the placement of the dropdown on the screen.
    */
   placement?: DropdownPlacement;
+  /**
+   * Controls the width of the dropdown menu container.
+   * 
+   * - `auto` — Menu expands to fit content
+   * - `sm` — 192px (12rem)
+   * - `md` — 224px (14rem)
+   * - `lg` — 256px (16rem)
+   * - `xl` — 288px (18rem)
+   * - `2xl` — 320px (20rem)
+   * 
+   * @default 'md'
+   */
+  width?: DropdownWidth;
   /**
    * Determines if the dropdown is disabled
    */
@@ -279,8 +297,10 @@ const props = withDefaults(defineProps<FilterByDropdownProps>(), {
   iconOnly: false,
   tooltip: '',
   enableFilter: false,
+  enableSelectAll: false,
   enableSortOptions: false,
   placement: 'bottom-start',
+  width: 'md',
   disabled: false,
   showCount: false,
   offset: 5,
@@ -299,6 +319,7 @@ const {
   id,
   buttonRef: button,
   zIndexClass,
+  widthClass,
   iconOnlyClasses,
   iconSizeClasses
 } = useDropdown({
@@ -307,6 +328,7 @@ const {
   variant: () => props.variant,
   size: () => props.size,
   zIndex: () => props.zIndex,
+  width: () => props.width,
   disabled: () => props.disabled,
   block: () => props.block,
   iconOnly: () => props.iconOnly,

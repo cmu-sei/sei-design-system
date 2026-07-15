@@ -19,7 +19,10 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-brochure-site-footer v-bind="args"></sds-brochure-site-footer>
+    <sds-brochure-site-footer
+      v-bind="args"
+      class="sds-theme-plaid"
+    ></sds-brochure-site-footer>
   `
 });
 

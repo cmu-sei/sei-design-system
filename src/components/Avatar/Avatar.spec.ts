@@ -145,4 +145,122 @@ describe('Avatar', () => {
       expect(wrapper.element).toMatchSnapshot()
     })
   })
+
+  describe('slot content', () => {
+    it('renders slot content when provided', () => {
+      const wrapper = mount(Component, {
+        props: { variant: 'blue', name: 'User' },
+        slots: {
+          default: '<span class="test-icon">Icon</span>'
+        }
+      })
+      expect(wrapper.find('.test-icon').exists()).toBe(true)
+      expect(wrapper.find('.test-icon').text()).toBe('Icon')
+    })
+
+    it('slot content takes priority over src prop', () => {
+      const wrapper = mount(Component, {
+        props: { 
+          variant: 'blue', 
+          name: 'User',
+          src: 'https://example.com/image.jpg'
+        },
+        slots: {
+          default: '<span class="test-icon">Icon</span>'
+        }
+      })
+      expect(wrapper.find('.test-icon').exists()).toBe(true)
+      expect(wrapper.find('[style*="background-image"]').exists()).toBe(false)
+    })
+
+    it('slot content takes priority over initials', () => {
+      const wrapper = mount(Component, {
+        props: { 
+          variant: 'blue', 
+          name: 'John Doe'
+        },
+        slots: {
+          default: '<span class="test-icon">Icon</span>'
+        }
+      })
+      expect(wrapper.find('.test-icon').exists()).toBe(true)
+      expect(wrapper.text()).not.toContain('JD')
+    })
+
+    it('applies w-full h-full to icon container for xs size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'xs', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('applies w-full h-full to icon container for sm size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'sm', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('applies w-full h-full to icon container for md size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'md', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('applies w-full h-full to icon container for lg size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'lg', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('applies w-full h-full to icon container for xl size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'xl', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('applies w-full h-full to icon container for 2xl size', () => {
+      const wrapper = mount(Component, {
+        props: { size: '2xl', variant: 'blue' },
+        slots: { default: '<span>Icon</span>' }
+      })
+      const iconContainer = wrapper.find('[data-id="sds-avatar"] > div > div')
+      expect(iconContainer.classes()).toContain('w-full')
+      expect(iconContainer.classes()).toContain('h-full')
+    })
+
+    it('matches snapshot with slot content and lg size', () => {
+      const wrapper = mount(Component, {
+        props: { size: 'lg', variant: 'blue', name: 'User' },
+        slots: { default: '<svg class="icon-user"><path d="M0 0"/></svg>' }
+      })
+      expect(wrapper.element).toMatchSnapshot()
+    })
+
+    it('matches snapshot with slot content and circle shape', () => {
+      const wrapper = mount(Component, {
+        props: { shape: 'circle', variant: 'green', name: 'User' },
+        slots: { default: '<svg class="icon-user"><path d="M0 0"/></svg>' }
+      })
+      expect(wrapper.element).toMatchSnapshot()
+    })
+  })
 })

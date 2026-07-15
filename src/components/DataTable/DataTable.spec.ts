@@ -580,6 +580,42 @@ describe('SdsDataTable', () => {
       expect(onUpdateFilters).toHaveBeenCalled()
     })
 
+    it('should open search on slash keypress only when `focusSearchOnKeyPress` is enabled', async () => {
+      const wrapperWithoutShortcut = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          search: true,
+          focusSearchOnKeyPress: false
+        },
+        attachTo: container
+      })
+
+      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: '/', bubbles: true }))
+      await wrapperWithoutShortcut.vm.$nextTick()
+
+      expect(wrapperWithoutShortcut.findComponent({ name: 'SdsComboBox' }).exists()).toBe(false)
+
+      wrapperWithoutShortcut.unmount()
+
+      const wrapperWithShortcut = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          pagination,
+          search: true,
+          focusSearchOnKeyPress: true
+        },
+        attachTo: container
+      })
+
+      document.body.dispatchEvent(new KeyboardEvent('keydown', { key: '/', bubbles: true }))
+      await wrapperWithShortcut.vm.$nextTick()
+
+      const component = wrapperWithShortcut.findComponent({ name: 'SdsComboBox' })
+      expect(component.exists()).toBe(true)
+      expect(component.find('input').element).toBe(document.activeElement)
+    })
+
     it('should emit debounced search updates and clear the query on cancel', async () => {
       vi.useFakeTimers()
 
@@ -630,6 +666,117 @@ describe('SdsDataTable', () => {
       } finally {
         vi.useRealTimers()
       }
+    })
+  })
+
+  describe('Select All Filters', () => {
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count meets threshold (≥6)', () => {
+      const manyOptionsFilter: DataTableFilterConfig = {
+        key: 'assignee',
+        label: 'Assignee',
+        type: 'dropdown',
+        options: [
+          { id: '1', text: 'Option 1', value: 'opt1', selected: false },
+          { id: '2', text: 'Option 2', value: 'opt2', selected: false },
+          { id: '3', text: 'Option 3', value: 'opt3', selected: false },
+          { id: '4', text: 'Option 4', value: 'opt4', selected: false },
+          { id: '5', text: 'Option 5', value: 'opt5', selected: false },
+          { id: '6', text: 'Option 6', value: 'opt6', selected: false }
+        ]
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [manyOptionsFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableFilter')).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+    })
+
+    it('should disable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count is below threshold (<6)', () => {
+      const fewOptionsFilter: DataTableFilterConfig = {
+        key: 'status',
+        label: 'Status',
+        type: 'dropdown',
+        options: [
+          { id: '1', text: 'Draft', value: 'draft', selected: false },
+          { id: '2', text: 'Submitted', value: 'submitted', selected: false }
+        ]
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [fewOptionsFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.exists()).toBe(true)
+      expect(filterDropdown.props('enableFilter')).toBe(false)
+      expect(filterDropdown.props('enableSelectAll')).toBe(false)
+    })
+
+    it('should enable both `enableFilter` and `enableSelectAll` props on dropdown filters when options count exactly equals threshold (6)', () => {
+      const exactThresholdFilter: DataTableFilterConfig = {
+        key: 'department',
+        label: 'Department',
+        type: 'dropdown',
+        options: Array.from({ length: 6 }, (_, i) => ({
+          id: `dept-${i}`,
+          text: `Department ${i + 1}`,
+          value: `dept_${i}`,
+          selected: false
+        }))
+      }
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [exactThresholdFilter]
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.props('enableFilter')).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+    })
+
+    it('should pass `enableFilter` and `enableSelectAll` props to FilterByDropdown', () => {
+      const filterConfig: DataTableFilterConfig[] = [
+        {
+          key: 'assignee',
+          label: 'Assignee',
+          type: 'dropdown',
+          options: Array.from({ length: 7 }, (_, i) => ({
+            id: `assignee-${i}`,
+            text: `Person ${i + 1}`,
+            value: `person_${i}`,
+            selected: false
+          }))
+        }
+      ]
+
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: filterConfig
+        },
+        attachTo: container
+      })
+
+      const filterDropdown = wrapper.findComponent({ name: 'SdsFilterByDropdown' })
+      expect(filterDropdown.props('enableFilter')).toBe(true)
+      expect(filterDropdown.props('enableSelectAll')).toBe(true)
+      expect(filterDropdown.props('title')).toBe('Assignee')
     })
   })
 

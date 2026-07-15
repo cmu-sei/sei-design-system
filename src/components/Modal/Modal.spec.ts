@@ -244,6 +244,45 @@ describe('Modal', () => {
     wrapper.unmount()
   })
 
+  it('keeps body scroll locked until close lifecycle finishes, then restores focus', async () => {
+    const trigger = document.createElement('button')
+    trigger.textContent = 'Open modal'
+    document.body.appendChild(trigger)
+    trigger.focus()
+
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        modelValue: true,
+        title: 'Lifecycle Test Modal'
+      },
+      slots: {
+        default: '<button id="modal-action">Action</button>'
+      }
+    })
+
+    await nextTick()
+    vi.advanceTimersByTime(300)
+    await nextTick()
+
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true)
+    expect(document.activeElement).toBe(document.getElementById('modal-action'))
+
+    const closeButton = document.querySelector('button[aria-label="close"]') as HTMLButtonElement
+    await closeButton.click()
+    await nextTick()
+
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true)
+    expect(document.activeElement).not.toBe(trigger)
+
+    vi.advanceTimersByTime(250)
+    await nextTick()
+
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false)
+    expect(document.activeElement).toBe(trigger)
+    wrapper.unmount()
+  })
+
   it('closes modal when backdrop is clicked', async () => {
     let emittedValue: boolean | null = null
     const wrapper = mount(Component, {

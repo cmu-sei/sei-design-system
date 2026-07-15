@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import SdsDropdown from "../Dropdown/Dropdown.vue";
-import type { ButtonVariant, ActionButtonSize, ZIndexValue, DropdownPlacement } from '@/composables'
+import type { ButtonVariant, ActionButtonSize, ZIndexValue, DropdownPlacement, DropdownWidth } from '@/composables'
 import type { Strategy } from '@floating-ui/dom'
 
 interface ActionDropdownProps {
@@ -71,8 +71,22 @@ interface ActionDropdownProps {
   hideArrow?: boolean;
   /**
    * Determines whether the content of the popper will set the width of the popper.
+   * @deprecated Use `width="auto"` instead
    */
   auto?: boolean;
+  /**
+   * Controls the width of the dropdown menu container.
+   * 
+   * - `auto` — Menu expands to fit content
+   * - `sm` — 192px (12rem)
+   * - `md` — 224px (14rem)
+   * - `lg` — 256px (16rem)
+   * - `xl` — 288px (18rem)
+   * - `2xl` — 320px (20rem)
+   * 
+   * @default 'md'
+   */
+  width?: DropdownWidth;
   /**
    * The strategy of the popover on the screen.
    */

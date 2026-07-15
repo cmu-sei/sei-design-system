@@ -334,6 +334,27 @@ describe('FilterByDropdown.vue', () => {
     })
   })
 
+  describe('Props: Enable Select All', () => {
+    it('should accept enableSelectAll prop as true', () => {
+      const wrapper = createWrapper({ enableSelectAll: true }, mockOptions)
+      
+      expect(wrapper.props('enableSelectAll')).toBe(true)
+    })
+
+    it('should accept enableSelectAll prop as false (default)', () => {
+      const wrapper = createWrapper({ enableSelectAll: false }, mockOptions)
+      
+      expect(wrapper.props('enableSelectAll')).toBe(false)
+    })
+
+    it('should default enableSelectAll to false when not specified', () => {
+      const wrapper = createWrapper({}, mockOptions)
+      
+      expect(wrapper.props('enableSelectAll')).toBe(false)
+    })
+
+  })
+
   describe('Props: Enable Sort Options', () => {
     it('should accept enableSortOptions prop as true', () => {
       const wrapper = createWrapper({ enableSortOptions: true }, mockOptions)

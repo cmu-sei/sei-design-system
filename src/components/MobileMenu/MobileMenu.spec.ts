@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import SdsMobileMenu, { type MobileMenuItem } from './MobileMenu.vue';
 import SdsPanel from '../Panel/Panel.vue';
 import { navigateMobileMenu } from '@/helpers/mobileMenuNavigate';
@@ -189,6 +189,8 @@ describe('SdsMobileMenu', () => {
   });
 
   it('adds and removes DOM changes correctly', async () => {
+    vi.useFakeTimers();
+
     const wrapper = mount(SdsMobileMenu, {
       props: { ...defaultProps, modelValue: true }
     });
@@ -196,7 +198,15 @@ describe('SdsMobileMenu', () => {
     expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true);
     await wrapper.setProps({ modelValue: false });
     await wrapper.vm.$nextTick();
+
+    expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(true);
+
+    vi.advanceTimersByTime(250);
+    await wrapper.vm.$nextTick();
+
     expect(document.documentElement.classList.contains('sds-overlay-prevent-scroll')).toBe(false);
+
+    vi.useRealTimers();
   });
 
   it.todo('closes the panel on Esc key press', async () => {

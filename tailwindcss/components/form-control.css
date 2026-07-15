@@ -126,7 +126,7 @@
 @layer components {
   :where(input[type="checkbox"]),
   :where(input[type="radio"]) {
-    @apply form-border appearance-none w-4 h-4 bg-white rounded-theme-sm cursor-pointer;
+    @apply form-border appearance-none w-4 h-4 bg-white rounded-theme-sm cursor-pointer shrink-0 grow-0;
     @apply dark:bg-gray-900/50;
     @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 dark:focus-visible:ring-blue-700;
     @apply disabled:pointer-events-none disabled:bg-gray-100 disabled:border-gray-300 disabled:cursor-default;

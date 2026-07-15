@@ -200,7 +200,7 @@ const props = withDefaults(defineProps<TabsProps>(), {
  * }
  * ```
  */
-const model = defineModel<TabItem[]>({ type: Array as PropType<TabItem[]>, default: [] })
+const model = defineModel<TabItem[]>({ type: Array as PropType<TabItem[]>, default: () => [] })
 
 const emit = defineEmits(['update:modelValue', 'change'])
 

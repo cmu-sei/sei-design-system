@@ -3,15 +3,15 @@
     data-id="sds-section"
     class="block bg-white dark:bg-gray-950"
     :class="{
-      'rounded-theme-sm': type === 'simple',
-      'border border-gray-200 dark:border-gray-800': type === 'simple' || type === 'raised',
-      'shadow-md border rounded-theme-lg': type === 'raised',
+      'border border-gray-100 dark:border-gray-900': type === 'simple' || type === 'raised',
+      'rounded-theme-lg shadow-sm': type === 'simple',
+      'rounded-theme-xl shadow-lg': type === 'raised',
     }"
   >
     <header
       v-if="!hideHeader"
       :class="{
-        'border-b dark:border-gray-800':
+        'border-b border-gray-100 dark:border-gray-900':
           type === 'simple' || type === 'raised',
         'border-0 border-t-2 border-gray-900 dark:border-gray-600':
           type === 'accented',
@@ -19,7 +19,7 @@
     >
       <div
         class="flex px-4 py-3"
-        :class="{ 'border-b border-gray-200 dark:border-gray-800': type === 'accented' }"
+        :class="{ 'border-b border-gray-100 dark:border-gray-900': type === 'accented' }"
       >
         <div class="self-center grow">
           <div
