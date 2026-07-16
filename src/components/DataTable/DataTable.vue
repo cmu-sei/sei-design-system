@@ -512,7 +512,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
     ? props.filters.map((f) => ({ 
       ...f,
-      segments: f.segments ? [{ label: 'All', selected: true }, ...f.segments] : undefined,
+      segments: f.segments ? [...f.segments] : undefined,
       options: f.options ? [...f.options] : undefined
     })) 
     : undefined
@@ -728,8 +728,8 @@ function clearFilters() {
     filters.value.forEach((filter) => {
       if (isSegmentFilter(filter)) {
         // Set "All" (first segment) to selected, or true, and the rest to false
-        filter.segments.forEach((segment, index) => {
-          segment.selected = index === 0
+        filter.segments.forEach((segment) => {
+          segment.selected = false
         })
       } else if (isDropdownFilter(filter)) {
         // Set all options (selected) to false
@@ -759,9 +759,9 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filter) return
 
   if (isSegmentFilter(filter) && segment) {
-    // Set clicked segment to selected and all others to false
+    // Set clicked segment to selected and all others to false or toggle the clicked segment if it's already selected
     filter.segments.forEach((s) => {
-      s.selected = s.label === segment.label
+      s.selected = s.label === segment.label ? !s.selected : false
     })
   }
 
