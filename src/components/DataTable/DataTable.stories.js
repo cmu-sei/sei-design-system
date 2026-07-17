@@ -169,11 +169,11 @@ const DefaultTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :filters="localFilters"
       :search="true"
+      :focus-search-on-key-press="true"
       :sort-by="sortByConfig"
       :enable-batch-selection="true"
       :batch-selection-actions="batchActions"
@@ -256,7 +256,7 @@ const DefaultTemplate = (args) => ({
       this.localFilters.forEach((filter) => {
         if (filter.type === 'segment' && filter.segments) {
           const selectedSegment = filter.segments.find((s) => s.selected);
-          if (selectedSegment && selectedSegment.label !== 'All') {
+          if (selectedSegment) {
             items = items.filter((item) => item[filter.key] === selectedSegment.label);
           }
         } else if (filter.type === 'dropdown' && filter.options) {
@@ -331,7 +331,6 @@ const MinimalTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       @update:pagination="onUpdatePagination"
@@ -397,10 +396,10 @@ const WithSearchTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :search="true"
+      :focus-search-on-key-press="true"
       @update:search-query="onUpdateSearchQuery"
       @update:pagination="onUpdatePagination"
     >
@@ -479,7 +478,6 @@ const WithFiltersTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :filters="localFilters"
@@ -523,7 +521,7 @@ const WithFiltersTemplate = (args) => ({
       this.localFilters.forEach((filter) => {
         if (filter.type === 'segment' && filter.segments) {
           const selectedSegment = filter.segments.find((s) => s.selected);
-          if (selectedSegment && selectedSegment.label !== 'All') {
+          if (selectedSegment) {
             items = items.filter((item) => item[filter.key] === selectedSegment.label);
           }
         } else if (filter.type === 'dropdown' && filter.options) {
@@ -558,7 +556,7 @@ WithFilters.args = {
 WithFilters.parameters = {
   docs: {
     description: {
-      story: 'DataTable with segment filters (Workflow) and dropdown filters (Assignee, Status). Selecting "All" in the segment resets that filter.',
+      story: 'DataTable with segment filters (Workflow) and dropdown filters (Assignee, Status).',
     },
   },
 };
@@ -573,10 +571,10 @@ const WithBatchSelectionTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :search="true"
+      :focus-search-on-key-press="true"
       :enable-batch-selection="true"
       :batch-selection-actions="batchActions"
       @update:search-query="onUpdateSearchQuery"
@@ -692,7 +690,6 @@ const WithSortByDropdownTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :sort-by="sortByConfig"
