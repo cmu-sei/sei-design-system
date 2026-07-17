@@ -552,10 +552,8 @@ const hasActiveFilters = computed(() => {
   if (!filters.value) return false
   return filters.value.some((filter) => {
     if (isSegmentFilter(filter)) {
-      // Check if any segment other than "All" (first) is selected
       return filter.segments.some((segment, index) => index !== 0 && segment.selected)
     } else if (isDropdownFilter(filter)) {
-      // Check if any options are selected
       return filter.options.some((option) => option.selected)
     }
     return false
@@ -727,15 +725,9 @@ function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
       if (isSegmentFilter(filter)) {
-        // Set "All" (first segment) to selected, or true, and the rest to false
-        filter.segments.forEach((segment) => {
-          segment.selected = false
-        })
+        filter.segments.forEach((segment) => segment.selected = false)
       } else if (isDropdownFilter(filter)) {
-        // Set all options (selected) to false
-        filter.options.forEach((option) => {
-          option.selected = false
-        })
+        filter.options.forEach((option) => option.selected = false)
       }
     })
   }
