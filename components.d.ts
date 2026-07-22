@@ -87,6 +87,7 @@ declare module 'vue' {
     IconFa7SolidXmark: typeof import('~icons/fa7-solid/xmark')['default']
     Indicator: typeof import('./src/components/Indicator/Indicator.vue')['default']
     Input: typeof import('./src/components/Input/Input.vue')['default']
+    LineChart: typeof import('./src/components/LineChart/LineChart.vue')['default']
     Link: typeof import('./src/components/Link/Link.vue')['default']
     LoadingSkeleton: typeof import('./src/components/LoadingSkeleton/LoadingSkeleton.vue')['default']
     LoadingSpinner: typeof import('./src/components/LoadingSpinner/LoadingSpinner.vue')['default']

@@ -264,9 +264,20 @@ function getBarSeriesIndex(bar: BarRect): number | null {
   return idx >= 0 ? idx : null
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 function onBarEnter(e: MouseEvent, bar: BarRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     label: bar.label,
     seriesName: bar.seriesName,
     value: bar.value,
@@ -276,7 +287,8 @@ function onBarEnter(e: MouseEvent, bar: BarRect) {
 
 function onBarMove(e: MouseEvent, bar: BarRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     label: bar.label,
     seriesName: bar.seriesName,
     value: bar.value,

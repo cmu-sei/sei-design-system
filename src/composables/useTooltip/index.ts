@@ -20,6 +20,9 @@ export interface TooltipState<T> {
   hide: () => void
 }
 
+/** Small delay to preserve tooltip continuity while moving between nearby chart targets. */
+const HIDE_DELAY_MS = 120
+
 /**
  * Composable that manages generic tooltip state with position and data.
  *
@@ -55,8 +58,16 @@ export function useTooltip<T = unknown>(): TooltipState<T> {
   const x = ref(0)
   const y = ref(0)
   const data = shallowRef<T | null>(null)
+  let hideTimeoutId: ReturnType<typeof setTimeout> | null = null
+
+  function clearHideTimeout() {
+    if (hideTimeoutId == null) return
+    clearTimeout(hideTimeoutId)
+    hideTimeoutId = null
+  }
 
   function show(posX: number, posY: number, payload: T) {
+    clearHideTimeout()
     x.value = posX
     y.value = posY
     data.value = payload
@@ -64,8 +75,14 @@ export function useTooltip<T = unknown>(): TooltipState<T> {
   }
 
   function hide() {
-    visible.value = false
+    clearHideTimeout()
+    hideTimeoutId = setTimeout(() => {
+      visible.value = false
+      hideTimeoutId = null
+    }, HIDE_DELAY_MS)
   }
+
+  onScopeDispose(() => clearHideTimeout())
 
   return { visible, x, y, data, show, hide }
 }

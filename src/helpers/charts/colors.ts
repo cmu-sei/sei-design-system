@@ -60,6 +60,33 @@ export const defaultSingleColor = monochromeColorScheme[8] // blue-600
 export const defaultSingleColorDark = monochromeColorScheme[5] // blue-300
 
 /**
+ * Tailwind text-color classes used for line-chart series when six or fewer lines are present.
+ * These are intentionally chart-specific and not used by bar/pie/heatmap components.
+ */
+export const lineChartColorClasses = Object.freeze([
+  'text-blue-400',
+  'text-teal-400',
+  'text-red-400',
+  'text-green-400',
+  'text-yellow-400',
+  'text-purple-400',
+] as const)
+
+/**
+ * CSS color values mapped from line-chart Tailwind text-color classes.
+ * Used to keep legend swatches aligned with rendered line/point colors.
+ */
+export const lineChartColorValues: Record<(typeof lineChartColorClasses)[number] | 'text-gray-200', string> = {
+  'text-blue-400': 'var(--color-blue-400)',
+  'text-teal-400': 'var(--color-teal-400)',
+  'text-red-400': 'var(--color-red-400)',
+  'text-green-400': 'var(--color-green-400)',
+  'text-yellow-400': 'var(--color-yellow-400)',
+  'text-purple-400': 'var(--color-purple-400)',
+  'text-gray-200': 'var(--color-gray-200)',
+}
+
+/**
  * Resolves a `color` property that is either a plain string or a `{ light, dark }` object
  * to a single color string based on the current dark-mode state.
  */

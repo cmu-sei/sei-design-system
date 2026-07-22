@@ -1,0 +1,344 @@
+import type { ComputedRef, Ref } from 'vue'
+import type { ChartLegendItem } from '@/components'
+import type { AxisDomain, ScaleLinear } from '@/lib/d3'
+import { line, max, min, scaleLinear } from '@/lib/d3'
+import { useChartAxis } from '@/composables/useChartAxis'
+import { useChartConfig } from '@/composables/useChartConfig'
+import { useDarkMode } from '@/composables/useDarkMode'
+import { resolveColor } from '@/helpers/charts/colors'
+
+/**
+ * A single line-chart point.
+ */
+export interface LineDatum {
+  x: string | number | Date
+  y: number | null
+}
+
+/**
+ * A named series of line-chart points.
+ */
+export interface LineSeries {
+  id?: string
+  label: string
+  data: LineDatum[]
+}
+
+export type LineData = LineDatum[] | LineSeries[]
+
+export interface LineChartPoint extends LineDatum {
+  xKey: string
+  xLabel: string
+  xIndex: number
+}
+
+export interface LinePath {
+  seriesId: string
+  seriesLabel: string
+  points: LineChartPoint[]
+  path: string
+  color: string
+}
+
+export interface LineGapSegment {
+  seriesId: string
+  seriesLabel: string
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+  color: string
+}
+
+export interface LineTooltipData {
+  xLabel: string
+  seriesLabel: string
+  value: number
+  color: string
+}
+
+interface InternalSeries {
+  id: string
+  label: string
+  data: LineDatum[]
+}
+
+const SINGLE_SERIES_ID = '_'
+const SINGLE_SERIES_LABEL = 'Series'
+
+export function isLineSeries(data: LineData): data is LineSeries[] {
+  const first = data[0]
+  return first !== undefined && 'data' in first
+}
+
+function normalizeKey(value: string | number | Date): string {
+  if (value instanceof Date) return value.toISOString()
+  return String(value)
+}
+
+function displayLabel(value: string | number | Date): string {
+  if (value instanceof Date) return value.toISOString().slice(0, 10)
+  return String(value)
+}
+
+function toComparableValue(value: string | number | Date): number | null {
+  if (value instanceof Date) return value.getTime()
+  if (typeof value === 'number' && Number.isFinite(value)) return value
+  if (typeof value !== 'string') return null
+
+  const trimmed = value.trim()
+  if (!trimmed) return null
+
+  const asNumber = Number(trimmed)
+  if (Number.isFinite(asNumber) && /^-?\d+(\.\d+)?$/.test(trimmed)) {
+    return asNumber
+  }
+
+  const asDate = Date.parse(trimmed)
+  return Number.isNaN(asDate) ? null : asDate
+}
+
+function buildTickIndices(pointCount: number, width: number): number[] {
+  if (pointCount <= 0) return []
+  if (pointCount <= 1) return [0]
+
+  const targetTicks = Math.max(2, Math.floor(width / 80))
+  if (pointCount <= targetTicks) {
+    return Array.from({ length: pointCount }, (_, i) => i)
+  }
+
+  const step = Math.max(1, Math.ceil((pointCount - 1) / (targetTicks - 1)))
+  const ticks: number[] = []
+  for (let i = 0; i < pointCount; i += step) ticks.push(i)
+  if (ticks[ticks.length - 1] !== pointCount - 1) ticks.push(pointCount - 1)
+  return ticks
+}
+
+function resolveSeriesId(series: LineSeries): string {
+  return series.id ?? series.label
+}
+
+export function useLineChart(
+  data: Ref<LineData | undefined> | ComputedRef<LineData | undefined>,
+  innerWidth: Ref<number> | ComputedRef<number>,
+  innerHeight: Ref<number> | ComputedRef<number>,
+  valueFormat:
+    | Ref<string | ((v: number) => string)>
+    | ComputedRef<string | ((v: number) => string)> = computed(() => '~s'),
+) {
+  const _bodyDark = useDarkMode()
+  const config = useChartConfig() ?? {}
+  const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
+
+  const series = computed<InternalSeries[]>(() => {
+    const values = data.value
+    if (!values?.length) return []
+
+    if (isLineSeries(values)) {
+      return values.map((item) => ({
+        id: resolveSeriesId(item),
+        label: item.label,
+        data: item.data,
+      }))
+    }
+
+    return [
+      {
+        id: SINGLE_SERIES_ID,
+        label: SINGLE_SERIES_LABEL,
+        data: values,
+      },
+    ]
+  })
+
+  const xDomainMeta = computed(() => {
+    const keySet = new Set<string>()
+    const entries: Array<{ key: string; comparable: number | null }> = []
+    const labels = new Map<string, string>()
+    const values = new Map<string, string | number | Date>()
+
+    series.value.forEach((lineSeries) => {
+      lineSeries.data.forEach((point) => {
+        const key = normalizeKey(point.x)
+        if (!keySet.has(key)) {
+          keySet.add(key)
+          values.set(key, point.x)
+          labels.set(key, displayLabel(point.x))
+          entries.push({
+            key,
+            comparable: toComparableValue(point.x),
+          })
+        }
+      })
+    })
+
+    const canSort = entries.every((entry) => entry.comparable != null)
+    const keys = canSort
+      ? [...entries]
+        .sort((a, b) => (a.comparable ?? 0) - (b.comparable ?? 0))
+        .map((entry) => entry.key)
+      : entries.map((entry) => entry.key)
+
+    return { keys, labels, values }
+  })
+
+  const pointsBySeries = computed<LinePath[]>(() => {
+    const xKeys = xDomainMeta.value.keys
+    return series.value.map((lineSeries, seriesIndex) => {
+      const valuesByKey = new Map<string, LineDatum>()
+      lineSeries.data.forEach((point) => valuesByKey.set(normalizeKey(point.x), point))
+
+      const points: LineChartPoint[] = xKeys.map((xKey, xIndex) => {
+        const point = valuesByKey.get(xKey)
+        const xValue = xDomainMeta.value.values.get(xKey)
+        return {
+          x: xValue ?? xKey,
+          y: point?.y ?? null,
+          xKey,
+          xLabel: xDomainMeta.value.labels.get(xKey) ?? xKey,
+          xIndex,
+        }
+      })
+
+      return {
+        seriesId: lineSeries.id,
+        seriesLabel: lineSeries.label,
+        points,
+        path: '',
+        color: resolveColor(undefined, seriesIndex, isDark.value, config),
+      }
+    })
+  })
+
+  const allYValues = computed<number[]>(() =>
+    pointsBySeries.value.flatMap((lineSeries) =>
+      lineSeries.points.flatMap((point) => (point.y == null ? [] : [point.y])),
+    ),
+  )
+
+  const yDomain = computed<[number, number]>(() => {
+    if (!allYValues.value.length) return [0, 1]
+
+    const minValue = min(allYValues.value) ?? 0
+    const maxValue = max(allYValues.value) ?? 1
+    if (minValue === maxValue) {
+      const padding = minValue === 0 ? 1 : Math.abs(minValue) * 0.1
+      return [minValue - padding, maxValue + padding]
+    }
+
+    const span = maxValue - minValue
+    const padding = span * 0.08
+    return [minValue - padding, maxValue + padding]
+  })
+
+  const xScale = computed<ScaleLinear<number, number>>(() => {
+    const lastIndex = Math.max(0, xDomainMeta.value.keys.length - 1)
+    return scaleLinear<number, number>().domain([0, lastIndex]).range([0, innerWidth.value])
+  })
+
+  const yScale = computed<ScaleLinear<number, number>>(() =>
+    scaleLinear<number, number>()
+      .domain(yDomain.value)
+      .nice()
+      .range([innerHeight.value, 0]),
+  )
+
+  const xTickValues = computed<number[]>(() =>
+    buildTickIndices(xDomainMeta.value.keys.length, innerWidth.value),
+  )
+
+  const xTickFormatter = computed(() => (value: AxisDomain) => {
+    const numericValue = typeof value === 'number' ? value : Number(value)
+    const index = Number.isFinite(numericValue) ? Math.round(numericValue) : 0
+    const xKey = xDomainMeta.value.keys[index]
+    return xKey ? (xDomainMeta.value.labels.get(xKey) ?? xKey) : ''
+  })
+
+  const xAxis = useChartAxis(
+    computed(() => xScale.value),
+    computed(() => 'bottom' as const),
+    undefined,
+    undefined,
+    computed(() => xTickFormatter.value),
+    computed(() => xTickValues.value),
+  )
+
+  const yAxisTicks = computed(() => Math.max(2, Math.floor(innerHeight.value / 42)))
+  const yAxis = useChartAxis(
+    computed(() => yScale.value),
+    computed(() => 'left' as const),
+    valueFormat,
+    computed(() => yAxisTicks.value),
+  )
+
+  const lineGenerator = computed(() =>
+    line<LineChartPoint>()
+      .defined((point) => point.y != null && Number.isFinite(point.y))
+      .x((point) => xScale.value(point.xIndex))
+      .y((point) => yScale.value(point.y ?? 0)),
+  )
+
+  const lines = computed<LinePath[]>(() =>
+    pointsBySeries.value.map((lineSeries) => ({
+      ...lineSeries,
+      path: lineGenerator.value(lineSeries.points) ?? '',
+    })),
+  )
+
+  const gapSegments = computed<LineGapSegment[]>(() => {
+    const segments: LineGapSegment[] = []
+
+    lines.value.forEach((lineSeries) => {
+      const points = lineSeries.points
+      if (points.length < 3) return
+
+      let index = 0
+      while (index < points.length) {
+        const point = points[index]
+        if (point?.y != null) {
+          index += 1
+          continue
+        }
+
+        const start = index
+        while (index < points.length && points[index]?.y == null) index += 1
+        const end = index - 1
+
+        const previous = points[start - 1]
+        const next = points[end + 1]
+        if (previous?.y == null || next?.y == null) continue
+
+        segments.push({
+          seriesId: lineSeries.seriesId,
+          seriesLabel: lineSeries.seriesLabel,
+          x1: xScale.value(previous.xIndex),
+          y1: yScale.value(previous.y),
+          x2: xScale.value(next.xIndex),
+          y2: yScale.value(next.y),
+          color: lineSeries.color,
+        })
+      }
+    })
+
+    return segments
+  })
+
+  const legendItems = computed<ChartLegendItem[]>(() => {
+    if (!isLineSeries(data.value ?? [])) return []
+    return lines.value.map((lineSeries) => ({
+      label: lineSeries.seriesLabel,
+      color: lineSeries.color,
+    }))
+  })
+
+  return {
+    lines,
+    gapSegments,
+    xAxis,
+    yAxis,
+    xScale,
+    yScale,
+    legendItems,
+    xDomainLabels: computed(() => xDomainMeta.value.keys.map((key) => xDomainMeta.value.labels.get(key) ?? key)),
+  }
+}

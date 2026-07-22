@@ -189,13 +189,24 @@ function computeArcs(innerWidth: number, innerHeight: number) {
   return arcs.value
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 /**
  * Show tooltip and set hovered slice index on mouse enter.
  */
 function onArcEnter(e: MouseEvent, arc: PieArcData) {
   setHovered(arcs.value.indexOf(arc))
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, arc.data)
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, arc.data)
 }
 
 /**
@@ -203,7 +214,8 @@ function onArcEnter(e: MouseEvent, arc: PieArcData) {
  */
 function onArcMove(e: MouseEvent, arc: PieArcData) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, arc.data)
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, arc.data)
 }
 
 /**

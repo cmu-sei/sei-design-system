@@ -216,9 +216,20 @@ function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
   return cells.value
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex
@@ -227,7 +238,8 @@ function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
 
 function onCellMove(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex

@@ -28,6 +28,7 @@ export type {
  */
 export {
   pie,
+  line,
   arc,
   scaleBand,
   scaleLinear,

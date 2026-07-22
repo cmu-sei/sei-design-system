@@ -955,6 +955,76 @@
     <div class="grid gap-4">
       <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
         <h2>
+          Line Chart
+        </h2>
+        <p>
+          A reusable SVG-based line chart for trend analysis across ordered categories. Like the other
+          chart components, it is built on <code>BaseChart</code> and supports tooltips, legends, and
+          responsive sizing via <code>aspect-ratio</code>.
+        </p>
+
+        <h3>Trend comparison (6 lines or fewer)</h3>
+        <p>
+          With six or fewer series, each line receives a distinct color to maximize comparability.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendSeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Browser Market Share Trend (2019-2025)"
+          />
+        </div>
+
+        <h3 class="mt-10">
+          Missing data with dashed gaps
+        </h3>
+        <p>
+          Null values intentionally break each line segment. Missing intervals are represented with
+          dashes to show discontinuity.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendWithGaps"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Browser Market Share Trend with Missing Data"
+          />
+        </div>
+
+        <h3 class="mt-10">
+          Dense mode (more than 6 lines)
+        </h3>
+        <p>
+          When series count exceeds six, all lines render in gray to reduce visual noise. Hovering a
+          line highlights it in blue. Use <code>line-count-threshold</code> to override when this mode starts.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendManySeries"
+            :value-format="formatPercent"
+            :tooltip-value-format="formatPercent"
+            :aspect-ratio="16 / 9"
+            :line-count-threshold="6"
+            show-tooltip
+            show-points
+            show-legend
+            title="Dense Multi-Series Trend (Monochrome with Hover Highlight)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
           Heatmap Chart
         </h2>
         <p>
@@ -1822,11 +1892,13 @@
 import type { AxisDomain } from '@/lib/d3'
 import type { BarItem, BarSeries } from '@/composables/useBarChart'
 import type { HeatmapCell, HeatmapColors } from '@/composables/useHeatmapChart'
+import type { LineSeries } from '@/composables/useLineChart'
 import type { PieSlice } from '@/composables/usePieChart'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 import SdsBarChart from '@/components/BarChart/BarChart.vue'
 import SdsHeatmapChart from '@/components/HeatmapChart/HeatmapChart.vue'
 import SdsLink from '@/components/Link/Link.vue';
+import SdsLineChart from '@/components/LineChart/LineChart.vue'
 import SdsPieChart from '@/components/PieChart/PieChart.vue';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { formatPercent, resolveItemColor, sortByProperty } from '@/helpers/charts'
@@ -2027,6 +2099,90 @@ const browserShareBySeriesBrandColors: BarSeries[] = [
     ],
   },
 ]
+
+/**
+ * Line Chart(s)
+ */
+const lineYears = ['2019', '2020', '2021', '2022', '2023', '2024', '2025']
+
+const browserLineTrendSeries: LineSeries[] = [
+  {
+    label: 'Chrome',
+    data: lineYears.map((year, index) => ({ x: year, y: [67.2, 68.1, 66.7, 65.5, 64.1, 65.1, 65.8][index] ?? 0 })),
+  },
+  {
+    label: 'Safari',
+    data: lineYears.map((year, index) => ({ x: year, y: [16.1, 16.8, 17.4, 18.8, 19.6, 18.7, 18.2][index] ?? 0 })),
+  },
+  {
+    label: 'Edge',
+    data: lineYears.map((year, index) => ({ x: year, y: [2.8, 3.1, 3.4, 3.9, 4.6, 5.1, 5.0][index] ?? 0 })),
+  },
+  {
+    label: 'Firefox',
+    data: lineYears.map((year, index) => ({ x: year, y: [4.4, 4.1, 3.8, 3.2, 2.9, 2.8, 2.7][index] ?? 0 })),
+  },
+  {
+    label: 'Others',
+    data: lineYears.map((year, index) => ({ x: year, y: [9.5, 7.9, 8.7, 8.6, 8.8, 8.3, 8.3][index] ?? 0 })),
+  },
+]
+
+const browserLineTrendWithGaps: LineSeries[] = [
+  {
+    label: 'Chrome',
+    data: [
+      { x: '2019', y: 67.2 },
+      { x: '2020', y: 68.1 },
+      { x: '2021', y: null },
+      { x: '2022', y: null },
+      { x: '2023', y: 64.1 },
+      { x: '2024', y: 65.1 },
+      { x: '2025', y: 65.8 },
+    ],
+  },
+  {
+    label: 'Safari',
+    data: [
+      { x: '2019', y: 16.1 },
+      { x: '2020', y: 16.8 },
+      { x: '2021', y: 17.4 },
+      { x: '2022', y: null },
+      { x: '2023', y: 19.6 },
+      { x: '2024', y: null },
+      { x: '2025', y: 18.2 },
+    ],
+  },
+  {
+    label: 'Edge',
+    data: [
+      { x: '2019', y: 2.8 },
+      { x: '2020', y: 3.1 },
+      { x: '2021', y: 3.4 },
+      { x: '2022', y: null },
+      { x: '2023', y: 4.6 },
+      { x: '2024', y: 5.1 },
+      { x: '2025', y: 5.0 },
+    ],
+  },
+]
+
+const browserLineTrendManySeries: LineSeries[] = [
+  'Chrome',
+  'Safari',
+  'Edge',
+  'Firefox',
+  'Opera',
+  'Brave',
+  'Vivaldi',
+  'Arc'
+].map((label, index) => ({
+  label,
+  data: lineYears.map((year, yearIndex) => ({
+    x: year,
+    y: Math.max(1, 70 - (index * 7) - yearIndex),
+  })),
+}))
 
 /**
  * Heatmap Chart(s)
