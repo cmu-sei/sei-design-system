@@ -13,7 +13,7 @@
         orientation: props.legendOrientation,
         position: resolvedLegendPosition,
       }"
-      :show-legend="showLegendForData"
+      :show-legend="showLegend"
       :title="props.title"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
@@ -54,6 +54,19 @@
             :aria-label="`Series ${lineSeries.seriesLabel}`"
           />
 
+          <path
+            v-for="(lineSeries, i) in computeLines(innerWidth, innerHeight)"
+            :key="`line-hit-${lineSeries.seriesId}`"
+            :d="lineSeries.path"
+            fill="none"
+            stroke="transparent"
+            stroke-width="10"
+            class="pointer-events-stroke"
+            @mouseenter="onLineEnter(i)"
+            @mousemove="onLineEnter(i)"
+            @mouseleave="onLineLeave"
+          />
+
           <template v-if="props.showPoints">
             <circle
               v-for="point in pointMarkers"
@@ -67,18 +80,20 @@
               role="img"
               :aria-label="`${point.seriesLabel} at ${point.xLabel}: ${resolvedFormatter(point.value)}`"
             />
-          </template>
 
-          <rect
-            v-if="props.showPoints"
-            x="0"
-            y="0"
-            :width="innerWidth"
-            :height="innerHeight"
-            fill="transparent"
-            @mousemove="onInteractionMove"
-            @mouseleave="onInteractionLeave"
-          />
+            <circle
+              v-for="point in pointMarkers"
+              :key="`point-hit-${point.key}`"
+              :cx="point.cx"
+              :cy="point.cy"
+              :r="8"
+              fill="transparent"
+              class="pointer-events-all"
+              @mouseenter="(event) => onPointEnter(event, point)"
+              @mousemove="(event) => onPointEnter(event, point)"
+              @mouseleave="onPointLeave"
+            />
+          </template>
         </g>
       </template>
 
@@ -158,7 +173,6 @@ interface LinePointMarker {
 }
 
 type LineChartColorClass = (typeof lineChartColorClasses)[number] | 'text-gray-200'
-const POINT_HOVER_RADIUS_PX = 14
 
 defineOptions({
   name: 'SdsLineChart',
@@ -205,7 +219,7 @@ const resolvedFormatter = computed(() => {
   return typeof formatter === 'function' ? formatter : format(formatter)
 })
 
-const showLegendForData = computed(() => props.showLegend && lines.value.length > 1)
+const showLegend = computed(() => props.showLegend && lines.value.length > props.lineCountThreshold)
 const resolvedLegendPosition = computed<ChartLegendPosition>(() =>
   props.legendPosition.startsWith('top-')
     ? (props.legendPosition.replace('top-', 'bottom-') as ChartLegendPosition)
@@ -258,53 +272,45 @@ function getLineColorClass(index: number): LineChartColorClass {
   return lineChartColorClasses[index % lineChartColorClasses.length] ?? 'text-blue-400'
 }
 
-function onInteractionMove(event: MouseEvent) {
-  if (!props.showPoints || !pointMarkers.value.length) return
-
+function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
   const target = event.currentTarget
-  if (!(target instanceof SVGRectElement)) return
+  if (!(target instanceof SVGCircleElement)) {
+    return { x: event.clientX, y: event.clientY }
+  }
   const rect = target.getBoundingClientRect()
-  const pointerX = event.clientX - rect.left
-  const pointerY = event.clientY - rect.top
-
-  let nearest: LinePointMarker | null = null
-  let nearestDistance = Number.POSITIVE_INFINITY
-
-  for (const point of pointMarkers.value) {
-    const dx = point.cx - pointerX
-    const dy = point.cy - pointerY
-    const distance = (dx * dx) + (dy * dy)
-    if (distance < nearestDistance) {
-      nearestDistance = distance
-      nearest = point
-    }
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
   }
+}
 
-  const nearestPoint = nearest
-  if (!nearestPoint) return
-
-  if (nearestDistance > POINT_HOVER_RADIUS_PX * POINT_HOVER_RADIUS_PX) {
-    hoveredPointKey.value = null
-    setHovered(null)
-    tooltip.hide()
-    return
-  }
-
-  hoveredPointKey.value = nearestPoint.key
-  setHovered(nearestPoint.seriesIndex)
-
+function onPointEnter(event: MouseEvent, point: LinePointMarker) {
+  hoveredPointKey.value = point.key
+  setHovered(point.seriesIndex)
   if (!props.showTooltip) return
-  tooltip.show(rect.left + nearestPoint.cx, rect.top + nearestPoint.cy, {
-    xLabel: nearestPoint.xLabel,
-    seriesLabel: nearestPoint.seriesLabel,
-    value: nearestPoint.value,
-    color: nearestPoint.color,
+  const anchor = getTooltipAnchor(event)
+  tooltip.show(anchor.x, anchor.y, {
+    xLabel: point.xLabel,
+    seriesLabel: point.seriesLabel,
+    value: point.value,
+    color: point.color,
   })
 }
 
-function onInteractionLeave() {
+function onPointLeave() {
   hoveredPointKey.value = null
   setHovered(null)
   tooltip.hide()
+}
+
+function onLineEnter(index: number) {
+  if (hoveredPointKey.value) return
+  setHovered(index)
+  tooltip.hide()
+}
+
+function onLineLeave() {
+  if (hoveredPointKey.value) return
+  setHovered(null)
 }
 </script>
