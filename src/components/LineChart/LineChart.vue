@@ -2,6 +2,7 @@
   <div
     data-id="sds-line-chart"
     class="sds-line-chart w-full min-w-0"
+    @mouseleave="onChartLeave"
   >
     <BaseChart
       v-model:hovered-index="hoveredIndex"
@@ -91,7 +92,6 @@
             class="pointer-events-stroke"
             @mouseenter="onLineEnter(i)"
             @mousemove="onLineEnter(i)"
-            @mouseleave="onLineLeave"
           />
 
           <template v-if="props.showPoints">
@@ -368,18 +368,16 @@ function onPointEnter(event: MouseEvent, point: LinePointMarker) {
 
 function onPointLeave() {
   hoveredPointKey.value = null
-  setHovered(null)
-  tooltip.hide()
 }
 
 function onLineEnter(index: number) {
-  if (hoveredPointKey.value) return
+  hoveredPointKey.value = null
   setHovered(index)
-  tooltip.hide()
 }
 
-function onLineLeave() {
-  if (hoveredPointKey.value) return
+function onChartLeave() {
+  hoveredPointKey.value = null
   setHovered(null)
+  tooltip.hide()
 }
 </script>

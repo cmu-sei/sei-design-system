@@ -1,105 +1,109 @@
 <template>
-  <BaseChart
-    v-model:hovered-index="hoveredIndex"
-    :height="props.height"
-    :aspect-ratio="props.aspectRatio"
-    :margin="props.margin"
-    :legend="{
-      items: legendItems,
-      orientation: props.legendOrientation,
-      position: props.legendPosition
-    }"
-    :show-legend="props.showLegend"
-    :title="props.title"
-    :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
-    :tooltip-x="tooltip.x.value"
-    :tooltip-y="tooltip.y.value"
+  <div
+    class="sds-pie-chart w-full"
+    @mouseleave="onChartLeave"
   >
-    <template #default="{ containerWidth, innerWidth, innerHeight }">
-      <g
-        v-if="containerWidth > 0"
-        :transform="`translate(${props.margin.left + innerWidth / 2}, ${props.margin.top + innerHeight / 2})`"
-      >
-        <path
-          v-for="(arc, i) in computeArcs(innerWidth, innerHeight)"
-          :key="i"
-          :d="arc.path"
-          :fill="arc.color"
-          class="transition-opacity duration-150 cursor-pointer sds-pie-chart-slice"
-          :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
-          role="img"
-          :aria-label="`${arc.data.label}: ${resolvedFormatter(arc.data.value)}`"
-          @mouseenter="(e) => onArcEnter(e, arc)"
-          @mousemove="(e) => onArcMove(e, arc)"
-          @mouseleave="onArcLeave"
-        />
-        <template v-if="props.showLabels">
-          <text
-            v-for="(arc, i) in arcs"
-            v-show="arc.angle > MIN_LABEL_ANGLE"
-            :key="`label-${i}`"
-            :x="arc.centroid[0]"
-            :y="arc.centroid[1]"
-            text-anchor="middle"
-            dominant-baseline="middle"
-            fill="white"
-            font-size="12"
-            font-weight="600"
-            class="pointer-events-none select-none sds-pie-chart-label"
-          >
-            <tspan
-              v-if="props.labelType === 'label' || props.labelType === 'both'"
-              :x="arc.centroid[0]"
-              dy="0"
-            >
-              {{ arc.data.label }}
-            </tspan>
-            <tspan 
-              v-if="props.labelType === 'both'" 
-              :x="arc.centroid[0]" 
-              dy="1.2rem"
-            >
-              {{ resolvedFormatter(arc.data.value) }}
-            </tspan>
-            <tspan 
-              v-if="props.labelType === 'value'" 
-              :x="arc.centroid[0]" 
-              dy="0"
-            >
-              {{ resolvedFormatter(arc.data.value) }}
-            </tspan>
-          </text>
-        </template>
-      </g>
-    </template>
-    <template 
-      v-if="props.showTooltip" 
-      #tooltip
+    <BaseChart
+      v-model:hovered-index="hoveredIndex"
+      :height="props.height"
+      :aspect-ratio="props.aspectRatio"
+      :margin="props.margin"
+      :legend="{
+        items: legendItems,
+        orientation: props.legendOrientation,
+        position: props.legendPosition
+      }"
+      :show-legend="props.showLegend"
+      :title="props.title"
+      :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
+      :tooltip-x="tooltip.x.value"
+      :tooltip-y="tooltip.y.value"
     >
-      <slot 
-        name="tooltip" 
-        :data="tooltip.data.value" 
-        :format-value="resolvedFormatter"
-      >
-        <p 
-          v-if="tooltip.data.value" 
-          class="text-xs wrap-break-word"
+      <template #default="{ containerWidth, innerWidth, innerHeight }">
+        <g
+          v-if="containerWidth > 0"
+          :transform="`translate(${props.margin.left + innerWidth / 2}, ${props.margin.top + innerHeight / 2})`"
         >
-          <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-          <span class="block">{{ resolvedFormatter(tooltip.data.value.value) }}</span>
-        </p>
-      </slot>
-    </template>
-    <template 
-      v-if="$slots.legend" 
-      #legend="slotProps"
-    >
-      <slot 
-        name="legend" 
-        v-bind="slotProps" 
-      />
-    </template>
-  </BaseChart>
+          <path
+            v-for="(arc, i) in computeArcs(innerWidth, innerHeight)"
+            :key="i"
+            :d="arc.path"
+            :fill="arc.color"
+            class="transition-opacity duration-150 cursor-pointer sds-pie-chart-slice"
+            :class="hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
+            role="img"
+            :aria-label="`${arc.data.label}: ${resolvedFormatter(arc.data.value)}`"
+            @mouseenter="(e) => onArcEnter(e, arc)"
+            @mousemove="(e) => onArcMove(e, arc)"
+          />
+          <template v-if="props.showLabels">
+            <text
+              v-for="(arc, i) in arcs"
+              v-show="arc.angle > MIN_LABEL_ANGLE"
+              :key="`label-${i}`"
+              :x="arc.centroid[0]"
+              :y="arc.centroid[1]"
+              text-anchor="middle"
+              dominant-baseline="middle"
+              fill="white"
+              font-size="12"
+              font-weight="600"
+              class="pointer-events-none select-none sds-pie-chart-label"
+            >
+              <tspan
+                v-if="props.labelType === 'label' || props.labelType === 'both'"
+                :x="arc.centroid[0]"
+                dy="0"
+              >
+                {{ arc.data.label }}
+              </tspan>
+              <tspan 
+                v-if="props.labelType === 'both'" 
+                :x="arc.centroid[0]" 
+                dy="1.2rem"
+              >
+                {{ resolvedFormatter(arc.data.value) }}
+              </tspan>
+              <tspan 
+                v-if="props.labelType === 'value'" 
+                :x="arc.centroid[0]" 
+                dy="0"
+              >
+                {{ resolvedFormatter(arc.data.value) }}
+              </tspan>
+            </text>
+          </template>
+        </g>
+      </template>
+      <template 
+        v-if="props.showTooltip" 
+        #tooltip
+      >
+        <slot 
+          name="tooltip" 
+          :data="tooltip.data.value" 
+          :format-value="resolvedFormatter"
+        >
+          <p 
+            v-if="tooltip.data.value" 
+            class="text-xs wrap-break-word"
+          >
+            <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
+            <span class="block">{{ resolvedFormatter(tooltip.data.value.value) }}</span>
+          </p>
+        </slot>
+      </template>
+      <template 
+        v-if="$slots.legend" 
+        #legend="slotProps"
+      >
+        <slot 
+          name="legend" 
+          v-bind="slotProps" 
+        />
+      </template>
+    </BaseChart>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -219,9 +223,9 @@ function onArcMove(e: MouseEvent, arc: PieArcData) {
 }
 
 /**
- * Hide tooltip and reset hovered slice on mouse leave.
+ * Hide tooltip and reset hovered slice when leaving chart bounds.
  */
-function onArcLeave() {
+function onChartLeave() {
   setHovered(null)
   tooltip.hide()
 }

@@ -1,96 +1,100 @@
 <template>
-  <BaseChart 
-    v-model:hovered-index="hoveredIndex"
-    :height="props.height"
-    :aspect-ratio="props.aspectRatio"
-    :margin="resolvedMargin"
-    :legend="{
-      items: legendItems,
-      orientation: props.legendOrientation,
-      position: props.legendPosition,
-    }"
-    :show-legend="props.showLegend"
-    :title="props.title"
-    :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
-    :tooltip-x="tooltip.x.value"
-    :tooltip-y="tooltip.y.value"
-    :x-axis="xAxis"
-    :y-axis="yAxis"
+  <div
+    class="sds-bar-chart w-full"
+    @mouseleave="onChartLeave"
   >
-    <template #default="{ innerWidth, innerHeight, containerWidth }">
-      <g
-        v-if="innerWidth > 0"
-        ref="barsGroupRef"
-        :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
-      >
-        <!-- Bars (rendered first so axes paint on top of bar edges) -->
-        <rect
-          v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
-          :key="i"
-          :x="bar.x"
-          :y="bar.y"
-          :width="bar.width"
-          :height="bar.height"
-          :fill="bar.color"
-          class="transition-[opacity,filter] duration-100"
-          :class="
-            hoveredIndex !== null && getBarSeriesIndex(bar) !== hoveredIndex
-              ? 'opacity-40'
-              : 'opacity-100'
-          "
-          role="img"
-          :aria-label="`${bar.label}${bar.seriesName ? ` – ${bar.seriesName}` : ''}: ${bar.value}`"
-          @mouseenter="(e) => onBarEnter(e, bar)"
-          @mousemove="(e) => onBarMove(e, bar)"
-          @mouseleave="onBarLeave"
-        />
-      </g>
-    </template>
-
-    <template 
-      v-if="props.showTooltip" 
-      #tooltip
+    <BaseChart
+      v-model:hovered-index="hoveredIndex"
+      :height="props.height"
+      :aspect-ratio="props.aspectRatio"
+      :margin="resolvedMargin"
+      :legend="{
+        items: legendItems,
+        orientation: props.legendOrientation,
+        position: props.legendPosition,
+      }"
+      :show-legend="props.showLegend"
+      :title="props.title"
+      :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
+      :tooltip-x="tooltip.x.value"
+      :tooltip-y="tooltip.y.value"
+      :x-axis="xAxis"
+      :y-axis="yAxis"
     >
-      <slot 
-        name="tooltip" 
-        :data="tooltip.data.value" 
-        :format-value="resolvedFormatter"
-      >
-        <p 
-          v-if="tooltip.data.value" 
-          class="text-xs wrap-break-word"
+      <template #default="{ innerWidth, innerHeight, containerWidth }">
+        <g
+          v-if="innerWidth > 0"
+          ref="barsGroupRef"
+          :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
-          <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-          <span 
-            v-if="tooltip.data.value.seriesName" 
-            class="block"
-          >
-            <span
-              class="inline-block w-2.5 h-2.5 rounded-sm mr-1"
-              :style="{ background: tooltip.data.value.color }"
-            />
-            {{ tooltip.data.value.seriesName }}: {{ resolvedFormatter(tooltip.data.value.value) }}
-          </span>
-          <span 
-            v-else 
-            class="block"
-          >
-            {{ resolvedFormatter(tooltip.data.value.value) }}
-          </span>
-        </p>
-      </slot>
-    </template>
+          <!-- Bars (rendered first so axes paint on top of bar edges) -->
+          <rect
+            v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
+            :key="i"
+            :x="bar.x"
+            :y="bar.y"
+            :width="bar.width"
+            :height="bar.height"
+            :fill="bar.color"
+            class="transition-[opacity,filter] duration-100"
+            :class="
+              hoveredIndex !== null && getBarSeriesIndex(bar) !== hoveredIndex
+                ? 'opacity-40'
+                : 'opacity-100'
+            "
+            role="img"
+            :aria-label="`${bar.label}${bar.seriesName ? ` – ${bar.seriesName}` : ''}: ${bar.value}`"
+            @mouseenter="(e) => onBarEnter(e, bar)"
+            @mousemove="(e) => onBarMove(e, bar)"
+          />
+        </g>
+      </template>
 
-    <template
-      v-if="$slots.legend" 
-      #legend="slotProps"
-    >
-      <slot 
-        name="legend" 
-        v-bind="slotProps" 
-      />
-    </template>
-  </BaseChart>
+      <template 
+        v-if="props.showTooltip" 
+        #tooltip
+      >
+        <slot 
+          name="tooltip" 
+          :data="tooltip.data.value" 
+          :format-value="resolvedFormatter"
+        >
+          <p 
+            v-if="tooltip.data.value" 
+            class="text-xs wrap-break-word"
+          >
+            <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
+            <span 
+              v-if="tooltip.data.value.seriesName" 
+              class="block"
+            >
+              <span
+                class="inline-block w-2.5 h-2.5 rounded-sm mr-1"
+                :style="{ background: tooltip.data.value.color }"
+              />
+              {{ tooltip.data.value.seriesName }}: {{ resolvedFormatter(tooltip.data.value.value) }}
+            </span>
+            <span 
+              v-else 
+              class="block"
+            >
+              {{ resolvedFormatter(tooltip.data.value.value) }}
+            </span>
+          </p>
+        </slot>
+      </template>
+
+      <template
+        v-if="$slots.legend" 
+        #legend="slotProps"
+      >
+        <slot 
+          name="legend" 
+          v-bind="slotProps" 
+        />
+      </template>
+    </BaseChart>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -296,7 +300,8 @@ function onBarMove(e: MouseEvent, bar: BarRect) {
   })
 }
 
-function onBarLeave() {
+function onChartLeave() {
+  hoveredIndex.value = null
   tooltip.hide()
 }
 </script>
