@@ -33,6 +33,8 @@
 </template>
 
 <script setup lang="ts">
+import { CSSProperties } from 'vue'
+
 /** Minimum viewport inset to keep tooltip content visible. */
 const EDGE_PADDING = 8
 /** Horizontal gap between cursor point and tooltip body. */
@@ -47,6 +49,14 @@ interface ChartTooltipProps {
   visible: boolean
   x: number
   y: number
+}
+
+interface TooltipStyle extends CSSProperties {
+  transform: string
+  maxWidth: string
+  whiteSpace: 'normal'
+  overflowWrap: 'anywhere'
+  wordBreak: 'break-word'
 }
 
 defineOptions({ 
@@ -187,11 +197,11 @@ const arrowStyle = computed(() => {
 })
 
 /** Tooltip body style: position + width constraints + wrap behavior. */
-const tooltipStyle = computed(() => ({
+const tooltipStyle = computed<TooltipStyle>(() => ({
   transform: `translate3d(${tooltipLeft.value}px, ${tooltipTop.value}px, 0)`,
   maxWidth: `min(${MAX_WIDTH_PX}px, calc(100vw - ${EDGE_PADDING * 2}px))`,
-  whiteSpace: 'normal' as const,
-  overflowWrap: 'anywhere' as const,
-  wordBreak: 'break-word' as const,
+  whiteSpace: 'normal',
+  overflowWrap: 'anywhere',
+  wordBreak: 'break-word',
 }))
 </script>
