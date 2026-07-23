@@ -290,6 +290,9 @@ const items = computed(() => chunkArray(tableItems.value, totalResultsPerPage.va
 
 // Data and pagination objects
 const data = computed(() => ({ 
+  caption: 'Data Table Caption',
+  subcaption: 'Browse, filter, and manage table records',
+  // hideHeader: true,
   fields: tableFields.value, 
   items: items.value[currentPage.value - 1],
   sortBy: sort_by.value,

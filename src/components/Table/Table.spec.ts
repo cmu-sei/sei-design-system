@@ -64,6 +64,51 @@ describe('Table', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
+  it('renders supporting text beneath the caption', () => {
+    const wrapper = mount(Component, {
+      props: {
+        ...props,
+        caption: 'Tasks',
+        subcaption: 'Updated a few seconds ago'
+      }
+    })
+
+    const caption = wrapper.find('caption')
+    const subcaption = caption.find('.text-sm')
+
+    expect(caption.text()).toContain('Tasks')
+    expect(subcaption.text()).toBe('Updated a few seconds ago')
+    expect(subcaption.classes()).toContain('text-gray-600')
+  })
+
+  it('renders custom supporting content from the subcaption slot', () => {
+    const wrapper = mount(Component, {
+      props: {
+        ...props,
+        caption: 'Tasks',
+        subcaption: 'Default supporting text'
+      },
+      slots: {
+        subcaption: '<span data-testid="custom-subcaption">Updated just now</span>'
+      }
+    })
+
+    expect(wrapper.find('[data-testid="custom-subcaption"]').text()).toBe('Updated just now')
+    expect(wrapper.find('caption').text()).not.toContain('Default supporting text')
+  })
+
+  it('does not reserve supporting-text space when the subcaption is empty', () => {
+    const wrapper = mount(Component, {
+      props: {
+        ...props,
+        caption: 'Tasks',
+        subcaption: ''
+      }
+    })
+
+    expect(wrapper.find('caption .text-sm').exists()).toBe(false)
+  })
+
   it('sorts table by field (column)', async () => {
     await wrapper.setProps({ ...props, sortBy: 'name' })
     // Find all header buttons and get the Fruit column button (index 1, after Title)
@@ -328,6 +373,17 @@ describe('Table', () => {
   it('matches snapshot with assigned `rowHighlight` prop', async () => {
     await wrapper.setProps({ ...props, rowHighlight: true })
     expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  it('applies the table-prose header hiding class when hideHeader is true', async () => {
+    await wrapper.setProps({ ...props, hideHeader: true })
+    expect(wrapper.classes()).toContain('table-prose-hide-header')
+  })
+
+  it('applies the standalone table-prose class when standalone is true with a caption', async () => {
+    await wrapper.setProps({ ...props, caption: 'Caption', standalone: true })
+    expect(wrapper.classes()).toContain('table-prose-standalone')
+    expect(wrapper.find('caption').text()).toBe('Caption')
   })
 
   describe('Sticky columns', () => {
