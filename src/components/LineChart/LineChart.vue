@@ -26,6 +26,31 @@
           v-if="innerWidth > 0"
           :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
+          <template v-if="props.showGrid">
+            <line
+              v-for="(y, yIndex) in computeHorizontalGridLines(innerWidth, innerHeight)"
+              :key="`line-grid-y-${yIndex}`"
+              x1="0"
+              :y1="y"
+              :x2="innerWidth"
+              :y2="y"
+              class="stroke-current text-gray-100/75 pointer-events-none"
+              role="none"
+              stroke-width="1"
+            />
+            <line
+              v-for="(x, xIndex) in computeVerticalGridLines(innerWidth, innerHeight)"
+              :key="`line-grid-x-${xIndex}`"
+              :x1="x"
+              y1="0"
+              :x2="x"
+              :y2="innerHeight"
+              class="stroke-current text-gray-100/75 pointer-events-none"
+              role="none"
+              stroke-width="1"
+            />
+          </template>
+
           <line
             v-for="(segment, segmentIndex) in computeGapSegments(innerWidth, innerHeight)"
             :key="`line-gap-${segment.seriesId}-${segmentIndex}`"
@@ -33,11 +58,12 @@
             :y1="segment.y1"
             :x2="segment.x2"
             :y2="segment.y2"
-            stroke-width="2"
-            stroke-dasharray="6 6"
+            role="none"
+            stroke-width="1"
+            stroke-dasharray="4 4"
             stroke-linecap="round"
             class="stroke-current pointer-events-none transition-[opacity,color] duration-150"
-            :class="'text-gray-200'"
+            :class="getGapColorClass(segment)"
           />
 
           <path
@@ -59,6 +85,7 @@
             :key="`line-hit-${lineSeries.seriesId}`"
             :d="lineSeries.path"
             fill="none"
+            role="none"
             stroke="transparent"
             stroke-width="10"
             class="pointer-events-stroke"
@@ -142,6 +169,7 @@ interface LineChartProps {
   margin?: ChartMargin
   title?: string
   showTooltip?: boolean
+  showGrid?: boolean
   aspectRatio?: number
   valueFormat?: string | ((value: number) => string)
   tooltipValueFormat?: string | ((value: number) => string)
@@ -176,6 +204,7 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   margin: undefined,
   title: undefined,
   showTooltip: true,
+  showGrid: true,
   aspectRatio: undefined,
   valueFormat: '~s',
   tooltipValueFormat: undefined,
@@ -190,6 +219,10 @@ const dataRef = computed(() => props.data)
 const valueFormatRef = computed(() => props.valueFormat)
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
+
+// Keep horizontal grid density readable across chart heights.
+const HORIZONTAL_GRID_TICK_SPACING_PX = 56
+const MIN_HORIZONTAL_GRID_TICKS = 2
 
 const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
@@ -239,6 +272,14 @@ const resolvedLegendItems = computed(() =>
   }),
 )
 
+const lineSeriesIndexById = computed(() => {
+  const seriesIndexById = new Map<string, number>()
+  lines.value.forEach((lineSeries, index) => {
+    seriesIndexById.set(lineSeries.seriesId, index)
+  })
+  return seriesIndexById
+})
+
 const pointMarkers = computed<LinePointMarker[]>(() =>
   lines.value.flatMap((lineSeries, seriesIndex) =>
     lineSeries.points
@@ -256,16 +297,35 @@ const pointMarkers = computed<LinePointMarker[]>(() =>
   ),
 )
 
-function computeLines(innerWidth: number, innerHeight: number): LinePath[] {
+function syncDimensions(innerWidth: number, innerHeight: number) {
   innerWidthRef.value = innerWidth
   innerHeightRef.value = innerHeight
+}
+
+function computeLines(innerWidth: number, innerHeight: number): LinePath[] {
+  syncDimensions(innerWidth, innerHeight)
   return lines.value
 }
 
 function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSegment[] {
-  innerWidthRef.value = innerWidth
-  innerHeightRef.value = innerHeight
+  syncDimensions(innerWidth, innerHeight)
   return gapSegments.value
+}
+
+function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
+  syncDimensions(innerWidth, innerHeight)
+  const pointCount = xDomainLabels.value.length
+  if (pointCount <= 0) return []
+  return Array.from({ length: pointCount }, (_, index) => xScale.value(index))
+}
+
+function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
+  syncDimensions(innerWidth, innerHeight)
+  const tickCount = Math.max(
+    MIN_HORIZONTAL_GRID_TICKS,
+    Math.floor(innerHeight / HORIZONTAL_GRID_TICK_SPACING_PX),
+  )
+  return yScale.value.ticks(tickCount).map((tickValue) => yScale.value(tickValue))
 }
 
 function getLineColorClass(index: number): LineChartColorClass {
@@ -273,6 +333,12 @@ function getLineColorClass(index: number): LineChartColorClass {
     return hoveredIndex.value === index ? 'text-blue-400' : 'text-gray-200'
   }
   return lineChartColorClasses[index % lineChartColorClasses.length] ?? 'text-blue-400'
+}
+
+function getGapColorClass(segment: LineGapSegment): LineChartColorClass {
+  const seriesIndex = lineSeriesIndexById.value.get(segment.seriesId)
+  if (seriesIndex == null) return 'text-gray-200'
+  return getLineColorClass(seriesIndex)
 }
 
 function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {

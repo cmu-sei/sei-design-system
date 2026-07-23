@@ -176,18 +176,3 @@ MonochromeWhenMoreThanSixLines.parameters = {
     },
   },
 }
-
-export const CustomMonochromeThreshold = Template.bind({})
-CustomMonochromeThreshold.args = {
-  ...Default.args,
-  data: csatTrendSeries,
-  lineCountThreshold: 3,
-  title: 'Custom Monochrome Threshold (3)',
-}
-CustomMonochromeThreshold.parameters = {
-  docs: {
-    description: {
-      story: 'Use lineCountThreshold to control when dense-mode grayscale behavior starts.',
-    },
-  },
-}
