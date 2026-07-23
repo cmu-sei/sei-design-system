@@ -1,8 +1,8 @@
 import type { ComputedRef, Ref } from 'vue'
 import type { ChartLegendItem } from '@/components'
-import type { AxisDomain, ScaleLinear } from '@/lib/d3'
-import { line, max, min, scaleLinear } from '@/lib/d3'
-import { useChartAxis } from '@/composables/useChartAxis'
+import type { AxisDomain, ScaleLinear, ScaleTime } from '@/lib/d3'
+import { line, max, min, scaleLinear, scaleTime, scaleUtc } from '@/lib/d3'
+import { useChartAxis, type TickFormatter } from '@/composables/useChartAxis'
 import { useChartConfig } from '@/composables/useChartConfig'
 import { useDarkMode } from '@/composables/useDarkMode'
 import { resolveColor } from '@/helpers/charts/colors'
@@ -14,6 +14,8 @@ export interface LineDatum {
   x: string | number | Date
   y: number | null
 }
+
+export type LineXScaleType = 'category' | 'linear' | 'time' | 'utc'
 
 /**
  * A named series of line-chart points.
@@ -30,6 +32,7 @@ export interface LineChartPoint extends LineDatum {
   xKey: string
   xLabel: string
   xIndex: number
+  xPosition: number | Date
 }
 
 export interface LinePath {
@@ -63,6 +66,8 @@ interface InternalSeries {
   data: LineDatum[]
 }
 
+type XScale = ScaleLinear<number, number> | ScaleTime<number, number>
+
 const SINGLE_SERIES_ID = '_'
 const SINGLE_SERIES_LABEL = 'Series'
 
@@ -79,6 +84,31 @@ function normalizeKey(value: string | number | Date): string {
 function displayLabel(value: string | number | Date): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10)
   return String(value)
+}
+
+function resolvePosition(value: string | number | Date, scaleType: LineXScaleType): number | Date {
+  if (scaleType === 'category') return 0
+  if (scaleType === 'time' || scaleType === 'utc') {
+    if (value instanceof Date) return value
+    if (typeof value === 'number') return new Date(value)
+    const parsed = Date.parse(value.trim())
+    return Number.isNaN(parsed) ? new Date(value) : new Date(parsed)
+  }
+
+  if (value instanceof Date) return value.getTime()
+  if (typeof value === 'number' && Number.isFinite(value)) return value
+  if (typeof value !== 'string') return 0
+
+  const trimmed = value.trim()
+  if (!trimmed) return 0
+
+  const asNumber = Number(trimmed)
+  if (Number.isFinite(asNumber) && /^-?\d+(\.\d+)?$/.test(trimmed)) {
+    return asNumber
+  }
+
+  const asDate = Date.parse(trimmed)
+  return Number.isNaN(asDate) ? 0 : asDate
 }
 
 function toComparableValue(value: string | number | Date): number | null {
@@ -125,6 +155,9 @@ export function useLineChart(
   valueFormat:
     | Ref<string | ((v: number) => string)>
     | ComputedRef<string | ((v: number) => string)> = computed(() => '~s'),
+  xScaleType: Ref<LineXScaleType> | ComputedRef<LineXScaleType> = computed(() => 'category'),
+  xTickValuesOverride?: Ref<AxisDomain[] | undefined> | ComputedRef<AxisDomain[] | undefined>,
+  xTickFormatterOverride?: Ref<TickFormatter | undefined> | ComputedRef<TickFormatter | undefined>,
 ) {
   const _bodyDark = useDarkMode()
   const config = useChartConfig() ?? {}
@@ -153,9 +186,11 @@ export function useLineChart(
 
   const xDomainMeta = computed(() => {
     const keySet = new Set<string>()
-    const entries: Array<{ key: string; comparable: number | null }> = []
+    const entries: Array<{ key: string; comparable: number | null; position: number | Date }> = []
     const labels = new Map<string, string>()
     const values = new Map<string, string | number | Date>()
+    const positions = new Map<string, number | Date>()
+    const currentScaleType = xScaleType.value
 
     series.value.forEach((lineSeries) => {
       lineSeries.data.forEach((point) => {
@@ -164,9 +199,14 @@ export function useLineChart(
           keySet.add(key)
           values.set(key, point.x)
           labels.set(key, displayLabel(point.x))
+          if (currentScaleType !== 'category') {
+            const position = resolvePosition(point.x, currentScaleType)
+            positions.set(key, position)
+          }
           entries.push({
             key,
             comparable: toComparableValue(point.x),
+            position: currentScaleType === 'category' ? 0 : resolvePosition(point.x, currentScaleType),
           })
         }
       })
@@ -179,7 +219,7 @@ export function useLineChart(
         .map((entry) => entry.key)
       : entries.map((entry) => entry.key)
 
-    return { keys, labels, values }
+    return { keys, labels, values, positions }
   })
 
   const pointsBySeries = computed<LinePath[]>(() => {
@@ -197,6 +237,10 @@ export function useLineChart(
           xKey,
           xLabel: xDomainMeta.value.labels.get(xKey) ?? xKey,
           xIndex,
+          xPosition:
+            xScaleType.value === 'category'
+              ? xIndex
+              : (xDomainMeta.value.positions.get(xKey) ?? xIndex),
         }
       })
 
@@ -231,7 +275,35 @@ export function useLineChart(
     return [minValue - padding, maxValue + padding]
   })
 
-  const xScale = computed<ScaleLinear<number, number>>(() => {
+  const xScale = computed<XScale>(() => {
+    const currentScaleType = xScaleType.value
+    if (currentScaleType === 'time' || currentScaleType === 'utc') {
+      const positions = xDomainMeta.value.keys
+        .map((key) => xDomainMeta.value.positions.get(key))
+        .filter((value): value is Date => value instanceof Date)
+      const [minValue, maxValue] = positions.length
+        ? [positions[0], positions[positions.length - 1]]
+        : [new Date(), new Date()]
+
+      const scale = currentScaleType === 'utc'
+        ? scaleUtc<number, number>()
+        : scaleTime<number, number>()
+      return scale
+        .domain([minValue, maxValue])
+        .range([0, innerWidth.value])
+    }
+
+    if (currentScaleType === 'linear') {
+      const positions = xDomainMeta.value.keys
+        .map((key) => xDomainMeta.value.positions.get(key))
+        .filter((value): value is number => typeof value === 'number')
+      const minValue = positions[0] ?? 0
+      const maxValue = positions[positions.length - 1] ?? 1
+      return scaleLinear<number, number>()
+        .domain([minValue, maxValue])
+        .range([0, innerWidth.value])
+    }
+
     const lastIndex = Math.max(0, xDomainMeta.value.keys.length - 1)
     return scaleLinear<number, number>()
       .domain([0, lastIndex])
@@ -245,11 +317,29 @@ export function useLineChart(
       .range([innerHeight.value, 0]),
   )
 
-  const xTickValues = computed<number[]>(() =>
-    buildTickIndices(xDomainMeta.value.keys.length, innerWidth.value),
-  )
+  const xTickValues = computed<AxisDomain[]>(() => {
+    const override = xTickValuesOverride?.value
+    if (override?.length) return override
+
+    const currentScaleType = xScaleType.value
+    if (currentScaleType === 'category') {
+      return buildTickIndices(xDomainMeta.value.keys.length, innerWidth.value)
+    }
+
+    const scale = xScale.value
+    if ('ticks' in scale && typeof scale.ticks === 'function') {
+      return scale.ticks(Math.max(2, Math.floor(innerWidth.value / 80)))
+    }
+    return []
+  })
 
   const xTickFormatter = computed(() => (value: AxisDomain) => {
+    const override = xTickFormatterOverride?.value
+    if (override) return override(value)
+
+    const currentScaleType = xScaleType.value
+    if (currentScaleType !== 'category') return ''
+
     const numericValue = typeof value === 'number' ? value : Number(value)
     const index = Number.isFinite(numericValue) ? Math.round(numericValue) : 0
     const xKey = xDomainMeta.value.keys[index]
@@ -260,8 +350,16 @@ export function useLineChart(
     computed(() => xScale.value),
     computed(() => 'bottom' as const),
     undefined,
-    undefined,
-    computed(() => xTickFormatter.value),
+    computed(() =>
+      xScaleType.value === 'category' || xTickValuesOverride?.value?.length
+        ? undefined
+        : Math.max(2, Math.floor(innerWidth.value / 80)),
+    ),
+    computed(() =>
+      xScaleType.value === 'category' || xTickFormatterOverride?.value
+        ? xTickFormatter.value
+        : undefined,
+    ),
     computed(() => xTickValues.value),
   )
 
@@ -276,7 +374,11 @@ export function useLineChart(
   const lineGenerator = computed(() =>
     line<LineChartPoint>()
       .defined((point) => point.y != null && Number.isFinite(point.y))
-      .x((point) => xScale.value(point.xIndex))
+      .x((point) =>
+        xScaleType.value === 'category'
+          ? (xScale.value as ScaleLinear<number, number>)(point.xIndex)
+          : (xScale.value as ScaleLinear<number, number> | ScaleTime<number, number>)(point.xPosition as never),
+      )
       .y((point) => yScale.value(point.y ?? 0)),
   )
 
@@ -313,9 +415,13 @@ export function useLineChart(
         segments.push({
           seriesId: lineSeries.seriesId,
           seriesLabel: lineSeries.seriesLabel,
-          x1: xScale.value(previous.xIndex),
+          x1: xScaleType.value === 'category'
+            ? (xScale.value as ScaleLinear<number, number>)(previous.xIndex)
+            : (xScale.value as ScaleLinear<number, number> | ScaleTime<number, number>)(previous.xPosition as never),
           y1: yScale.value(previous.y),
-          x2: xScale.value(next.xIndex),
+          x2: xScaleType.value === 'category'
+            ? (xScale.value as ScaleLinear<number, number>)(next.xIndex)
+            : (xScale.value as ScaleLinear<number, number> | ScaleTime<number, number>)(next.xPosition as never),
           y2: yScale.value(next.y),
           color: lineSeries.color,
         })
@@ -341,6 +447,7 @@ export function useLineChart(
     xScale,
     yScale,
     legendItems,
+    xTickValues,
     xDomainLabels: computed(() => xDomainMeta.value.keys.map((key) => xDomainMeta.value.labels.get(key) ?? key)),
   }
 }

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { effectScope, ref } from 'vue'
-import { useLineChart, isLineSeries, type LineData } from './useLineChart'
+import { useLineChart, isLineSeries, type LineData, type LineXScaleType } from './useLineChart'
+import type { AxisDomain } from '@/lib/d3'
 
 vi.mock('@/composables/useDarkMode', () => ({
   useDarkMode: () => ref(false),
@@ -10,10 +11,25 @@ vi.mock('@/composables/useChartConfig', () => ({
   useChartConfig: () => ({}),
 }))
 
-function createLineChart(data: LineData) {
+function createLineChart(
+  data: LineData,
+  options?: {
+    xScaleType?: LineXScaleType
+    xTickValues?: AxisDomain[]
+    xTickFormatter?: (value: AxisDomain) => string
+  },
+) {
   const scope = effectScope()
   const chart = scope.run(() =>
-    useLineChart(ref(data), ref(480), ref(240), ref('~s')),
+    useLineChart(
+      ref(data),
+      ref(480),
+      ref(240),
+      ref('~s'),
+      ref(options?.xScaleType ?? 'category'),
+      ref(options?.xTickValues),
+      ref(options?.xTickFormatter),
+    ),
   )
 
   if (!chart) throw new Error('Failed to create line chart composable scope.')
@@ -120,5 +136,30 @@ describe('useLineChart', () => {
     expect(multi.chart.legendItems.value).toHaveLength(2)
     expect(multi.chart.legendItems.value[0]?.label).toBe('Series A')
     multi.scope.stop()
+  })
+
+  it('uses explicit UTC tick values and formatter when provided', () => {
+    const months = [new Date(Date.UTC(2025, 0, 1)), new Date(Date.UTC(2025, 11, 1))]
+    const { scope, chart } = createLineChart(
+      [
+        {
+          label: 'Series A',
+          data: months.map((month, index) => ({ x: month, y: index + 1 })),
+        },
+      ],
+      {
+        xScaleType: 'utc',
+        xTickValues: months,
+        xTickFormatter: (value) =>
+          new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(
+            value instanceof Date ? value : new Date(value as number),
+          ),
+      },
+    )
+
+    expect(chart.xTickValues.value).toEqual(months)
+    expect(chart.xAxis.value.tickValues?.()).toEqual(months)
+    expect(chart.xAxis.value.tickFormat?.()?.(months[0] as never)).toBe('Jan')
+    scope.stop()
   })
 })

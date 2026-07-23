@@ -152,10 +152,10 @@
 <script setup lang="ts">
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
-import type { LineData, LinePath, LineTooltipData, LineGapSegment } from '@/composables/useLineChart'
+import type { LineData, LinePath, LineTooltipData, LineGapSegment, LineXScaleType } from '@/composables/useLineChart'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
 import { lineChartColorClasses, lineChartColorValues } from '@/helpers/charts/colors'
-import { format } from '@/lib/d3'
+import { format, type AxisDomain, type ScaleLinear, type ScaleTime } from '@/lib/d3'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useLineChart } from '@/composables/useLineChart'
 import { useTooltip } from '@/composables/useTooltip'
@@ -171,6 +171,12 @@ interface LineChartProps {
   showTooltip?: boolean
   showGrid?: boolean
   aspectRatio?: number
+  /** X-axis scale mode. @default 'category' */
+  xScaleType?: LineXScaleType
+  /** Optional x-axis tick values for custom scales such as time. */
+  xTickValues?: Array<string | number | Date>
+  /** Optional x-axis tick formatter for custom tick labels. */
+  xTickFormatter?: (value: AxisDomain) => string
   valueFormat?: string | ((value: number) => string)
   tooltipValueFormat?: string | ((value: number) => string)
   showPoints?: boolean
@@ -206,6 +212,9 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   showTooltip: true,
   showGrid: true,
   aspectRatio: undefined,
+  xScaleType: 'category',
+  xTickValues: undefined,
+  xTickFormatter: undefined,
   valueFormat: '~s',
   tooltipValueFormat: undefined,
   showPoints: false,
@@ -217,6 +226,7 @@ const props = withDefaults(defineProps<LineChartProps>(), {
 
 const dataRef = computed(() => props.data)
 const valueFormatRef = computed(() => props.valueFormat)
+const xScaleTypeRef = computed(() => props.xScaleType)
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
@@ -228,11 +238,14 @@ const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
 
-const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
+const { lines, gapSegments, xAxis, yAxis, xScale, xTickValues, yScale, xDomainLabels } = useLineChart(
   dataRef,
   innerWidthRef,
   innerHeightRef,
   valueFormatRef,
+  xScaleTypeRef,
+  computed(() => props.xTickValues),
+  computed(() => props.xTickFormatter),
 )
 
 const resolvedMargin = computed<ChartMargin>(() => {
@@ -291,7 +304,7 @@ const pointMarkers = computed<LinePointMarker[]>(() =>
         xLabel: point.xLabel,
         value: point.y ?? 0,
         color: lineSeries.color,
-        cx: xScale.value(point.xIndex),
+        cx: getXCoordinate(point.xPosition, point.xIndex),
         cy: yScale.value(point.y ?? 0),
       })),
   ),
@@ -314,9 +327,7 @@ function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSeg
 
 function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
-  const pointCount = xDomainLabels.value.length
-  if (pointCount <= 0) return []
-  return Array.from({ length: pointCount }, (_, index) => xScale.value(index))
+  return xTickValues.value.map((tick, index) => getXCoordinate(tick, index))
 }
 
 function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
@@ -333,6 +344,19 @@ function getLineColorClass(index: number): LineChartColorClass {
     return hoveredIndex.value === index ? 'text-blue-400' : 'text-gray-200'
   }
   return lineChartColorClasses[index % lineChartColorClasses.length] ?? 'text-blue-400'
+}
+
+function getXCoordinate(value: AxisDomain, fallbackIndex: number): number {
+  if (props.xScaleType === 'category') {
+    return (xScale.value as ScaleLinear<number, number>)(fallbackIndex)
+  }
+  const scaleValue =
+    value instanceof Date || typeof value === 'number'
+      ? value
+      : typeof value === 'string'
+        ? new Date(value)
+        : value.valueOf()
+  return (xScale.value as ScaleLinear<number, number> | ScaleTime<number, number>)(scaleValue)
 }
 
 function getGapColorClass(segment: LineGapSegment): LineChartColorClass {

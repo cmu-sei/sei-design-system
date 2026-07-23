@@ -7,6 +7,8 @@ export type {
   PieArcDatum,
   /** D3 band scale for categorical axes. */
   ScaleBand,
+  /** D3 time scale for date-based axes. */
+  ScaleTime,
   /** D3 linear scale for numeric axes. */
   ScaleLinear,
   /** Numeric value type alias used by D3. */
@@ -32,6 +34,8 @@ export {
   arc,
   scaleBand,
   scaleLinear,
+  scaleTime,
+  scaleUtc,
   scaleQuantize,
   axisBottom,
   axisLeft,

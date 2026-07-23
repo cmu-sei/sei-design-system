@@ -33,6 +33,26 @@ const quarters = [
   'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
 ]
 
+const monthlyDates = [
+  new Date(Date.UTC(2025, 0, 1)),
+  new Date(Date.UTC(2025, 1, 1)),
+  new Date(Date.UTC(2025, 2, 1)),
+  new Date(Date.UTC(2025, 3, 1)),
+  new Date(Date.UTC(2025, 4, 1)),
+  new Date(Date.UTC(2025, 5, 1)),
+  new Date(Date.UTC(2025, 6, 1)),
+  new Date(Date.UTC(2025, 7, 1)),
+  new Date(Date.UTC(2025, 8, 1)),
+  new Date(Date.UTC(2025, 9, 1)),
+  new Date(Date.UTC(2025, 10, 1)),
+  new Date(Date.UTC(2025, 11, 1)),
+]
+
+const formatMonthTickLabel = (value) =>
+  new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(
+    value instanceof Date ? value : new Date(value),
+  )
+
 const csatTrendSeries = [
   {
     label: 'Web',
@@ -173,6 +193,38 @@ MonochromeWhenMoreThanSixLines.parameters = {
   docs: {
     description: {
       story: 'When the chart has more than six series, lines are rendered in gray and the hovered line highlights in blue.',
+    },
+  },
+}
+
+export const TimeScale = Template.bind({})
+TimeScale.args = {
+  data: [
+    {
+      label: 'Capacity',
+      data: monthlyDates.map((date, index) => ({ x: date, y: [42, 48, 45, 53, 49, 57, 61, 58, 64, 66, 69, 72][index] })),
+    },
+    {
+      label: 'Demand',
+      data: monthlyDates.map((date, index) => ({ x: date, y: [50, 46, 52, 55, 60, 58, 63, 67, 65, 70, 74, 71][index] })),
+    },
+  ],
+  title: 'Monthly Trend with a Time Scale',
+  xScaleType: 'utc',
+  showTooltip: true,
+  showPoints: true,
+  showLegend: true,
+  valueFormat: formatPercent,
+  tooltipValueFormat: formatPercent,
+  legendOrientation: 'horizontal',
+  legendPosition: 'bottom-right',
+  xTickValues: monthlyDates,
+  xTickFormatter: formatMonthTickLabel,
+}
+TimeScale.parameters = {
+  docs: {
+    description: {
+      story: 'Use xScaleType="time" when the x-axis represents actual dates; the chart uses D3 time ticks instead of evenly spaced category positions.',
     },
   },
 }

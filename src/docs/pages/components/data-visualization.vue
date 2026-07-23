@@ -1021,6 +1021,37 @@
             title="Dense Multi-Series Customer Satisfaction Trends"
           />
         </div>
+
+        <h3 class="mt-10">
+          Time scale example
+        </h3>
+        <p>
+          When the x-axis represents real dates, use <code>x-scale-type="time"</code> so D3 can render time ticks with actual temporal spacing.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="[
+              {
+                label: 'Capacity',
+                data: lineMonths.map((date, index) => ({ x: date, y: [42, 48, 45, 53, 49, 57, 61, 58, 64, 66, 69, 72][index] })),
+              },
+              {
+                label: 'Demand',
+                data: lineMonths.map((date, index) => ({ x: date, y: [50, 46, 52, 55, 60, 58, 63, 67, 65, 70, 74, 71][index] })),
+              },
+            ]"
+            :value-format="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
+            x-scale-type="utc"
+            :x-tick-values="lineMonths"
+            :x-tick-formatter="formatMonthTickLabel"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Monthly Trend with a Time Scale"
+          />
+        </div>
       </div>
     </div>
     <div class="grid gap-4">
@@ -2109,6 +2140,29 @@ const lineQuarters = [
   'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024',
   'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
 ]
+const lineMonths = [
+  new Date(Date.UTC(2025, 0, 1)),
+  new Date(Date.UTC(2025, 1, 1)),
+  new Date(Date.UTC(2025, 2, 1)),
+  new Date(Date.UTC(2025, 3, 1)),
+  new Date(Date.UTC(2025, 4, 1)),
+  new Date(Date.UTC(2025, 5, 1)),
+  new Date(Date.UTC(2025, 6, 1)),
+  new Date(Date.UTC(2025, 7, 1)),
+  new Date(Date.UTC(2025, 8, 1)),
+  new Date(Date.UTC(2025, 9, 1)),
+  new Date(Date.UTC(2025, 10, 1)),
+  new Date(Date.UTC(2025, 11, 1)),
+]
+
+const formatMonthTickLabel = (value: AxisDomain) =>
+  new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(
+    value instanceof Date
+      ? value
+      : typeof value === 'string' || typeof value === 'number'
+        ? new Date(value)
+        : new Date(value.valueOf()),
+  )
 const linePercentFormat = (value: number) => formatPercent(value)
 
 const browserLineTrendSeries: LineSeries[] = [
