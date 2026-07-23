@@ -1,5 +1,7 @@
 import SdsLineChart from './LineChart.vue'
 
+const formatPercent = (value) => `${value.toFixed(1).replace('.0', '')}%`
+
 export default {
   title: 'Components/Data Visualization/Line Chart',
   parameters: {
@@ -129,6 +131,8 @@ Default.args = {
   showTooltip: true,
   showPoints: true,
   showLegend: true,
+  valueFormat: formatPercent,
+  tooltipValueFormat: formatPercent,
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
 }

@@ -971,8 +971,8 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendSeries"
-            :value-format="formatPercent"
-            :tooltip-value-format="formatPercent"
+            :value-format="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             show-tooltip
             show-points
@@ -991,8 +991,8 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendWithGaps"
-            :value-format="formatPercent"
-            :tooltip-value-format="formatPercent"
+            :value-format="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             show-tooltip
             show-points
@@ -1011,8 +1011,8 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendManySeries"
-            :value-format="formatPercent"
-            :tooltip-value-format="formatPercent"
+            :value-format="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             :line-count-threshold="6"
             show-tooltip
@@ -2109,6 +2109,7 @@ const lineQuarters = [
   'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024',
   'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
 ]
+const linePercentFormat = (value: number) => formatPercent(value)
 
 const browserLineTrendSeries: LineSeries[] = [
   {
