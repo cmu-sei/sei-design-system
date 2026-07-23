@@ -25,75 +25,90 @@ export default {
   },
 }
 
-const years = ['2019', '2020', '2021', '2022', '2023', '2024', '2025']
+const quarters = [
+  'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023',
+  'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024',
+  'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
+]
 
-const browserTrendSeries = [
+const csatTrendSeries = [
   {
-    label: 'Chrome',
-    data: years.map((year, index) => ({ x: year, y: [67.2, 68.1, 66.7, 65.5, 64.1, 65.1, 65.8][index] })),
+    label: 'Web',
+    data: quarters.map((quarter, index) => ({ x: quarter, y: [78, 79, 80, 81, 82, 83, 84, 84, 85, 86, 87, 88][index] })),
   },
   {
-    label: 'Safari',
-    data: years.map((year, index) => ({ x: year, y: [16.1, 16.8, 17.4, 18.8, 19.6, 18.7, 18.2][index] })),
+    label: 'Mobile App',
+    data: quarters.map((quarter, index) => ({ x: quarter, y: [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83][index] })),
   },
   {
-    label: 'Edge',
-    data: years.map((year, index) => ({ x: year, y: [2.8, 3.1, 3.4, 3.9, 4.6, 5.1, 5.0][index] })),
+    label: 'API',
+    data: quarters.map((quarter, index) => ({ x: quarter, y: [84, 84, 85, 86, 86, 87, 88, 88, 89, 90, 90, 91][index] })),
   },
   {
-    label: 'Firefox',
-    data: years.map((year, index) => ({ x: year, y: [4.4, 4.1, 3.8, 3.2, 2.9, 2.8, 2.7][index] })),
-  },
-  {
-    label: 'Others',
-    data: years.map((year, index) => ({ x: year, y: [9.5, 7.9, 8.7, 8.6, 8.8, 8.3, 8.3][index] })),
+    label: 'Support',
+    data: quarters.map((quarter, index) => ({ x: quarter, y: [70, 71, 72, 72, 73, 74, 75, 76, 77, 78, 79, 80][index] })),
   },
 ]
 
-const browserTrendWithGaps = [
+const csatTrendWithGaps = [
   {
-    label: 'Chrome',
+    label: 'Web',
     data: [
-      { x: '2019', y: 67.2 },
-      { x: '2020', y: 68.1 },
-      { x: '2021', y: null },
-      { x: '2022', y: null },
-      { x: '2023', y: 64.1 },
-      { x: '2024', y: 65.1 },
-      { x: '2025', y: 65.8 },
+      { x: 'Q1 2023', y: 78 },
+      { x: 'Q2 2023', y: 79 },
+      { x: 'Q3 2023', y: 80 },
+      { x: 'Q4 2023', y: null },
+      { x: 'Q1 2024', y: null },
+      { x: 'Q2 2024', y: 83 },
+      { x: 'Q3 2024', y: 84 },
+      { x: 'Q4 2024', y: 84 },
+      { x: 'Q1 2025', y: 85 },
+      { x: 'Q2 2025', y: 86 },
+      { x: 'Q3 2025', y: 87 },
+      { x: 'Q4 2025', y: 88 },
     ],
   },
   {
-    label: 'Safari',
+    label: 'Mobile App',
     data: [
-      { x: '2019', y: 16.1 },
-      { x: '2020', y: 16.8 },
-      { x: '2021', y: 17.4 },
-      { x: '2022', y: null },
-      { x: '2023', y: 19.6 },
-      { x: '2024', y: null },
-      { x: '2025', y: 18.2 },
+      { x: 'Q1 2023', y: 72 },
+      { x: 'Q2 2023', y: 73 },
+      { x: 'Q3 2023', y: 74 },
+      { x: 'Q4 2023', y: 75 },
+      { x: 'Q1 2024', y: 76 },
+      { x: 'Q2 2024', y: null },
+      { x: 'Q3 2024', y: null },
+      { x: 'Q4 2024', y: 79 },
+      { x: 'Q1 2025', y: 80 },
+      { x: 'Q2 2025', y: 81 },
+      { x: 'Q3 2025', y: 82 },
+      { x: 'Q4 2025', y: 83 },
     ],
   },
   {
-    label: 'Edge',
+    label: 'Support',
     data: [
-      { x: '2019', y: 2.8 },
-      { x: '2020', y: 3.1 },
-      { x: '2021', y: 3.4 },
-      { x: '2022', y: null },
-      { x: '2023', y: 4.6 },
-      { x: '2024', y: 5.1 },
-      { x: '2025', y: 5.0 },
+      { x: 'Q1 2023', y: 70 },
+      { x: 'Q2 2023', y: 71 },
+      { x: 'Q3 2023', y: null },
+      { x: 'Q4 2023', y: 72 },
+      { x: 'Q1 2024', y: 73 },
+      { x: 'Q2 2024', y: 74 },
+      { x: 'Q3 2024', y: 75 },
+      { x: 'Q4 2024', y: null },
+      { x: 'Q1 2025', y: 77 },
+      { x: 'Q2 2025', y: 78 },
+      { x: 'Q3 2025', y: 79 },
+      { x: 'Q4 2025', y: 80 },
     ],
   },
 ]
 
-const manySeries = ['Chrome', 'Safari', 'Edge', 'Firefox', 'Opera', 'Brave', 'Vivaldi', 'Arc'].map((label, index) => ({
+const manySeries = ['Web', 'Mobile App', 'API', 'Support', 'Store', 'Partner', 'Email', 'Chatbot'].map((label, index) => ({
   label,
-  data: years.map((year, yearIndex) => ({
-    x: year,
-    y: Math.max(1, 70 - (index * 7) - yearIndex),
+  data: quarters.map((quarter, quarterIndex) => ({
+    x: quarter,
+    y: Math.max(45, 91 - (index * 4) - Math.floor(quarterIndex / 2)),
   })),
 }))
 
@@ -109,8 +124,8 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  data: browserTrendSeries,
-  title: 'Browser Market Share Trend (2019-2025)',
+  data: csatTrendSeries,
+  title: 'Customer Satisfaction by Channel (Quarterly)',
   showTooltip: true,
   showPoints: true,
   showLegend: true,
@@ -121,8 +136,8 @@ Default.args = {
 export const MissingDataGaps = Template.bind({})
 MissingDataGaps.args = {
   ...Default.args,
-  data: browserTrendWithGaps,
-  title: 'Browser Market Share Trend with Missing Data',
+  data: csatTrendWithGaps,
+  title: 'Customer Satisfaction with Missing Quarters',
 }
 MissingDataGaps.parameters = {
   docs: {
@@ -136,7 +151,7 @@ export const MonochromeWhenMoreThanSixLines = Template.bind({})
 MonochromeWhenMoreThanSixLines.args = {
   ...Default.args,
   data: manySeries,
-  title: 'Monochrome Mode for Dense Multi-Series Trends',
+  title: 'Dense Multi-Series Customer Satisfaction Trends',
   lineCountThreshold: 6,
 }
 MonochromeWhenMoreThanSixLines.parameters = {
@@ -150,7 +165,7 @@ MonochromeWhenMoreThanSixLines.parameters = {
 export const CustomMonochromeThreshold = Template.bind({})
 CustomMonochromeThreshold.args = {
   ...Default.args,
-  data: browserTrendSeries,
+  data: csatTrendSeries,
   lineCountThreshold: 3,
   title: 'Custom Monochrome Threshold (3)',
 }

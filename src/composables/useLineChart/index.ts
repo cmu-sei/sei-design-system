@@ -233,7 +233,9 @@ export function useLineChart(
 
   const xScale = computed<ScaleLinear<number, number>>(() => {
     const lastIndex = Math.max(0, xDomainMeta.value.keys.length - 1)
-    return scaleLinear<number, number>().domain([0, lastIndex]).range([0, innerWidth.value])
+    return scaleLinear<number, number>()
+      .domain([0, lastIndex])
+      .range([0, innerWidth.value])
   })
 
   const yScale = computed<ScaleLinear<number, number>>(() =>

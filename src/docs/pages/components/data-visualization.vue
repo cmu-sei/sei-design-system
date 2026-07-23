@@ -963,9 +963,10 @@
           responsive sizing via <code>aspect-ratio</code>.
         </p>
 
-        <h3>Trend comparison (6 lines or fewer)</h3>
+        <h3>Multi-series trend comparison (6 lines or fewer)</h3>
         <p>
-          With six or fewer series, each line receives a distinct color to maximize comparability.
+          This customer satisfaction dataset uses quarterly values across service channels. With six
+          or fewer series, each line receives a distinct color for fast comparison.
         </p>
         <div class="not-prose mt-6">
           <SdsLineChart
@@ -976,7 +977,7 @@
             show-tooltip
             show-points
             show-legend
-            title="Browser Market Share Trend (2019-2025)"
+            title="Customer Satisfaction by Channel (Quarterly)"
           />
         </div>
 
@@ -984,8 +985,8 @@
           Missing data with dashed gaps
         </h3>
         <p>
-          Null values intentionally break each line segment. Missing intervals are represented with
-          dashes to show discontinuity.
+          Null values intentionally break each line segment. Dashed connectors show missing reporting
+          windows in a way users can read immediately.
         </p>
         <div class="not-prose mt-6">
           <SdsLineChart
@@ -996,7 +997,7 @@
             show-tooltip
             show-points
             show-legend
-            title="Browser Market Share Trend with Missing Data"
+            title="Customer Satisfaction with Missing Quarters"
           />
         </div>
 
@@ -1017,7 +1018,7 @@
             show-tooltip
             show-points
             show-legend
-            title="Dense Multi-Series Trend (Monochrome with Hover Highlight)"
+            title="Dense Multi-Series Customer Satisfaction Trends"
           />
         </div>
       </div>
@@ -2103,84 +2104,99 @@ const browserShareBySeriesBrandColors: BarSeries[] = [
 /**
  * Line Chart(s)
  */
-const lineYears = ['2019', '2020', '2021', '2022', '2023', '2024', '2025']
+const lineQuarters = [
+  'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023',
+  'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024',
+  'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
+]
 
 const browserLineTrendSeries: LineSeries[] = [
   {
-    label: 'Chrome',
-    data: lineYears.map((year, index) => ({ x: year, y: [67.2, 68.1, 66.7, 65.5, 64.1, 65.1, 65.8][index] ?? 0 })),
+    label: 'Web',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [78, 79, 80, 81, 82, 83, 84, 84, 85, 86, 87, 88][index] ?? 0 })),
   },
   {
-    label: 'Safari',
-    data: lineYears.map((year, index) => ({ x: year, y: [16.1, 16.8, 17.4, 18.8, 19.6, 18.7, 18.2][index] ?? 0 })),
+    label: 'Mobile App',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83][index] ?? 0 })),
   },
   {
-    label: 'Edge',
-    data: lineYears.map((year, index) => ({ x: year, y: [2.8, 3.1, 3.4, 3.9, 4.6, 5.1, 5.0][index] ?? 0 })),
+    label: 'API',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [84, 84, 85, 86, 86, 87, 88, 88, 89, 90, 90, 91][index] ?? 0 })),
   },
   {
-    label: 'Firefox',
-    data: lineYears.map((year, index) => ({ x: year, y: [4.4, 4.1, 3.8, 3.2, 2.9, 2.8, 2.7][index] ?? 0 })),
-  },
-  {
-    label: 'Others',
-    data: lineYears.map((year, index) => ({ x: year, y: [9.5, 7.9, 8.7, 8.6, 8.8, 8.3, 8.3][index] ?? 0 })),
+    label: 'Support',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [70, 71, 72, 72, 73, 74, 75, 76, 77, 78, 79, 80][index] ?? 0 })),
   },
 ]
 
 const browserLineTrendWithGaps: LineSeries[] = [
   {
-    label: 'Chrome',
+    label: 'Web',
     data: [
-      { x: '2019', y: 67.2 },
-      { x: '2020', y: 68.1 },
-      { x: '2021', y: null },
-      { x: '2022', y: null },
-      { x: '2023', y: 64.1 },
-      { x: '2024', y: 65.1 },
-      { x: '2025', y: 65.8 },
+      { x: 'Q1 2023', y: 78 },
+      { x: 'Q2 2023', y: 79 },
+      { x: 'Q3 2023', y: 80 },
+      { x: 'Q4 2023', y: null },
+      { x: 'Q1 2024', y: null },
+      { x: 'Q2 2024', y: 83 },
+      { x: 'Q3 2024', y: 84 },
+      { x: 'Q4 2024', y: 84 },
+      { x: 'Q1 2025', y: 85 },
+      { x: 'Q2 2025', y: 86 },
+      { x: 'Q3 2025', y: 87 },
+      { x: 'Q4 2025', y: 88 },
     ],
   },
   {
-    label: 'Safari',
+    label: 'Mobile App',
     data: [
-      { x: '2019', y: 16.1 },
-      { x: '2020', y: 16.8 },
-      { x: '2021', y: 17.4 },
-      { x: '2022', y: null },
-      { x: '2023', y: 19.6 },
-      { x: '2024', y: null },
-      { x: '2025', y: 18.2 },
+      { x: 'Q1 2023', y: 72 },
+      { x: 'Q2 2023', y: 73 },
+      { x: 'Q3 2023', y: 74 },
+      { x: 'Q4 2023', y: 75 },
+      { x: 'Q1 2024', y: 76 },
+      { x: 'Q2 2024', y: null },
+      { x: 'Q3 2024', y: null },
+      { x: 'Q4 2024', y: 79 },
+      { x: 'Q1 2025', y: 80 },
+      { x: 'Q2 2025', y: 81 },
+      { x: 'Q3 2025', y: 82 },
+      { x: 'Q4 2025', y: 83 },
     ],
   },
   {
-    label: 'Edge',
+    label: 'Support',
     data: [
-      { x: '2019', y: 2.8 },
-      { x: '2020', y: 3.1 },
-      { x: '2021', y: 3.4 },
-      { x: '2022', y: null },
-      { x: '2023', y: 4.6 },
-      { x: '2024', y: 5.1 },
-      { x: '2025', y: 5.0 },
+      { x: 'Q1 2023', y: 70 },
+      { x: 'Q2 2023', y: 71 },
+      { x: 'Q3 2023', y: null },
+      { x: 'Q4 2023', y: 72 },
+      { x: 'Q1 2024', y: 73 },
+      { x: 'Q2 2024', y: 74 },
+      { x: 'Q3 2024', y: 75 },
+      { x: 'Q4 2024', y: null },
+      { x: 'Q1 2025', y: 77 },
+      { x: 'Q2 2025', y: 78 },
+      { x: 'Q3 2025', y: 79 },
+      { x: 'Q4 2025', y: 80 },
     ],
   },
 ]
 
 const browserLineTrendManySeries: LineSeries[] = [
-  'Chrome',
-  'Safari',
-  'Edge',
-  'Firefox',
-  'Opera',
-  'Brave',
-  'Vivaldi',
-  'Arc'
+  'Web',
+  'Mobile App',
+  'API',
+  'Support',
+  'Store',
+  'Partner',
+  'Email',
+  'Chatbot'
 ].map((label, index) => ({
   label,
-  data: lineYears.map((year, yearIndex) => ({
-    x: year,
-    y: Math.max(1, 70 - (index * 7) - yearIndex),
+  data: lineQuarters.map((quarter, quarterIndex) => ({
+    x: quarter,
+    y: Math.max(45, 91 - (index * 4) - Math.floor(quarterIndex / 2)),
   })),
 }))
 

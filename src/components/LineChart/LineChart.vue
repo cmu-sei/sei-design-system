@@ -1,7 +1,7 @@
 <template>
   <div
     data-id="sds-line-chart"
-    class="sds-line-chart w-full"
+    class="sds-line-chart w-full min-w-0"
   >
     <BaseChart
       v-model:hovered-index="hoveredIndex"
@@ -194,8 +194,6 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   legendPosition: 'bottom-left',
 })
 
-const resolvedMargin = computed<ChartMargin>(() => props.margin ?? DEFAULT_BAR_CHART_MARGIN)
-
 const dataRef = computed(() => props.data)
 const valueFormatRef = computed(() => props.valueFormat)
 const innerWidthRef = ref(0)
@@ -205,12 +203,25 @@ const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
 
-const { lines, gapSegments, xAxis, yAxis, xScale, yScale } = useLineChart(
+const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
   dataRef,
   innerWidthRef,
   innerHeightRef,
   valueFormatRef,
 )
+
+const resolvedMargin = computed<ChartMargin>(() => {
+  if (props.margin) return props.margin
+  const maxLabelLines = Math.max(
+    1,
+    ...xDomainLabels.value.map((label) => Math.max(1, label.split(/\s+/).filter(Boolean).length)),
+  )
+  const extraBottom = Math.max(0, (maxLabelLines - 1) * 14)
+  return {
+    ...DEFAULT_BAR_CHART_MARGIN,
+    bottom: DEFAULT_BAR_CHART_MARGIN.bottom + extraBottom,
+  }
+})
 
 const isMonochrome = computed(() => lines.value.length > Math.max(0, props.lineCountThreshold))
 
