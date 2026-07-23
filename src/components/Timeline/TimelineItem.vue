@@ -29,7 +29,7 @@
         v-else
         data-id="sds-timeline-item-marker"
         class="inline-flex items-center justify-center"
-        :class="$slots.marker ? '' : 'mt-1.5 mb-1'"
+        :class="$slots.marker ? '' : 'mt-2 mb-1'"
         :aria-label="markerLabel"
         role="img"
       >
