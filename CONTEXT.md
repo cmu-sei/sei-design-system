@@ -238,8 +238,6 @@ A placeholder shape that previews layout while real content is loading.
 ### Expand Collapse
 A pattern for progressively revealing or hiding content in place.
 
-## Data Display
-
 ### Table
 A structured grid of rows and columns used to compare or scan detailed records.
 

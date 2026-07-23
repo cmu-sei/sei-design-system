@@ -4,7 +4,7 @@ import SdsTimeline from '../Timeline/Timeline.vue'
 import SdsTimelineItem from '../Timeline/TimelineItem.vue'
 
 export default {
-  title: 'Components/Data Display/List',
+  title: 'Components/Containers/List',
   parameters: {
     docs: {
       description: {

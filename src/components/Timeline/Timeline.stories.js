@@ -4,7 +4,7 @@ import SdsTimelineItem from './TimelineItem.vue'
 import SdsAvatar from '../Avatar/Avatar.vue'
 
 export default {
-  title: 'Components/Data Display/Timeline',
+  title: 'Components/Containers/Timeline',
   parameters: {
     docs: {
       description: {
