@@ -33,23 +33,18 @@ const quarters = [
   'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
 ]
 
-const monthlyDates = [
-  new Date(Date.UTC(2025, 0, 1)),
-  new Date(Date.UTC(2025, 1, 1)),
-  new Date(Date.UTC(2025, 2, 1)),
-  new Date(Date.UTC(2025, 3, 1)),
-  new Date(Date.UTC(2025, 4, 1)),
-  new Date(Date.UTC(2025, 5, 1)),
-  new Date(Date.UTC(2025, 6, 1)),
-  new Date(Date.UTC(2025, 7, 1)),
-  new Date(Date.UTC(2025, 8, 1)),
-  new Date(Date.UTC(2025, 9, 1)),
-  new Date(Date.UTC(2025, 10, 1)),
-  new Date(Date.UTC(2025, 11, 1)),
-]
+const formatUtcDateLabel = (value) =>
+  new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
+    value instanceof Date ? value : new Date(value),
+  )
 
-const formatMonthTickLabel = (value) =>
-  new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(
+const formatLocalDateLabel = (value) =>
+  new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(
+    value instanceof Date ? value : new Date(value),
+  )
+
+const formatUtcHourLabel = (value) =>
+  new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'UTC' }).format(
     value instanceof Date ? value : new Date(value),
   )
 
@@ -145,6 +140,74 @@ const manySeries = ['Web', 'Mobile App', 'API', 'Support', 'Store', 'Partner', '
   })),
 }))
 
+const onboardingProgressCategorySeries = [
+  {
+    label: 'Q1 Cohort',
+    data: [
+      { x: 'Account Created', y: 18 },
+      { x: 'Email Verified', y: 36 },
+      { x: 'Profile Completed', y: 58 },
+      { x: 'First Project Created', y: 79 },
+      { x: 'Workspace Activated', y: 100 },
+    ],
+  },
+  {
+    label: 'Q2 Cohort',
+    data: [
+      { x: 'Account Created', y: 22 },
+      { x: 'Email Verified', y: 43 },
+      { x: 'Profile Completed', y: 67 },
+      { x: 'First Project Created', y: 85 },
+      { x: 'Workspace Activated', y: 100 },
+    ],
+  },
+]
+
+const localReleaseTimeline = [
+  new Date(2026, 0, 6, 9),
+  new Date(2026, 0, 13, 9),
+  new Date(2026, 0, 20, 9),
+  new Date(2026, 0, 27, 9),
+  new Date(2026, 1, 3, 9),
+  new Date(2026, 1, 10, 9),
+  new Date(2026, 1, 17, 9),
+  new Date(2026, 1, 24, 9),
+]
+
+const utcTrafficTimeline = [
+  new Date(Date.UTC(2026, 3, 8, 0)),
+  new Date(Date.UTC(2026, 3, 8, 4)),
+  new Date(Date.UTC(2026, 3, 8, 8)),
+  new Date(Date.UTC(2026, 3, 8, 12)),
+  new Date(Date.UTC(2026, 3, 8, 16)),
+  new Date(Date.UTC(2026, 3, 8, 20)),
+]
+
+const linearScaleSeries = [
+  {
+    label: 'Projected Throughput (req/s)',
+    data: [
+      { x: 0, y: 120 },
+      { x: 20, y: 210 },
+      { x: 40, y: 320 },
+      { x: 60, y: 430 },
+      { x: 80, y: 540 },
+      { x: 100, y: 620 },
+    ],
+  },
+  {
+    label: 'Observed Throughput (req/s)',
+    data: [
+      { x: 0, y: 115 },
+      { x: 20, y: 198 },
+      { x: 40, y: 298 },
+      { x: 60, y: 395 },
+      { x: 80, y: 485 },
+      { x: 100, y: 555 },
+    ],
+  },
+]
+
 const Template = (args) => ({
   components: { SdsLineChart },
   setup() {
@@ -166,6 +229,23 @@ Default.args = {
   tooltipValueFormat: formatPercent,
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
+}
+
+export const CategoryScale = Template.bind({})
+CategoryScale.args = {
+  ...Default.args,
+  data: onboardingProgressCategorySeries,
+  xScaleType: 'category',
+  title: 'Cumulative Onboarding Completion by Cohort (Category x-axis)',
+  valueFormat: formatPercent,
+  tooltipValueFormat: formatPercent,
+}
+CategoryScale.parameters = {
+  docs: {
+    description: {
+      story: 'Use xScaleType="category" for named stages where spacing should stay equal. This example uses cumulative completion percentages, so lines trend upward toward 100%.',
+    },
+  },
 }
 
 export const MissingDataGaps = Template.bind({})
@@ -201,30 +281,74 @@ export const TimeScale = Template.bind({})
 TimeScale.args = {
   data: [
     {
-      label: 'Capacity',
-      data: monthlyDates.map((date, index) => ({ x: date, y: [42, 48, 45, 53, 49, 57, 61, 58, 64, 66, 69, 72][index] })),
+      label: 'Planned Scope (points)',
+      data: localReleaseTimeline.map((date, index) => ({ x: date, y: [82, 86, 84, 90, 88, 92, 95, 97][index] })),
     },
     {
-      label: 'Demand',
-      data: monthlyDates.map((date, index) => ({ x: date, y: [50, 46, 52, 55, 60, 58, 63, 67, 65, 70, 74, 71][index] })),
+      label: 'Delivered Scope (points)',
+      data: localReleaseTimeline.map((date, index) => ({ x: date, y: [74, 79, 77, 83, 82, 86, 90, 93][index] })),
     },
   ],
-  title: 'Monthly Trend with a Time Scale',
-  xScaleType: 'utc',
+  title: 'Release Burndown Trend by Sprint Date (Local Time)',
+  xScaleType: 'time',
   showTooltip: true,
   showPoints: true,
   showLegend: true,
-  valueFormat: formatPercent,
-  tooltipValueFormat: formatPercent,
+  valueFormat: ',.0f',
+  tooltipValueFormat: ',.0f',
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
-  xTickValues: monthlyDates,
-  xTickFormatter: formatMonthTickLabel,
+  xTickValues: localReleaseTimeline,
+  xTickFormatter: formatLocalDateLabel,
 }
 TimeScale.parameters = {
   docs: {
     description: {
-      story: 'Use xScaleType="time" when the x-axis represents actual dates; the chart uses D3 time ticks instead of evenly spaced category positions.',
+      story: 'Use xScaleType="time" when dates should follow local timezone behavior (for example, sprint or business-calendar reporting).',
+    },
+  },
+}
+
+export const UtcScale = Template.bind({})
+UtcScale.args = {
+  ...TimeScale.args,
+  data: [
+    {
+      label: 'EU Requests/min',
+      data: utcTrafficTimeline.map((date, index) => ({ x: date, y: [540, 620, 710, 760, 700, 590][index] })),
+    },
+    {
+      label: 'US Requests/min',
+      data: utcTrafficTimeline.map((date, index) => ({ x: date, y: [430, 410, 460, 580, 720, 770][index] })),
+    },
+  ],
+  title: 'Global API Traffic by UTC Hour',
+  xScaleType: 'utc',
+  xTickValues: utcTrafficTimeline,
+  xTickFormatter: formatUtcHourLabel,
+}
+UtcScale.parameters = {
+  docs: {
+    description: {
+      story: 'Use xScaleType="utc" for globally normalized timestamps where labels must remain stable across local timezones.',
+    },
+  },
+}
+UtcScale.storyName = 'UTC Scale'
+
+export const LinearScale = Template.bind({})
+LinearScale.args = {
+  ...Default.args,
+  data: linearScaleSeries,
+  title: 'Throughput vs CPU Utilization (Linear x-axis)',
+  xScaleType: 'linear',
+  valueFormat: ',.0f',
+  tooltipValueFormat: ',.0f',
+}
+LinearScale.parameters = {
+  docs: {
+    description: {
+      story: 'Use xScaleType="linear" when x is a numeric variable (here: CPU utilization %) and spacing should match numeric distance.',
     },
   },
 }
