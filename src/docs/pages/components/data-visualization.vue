@@ -1350,6 +1350,10 @@
           :items="items"
           enable-drawer
           row-highlight
+          hide-header
+          caption="Fruits Table"
+          subcaption="Current inventory and stocking assignments"
+          standalone
         >
           <template #cell(fruit_employee)="{ item }: { item: TableItem }">
             <p class="font-bold">
@@ -1392,6 +1396,7 @@
         <SdsTable
           :fields="fields_simple"
           :items="items_simple"
+          standalone
         >
           <template #cell(fruit)="{ value }">
             <p class="font-bold">

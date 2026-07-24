@@ -125,6 +125,8 @@ import SdsBrochureSiteHeader from "./BrochureSiteHeader";
 import SdsBrochureSiteWordmark from "./BrochureSiteWordmark";
 import SdsStructuredPage from "./StructuredPage";
 import SdsLink from "./Link";
+import SdsList from "./List";
+import SdsListItem from "./List/ListItem.vue";
 import SdsLoadingSkeleton from "./LoadingSkeleton";
 import SdsLoadingSpinner from "./LoadingSpinner";
 import SdsMegaMenu from "./MegaMenu";
@@ -151,6 +153,8 @@ import SdsTabs from "./Tabs";
 import SdsTable from "./Table";
 import SdsTag from "./Tag";
 import SdsTextarea from "./Textarea";
+import SdsTimeline from "./Timeline";
+import SdsTimelineItem from "./Timeline/TimelineItem.vue";
 import SdsToast from "./Toast";
 import SdsToaster from "./Toaster";
 import SdsToggleSwitch from "./ToggleSwitch";
@@ -207,6 +211,8 @@ const Components: ComponentList = {
   SdsBrochureSiteWordmark,
   SdsStructuredPage,
   SdsLink,
+  SdsList,
+  SdsListItem,
   SdsLoadingSkeleton,
   SdsLoadingSpinner,
   SdsMegaMenu,
@@ -233,6 +239,8 @@ const Components: ComponentList = {
   SdsTable,
   SdsTag,
   SdsTextarea,
+  SdsTimeline,
+  SdsTimelineItem,
   SdsToast,
   SdsToaster,
   SdsToggleSwitch,
@@ -294,6 +302,8 @@ export { default as SdsBrochureSiteHeader } from "./BrochureSiteHeader";
 export { default as SdsBrochureSiteWordmark } from "./BrochureSiteWordmark";
 export { default as SdsStructuredPage } from "./StructuredPage";
 export { default as SdsLink } from "./Link";
+export { default as SdsList } from "./List";
+export { SdsListItem } from "./List";
 export { default as SdsLoadingSkeleton } from "./LoadingSkeleton";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";
 export { default as SdsMegaMenu } from "./MegaMenu";
@@ -320,6 +330,8 @@ export { default as SdsTabs } from "./Tabs";
 export { default as SdsTable } from "./Table";
 export { default as SdsTag } from "./Tag";
 export { default as SdsTextarea } from "./Textarea";
+export { default as SdsTimeline } from "./Timeline";
+export { SdsTimelineItem } from "./Timeline";
 export { default as SdsToast } from "./Toast";
 export { default as SdsToaster } from "./Toaster";
 export { default as SdsToggleSwitch } from "./ToggleSwitch";

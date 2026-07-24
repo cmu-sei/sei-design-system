@@ -80,9 +80,23 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/components/list': RouteRecordInfo<
+      '/components/list',
+      '/components/list',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/components/navigation': RouteRecordInfo<
       '/components/navigation',
       '/components/navigation',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/components/timeline': RouteRecordInfo<
+      '/components/timeline',
+      '/components/timeline',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -212,9 +226,25 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
+    'src/docs/pages/components/list.vue': {
+      routes:
+        | '/components/list'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
     'src/docs/pages/components/navigation.vue': {
       routes:
         | '/components/navigation'
+      views:
+        | never
+      pathParamNames:
+        | never
+    }
+    'src/docs/pages/components/timeline.vue': {
+      routes:
+        | '/components/timeline'
       views:
         | never
       pathParamNames:

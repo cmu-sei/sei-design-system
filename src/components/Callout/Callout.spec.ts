@@ -165,7 +165,6 @@ describe('Callout', () => {
         description: 'This is a description',
         timestamp: new Date('December 4, 2012 03:20:00')
       },
-      // @ts-expect-error - partial slots are valid in tests
       slots: {
         default: 'This is an overridden description'
       }
@@ -182,7 +181,6 @@ describe('Callout', () => {
         title: 'This is a title',
         timestamp: new Date('December 4, 2012 03:20:00')
       },
-      // @ts-expect-error - partial slots are valid in tests
       slots: {
         default: '<a href="https://sei.cmu.edu">This is a description</a>'
       }
@@ -202,7 +200,6 @@ describe('Callout', () => {
         description: 'This is a description',
         timestamp: new Date('December 4, 2012 03:20:00')
       },
-      // @ts-expect-error - partial slots are valid in tests
       slots: {
         leftIcon: 'Left Icon Here'
       }
@@ -220,7 +217,6 @@ describe('Callout', () => {
         description: 'This is a description',
         timestamp: new Date('December 4, 2012 03:20:00')
       },
-      // @ts-expect-error - partial slots are valid in tests
       slots: {
         buttons: '<button>This is a button</button>'
       }
