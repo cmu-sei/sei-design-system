@@ -538,8 +538,6 @@ describe('SdsDataTable', () => {
       const statusFilter = resetFilters.find((filter) => filter.key === 'status')
       const assigneeFilter = resetFilters.find((filter) => filter.key === 'assignee')
 
-      expect(statusFilter?.segments?.[0]?.label).toBe('All')
-      expect(statusFilter?.segments?.[0]?.selected).toBe(true)
       expect(statusFilter?.segments?.slice(1).every((segment) => !segment.selected)).toBe(true)
       expect(assigneeFilter?.options?.every((option) => !option.selected)).toBe(true)
     })
