@@ -106,7 +106,7 @@ export default defineConfig(({ mode }) => ({
     coverage: {
       include: [
         'src/components/**/*.vue',
-        'src/composables/*.{js,ts}',
+        'src/composables/**/*.{js,ts}',
         'src/helpers/**/*.{js,ts}',
         'src/lib/*.{js,ts}'
       ],

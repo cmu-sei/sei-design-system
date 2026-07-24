@@ -52,16 +52,30 @@ watchEffect(
 
     if (props.orientation === 'x') {
       const tickCount = tickGroups.length
-      // Available width per tick label — only shrink font if needed, never add tspans
+      // Available width per tick label for responsive wrapping
       const availablePerTick = tickCount > 0 ? props.innerWidth / tickCount : props.innerWidth
+      const labels = Array.from(tickGroups)
+        .map((tickG) => tickG.querySelector<SVGTextElement>('text'))
+        .filter((textEl): textEl is SVGTextElement => textEl !== null)
+        .map((textEl) => ({
+          textEl,
+          fullText: textEl.textContent?.trim() ?? '',
+        }))
+        .filter((entry) => entry.fullText.length > 0)
 
-      tickGroups.forEach((tickG) => {
-        const textEl = tickG.querySelector<SVGTextElement>('text')
-        if (!textEl) return
-        const fullText = textEl.textContent ?? ''
-        const fontSize = fitFontSize(textEl, fullText, availablePerTick * 0.9)
-        textEl.setAttribute('font-size', `${fontSize}px`)
-      })
+      if (!labels.length) return
+
+      const widthFactors = [0.9, 0.8, 0.7, 0.6, 0.5, 0.45, 0.4]
+      for (const factor of widthFactors) {
+        labels.forEach(({ textEl, fullText }) => {
+          textEl.querySelectorAll('tspan[data-wrap-x]').forEach((t) => t.remove())
+          textEl.removeAttribute('transform')
+          applyWrappedXAxisLabel(textEl, fullText, availablePerTick * factor)
+        })
+        const xLabels = labels.map(({ textEl }) => textEl)
+        constrainXAxisEdgeLabels(xLabels)
+        if (!hasXAxisLabelOverlap(xLabels)) break
+      }
     } else {
       // y-axis: wrap labels to maxLabelWidth using multiple <text> elements
       const maxW = props.maxLabelWidth * 0.9
@@ -128,6 +142,98 @@ watchEffect(
   { flush: 'post' },
 )
 
+function applyWrappedXAxisLabel(textEl: SVGTextElement, fullText: string, maxWidth: number) {
+  let fontSize = props.maxFontSize
+  let lines: string[] = [fullText]
+
+  while (fontSize >= props.minFontSize) {
+    textEl.setAttribute('font-size', `${fontSize}px`)
+    textEl.textContent = fullText
+    const singleLineWidth = textEl.getComputedTextLength()
+    if (singleLineWidth <= maxWidth) {
+      lines = [fullText]
+      break
+    }
+    lines = computeLines(textEl, fullText, maxWidth)
+    if (measureWidestLine(textEl, lines) <= maxWidth) break
+    fontSize -= 1
+  }
+
+  textEl.setAttribute('font-size', `${fontSize}px`)
+  textEl.setAttribute('text-anchor', 'middle')
+  textEl.textContent = fullText
+
+  if (lines.length <= 1) return
+
+  const x = textEl.getAttribute('x') ?? '0'
+  const baseDy = textEl.getAttribute('dy') ?? '0.71em'
+  textEl.textContent = ''
+
+  lines.forEach((lineText, index) => {
+    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan')
+    tspan.setAttribute('data-wrap-x', '')
+    tspan.setAttribute('x', x)
+    tspan.setAttribute('dy', index === 0 ? baseDy : '1.1em')
+    tspan.textContent = lineText
+    textEl.appendChild(tspan)
+  })
+}
+
+function measureWidestLine(textEl: SVGTextElement, lines: string[]): number {
+  const original = textEl.textContent ?? ''
+  let widest = 0
+
+  for (const line of lines) {
+    textEl.textContent = line
+    widest = Math.max(widest, textEl.getComputedTextLength())
+  }
+
+  textEl.textContent = original
+  return widest
+}
+
+function hasXAxisLabelOverlap(labels: SVGTextElement[]): boolean {
+  const rects = labels.map((label) => label.getBoundingClientRect())
+  for (let i = 1; i < rects.length; i += 1) {
+    const prev = rects[i - 1]
+    const curr = rects[i]
+    if (!prev || !curr) continue
+    if (curr.left < prev.right + 12) return true
+  }
+  return false
+}
+
+/**
+ * Prevents first/last x-axis labels from being clipped by nudging only when
+ * they overflow the SVG viewport edge. Labels remain text-anchor="middle".
+ */
+function constrainXAxisEdgeLabels(labels: SVGTextElement[]) {
+  if (!labels.length) return
+  const svg = labels[0]?.ownerSVGElement
+  if (!svg) return
+
+  const svgRect = svg.getBoundingClientRect()
+  const edgePadding = 4
+  const edgeLabels = [labels[0], labels[labels.length - 1]].filter(
+    (label): label is SVGTextElement => label !== undefined,
+  )
+
+  edgeLabels.forEach((label) => {
+    const rect = label.getBoundingClientRect()
+    const leftOverflow = (svgRect.left + edgePadding) - rect.left
+    const rightOverflow = rect.right - (svgRect.right - edgePadding)
+
+    if (leftOverflow > 0) {
+      label.setAttribute('transform', `translate(${leftOverflow}, 0)`)
+      return
+    }
+
+    if (rightOverflow > 0) {
+      label.setAttribute('transform', `translate(${-rightOverflow}, 0)`)
+    }
+  })
+}
+
 /**
  * Compute word-wrapped lines for the given text within maxWidth.
  * Uses the provided textEl for measurement (must be attached to the DOM).
@@ -185,25 +291,4 @@ function computeLinesFallback(fullText: string, maxWidth: number, fontSize: numb
   return lines
 }
 
-/**
- * Shrinks font size (between minFontSize and maxFontSize) until the label fits
- * within maxWidth. Starts at maxFontSize and steps down if needed.
- */
-function fitFontSize(textEl: SVGTextElement, text: string, maxWidth: number): number {
-  textEl.textContent = text
-  textEl.setAttribute('font-size', `${props.maxFontSize}px`)
-  if (textEl.getComputedTextLength() <= maxWidth) return props.maxFontSize
-  let low = props.minFontSize
-  let high = props.maxFontSize
-  let best = props.minFontSize
-  while (high - low > 0.5) {
-    const mid = (low + high) / 2
-    textEl.setAttribute('font-size', `${mid}px`)
-    if (textEl.getComputedTextLength() <= maxWidth) {
-      best = mid
-      low = mid
-    } else high = mid
-  }
-  return best
-}
 </script>
