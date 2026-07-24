@@ -152,7 +152,7 @@ export function useLineChart(
   data: Ref<LineData | undefined> | ComputedRef<LineData | undefined>,
   innerWidth: Ref<number> | ComputedRef<number>,
   innerHeight: Ref<number> | ComputedRef<number>,
-  valueFormat:
+  yTickFormatter:
     | Ref<string | ((v: number) => string)>
     | ComputedRef<string | ((v: number) => string)> = computed(() => '~s'),
   xScaleType: Ref<LineXScaleType> | ComputedRef<LineXScaleType> = computed(() => 'category'),
@@ -367,7 +367,7 @@ export function useLineChart(
   const yAxis = useChartAxis(
     computed(() => yScale.value),
     computed(() => 'left' as const),
-    valueFormat,
+    yTickFormatter,
     computed(() => yAxisTicks.value),
   )
 

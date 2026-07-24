@@ -225,7 +225,7 @@ Default.args = {
   showTooltip: true,
   showPoints: true,
   showLegend: true,
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
   tooltipValueFormat: formatPercent,
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
@@ -237,7 +237,7 @@ CategoryScale.args = {
   data: onboardingProgressCategorySeries,
   xScaleType: 'category',
   title: 'Cumulative Onboarding Completion by Cohort (Category x-axis)',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
   tooltipValueFormat: formatPercent,
 }
 CategoryScale.parameters = {
@@ -294,7 +294,7 @@ TimeScale.args = {
   showTooltip: true,
   showPoints: true,
   showLegend: true,
-  valueFormat: ',.0f',
+  yTickFormatter: ',.0f',
   tooltipValueFormat: ',.0f',
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
@@ -342,7 +342,7 @@ LinearScale.args = {
   data: linearScaleSeries,
   title: 'Throughput vs CPU Utilization (Linear x-axis)',
   xScaleType: 'linear',
-  valueFormat: ',.0f',
+  yTickFormatter: ',.0f',
   tooltipValueFormat: ',.0f',
 }
 LinearScale.parameters = {

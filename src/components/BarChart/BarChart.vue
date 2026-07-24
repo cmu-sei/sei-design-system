@@ -127,9 +127,11 @@ interface BarChartProps {
   showTooltip?: boolean
   /** When provided, height is derived as containerWidth / aspectRatio. */
   aspectRatio?: number
-  /** Format for value-axis tick labels. Pass a D3 format specifier string (e.g. `'~s'`, `',.0f'`) or a custom formatter function. @default '~s' */
-  valueFormat?: string | ((value: number) => string)
-  /** Format for tooltip values. Falls back to valueFormat when omitted. */
+  /** Format for x-axis tick labels on value axes. Used when orientation is horizontal. @default '~s' */
+  xTickFormatter?: string | ((value: number) => string)
+  /** Format for y-axis tick labels on value axes. Used when orientation is vertical. @default '~s' */
+  yTickFormatter?: string | ((value: number) => string)
+  /** Format for tooltip values. Falls back to the active value-axis tick formatter when omitted. */
   tooltipValueFormat?: string | ((value: number) => string)
   /** When true (default), bars grow from zero on mount and whenever data changes. The transition decelerates at the end. */
   animate?: boolean
@@ -152,7 +154,8 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   title: undefined,
   showTooltip: true,
   aspectRatio: undefined,
-  valueFormat: '~s',
+  xTickFormatter: '~s',
+  yTickFormatter: '~s',
   tooltipValueFormat: undefined,
   animate: false,
   showLegend: false,
@@ -192,9 +195,11 @@ const resolvedMargin = computed<ChartMargin>(() => {
 const dataRef = computed(() => props.data)
 const orientationRef = computed(() => props.orientation)
 const modeRef = computed(() => props.mode)
-const valueFormatRef = computed(() => props.valueFormat)
+const xTickFormatterRef = computed(() => props.xTickFormatter)
+const yTickFormatterRef = computed(() => props.yTickFormatter)
 const resolvedFormatter = computed(() => {
-  const vf = props.tooltipValueFormat ?? props.valueFormat
+  const axisFormatter = props.orientation === 'horizontal' ? props.xTickFormatter : props.yTickFormatter
+  const vf = props.tooltipValueFormat ?? axisFormatter
   return typeof vf === 'function' ? vf : format(vf)
 })
 
@@ -208,7 +213,8 @@ const { bars, xAxis, yAxis, legendItems } = useBarChart(
   modeRef,
   innerWidthRef,
   innerHeightRef,
-  valueFormatRef,
+  xTickFormatterRef,
+  yTickFormatterRef,
 )
 
 // Entry animation

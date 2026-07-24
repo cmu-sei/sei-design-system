@@ -179,7 +179,8 @@ interface LineChartProps {
   xTickValues?: Array<string | number | Date>
   /** Optional x-axis tick formatter for custom tick labels. */
   xTickFormatter?: (value: AxisDomain) => string
-  valueFormat?: string | ((value: number) => string)
+  /** Y-axis tick formatter. */
+  yTickFormatter?: string | ((value: number) => string)
   tooltipValueFormat?: string | ((value: number) => string)
   showPoints?: boolean
   /** Number of lines allowed before monochrome mode is enabled. */
@@ -221,7 +222,7 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   xScaleType: 'category',
   xTickValues: undefined,
   xTickFormatter: undefined,
-  valueFormat: '~s',
+  yTickFormatter: '~s',
   tooltipValueFormat: undefined,
   showPoints: false,
   lineCountThreshold: 6,
@@ -231,7 +232,7 @@ const props = withDefaults(defineProps<LineChartProps>(), {
 })
 
 const dataRef = computed(() => props.data)
-const valueFormatRef = computed(() => props.valueFormat)
+const yTickFormatterRef = computed(() => props.yTickFormatter)
 const xScaleTypeRef = computed(() => props.xScaleType)
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
@@ -251,7 +252,7 @@ const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useL
   dataRef,
   innerWidthRef,
   innerHeightRef,
-  valueFormatRef,
+  yTickFormatterRef,
   xScaleTypeRef,
   computed(() => props.xTickValues),
   computed(() => props.xTickFormatter),
@@ -273,7 +274,7 @@ const resolvedMargin = computed<ChartMargin>(() => {
 const isMonochrome = computed(() => lines.value.length > Math.max(0, props.lineCountThreshold))
 
 const resolvedFormatter = computed(() => {
-  const formatter = props.tooltipValueFormat ?? props.valueFormat
+  const formatter = props.tooltipValueFormat ?? props.yTickFormatter
   return typeof formatter === 'function' ? formatter : format(formatter)
 })
 

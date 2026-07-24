@@ -763,7 +763,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="browserShare2025"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             animate
             show-tooltip
@@ -782,7 +782,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="sortByProperty(browserShare2025, 'value', 'desc')"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             show-tooltip
@@ -802,7 +802,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="sortByProperty(browserShare2025LongLabels, 'value', 'desc')"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             show-tooltip
@@ -822,7 +822,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareByYearSeries"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             show-tooltip
@@ -842,7 +842,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="stacked"
             show-tooltip
@@ -863,7 +863,7 @@
           <SdsBarChart
             :height="720"
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             orientation="horizontal"
@@ -884,7 +884,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             mode="stacked"
@@ -905,7 +905,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShare2025"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             :aspect-ratio="16 / 9"
             show-tooltip
@@ -924,7 +924,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="browserShare2025CustomColor"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             show-tooltip
             title="Browser Market Share 2025 - Custom Color"
@@ -942,7 +942,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeriesBrandColors"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             show-tooltip
@@ -971,7 +971,7 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendSeries"
-            :value-format="linePercentFormat"
+            :y-tick-formatter="linePercentFormat"
             :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             show-tooltip
@@ -991,7 +991,7 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendWithGaps"
-            :value-format="linePercentFormat"
+            :y-tick-formatter="linePercentFormat"
             :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             show-tooltip
@@ -1011,7 +1011,7 @@
         <div class="not-prose mt-6">
           <SdsLineChart
             :data="browserLineTrendManySeries"
-            :value-format="linePercentFormat"
+            :y-tick-formatter="linePercentFormat"
             :tooltip-value-format="linePercentFormat"
             :aspect-ratio="16 / 9"
             :line-count-threshold="6"
@@ -1040,7 +1040,7 @@
                 data: lineMonths.map((date, index) => ({ x: date, y: [50, 46, 52, 55, 60, 58, 63, 67, 65, 70, 74, 71][index] })),
               },
             ]"
-            :value-format="linePercentFormat"
+            :y-tick-formatter="linePercentFormat"
             :tooltip-value-format="linePercentFormat"
             x-scale-type="utc"
             :x-tick-values="lineMonths"
