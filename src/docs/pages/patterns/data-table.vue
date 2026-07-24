@@ -335,11 +335,8 @@ function applyFilters(items: TableItem[], filtersConfig: DataTableFilterConfig[]
 
   filtersConfig.forEach((filter) => {
     if (filter.type === 'segment' && filter.segments) {
-      // Find selected segment (skip "All")
       const selectedSegment = filter.segments.find((s) => s.selected)
-      if (selectedSegment && selectedSegment.label !== 'All') {
-        filtered = filtered.filter((item) => item[filter.key] === selectedSegment.label)
-      }
+      filtered = filtered.filter((item) => item[filter.key] === selectedSegment?.label)
     } else if (filter.type === 'dropdown' && filter.options) {
       // Find selected options
       const selectedOptions = filter.options.filter((o) => o.selected).map((o) => o.text)
@@ -360,21 +357,11 @@ function applyFilters(items: TableItem[], filtersConfig: DataTableFilterConfig[]
 function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
   const normalizedFilters = updatedFilters.map((filter) => {
     if (filter.type === 'segment' && filter.segments) {
-      // Find the "All" segment by label
-      const allIdx = filter.segments.findIndex(seg => seg.label === 'All')
       const selectedIdx = filter.segments.findIndex(seg => seg.selected)
       if (selectedIdx !== -1) {
-        if (allIdx !== -1 && selectedIdx === allIdx) {
-          // "All" selected, deselect all others
-          filter.segments.forEach((seg, idx) => {
-            seg.selected = idx === allIdx
-          })
-        } else {
-          // Only one segment selected at a time (not "All")
-          filter.segments.forEach((seg, idx) => {
-            seg.selected = idx === selectedIdx
-          })
-        }
+        filter.segments.forEach((seg, idx) => {
+          seg.selected = idx === selectedIdx
+        })
       }
     }
     return filter
@@ -385,13 +372,9 @@ function handleFilterUpdate(updatedFilters: DataTableFilterConfig[]) {
   // Check if all filters are cleared
   const allFiltersCleared = normalizedFilters.every((filter) => {
     if (filter.type === 'segment' && filter.segments) {
-      // Check if no segment is selected or first segment ("All") is selected
       const hasSelection = filter.segments.some((s) => s.selected)
-      if (!hasSelection) return true
-      const firstSelected = filter.segments[0]?.selected === true
-      return firstSelected && filter.segments[0]?.label === 'All'
+      return hasSelection ? false : true
     } else if (filter.type === 'dropdown' && filter.options) {
-      // No options selected
       return filter.options.every((o) => !o.selected)
     }
     return true
