@@ -14,7 +14,7 @@ const isVueUseInvalidAnnotation = log => (
 )
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     Icons({
       compiler: 'vue3',
@@ -49,7 +49,7 @@ export default defineConfig({
     }
   },
   publicDir: false,
-  define: { 'process.env.NODE_ENV': '"production"' },
+  define: { 'process.env.NODE_ENV': JSON.stringify(mode === 'test' ? 'test' : 'production') },
   build: {
     target: 'esnext',
     lib: {
@@ -113,4 +113,4 @@ export default defineConfig({
       provider: 'v8'
     }
   },
-})
+}))

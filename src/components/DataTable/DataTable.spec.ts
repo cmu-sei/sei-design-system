@@ -877,6 +877,127 @@ describe('SdsDataTable', () => {
       expect(dataTable.attributes('data-has-header')).toBe('true')
     })
 
+    it('should render table caption above header controls and remove competing table top styling', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items, caption: 'Tasks' },
+          filters: [
+            {
+              key: 'status',
+              label: 'Status',
+              type: 'segment',
+              segments: [
+                { label: 'Draft', selected: false },
+                { label: 'Submitted', selected: false }
+              ]
+            }
+          ]
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+      const [captionSection, controlsSection] = Array.from(dataTable.element.children)
+      const table = wrapper.findComponent({ name: 'SdsTable' })
+
+      expect(captionSection.textContent).toContain('Tasks')
+      expect(controlsSection.textContent).toContain('Draft')
+      expect(controlsSection.classList).toContain('border-t-0')
+      expect(controlsSection.classList).toContain('rounded-tl-none')
+      expect(table.classes()).toContain('border-x-0')
+      expect(table.classes()).toContain('border-t-0')
+      expect(table.classes()).toContain('rounded-tl-none')
+      expect(table.classes()).toContain('rounded-tr-none')
+    })
+
+    it('should render supporting text beneath the table caption without duplicating it in the nested table', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: {
+            fields,
+            items,
+            caption: 'Tasks',
+            subcaption: 'Updated a few seconds ago'
+          }
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+      const captionSection = dataTable.find('.text-lg')
+      const subcaption = captionSection.find('.text-sm')
+      const table = wrapper.findComponent({ name: 'SdsTable' })
+
+      expect(captionSection.text()).toContain('Tasks')
+      expect(subcaption.text()).toBe('Updated a few seconds ago')
+      expect(subcaption.classes()).toContain('text-gray-600')
+      expect(table.find('caption').exists()).toBe(false)
+    })
+
+    it('should render custom supporting content from the subcaption slot', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: {
+            fields,
+            items,
+            caption: 'Tasks',
+            subcaption: 'Default supporting text'
+          }
+        },
+        slots: {
+          subcaption: '<span data-testid="custom-subcaption">Updated just now</span>'
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+
+      expect(dataTable.find('[data-testid="custom-subcaption"]').text()).toBe('Updated just now')
+      expect(dataTable.text()).not.toContain('Default supporting text')
+    })
+
+    it('should not reserve supporting-text space when the subcaption is empty', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: {
+            fields,
+            items,
+            caption: 'Tasks',
+            subcaption: ''
+          }
+        },
+        attachTo: container
+      })
+
+      expect(wrapper.find('[data-id="sds-data-table"] .text-lg .text-sm').exists()).toBe(false)
+    })
+
+    it('should avoid a double border between header controls and the table when no caption is present', () => {
+      const wrapper = mount(SdsDataTable, {
+        props: {
+          tableData: { fields, items },
+          filters: [
+            {
+              key: 'status',
+              label: 'Status',
+              type: 'segment',
+              segments: [
+                { label: 'Draft', selected: false },
+                { label: 'Submitted', selected: false }
+              ]
+            }
+          ]
+        },
+        attachTo: container
+      })
+
+      const dataTable = wrapper.find('[data-id="sds-data-table"]')
+      const [controlsSection] = Array.from(dataTable.element.children)
+
+      expect(controlsSection.textContent).toContain('Draft')
+      expect(controlsSection.classList).toContain('border-b-0')
+    })
+
   })
 
   describe('Slot Pass-Through', () => {
