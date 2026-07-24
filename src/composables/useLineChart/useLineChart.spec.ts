@@ -1,13 +1,22 @@
-import type { AxisDomain } from '../../lib/d3.ts'
-import { useLineChart, isLineSeries, type LineData, type LineXScaleType } from './index.ts'
+import type { AxisDomain } from '../../lib/d3'
+import { useLineChart, isLineSeries, type LineData, type LineXScaleType, type LineChartPoint } from './index'
+import { ref } from 'vue'
+import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import { effectScope, ref } from 'vue'
 
 vi.mock('@/composables/useDarkMode', () => ({
   useDarkMode: () => ref(false),
 }))
 
+vi.mock('@/composables/useDarkMode/index.ts', () => ({
+  useDarkMode: () => ref(false),
+}))
+
 vi.mock('@/composables/useChartConfig', () => ({
+  useChartConfig: () => ({}),
+}))
+
+vi.mock('@/composables/useChartConfig/index.ts', () => ({
   useChartConfig: () => ({}),
 }))
 
@@ -17,24 +26,30 @@ function createLineChart(
     xScaleType?: LineXScaleType
     xTickValues?: AxisDomain[]
     xTickFormatter?: (value: AxisDomain) => string
+    innerWidth?: number
+    innerHeight?: number
   },
 ) {
-  const scope = effectScope()
-  const chart = scope.run(() =>
-    useLineChart(
-      ref(data),
-      ref(480),
-      ref(240),
-      ref('~s'),
-      ref(options?.xScaleType ?? 'category'),
-      ref(options?.xTickValues),
-      ref(options?.xTickFormatter),
-    ),
-  )
+  let chart: ReturnType<typeof useLineChart> | undefined
+  const wrapper = mount({
+    setup() {
+      chart = useLineChart(
+        ref(data),
+        ref(options?.innerWidth ?? 480),
+        ref(options?.innerHeight ?? 240),
+        ref('~s'),
+        ref(options?.xScaleType ?? 'category'),
+        ref(options?.xTickValues),
+        ref(options?.xTickFormatter),
+      )
+      return {}
+    },
+    template: '<div />',
+  })
 
   if (!chart) throw new Error('Failed to create line chart composable scope.')
 
-  return { scope, chart }
+  return { chart, stop: () => wrapper.unmount() }
 }
 
 describe('useLineChart', () => {
@@ -51,7 +66,7 @@ describe('useLineChart', () => {
   })
 
   it('aligns series to a shared x-domain and inserts nulls for missing points', () => {
-    const { scope, chart } = createLineChart([
+    const { stop, chart } = createLineChart([
       {
         label: 'Series A',
         data: [
@@ -74,11 +89,11 @@ describe('useLineChart', () => {
     expect(secondSeries?.points[1]?.xLabel).toBe('2022')
     expect(secondSeries?.points[1]?.y).toBeNull()
 
-    scope.stop()
+    stop()
   })
 
   it('creates dashed-gap segments between valid points around null runs', () => {
-    const { scope, chart } = createLineChart([
+    const { stop, chart } = createLineChart([
       {
         label: 'Series A',
         data: [
@@ -95,11 +110,11 @@ describe('useLineChart', () => {
     expect(gap?.x2).toBeGreaterThan(gap?.x1 ?? 0)
     expect(gap?.seriesLabel).toBe('Series A')
 
-    scope.stop()
+    stop()
   })
 
   it('keeps sortable x values in ascending order when earlier series are sparse', () => {
-    const { scope, chart } = createLineChart([
+    const { stop, chart } = createLineChart([
       {
         label: 'Series A',
         data: [
@@ -118,7 +133,7 @@ describe('useLineChart', () => {
     ])
 
     expect(chart.xDomainLabels.value).toEqual(['2021', '2022', '2023'])
-    scope.stop()
+    stop()
   })
 
   it('returns empty legend items for single-series input and populated items for multi-series', () => {
@@ -127,7 +142,7 @@ describe('useLineChart', () => {
       { x: '2022', y: 15 },
     ])
     expect(single.chart.legendItems.value).toEqual([])
-    single.scope.stop()
+    single.stop()
 
     const multi = createLineChart([
       { label: 'Series A', data: [{ x: '2021', y: 10 }] },
@@ -135,12 +150,12 @@ describe('useLineChart', () => {
     ])
     expect(multi.chart.legendItems.value).toHaveLength(2)
     expect(multi.chart.legendItems.value[0]?.label).toBe('Series A')
-    multi.scope.stop()
+    multi.stop()
   })
 
   it('uses explicit UTC tick values and formatter when provided', () => {
     const months = [new Date(Date.UTC(2025, 0, 1)), new Date(Date.UTC(2025, 11, 1))]
-    const { scope, chart } = createLineChart(
+    const { stop, chart } = createLineChart(
       [
         {
           label: 'Series A',
@@ -160,6 +175,130 @@ describe('useLineChart', () => {
     expect(chart.xTickValues.value).toEqual(months)
     expect(chart.xAxis.value.tickValues?.()).toEqual(months)
     expect(chart.xAxis.value.tickFormat?.()?.(months[0] as never)).toBe('Jan')
-    scope.stop()
+    stop()
+  })
+
+  it('uses linear x positions when xScaleType is linear', () => {
+    const { stop, chart } = createLineChart(
+      [
+        {
+          label: 'Series A',
+          data: [
+            { x: 0, y: 10 },
+            { x: 50, y: 20 },
+            { x: 100, y: 30 },
+          ],
+        },
+      ],
+      { xScaleType: 'linear' },
+    )
+
+    const points: LineChartPoint[] = chart.lines.value[0]?.points ?? []
+    expect(points.map((point) => point.xPosition)).toEqual([0, 50, 100])
+    expect(chart.xTickValues.value.length).toBeGreaterThan(1)
+    stop()
+  })
+
+  it('uses Date-based x positions when xScaleType is time', () => {
+    const dates = [
+      new Date(2026, 0, 1),
+      new Date(2026, 0, 8),
+      new Date(2026, 0, 15),
+    ]
+    const { stop, chart } = createLineChart(
+      [
+        {
+          label: 'Series A',
+          data: dates.map((date, index) => ({ x: date, y: index + 1 })),
+        },
+      ],
+      { xScaleType: 'time' },
+    )
+
+    const points: LineChartPoint[] = chart.lines.value[0]?.points ?? []
+    expect(points.every((point) => point.xPosition instanceof Date)).toBe(true)
+    expect(chart.xTickValues.value.length).toBeGreaterThan(1)
+    stop()
+  })
+
+  it('preserves original x order when values are not sortable', () => {
+    const { stop, chart } = createLineChart([
+      {
+        label: 'Series A',
+        data: [
+          { x: 'Backlog', y: 10 },
+          { x: 'In Progress', y: 20 },
+          { x: 'Review', y: 15 },
+          { x: 'Done', y: 30 },
+        ],
+      },
+    ])
+
+    expect(chart.xDomainLabels.value).toEqual(['Backlog', 'In Progress', 'Review', 'Done'])
+    stop()
+  })
+
+  it('returns empty lines and default y-domain behavior for empty data', () => {
+    const { stop, chart } = createLineChart([])
+
+    expect(chart.lines.value).toEqual([])
+    expect(chart.gapSegments.value).toEqual([])
+    expect(chart.legendItems.value).toEqual([])
+    expect(chart.xDomainLabels.value).toEqual([])
+    expect(chart.xTickValues.value).toEqual([])
+    expect(chart.yScale.value.domain()[0]).toBeLessThan(chart.yScale.value.domain()[1])
+    stop()
+  })
+
+  it('downsamples category ticks for narrow widths while keeping the final category', () => {
+    const points = Array.from({ length: 20 }, (_, i) => ({ x: `P${i + 1}`, y: i + 1 }))
+    const { stop, chart } = createLineChart([{ label: 'Series A', data: points }], {
+      innerWidth: 120,
+    })
+
+    const ticks = chart.xTickValues.value
+    expect(ticks.length).toBeLessThan(points.length)
+    expect(ticks[ticks.length - 1]).toBe(points.length - 1)
+    stop()
+  })
+
+  it('does not create gap segments when null values are only at series edges', () => {
+    const { stop, chart } = createLineChart([
+      {
+        label: 'Series A',
+        data: [
+          { x: 'Q1', y: null },
+          { x: 'Q2', y: 10 },
+          { x: 'Q3', y: 20 },
+          { x: 'Q4', y: null },
+        ],
+      },
+    ])
+
+    expect(chart.gapSegments.value).toEqual([])
+    stop()
+  })
+
+  it('uses custom category tick formatter when provided', () => {
+    const formatter = (value: AxisDomain) => `Tick ${String(value)}`
+    const { stop, chart } = createLineChart(
+      [
+        {
+          label: 'Series A',
+          data: [
+            { x: 'A', y: 1 },
+            { x: 'B', y: 2 },
+          ],
+        },
+      ],
+      {
+        xScaleType: 'category',
+        xTickFormatter: formatter,
+      },
+    )
+
+    const tickFormatter = chart.xAxis.value.tickFormat?.()
+    expect(tickFormatter?.(0 as never, 0)).toBe('Tick 0')
+    stop()
   })
 })
