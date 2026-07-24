@@ -2,8 +2,8 @@
   <div
     data-id="sds-timeline"
     role="list"
-    class="grid gap-x-3"
-    :class="markerColumnClass"
+    class="grid grid-cols-[var(--sds-timeline-marker-column-width,1.5rem)_1fr] gap-x-3"
+    :style="{ '--sds-timeline-marker-column-width': markerColumnWidth }"
   >
     <!-- @slot Timeline items. -->
     <slot />
@@ -38,24 +38,23 @@ interface TimelineProps {
   /** Number of items to show before collapsing middle items. */
   collapseAfter?: number
   /** Width reserved for each item marker. */
-  markerSize?: 'sm' | 'md' | 'lg' | 'xl'
-  /** Timeline presentation style. */
-  variant?: 'default' | 'history'
+  markerColumnWidth?: string
 }
 
 interface TimelineContext {
   registerItem: () => number
   isItemVisible: (index: number) => boolean
   isLastVisible: (index: number) => boolean
-  variant: Ref<'default' | 'history'>
+}
+
+interface ListItemContext {
+  markerColumnWidth: { value: string | undefined }
 }
 
 const props = withDefaults(defineProps<TimelineProps>(), {
   collapseAfter: 0,
-  markerSize: 'sm',
-  variant: 'default'
+  markerColumnWidth: undefined
 })
-const variant = computed(() => props.variant)
 
 
 type TimelineSlotNode = {
@@ -64,22 +63,14 @@ type TimelineSlotNode = {
 }
 
 const slots = useSlots()
+const listItem = inject<ListItemContext | null>('sdsListItem', null)
 const expanded = ref(false)
 let nextIndex = 0
 
+const markerColumnWidth = computed(() => props.markerColumnWidth ?? listItem?.markerColumnWidth.value ?? '1.5rem')
 const timelineItemCount = computed(() => countRenderableSlotNodes(slots.default?.() ?? []))
 const shouldCollapse = computed(() => props.collapseAfter > 0 && timelineItemCount.value > props.collapseAfter)
 const hiddenCount = computed(() => Math.max(timelineItemCount.value - (props.collapseAfter - 1) - 1, 0))
-const markerColumnClass = computed(() => {
-  switch (props.markerSize) {
-    case 'xl': return 'grid-cols-[3rem_1fr]'
-    case 'lg': return 'grid-cols-[2.5rem_1fr]'
-    case 'md': return 'grid-cols-[2rem_1fr]'
-    case 'sm':
-    default: return 'grid-cols-[1.5rem_1fr]'
-  }
-})
-
 const isSlotNodeArray = (children: unknown): children is TimelineSlotNode[] => Array.isArray(children)
 
 const countRenderableSlotNodes = (nodes: TimelineSlotNode[]): number => nodes.reduce((count, node) => {
@@ -107,7 +98,6 @@ const isLastVisible = (index: number) => {
 provide<TimelineContext>('sdsTimeline', {
   registerItem,
   isItemVisible,
-  isLastVisible,
-  variant
+  isLastVisible
 })
 </script>
