@@ -3,13 +3,13 @@
     data-id="sds-list-item"
     role="listitem"
     class="min-w-0"
-    :class="{ [`grid ${list?.markerGridClass.value ?? 'grid-cols-[auto_1fr]'} gap-x-3`]: $slots.marker }"
+    :class="{ [`grid ${list?.markerGridClass ?? 'grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]'} gap-x-3`]: $slots.marker }"
+    :style="listItemStyle"
   >
     <div
       v-if="$slots.marker"
       data-id="sds-list-item-marker"
       class="flex items-start justify-center"
-      :class="[list?.markerFrameClass.value, markerVariantClass]"
     >
       <!-- @slot Optional marker displayed next to the list item body. -->
       <slot name="marker" />
@@ -22,7 +22,7 @@
     >
       <h3
         v-if="title"
-        :class="list?.titleClass.value ?? 'text-sm font-semibold text-gray-900 dark:text-gray-50'"
+        :class="list?.titleClass ?? 'text-sm font-semibold text-gray-900 dark:text-gray-50'"
       >
         {{ title }}
       </h3>
@@ -35,26 +35,13 @@
       </div>
     </div>
     <div
-      v-if="contentTitle || contentDescription || $slots.default"
+      v-if="$slots.default"
       data-id="sds-list-item-content"
       :class="{
-        'col-start-2': $slots.marker && contentLayout === 'body',
-        'col-span-2': $slots.marker && contentLayout === 'full',
+        'col-span-2': $slots.marker,
         'mt-3': $slots.default && (title || $slots.description)
       }"
     >
-      <div
-        v-if="contentTitle"
-        class="text-base leading-6 text-gray-900 dark:text-gray-50"
-      >
-        {{ contentTitle }}
-      </div>
-      <div
-        v-if="contentDescription"
-        class="mt-1 text-sm leading-5 text-gray-600 dark:text-gray-300"
-      >
-        {{ contentDescription }}
-      </div>
       <!-- @slot Custom list item content. -->
       <slot />
     </div>
@@ -67,38 +54,31 @@ defineOptions({
 })
 
 interface ListItemProps {
-  /** Determines whether custom content aligns with the body or spans the full item. */
-  contentLayout?: 'body' | 'full'
-  /** Optional content description displayed beneath the content title. */
-  contentDescription?: string
-  /** Optional content title displayed beneath the item body. */
-  contentTitle?: string
-  /** Applies a framed marker treatment. */
-  markerVariant?: 'gray'
   /** Optional title displayed at the top of the list item. */
   title?: string
+  /** Width reserved for the marker column. */
+  markerColumnWidth?: string
 }
 
 interface ListContext {
-  markerFrameClass: Ref<string>
-  markerGridClass: Ref<string>
-  titleClass: Ref<string>
+  markerGridClass: string
+  titleClass: string
+}
+
+interface ListItemContext {
+  markerColumnWidth: { value: string | undefined }
 }
 
 const props = withDefaults(defineProps<ListItemProps>(), {
-  contentLayout: 'body',
-  contentDescription: undefined,
-  contentTitle: undefined,
-  markerVariant: undefined,
-  title: undefined
+  title: undefined,
+  markerColumnWidth: undefined
 })
 
 const list = inject<ListContext | null>('sdsList', null)
+const markerColumnWidth = computed(() => props.markerColumnWidth)
+const listItemStyle = computed(() => markerColumnWidth.value ? { '--sds-list-item-marker-column-width': markerColumnWidth.value } : undefined)
 
-const markerVariantClass = computed(() => {
-  switch (props.markerVariant) {
-    case 'gray': return 'rounded-theme-sm bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-100'
-    default: return ''
-  }
+provide<ListItemContext>('sdsListItem', {
+  markerColumnWidth
 })
 </script>

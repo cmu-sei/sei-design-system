@@ -20,57 +20,19 @@ defineOptions({
 interface ListProps {
   /** Adds dividers between list items. */
   divided?: boolean
-  /** Width reserved for each item marker. */
-  markerSize?: 'auto' | 'sm' | 'md' | 'lg' | 'xl'
-  /** Size of list item titles. */
-  titleSize?: 'sm' | 'md'
 }
 
 interface ListContext {
-  markerFrameClass: Ref<string>
-  markerGridClass: Ref<string>
-  titleClass: Ref<string>
+  markerGridClass: string
+  titleClass: string
 }
 
-const props = withDefaults(defineProps<ListProps>(), {
-  divided: false,
-  markerSize: 'auto',
-  titleSize: 'sm'
-})
-
-const markerGridClass = computed(() => {
-  switch (props.markerSize) {
-    case 'xl': return 'grid-cols-[3rem_1fr]'
-    case 'lg': return 'grid-cols-[2.5rem_1fr]'
-    case 'md': return 'grid-cols-[2rem_1fr]'
-    case 'sm': return 'grid-cols-[1.5rem_1fr]'
-    case 'auto':
-    default: return 'grid-cols-[auto_1fr]'
-  }
-})
-
-const markerFrameClass = computed(() => {
-  switch (props.markerSize) {
-    case 'xl': return 'h-12 w-12'
-    case 'lg': return 'h-10 w-10'
-    case 'md': return 'h-8 w-8'
-    case 'sm': return 'h-6 w-6'
-    case 'auto':
-    default: return ''
-  }
-})
-
-const titleClass = computed(() => {
-  switch (props.titleSize) {
-    case 'md': return 'text-base font-semibold text-gray-900 dark:text-gray-50'
-    case 'sm':
-    default: return 'text-sm font-semibold text-gray-900 dark:text-gray-50'
-  }
+withDefaults(defineProps<ListProps>(), {
+  divided: false
 })
 
 provide<ListContext>('sdsList', {
-  markerFrameClass,
-  markerGridClass,
-  titleClass
+  markerGridClass: 'grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]',
+  titleClass: 'text-sm font-semibold text-gray-900 dark:text-gray-50'
 })
 </script>

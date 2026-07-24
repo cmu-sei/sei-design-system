@@ -13,7 +13,7 @@ describe('List', () => {
       },
       slots: {
         default: `
-          <ListItem title="Application review" content-layout="full">
+          <ListItem title="Application review">
             <template #description>Track the review work as it moves forward.</template>
             <Timeline>
               <TimelineItem title="Submitted" timestamp="09:00" />
@@ -32,14 +32,14 @@ describe('List', () => {
     expect(wrapper.findAll('[data-id="sds-timeline-item"]')).toHaveLength(2)
   })
 
-  it('renders list item markers while letting nested timelines align with the list edge', () => {
+  it('lets nested timelines inherit the list item marker column width', () => {
     const wrapper = mount(List, {
       global: {
         components: { ListItem, Timeline, TimelineItem }
       },
       slots: {
         default: `
-          <ListItem title="Application review" content-layout="full">
+          <ListItem title="Application review" marker-column-width="3rem">
             <template #marker>
               <span data-test="list-marker">AR</span>
             </template>
@@ -54,14 +54,15 @@ describe('List', () => {
     })
 
     expect(wrapper.find('[data-id="sds-list-item-marker"]').text()).toBe('AR')
+    expect(wrapper.find('[data-id="sds-list-item"]').attributes('style')).toBe('--sds-list-item-marker-column-width: 3rem;')
     expect(wrapper.find('[data-id="sds-list-item-body"]').text()).toContain('Application review')
     expect(wrapper.find('[data-id="sds-list-item-body"]').classes()).not.toContain('self-center')
-    expect(wrapper.find('[data-id="sds-list-item-content"]').find('[data-id="sds-timeline"]').exists()).toBe(true)
+    expect(wrapper.find('[data-id="sds-list-item-content"]').find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: 3rem;')
     expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).toContain('col-span-2')
     expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).toContain('mt-3')
   })
 
-  it('aligns custom content with the body column by default when a marker is present', () => {
+  it('spans custom content across the full item width when a marker is present', () => {
     const wrapper = mount(List, {
       global: {
         components: { ListItem }
@@ -79,8 +80,8 @@ describe('List', () => {
     })
 
     expect(wrapper.find('[data-id="sds-list-item-body"]').classes()).toContain('self-center')
-    expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).toContain('col-start-2')
-    expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).not.toContain('col-span-2')
+    expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).toContain('col-span-2')
+    expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).not.toContain('col-start-2')
     expect(wrapper.find('[data-id="sds-list-item-content"]').classes()).toContain('mt-3')
   })
 
@@ -103,5 +104,47 @@ describe('List', () => {
 
     expect(wrapper.find('[data-id="sds-list-item-content"]').exists()).toBe(false)
     expect(wrapper.find('[data-id="sds-list-item-body"]').classes()).not.toContain('mb-3')
+  })
+
+  it('uses one marker and title treatment even when old styling props are present', () => {
+    const wrapper = mount(List, {
+      attrs: {
+        markerSize: 'xl',
+        titleSize: 'md'
+      },
+      global: {
+        components: { ListItem }
+      },
+      slots: {
+        default: `
+          <ListItem title="Supporting material" marker-variant="gray">
+            <template #marker>
+              <span data-test="list-marker">QA</span>
+            </template>
+          </ListItem>
+        `
+      }
+    })
+
+    expect(wrapper.find('[data-id="sds-list-item-marker"]').classes()).not.toContain('h-12')
+    expect(wrapper.find('[data-id="sds-list-item-marker"]').classes()).not.toContain('rounded-theme-sm')
+    expect(wrapper.find('h3').classes()).toContain('text-sm')
+    expect(wrapper.find('h3').classes()).toContain('font-semibold')
+    expect(wrapper.find('h3').classes()).not.toContain('text-base')
+  })
+
+  it('uses slots instead of content shortcut props for additional item content', () => {
+    const wrapper = mount(ListItem, {
+      props: {
+        contentTitle: 'Steering Committee Member',
+        contentDescription: 'Since May 19, 2018',
+        title: 'Symantec'
+      }
+    })
+
+    expect(wrapper.text()).toContain('Symantec')
+    expect(wrapper.text()).not.toContain('Steering Committee Member')
+    expect(wrapper.text()).not.toContain('Since May 19, 2018')
+    expect(wrapper.find('[data-id="sds-list-item-content"]').exists()).toBe(false)
   })
 })

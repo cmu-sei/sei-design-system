@@ -11,10 +11,10 @@ describe('Timeline', () => {
       },
       slots: {
         default: `
-          <TimelineItem title="Request received" timestamp="09:00" marker-label="Completed">
+          <TimelineItem title="Request received" timestamp="09:00">
             <template #description>Application entered the review queue.</template>
           </TimelineItem>
-          <TimelineItem title="Analyst assigned" timestamp="10:15" marker-label="Current">
+          <TimelineItem title="Analyst assigned" timestamp="10:15">
             <template #description>Ownership moved to the intake analyst.</template>
           </TimelineItem>
         `
@@ -28,7 +28,6 @@ describe('Timeline', () => {
     expect(items[0].text()).toContain('Request received')
     expect(items[0].text()).toContain('09:00')
     expect(items[0].text()).toContain('Application entered the review queue.')
-    expect(items[0].find('[aria-label="Completed"]').exists()).toBe(true)
     expect(items[1].text()).toContain('Analyst assigned')
     expect(items[1].text()).toContain('10:15')
     expect(items[1].text()).toContain('Ownership moved to the intake analyst.')
@@ -38,11 +37,12 @@ describe('Timeline', () => {
     ])
   })
 
-  it('emits navigate when a navigable marker or title is activated', async () => {
+  it('renders timeline items as static content even when old navigable attrs are present', () => {
     const wrapper = mount(TimelineItem, {
+      attrs: {
+        navigable: true
+      },
       props: {
-        markerLabel: 'Open request event',
-        navigable: true,
         title: 'Request received'
       },
       slots: {
@@ -50,20 +50,19 @@ describe('Timeline', () => {
       }
     })
 
-    await wrapper.find('[data-id="sds-timeline-item-marker-button"]').trigger('click')
-    await wrapper.find('[data-id="sds-timeline-item-title-button"]').trigger('click')
-
     expect(wrapper.find('[data-test="custom-marker"]').exists()).toBe(true)
-    expect(wrapper.emitted('navigate')).toEqual([
-      [{ source: 'marker' }],
-      [{ source: 'title' }]
-    ])
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-button"]').exists()).toBe(false)
+    expect(wrapper.find('[data-id="sds-timeline-item-title-button"]').exists()).toBe(false)
+    expect(wrapper.find('[data-id="sds-timeline-item-title"]').text()).toBe('Request received')
+    expect(wrapper.emitted('navigate')).toBeUndefined()
   })
 
-  it('labels custom non-navigable markers without rendering an empty description', () => {
+  it('renders custom markers without requiring marker labels', () => {
     const wrapper = mount(TimelineItem, {
+      attrs: {
+        markerLabel: 'Approved event'
+      },
       props: {
-        markerLabel: 'Approved event',
         title: 'Approved'
       },
       slots: {
@@ -71,27 +70,23 @@ describe('Timeline', () => {
       }
     })
 
-    expect(wrapper.find('[data-id="sds-timeline-item-marker"]').attributes('aria-label')).toBe('Approved event')
+    expect(wrapper.find('[data-id="sds-timeline-item-marker"]').attributes('aria-label')).toBeUndefined()
     expect(wrapper.find('[data-test="custom-marker"]').exists()).toBe(true)
     expect(wrapper.find('[data-id="sds-timeline-item"] .mt-1.text-sm.leading-5').exists()).toBe(false)
   })
 
-  it.each([
-    ['gray', 'bg-gray-200'],
-    ['blue', 'bg-blue-600'],
-    ['green', 'bg-green-500'],
-    ['orange', 'bg-orange-500'],
-    ['red', 'bg-red-600']
-  ] as const)('renders the %s default marker variant', (variant, expectedClass) => {
+  it('uses one neutral marker treatment for default markers', () => {
     const wrapper = mount(TimelineItem, {
+      attrs: {
+        variant: 'green'
+      },
       props: {
-        navigable: true,
         title: 'Request received',
-        variant
       }
     })
 
-    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).toContain(expectedClass)
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).toContain('bg-gray-200')
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).not.toContain('bg-green-500')
   })
 
   it('collapses middle timeline items until the user expands the timeline', async () => {
@@ -128,10 +123,32 @@ describe('Timeline', () => {
     expect(wrapper.text()).toContain('Reviewed')
   })
 
-  it('reserves a larger marker column when configured for larger markers', () => {
+  it('uses one title style for all timeline contexts', () => {
     const wrapper = mount(Timeline, {
-      props: {
+      attrs: {
+        variant: 'history'
+      },
+      global: {
+        components: { TimelineItem }
+      },
+      slots: {
+        default: '<TimelineItem title="Request received" />'
+      }
+    })
+
+    expect(wrapper.find('[data-id="sds-timeline-item-title"]').classes()).toContain('text-sm')
+    expect(wrapper.find('[data-id="sds-timeline-item-title"]').classes()).toContain('font-semibold')
+    expect(wrapper.find('[data-id="sds-timeline-item-title"]').classes()).not.toContain('text-base')
+    expect(wrapper.find('[data-id="sds-timeline-item-title"]').classes()).not.toContain('font-normal')
+  })
+
+  it('uses markerColumnWidth to align the marker track with surrounding layout', () => {
+    const wrapper = mount(Timeline, {
+      attrs: {
         markerSize: 'lg'
+      },
+      props: {
+        markerColumnWidth: '3rem'
       },
       global: {
         components: { TimelineItem }
@@ -141,6 +158,8 @@ describe('Timeline', () => {
       }
     })
 
-    expect(wrapper.find('[data-id="sds-timeline"]').classes()).toContain('grid-cols-[2.5rem_1fr]')
+    expect(wrapper.find('[data-id="sds-timeline"]').classes()).toContain('grid-cols-[var(--sds-timeline-marker-column-width,1.5rem)_1fr]')
+    expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: 3rem;')
+    expect(wrapper.find('[data-id="sds-timeline"]').classes()).not.toContain('grid-cols-[2.5rem_1fr]')
   })
 })
