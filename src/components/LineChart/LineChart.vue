@@ -35,7 +35,7 @@
               :y1="y"
               :x2="innerWidth"
               :y2="y"
-              class="stroke-current text-gray-100/75 pointer-events-none"
+              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
               role="none"
               stroke-width="1"
             />
@@ -46,7 +46,7 @@
               y1="0"
               :x2="x"
               :y2="innerHeight"
-              class="stroke-current text-gray-100/75 pointer-events-none"
+              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
               role="none"
               stroke-width="1"
             />
@@ -154,8 +154,10 @@ import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import type { LineData, LinePath, LineTooltipData, LineGapSegment, LineXScaleType } from '@/composables/useLineChart'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
-import { lineChartColorClasses, lineChartColorValues } from '@/helpers/charts/colors'
+import { lineChartColorClasses, lineChartColorClassesDark, lineChartColorValues } from '@/helpers/charts/colors'
 import { format, type AxisDomain, type ScaleLinear, type ScaleTime } from '@/lib/d3'
+import { useChartConfig } from '@/composables/useChartConfig'
+import { useDarkMode } from '@/composables/useDarkMode'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useLineChart } from '@/composables/useLineChart'
 import { useTooltip } from '@/composables/useTooltip'
@@ -198,7 +200,11 @@ interface LinePointMarker {
   cy: number
 }
 
-type LineChartColorClass = (typeof lineChartColorClasses)[number] | 'text-gray-200'
+type LineChartColorClass =
+  | (typeof lineChartColorClasses)[number]
+  | (typeof lineChartColorClassesDark)[number]
+  | 'text-gray-200'
+  | 'text-gray-400'
 
 defineOptions({
   name: 'SdsLineChart',
@@ -237,6 +243,9 @@ const MIN_HORIZONTAL_GRID_TICKS = 2
 const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
+const _bodyDark = useDarkMode()
+const config = useChartConfig() ?? {}
+const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
 const { lines, gapSegments, xAxis, yAxis, xScale, xTickValues, yScale, xDomainLabels } = useLineChart(
   dataRef,
@@ -341,9 +350,12 @@ function computeHorizontalGridLines(innerWidth: number, innerHeight: number): nu
 
 function getLineColorClass(index: number): LineChartColorClass {
   if (isMonochrome.value) {
-    return hoveredIndex.value === index ? 'text-blue-400' : 'text-gray-200'
+    return hoveredIndex.value === index
+      ? (isDark.value ? 'text-blue-600' : 'text-blue-400')
+      : (isDark.value ? 'text-gray-400' : 'text-gray-200')
   }
-  return lineChartColorClasses[index % lineChartColorClasses.length] ?? 'text-blue-400'
+  const colors = isDark.value ? lineChartColorClassesDark : lineChartColorClasses
+  return colors[index % colors.length] ?? (isDark.value ? 'text-blue-600' : 'text-blue-400')
 }
 
 function getXCoordinate(value: AxisDomain, fallbackIndex: number): number {
