@@ -1,14 +1,12 @@
 <template>
   <Transition
-    enter-active-class="transition-opacity duration-150"
-    leave-active-class="transition-opacity duration-100"
     enter-from-class="opacity-0"
     leave-to-class="opacity-0"
   >
     <div
       v-if="props.visible"
       ref="tooltipRef"
-      class="fixed z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-2 text-xs text-gray-900 shadow-sm transition-[left,top] duration-60 ease-out dark:border-gray-800 dark:bg-black dark:text-gray-50 dark:shadow-gray-900"
+      class="fixed left-0 top-0 z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-2 text-xs text-gray-900 shadow-sm transition-[opacity,transform] duration-150 ease-out dark:border-gray-800 dark:bg-black dark:text-gray-50 dark:shadow-gray-900"
       :style="tooltipStyle"
     >
       <slot />
@@ -35,6 +33,8 @@
 </template>
 
 <script setup lang="ts">
+import { CSSProperties } from 'vue'
+
 /** Minimum viewport inset to keep tooltip content visible. */
 const EDGE_PADDING = 8
 /** Horizontal gap between cursor point and tooltip body. */
@@ -49,6 +49,14 @@ interface ChartTooltipProps {
   visible: boolean
   x: number
   y: number
+}
+
+interface TooltipStyle extends CSSProperties {
+  transform: string
+  maxWidth: string
+  whiteSpace: 'normal'
+  overflowWrap: 'anywhere'
+  wordBreak: 'break-word'
 }
 
 defineOptions({ 
@@ -177,24 +185,23 @@ const arrowStyle = computed(() => {
     return {
       left: '0',
       top: `${arrowOffsetY.value}px`,
-      transform: 'translate(-100%, -50%)',
+      transform: 'translate(calc(-100% + 1px), -50%)',
     }
   }
 
   return {
     right: '0',
     top: `${arrowOffsetY.value}px`,
-    transform: 'translate(100%, -50%) scaleX(-1)',
+    transform: 'translate(calc(100% - 1px), -50%) scaleX(-1)',
   }
 })
 
 /** Tooltip body style: position + width constraints + wrap behavior. */
-const tooltipStyle = computed(() => ({
-  left: `${tooltipLeft.value}px`,
-  top: `${tooltipTop.value}px`,
+const tooltipStyle = computed<TooltipStyle>(() => ({
+  transform: `translate3d(${tooltipLeft.value}px, ${tooltipTop.value}px, 0)`,
   maxWidth: `min(${MAX_WIDTH_PX}px, calc(100vw - ${EDGE_PADDING * 2}px))`,
-  whiteSpace: 'normal' as const,
-  overflowWrap: 'anywhere' as const,
-  wordBreak: 'break-word' as const,
+  whiteSpace: 'normal',
+  overflowWrap: 'anywhere',
+  wordBreak: 'break-word',
 }))
 </script>

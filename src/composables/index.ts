@@ -123,5 +123,17 @@ export { useHoveredIndex } from './useHoveredIndex'
 export { usePieChart } from './usePieChart'
 export type { PieArcData, PieLegendItem, PieSlice } from './usePieChart'
 
+export { useLineChart, isLineSeries } from './useLineChart'
+export type {
+  LineDatum,
+  LineSeries,
+  LineData,
+  LineXScaleType,
+  LineChartPoint,
+  LinePath,
+  LineGapSegment,
+  LineTooltipData
+} from './useLineChart'
+
 export { useTooltip } from './useTooltip'
 export type { TooltipState } from './useTooltip'

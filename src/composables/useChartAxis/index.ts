@@ -1,5 +1,5 @@
 import type { Ref, ComputedRef } from 'vue'
-import type { Axis, AxisDomain, ScaleBand, ScaleLinear, NumberValue } from '@/lib/d3'
+import type { Axis, AxisDomain, ScaleBand, ScaleLinear, ScaleTime, NumberValue } from '@/lib/d3'
 import { axisBottom, axisLeft, axisTop, axisRight, format } from '@/lib/d3'
 
 /**
@@ -18,13 +18,14 @@ export type TickFormatter = (value: AxisDomain) => string
 
 type BandScale = ScaleBand<string>
 type LinearScale = ScaleLinear<number, number>
+type TimeScale = ScaleTime<number, number>
 /**
  * Union type of all scale types supported by the chart axis composable.
  *
  * Includes both categorical (band) scales for label axes and linear scales for value axes.
  * @type {(ScaleBand<string> | ScaleLinear<number, number>)} AnyScale
  */
-export type AnyScale = BandScale | LinearScale
+export type AnyScale = BandScale | LinearScale | TimeScale
 
 /**
  * Composable that creates a reactive D3 axis generator for the given scale and direction.

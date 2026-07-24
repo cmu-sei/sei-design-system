@@ -25,6 +25,7 @@ import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
 import type { TooltipPlacement } from './Tooltip/Tooltip.vue'
 import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
+import type { LineDatum, LineSeries, LineData, LineXScaleType } from './LineChart/LineChart.vue'
 
 export type {
   DropdownPlacement,
@@ -75,7 +76,11 @@ export type {
   TabItem,
   ToasterToast,
   TooltipPlacement,
-  TopFiveChartResult
+  TopFiveChartResult,
+  LineDatum,
+  LineSeries,
+  LineData,
+  LineXScaleType
 }
 
 import { App, Component } from "vue";
@@ -127,6 +132,7 @@ import SdsStructuredPage from "./StructuredPage";
 import SdsLink from "./Link";
 import SdsList from "./List";
 import SdsListItem from "./List/ListItem.vue";
+import SdsLineChart from "./LineChart";
 import SdsLoadingSkeleton from "./LoadingSkeleton";
 import SdsLoadingSpinner from "./LoadingSpinner";
 import SdsMegaMenu from "./MegaMenu";
@@ -213,6 +219,7 @@ const Components: ComponentList = {
   SdsLink,
   SdsList,
   SdsListItem,
+  SdsLineChart,
   SdsLoadingSkeleton,
   SdsLoadingSpinner,
   SdsMegaMenu,
@@ -304,6 +311,7 @@ export { default as SdsStructuredPage } from "./StructuredPage";
 export { default as SdsLink } from "./Link";
 export { default as SdsList } from "./List";
 export { SdsListItem } from "./List";
+export { default as SdsLineChart } from "./LineChart";
 export { default as SdsLoadingSkeleton } from "./LoadingSkeleton";
 export { default as SdsLoadingSpinner } from "./LoadingSpinner";
 export { default as SdsMegaMenu } from "./MegaMenu";
