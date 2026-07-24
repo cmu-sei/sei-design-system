@@ -166,12 +166,19 @@ import BaseChart from '../BaseChart'
 export type { LineDatum, LineSeries, LineData, LineXScaleType } from '@/composables/useLineChart'
 
 interface LineChartProps {
+  /** Line chart data, either a single series (LineDatum[]) or multiple named series (LineSeries[]). */
   data?: LineData
+  /** Chart height in pixels when aspectRatio is not provided. @default 360 */
   height?: number
+  /** Optional margin overrides for the inner chart area. */
   margin?: ChartMargin
+  /** Optional accessible chart title rendered within the SVG. */
   title?: string
+  /** Enables point/line tooltip rendering and hover behavior. @default true */
   showTooltip?: boolean
+  /** Toggles gridline rendering behind line paths. @default true */
   showGrid?: boolean
+  /** Responsive width-to-height ratio used to derive chart height. */
   aspectRatio?: number
   /** X-axis scale mode. @default 'category' */
   xScaleType?: LineXScaleType
@@ -181,12 +188,17 @@ interface LineChartProps {
   xTickFormatter?: (value: AxisDomain) => string
   /** Y-axis tick formatter. */
   yTickFormatter?: string | ((value: number) => string)
+  /** Tooltip value formatter. Falls back to yTickFormatter when omitted. */
   tooltipValueFormat?: string | ((value: number) => string)
+  /** Shows point markers at each non-null datum. @default false */
   showPoints?: boolean
   /** Number of lines allowed before monochrome mode is enabled. */
   lineCountThreshold?: number
+  /** Enables rendering of legend items beneath the chart. @default true */
   showLegend?: boolean
+  /** Legend layout direction. @default 'horizontal' */
   legendOrientation?: ChartLegendOrientation
+  /** Legend position within the legend container. @default 'bottom-left' */
   legendPosition?: ChartLegendPosition
 }
 
@@ -231,8 +243,11 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   legendPosition: 'bottom-left',
 })
 
+/** Reactive line-chart data source passed to the composable. */
 const dataRef = computed(() => props.data)
+/** Reactive y-axis tick formatter source passed to the composable. */
 const yTickFormatterRef = computed(() => props.yTickFormatter)
+/** Reactive x-scale mode source passed to the composable. */
 const xScaleTypeRef = computed(() => props.xScaleType)
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
@@ -246,6 +261,7 @@ const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
 const _bodyDark = useDarkMode()
 const config = useChartConfig() ?? {}
+/** Effective dark-mode state resolved from chart config with document fallback. */
 const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
 const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
@@ -258,6 +274,7 @@ const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useL
   computed(() => props.xTickFormatter),
 )
 
+/** Resolved chart margins, with automatic bottom padding for multi-line x labels. */
 const resolvedMargin = computed<ChartMargin>(() => {
   if (props.margin) return props.margin
   const maxLabelLines = Math.max(
@@ -271,20 +288,25 @@ const resolvedMargin = computed<ChartMargin>(() => {
   }
 })
 
+/** Whether monochrome rendering should be applied based on configured line threshold. */
 const isMonochrome = computed(() => lines.value.length > Math.max(0, props.lineCountThreshold))
 
+/** Final numeric formatter used in tooltips (falls back to y-axis tick formatter). */
 const resolvedFormatter = computed(() => {
   const formatter = props.tooltipValueFormat ?? props.yTickFormatter
   return typeof formatter === 'function' ? formatter : format(formatter)
 })
 
+/** Whether the legend should be shown based on prop toggle and series density threshold. */
 const showLegend = computed(() => props.showLegend && lines.value.length > props.lineCountThreshold)
+/** Legend position normalized to render below the chart area. */
 const resolvedLegendPosition = computed<ChartLegendPosition>(() =>
   props.legendPosition.startsWith('top-')
     ? (props.legendPosition.replace('top-', 'bottom-') as ChartLegendPosition)
     : props.legendPosition,
 )
 
+/** Legend item list with color values synchronized to rendered line classes. */
 const resolvedLegendItems = computed(() =>
   lines.value.map((lineSeries, index) => {
     const className = getLineColorClass(index)
@@ -295,6 +317,7 @@ const resolvedLegendItems = computed(() =>
   }),
 )
 
+/** Lookup map from series id to index for fast color-class resolution. */
 const lineSeriesIndexById = computed(() => {
   const seriesIndexById = new Map<string, number>()
   lines.value.forEach((lineSeries, index) => {
@@ -303,6 +326,7 @@ const lineSeriesIndexById = computed(() => {
   return seriesIndexById
 })
 
+/** Render-ready point marker metadata for visible non-null data points. */
 const pointMarkers = computed<LinePointMarker[]>(() =>
   lines.value.flatMap((lineSeries, seriesIndex) =>
     lineSeries.points
@@ -320,21 +344,48 @@ const pointMarkers = computed<LinePointMarker[]>(() =>
   ),
 )
 
+/**
+ * Stores current inner chart dimensions from the BaseChart slot.
+ *
+ * @param innerWidth - Current chart inner width in pixels.
+ * @param innerHeight - Current chart inner height in pixels.
+ */
 function syncDimensions(innerWidth: number, innerHeight: number) {
   innerWidthRef.value = innerWidth
   innerHeightRef.value = innerHeight
 }
 
+/**
+ * Computes rendered line paths for the latest chart dimensions.
+ *
+ * @param innerWidth - Current chart inner width in pixels.
+ * @param innerHeight - Current chart inner height in pixels.
+ * @returns Resolved line path objects for each series.
+ */
 function computeLines(innerWidth: number, innerHeight: number): LinePath[] {
   syncDimensions(innerWidth, innerHeight)
   return lines.value
 }
 
+/**
+ * Computes dashed segments that bridge gaps between known points.
+ *
+ * @param innerWidth - Current chart inner width in pixels.
+ * @param innerHeight - Current chart inner height in pixels.
+ * @returns Gap connector segment definitions.
+ */
 function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSegment[] {
   syncDimensions(innerWidth, innerHeight)
   return gapSegments.value
 }
 
+/**
+ * Computes x positions for vertical grid lines.
+ *
+ * @param innerWidth - Current chart inner width in pixels.
+ * @param innerHeight - Current chart inner height in pixels.
+ * @returns X coordinates for each vertical grid line.
+ */
 function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
   const firstSeries = lines.value[0]
@@ -342,12 +393,25 @@ function computeVerticalGridLines(innerWidth: number, innerHeight: number): numb
   return firstSeries.points.map((point) => getXCoordinate(point.xPosition, point.xIndex))
 }
 
+/**
+ * Computes y positions for horizontal grid lines.
+ *
+ * @param innerWidth - Current chart inner width in pixels.
+ * @param innerHeight - Current chart inner height in pixels.
+ * @returns Y coordinates for each horizontal grid line.
+ */
 function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
   const tickCount = Math.max(MIN_HORIZONTAL_GRID_TICKS, HORIZONTAL_GRID_LINE_COUNT)
   return yScale.value.ticks(tickCount).map((tickValue) => yScale.value(tickValue))
 }
 
+/**
+ * Resolves the Tailwind text color class for a series index.
+ *
+ * @param index - Zero-based series index.
+ * @returns Color utility class used by line, point, and legend rendering.
+ */
 function getLineColorClass(index: number): LineChartColorClass {
   if (isMonochrome.value) {
     return hoveredIndex.value === index
@@ -358,6 +422,13 @@ function getLineColorClass(index: number): LineChartColorClass {
   return colors[index % colors.length] ?? (isDark.value ? 'text-blue-600' : 'text-blue-400')
 }
 
+/**
+ * Converts an x-domain value into an SVG x coordinate.
+ *
+ * @param value - Axis-domain value (index, number, date-like).
+ * @param fallbackIndex - Category index fallback for category scales.
+ * @returns X coordinate in inner chart space.
+ */
 function getXCoordinate(value: AxisDomain, fallbackIndex: number): number {
   if (props.xScaleType === 'category') {
     return (xScale.value as ScaleLinear<number, number>)(fallbackIndex)
@@ -371,12 +442,24 @@ function getXCoordinate(value: AxisDomain, fallbackIndex: number): number {
   return (xScale.value as ScaleLinear<number, number> | ScaleTime<number, number>)(scaleValue)
 }
 
+/**
+ * Resolves the color class for a gap segment based on its source series.
+ *
+ * @param segment - Gap segment metadata.
+ * @returns Tailwind color class for the dashed connector.
+ */
 function getGapColorClass(segment: LineGapSegment): LineChartColorClass {
   const seriesIndex = lineSeriesIndexById.value.get(segment.seriesId)
   if (seriesIndex == null) return 'text-gray-200'
   return getLineColorClass(seriesIndex)
 }
 
+/**
+ * Resolves tooltip anchor coordinates for point-hover events.
+ *
+ * @param event - Mouse event from point interactions.
+ * @returns Screen-space tooltip anchor coordinates.
+ */
 function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
   const target = event.currentTarget
   if (!(target instanceof SVGCircleElement)) {
@@ -389,6 +472,12 @@ function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
   }
 }
 
+/**
+ * Handles point-hover entry and tooltip rendering.
+ *
+ * @param event - Mouse event for the hovered point.
+ * @param point - Point marker metadata used by tooltip content.
+ */
 function onPointEnter(event: MouseEvent, point: LinePointMarker) {
   hoveredPointKey.value = point.key
   setHovered(point.seriesIndex)
@@ -402,15 +491,26 @@ function onPointEnter(event: MouseEvent, point: LinePointMarker) {
   })
 }
 
+/**
+ * Clears point-specific hover state while preserving line hover behavior.
+ */
 function onPointLeave() {
   hoveredPointKey.value = null
 }
 
+/**
+ * Handles hover state when the pointer is over a line hit-area.
+ *
+ * @param index - Zero-based series index for the hovered line.
+ */
 function onLineEnter(index: number) {
   hoveredPointKey.value = null
   setHovered(index)
 }
 
+/**
+ * Resets hover/tooltip state after leaving the chart container.
+ */
 function onChartLeave() {
   hoveredPointKey.value = null
   setHovered(null)

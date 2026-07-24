@@ -1,5 +1,11 @@
 import SdsLineChart from './LineChart.vue'
 
+/**
+ * Formats numeric values as percentages for axis and tooltip display.
+ *
+ * @param {number} value - Numeric value to format.
+ * @returns {string} Percentage label.
+ */
 const formatPercent = (value) => `${value.toFixed(1).replace('.0', '')}%`
 
 export default {
@@ -33,16 +39,34 @@ const quarters = [
   'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
 ]
 
+/**
+ * Formats date-like values as UTC month/day labels.
+ *
+ * @param {string | number | Date} value - Value convertible to a Date.
+ * @returns {string} UTC-formatted month/day label.
+ */
 const formatUtcDateLabel = (value) =>
   new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
     value instanceof Date ? value : new Date(value),
   )
 
+/**
+ * Formats date-like values as local month/day labels.
+ *
+ * @param {string | number | Date} value - Value convertible to a Date.
+ * @returns {string} Local-time month/day label.
+ */
 const formatLocalDateLabel = (value) =>
   new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(
     value instanceof Date ? value : new Date(value),
   )
 
+/**
+ * Formats date-like values as UTC hour labels in 12-hour time.
+ *
+ * @param {string | number | Date} value - Value convertible to a Date.
+ * @returns {string} UTC-formatted hour label with AM/PM.
+ */
 const formatUtcHourLabel = (value) =>
   new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'UTC' }).format(
     value instanceof Date ? value : new Date(value),
@@ -208,6 +232,12 @@ const linearScaleSeries = [
   },
 ]
 
+/**
+ * Base story template for rendering the line chart with Storybook args.
+ *
+ * @param {Record<string, unknown>} args - Storybook-bound args.
+ * @returns {import('vue').ComponentOptions} Vue component options for the story.
+ */
 const Template = (args) => ({
   components: { SdsLineChart },
   setup() {

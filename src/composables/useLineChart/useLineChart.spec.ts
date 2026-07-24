@@ -1,7 +1,7 @@
+import type { AxisDomain } from '../../lib/d3.ts'
+import { useLineChart, isLineSeries, type LineData, type LineXScaleType } from './index.ts'
 import { describe, it, expect, vi } from 'vitest'
 import { effectScope, ref } from 'vue'
-import { useLineChart, isLineSeries, type LineData, type LineXScaleType } from './useLineChart'
-import type { AxisDomain } from '@/lib/d3'
 
 vi.mock('@/composables/useDarkMode', () => ({
   useDarkMode: () => ref(false),

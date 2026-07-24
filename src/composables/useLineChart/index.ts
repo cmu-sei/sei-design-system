@@ -71,21 +71,46 @@ type XScale = ScaleLinear<number, number> | ScaleTime<number, number>
 const SINGLE_SERIES_ID = '_'
 const SINGLE_SERIES_LABEL = 'Series'
 
+/**
+ * Type guard that detects multi-series line-chart input.
+ *
+ * @param data - Line chart input data.
+ * @returns True when the data is an array of line series.
+ */
 export function isLineSeries(data: LineData): data is LineSeries[] {
   const first = data[0]
   return first !== undefined && 'data' in first
 }
 
+/**
+ * Converts an x value into a stable map key.
+ *
+ * @param value - Raw x value from the source dataset.
+ * @returns Normalized string key.
+ */
 function normalizeKey(value: string | number | Date): string {
   if (value instanceof Date) return value.toISOString()
   return String(value)
 }
 
+/**
+ * Converts an x value into a human-readable axis label.
+ *
+ * @param value - Raw x value from the source dataset.
+ * @returns Display label for axis/tooltip usage.
+ */
 function displayLabel(value: string | number | Date): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10)
   return String(value)
 }
 
+/**
+ * Resolves an x value into a numeric or date position for non-category scales.
+ *
+ * @param value - Raw x value from the source dataset.
+ * @param scaleType - Active x-axis scale mode.
+ * @returns Resolved position value for the active scale.
+ */
 function resolvePosition(value: string | number | Date, scaleType: LineXScaleType): number | Date {
   if (scaleType === 'category') return 0
   if (scaleType === 'time' || scaleType === 'utc') {
@@ -111,6 +136,12 @@ function resolvePosition(value: string | number | Date, scaleType: LineXScaleTyp
   return Number.isNaN(asDate) ? 0 : asDate
 }
 
+/**
+ * Converts x values into comparable numeric values for optional domain sorting.
+ *
+ * @param value - Raw x value from the source dataset.
+ * @returns Comparable numeric value when available; otherwise null.
+ */
 function toComparableValue(value: string | number | Date): number | null {
   if (value instanceof Date) return value.getTime()
   if (typeof value === 'number' && Number.isFinite(value)) return value
@@ -128,6 +159,13 @@ function toComparableValue(value: string | number | Date): number | null {
   return Number.isNaN(asDate) ? null : asDate
 }
 
+/**
+ * Builds category tick indices based on available width.
+ *
+ * @param pointCount - Number of x-domain points.
+ * @param width - Available inner chart width in pixels.
+ * @returns Index values used for category-axis tick placement.
+ */
 function buildTickIndices(pointCount: number, width: number): number[] {
   if (pointCount <= 0) return []
   if (pointCount <= 1) return [0]
@@ -144,10 +182,28 @@ function buildTickIndices(pointCount: number, width: number): number[] {
   return ticks
 }
 
+/**
+ * Resolves a stable series id from optional id or fallback label.
+ *
+ * @param series - Source line series.
+ * @returns Stable identifier for series joins and lookup.
+ */
 function resolveSeriesId(series: LineSeries): string {
   return series.id ?? series.label
 }
 
+/**
+ * Composable that normalizes line-chart data and exposes scales, axes, lines, and gap segments.
+ *
+ * @param data - Source line chart data (single- or multi-series).
+ * @param innerWidth - Reactive inner chart width in pixels.
+ * @param innerHeight - Reactive inner chart height in pixels.
+ * @param yTickFormatter - Formatter for numeric y-axis ticks.
+ * @param xScaleType - X-axis scale mode.
+ * @param xTickValuesOverride - Optional explicit x-axis tick values.
+ * @param xTickFormatterOverride - Optional explicit x-axis tick formatter.
+ * @returns Reactive chart primitives used by the LineChart component.
+ */
 export function useLineChart(
   data: Ref<LineData | undefined> | ComputedRef<LineData | undefined>,
   innerWidth: Ref<number> | ComputedRef<number>,
@@ -161,8 +217,10 @@ export function useLineChart(
 ) {
   const _bodyDark = useDarkMode()
   const config = useChartConfig() ?? {}
+  /** Effective dark-mode state resolved from chart config with document fallback. */
   const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
+  /** Normalized internal series representation for both single- and multi-series inputs. */
   const series = computed<InternalSeries[]>(() => {
     const values = data.value
     if (!values?.length) return []
@@ -184,6 +242,7 @@ export function useLineChart(
     ]
   })
 
+  /** Aggregated x-domain metadata including stable keys, labels, values, and scale positions. */
   const xDomainMeta = computed(() => {
     const keySet = new Set<string>()
     const entries: Array<{ key: string; comparable: number | null; position: number | Date }> = []
@@ -222,6 +281,7 @@ export function useLineChart(
     return { keys, labels, values, positions }
   })
 
+  /** Series-aligned point arrays with null placeholders for missing x positions. */
   const pointsBySeries = computed<LinePath[]>(() => {
     const xKeys = xDomainMeta.value.keys
     return series.value.map((lineSeries, seriesIndex) => {
@@ -254,12 +314,14 @@ export function useLineChart(
     })
   })
 
+  /** Flattened list of finite y values used for domain calculation. */
   const allYValues = computed<number[]>(() =>
     pointsBySeries.value.flatMap((lineSeries) =>
       lineSeries.points.flatMap((point) => (point.y == null ? [] : [point.y])),
     ),
   )
 
+  /** Y-axis domain with padding and single-value expansion handling. */
   const yDomain = computed<[number, number]>(() => {
     if (!allYValues.value.length) return [0, 1]
 
@@ -275,6 +337,7 @@ export function useLineChart(
     return [minValue - padding, maxValue + padding]
   })
 
+  /** X scale resolved by mode (category, linear, time, or utc). */
   const xScale = computed<XScale>(() => {
     const currentScaleType = xScaleType.value
     if (currentScaleType === 'time' || currentScaleType === 'utc') {
@@ -310,6 +373,7 @@ export function useLineChart(
       .range([0, innerWidth.value])
   })
 
+  /** Nice linear y scale spanning the padded y domain. */
   const yScale = computed<ScaleLinear<number, number>>(() =>
     scaleLinear<number, number>()
       .domain(yDomain.value)
@@ -317,6 +381,7 @@ export function useLineChart(
       .range([innerHeight.value, 0]),
   )
 
+  /** X-axis tick values from explicit overrides or scale-derived defaults. */
   const xTickValues = computed<AxisDomain[]>(() => {
     const override = xTickValuesOverride?.value
     if (override?.length) return override
@@ -333,6 +398,7 @@ export function useLineChart(
     return []
   })
 
+  /** X-axis tick formatter using explicit overrides or category label mapping. */
   const xTickFormatter = computed(() => (value: AxisDomain) => {
     const override = xTickFormatterOverride?.value
     if (override) return override(value)
@@ -346,6 +412,7 @@ export function useLineChart(
     return xKey ? (xDomainMeta.value.labels.get(xKey) ?? xKey) : ''
   })
 
+  /** Configured D3 bottom x-axis generator for the current x scale mode. */
   const xAxis = useChartAxis(
     computed(() => xScale.value),
     computed(() => 'bottom' as const),
@@ -363,7 +430,9 @@ export function useLineChart(
     computed(() => xTickValues.value),
   )
 
+  /** Responsive target tick count for the y-axis based on chart height. */
   const yAxisTicks = computed(() => Math.max(2, Math.floor(innerHeight.value / 42)))
+  /** Configured D3 left y-axis generator with numeric tick formatting. */
   const yAxis = useChartAxis(
     computed(() => yScale.value),
     computed(() => 'left' as const),
@@ -371,6 +440,7 @@ export function useLineChart(
     computed(() => yAxisTicks.value),
   )
 
+  /** D3 line generator configured for the active x-scale type and current y scale. */
   const lineGenerator = computed(() =>
     line<LineChartPoint>()
       .defined((point) => point.y != null && Number.isFinite(point.y))
@@ -382,6 +452,7 @@ export function useLineChart(
       .y((point) => yScale.value(point.y ?? 0)),
   )
 
+  /** Series paths with SVG path strings generated from aligned point sets. */
   const lines = computed<LinePath[]>(() =>
     pointsBySeries.value.map((lineSeries) => ({
       ...lineSeries,
@@ -389,6 +460,7 @@ export function useLineChart(
     })),
   )
 
+  /** Dashed connector segments bridging runs of null values between known points. */
   const gapSegments = computed<LineGapSegment[]>(() => {
     const segments: LineGapSegment[] = []
 
@@ -431,6 +503,7 @@ export function useLineChart(
     return segments
   })
 
+  /** Legend items for multi-series datasets only. */
   const legendItems = computed<ChartLegendItem[]>(() => {
     if (!isLineSeries(data.value ?? [])) return []
     return lines.value.map((lineSeries) => ({
@@ -438,6 +511,9 @@ export function useLineChart(
       color: lineSeries.color,
     }))
   })
+
+  /** X-axis domain labels derived from the metadata map. */
+  const xDomainLabels = computed(() => xDomainMeta.value.keys.map((key) => xDomainMeta.value.labels.get(key) ?? key))
 
   return {
     lines,
@@ -448,6 +524,6 @@ export function useLineChart(
     yScale,
     legendItems,
     xTickValues,
-    xDomainLabels: computed(() => xDomainMeta.value.keys.map((key) => xDomainMeta.value.labels.get(key) ?? key)),
+    xDomainLabels,
   }
 }
