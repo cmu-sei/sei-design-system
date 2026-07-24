@@ -163,7 +163,7 @@ import { useLineChart } from '@/composables/useLineChart'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
 
-export type { LineDatum, LineSeries, LineData } from '@/composables/useLineChart'
+export type { LineDatum, LineSeries, LineData, LineXScaleType } from '@/composables/useLineChart'
 
 interface LineChartProps {
   data?: LineData

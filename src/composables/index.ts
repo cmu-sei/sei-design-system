@@ -128,6 +128,7 @@ export type {
   LineDatum,
   LineSeries,
   LineData,
+  LineXScaleType,
   LineChartPoint,
   LinePath,
   LineGapSegment,

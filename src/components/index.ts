@@ -25,7 +25,7 @@ import type { TabItem } from './Tabs/Tabs.vue'
 import type { ToasterToast } from './Toaster/Toaster.vue'
 import type { TooltipPlacement } from './Tooltip/Tooltip.vue'
 import type { TopFiveChartResult } from './TopFiveChart/TopFiveChart.vue'
-import type { LineDatum, LineSeries, LineData } from './LineChart/LineChart.vue'
+import type { LineDatum, LineSeries, LineData, LineXScaleType } from './LineChart/LineChart.vue'
 
 export type {
   DropdownPlacement,
@@ -79,7 +79,8 @@ export type {
   TopFiveChartResult,
   LineDatum,
   LineSeries,
-  LineData
+  LineData,
+  LineXScaleType
 }
 
 import { App, Component } from "vue";
