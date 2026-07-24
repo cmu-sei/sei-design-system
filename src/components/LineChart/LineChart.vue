@@ -237,8 +237,8 @@ const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
 // Keep horizontal grid density readable across chart heights.
-const HORIZONTAL_GRID_TICK_SPACING_PX = 56
 const MIN_HORIZONTAL_GRID_TICKS = 2
+const HORIZONTAL_GRID_LINE_COUNT = 6
 
 const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
@@ -247,7 +247,7 @@ const _bodyDark = useDarkMode()
 const config = useChartConfig() ?? {}
 const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
-const { lines, gapSegments, xAxis, yAxis, xScale, xTickValues, yScale, xDomainLabels } = useLineChart(
+const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
   dataRef,
   innerWidthRef,
   innerHeightRef,
@@ -336,15 +336,14 @@ function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSeg
 
 function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
-  return xTickValues.value.map((tick, index) => getXCoordinate(tick, index))
+  const firstSeries = lines.value[0]
+  if (!firstSeries) return []
+  return firstSeries.points.map((point) => getXCoordinate(point.xPosition, point.xIndex))
 }
 
 function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
-  const tickCount = Math.max(
-    MIN_HORIZONTAL_GRID_TICKS,
-    Math.floor(innerHeight / HORIZONTAL_GRID_TICK_SPACING_PX),
-  )
+  const tickCount = Math.max(MIN_HORIZONTAL_GRID_TICKS, HORIZONTAL_GRID_LINE_COUNT)
   return yScale.value.ticks(tickCount).map((tickValue) => yScale.value(tickValue))
 }
 
