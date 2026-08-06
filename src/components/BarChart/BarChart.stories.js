@@ -52,9 +52,13 @@ export default {
       control: { type: 'text' },
       description: 'Optional chart title.',
     },
-    valueFormat: {
+    xTickFormatter: {
       control: { type: 'text' },
-      description: 'D3 format specifier for value-axis labels (e.g., "~s", ",.0f").',
+      description: 'D3 format specifier for x-axis numeric ticks.',
+    },
+    yTickFormatter: {
+      control: { type: 'text' },
+      description: 'D3 format specifier for y-axis numeric ticks.',
     },
   },
 }
@@ -251,7 +255,7 @@ Default.args = {
   showLegend: false,
   animate: true,
   title: 'Browser Market Share - Desktop, 2025 (Vertical)',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }
 
 export const Horizontal = Template.bind({})
@@ -260,7 +264,7 @@ Horizontal.args = {
   orientation: 'horizontal',
   showTooltip: true,
   title: 'Browser Market Share - Desktop, 2025 (Horizontal)',
-  valueFormat: formatPercent,
+  xTickFormatter: formatPercent,
 }
 
 export const HorizontalLongLabels = Template.bind({})
@@ -269,7 +273,7 @@ HorizontalLongLabels.args = {
   orientation: 'horizontal',
   showTooltip: true,
   title: 'Browser Market Share - Desktop, 2025 (Long Labels)',
-  valueFormat: formatPercent,
+  xTickFormatter: formatPercent,
 }
 
 export const VerticalMultiSeriesGrouped = Template.bind({})
@@ -281,7 +285,7 @@ VerticalMultiSeriesGrouped.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Vertical Multi-Series Grouped (Years as Series)',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }
 
 export const VerticalMultiSeriesStacked = Template.bind({})
@@ -293,7 +297,7 @@ VerticalMultiSeriesStacked.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Vertical Multi-Series Stacked',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }
 
 export const HorizontalMultiSeriesGrouped = Template.bind({})
@@ -306,7 +310,7 @@ HorizontalMultiSeriesGrouped.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Horizontal Multi-Series Grouped',
-  valueFormat: formatPercent,
+  xTickFormatter: formatPercent,
 }
 
 export const HorizontalMultiSeriesStacked = Template.bind({})
@@ -318,7 +322,7 @@ HorizontalMultiSeriesStacked.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Horizontal Multi-Series Stacked',
-  valueFormat: formatPercent,
+  xTickFormatter: formatPercent,
 }
 
 export const SingleSeriesCustomColor = Template.bind({})
@@ -327,7 +331,7 @@ SingleSeriesCustomColor.args = {
   orientation: 'vertical',
   showTooltip: true,
   title: 'Browser Market Share 2025 - Custom Color',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }
 
 export const MultiSeriesBrandColors = Template.bind({})
@@ -339,7 +343,7 @@ MultiSeriesBrandColors.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Per-Series Brand Colors',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }
 
 export const ResponsiveAspectRatio = Template.bind({})
@@ -348,5 +352,5 @@ ResponsiveAspectRatio.args = {
   aspectRatio: 16 / 9,
   showTooltip: true,
   title: 'Browser Market Share 2025 - 16:9 Aspect Ratio',
-  valueFormat: formatPercent,
+  yTickFormatter: formatPercent,
 }

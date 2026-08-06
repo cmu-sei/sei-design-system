@@ -763,7 +763,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="browserShare2025"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             animate
             show-tooltip
@@ -782,7 +782,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="sortByProperty(browserShare2025, 'value', 'desc')"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             show-tooltip
@@ -802,7 +802,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="sortByProperty(browserShare2025LongLabels, 'value', 'desc')"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             show-tooltip
@@ -822,7 +822,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareByYearSeries"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             show-tooltip
@@ -842,7 +842,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="stacked"
             show-tooltip
@@ -863,7 +863,7 @@
           <SdsBarChart
             :height="720"
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             orientation="horizontal"
@@ -884,7 +884,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeries"
-            :value-format="formatPercent"
+            :x-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             orientation="horizontal"
             mode="stacked"
@@ -905,7 +905,7 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShare2025"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             :aspect-ratio="16 / 9"
             show-tooltip
@@ -924,7 +924,7 @@
         <div class="not-prose mt-6 max-w-3xl">
           <SdsBarChart
             :data="browserShare2025CustomColor"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             show-tooltip
             title="Browser Market Share 2025 - Custom Color"
@@ -942,12 +942,114 @@
         <div class="not-prose mt-6">
           <SdsBarChart
             :data="browserShareBySeriesBrandColors"
-            :value-format="formatPercent"
+            :y-tick-formatter="formatPercent"
             :tooltip-value-format="formatPercent"
             mode="grouped"
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Per-Series Brand Colors"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+        <h2>
+          Line Chart
+        </h2>
+        <p>
+          A reusable SVG-based line chart for trend analysis across ordered categories. Like the other
+          chart components, it is built on <code>BaseChart</code> and supports tooltips, legends, and
+          responsive sizing via <code>aspect-ratio</code>.
+        </p>
+
+        <h3>Multi-series trend comparison (6 lines or fewer)</h3>
+        <p>
+          This customer satisfaction dataset uses quarterly values across service channels. With six
+          or fewer series, each line receives a distinct color for fast comparison.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendSeries"
+            :y-tick-formatter="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Customer Satisfaction by Channel (Quarterly)"
+          />
+        </div>
+
+        <h3 class="mt-10">
+          Missing data with dashed gaps
+        </h3>
+        <p>
+          Null values intentionally break each line segment. Dashed connectors show missing reporting
+          windows in a way users can read immediately.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendWithGaps"
+            :y-tick-formatter="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Customer Satisfaction with Missing Quarters"
+          />
+        </div>
+
+        <h3 class="mt-10">
+          Dense mode (more than 6 lines)
+        </h3>
+        <p>
+          When series count exceeds six, all lines render in gray to reduce visual noise. Hovering a
+          line highlights it in blue. Use <code>line-count-threshold</code> to override when this mode starts.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="browserLineTrendManySeries"
+            :y-tick-formatter="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
+            :aspect-ratio="16 / 9"
+            :line-count-threshold="6"
+            show-tooltip
+            show-points
+            show-legend
+            title="Dense Multi-Series Customer Satisfaction Trends"
+          />
+        </div>
+
+        <h3 class="mt-10">
+          Time scale example
+        </h3>
+        <p>
+          When the x-axis represents real dates, use <code>x-scale-type="time"</code> so D3 can render time ticks with actual temporal spacing.
+        </p>
+        <div class="not-prose mt-6">
+          <SdsLineChart
+            :data="[
+              {
+                label: 'Capacity',
+                data: lineMonths.map((date, index) => ({ x: date, y: [42, 48, 45, 53, 49, 57, 61, 58, 64, 66, 69, 72][index] })),
+              },
+              {
+                label: 'Demand',
+                data: lineMonths.map((date, index) => ({ x: date, y: [50, 46, 52, 55, 60, 58, 63, 67, 65, 70, 74, 71][index] })),
+              },
+            ]"
+            :y-tick-formatter="linePercentFormat"
+            :tooltip-value-format="linePercentFormat"
+            x-scale-type="utc"
+            :x-tick-values="lineMonths"
+            :x-tick-formatter="formatMonthTickLabel"
+            :aspect-ratio="16 / 9"
+            show-tooltip
+            show-points
+            show-legend
+            title="Monthly Trend with a Time Scale"
           />
         </div>
       </div>
@@ -1350,6 +1452,10 @@
           :items="items"
           enable-drawer
           row-highlight
+          hide-header
+          caption="Fruits Table"
+          subcaption="Current inventory and stocking assignments"
+          standalone
         >
           <template #cell(fruit_employee)="{ item }: { item: TableItem }">
             <p class="font-bold">
@@ -1392,6 +1498,7 @@
         <SdsTable
           :fields="fields_simple"
           :items="items_simple"
+          standalone
         >
           <template #cell(fruit)="{ value }">
             <p class="font-bold">
@@ -1822,11 +1929,13 @@
 import type { AxisDomain } from '@/lib/d3'
 import type { BarItem, BarSeries } from '@/composables/useBarChart'
 import type { HeatmapCell, HeatmapColors } from '@/composables/useHeatmapChart'
+import type { LineSeries } from '@/composables/useLineChart'
 import type { PieSlice } from '@/composables/usePieChart'
 import type { TableField, TableItem } from '../../../components/Table/Table.vue';
 import SdsBarChart from '@/components/BarChart/BarChart.vue'
 import SdsHeatmapChart from '@/components/HeatmapChart/HeatmapChart.vue'
 import SdsLink from '@/components/Link/Link.vue';
+import SdsLineChart from '@/components/LineChart/LineChart.vue'
 import SdsPieChart from '@/components/PieChart/PieChart.vue';
 import { useDarkMode } from '@/composables/useDarkMode';
 import { formatPercent, resolveItemColor, sortByProperty } from '@/helpers/charts'
@@ -2027,6 +2136,140 @@ const browserShareBySeriesBrandColors: BarSeries[] = [
     ],
   },
 ]
+
+/**
+ * Line Chart(s)
+ */
+const lineQuarters = [
+  'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023',
+  'Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024',
+  'Q1 2025', 'Q2 2025', 'Q3 2025', 'Q4 2025',
+]
+const lineMonths = [
+  new Date(Date.UTC(2025, 0, 1)),
+  new Date(Date.UTC(2025, 1, 1)),
+  new Date(Date.UTC(2025, 2, 1)),
+  new Date(Date.UTC(2025, 3, 1)),
+  new Date(Date.UTC(2025, 4, 1)),
+  new Date(Date.UTC(2025, 5, 1)),
+  new Date(Date.UTC(2025, 6, 1)),
+  new Date(Date.UTC(2025, 7, 1)),
+  new Date(Date.UTC(2025, 8, 1)),
+  new Date(Date.UTC(2025, 9, 1)),
+  new Date(Date.UTC(2025, 10, 1)),
+  new Date(Date.UTC(2025, 11, 1)),
+]
+
+const formatMonthTickLabel = (value: AxisDomain) =>
+  new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' }).format(
+    value instanceof Date
+      ? value
+      : typeof value === 'string' || typeof value === 'number'
+        ? new Date(value)
+        : new Date(value.valueOf()),
+  )
+const linePercentFormat = (value: number) => formatPercent(value)
+
+const browserLineTrendSeries: LineSeries[] = [
+  {
+    label: 'Web',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [62, 71, 69, 78, 74, 81, 77, 85, 80, 88, 83, 86][index] ?? 0 })),
+  },
+  {
+    label: 'Mobile App',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [88, 79, 83, 72, 76, 68, 74, 67, 73, 65, 70, 63][index] ?? 0 })),
+  },
+  {
+    label: 'API',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [54, 58, 73, 61, 79, 66, 82, 70, 76, 69, 84, 72][index] ?? 0 })),
+  },
+  {
+    label: 'Support',
+    data: lineQuarters.map((quarter, index) => ({ x: quarter, y: [91, 85, 87, 80, 84, 77, 79, 73, 75, 69, 72, 66][index] ?? 0 })),
+  },
+]
+
+const browserLineTrendWithGaps: LineSeries[] = [
+  {
+    label: 'Web',
+    data: [
+      { x: 'Q1 2023', y: 62 },
+      { x: 'Q2 2023', y: 71 },
+      { x: 'Q3 2023', y: null },
+      { x: 'Q4 2023', y: 78 },
+      { x: 'Q1 2024', y: 74 },
+      { x: 'Q2 2024', y: null },
+      { x: 'Q3 2024', y: 77 },
+      { x: 'Q4 2024', y: 85 },
+      { x: 'Q1 2025', y: 80 },
+      { x: 'Q2 2025', y: null },
+      { x: 'Q3 2025', y: 83 },
+      { x: 'Q4 2025', y: 86 },
+    ],
+  },
+  {
+    label: 'Mobile App',
+    data: [
+      { x: 'Q1 2023', y: 88 },
+      { x: 'Q2 2023', y: null },
+      { x: 'Q3 2023', y: 83 },
+      { x: 'Q4 2023', y: 72 },
+      { x: 'Q1 2024', y: null },
+      { x: 'Q2 2024', y: 68 },
+      { x: 'Q3 2024', y: 74 },
+      { x: 'Q4 2024', y: 67 },
+      { x: 'Q1 2025', y: null },
+      { x: 'Q2 2025', y: 65 },
+      { x: 'Q3 2025', y: 70 },
+      { x: 'Q4 2025', y: 63 },
+    ],
+  },
+  {
+    label: 'Support',
+    data: [
+      { x: 'Q1 2023', y: 91 },
+      { x: 'Q2 2023', y: 85 },
+      { x: 'Q3 2023', y: null },
+      { x: 'Q4 2023', y: 80 },
+      { x: 'Q1 2024', y: 84 },
+      { x: 'Q2 2024', y: 77 },
+      { x: 'Q3 2024', y: null },
+      { x: 'Q4 2024', y: 73 },
+      { x: 'Q1 2025', y: 75 },
+      { x: 'Q2 2025', y: 69 },
+      { x: 'Q3 2025', y: null },
+      { x: 'Q4 2025', y: 66 },
+    ],
+  },
+]
+
+const denseSeriesProfiles = [
+  [78, 66, 74, 61, 79, 68, 83, 70, 76, 64, 81, 69],
+  [63, 72, 65, 76, 67, 74, 69, 78, 71, 75, 73, 80],
+  [85, 82, 88, 80, 84, 79, 86, 77, 83, 76, 87, 74],
+  [58, 64, 60, 69, 62, 67, 64, 71, 66, 70, 68, 73],
+  [74, 70, 77, 68, 75, 66, 79, 69, 76, 67, 80, 70],
+  [69, 75, 71, 78, 73, 76, 70, 79, 72, 77, 74, 81],
+  [81, 73, 84, 71, 82, 70, 86, 72, 83, 69, 85, 73],
+  [55, 61, 57, 64, 59, 66, 58, 68, 60, 65, 62, 69],
+]
+
+const browserLineTrendManySeries: LineSeries[] = [
+  'Web',
+  'Mobile App',
+  'API',
+  'Support',
+  'Store',
+  'Partner',
+  'Email',
+  'Chatbot'
+].map((label, index) => ({
+  label,
+  data: lineQuarters.map((quarter, quarterIndex) => ({
+    x: quarter,
+    y: denseSeriesProfiles[index]?.[quarterIndex] ?? 0,
+  })),
+}))
 
 /**
  * Heatmap Chart(s)

@@ -1,8 +1,9 @@
 <template>
-  <div 
-    class="sds-heatmap-chart w-full" 
-    :class="containerClass" 
+  <div
+    class="sds-heatmap-chart w-full"
+    :class="containerClass"
     :style="containerStyle"
+    @mouseleave="onChartLeave"
   >
     <BaseChart
       v-bind="forwardedAttrs"
@@ -25,8 +26,8 @@
       :y-axis="yAxis"
     >
       <template #default="{ innerWidth, innerHeight }">
-        <g 
-          v-if="innerWidth > 0" 
+        <g
+          v-if="innerWidth > 0"
           :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
           <rect
@@ -43,7 +44,6 @@
             :aria-label="`${cell.data.x}, ${cell.data.y}: ${cell.data.value}`"
             @mouseenter="(e) => onCellEnter(e, cell)"
             @mousemove="(e) => onCellMove(e, cell)"
-            @mouseleave="onCellLeave"
           />
         </g>
       </template>
@@ -55,8 +55,8 @@
           name="tooltip" 
           :data="tooltip.data.value"
         >
-          <p 
-            v-if="tooltip.data.value" 
+          <p
+            v-if="tooltip.data.value"
             class="text-xs wrap-break-word"
           >
             <span class="block font-semibold">{{ tooltip.data.value.x }} / {{ tooltip.data.value.y }}</span>
@@ -216,9 +216,20 @@ function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
   return cells.value
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex
@@ -227,14 +238,16 @@ function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
 
 function onCellMove(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex
   })
 }
 
-function onCellLeave() {
+function onChartLeave() {
+  hoveredIndex.value = null
   tooltip.hide()
 }
 </script>

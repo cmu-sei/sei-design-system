@@ -3,14 +3,31 @@
     :id="id || 'sds-table'"
     data-id="sds-table"
     class="table-prose dark:table-prose-invert"
-    :class="[paddingClass]"
+    :class="[
+      paddingClass,
+      {
+        'table-prose-hide-header': hideHeader,
+        'table-prose-standalone': standalone
+      }
+    ]"
     :data-row-highlight="rowHighlight || undefined"
   >
     <caption v-if="!!$slots.caption || caption">
-      <!-- @slot Caption content. This will override the **caption** prop. -->
-      <slot name="caption">
-        {{ caption }}
-      </slot>
+      <span class="block">
+        <!-- @slot Caption content. This will override the **caption** prop. -->
+        <slot name="caption">
+          {{ caption }}
+        </slot>
+      </span>
+      <span
+        v-if="!!$slots.subcaption || subcaption"
+        class="block text-sm font-normal text-gray-600 dark:text-gray-400"
+      >
+        <!-- @slot Supporting content displayed beneath the caption. This will override the **subcaption** prop. -->
+        <slot name="subcaption">
+          {{ subcaption }}
+        </slot>
+      </span>
     </caption>
     <colgroup>
       <template v-for="field in displayedFields">
@@ -500,6 +517,21 @@ export interface TableProps {
    */
   caption?: string;
   /**
+   * Supporting text displayed beneath the table caption.
+   * @default undefined
+   */
+  subcaption?: string;
+  /**
+   * Determines if the table header should be visually hidden.
+   * @default false
+   */
+  hideHeader?: boolean;
+  /**
+   * Determines if the table should include standalone border and shadow styling.
+   * @default false
+   */
+  standalone?: boolean;
+  /**
    * Determines the CSS classes used on the sorted column.
    * @default undefined
    */
@@ -561,6 +593,9 @@ const props = withDefaults(defineProps<TableProps>(), {
   sortBy: undefined,
   sortDesc: false,
   caption: undefined,
+  subcaption: undefined,
+  hideHeader: false,
+  standalone: false,
   sortedColumnClass: undefined,
   enableDrawer: false,
   onSort: undefined,

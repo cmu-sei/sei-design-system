@@ -1,11 +1,11 @@
 <template>
   <div 
     data-id="sds-base-chart" 
-    class="sds-base-chart flex flex-col gap-y-4"
+    class="sds-base-chart flex w-full min-w-0 flex-col gap-y-4"
   >
     <div 
       ref="containerRef" 
-      class="relative" 
+      class="relative w-full min-w-0" 
       :style="{ width: props.width }"
     >
       <svg
