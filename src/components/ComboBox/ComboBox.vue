@@ -160,6 +160,7 @@
     <div
       ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
+      class="@container"
     >
       <div
         v-if="hasCategories"
@@ -540,9 +541,11 @@
       <!-- Footer section -->
       <div
         v-if="!isSelected(query)"
-        class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+        data-id="sds-combo-box-footer"
+        class="grid items-start gap-2 border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 @min-[28rem]:flex @min-[28rem]:items-center @min-[28rem]:gap-6 @min-[28rem]:px-4 @min-[28rem]:text-sm"
+        :class="isFlatArray || groups.length <= 1 ? 'grid-cols-2' : 'grid-cols-3'"
       >
-        <div class="ml-auto flex items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:ml-auto @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             <IconFa7SolidArrowUp
               class="w-3 h-3"
@@ -551,11 +554,11 @@
               class="w-3 h-3"
             />
           </div>
-          <span class="sr-only">Up, down</span> to navigate
+          <span class="sr-only">Up, down:</span> Navigate
         </div>
         <div
           v-if="!isFlatArray && groups.length > 1"
-          class="flex items-center gap-1.5"
+          class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5"
         >
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             <IconFa7SolidArrowLeft
@@ -565,13 +568,13 @@
               class="w-3 h-3"
             />
           </div>
-          <span class="sr-only">Left, right</span> to switch tabs
+          <span class="sr-only">Left, right:</span> Switch tabs
         </div>
-        <div class="flex items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
           <span class="inline-block p-1 border text-xs font-mono border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             Enter
           </span>
-          to select
+          Select
         </div>
       </div>
     </div>
