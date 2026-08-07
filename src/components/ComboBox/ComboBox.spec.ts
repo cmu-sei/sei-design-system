@@ -434,8 +434,44 @@ describe('ComboBox', () => {
     const listbox = dropdownInBody()
     expect(listbox).toBeTruthy()
     expect(listbox?.id).toBe(input.attributes('aria-controls'))
-    expect(text(listbox)).not.toContain('to select')
-    expect(text(findInBody('[data-id="sds-combo-box-dropdown"]'))).toContain('to select')
+    expect(text(listbox)).not.toContain('Select')
+    expect(text(findInBody('[data-id="sds-combo-box-dropdown"]'))).toContain('Select')
+    wrapper.unmount()
+  })
+
+  it('uses container-responsive, non-wrapping keyboard instructions', async () => {
+    const wrapper = mountComponent({
+      props: {
+        clickToSelect: true,
+        suggestions: groupedSuggestions,
+        type: 'select',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        optionLabel: 'name'
+      }
+    })
+
+    await wrapper.find('input[type="text"]').trigger('click')
+    await flushDropdown()
+
+    const dropdown = findInBody('[data-id="sds-combo-box-dropdown"]')
+    const footer = findInBody('[data-id="sds-combo-box-footer"]')
+    const instructions = footer?.children ?? []
+
+    expect(dropdown?.classList).toContain('@container')
+    expect(footer?.classList).toContain('grid-cols-3')
+    expect(footer?.classList).toContain('@min-[28rem]:flex')
+    expect(Array.from(instructions)).toHaveLength(3)
+    Array.from(instructions).forEach(instruction => {
+      expect(instruction.classList).toContain('flex-col')
+      expect(instruction.classList).toContain('items-center')
+      expect(instruction.classList).toContain('whitespace-nowrap')
+      expect(instruction.classList).toContain('@min-[28rem]:flex-row')
+    })
+    expect(text(footer)).toContain('Navigate')
+    expect(text(footer)).toContain('Switch tabs')
+    expect(text(footer)).toContain('Select')
+    expect(text(footer)).not.toContain('to navigate')
     wrapper.unmount()
   })
 
