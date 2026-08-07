@@ -2730,10 +2730,10 @@ const edit = (item: TableItem) => {
 const title = ref('Chart title')
 
 const entries = ref([
-  { id: 1, title: "Item 1", url: "https://designsystem.sei.cmu.edu", count: 100 },
-  { id: 2, title: "Item 2", url: "https://designsystem.sei.cmu.edu", count: 80 },
-  { id: 3, title: "Item 3", url: "https://designsystem.sei.cmu.edu", count: 40 },
-  { id: 4, title: "Item 4", url: "https://designsystem.sei.cmu.edu", count: 32 },
+  { id: 1, title: "Item 1", url: "https://designsystem.sei.cmu.edu", count: 100000 },
+  { id: 2, title: "Item 2", url: "https://designsystem.sei.cmu.edu", count: 80000 },
+  { id: 3, title: "Item 3", url: "https://designsystem.sei.cmu.edu", count: 4000 },
+  { id: 4, title: "Item 4", url: "https://designsystem.sei.cmu.edu", count: 320 },
   { id: 5, title: "Item 5", url: "https://designsystem.sei.cmu.edu", count: 20 },
 ])
 
