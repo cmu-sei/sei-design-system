@@ -959,8 +959,8 @@
         </h2>
         <p>
           A reusable SVG-based line chart for trend analysis across ordered categories. Like the other
-          chart components, it is built on <code>BaseChart</code> and supports tooltips, legends, and
-          responsive sizing via <code>aspect-ratio</code>.
+          chart components, it is built on <code>BaseChart</code> and supports tooltips, optional
+          legends via <code>show-legend</code>, and responsive sizing via <code>aspect-ratio</code>.
         </p>
 
         <h3>Multi-series trend comparison (6 lines or fewer)</h3>
