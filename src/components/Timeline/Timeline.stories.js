@@ -18,7 +18,7 @@ export default {
     },
     markerColumnWidth: {
       control: 'text',
-      description: 'Width reserved for the timeline marker column.',
+      description: 'Width reserved for the timeline marker column. Custom markers use an automatic width by default.',
     },
   },
 }

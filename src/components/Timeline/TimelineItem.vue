@@ -132,8 +132,10 @@ withDefaults(defineProps<TimelineItemProps>(), {
 })
 
 const timeline = inject<TimelineContext | null>(timelineContextKey, null)
+const slots = useSlots()
 const itemElement = ref<HTMLElement | null>(null)
-const item: TimelineItemRegistration = { element: itemElement }
+const hasCustomMarker = computed(() => Boolean(slots.marker))
+const item: TimelineItemRegistration = { element: itemElement, hasCustomMarker }
 timeline?.registerItem(item)
 
 const orientation = computed(() => timeline?.orientation.value ?? 'vertical')

@@ -3,7 +3,7 @@
     data-id="sds-list-item"
     role="listitem"
     class="min-w-0"
-    :class="{ [`grid ${list?.markerGridClass ?? 'grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]'} gap-x-3`]: $slots.marker }"
+    :class="{ 'grid grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr] gap-x-3': $slots.marker }"
     :style="listItemStyle"
   >
     <div
@@ -63,7 +63,7 @@ defineOptions({
 interface ListItemProps {
   /** Optional title displayed at the top of the list item. */
   title?: string
-  /** Width reserved for the marker column. */
+  /** Width reserved for the marker column. Defaults to the custom marker's intrinsic width. */
   markerColumnWidth?: string
 }
 
@@ -73,8 +73,10 @@ const props = withDefaults(defineProps<ListItemProps>(), {
 })
 
 const list = inject<ListContext | null>(listContextKey, null)
+const slots = useSlots()
 const markerColumnWidth = computed(() => props.markerColumnWidth)
-const listItemStyle = computed(() => markerColumnWidth.value ? { '--sds-list-item-marker-column-width': markerColumnWidth.value } : undefined)
+const resolvedMarkerColumnWidth = computed(() => markerColumnWidth.value ?? (slots.marker ? 'auto' : undefined))
+const listItemStyle = computed(() => resolvedMarkerColumnWidth.value ? { '--sds-list-item-marker-column-width': resolvedMarkerColumnWidth.value } : undefined)
 
 provide<ListItemContext>(listItemContextKey, {
   markerColumnWidth

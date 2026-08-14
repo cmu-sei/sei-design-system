@@ -214,6 +214,77 @@
 
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Automatic Marker Columns
+      </h2>
+      <div class="grid gap-10 lg:grid-cols-2">
+        <section class="grid gap-4">
+          <h3 class="text-lg">
+            Team handoff
+          </h3>
+          <SdsTimeline>
+            <SdsTimelineItem
+              title="Review assigned"
+              subtitle="Maya Jankowski"
+              timestamp="09:15"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="sm"
+                  shape="circle"
+                  name="Maya Jankowski"
+                  variant="orange"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Approval requested"
+              subtitle="Daniel Lee"
+              timestamp="10:40"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Daniel Lee"
+                  variant="blue"
+                />
+              </template>
+            </SdsTimelineItem>
+          </SdsTimeline>
+        </section>
+
+        <section class="grid gap-4">
+          <h3 class="text-lg">
+            Release gates
+          </h3>
+          <SdsTimeline>
+            <SdsTimelineItem
+              title="Automated checks passed"
+              timestamp="11:05"
+            >
+              <template #marker>
+                <span class="inline-flex h-6 min-w-10 items-center justify-center rounded bg-green-100 px-2 text-xs font-semibold text-green-800 dark:bg-green-900 dark:text-green-100">
+                  CI
+                </span>
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Security sign-off complete"
+              timestamp="11:30"
+            >
+              <template #marker>
+                <span class="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-100 px-1 text-xs font-semibold text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+                  SEC
+                </span>
+              </template>
+            </SdsTimelineItem>
+          </SdsTimeline>
+        </section>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Collapsed Timeline
       </h2>
       <SdsTimeline
