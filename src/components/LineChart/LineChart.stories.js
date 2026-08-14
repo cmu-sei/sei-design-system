@@ -13,7 +13,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A line chart for trend comparisons across ordered categories. It supports optional point markers, missing-data gaps, and an adjustable monochrome threshold for dense multi-series charts.',
+        component: 'A line chart for trend comparisons across ordered categories. It supports optional point markers, missing-data gaps, and an adjustable monochrome threshold for dense multi-series charts. The legend is opt-in via showLegend.',
       },
     },
   },
@@ -26,6 +26,10 @@ export default {
     legendPosition: {
       options: ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'],
       control: { type: 'select' },
+    },
+    showLegend: {
+      control: { type: 'boolean' },
+      description: 'Display the legend.',
     },
     lineCountThreshold: {
       control: { type: 'number' },
