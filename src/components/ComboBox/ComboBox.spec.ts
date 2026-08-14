@@ -233,11 +233,15 @@ describe('ComboBox', () => {
     const focusIndicatorWrapper = mountComponent({
       props: { suggestions, type: 'select', focusOnKeyPress: true }
     })
+    const emptySuggestionsWrapper = mountComponent({
+      props: { suggestions: [], type: 'select' }
+    })
 
     expect(selectWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
     expect(taggableSelectWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
     expect(textWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
     expect(focusIndicatorWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
+    expect(emptySuggestionsWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
   })
 
   it('keeps the select caret vertically centered for every size', () => {

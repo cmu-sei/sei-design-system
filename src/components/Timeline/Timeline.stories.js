@@ -12,6 +12,10 @@ export default {
   },
   component: SdsTimeline,
   argTypes: {
+    orientation: {
+      options: ['vertical', 'horizontal'],
+      control: { type: 'select' },
+    },
     markerColumnWidth: {
       control: 'text',
       description: 'Width reserved for the timeline marker column.',
@@ -43,3 +47,29 @@ Collapsed.args = {
   collapseAfter: 2,
   markerColumnWidth: '1.5rem'
 }
+
+export const Horizontal = Template.bind({})
+Horizontal.args = {
+  orientation: 'horizontal'
+}
+
+export const CurrentEvent = () => ({
+  components: { SdsTimeline, SdsTimelineItem },
+  template: `
+    <sds-timeline>
+      <sds-timeline-item
+        current
+        subtitle="Final review"
+        description="The final review is complete."
+        datetime="2026-08-13T09:00:00Z"
+      >
+        <template #title>
+          <a href="/records/approved" class="text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-200">
+            Record status changed to Approved
+          </a>
+        </template>
+        <template #timestamp>A moment ago</template>
+      </sds-timeline-item>
+    </sds-timeline>
+  `
+})

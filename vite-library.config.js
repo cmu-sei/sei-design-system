@@ -6,8 +6,6 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
-console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
-
 const isVueUseInvalidAnnotation = log => (
   log.code === 'INVALID_ANNOTATION' &&
   log.message.includes('node_modules/@vueuse/core/dist/index.js')
@@ -45,7 +43,7 @@ export default defineConfig(({ mode }) => ({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
+      '@': resolve(import.meta.dirname, './src')
     }
   },
   publicDir: false,
@@ -53,7 +51,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     target: 'esnext',
     lib: {
-      entry: resolve(__dirname, process.env.LIB_ROOT, 'index.ts'),
+      entry: resolve(import.meta.dirname, process.env.LIB_ROOT, 'index.ts'),
       name: process.env.LIB_NAME || 'SeiDesignSystem',
       fileName: format => {
         if (format === 'es') {

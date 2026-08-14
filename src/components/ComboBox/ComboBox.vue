@@ -143,7 +143,7 @@
             </SdsTooltip>
           </div>
           <div
-            v-else-if="isSelectType"
+            v-else-if="isSelectType && hasDropdownSuggestion"
             data-id="sds-combo-box-select-caret"
             aria-hidden="true"
             class="input-group-addon pointer-events-none"
@@ -606,7 +606,7 @@ interface ComboBoxProps {
    * Use this for select-like ComboBoxes where users should browse the full suggestion list.
    * When false, the dropdown opens from typing or keyboard navigation instead.
    *
-   * @default false
+   * @default true
    */
   clickToSelect?: boolean;
   /**
@@ -881,7 +881,7 @@ defineOptions({ name: 'SdsComboBox' })
 
 const props = withDefaults(defineProps<ComboBoxProps>(), {
   autofocus: false,
-  clickToSelect: false,
+  clickToSelect: true,
   debounceComplete: 250,
   disableGroupTabs: false,
   enableSelectAll: false,
