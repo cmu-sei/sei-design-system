@@ -49,6 +49,13 @@
 </template>
 
 <script setup lang="ts">
+import {
+  listContextKey,
+  listItemContextKey,
+  type ListContext,
+  type ListItemContext
+} from './listContext'
+
 defineOptions({
   name: 'SdsListItem'
 })
@@ -60,25 +67,16 @@ interface ListItemProps {
   markerColumnWidth?: string
 }
 
-interface ListContext {
-  markerGridClass: string
-  titleClass: string
-}
-
-interface ListItemContext {
-  markerColumnWidth: { value: string | undefined }
-}
-
 const props = withDefaults(defineProps<ListItemProps>(), {
   title: undefined,
   markerColumnWidth: undefined
 })
 
-const list = inject<ListContext | null>('sdsList', null)
+const list = inject<ListContext | null>(listContextKey, null)
 const markerColumnWidth = computed(() => props.markerColumnWidth)
 const listItemStyle = computed(() => markerColumnWidth.value ? { '--sds-list-item-marker-column-width': markerColumnWidth.value } : undefined)
 
-provide<ListItemContext>('sdsListItem', {
+provide<ListItemContext>(listItemContextKey, {
   markerColumnWidth
 })
 </script>
