@@ -161,6 +161,7 @@ describe('Timeline', () => {
 
     expect(timeline.attributes('data-orientation')).toBe('vertical')
     expect(timeline.classes()).toContain('grid-cols-[var(--sds-timeline-marker-column-width,1.5rem)_1fr]')
+    expect(timeline.attributes('style')).toBe('--sds-timeline-marker-column-width: 1.5rem;')
     expect(wrapper.find('[data-id="sds-timeline-item-marker-track"]').classes()).toContain('flex-col')
     expect(wrapper.find('[data-id="sds-timeline-item-marker-track"]').classes()).toContain('translate-y-1.5')
     expect(wrapper.find('[data-id="sds-timeline-item-connector"]').classes()).toContain('w-0.5')
@@ -464,12 +465,35 @@ describe('Timeline', () => {
         components: { TimelineItem }
       },
       slots: {
-        default: '<TimelineItem title="Maya Jankowski" />'
+        default: `
+          <TimelineItem title="Maya Jankowski">
+            <template #marker><span>MJ</span></template>
+          </TimelineItem>
+        `
       }
     })
 
     expect(wrapper.find('[data-id="sds-timeline"]').classes()).toContain('grid-cols-[var(--sds-timeline-marker-column-width,1.5rem)_1fr]')
     expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: 3rem;')
     expect(wrapper.find('[data-id="sds-timeline"]').classes()).not.toContain('grid-cols-[2.5rem_1fr]')
+  })
+
+  it('automatically sizes the marker column when an item has a custom marker', async () => {
+    const wrapper = mount(Timeline, {
+      global: {
+        components: { TimelineItem }
+      },
+      slots: {
+        default: `
+          <TimelineItem title="Maya Jankowski">
+            <template #marker><span>MJ</span></template>
+          </TimelineItem>
+        `
+      }
+    })
+
+    await nextTick()
+
+    expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: auto;')
   })
 })

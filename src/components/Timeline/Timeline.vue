@@ -60,7 +60,7 @@ defineOptions({
 interface TimelineProps {
   /** Number of items to show before collapsing middle items. */
   collapseAfter?: number
-  /** Width reserved for each item marker. */
+  /** Width reserved for each item marker. Defaults to auto when an item has a custom marker. */
   markerColumnWidth?: string
   /** Direction used to arrange timeline events. */
   orientation?: TimelineOrientation
@@ -78,7 +78,8 @@ const registeredItems: TimelineItemRegistration[] = []
 const orderedItems = shallowRef<TimelineItemRegistration[]>([])
 
 const orientation = computed<TimelineOrientation>(() => props.orientation === 'horizontal' ? 'horizontal' : 'vertical')
-const markerColumnWidth = computed(() => props.markerColumnWidth ?? listItem?.markerColumnWidth.value ?? '1.5rem')
+const hasCustomMarker = computed(() => orderedItems.value.some(item => item.hasCustomMarker.value))
+const markerColumnWidth = computed(() => props.markerColumnWidth ?? listItem?.markerColumnWidth.value ?? (hasCustomMarker.value ? 'auto' : '1.5rem'))
 const collapseAfter = computed(() => Number.isFinite(props.collapseAfter) ? Math.max(Math.floor(props.collapseAfter), 0) : 0)
 const timelineItemCount = computed(() => orderedItems.value.length)
 const shouldCollapse = computed(() => collapseAfter.value > 0 && timelineItemCount.value > collapseAfter.value)

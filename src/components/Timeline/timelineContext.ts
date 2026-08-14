@@ -4,6 +4,7 @@ export type TimelineOrientation = 'horizontal' | 'vertical'
 
 export interface TimelineItemRegistration {
   element: Ref<HTMLElement | null>
+  hasCustomMarker: ComputedRef<boolean>
 }
 
 export interface TimelineContext {
