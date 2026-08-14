@@ -31,6 +31,7 @@
             <line
               v-for="(y, yIndex) in computeHorizontalGridLines(innerWidth, innerHeight)"
               :key="`line-grid-y-${yIndex}`"
+              data-id="sds-grid-line-y"
               x1="0"
               :y1="y"
               :x2="innerWidth"
@@ -42,6 +43,7 @@
             <line
               v-for="(x, xIndex) in computeVerticalGridLines(innerWidth, innerHeight)"
               :key="`line-grid-x-${xIndex}`"
+              data-id="sds-grid-line-x"
               :x1="x"
               y1="0"
               :x2="x"
@@ -64,7 +66,7 @@
             stroke-dasharray="4 4"
             stroke-linecap="round"
             class="stroke-current pointer-events-none transition-[opacity,color] duration-150"
-            :class="getGapColorClass(segment)"
+            :class="[getGapColorClass(segment), getLineOpacityClass(lineSeriesIndexById.get(segment.seriesId) ?? -1)]"
           />
 
           <path
@@ -75,7 +77,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none"
-            :class="getLineColorClass(i)"
+            :class="[getLineColorClass(i), getLineOpacityClass(i)]"
             :stroke-width="2"
             role="img"
             :aria-label="`Series ${lineSeries.seriesLabel}`"
@@ -103,7 +105,7 @@
               :r="hoveredPointKey === point.key ? 4.5 : 3.5"
               class="fill-current stroke-current pointer-events-all transition-[opacity,color] duration-150"
               style="transition: r 120ms ease, opacity 150ms ease, color 150ms ease;"
-              :class="getLineColorClass(point.seriesIndex)"
+              :class="[getLineColorClass(point.seriesIndex), getLineOpacityClass(point.seriesIndex)]"
               :fill-opacity="0.35"
               :stroke-width="1"
               role="img"
@@ -194,7 +196,7 @@ interface LineChartProps {
   showPoints?: boolean
   /** Number of lines allowed before monochrome mode is enabled. */
   lineCountThreshold?: number
-  /** Enables rendering of legend items beneath the chart. @default true */
+  /** Enables rendering of legend items beneath the chart. @default false */
   showLegend?: boolean
   /** Legend layout direction. @default 'horizontal' */
   legendOrientation?: ChartLegendOrientation
@@ -238,7 +240,7 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   tooltipValueFormat: undefined,
   showPoints: false,
   lineCountThreshold: 6,
-  showLegend: true,
+  showLegend: false,
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-left',
 })
@@ -297,8 +299,8 @@ const resolvedFormatter = computed(() => {
   return typeof formatter === 'function' ? formatter : format(formatter)
 })
 
-/** Whether the legend should be shown based on prop toggle and series density threshold. */
-const showLegend = computed(() => props.showLegend && lines.value.length > props.lineCountThreshold)
+/** Whether the legend should be shown based on prop toggle. */
+const showLegend = computed(() => props.showLegend)
 /** Legend position normalized to render below the chart area. */
 const resolvedLegendPosition = computed<ChartLegendPosition>(() =>
   props.legendPosition.startsWith('top-')
@@ -423,7 +425,19 @@ function getLineColorClass(index: number): LineChartColorClass {
 }
 
 /**
- * Converts an x-domain value into an SVG x coordinate.
+ * Resolves an opacity class for a series in non-monochrome mode.
+ * Dims non-hovered series when any series is being hovered.
+ * Monochrome mode handles hover via color change and does not need this.
+ *
+ * @param index - Zero-based series index.
+ * @returns Tailwind opacity class, or empty string when no dimming is needed.
+ */
+function getLineOpacityClass(index: number): string {
+  if (isMonochrome.value) return ''
+  return hoveredIndex.value !== null && hoveredIndex.value !== index ? 'opacity-40' : ''
+}
+
+/**
  *
  * @param value - Axis-domain value (index, number, date-like).
  * @param fallbackIndex - Category index fallback for category scales.
@@ -462,7 +476,7 @@ function getGapColorClass(segment: LineGapSegment): LineChartColorClass {
  */
 function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
   const target = event.currentTarget
-  if (!(target instanceof SVGCircleElement)) {
+  if (typeof SVGCircleElement === 'undefined' || !(target instanceof SVGCircleElement)) {
     return { x: event.clientX, y: event.clientY }
   }
   const rect = target.getBoundingClientRect()
