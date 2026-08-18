@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
+import { h, nextTick, ref } from 'vue'
 import List from './List.vue'
 import ListItem from './ListItem.vue'
 import Timeline from '../Timeline/Timeline.vue'
@@ -110,6 +111,34 @@ describe('List', () => {
 
     expect(item.attributes('style')).toBe('--sds-list-item-marker-column-width: auto;')
     expect(item.classes()).toContain('grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]')
+  })
+
+  it('updates marker layout when the marker slot is added after mount', async () => {
+    const hasMarker = ref(false)
+    const wrapper = mount(List, {
+      slots: {
+        default: () => h(ListItem, { title: 'Supporting material' }, hasMarker.value
+          ? { marker: () => h('span', 'QA') }
+          : {})
+      }
+    })
+
+    expect(wrapper.find('[data-id="sds-list-item-marker"]').exists()).toBe(false)
+
+    hasMarker.value = true
+    await nextTick()
+
+    const item = wrapper.find('[data-id="sds-list-item"]')
+    expect(wrapper.find('[data-id="sds-list-item-marker"]').text()).toBe('QA')
+    expect(item.attributes('style')).toBe('--sds-list-item-marker-column-width: auto;')
+    expect(item.classes()).toContain('grid')
+
+    hasMarker.value = false
+    await nextTick()
+
+    expect(wrapper.find('[data-id="sds-list-item-marker"]').exists()).toBe(false)
+    expect(item.attributes('style')).toBeUndefined()
+    expect(item.classes()).not.toContain('grid')
   })
 
   it('does not render an empty content row when a list item only has marker and body content', () => {

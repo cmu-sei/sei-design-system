@@ -3,11 +3,11 @@
     data-id="sds-list-item"
     role="listitem"
     class="min-w-0"
-    :class="{ 'grid grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr] gap-x-3': $slots.marker }"
+    :class="{ 'grid grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr] gap-x-3': hasMarker }"
     :style="listItemStyle"
   >
     <div
-      v-if="$slots.marker"
+      v-if="hasMarker"
       data-id="sds-list-item-marker"
       class="flex items-start justify-center"
     >
@@ -18,7 +18,7 @@
       v-if="title || $slots.description"
       data-id="sds-list-item-body"
       class="min-w-0"
-      :class="{ 'self-center': $slots.marker && !$slots.description }"
+      :class="{ 'self-center': hasMarker && !$slots.description }"
     >
       <h3
         v-if="title"
@@ -38,7 +38,7 @@
       v-if="$slots.default"
       data-id="sds-list-item-content"
       :class="{
-        'col-span-2': $slots.marker,
+        'col-span-2': hasMarker,
         'mt-3': $slots.default && (title || $slots.description)
       }"
     >
@@ -74,9 +74,14 @@ const props = withDefaults(defineProps<ListItemProps>(), {
 
 const list = inject<ListContext | null>(listContextKey, null)
 const slots = useSlots()
+const hasMarker = ref(Boolean(slots.marker))
 const markerColumnWidth = computed(() => props.markerColumnWidth)
-const resolvedMarkerColumnWidth = computed(() => markerColumnWidth.value ?? (slots.marker ? 'auto' : undefined))
+const resolvedMarkerColumnWidth = computed(() => markerColumnWidth.value ?? (hasMarker.value ? 'auto' : undefined))
 const listItemStyle = computed(() => resolvedMarkerColumnWidth.value ? { '--sds-list-item-marker-column-width': resolvedMarkerColumnWidth.value } : undefined)
+
+onBeforeUpdate(() => {
+  hasMarker.value = Boolean(slots.marker)
+})
 
 provide<ListItemContext>(listItemContextKey, {
   markerColumnWidth

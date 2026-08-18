@@ -235,7 +235,8 @@ describe('Timeline', () => {
       props: {
         current: true,
         datetime: '2026-08-13T09:00:00Z',
-        timestamp: 'A moment ago'
+        timestamp: 'A moment ago',
+        variant: 'green'
       },
       slots: {
         title: '<a href="/events/approved">Record approved</a>'
@@ -248,20 +249,40 @@ describe('Timeline', () => {
     expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).toContain('bg-green-500')
   })
 
-  it('uses one neutral marker treatment for default markers', () => {
-    const wrapper = mount(TimelineItem, {
-      attrs: {
-        variant: 'green'
-      },
+  it('uses a time element only for machine-readable timestamps', () => {
+    const displayOnlyTimestamp = mount(TimelineItem, {
       props: {
-        title: 'Request received',
+        timestamp: 'A moment ago'
+      }
+    })
+    const machineReadableTimestamp = mount(TimelineItem, {
+      props: {
+        datetime: '2026-08-13T09:00:00Z',
+        timestamp: 'A moment ago'
       }
     })
 
-    expect(wrapper.find('[data-id="sds-timeline-item-marker"]').classes()).not.toContain('h-5')
-    expect(wrapper.find('[data-id="sds-timeline-item-marker"]').classes()).not.toContain('translate-y-0.5')
-    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).toContain('bg-gray-200')
-    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').classes()).not.toContain('bg-green-500')
+    expect(displayOnlyTimestamp.find('[data-id="sds-timeline-item-timestamp"]').element.tagName).toBe('SPAN')
+    expect(machineReadableTimestamp.find('[data-id="sds-timeline-item-timestamp"]').element.tagName).toBe('TIME')
+    expect(machineReadableTimestamp.find('time').attributes('datetime')).toBe('2026-08-13T09:00:00Z')
+  })
+
+  it.each([
+    ['gray', 'bg-gray-200', 'dark:bg-gray-700'],
+    ['red', 'bg-red-500', 'dark:bg-red-400'],
+    ['yellow', 'bg-yellow-500', 'dark:bg-yellow-400'],
+    ['green', 'bg-green-500', 'dark:bg-green-400'],
+    ['blue', 'bg-blue-500', 'dark:bg-blue-400'],
+    ['purple', 'bg-purple-500', 'dark:bg-purple-400'],
+    ['orange', 'bg-orange-500', 'dark:bg-orange-400']
+  ] as const)('uses the %s variant for the default marker', (variant, lightClass, darkClass) => {
+    const wrapper = mount(TimelineItem, {
+      props: { variant }
+    })
+
+    const marker = wrapper.find('[data-id="sds-timeline-item-marker-dot"]')
+    expect(marker.classes()).toContain(lightClass)
+    expect(marker.classes()).toContain(darkClass)
   })
 
   it('collapses middle timeline items until the user expands the timeline', async () => {
@@ -364,10 +385,92 @@ describe('Timeline', () => {
     expect(wrapper.find('[data-id="sds-timeline-collapse"]').element.tagName).toBe('LI')
   })
 
+  it('keeps the expansion control in chronological DOM order', async () => {
+    const wrapper = mount(Timeline, {
+      props: {
+        collapseAfter: 2
+      },
+      global: {
+        components: { TimelineItem }
+      },
+      slots: {
+        default: `
+          <TimelineItem title="Created" />
+          <TimelineItem title="Reviewed" />
+          <TimelineItem title="Approved" />
+        `
+      }
+    })
+
+    await nextTick()
+
+    expect(wrapper.findAll('[role="listitem"]').map(item => item.attributes('data-id'))).toEqual([
+      'sds-timeline-item',
+      'sds-timeline-collapse',
+      'sds-timeline-item'
+    ])
+  })
+
+  it('identifies the timeline region controlled by the expansion button', async () => {
+    const wrapper = mount(Timeline, {
+      props: {
+        collapseAfter: 2
+      },
+      global: {
+        components: { TimelineItem }
+      },
+      slots: {
+        default: `
+          <TimelineItem title="Created" />
+          <TimelineItem title="Reviewed" />
+          <TimelineItem title="Approved" />
+        `
+      }
+    })
+
+    await nextTick()
+
+    const timeline = wrapper.find('[data-id="sds-timeline"]')
+    const button = wrapper.find('[data-id="sds-timeline-collapse"] button')
+    expect(button.attributes('aria-expanded')).toBe('false')
+    expect(button.attributes('aria-controls')).toBe(timeline.attributes('id'))
+
+    await button.trigger('click')
+
+    expect(wrapper.text()).toContain('Reviewed')
+  })
+
   it('normalizes fractional collapse counts to whole visible items', async () => {
     const wrapper = mount(Timeline, {
       props: {
         collapseAfter: 2.5
+      },
+      global: {
+        components: { TimelineItem }
+      },
+      slots: {
+        default: `
+          <TimelineItem title="Created" />
+          <TimelineItem title="Submitted" />
+          <TimelineItem title="Reviewed" />
+          <TimelineItem title="Approved" />
+        `
+      }
+    })
+
+    await nextTick()
+
+    expect(wrapper.findAll('[data-id="sds-timeline-item-title"]').map(title => title.text())).toEqual([
+      'Created',
+      'Approved'
+    ])
+    expect(wrapper.find('button').text()).toBe('Show 2 more')
+  })
+
+  it('keeps the first and latest events visible for a positive collapse count', async () => {
+    const wrapper = mount(Timeline, {
+      props: {
+        collapseAfter: 1
       },
       global: {
         components: { TimelineItem }
@@ -495,5 +598,32 @@ describe('Timeline', () => {
     await nextTick()
 
     expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: auto;')
+  })
+
+  it('updates marker alignment when a custom marker is added after mount', async () => {
+    const hasCustomMarker = ref(false)
+    const wrapper = mount(Timeline, {
+      slots: {
+        default: () => h(TimelineItem, { title: 'Maya Jankowski' }, hasCustomMarker.value
+          ? { marker: () => h('span', 'MJ') }
+          : {})
+      }
+    })
+
+    expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: 1.5rem;')
+
+    hasCustomMarker.value = true
+    await nextTick()
+
+    expect(wrapper.find('[data-id="sds-timeline-item-marker"]').text()).toBe('MJ')
+    expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: auto;')
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-track"]').classes()).not.toContain('translate-y-1.5')
+
+    hasCustomMarker.value = false
+    await nextTick()
+
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-dot"]').exists()).toBe(true)
+    expect(wrapper.find('[data-id="sds-timeline"]').attributes('style')).toBe('--sds-timeline-marker-column-width: 1.5rem;')
+    expect(wrapper.find('[data-id="sds-timeline-item-marker-track"]').classes()).toContain('translate-y-1.5')
   })
 })
