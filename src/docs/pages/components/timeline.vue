@@ -95,6 +95,7 @@
             />
             <SdsTimelineItem
               current
+              variant="green"
               subtitle="Review package 42"
               description="The security team is reviewing the submitted package."
               timestamp="Today, 10:30 AM"
@@ -146,6 +147,63 @@
               title="Approved"
               timestamp="14:30"
             />
+          </SdsTimeline>
+        </section>
+
+        <section class="grid min-w-0 gap-4">
+          <h3 class="text-lg">
+            Approval handoff
+          </h3>
+          <SdsTimeline
+            orientation="horizontal"
+            aria-label="Approval handoff"
+          >
+            <SdsTimelineItem
+              title="Review assigned"
+              subtitle="Maya Jankowski"
+              timestamp="9:15 AM"
+              datetime="2026-08-13T09:15:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Maya Jankowski"
+                  variant="orange"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Security review"
+              subtitle="Daniel Lee"
+              timestamp="10:40 AM"
+              datetime="2026-08-13T10:40:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Daniel Lee"
+                  variant="blue"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              current
+              title="Final approval"
+              subtitle="Quality Assurance"
+              timestamp="11:30 AM"
+              datetime="2026-08-13T11:30:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Quality Assurance"
+                  variant="green"
+                />
+              </template>
+            </SdsTimelineItem>
           </SdsTimeline>
         </section>
       </div>

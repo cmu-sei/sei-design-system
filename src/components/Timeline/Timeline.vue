@@ -1,5 +1,6 @@
 <template>
   <ol
+    :id="timelineId"
     data-id="sds-timeline"
     :data-orientation="orientation"
     role="list"
@@ -11,36 +12,6 @@
   >
     <!-- @slot Timeline items. -->
     <slot />
-    <li
-      v-if="shouldCollapse && !expanded"
-      data-id="sds-timeline-collapse"
-      role="listitem"
-      class="contents"
-    >
-      <div
-        data-id="sds-timeline-collapse-marker-track"
-        class="flex items-center order-1"
-        :class="orientation === 'horizontal' ? 'flex-row' : 'flex-col'"
-      >
-        <span
-          data-id="sds-timeline-collapse-connector"
-          class="flex-1 bg-gray-100 dark:bg-gray-800"
-          :class="orientation === 'horizontal' ? '-ml-1 h-0.5' : 'mt-0.5 -mb-1.5 w-0.5'"
-        />
-      </div>
-      <div
-        class="min-w-0 order-1"
-        :class="orientation === 'horizontal' ? 'pb-4 pr-6' : 'pb-4'"
-      >
-        <button
-          type="button"
-          class="text-sm font-medium text-blue-700 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-blue-300 dark:hover:text-blue-200 dark:focus-visible:outline-blue-400"
-          @click="expanded = true"
-        >
-          Show {{ hiddenCount }} more
-        </button>
-      </div>
-    </li>
   </ol>
 </template>
 
@@ -58,7 +29,7 @@ defineOptions({
 })
 
 interface TimelineProps {
-  /** Number of items to show before collapsing middle items. */
+  /** Number of items to show before collapsing middle items. Positive values have a minimum of two. */
   collapseAfter?: number
   /** Width reserved for each item marker. Defaults to auto when an item has a custom marker. */
   markerColumnWidth?: string
@@ -72,6 +43,7 @@ const props = withDefaults(defineProps<TimelineProps>(), {
   orientation: 'vertical'
 })
 
+const timelineId = `sds-timeline-${useId()}`
 const listItem = inject<ListItemContext | null>(listItemContextKey, null)
 const expanded = ref(false)
 const registeredItems: TimelineItemRegistration[] = []
@@ -80,10 +52,16 @@ const orderedItems = shallowRef<TimelineItemRegistration[]>([])
 const orientation = computed<TimelineOrientation>(() => props.orientation === 'horizontal' ? 'horizontal' : 'vertical')
 const hasCustomMarker = computed(() => orderedItems.value.some(item => item.hasCustomMarker.value))
 const markerColumnWidth = computed(() => props.markerColumnWidth ?? listItem?.markerColumnWidth.value ?? (hasCustomMarker.value ? 'auto' : '1.5rem'))
-const collapseAfter = computed(() => Number.isFinite(props.collapseAfter) ? Math.max(Math.floor(props.collapseAfter), 0) : 0)
+const collapseAfter = computed(() => {
+  if (!Number.isFinite(props.collapseAfter) || props.collapseAfter <= 0) return 0
+  return Math.max(Math.floor(props.collapseAfter), 2)
+})
 const timelineItemCount = computed(() => orderedItems.value.length)
 const shouldCollapse = computed(() => collapseAfter.value > 0 && timelineItemCount.value > collapseAfter.value)
 const hiddenCount = computed(() => Math.max(timelineItemCount.value - collapseAfter.value, 0))
+const expand = () => {
+  expanded.value = true
+}
 
 const registerItem = (item: TimelineItemRegistration) => {
   registeredItems.push(item)
@@ -131,7 +109,10 @@ onMounted(synchronizeItemOrder)
 onUpdated(synchronizeItemOrder)
 
 provide<TimelineContext>(timelineContextKey, {
+  hiddenCount,
+  timelineId,
   orientation,
+  expand,
   registerItem,
   unregisterItem,
   isItemVisible,

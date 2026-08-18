@@ -1,5 +1,37 @@
 <template>
   <li
+    v-if="lastVisible"
+    data-id="sds-timeline-collapse"
+    role="listitem"
+    class="contents"
+  >
+    <div
+      data-id="sds-timeline-collapse-marker-track"
+      class="flex items-center order-1"
+      :class="orientation === 'horizontal' ? 'flex-row' : 'flex-col'"
+    >
+      <span
+        data-id="sds-timeline-collapse-connector"
+        class="flex-1 bg-gray-100 dark:bg-gray-800"
+        :class="orientation === 'horizontal' ? '-ml-1 h-0.5' : 'mt-0.5 -mb-1.5 w-0.5'"
+      />
+    </div>
+    <div
+      class="min-w-0 order-1"
+      :class="orientation === 'horizontal' ? 'pb-4 pr-6' : 'pb-4'"
+    >
+      <button
+        type="button"
+        :aria-controls="timeline?.timelineId"
+        aria-expanded="false"
+        class="text-sm font-medium text-blue-700 hover:text-blue-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-blue-300 dark:hover:text-blue-200 dark:focus-visible:outline-blue-400"
+        @click="timeline?.expand()"
+      >
+        Show {{ timeline?.hiddenCount.value }} more
+      </button>
+    </div>
+  </li>
+  <li
     ref="itemElement"
     :data-id="visible ? 'sds-timeline-item' : undefined"
     :role="visible ? 'listitem' : undefined"
@@ -12,7 +44,7 @@
         class="flex items-center"
         :class="[
           orientation === 'horizontal' ? 'flex-row' : 'flex-col',
-          { 'translate-y-1.5': orientation === 'vertical' && !$slots.marker },
+          { 'translate-y-1.5': orientation === 'vertical' && !hasCustomMarker },
           { 'order-2': lastVisible }
         ]"
       >
@@ -27,7 +59,7 @@
             <span
               data-id="sds-timeline-item-marker-dot"
               class="h-2 w-2 rounded-full"
-              :class="current ? 'bg-green-500 dark:bg-green-400' : 'bg-gray-200 dark:bg-gray-700'"
+              :class="variantClass"
             />
           </slot>
         </div>
@@ -79,7 +111,8 @@
               {{ description }}
             </slot>
           </div>
-          <time
+          <component
+            :is="datetime ? 'time' : 'span'"
             v-if="timestamp || $slots.timestamp"
             data-id="sds-timeline-item-timestamp"
             :datetime="datetime"
@@ -89,7 +122,7 @@
             <slot name="timestamp">
               {{ timestamp }}
             </slot>
-          </time>
+          </component>
         </template>
       </div>
     </template>
@@ -110,6 +143,8 @@ defineOptions({
 interface TimelineItemProps {
   /** Marks this item as the current event in the timeline. */
   current?: boolean
+  /** The color of the default marker. */
+  variant?: 'gray' | 'red' | 'yellow' | 'green' | 'blue' | 'purple' | 'orange'
   /** Machine-readable value for the timestamp. */
   datetime?: string
   /** Optional description displayed below the subtitle. */
@@ -122,8 +157,9 @@ interface TimelineItemProps {
   title?: string
 }
 
-withDefaults(defineProps<TimelineItemProps>(), {
+const props = withDefaults(defineProps<TimelineItemProps>(), {
   current: false,
+  variant: 'gray',
   datetime: undefined,
   description: undefined,
   subtitle: undefined,
@@ -134,7 +170,7 @@ withDefaults(defineProps<TimelineItemProps>(), {
 const timeline = inject<TimelineContext | null>(timelineContextKey, null)
 const slots = useSlots()
 const itemElement = ref<HTMLElement | null>(null)
-const hasCustomMarker = computed(() => Boolean(slots.marker))
+const hasCustomMarker = ref(Boolean(slots.marker))
 const item: TimelineItemRegistration = { element: itemElement, hasCustomMarker }
 timeline?.registerItem(item)
 
@@ -143,6 +179,37 @@ const visible = computed(() => timeline?.isItemVisible(item) ?? true)
 const lastVisible = computed(() => timeline?.isLastVisible(item) ?? false)
 const titleClass = computed(() => {
   return 'text-sm font-semibold text-gray-900 dark:text-gray-50'
+})
+
+const variantClass = computed(() => {
+  switch (props.variant) {
+    case 'blue': {
+      return 'bg-blue-500 dark:bg-blue-400'
+    }
+    case 'green': {
+      return 'bg-green-500 dark:bg-green-400'
+    }
+    case 'orange': {
+      return 'bg-orange-500 dark:bg-orange-400'
+    }
+    case 'purple': {
+      return 'bg-purple-500 dark:bg-purple-400'
+    }
+    case 'red': {
+      return 'bg-red-500 dark:bg-red-400'
+    }
+    case 'yellow': {
+      return 'bg-yellow-500 dark:bg-yellow-400'
+    }
+    case 'gray':
+    default: {
+      return 'bg-gray-200 dark:bg-gray-700'
+    }
+  }
+})
+
+onBeforeUpdate(() => {
+  hasCustomMarker.value = Boolean(slots.marker)
 })
 
 onBeforeUnmount(() => timeline?.unregisterItem(item))

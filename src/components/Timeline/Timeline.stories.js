@@ -16,6 +16,11 @@ export default {
       options: ['vertical', 'horizontal'],
       control: { type: 'select' },
     },
+    variant: {
+      options: ['gray', 'red', 'yellow', 'green', 'blue', 'purple', 'orange'],
+      control: { type: 'select' },
+      description: 'Color of the default timeline item markers.',
+    },
     markerColumnWidth: {
       control: 'text',
       description: 'Width reserved for the timeline marker column. Custom markers use an automatic width by default.',
@@ -29,17 +34,22 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-timeline v-bind="args">
-      <sds-timeline-item title="Record status changed to Approved" timestamp="A moment ago" />
-      <sds-timeline-item title="Final approval assigned to Maya Jankowski" timestamp="A moment ago" />
-      <sds-timeline-item title="Documents uploaded by Daniel Lee" timestamp="A moment ago" />
+    <sds-timeline
+      :collapse-after="args.collapseAfter"
+      :marker-column-width="args.markerColumnWidth"
+      :orientation="args.orientation"
+    >
+      <sds-timeline-item :variant="args.variant" title="Record status changed to Approved" timestamp="A moment ago" />
+      <sds-timeline-item :variant="args.variant" title="Final approval assigned to Maya Jankowski" timestamp="A moment ago" />
+      <sds-timeline-item :variant="args.variant" title="Documents uploaded by Daniel Lee" timestamp="A moment ago" />
     </sds-timeline>
   `
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  markerColumnWidth: '1.5rem'
+  markerColumnWidth: '1.5rem',
+  variant: 'gray'
 }
 
 export const Collapsed = Template.bind({})
@@ -59,6 +69,7 @@ export const CurrentEvent = () => ({
     <sds-timeline>
       <sds-timeline-item
         current
+        variant="green"
         subtitle="Final review"
         description="The final review is complete."
         datetime="2026-08-13T09:00:00Z"
