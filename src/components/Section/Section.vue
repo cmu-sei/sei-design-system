@@ -23,18 +23,22 @@
       >
         <div class="self-center grow">
           <div
-            v-if="hasTitleSlot"
-            class="slot-title"
+            v-if="hasTitle"
+            class="slot-title uppercase font-semibold"
           >
             <!-- @slot Section title content. -->
-            <slot name="title" />
+            <slot name="title">
+              {{ props.title }}
+            </slot>
           </div>
           <div
-            v-if="hasSubtitleSlot"
+            v-if="hasSubtitle"
             class="text-sm text-gray-500 dark:text-gray-400"
           >
             <!-- @slot Section subtitle content. -->
-            <slot name="subtitle" />
+            <slot name="subtitle">
+              {{ props.subtitle }}
+            </slot>
           </div>
         </div>
         <div
@@ -60,9 +64,17 @@
 <script setup lang="ts">
 interface SectionProps {
   /**
+   * The title of the section.
+   */
+  title?: string;
+  /**
+   * The subtitle of the section.
+   */
+  subtitle?: string;
+  /**
    * Determines the overall look and feel of the section.
    */
-  type?: string;
+  type?: 'simple' | 'raised' | 'accented';
   /**
    * Determines if the header is hidden or shown.
    */
@@ -85,11 +97,13 @@ defineOptions({
   name: 'SdsSection'
 })
 
-withDefaults(defineProps<SectionProps>(), {
-  type: '',
+const props = withDefaults(defineProps<SectionProps>(), {
+  title: undefined,
+  subtitle: undefined,
+  type: undefined,
   hideHeader: false,
   hideContent: false,
-  navClass: '',
+  navClass: undefined,
   contentClass: 'p-4'
 })
 
@@ -101,12 +115,12 @@ const slots = defineSlots<{
   footer: () => unknown
 }>()
 
-const hasTitleSlot = computed(() => {
-  return !!slots.title;
+const hasTitle = computed(() => {
+  return !!slots.title || !!props.title;
 })
 
-const hasSubtitleSlot = computed(() => {
-  return !!slots.subtitle;
+const hasSubtitle = computed(() => {
+  return !!slots.subtitle || !!props.subtitle;
 })
 
 const hasNavSlot = computed(() => {
