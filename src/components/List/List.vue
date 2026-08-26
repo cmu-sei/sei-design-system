@@ -13,6 +13,8 @@
 </template>
 
 <script setup lang="ts">
+import { listContextKey, type ListContext } from './listContext'
+
 defineOptions({
   name: 'SdsList'
 })
@@ -22,17 +24,11 @@ interface ListProps {
   divided?: boolean
 }
 
-interface ListContext {
-  markerGridClass: string
-  titleClass: string
-}
-
 withDefaults(defineProps<ListProps>(), {
   divided: false
 })
 
-provide<ListContext>('sdsList', {
-  markerGridClass: 'grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]',
+provide<ListContext>(listContextKey, {
   titleClass: 'text-sm font-semibold text-gray-900 dark:text-gray-50'
 })
 </script>

@@ -128,27 +128,25 @@
         Section
       </h2>
       <div class="space-y-4">
-        <SdsSection type="accented">
-          <template #title>
-            <strong class="text-sm uppercase">
-              Section title
-            </strong>
-          </template>
+        <SdsSection
+          title="Section title"
+          type="accented"
+        >
           <p>Sed libero enim sed faucibus turpis in eu mi.</p>
         </SdsSection>
         <SdsSection type="raised">
           <template #title>
-            <strong class="text-sm uppercase">
+            <p>
               Section title
-            </strong>
+            </p>
           </template>
           <p>Sed libero enim sed faucibus turpis in eu mi.</p>
         </SdsSection>
         <SdsSection type="simple">
           <template #title>
-            <strong class="text-sm uppercase">
+            <p>
               Section title
-            </strong>
+            </p>
           </template>
           <p>Sed libero enim sed faucibus turpis in eu mi.</p>
         </SdsSection>

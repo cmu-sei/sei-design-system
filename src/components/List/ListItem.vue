@@ -3,11 +3,11 @@
     data-id="sds-list-item"
     role="listitem"
     class="min-w-0"
-    :class="{ [`grid ${list?.markerGridClass ?? 'grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr]'} gap-x-3`]: $slots.marker }"
+    :class="{ 'grid grid-cols-[var(--sds-list-item-marker-column-width,auto)_1fr] gap-x-3': hasMarker }"
     :style="listItemStyle"
   >
     <div
-      v-if="$slots.marker"
+      v-if="hasMarker"
       data-id="sds-list-item-marker"
       class="flex items-start justify-center"
     >
@@ -18,7 +18,7 @@
       v-if="title || $slots.description"
       data-id="sds-list-item-body"
       class="min-w-0"
-      :class="{ 'self-center': $slots.marker && !$slots.description }"
+      :class="{ 'self-center': hasMarker && !$slots.description }"
     >
       <h3
         v-if="title"
@@ -38,7 +38,7 @@
       v-if="$slots.default"
       data-id="sds-list-item-content"
       :class="{
-        'col-span-2': $slots.marker,
+        'col-span-2': hasMarker,
         'mt-3': $slots.default && (title || $slots.description)
       }"
     >
@@ -49,6 +49,13 @@
 </template>
 
 <script setup lang="ts">
+import {
+  listContextKey,
+  listItemContextKey,
+  type ListContext,
+  type ListItemContext
+} from './listContext'
+
 defineOptions({
   name: 'SdsListItem'
 })
@@ -56,17 +63,8 @@ defineOptions({
 interface ListItemProps {
   /** Optional title displayed at the top of the list item. */
   title?: string
-  /** Width reserved for the marker column. */
+  /** Width reserved for the marker column. Defaults to the custom marker's intrinsic width. */
   markerColumnWidth?: string
-}
-
-interface ListContext {
-  markerGridClass: string
-  titleClass: string
-}
-
-interface ListItemContext {
-  markerColumnWidth: { value: string | undefined }
 }
 
 const props = withDefaults(defineProps<ListItemProps>(), {
@@ -74,11 +72,18 @@ const props = withDefaults(defineProps<ListItemProps>(), {
   markerColumnWidth: undefined
 })
 
-const list = inject<ListContext | null>('sdsList', null)
+const list = inject<ListContext | null>(listContextKey, null)
+const slots = useSlots()
+const hasMarker = ref(Boolean(slots.marker))
 const markerColumnWidth = computed(() => props.markerColumnWidth)
-const listItemStyle = computed(() => markerColumnWidth.value ? { '--sds-list-item-marker-column-width': markerColumnWidth.value } : undefined)
+const resolvedMarkerColumnWidth = computed(() => markerColumnWidth.value ?? (hasMarker.value ? 'auto' : undefined))
+const listItemStyle = computed(() => resolvedMarkerColumnWidth.value ? { '--sds-list-item-marker-column-width': resolvedMarkerColumnWidth.value } : undefined)
 
-provide<ListItemContext>('sdsListItem', {
+onBeforeUpdate(() => {
+  hasMarker.value = Boolean(slots.marker)
+})
+
+provide<ListItemContext>(listItemContextKey, {
   markerColumnWidth
 })
 </script>

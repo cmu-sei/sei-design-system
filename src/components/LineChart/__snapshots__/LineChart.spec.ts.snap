@@ -1,0 +1,500 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LineChart.vue > Basic Rendering > matches snapshot with multi-series data 1`] = `
+"<div data-id="sds-line-chart" class="sds-line-chart w-full min-w-0">
+  <div data-id="sds-base-chart" height="360" margin="[object Object]" x-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }" y-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }"><svg role="img">
+      <!--v-if-->
+      <g transform="translate(72, 20)">
+        <line data-id="sds-grid-line-y" x1="0" y1="255" x2="400" y2="255" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="180" x2="400" y2="180" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="105" x2="400" y2="105" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="29.999999999999993" x2="400" y2="29.999999999999993" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="0" y1="0" x2="0" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="200" y1="0" x2="200" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="400" y1="0" x2="400" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <path d="M0,180L200,30L400,105" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-blue-400" stroke-width="2" role="img" aria-label="Series Series A"></path>
+        <path d="M0,255L200,105L400,210" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-teal-400" stroke-width="2" role="img" aria-label="Series Series B"></path>
+        <path d="M0,180L200,30L400,105" fill="none" role="none" stroke="transparent" stroke-width="10" class="pointer-events-stroke"></path>
+        <path d="M0,255L200,105L400,210" fill="none" role="none" stroke="transparent" stroke-width="10" class="pointer-events-stroke"></path>
+        <!--v-if-->
+      </g>
+    </svg>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`LineChart.vue > Basic Rendering > matches snapshot with no props 1`] = `
+"<div data-id="sds-line-chart" class="sds-line-chart w-full min-w-0">
+  <div data-id="sds-base-chart" height="360" margin="[object Object]" x-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }" y-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }"><svg role="img">
+      <!--v-if-->
+      <g transform="translate(72, 20)">
+        <line data-id="sds-grid-line-y" x1="0" y1="300" x2="400" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="240" x2="400" y2="240" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="180" x2="400" y2="180" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="120" x2="400" y2="120" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="59.999999999999986" x2="400" y2="59.999999999999986" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="0" x2="400" y2="0" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <!--v-if-->
+      </g>
+    </svg>
+    <!--v-if-->
+  </div>
+</div>"
+`;
+
+exports[`LineChart.vue > Basic Rendering > matches snapshot with single series data 1`] = `
+"<div data-id="sds-line-chart" class="sds-line-chart w-full min-w-0">
+  <div data-id="sds-base-chart" height="360" margin="[object Object]" x-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }" y-axis="function axis(context) {
+    var values = tickValues == null ? (scale.ticks ? scale.ticks.apply(scale, tickArguments) : scale.domain()) : tickValues,
+        format = tickFormat == null ? (scale.tickFormat ? scale.tickFormat.apply(scale, tickArguments) : identity) : tickFormat,
+        spacing = Math.max(tickSizeInner, 0) + tickPadding,
+        range = scale.range(),
+        range0 = +range[0] + offset,
+        range1 = +range[range.length - 1] + offset,
+        position = (scale.bandwidth ? center : number)(scale.copy(), offset),
+        selection = context.selection ? context.selection() : context,
+        path = selection.selectAll(&quot;.domain&quot;).data([null]),
+        tick = selection.selectAll(&quot;.tick&quot;).data(values, scale).order(),
+        tickExit = tick.exit(),
+        tickEnter = tick.enter().append(&quot;g&quot;).attr(&quot;class&quot;, &quot;tick&quot;),
+        line = tick.select(&quot;line&quot;),
+        text = tick.select(&quot;text&quot;);
+
+    path = path.merge(path.enter().insert(&quot;path&quot;, &quot;.tick&quot;)
+        .attr(&quot;class&quot;, &quot;domain&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;));
+
+    tick = tick.merge(tickEnter);
+
+    line = line.merge(tickEnter.append(&quot;line&quot;)
+        .attr(&quot;stroke&quot;, &quot;currentColor&quot;)
+        .attr(x + &quot;2&quot;, k * tickSizeInner));
+
+    text = text.merge(tickEnter.append(&quot;text&quot;)
+        .attr(&quot;fill&quot;, &quot;currentColor&quot;)
+        .attr(x, k * spacing)
+        .attr(&quot;dy&quot;, orient === top ? &quot;0em&quot; : orient === bottom ? &quot;0.71em&quot; : &quot;0.32em&quot;));
+
+    if (context !== selection) {
+      path = path.transition(context);
+      tick = tick.transition(context);
+      line = line.transition(context);
+      text = text.transition(context);
+
+      tickExit = tickExit.transition(context)
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { return isFinite(d = position(d)) ? transform(d + offset) : this.getAttribute(&quot;transform&quot;); });
+
+      tickEnter
+          .attr(&quot;opacity&quot;, epsilon)
+          .attr(&quot;transform&quot;, function(d) { var p = this.parentNode.__axis; return transform((p &amp;&amp; isFinite(p = p(d)) ? p : position(d)) + offset); });
+    }
+
+    tickExit.remove();
+
+    path
+        .attr(&quot;d&quot;, orient === left || orient === right
+            ? (tickSizeOuter ? &quot;M&quot; + k * tickSizeOuter + &quot;,&quot; + range0 + &quot;H&quot; + offset + &quot;V&quot; + range1 + &quot;H&quot; + k * tickSizeOuter : &quot;M&quot; + offset + &quot;,&quot; + range0 + &quot;V&quot; + range1)
+            : (tickSizeOuter ? &quot;M&quot; + range0 + &quot;,&quot; + k * tickSizeOuter + &quot;V&quot; + offset + &quot;H&quot; + range1 + &quot;V&quot; + k * tickSizeOuter : &quot;M&quot; + range0 + &quot;,&quot; + offset + &quot;H&quot; + range1));
+
+    tick
+        .attr(&quot;opacity&quot;, 1)
+        .attr(&quot;transform&quot;, function(d) { return transform(position(d) + offset); });
+
+    line
+        .attr(x + &quot;2&quot;, k * tickSizeInner);
+
+    text
+        .attr(x, k * spacing)
+        .text(format);
+
+    selection.filter(entering)
+        .attr(&quot;fill&quot;, &quot;none&quot;)
+        .attr(&quot;font-size&quot;, 10)
+        .attr(&quot;font-family&quot;, &quot;sans-serif&quot;)
+        .attr(&quot;text-anchor&quot;, orient === right ? &quot;start&quot; : orient === left ? &quot;end&quot; : &quot;middle&quot;);
+
+    selection
+        .each(function() { this.__axis = position; });
+  }"><svg role="img">
+      <!--v-if-->
+      <g transform="translate(72, 20)">
+        <line data-id="sds-grid-line-y" x1="0" y1="275" x2="400" y2="275" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="225" x2="400" y2="225" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="174.99999999999997" x2="400" y2="174.99999999999997" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="124.99999999999999" x2="400" y2="124.99999999999999" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="75" x2="400" y2="75" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-y" x1="0" y1="25.00000000000001" x2="400" y2="25.00000000000001" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="0" y1="0" x2="0" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="200" y1="0" x2="200" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <line data-id="sds-grid-line-x" x1="400" y1="0" x2="400" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
+        <path d="M0,275L200,25L400,150" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-blue-400" stroke-width="2" role="img" aria-label="Series Series"></path>
+        <path d="M0,275L200,25L400,150" fill="none" role="none" stroke="transparent" stroke-width="10" class="pointer-events-stroke"></path>
+        <!--v-if-->
+      </g>
+    </svg>
+    <!--v-if-->
+  </div>
+</div>"
+`;

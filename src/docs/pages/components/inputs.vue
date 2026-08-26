@@ -160,7 +160,6 @@
             required
             :pending="comboBox1.pending"
             :suggestions="comboBox1.suggestions"
-            focus-on-key-press
             multiple
             @complete="comboBox1.onComplete"
             @result="comboBox1.onResult"
@@ -181,7 +180,6 @@
               size="sm"
               type="select"
               filter-suggestions
-              focus-on-key-press
               click-to-select
               @complete="comboBox2_1.onComplete"
               @result="comboBox2_1.onResult"
@@ -202,7 +200,6 @@
             type="select"
             multiple
             filter-suggestions
-            focus-on-key-press
             option-label="name"
             @complete="comboBox2_2.onComplete"
             @result="comboBox2_2.onResult"
@@ -220,7 +217,6 @@
             size="sm"
             type="taggable-select"
             filter-suggestions
-            focus-on-key-press
             click-to-select
             option-label="name"
             option-group-label="section"
@@ -243,7 +239,6 @@
             type="taggable-select"
             multiple
             filter-suggestions
-            focus-on-key-press
             option-label="name"
             option-group-label="section"
             option-group-children="items"
@@ -263,7 +258,6 @@
             size="sm"
             type="text"
             filter-suggestions
-            focus-on-key-press
             option-label="term"
             option-type="custom"
             @complete="comboBox5.onComplete"
@@ -304,7 +298,6 @@
             type="select"
             multiple
             filter-suggestions
-            focus-on-key-press
             option-label="name"
             option-type="custom"
             @complete="comboBox6.onComplete"
@@ -359,7 +352,6 @@
             v-model="comboBox7.modelValue"
             size="lg"
             placeholder="Search..."
-            focus-on-key-press
             @enter="comboBox7.onEnter"
           />
           <code class="text-xs">size="lg" type="select" filter-suggestions :click-to-select="true"</code>

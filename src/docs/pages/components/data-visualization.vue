@@ -959,8 +959,8 @@
         </h2>
         <p>
           A reusable SVG-based line chart for trend analysis across ordered categories. Like the other
-          chart components, it is built on <code>BaseChart</code> and supports tooltips, legends, and
-          responsive sizing via <code>aspect-ratio</code>.
+          chart components, it is built on <code>BaseChart</code> and supports tooltips, optional
+          legends via <code>show-legend</code>, and responsive sizing via <code>aspect-ratio</code>.
         </p>
 
         <h3>Multi-series trend comparison (6 lines or fewer)</h3>
@@ -2730,10 +2730,10 @@ const edit = (item: TableItem) => {
 const title = ref('Chart title')
 
 const entries = ref([
-  { id: 1, title: "Item 1", url: "https://designsystem.sei.cmu.edu", count: 100 },
-  { id: 2, title: "Item 2", url: "https://designsystem.sei.cmu.edu", count: 80 },
-  { id: 3, title: "Item 3", url: "https://designsystem.sei.cmu.edu", count: 40 },
-  { id: 4, title: "Item 4", url: "https://designsystem.sei.cmu.edu", count: 32 },
+  { id: 1, title: "Item 1", url: "https://designsystem.sei.cmu.edu", count: 100000 },
+  { id: 2, title: "Item 2", url: "https://designsystem.sei.cmu.edu", count: 80000 },
+  { id: 3, title: "Item 3", url: "https://designsystem.sei.cmu.edu", count: 4000 },
+  { id: 4, title: "Item 4", url: "https://designsystem.sei.cmu.edu", count: 320 },
   { id: 5, title: "Item 5", url: "https://designsystem.sei.cmu.edu", count: 20 },
 ])
 

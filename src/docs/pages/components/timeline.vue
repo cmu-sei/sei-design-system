@@ -12,6 +12,8 @@
           <SdsTimeline>
             <SdsTimelineItem
               title="Record status changed to Approved"
+              subtitle="Review package 42"
+              description="The final review is complete."
               timestamp="A moment ago"
             />
             <SdsTimelineItem
@@ -73,14 +75,147 @@
 
     <div class="grid gap-4">
       <h2 class="text-xl">
+        Horizontal Timelines
+      </h2>
+      <div class="grid gap-10">
+        <section class="grid min-w-0 gap-4">
+          <h3 class="text-lg">
+            Review progress
+          </h3>
+          <SdsTimeline
+            orientation="horizontal"
+            aria-label="Review progress"
+          >
+            <SdsTimelineItem
+              title="Review requested"
+              subtitle="Review package 42"
+              description="The package entered the review queue."
+              timestamp="Aug 12, 9:00 AM"
+              datetime="2026-08-12T09:00:00-04:00"
+            />
+            <SdsTimelineItem
+              current
+              variant="green"
+              subtitle="Review package 42"
+              description="The security team is reviewing the submitted package."
+              timestamp="Today, 10:30 AM"
+              datetime="2026-08-13T10:30:00-04:00"
+            >
+              <template #title>
+                <span class="inline-flex flex-wrap items-center gap-2">
+                  Security review
+                  <SdsBadge
+                    type="light"
+                    variant="green"
+                  >
+                    Current
+                  </SdsBadge>
+                </span>
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem title="Final approval" />
+            <SdsTimelineItem title="Published" />
+          </SdsTimeline>
+        </section>
+
+        <section class="grid min-w-0 gap-4">
+          <h3 class="text-lg">
+            Collapsed review progress
+          </h3>
+          <SdsTimeline
+            orientation="horizontal"
+            :collapse-after="2"
+            aria-label="Collapsed review progress"
+          >
+            <SdsTimelineItem
+              title="Created"
+              timestamp="08:15"
+            />
+            <SdsTimelineItem
+              title="Submitted"
+              timestamp="09:00"
+            />
+            <SdsTimelineItem
+              title="Reviewed"
+              timestamp="10:30"
+            />
+            <SdsTimelineItem
+              title="Revised"
+              timestamp="12:45"
+            />
+            <SdsTimelineItem
+              title="Approved"
+              timestamp="14:30"
+            />
+          </SdsTimeline>
+        </section>
+
+        <section class="grid min-w-0 gap-4">
+          <h3 class="text-lg">
+            Approval handoff
+          </h3>
+          <SdsTimeline
+            orientation="horizontal"
+            aria-label="Approval handoff"
+          >
+            <SdsTimelineItem
+              title="Review assigned"
+              subtitle="Maya Jankowski"
+              timestamp="9:15 AM"
+              datetime="2026-08-13T09:15:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Maya Jankowski"
+                  variant="orange"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Security review"
+              subtitle="Daniel Lee"
+              timestamp="10:40 AM"
+              datetime="2026-08-13T10:40:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Daniel Lee"
+                  variant="blue"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              current
+              title="Final approval"
+              subtitle="Quality Assurance"
+              timestamp="11:30 AM"
+              datetime="2026-08-13T11:30:00-04:00"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Quality Assurance"
+                  variant="green"
+                />
+              </template>
+            </SdsTimelineItem>
+          </SdsTimeline>
+        </section>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Rich Events
       </h2>
       <div class="max-w-3xl">
         <SdsTimeline>
-          <SdsTimelineItem
-            title="Review package updated"
-            timestamp="12 min ago"
-          >
+          <SdsTimelineItem>
             <template #marker>
               <SdsAvatar
                 size="xs"
@@ -88,26 +223,39 @@
                 variant="purple"
               />
             </template>
-            <template #description>
-              The missing classification notes were added and the decision memo was linked.
-            </template>
-            <div class="mt-2 flex flex-wrap gap-2">
-              <SdsBadge
-                type="light"
-                variant="purple"
-              >
-                Review package
-              </SdsBadge>
-              <SdsBadge
-                type="light"
-                variant="gray"
-              >
-                3 files
-              </SdsBadge>
+            <div class="grid gap-1">
+              <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-50">
+                Review package updated
+              </h3>
+              <p class="text-sm text-gray-700 dark:text-gray-200">
+                Classification review
+              </p>
+              <p class="text-sm leading-5 text-gray-600 dark:text-gray-300">
+                The missing classification notes were added and the decision memo was linked.
+              </p>
+              <time class="text-xs text-gray-500 dark:text-gray-400">
+                12 min ago
+              </time>
+              <div class="mt-1 flex flex-wrap gap-2">
+                <SdsBadge
+                  type="light"
+                  variant="purple"
+                >
+                  Review package
+                </SdsBadge>
+                <SdsBadge
+                  type="light"
+                  variant="gray"
+                >
+                  3 files
+                </SdsBadge>
+              </div>
             </div>
           </SdsTimelineItem>
           <SdsTimelineItem
             title="Approval history verified"
+            subtitle="Source record"
+            description="The supporting files and approval history match the source record."
             timestamp="Yesterday"
           >
             <template #marker>
@@ -117,11 +265,79 @@
                 variant="green"
               />
             </template>
-            <template #description>
-              The supporting files and approval history match the source record.
-            </template>
           </SdsTimelineItem>
         </SdsTimeline>
+      </div>
+    </div>
+
+    <div class="grid gap-4">
+      <h2 class="text-xl">
+        Automatic Marker Columns
+      </h2>
+      <div class="grid gap-10 lg:grid-cols-2">
+        <section class="grid gap-4">
+          <h3 class="text-lg">
+            Team handoff
+          </h3>
+          <SdsTimeline>
+            <SdsTimelineItem
+              title="Review assigned"
+              subtitle="Maya Jankowski"
+              timestamp="09:15"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="sm"
+                  shape="circle"
+                  name="Maya Jankowski"
+                  variant="orange"
+                />
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Approval requested"
+              subtitle="Daniel Lee"
+              timestamp="10:40"
+            >
+              <template #marker>
+                <SdsAvatar
+                  size="xs"
+                  shape="circle"
+                  name="Daniel Lee"
+                  variant="blue"
+                />
+              </template>
+            </SdsTimelineItem>
+          </SdsTimeline>
+        </section>
+
+        <section class="grid gap-4">
+          <h3 class="text-lg">
+            Release gates
+          </h3>
+          <SdsTimeline>
+            <SdsTimelineItem
+              title="Automated checks passed"
+              timestamp="11:05"
+            >
+              <template #marker>
+                <span class="inline-flex h-6 min-w-10 items-center justify-center rounded bg-green-100 px-2 text-xs font-semibold text-green-800 dark:bg-green-900 dark:text-green-100">
+                  CI
+                </span>
+              </template>
+            </SdsTimelineItem>
+            <SdsTimelineItem
+              title="Security sign-off complete"
+              timestamp="11:30"
+            >
+              <template #marker>
+                <span class="inline-flex h-6 min-w-6 items-center justify-center rounded bg-blue-100 px-1 text-xs font-semibold text-blue-800 dark:bg-blue-900 dark:text-blue-100">
+                  SEC
+                </span>
+              </template>
+            </SdsTimelineItem>
+          </SdsTimeline>
+        </section>
       </div>
     </div>
 
