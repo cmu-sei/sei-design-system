@@ -3,6 +3,7 @@
     :id="id"
     data-id="sds-tag"
     class="
+      relative
       inline-flex
       items-center
       bg-white
@@ -54,10 +55,8 @@
       <a
         v-if="href && !readonly"
         class="
-          hover:underline
           hover:text-gray-900
           dark:hover:text-gray-100
-          active:underline
           active:text-black
           dark:active:text-white
           overflow-hidden text-nowrap text-ellipsis max-w-60
@@ -71,6 +70,10 @@
         <slot name="label">
           {{ label }}
         </slot>
+        <span
+          class="absolute inset-0"
+          aria-hidden="true"
+        />
       </a>
       <span
         v-else
@@ -87,7 +90,7 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
+            class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
@@ -108,7 +111,7 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
+            class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
@@ -129,7 +132,7 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50"
+            class="z-10 flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50"
             :class="[buttonSizeClass]"
             @click.stop="remove"
           >
