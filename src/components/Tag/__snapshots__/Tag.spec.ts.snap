@@ -2,7 +2,7 @@
 
 exports[`Tag > should match its default snapshot 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
   data-id="sds-tag"
   data-readonly="false"
 >
@@ -26,7 +26,7 @@ exports[`Tag > should match its default snapshot 1`] = `
 
 exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` props 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
   data-id="sds-tag"
   data-link="true"
   data-readonly="false"
@@ -37,7 +37,7 @@ exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` pr
     <!--v-if-->
     <!--v-if-->
     <a
-      class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 active:underline active:text-black dark:active:text-white overflow-hidden text-nowrap text-ellipsis max-w-60"
+      class="hover:text-gray-900 dark:hover:text-gray-100 active:text-black dark:active:text-white overflow-hidden text-nowrap text-ellipsis max-w-60"
       href="https://www.google.com/"
       rel="noopener noreferrer"
       target="_blank"
@@ -46,6 +46,10 @@ exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` pr
       
       Google
       
+      <span
+        aria-hidden="true"
+        class="absolute inset-0"
+      />
     </a>
     <!--v-if-->
   </div>
@@ -54,7 +58,7 @@ exports[`Tag > should match its snapshot with assigned \`href\`, \`external\` pr
 
 exports[`Tag > should match its snapshot with assigned \`id\` prop 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
   data-id="sds-tag"
   data-readonly="false"
   id="unique-id"
@@ -79,7 +83,7 @@ exports[`Tag > should match its snapshot with assigned \`id\` prop 1`] = `
 
 exports[`Tag > should match its snapshot with assigned \`readonly\` prop 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2"
   data-id="sds-tag"
   data-readonly="true"
 >
@@ -103,7 +107,7 @@ exports[`Tag > should match its snapshot with assigned \`readonly\` prop 1`] = `
 
 exports[`Tag > should match its snapshot with assigned \`size\` prop 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-base leading-6 h-8 px-3"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-base leading-6 h-8 px-3"
   data-id="sds-tag"
   data-readonly="false"
 >
@@ -127,7 +131,7 @@ exports[`Tag > should match its snapshot with assigned \`size\` prop 1`] = `
 
 exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
   data-id="sds-tag"
   data-readonly="false"
 >
@@ -146,7 +150,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
+      class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -177,7 +181,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 1`] = 
 
 exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
   data-id="sds-tag"
   data-readonly="false"
 >
@@ -196,7 +200,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
+      class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -227,7 +231,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 2`] = 
 
 exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 pl-2 pr-0"
   data-id="sds-tag"
   data-readonly="false"
 >
@@ -246,7 +250,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = 
     </span>
     
     <button
-      class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50 h-5.5 w-6"
+      class="z-10 flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50 h-5.5 w-6"
       type="button"
     >
       <svg
@@ -277,7 +281,7 @@ exports[`Tag > should match its snapshot(s) with assigned \`action\` prop 3`] = 
 
 exports[`Tag > should match its snapshot(s) with assigned \`disabled\` prop 1`] = `
 <div
-  class="inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2 opacity-50 pointer-events-none"
+  class="relative inline-flex items-center bg-white dark:bg-gray-850 shadow-none border border-gray-200 dark:border-gray-700 rounded-full sds-theme-plaid:rounded-md overflow-clip font-semibold text-gray-600 dark:text-gray-400 has-[a:hover]:bg-gray-25 dark:has-[a:hover]:bg-gray-850 has-[a:hover]:shadow-sm has-[a:hover]:border-gray-600 dark:has-[a:hover]:border-gray-400 has-[a:hover:active]:bg-gray-50 dark:has-[a:hover:active]:bg-gray-800 has-[a:hover:active]:shadow-sm has-[a:hover:active]:border-gray-900 dark:has-[a:hover:active]:border-gray-100 text-xs leading-4 h-6 px-2 opacity-50 pointer-events-none"
   data-id="sds-tag"
   data-readonly="false"
 >
