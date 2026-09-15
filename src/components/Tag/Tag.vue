@@ -3,6 +3,7 @@
     :id="id"
     data-id="sds-tag"
     class="
+      relative
       inline-flex
       items-center
       bg-white
@@ -16,7 +17,7 @@
       overflow-clip
       font-semibold
       text-gray-600
-      dark:text-gray-400
+      dark:text-gray-300
       has-[a:hover]:bg-gray-25
       dark:has-[a:hover]:bg-gray-850
       has-[a:hover]:shadow-sm
@@ -27,10 +28,24 @@
       has-[a:hover:active]:shadow-sm
       has-[a:hover:active]:border-gray-900
       dark:has-[a:hover:active]:border-gray-100
+      has-[a:focus-visible]:outline-2
+      has-[a:focus-visible]:outline-offset-2
+      has-[a:focus-visible]:outline-blue-600
+      dark:has-[a:focus-visible]:outline-blue-400
     "
     :data-link="href && !readonly ? true : undefined"
     :data-readonly="readonly"
-    :class="[textSizeClass, sizeClass, paddingClass, disabledClass]"
+    :class="[
+      textSizeClass,
+      sizeClass,
+      paddingClass,
+      disabledClass,
+      {
+        'group/tag cursor-pointer hover:shadow-sm active:shadow-sm has-[button:focus-visible]:outline-2 has-[button:focus-visible]:outline-offset-2 has-[button:focus-visible]:outline-blue-600 dark:has-[button:focus-visible]:outline-blue-400': isFullTagAction && !disabled,
+        'hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 dark:hover:text-blue-300 hover:border-blue-600 dark:hover:border-blue-300 active:bg-blue-100 dark:active:bg-blue-800': isFullTagAction && !disabled && action !== 'remove',
+        'hover:bg-red-50 dark:hover:bg-red-900 hover:text-red-600 dark:hover:text-red-300 hover:border-red-600 dark:hover:border-red-300 active:bg-red-100 dark:active:bg-red-800': isFullTagAction && !disabled && action === 'remove'
+      }
+    ]"
   >
     <div
       class="flex flex-row flex-nowrap items-center"
@@ -42,7 +57,12 @@
       <span
         v-if="counter"
         class="bg-blue-600 text-white text-center"
-        :class="size === 'sm' ? 'min-h-6 min-w-6 px-1.5 leading-6' : 'min-h-8 min-w-8 px-1.5 leading-8'"
+        :class="[
+          size === 'sm' ? 'min-h-6 min-w-6 px-1.5 leading-6' : 'min-h-8 min-w-8 px-1.5 leading-8',
+          {
+            'group-hover/tag:bg-red-600': isFullTagAction && !disabled && action === 'remove'
+          }
+        ]"
       >{{ counter.toLocaleString() }}</span>
       <span
         v-if="!!$slots.leftSlot"
@@ -54,12 +74,11 @@
       <a
         v-if="href && !readonly"
         class="
-          hover:underline
           hover:text-gray-900
           dark:hover:text-gray-100
-          active:underline
           active:text-black
           dark:active:text-white
+          focus:outline-none
           overflow-hidden text-nowrap text-ellipsis max-w-60
         "
         :class="counter ? 'pl-1' : ''"
@@ -71,6 +90,10 @@
         <slot name="label">
           {{ label }}
         </slot>
+        <span
+          class="absolute inset-0"
+          aria-hidden="true"
+        />
       </a>
       <span
         v-else
@@ -87,10 +110,17 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
+            :disabled="disabled"
+            class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 active:bg-blue-100 dark:active:bg-blue-800 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="increment"
           >
+            <span
+              v-if="isFullTagAction"
+              data-id="sds-tag-action-target"
+              class="absolute inset-0"
+              aria-hidden="true"
+            />
             <SdsSvgIcon
               aria-hidden="true"
               fill="none"
@@ -108,10 +138,17 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 focus:outline-none focus-visible:bg-blue-50"
+            :disabled="disabled"
+            class="z-10 flex flex-col items-center justify-center text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 active:bg-blue-100 dark:active:bg-blue-800 focus:outline-none focus-visible:bg-blue-50"
             :class="[buttonSizeClass]"
             @click.stop="decrement"
           >
+            <span
+              v-if="isFullTagAction"
+              data-id="sds-tag-action-target"
+              class="absolute inset-0"
+              aria-hidden="true"
+            />
             <SdsSvgIcon
               aria-hidden="true"
               fill="none"
@@ -129,10 +166,17 @@
           <button
             ref="button"
             type="button"
-            class="flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 focus:outline-none focus-visible:bg-red-50"
+            :disabled="disabled"
+            class="z-10 flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 active:bg-red-100 dark:active:bg-red-800 focus:outline-none focus-visible:bg-red-50"
             :class="[buttonSizeClass]"
             @click.stop="remove"
           >
+            <span
+              v-if="isFullTagAction"
+              data-id="sds-tag-action-target"
+              class="absolute inset-0"
+              aria-hidden="true"
+            />
             <SdsSvgIcon
               aria-hidden="true"
               fill="none"
@@ -278,6 +322,12 @@ const icons = ref<TagIconTypes>({
 })
 
 const renderLeftSlot = computed(() => !!slots.leftSlot)
+const isFullTagAction = computed(() => Boolean(
+  props.action
+  && isAction(props.action)
+  && !props.href
+  && !props.readonly
+))
 
 // Consolidated computed properties for better performance
 const tagClasses = computed(() => {

@@ -1722,6 +1722,7 @@
           <li>
             <SdsTag
               :counter="4"
+              href="https://sei.cmu.edu"
             >
               <template #label>
                 Default
@@ -1732,6 +1733,7 @@
             <SdsTag
               :counter="4000"
               action="increment"
+              href="https://sei.cmu.edu"
             >
               <template #label>
                 Increment
@@ -1742,6 +1744,7 @@
             <SdsTag
               :counter="4"
               action="decrement"
+              href="https://sei.cmu.edu"
             >
               <template #label>
                 Decrement
@@ -1752,6 +1755,7 @@
             <SdsTag
               :counter="4"
               action="remove"
+              href="https://sei.cmu.edu"
             >
               <template #label>
                 Remove
