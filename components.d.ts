@@ -15,6 +15,7 @@ declare module 'vue' {
     ActionDropdown: typeof import('./src/components/ActionDropdown/ActionDropdown.vue')['default']
     App: typeof import('./src/docs/App.vue')['default']
     Application: typeof import('./src/components/Application/Application.vue')['default']
+    ApplicationNavigationLabel: typeof import('./src/components/Application/ApplicationNavigationLabel.vue')['default']
     Avatar: typeof import('./src/components/Avatar/Avatar.vue')['default']
     AvatarGroup: typeof import('./src/components/AvatarGroup/AvatarGroup.vue')['default']
     Badge: typeof import('./src/components/Badge/Badge.vue')['default']

@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ApplicationNavigationLabel > should match its default snapshot 1`] = `"<span data-id="sds-application-navigation-label" class="flex-1 w-0 min-w-0 whitespace-normal text-pretty text-left">Navigation label<!--v-if--></span>"`;
