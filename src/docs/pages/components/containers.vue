@@ -156,6 +156,16 @@
     </div>
     <div class="grid gap-4">
       <h2 class="text-xl">
+        EmptyState
+      </h2>
+      <div class="space-y-4">
+        <div class="w-full">
+          <SdsEmptyState />
+        </div>
+      </div>
+    </div>
+    <div class="grid gap-4">
+      <h2 class="text-xl">
         Callout
       </h2>
       <div class="space-x-4 flex pb-16">
@@ -834,6 +844,7 @@
 </template>
 
 <script setup lang="ts">
+import { SdsEmptyState } from '@/components/index.js'
 import ActionButton from '../../../components/ActionButton/ActionButton.vue'
 import Callout from '../../../components/Callout/Callout.vue'
 

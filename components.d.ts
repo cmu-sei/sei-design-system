@@ -49,6 +49,7 @@ declare module 'vue' {
     DropdownItem: typeof import('./src/components/DropdownItem/DropdownItem.vue')['default']
     DropdownRadioItem: typeof import('./src/components/DropdownRadioItem/DropdownRadioItem.vue')['default']
     DropdownSection: typeof import('./src/components/DropdownSection/DropdownSection.vue')['default']
+    EmptyState: typeof import('./src/components/EmptyState/EmptyState.vue')['default']
     ExpandCollapse: typeof import('./src/components/ExpandCollapse/ExpandCollapse.vue')['default']
     FileUploader: typeof import('./src/components/FileUploader/FileUploader.vue')['default']
     FilterByDropdown: typeof import('./src/components/FilterByDropdown/FilterByDropdown.vue')['default']

@@ -113,6 +113,7 @@ import SdsDropdownRadioItem from "./DropdownRadioItem";
 import SdsDropdownSection from "./DropdownSection";
 // Backwards compatibility: DropdownFilterInput is now DropdownInputItem
 import SdsDropdownFilterInput from "./DropdownInputItem";
+import SdsEmptyState from "./EmptyState";
 import SdsExpandCollapse from "./ExpandCollapse";
 import SdsFileUploader from "./FileUploader";
 import SdsFilterByDropdown from "./FilterByDropdown";
@@ -200,6 +201,7 @@ const Components: ComponentList = {
   SdsDropdownItem,
   SdsDropdownRadioItem,
   SdsDropdownSection,
+  SdsEmptyState,
   SdsExpandCollapse,
   SdsFileUploader,
   SdsFilterByDropdown,
@@ -292,6 +294,7 @@ export { default as SdsDropdownHeader } from "./DropdownHeader";
 export { default as SdsDropdownItem } from "./DropdownItem";
 export { default as SdsDropdownRadioItem } from "./DropdownRadioItem";
 export { default as SdsDropdownSection } from "./DropdownSection";
+export { default as SdsEmptyState } from "./EmptyState";
 export { default as SdsExpandCollapse } from "./ExpandCollapse";
 export { default as SdsFileUploader } from "./FileUploader";
 export { default as SdsFilterByDropdown } from "./FilterByDropdown";
