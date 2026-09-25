@@ -6,7 +6,7 @@
     <div
       v-if="props.visible"
       ref="tooltipRef"
-      class="fixed left-0 top-0 z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-2 text-xs text-gray-900 shadow-sm transition-[opacity,transform] duration-150 ease-out dark:border-gray-800 dark:bg-black dark:text-gray-50 dark:shadow-gray-900"
+      class="fixed left-0 top-0 z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-2 text-gray-600 shadow-sm transition-[opacity,transform] duration-150 ease-out dark:border-gray-800 dark:bg-black dark:text-gray-400 dark:shadow-gray-900"
       :style="tooltipStyle"
     >
       <slot />
