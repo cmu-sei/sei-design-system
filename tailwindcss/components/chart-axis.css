@@ -1,7 +1,9 @@
 @layer base {
   .sds-chart-axis {
+    @apply text-sm font-semibold;
+
     .tick text {
-       @apply dark:fill-gray-200;
+      @apply fill-gray-900 dark:fill-gray-300;
     }
 
     .domain,
