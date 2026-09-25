@@ -6,7 +6,11 @@
       @apply fill-gray-900 dark:fill-gray-300;
     }
 
-    .domain,
+    .tick line,
+    .domain {
+      @apply stroke-gray-100 dark:stroke-gray-900 stroke-1;
+    }
+
     .text line {
       @apply dark:stroke-gray-600;
     }

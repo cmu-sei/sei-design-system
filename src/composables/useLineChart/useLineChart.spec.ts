@@ -28,6 +28,7 @@ function createLineChart(
     xTickFormatter?: (value: AxisDomain) => string
     innerWidth?: number
     innerHeight?: number
+    yTickCount?: number
   },
 ) {
   let chart: ReturnType<typeof useLineChart> | undefined
@@ -41,6 +42,7 @@ function createLineChart(
         ref(options?.xScaleType ?? 'category'),
         ref(options?.xTickValues),
         ref(options?.xTickFormatter),
+        options?.yTickCount === undefined ? undefined : ref(options.yTickCount),
       )
       return {}
     },
@@ -53,6 +55,19 @@ function createLineChart(
 }
 
 describe('useLineChart', () => {
+  it('uses the requested sparse y tick values for the axis and grid', () => {
+    const { chart, stop } = createLineChart(
+      [{ x: 'Jan', y: 0 }, { x: 'Feb', y: 100 }],
+      { innerHeight: 600, yTickCount: 3 },
+    )
+
+    expect(chart.yTickValues.value).toEqual(chart.yScale.value.ticks(3))
+    expect(chart.yAxis.value.tickValues()).toEqual(chart.yTickValues.value)
+    expect(chart.yTickValues.value.length).toBeLessThan(chart.yScale.value.ticks(14).length)
+
+    stop()
+  })
+
   it('detects multi-series datasets with isLineSeries', () => {
     expect(isLineSeries([{ x: '2023', y: 10 }])).toBe(false)
     expect(

@@ -40,18 +40,6 @@
               role="none"
               stroke-width="1"
             />
-            <line
-              v-for="(x, xIndex) in computeVerticalGridLines(innerWidth, innerHeight)"
-              :key="`line-grid-x-${xIndex}`"
-              data-id="sds-grid-line-x"
-              :x1="x"
-              y1="0"
-              :x2="x"
-              :y2="innerHeight"
-              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
-              role="none"
-              stroke-width="1"
-            />
           </template>
 
           <line
@@ -255,7 +243,6 @@ const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
 // Keep horizontal grid density readable across chart heights.
-const MIN_HORIZONTAL_GRID_TICKS = 2
 const HORIZONTAL_GRID_LINE_COUNT = 6
 
 const { hoveredIndex, setHovered } = useHoveredIndex()
@@ -266,7 +253,7 @@ const config = useChartConfig() ?? {}
 /** Effective dark-mode state resolved from chart config with document fallback. */
 const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
-const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
+const { lines, gapSegments, xAxis, yAxis, xScale, yScale, yTickValues, xDomainLabels } = useLineChart(
   dataRef,
   innerWidthRef,
   innerHeightRef,
@@ -274,6 +261,7 @@ const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useL
   xScaleTypeRef,
   computed(() => props.xTickValues),
   computed(() => props.xTickFormatter),
+  computed(() => HORIZONTAL_GRID_LINE_COUNT),
 )
 
 /** Resolved chart margins, with automatic bottom padding for multi-line x labels. */
@@ -382,20 +370,6 @@ function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSeg
 }
 
 /**
- * Computes x positions for vertical grid lines.
- *
- * @param innerWidth - Current chart inner width in pixels.
- * @param innerHeight - Current chart inner height in pixels.
- * @returns X coordinates for each vertical grid line.
- */
-function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
-  syncDimensions(innerWidth, innerHeight)
-  const firstSeries = lines.value[0]
-  if (!firstSeries) return []
-  return firstSeries.points.map((point) => getXCoordinate(point.xPosition, point.xIndex))
-}
-
-/**
  * Computes y positions for horizontal grid lines.
  *
  * @param innerWidth - Current chart inner width in pixels.
@@ -404,8 +378,7 @@ function computeVerticalGridLines(innerWidth: number, innerHeight: number): numb
  */
 function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
-  const tickCount = Math.max(MIN_HORIZONTAL_GRID_TICKS, HORIZONTAL_GRID_LINE_COUNT)
-  return yScale.value.ticks(tickCount).map((tickValue) => yScale.value(tickValue))
+  return yTickValues.value.map((tickValue) => yScale.value(tickValue))
 }
 
 /**
