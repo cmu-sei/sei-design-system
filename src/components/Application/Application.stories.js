@@ -109,3 +109,39 @@ Default.args = {
     { id: 7, title: 'Search', active: false, href: "#", keyboardShortcut: ['/'] }
   ]
 };
+
+export const WrappedNavigationLabels = Template.bind({});
+WrappedNavigationLabels.args = {
+  ...Default.args,
+  appName: 'An application name that wraps across multiple lines',
+  sidebarNavigationItems: [
+    {
+      id: 1,
+      title: 'A long standalone navigation label that wraps',
+      active: true,
+      href: '#',
+      badgeCount: 12,
+      keyboardShortcut: ['Ctrl', 'K']
+    },
+    {
+      id: 2,
+      title: 'A long grouped navigation label that wraps',
+      items: [
+        {
+          id: 1,
+          title: 'A long nested navigation label that wraps',
+          active: false,
+          href: '#',
+          badgeCount: 3
+        }
+      ]
+    }
+  ]
+};
+WrappedNavigationLabels.parameters = {
+  docs: {
+    description: {
+      story: 'Demonstrates top-aligned icons and shortcuts with wrapping labels whose badges remain attached to the final word.'
+    }
+  }
+};

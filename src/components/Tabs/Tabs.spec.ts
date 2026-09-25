@@ -97,6 +97,47 @@ describe('Tabs', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
+  it('should render a tab as a link when its `href` property is set', async () => {
+    await wrapper.setProps({
+      modelValue: [
+        { key: 'tab-1', title: 'Tab label 1', href: 'https://designsystem.sei.cmu.edu/' }
+      ]
+    })
+
+    const link = wrapper.find('a[role="tab"]')
+
+    expect(link.exists()).toBe(true)
+    expect(link.attributes('href')).toBe('https://designsystem.sei.cmu.edu/')
+  })
+
+  it('should render default tabs as non-submitting buttons', () => {
+    wrapper.findAll('button[role="tab"]').forEach((button) => {
+      expect(button.attributes('type')).toBe('button')
+    })
+  })
+
+  it('should prevent navigation when a link tab is disabled', async () => {
+    await wrapper.setProps({
+      modelValue: [
+        {
+          key: 'tab-1',
+          title: 'Tab label 1',
+          href: 'https://designsystem.sei.cmu.edu/',
+          disabled: true
+        }
+      ]
+    })
+    const link = wrapper.find('a[role="tab"]')
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true })
+
+    link.element.dispatchEvent(clickEvent)
+    await nextTick()
+
+    expect(link.attributes('href')).toBeUndefined()
+    expect(clickEvent.defaultPrevented).toBe(true)
+    expect(wrapper.emitted('change')).toBeUndefined()
+  })
+
   it('should match its snapshot with property `count` in tab item(s) is set to a numerical value', async () => {
     const props = {
       size: 'sm',
