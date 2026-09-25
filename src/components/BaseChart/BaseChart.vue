@@ -132,7 +132,7 @@ interface BaseChartProps {
 
 defineOptions({
   name: 'SdsBaseChart',
-  inheritAttrs: false,
+  inheritAttrs: false
 })
 
 const props = withDefaults(defineProps<BaseChartProps>(), {

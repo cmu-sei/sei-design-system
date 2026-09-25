@@ -10,7 +10,7 @@
       <li
         v-for="(item, i) in items"
         :key="item.label"
-        class="flex items-center gap-2 transition-opacity duration-150 cursor-default text-sm"
+        class="flex items-center gap-2 transition-opacity duration-150 cursor-default"
         :class="[
           hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100',
           hoveredIndex !== null ? 'cursor-pointer' : 'cursor-default',
@@ -24,10 +24,10 @@
           :style="{ backgroundColor: item.color }"
           aria-hidden="true"
         />
-        <span class="font-medium text-gray-900 dark:text-gray-100">{{ item.label }}</span>
+        <span class="font-normal text-sm text-gray-600 dark:text-gray-400">{{ item.label }}</span>
         <span 
           v-if="item.value !== undefined" 
-          class="text-gray-500 dark:text-gray-400 tabular-nums"
+          class="font-normaltext-sm text-gray-600 dark:text-gray-400 tabular-nums"
         >{{ item.value }}</span>
       </li>
     </ul>

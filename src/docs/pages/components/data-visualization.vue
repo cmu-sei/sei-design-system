@@ -1195,7 +1195,7 @@
                     v-for="(item, i) in legendItems"
                     :key="`custom-legend-label-${i}`"
                   >
-                    <span class="w-10 text-center text-[11px] text-gray-900 dark:text-gray-100">
+                    <span class="w-10 font-normal text-center text-[10px] text-gray-600 dark:text-gray-400">
                       >= {{ getRangeStart(item) }}
                     </span>
                   </template>
@@ -1371,7 +1371,7 @@
             title="Browser Market Share - Custom Legend"
           >
             <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
-              <table class="w-full text-sm border-collapse text-gray-900 dark:text-gray-100">
+              <table class="w-full font-normal text-sm border-collapse text-gray-600 dark:text-gray-400">
                 <thead>
                   <tr class="border-b border-gray-200 dark:border-gray-700">
                     <th class="py-1 text-left font-semibold">

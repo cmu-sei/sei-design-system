@@ -76,7 +76,7 @@
           v-else 
           class="sds-heatmap-legend flex items-center justify-center gap-1 text-xs select-none"
         >
-          <span class="text-gray-900 dark:text-gray-100">Less</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">Less</span>
           <button
             v-for="(item, i) in items"
             :key="`heatmap-legend-bin-${i}`"
@@ -88,7 +88,7 @@
             @mouseenter="updateHoveredIndex(i)"
             @mouseleave="updateHoveredIndex(null)"
           />
-          <span class="text-gray-900 dark:text-gray-100">More</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">More</span>
         </div>
       </template>
     </BaseChart>
