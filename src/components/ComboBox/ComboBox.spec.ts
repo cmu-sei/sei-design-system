@@ -252,16 +252,46 @@ describe('ComboBox', () => {
         props: { suggestions, type: 'select', size }
       })
       const caret = wrapper.find('[data-id="sds-combo-box-select-caret"]')
-      const caretIcon = caret.find('span')
+      const caretIcon = caret.find('span[aria-hidden="true"]')
 
       expect(caret.classes()).toEqual(expect.arrayContaining([
         'input-group-addon',
-        'pointer-events-none',
+        'cursor-pointer',
       ]))
       expect(caretIcon.classes()).toContain('shrink-0')
 
       wrapper.unmount()
     })
+  })
+
+  it('shows dropdown results when the search icon is clicked', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, clickToSelect: false }
+    })
+    const searchButton = wrapper.find('[data-id="sds-combo-box-search-button"]')
+
+    await searchButton.trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()).toBeTruthy()
+    expect(searchButton.attributes('aria-expanded')).toBe('true')
+    expect(wrapper.find('input[type="text"]').element).toBe(document.activeElement)
+    wrapper.unmount()
+  })
+
+  it('shows dropdown results when the select caret is clicked', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', clickToSelect: false }
+    })
+    const caret = wrapper.find('[data-id="sds-combo-box-select-caret"]')
+
+    await caret.trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()).toBeTruthy()
+    expect(caret.attributes('aria-expanded')).toBe('true')
+    expect(wrapper.find('input[type="text"]').element).toBe(document.activeElement)
+    wrapper.unmount()
   })
 
   it('should match snapshot for grouped options', () => {
@@ -1483,10 +1513,10 @@ describe('ComboBox', () => {
       }
     })
     const inputElement = wrapper.find('input[type="text"]').element as HTMLInputElement
-    const leadingAddon = wrapper.find('.input-group-addon')
+    const inputGroup = wrapper.find('.input-group')
     const decorativeDivider = wrapper.find('[data-id="decorative-divider"]')
 
-    await leadingAddon.trigger('mousedown')
+    await inputGroup.trigger('mousedown')
     expect(document.activeElement).toBe(inputElement)
 
     inputElement.blur()
