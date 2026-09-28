@@ -6,7 +6,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A flexible bar chart component that renders single-series or multi-series data in vertical or horizontal orientation, with support for grouped or stacked modes.',
+        component: 'A flexible bar chart component that renders single-series or multi-series data in vertical or horizontal orientation, with support for grouped or stacked modes and optional x- and y-axis labels.',
       },
     },
   },
@@ -51,6 +51,14 @@ export default {
     title: {
       control: { type: 'text' },
       description: 'Optional chart title.',
+    },
+    xAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional horizontal label below the x-axis.',
+    },
+    yAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional vertical label beside the y-axis.',
     },
     xTickFormatter: {
       control: { type: 'text' },
@@ -255,7 +263,43 @@ Default.args = {
   showLegend: false,
   animate: true,
   title: 'Browser Market Share - Desktop, 2025 (Vertical)',
+  xAxisLabel: 'Browser',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
+}
+Default.parameters = {
+  docs: {
+    description: {
+      story: 'Axis titles are optional. This example labels both axes; omit either prop to hide that label.',
+    },
+  },
+}
+
+export const WithoutAxisLabels = Template.bind({})
+WithoutAxisLabels.args = {
+  ...Default.args,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
+}
+WithoutAxisLabels.parameters = {
+  docs: {
+    description: {
+      story: 'Leave xAxisLabel and yAxisLabel unset to render the chart without axis titles.',
+    },
+  },
+}
+
+export const XAxisLabelOnly = Template.bind({})
+XAxisLabelOnly.args = {
+  ...Default.args,
+  yAxisLabel: undefined,
+}
+XAxisLabelOnly.parameters = {
+  docs: {
+    description: {
+      story: 'Axis labels can be configured independently; this example displays only the x-axis label.',
+    },
+  },
 }
 
 export const Horizontal = Template.bind({})
@@ -264,6 +308,8 @@ Horizontal.args = {
   orientation: 'horizontal',
   showTooltip: true,
   title: 'Browser Market Share - Desktop, 2025 (Horizontal)',
+  xAxisLabel: 'Percentage',
+  yAxisLabel: 'Browser',
   xTickFormatter: formatPercent,
 }
 
@@ -273,6 +319,8 @@ HorizontalLongLabels.args = {
   orientation: 'horizontal',
   showTooltip: true,
   title: 'Browser Market Share - Desktop, 2025 (Long Labels)',
+  xAxisLabel: 'Percentage',
+  yAxisLabel: 'Browser',
   xTickFormatter: formatPercent,
 }
 
@@ -285,6 +333,8 @@ VerticalMultiSeriesGrouped.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Vertical Multi-Series Grouped (Years as Series)',
+  xAxisLabel: 'Browser',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
 }
 
@@ -297,6 +347,8 @@ VerticalMultiSeriesStacked.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Vertical Multi-Series Stacked',
+  xAxisLabel: 'Year',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
 }
 
@@ -310,6 +362,8 @@ HorizontalMultiSeriesGrouped.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Horizontal Multi-Series Grouped',
+  xAxisLabel: 'Percentage',
+  yAxisLabel: 'Browser',
   xTickFormatter: formatPercent,
 }
 
@@ -322,6 +376,8 @@ HorizontalMultiSeriesStacked.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Horizontal Multi-Series Stacked',
+  xAxisLabel: 'Percentage',
+  yAxisLabel: 'Browser',
   xTickFormatter: formatPercent,
 }
 
@@ -331,6 +387,8 @@ SingleSeriesCustomColor.args = {
   orientation: 'vertical',
   showTooltip: true,
   title: 'Browser Market Share 2025 - Custom Color',
+  xAxisLabel: 'Browser',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
 }
 
@@ -343,6 +401,8 @@ MultiSeriesBrandColors.args = {
   legendPosition: 'top-right',
   showTooltip: true,
   title: 'Browser Market Share by Year - Per-Series Brand Colors',
+  xAxisLabel: 'Year',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
 }
 
@@ -352,5 +412,7 @@ ResponsiveAspectRatio.args = {
   aspectRatio: 16 / 9,
   showTooltip: true,
   title: 'Browser Market Share 2025 - 16:9 Aspect Ratio',
+  xAxisLabel: 'Browser',
+  yAxisLabel: 'Percentage',
   yTickFormatter: formatPercent,
 }

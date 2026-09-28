@@ -752,6 +752,9 @@
           single-series chart, or as an array of named series for grouped/stacked charts. The component
           detects the data shape automatically. Use <code>mode="stacked"</code> to stack bars instead of
           grouping them.
+          Use the optional <code>x-axis-label</code> and <code>y-axis-label</code> props to name each
+          dimension independently. For example, the horizontal chart below has only an x-axis title;
+          leaving both props out removes the titles.
         </p>
 
         <!-- ─── Vertical - Single Series ─────────────────────────────────────── -->
@@ -768,6 +771,8 @@
             animate
             show-tooltip
             title="Browser Market Share - Desktop, 2025 (Vertical)"
+            x-axis-label="Browser"
+            y-axis-label="Percentage"
           />
         </div>
 
@@ -787,6 +792,7 @@
             orientation="horizontal"
             show-tooltip
             title="Browser Market Share - Desktop, 2025 (Horizontal)"
+            x-axis-label="Percentage"
           />
         </div>
 
@@ -807,6 +813,8 @@
             orientation="horizontal"
             show-tooltip
             title="Browser Market Share - Desktop, 2025 (Long Labels)"
+            x-axis-label="Percentage"
+            y-axis-label="Browser"
           />
         </div>
 
@@ -828,6 +836,8 @@
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Vertical Grouped (Years as Series)"
+            x-axis-label="Browser"
+            y-axis-label="Percentage"
           />
         </div>
 
@@ -848,6 +858,8 @@
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Vertical Stacked"
+            x-axis-label="Year"
+            y-axis-label="Percentage"
           />
         </div>
 
@@ -870,6 +882,8 @@
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Horizontal Grouped"
+            x-axis-label="Percentage"
+            y-axis-label="Browser"
           />
         </div>
 
@@ -891,6 +905,8 @@
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Horizontal Stacked"
+            x-axis-label="Percentage"
+            y-axis-label="Browser"
           />
         </div>
 
@@ -910,6 +926,8 @@
             :aspect-ratio="16 / 9"
             show-tooltip
             title="Browser Market Share 2025 - 16:9 Aspect Ratio"
+            x-axis-label="Browser"
+            y-axis-label="Percentage"
           />
         </div>
 
@@ -928,6 +946,8 @@
             :tooltip-value-format="formatPercent"
             show-tooltip
             title="Browser Market Share 2025 - Custom Color"
+            x-axis-label="Browser"
+            y-axis-label="Percentage"
           />
         </div>
 
@@ -948,6 +968,8 @@
             show-tooltip
             show-legend
             title="Browser Market Share by Year - Per-Series Brand Colors"
+            x-axis-label="Year"
+            y-axis-label="Percentage"
           />
         </div>
       </div>
@@ -961,6 +983,8 @@
           A reusable SVG-based line chart for trend analysis across ordered categories. Like the other
           chart components, it is built on <code>BaseChart</code> and supports tooltips, optional
           legends via <code>show-legend</code>, and responsive sizing via <code>aspect-ratio</code>.
+          Optional <code>x-axis-label</code> and <code>y-axis-label</code> props add horizontal and
+          vertical axis titles. Leave either one out when that dimension is self-explanatory.
         </p>
 
         <h3>Multi-series trend comparison (6 lines or fewer)</h3>
@@ -978,6 +1002,8 @@
             show-points
             show-legend
             title="Customer Satisfaction by Channel (Quarterly)"
+            x-axis-label="Quarter"
+            y-axis-label="Satisfaction"
           />
         </div>
 
@@ -998,6 +1024,8 @@
             show-points
             show-legend
             title="Customer Satisfaction with Missing Quarters"
+            x-axis-label="Quarter"
+            y-axis-label="Satisfaction"
           />
         </div>
 
@@ -1019,6 +1047,8 @@
             show-points
             show-legend
             title="Dense Multi-Series Customer Satisfaction Trends"
+            x-axis-label="Quarter"
+            y-axis-label="Satisfaction"
           />
         </div>
 
@@ -1050,6 +1080,8 @@
             show-points
             show-legend
             title="Monthly Trend with a Time Scale"
+            x-axis-label="Month"
+            y-axis-label="Percentage"
           />
         </div>
       </div>
@@ -1075,7 +1107,9 @@
         <p>
           Heatmaps work best for dense, discrete categories where color intensity helps reveal
           distribution shifts. Keep labels short, align tooltip content to user questions, and pick a
-          palette with clear low-to-high contrast in both light and dark themes.
+          palette with clear low-to-high contrast in both light and dark themes. Optional
+          <code>x-axis-label</code> and <code>y-axis-label</code> props identify the dimensions; omit
+          either label when it is not needed.
         </p>
 
         <h3>GitHub-style Contributions Graph: Default Palette</h3>
@@ -1096,6 +1130,8 @@
             show-tooltip
             show-legend
             title="Daily Contributions by Month and Weekday"
+            x-axis-label="Month"
+            y-axis-label="Weekday"
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
@@ -1114,7 +1150,8 @@
         </h3>
         <p>
           Use the <code>colors</code> prop to override bins with separate light and dark variants. This is
-          handy when your product brand colors differ from default chart tokens.
+          handy when your product brand colors differ from default chart tokens. Axis titles are
+          independently optional; this example labels both the month and weekday dimensions.
         </p>
 
         <div class="not-prose mt-6 overflow-x-auto">
@@ -1129,6 +1166,8 @@
             show-tooltip
             show-legend
             title="Daily Contributions with Custom Bins"
+            x-axis-label="Month"
+            y-axis-label="Weekday"
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
@@ -1162,6 +1201,8 @@
             show-tooltip
             show-legend
             title="Daily Contributions with Custom Legend Slot"
+            x-axis-label="Month"
+            y-axis-label="Weekday"
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
@@ -1235,6 +1276,8 @@
             show-tooltip
             show-legend
             title="NYC Ride-Share Pickups by Hour and Day"
+            x-axis-label="Hour"
+            y-axis-label="Day"
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">

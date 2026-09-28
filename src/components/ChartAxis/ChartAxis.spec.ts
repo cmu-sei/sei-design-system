@@ -44,6 +44,7 @@ describe('ChartAxis', () => {
     const labels = wrapper.findAll('.tick text')
     expect(labels.map((label) => label.text())).toEqual(['Jan', 'Feb'])
     expect(wrapper.findAll('tspan[data-wrap-x]')).toHaveLength(0)
+    expect(wrapper.find('.sds-chart-axis').classes()).toContain('text-sm')
     expect(labels[0].attributes('font-size')).toBe('14px')
     expect(labels[0].attributes('text-anchor')).toBe('middle')
     wrapper.unmount()

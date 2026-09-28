@@ -16,6 +16,8 @@
       }"
       :show-legend="showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -165,6 +167,10 @@ interface LineChartProps {
   margin?: ChartMargin
   /** Optional accessible chart title rendered within the SVG. */
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   /** Enables point/line tooltip rendering and hover behavior. @default true */
   showTooltip?: boolean
   /** Toggles gridline rendering behind line paths. @default true */
@@ -219,6 +225,8 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   height: 360,
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
   showGrid: true,
   aspectRatio: undefined,

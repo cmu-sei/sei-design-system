@@ -13,7 +13,7 @@ const INNER_HEIGHT = 300
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['showLegend', 'legend', 'title', 'hoveredIndex', 'tooltipVisible', 'tooltipX', 'tooltipY'],
+  props: ['showLegend', 'legend', 'title', 'xAxisLabel', 'yAxisLabel', 'hoveredIndex', 'tooltipVisible', 'tooltipX', 'tooltipY'],
   emits: ['update:hoveredIndex'],
   template: `
     <div data-id="sds-base-chart">
@@ -87,6 +87,15 @@ describe('LineChart.vue', () => {
 
   // ─── Props and Defaults ───────────────────────────────────────────────────
   describe('Props and Defaults', () => {
+    it('forwards optional axis labels to BaseChart', () => {
+      const wrapper = createWrapper({ xAxisLabel: 'Year', yAxisLabel: 'Percentage' })
+
+      expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
+        xAxisLabel: 'Year',
+        yAxisLabel: 'Percentage',
+      })
+    })
+
     it('renders a title in the SVG when title prop is provided', () => {
       expect(createWrapper({ title: 'My Chart' }).find('title').text()).toBe('My Chart')
     })

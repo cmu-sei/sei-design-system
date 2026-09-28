@@ -15,6 +15,8 @@
       }"
       :show-legend="props.showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -111,6 +113,10 @@ interface BarChartProps {
   height?: number
   margin?: ChartMargin
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   showTooltip?: boolean
   /** When provided, height is derived as containerWidth / aspectRatio. */
   aspectRatio?: number
@@ -139,6 +145,8 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   height: 360,
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
   aspectRatio: undefined,
   xTickFormatter: '~s',

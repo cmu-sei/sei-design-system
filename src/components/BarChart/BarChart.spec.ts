@@ -5,7 +5,7 @@ import Component from './BarChart.vue'
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['xAxis', 'yAxis'],
+  props: ['xAxis', 'yAxis', 'xAxisLabel', 'yAxisLabel'],
   template: `
     <svg>
       <slot :inner-width="400" :inner-height="300" :container-width="480" />
@@ -35,4 +35,20 @@ describe('BarChart', () => {
       wrapper.unmount()
     },
   )
+
+  it('forwards optional axis labels to BaseChart', () => {
+    const wrapper = mount(Component, {
+      props: {
+        data: [{ label: 'First', value: 20 }],
+        xAxisLabel: 'Year',
+        yAxisLabel: 'Percentage',
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+
+    expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
+      xAxisLabel: 'Year',
+      yAxisLabel: 'Percentage',
+    })
+  })
 })

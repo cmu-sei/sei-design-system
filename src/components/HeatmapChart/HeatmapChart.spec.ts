@@ -4,7 +4,7 @@ import HeatmapChart from './HeatmapChart.vue'
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['legend', 'hoveredIndex'],
+  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'yAxisLabel'],
   emits: ['update:hoveredIndex'],
   template: `
     <div>
@@ -20,6 +20,22 @@ const BaseChartStub = {
 }
 
 describe('HeatmapChart legend', () => {
+  it('forwards optional axis labels to BaseChart', () => {
+    const wrapper = mount(HeatmapChart, {
+      props: {
+        data: [{ x: 'Monday', y: 'Morning', value: 0 }],
+        xAxisLabel: 'Hour',
+        yAxisLabel: 'Day',
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+
+    expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
+      xAxisLabel: 'Hour',
+      yAxisLabel: 'Day',
+    })
+  })
+
   it('renders wide, rectangular color bins that respond to hover', async () => {
     const wrapper = mount(HeatmapChart, {
       props: { data: [

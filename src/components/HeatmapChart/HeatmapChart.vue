@@ -19,6 +19,8 @@
       }"
       :show-legend="props.showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -113,6 +115,10 @@ interface HeatmapChartProps {
   width?: string | number
   margin?: ChartMargin
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   showTooltip?: boolean
   showLegend?: boolean
   colors?: HeatmapColors
@@ -134,6 +140,8 @@ const props = withDefaults(defineProps<HeatmapChartProps>(), {
   width: '100%',
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
   showLegend: true,
   colors: undefined,

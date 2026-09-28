@@ -7,7 +7,7 @@ import BaseChart from './BaseChart.vue'
 const ChartAxisStub = {
   name: 'SdsChartAxis',
   props: ['axis', 'orientation', 'innerWidth', 'innerHeight', 'minFontSize', 'maxFontSize', 'maxLabelWidth'],
-  template: '<g data-id="axis" :data-orientation="orientation" />',
+  template: '<g data-id="axis" class="sds-chart-axis" :data-orientation="orientation"><g class="tick"><text>Tick</text></g></g>',
 }
 
 const ChartTooltipStub = {
@@ -63,7 +63,7 @@ describe('BaseChart', () => {
     })
     await nextTick()
 
-    expect(wrapper.find('[data-id="sds-base-chart"] > div').attributes('style')).toContain('width: 75%')
+    expect(wrapper.find('svg').element.parentElement?.getAttribute('style')).toContain('width: 75%')
     expect(wrapper.find('svg').attributes()).toMatchObject({
       'aria-label': 'Quarterly revenue',
       'data-chart': 'revenue',
@@ -79,6 +79,93 @@ describe('BaseChart', () => {
 
     wrapper.unmount()
     expect(disconnect).toHaveBeenCalled()
+  })
+
+  it('renders optional HTML axis labels with spacing before the chart and legend', async () => {
+    const wrapper = mount(BaseChart, {
+      props: {
+        margin,
+        xAxisLabel: 'Year',
+        yAxisLabel: 'Percentage',
+        showLegend: true,
+      },
+      global,
+    })
+
+    const yLabel = wrapper.find('.sds-base-chart .absolute.flex.items-center')
+    const yLabelText = wrapper.find('.sds-base-chart .rotate-180')
+    const axisLabels = wrapper.findAll('.sds-base-chart .absolute')
+    const xLabel = axisLabels[1]
+    expect(yLabel.element.tagName).toBe('DIV')
+    expect(yLabel.text()).toBe('Percentage')
+    expect(yLabelText.classes()).toEqual(expect.arrayContaining([
+      'text-base',
+      'font-semibold',
+      'text-gray-600',
+      'dark:text-gray-400',
+    ]))
+    expect(yLabel.classes()).toContain('absolute')
+    expect(xLabel?.classes()).toContain('absolute')
+    expect(xLabel?.text()).toBe('Year')
+    expect(xLabel?.classes()).toEqual(expect.arrayContaining([
+      'text-base',
+      'font-semibold',
+      'text-gray-600',
+      'dark:text-gray-400',
+    ]))
+    expect(wrapper.find('.sds-base-chart').classes()).toContain('gap-y-4')
+
+    wrapper.unmount()
+  })
+
+  it('positions each axis title eight pixels from its rendered tick labels', async () => {
+    const htmlRect = vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 240)
+      if (this.classList.contains('rotate-180')) return new DOMRect(0, 0, 24, 100)
+      if (this.classList.contains('absolute')) return new DOMRect(0, 0, 32, 24)
+      return new DOMRect(0, 0, 0, 0)
+    })
+    const svgRect = vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, 0, 480, 240)
+      if (this.closest('[data-orientation="x"]')) return new DOMRect(100, 100, 40, 16)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(32, 20, 30, 16)
+      return new DOMRect(0, 0, 0, 0)
+    })
+    const wrapper = mount(BaseChart, {
+      props: {
+        height: 240,
+        margin,
+        xAxis: axisBottom(scaleLinear()),
+        yAxis: axisLeft(scaleLinear()),
+        xAxisLabel: 'Year',
+        yAxisLabel: 'Percentage',
+      },
+      global,
+    })
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.find('.sds-chart-axis[data-orientation="x"] .tick text').element.getBoundingClientRect().bottom)
+      .toBe(116)
+    expect(wrapper.find('.absolute.text-base').attributes('style')).toContain('top: 124px')
+    expect(wrapper.find('.sds-chart-axis[data-orientation="y"] .tick text').element.getBoundingClientRect().left)
+      .toBe(32)
+    const yLabelContainer = wrapper.find('.absolute.flex.items-center')
+    expect(yLabelContainer.attributes('style')).toContain('left: 0px')
+    expect(yLabelContainer.attributes('style')).toContain('top: 10px')
+    expect(yLabelContainer.attributes('style')).toContain('height: 200px')
+
+    wrapper.unmount()
+    htmlRect.mockRestore()
+    svgRect.mockRestore()
+  })
+
+  it('does not render axis labels when they are omitted', () => {
+    const wrapper = mount(BaseChart, { global })
+
+    expect(wrapper.find('.rotate-180').exists()).toBe(false)
+    expect(wrapper.find('.absolute').exists()).toBe(false)
+    wrapper.unmount()
   })
 
   it('derives the SVG height from aspect ratio and recomputes dimensions when props change', async () => {

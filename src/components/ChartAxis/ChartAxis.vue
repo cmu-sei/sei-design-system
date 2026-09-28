@@ -1,7 +1,8 @@
 <template>
   <g 
     ref="axisRef" 
-    class="sds-chart-axis"
+    class="sds-chart-axis text-sm"
+    :data-orientation="props.orientation"
   />
 </template>
 
