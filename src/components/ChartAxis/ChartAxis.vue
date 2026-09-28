@@ -150,7 +150,7 @@ function applyWrappedXAxisLabel(textEl: SVGTextElement, fullText: string, maxWid
     textEl.setAttribute('font-size', `${fontSize}px`)
     textEl.textContent = fullText
     const singleLineWidth = textEl.getComputedTextLength()
-    if (singleLineWidth <= maxWidth) {
+    if (singleLineWidth > 0 && singleLineWidth <= maxWidth) {
       lines = [fullText]
       break
     }
