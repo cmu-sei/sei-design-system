@@ -3,7 +3,10 @@
     data-id="sds-base-chart" 
     class="sds-base-chart flex w-full min-w-0 flex-col gap-y-4"
   >
-    <div class="min-w-0">
+    <div
+      class="min-w-0"
+      :style="{ paddingLeft: `${yAxisLabelPadding}px` }"
+    >
       <div
         ref="containerRef"
         class="relative w-full min-w-0"
@@ -191,6 +194,7 @@ const xAxisLabelRef = ref<HTMLDivElement | null>(null)
 const yAxisLabelRef = ref<HTMLSpanElement | null>(null)
 const yAxisLabelContainerRef = ref<HTMLDivElement | null>(null)
 const axisLabelPadding = ref(0)
+const yAxisLabelPadding = ref(0)
 const xAxisLabelStyle = ref({ left: '50%', top: '100%', transform: 'translateX(-50%)' })
 const yAxisLabelStyle = ref({ left: '0px', top: '0px', width: '0px', height: '0px' })
 const heightRef = computed(() => props.height)
@@ -273,6 +277,10 @@ function updateAxisLabelLayout() {
     ) {
       yAxisLabelStyle.value = style
     }
+    // Reserve room outside the positioned container so the title never overflows its left edge.
+    yAxisLabelPadding.value = Math.max(0, Math.ceil(-left))
+  } else {
+    yAxisLabelPadding.value = 0
   }
 }
 

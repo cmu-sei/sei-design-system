@@ -160,6 +160,35 @@ describe('BaseChart', () => {
     svgRect.mockRestore()
   })
 
+  it('reserves left padding when the y-axis title would overflow the container', async () => {
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 240)
+      if (this.classList.contains('rotate-180')) return new DOMRect(0, 0, 24, 100)
+      return new DOMRect(0, 0, 0, 0)
+    })
+    vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, 0, 480, 240)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(6, 20, 30, 16)
+      return new DOMRect(0, 0, 0, 0)
+    })
+    const wrapper = mount(BaseChart, {
+      props: { height: 240, margin, yAxis: axisLeft(scaleLinear()), yAxisLabel: 'Browser' },
+      global,
+    })
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.find('.absolute.flex.items-center').attributes('style')).toContain('left: -26px')
+    expect(wrapper.find('.sds-base-chart > .min-w-0').attributes('style')).toContain('padding-left: 26px')
+
+    await wrapper.setProps({ yAxisLabel: undefined })
+    await nextTick()
+    await nextTick()
+    expect(wrapper.find('.sds-base-chart > .min-w-0').attributes('style')).toContain('padding-left: 0px')
+
+    wrapper.unmount()
+  })
+
   it('does not render axis labels when they are omitted', () => {
     const wrapper = mount(BaseChart, { global })
 
