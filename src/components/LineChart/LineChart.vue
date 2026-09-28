@@ -115,14 +115,13 @@
           :data="tooltip.data.value"
           :format-value="resolvedFormatter"
         >
-          <p
+          <ChartTooltipContent
             v-if="tooltip.data.value"
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.seriesLabel }}</span>
-            <span class="block">{{ tooltip.data.value.xLabel }}</span>
-            <span class="block">{{ resolvedFormatter(tooltip.data.value.value) }}</span>
-          </p>
+            :title="tooltip.data.value.seriesLabel"
+            :label="tooltip.data.value.xLabel"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="tooltipColor"
+          />
         </slot>
       </template>
 
@@ -145,6 +144,7 @@ import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import type { LineData, LinePath, LineTooltipData, LineGapSegment, LineXScaleType } from '@/composables/useLineChart'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
 import { lineChartColorClasses, lineChartColorClassesDark, lineChartColorValues } from '@/helpers/charts/colors'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format, type AxisDomain, type ScaleLinear, type ScaleTime } from '@/lib/d3'
 import { useChartConfig } from '@/composables/useChartConfig'
 import { useDarkMode } from '@/composables/useDarkMode'
@@ -152,6 +152,7 @@ import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useLineChart } from '@/composables/useLineChart'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 
 export type { LineDatum, LineSeries, LineData, LineXScaleType } from '@/composables/useLineChart'
 
@@ -248,6 +249,7 @@ const HORIZONTAL_GRID_LINE_COUNT = 6
 const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
+const tooltipSeriesIndex = ref<number | null>(null)
 const _bodyDark = useDarkMode()
 const config = useChartConfig() ?? {}
 /** Effective dark-mode state resolved from chart config with document fallback. */
@@ -305,6 +307,11 @@ const resolvedLegendItems = computed(() =>
       color: lineChartColorValues[className] ?? lineSeries.color,
     }
   }),
+)
+const tooltipColor = computed(() =>
+  tooltipSeriesIndex.value === null || !hasMultipleColors(resolvedLegendItems.value)
+    ? undefined
+    : resolvedLegendItems.value[tooltipSeriesIndex.value]?.color,
 )
 
 /** Lookup map from series id to index for fast color-class resolution. */
@@ -467,6 +474,7 @@ function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
  */
 function onPointEnter(event: MouseEvent, point: LinePointMarker) {
   hoveredPointKey.value = point.key
+  tooltipSeriesIndex.value = point.seriesIndex
   setHovered(point.seriesIndex)
   if (!props.showTooltip) return
   const anchor = getTooltipAnchor(event)

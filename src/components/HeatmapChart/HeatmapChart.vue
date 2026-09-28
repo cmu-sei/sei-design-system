@@ -55,13 +55,13 @@
           name="tooltip" 
           :data="tooltip.data.value"
         >
-          <p
+          <ChartTooltipContent
             v-if="tooltip.data.value"
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.x }} / {{ tooltip.data.value.y }}</span>
-            <span class="block">{{ tooltip.data.value.value }}</span>
-          </p>
+            :title="tooltip.data.value.x"
+            :label="tooltip.data.value.y"
+            :datapoint="tooltip.data.value.value"
+            :color="hasDistinctColors ? tooltip.data.value.color : undefined"
+          />
         </slot>
       </template>
       <template #legend="{ items, hoveredIndex: legendHoveredIndex, updateHoveredIndex }">
@@ -100,10 +100,12 @@ import type { AxisDomain } from '@/lib/d3'
 import type { ChartMargin } from '@/helpers/charts/constants'
 import type { HeatmapCell, HeatmapColors, HeatmapRect, HeatmapTooltipData } from '@/composables/useHeatmapChart'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 import { useHeatmapChart } from '@/composables/useHeatmapChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import { DEFAULT_CHART_MARGIN } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 
 interface HeatmapChartProps {
   data?: HeatmapCell[]
@@ -209,6 +211,7 @@ const { cells, xAxis, yAxis, legendItems } = useHeatmapChart(
     squareCells: squareCellsRef
   }
 )
+const hasDistinctColors = computed(() => hasMultipleColors(cells.value))
 
 function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
   innerWidthRef.value = innerWidth

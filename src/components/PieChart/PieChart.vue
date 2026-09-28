@@ -84,13 +84,12 @@
           :data="tooltip.data.value" 
           :format-value="resolvedFormatter"
         >
-          <p 
-            v-if="tooltip.data.value" 
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-            <span class="block">{{ resolvedFormatter(tooltip.data.value.value) }}</span>
-          </p>
+          <ChartTooltipContent
+            v-if="tooltip.data.value"
+            :title="tooltip.data.value.label"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="tooltipColor"
+          />
         </slot>
       </template>
       <template 
@@ -111,8 +110,10 @@ import type { PieSlice, PieArcData } from '@/composables/usePieChart'
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../ChartLegend/ChartLegend.vue'
 import { DEFAULT_CHART_MARGIN, MIN_LABEL_ANGLE } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format } from '@/lib/d3'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { usePieChart } from '@/composables/usePieChart'
 import { useTooltip } from '@/composables/useTooltip'
@@ -184,6 +185,11 @@ const { arcs, legendItems } = usePieChart(
   legendFormatter
 )
 const tooltip = useTooltip<PieSlice>()
+const tooltipColor = computed(() =>
+  hasMultipleColors(arcs.value)
+    ? arcs.value.find((arc) => arc.data === tooltip.data.value)?.color
+    : undefined,
+)
 
 /**
  * Recomputes arcs whenever dimensions or data change.

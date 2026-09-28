@@ -20,7 +20,7 @@
       >
         <span
           v-if="item.color"
-          class="inline-block h-3 w-3 shrink-0 rounded-md"
+          class="inline-block h-3.5 w-3.5 shrink-0 rounded-xs"
           :style="{ backgroundColor: item.color }"
           aria-hidden="true"
         />

@@ -1099,12 +1099,12 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p
+              <span
                 v-if="data"
-                class="text-xs whitespace-nowrap font-semibold"
+                class="font-semibold text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap"
               >
                 {{ formatContributionTooltip(data) }}
-              </p>
+              </span>
             </template>
           </SdsHeatmapChart>
         </div>
@@ -1132,12 +1132,12 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p
+              <span
                 v-if="data"
-                class="text-xs whitespace-nowrap font-semibold"
+                class="font-semibold text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap"
               >
                 {{ formatContributionTooltip(data) }}
-              </p>
+              </span>
             </template>
           </SdsHeatmapChart>
         </div>
@@ -1165,12 +1165,12 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p
+              <span
                 v-if="data"
-                class="text-xs whitespace-nowrap font-semibold"
+                class="font-semibold text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap"
               >
                 {{ formatContributionTooltip(data) }}
-              </p>
+              </span>
             </template>
             <template #legend="{ items: legendItems, hoveredIndex, updateHoveredIndex }">
               <div class="flex flex-col items-center w-full select-none">
@@ -1238,12 +1238,12 @@
             class="min-w-5xl"
           >
             <template #tooltip="{ data }">
-              <p
+              <span
                 v-if="data"
-                class="text-xs whitespace-nowrap font-semibold"
+                class="font-semibold text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap"
               >
                 {{ formatTaxiPickupTooltip(data) }}
-              </p>
+              </span>
             </template>
           </SdsHeatmapChart>
         </div>
@@ -1393,7 +1393,7 @@
                   >
                     <td class="py-1 flex items-center gap-2">
                       <span
-                        class="inline-block h-3 w-3 rounded-md shrink-0"
+                        class="inline-block h-3.5 w-3.5 rounded-xs shrink-0"
                         :style="{ backgroundColor: item.color }"
                         aria-hidden="true"
                       />
@@ -1405,37 +1405,6 @@
                   </tr>
                 </tbody>
               </table>
-            </template>
-          </SdsPieChart>
-        </div>
-        <h3 class="mt-10">
-          Custom tooltip slot
-        </h3>
-        <p>
-          Override the <code>#tooltip</code> slot to customize what appears on hover. The slot receives
-          the hovered slice's <code>data</code> object.
-        </p>
-        <div class="not-prose mt-6 max-w-2xl">
-          <SdsPieChart
-            :slices="browserSlicesBrandColor"
-            :height="400"
-            :aspect-ratio="16 / 9"
-            show-labels
-            show-legend
-            show-tooltip
-            :tooltip-value-format="formatPercent"
-            label-type="both"
-            title="Browser Market Share - Custom Tooltip"
-          >
-            <template #tooltip="{ data }">
-              <div class="flex items-center gap-2">
-                <span
-                  class="inline-block h-2.5 w-2.5 rounded-full shrink-0"
-                  :style="{ backgroundColor: resolveItemColor(data?.color, isDark) }"
-                />
-                <span class="font-semibold">{{ data?.label }}</span>
-                <span class="text-gray-600">{{ data?.value }}%</span>
-              </div>
             </template>
           </SdsPieChart>
         </div>
@@ -1941,8 +1910,7 @@ import SdsHeatmapChart from '@/components/HeatmapChart/HeatmapChart.vue'
 import SdsLink from '@/components/Link/Link.vue';
 import SdsLineChart from '@/components/LineChart/LineChart.vue'
 import SdsPieChart from '@/components/PieChart/PieChart.vue';
-import { useDarkMode } from '@/composables/useDarkMode';
-import { formatPercent, resolveItemColor, sortByProperty } from '@/helpers/charts'
+import { formatPercent, sortByProperty } from '@/helpers/charts'
 import { heatmapColors, heatmapColorsDark } from '@/helpers/charts/colors'
 
 const datapointModelValue = ref(1451)
@@ -2511,8 +2479,6 @@ const browserSlicesBrandColor: PieSlice[] = [
   { label: 'Brave', value: 1.5, color: { light: '#b07aa1', dark: '#d0afc6' } },
   { label: 'Others', value: 2.1, color: { light: '#ff9da7', dark: '#ffc8cd' } },
 ]
-
-const isDark = useDarkMode()
 
 /**
  * No color — falls back to the defaultColors utility palette.

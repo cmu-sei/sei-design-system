@@ -59,28 +59,13 @@
           :data="tooltip.data.value" 
           :format-value="resolvedFormatter"
         >
-          <p 
-            v-if="tooltip.data.value" 
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-            <span 
-              v-if="tooltip.data.value.seriesName" 
-              class="block"
-            >
-              <span
-                class="inline-block w-2.5 h-2.5 rounded-sm mr-1"
-                :style="{ background: tooltip.data.value.color }"
-              />
-              {{ tooltip.data.value.seriesName }}: {{ resolvedFormatter(tooltip.data.value.value) }}
-            </span>
-            <span 
-              v-else 
-              class="block"
-            >
-              {{ resolvedFormatter(tooltip.data.value.value) }}
-            </span>
-          </p>
+          <ChartTooltipContent
+            v-if="tooltip.data.value"
+            :title="tooltip.data.value.label"
+            :label="tooltip.data.value.seriesName"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="hasDistinctColors ? tooltip.data.value.color : undefined"
+          />
         </slot>
       </template>
 
@@ -108,11 +93,13 @@ import type {
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format, select, easeCubicOut } from '@/lib/d3'
 import { useBarChart, isBarSeries } from '@/composables/useBarChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 
 interface BarChartProps {
   /** BarItem[] for single-series or BarSeries[] for multi-series. Detected automatically via type guard. */
@@ -216,6 +203,7 @@ const { bars, xAxis, yAxis, legendItems } = useBarChart(
   xTickFormatterRef,
   yTickFormatterRef,
 )
+const hasDistinctColors = computed(() => hasMultipleColors(bars.value))
 
 // Entry animation
 const barsGroupRef = ref<SVGGElement | null>(null)
