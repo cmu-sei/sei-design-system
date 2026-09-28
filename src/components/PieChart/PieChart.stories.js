@@ -139,7 +139,7 @@ const CustomLegendTemplate = (args) => ({
             >
               <td class="py-1 flex items-center gap-2">
                 <span
-                  class="inline-block h-3 w-3 rounded-md shrink-0"
+                  class="inline-block h-3.5 w-3.5 rounded-xs shrink-0"
                   :style="{ backgroundColor: item.color }"
                   aria-hidden="true"
                 />

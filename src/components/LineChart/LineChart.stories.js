@@ -13,12 +13,20 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A line chart for trend comparisons across ordered categories. It supports optional point markers, missing-data gaps, and an adjustable monochrome threshold for dense multi-series charts. The legend is opt-in via showLegend.',
+        component: 'A line chart for trend comparisons across ordered categories. It supports optional x- and y-axis labels, point markers, missing-data gaps, and an adjustable monochrome threshold for dense multi-series charts. The legend is opt-in via showLegend.',
       },
     },
   },
   component: SdsLineChart,
   argTypes: {
+    xAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional horizontal label below the x-axis.',
+    },
+    yAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional vertical label beside the y-axis.',
+    },
     legendOrientation: {
       options: ['horizontal', 'vertical'],
       control: { type: 'select' },
@@ -256,6 +264,8 @@ export const Default = Template.bind({})
 Default.args = {
   data: csatTrendSeries,
   title: 'Customer Satisfaction by Channel (Quarterly)',
+  xAxisLabel: 'Quarter',
+  yAxisLabel: 'Satisfaction',
   showTooltip: true,
   showPoints: true,
   showLegend: true,
@@ -264,6 +274,40 @@ Default.args = {
   legendOrientation: 'horizontal',
   legendPosition: 'bottom-right',
 }
+Default.parameters = {
+  docs: {
+    description: {
+      story: 'Axis titles are optional. This example labels both axes; omit either prop to hide that label.',
+    },
+  },
+}
+
+export const WithoutAxisLabels = Template.bind({})
+WithoutAxisLabels.args = {
+  ...Default.args,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
+}
+WithoutAxisLabels.parameters = {
+  docs: {
+    description: {
+      story: 'Leave xAxisLabel and yAxisLabel unset to render the chart without axis titles.',
+    },
+  },
+}
+
+export const XAxisLabelOnly = Template.bind({})
+XAxisLabelOnly.args = {
+  ...Default.args,
+  yAxisLabel: undefined,
+}
+XAxisLabelOnly.parameters = {
+  docs: {
+    description: {
+      story: 'Axis labels can be configured independently; this example displays only the x-axis label.',
+    },
+  },
+}
 
 export const CategoryScale = Template.bind({})
 CategoryScale.args = {
@@ -271,6 +315,8 @@ CategoryScale.args = {
   data: onboardingProgressCategorySeries,
   xScaleType: 'category',
   title: 'Cumulative Onboarding Completion by Cohort (Category x-axis)',
+  xAxisLabel: 'Onboarding Stage',
+  yAxisLabel: 'Completion',
   yTickFormatter: formatPercent,
   tooltipValueFormat: formatPercent,
 }
@@ -324,6 +370,8 @@ TimeScale.args = {
     },
   ],
   title: 'Release Burndown Trend by Sprint Date (Local Time)',
+  xAxisLabel: 'Sprint Date',
+  yAxisLabel: 'Scope (points)',
   xScaleType: 'time',
   showTooltip: true,
   showPoints: true,
@@ -357,6 +405,8 @@ UtcScale.args = {
     },
   ],
   title: 'Global API Traffic by UTC Hour',
+  xAxisLabel: 'UTC Hour',
+  yAxisLabel: 'Requests per minute',
   xScaleType: 'utc',
   xTickValues: utcTrafficTimeline,
   xTickFormatter: formatUtcHourLabel,
@@ -375,6 +425,8 @@ LinearScale.args = {
   ...Default.args,
   data: linearScaleSeries,
   title: 'Throughput vs CPU Utilization (Linear x-axis)',
+  xAxisLabel: 'CPU Utilization',
+  yAxisLabel: 'Throughput (req/s)',
   xScaleType: 'linear',
   yTickFormatter: ',.0f',
   tooltipValueFormat: ',.0f',

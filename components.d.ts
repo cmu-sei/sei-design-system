@@ -32,6 +32,7 @@ declare module 'vue' {
     ChartAxis: typeof import('./src/components/ChartAxis/ChartAxis.vue')['default']
     ChartLegend: typeof import('./src/components/ChartLegend/ChartLegend.vue')['default']
     ChartTooltip: typeof import('./src/components/ChartTooltip/ChartTooltip.vue')['default']
+    ChartTooltipContent: typeof import('./src/components/ChartTooltip/ChartTooltipContent.vue')['default']
     CheckboxGroup: typeof import('./src/components/CheckboxGroup/CheckboxGroup.vue')['default']
     ClientOnly: typeof import('./src/components/ClientOnly/ClientOnly.vue')['default']
     ComboBox: typeof import('./src/components/ComboBox/ComboBox.vue')['default']
