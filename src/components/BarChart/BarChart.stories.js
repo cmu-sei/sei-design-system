@@ -44,6 +44,10 @@ export default {
       control: { type: 'boolean' },
       description: 'Display the legend.',
     },
+    showGrid: {
+      control: { type: 'boolean' },
+      description: 'Show gridlines behind the bars, aligned to value-axis ticks.',
+    },
     animate: {
       control: { type: 'boolean' },
       description: 'Animate bars on mount and data changes.',

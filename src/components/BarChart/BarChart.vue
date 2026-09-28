@@ -29,6 +29,20 @@
           ref="barsGroupRef"
           :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
+          <template v-if="props.showGrid">
+            <line
+              v-for="(position, gridIndex) in computeGridLines(innerWidth, innerHeight, containerWidth)"
+              :key="`bar-grid-${gridIndex}`"
+              :data-id="props.orientation === 'horizontal' ? 'sds-grid-line-x' : 'sds-grid-line-y'"
+              :x1="props.orientation === 'horizontal' ? position : 0"
+              :y1="props.orientation === 'horizontal' ? 0 : position"
+              :x2="props.orientation === 'horizontal' ? position : innerWidth"
+              :y2="props.orientation === 'horizontal' ? innerHeight : position"
+              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
+              role="none"
+              stroke-width="1"
+            />
+          </template>
           <!-- Bars (rendered first so axes paint on top of bar edges) -->
           <rect
             v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
@@ -118,6 +132,8 @@ interface BarChartProps {
   /** Optional vertical label displayed beside the y-axis. */
   yAxisLabel?: string
   showTooltip?: boolean
+  /** Toggles gridlines behind the bars, aligned to value-axis ticks. @default true */
+  showGrid?: boolean
   /** When provided, height is derived as containerWidth / aspectRatio. */
   aspectRatio?: number
   /** Format for x-axis tick labels on value axes. Used when orientation is horizontal. @default '~s' */
@@ -148,6 +164,7 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   xAxisLabel: undefined,
   yAxisLabel: undefined,
   showTooltip: true,
+  showGrid: true,
   aspectRatio: undefined,
   xTickFormatter: '~s',
   yTickFormatter: '~s',
@@ -202,7 +219,7 @@ const resolvedFormatter = computed(() => {
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
-const { bars, xAxis, yAxis, legendItems } = useBarChart(
+const { bars, xAxis, yAxis, legendItems, gridLines } = useBarChart(
   dataRef,
   orientationRef,
   modeRef,
@@ -262,6 +279,13 @@ function computeBars(innerWidth: number, innerHeight: number, containerWidth: nu
   innerHeightRef.value = innerHeight
   containerWidthRef.value = containerWidth
   return bars.value
+}
+
+function computeGridLines(innerWidth: number, innerHeight: number, containerWidth: number) {
+  innerWidthRef.value = innerWidth
+  innerHeightRef.value = innerHeight
+  containerWidthRef.value = containerWidth
+  return gridLines.value
 }
 
 function getBarSeriesIndex(bar: BarRect): number | null {
