@@ -13,7 +13,7 @@ const INNER_HEIGHT = 300
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['showLegend', 'legend', 'title', 'hoveredIndex', 'tooltipVisible', 'tooltipX', 'tooltipY'],
+  props: ['showLegend', 'legend', 'title', 'xAxisLabel', 'yAxisLabel', 'hoveredIndex', 'tooltipVisible', 'tooltipX', 'tooltipY'],
   emits: ['update:hoveredIndex'],
   template: `
     <div data-id="sds-base-chart">
@@ -87,6 +87,15 @@ describe('LineChart.vue', () => {
 
   // ─── Props and Defaults ───────────────────────────────────────────────────
   describe('Props and Defaults', () => {
+    it('forwards optional axis labels to BaseChart', () => {
+      const wrapper = createWrapper({ xAxisLabel: 'Year', yAxisLabel: 'Percentage' })
+
+      expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
+        xAxisLabel: 'Year',
+        yAxisLabel: 'Percentage',
+      })
+    })
+
     it('renders a title in the SVG when title prop is provided', () => {
       expect(createWrapper({ title: 'My Chart' }).find('title').text()).toBe('My Chart')
     })
@@ -130,9 +139,20 @@ describe('LineChart.vue', () => {
       expect(wrapper.findAll('[data-id="sds-grid-line-y"]').length).toBeGreaterThan(0)
     })
 
-    it('renders vertical (x) grid lines when showGrid is true (default)', () => {
+    it('aligns every y-axis tick with a horizontal grid line', async () => {
       const wrapper = createWrapper({ data: singleSeries })
-      expect(wrapper.findAll('[data-id="sds-grid-line-x"]').length).toBeGreaterThan(0)
+      await nextTick()
+      const axis = wrapper.findComponent(BaseChartStub).vm.$attrs['y-axis']
+      const positions = axis.tickValues().map((value: number) => axis.scale()(value))
+      const gridPositions = wrapper.findAll('[data-id="sds-grid-line-y"]')
+        .map((line) => Number(line.attributes('y1')))
+
+      expect(gridPositions).toEqual(positions)
+    })
+
+    it('does not render vertical (x) grid lines when showGrid is true', () => {
+      const wrapper = createWrapper({ data: singleSeries })
+      expect(wrapper.findAll('[data-id="sds-grid-line-x"]')).toHaveLength(0)
     })
 
     it('does not render horizontal grid lines when showGrid is false', () => {
@@ -145,11 +165,6 @@ describe('LineChart.vue', () => {
       expect(wrapper.findAll('[data-id="sds-grid-line-x"]').length).toBe(0)
     })
 
-    it('renders one vertical grid line per x-axis category', () => {
-      // singleSeries has 3 categories: Jan, Feb, Mar
-      const wrapper = createWrapper({ data: singleSeries })
-      expect(wrapper.findAll('[data-id="sds-grid-line-x"]')).toHaveLength(3)
-    })
   })
 
   // ─── Gap Segments ─────────────────────────────────────────────────────────

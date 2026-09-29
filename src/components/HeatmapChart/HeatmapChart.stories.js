@@ -6,11 +6,21 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A heatmap chart visualizes values across two discrete dimensions using color intensity. Use it to compare distribution patterns by category and time.',
+        component: 'A heatmap chart visualizes values across two discrete dimensions using color intensity. Optional x- and y-axis labels help clarify the dimensions when comparing distribution patterns by category and time.',
       },
     },
   },
   component: SdsHeatmapChart,
+  argTypes: {
+    xAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional horizontal label below the x-axis.',
+    },
+    yAxisLabel: {
+      control: { type: 'text' },
+      description: 'Optional vertical label beside the y-axis.',
+    },
+  },
 };
 
 const taxiWeekdayShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -154,6 +164,8 @@ Default.args = {
   data: taxiPickupsHeatmap,
   colors: taxiPickupsBins,
   title: 'NYC Ride-Share Pickups by Hour and Day',
+  xAxisLabel: 'Hour',
+  yAxisLabel: 'Day',
   xTickValues: hourTickValues,
   xTickFormatter: hourTickFormatter,
   yTickValues: taxiWeekdayShort,
@@ -161,6 +173,40 @@ Default.args = {
   squareCells: false,
   showTooltip: true,
   showLegend: true,
+};
+Default.parameters = {
+  docs: {
+    description: {
+      story: 'Axis titles are optional. This example labels both dimensions; omit either prop to hide that label.',
+    },
+  },
+};
+
+export const WithoutAxisLabels = Template.bind({});
+WithoutAxisLabels.args = {
+  ...Default.args,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
+};
+WithoutAxisLabels.parameters = {
+  docs: {
+    description: {
+      story: 'Leave xAxisLabel and yAxisLabel unset to render the heatmap without axis titles.',
+    },
+  },
+};
+
+export const XAxisLabelOnly = Template.bind({});
+XAxisLabelOnly.args = {
+  ...Default.args,
+  yAxisLabel: undefined,
+};
+XAxisLabelOnly.parameters = {
+  docs: {
+    description: {
+      story: 'Axis labels can be configured independently; this example displays only the x-axis label.',
+    },
+  },
 };
 
 export const CustomColors = Template.bind({});

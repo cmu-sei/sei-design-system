@@ -48,14 +48,29 @@
             }
           ]"
         >
-          <div class="input-group-addon">
-            <span class="sr-only">Combo box</span>
+          <button
+            v-if="!pending"
+            data-id="sds-combo-box-search-button"
+            type="button"
+            tabindex="-1"
+            class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
+            :aria-controls="dropdownId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :disabled="disabled || readonly || undefined"
+            @click="showDropdownResults"
+          >
+            <span class="sr-only">Show suggestions</span>
             <IconFa7SolidMagnifyingGlass
-              v-if="!pending"
+              aria-hidden="true"
               :class="searchIconClass"
             />
+          </button>
+          <div
+            v-else
+            class="input-group-addon"
+          >
+            <span class="sr-only">Loading suggestions</span>
             <SdsLoadingSpinner
-              v-else
               size="sm"
               class="inline-flex shrink-0 items-center justify-center"
               :class="searchIconClass"
@@ -142,16 +157,23 @@
               </p>
             </SdsTooltip>
           </div>
-          <div
+          <button
             v-else-if="isSelectType && hasDropdownSuggestion"
             data-id="sds-combo-box-select-caret"
-            aria-hidden="true"
-            class="input-group-addon pointer-events-none"
+            type="button"
+            tabindex="-1"
+            class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
+            :aria-controls="dropdownId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :disabled="disabled || readonly || undefined"
+            @click="showDropdownResults"
           >
+            <span class="sr-only">Show suggestions</span>
             <span
+              aria-hidden="true"
               class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"
             />
-          </div>
+          </button>
           <!-- @slot Default content. Good for adding content to the end of the input group -->
           <slot />
         </div>
@@ -1135,9 +1157,15 @@ const inputClick = () => {
       closeDropdown()
       return
     }
-    shouldAutoHighlightOnOpen.value = !showDropdown.value
-    showDropdown.value = true
+    showDropdownResults()
   }
+}
+
+const showDropdownResults = () => {
+  if (props.readonly || props.disabled || props.pending) return
+  inputField.value?.focus()
+  shouldAutoHighlightOnOpen.value = true
+  showDropdown.value = true
 }
 
 const toggleSelectAll = () => {

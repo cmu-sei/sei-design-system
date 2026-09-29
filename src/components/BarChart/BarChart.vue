@@ -15,6 +15,8 @@
       }"
       :show-legend="props.showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -27,6 +29,20 @@
           ref="barsGroupRef"
           :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
+          <template v-if="props.showGrid">
+            <line
+              v-for="(position, gridIndex) in computeGridLines(innerWidth, innerHeight, containerWidth)"
+              :key="`bar-grid-${gridIndex}`"
+              :data-id="props.orientation === 'horizontal' ? 'sds-grid-line-x' : 'sds-grid-line-y'"
+              :x1="props.orientation === 'horizontal' ? position : 0"
+              :y1="props.orientation === 'horizontal' ? 0 : position"
+              :x2="props.orientation === 'horizontal' ? position : innerWidth"
+              :y2="props.orientation === 'horizontal' ? innerHeight : position"
+              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
+              role="none"
+              stroke-width="1"
+            />
+          </template>
           <!-- Bars (rendered first so axes paint on top of bar edges) -->
           <rect
             v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
@@ -59,28 +75,13 @@
           :data="tooltip.data.value" 
           :format-value="resolvedFormatter"
         >
-          <p 
-            v-if="tooltip.data.value" 
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-            <span 
-              v-if="tooltip.data.value.seriesName" 
-              class="block"
-            >
-              <span
-                class="inline-block w-2.5 h-2.5 rounded-sm mr-1"
-                :style="{ background: tooltip.data.value.color }"
-              />
-              {{ tooltip.data.value.seriesName }}: {{ resolvedFormatter(tooltip.data.value.value) }}
-            </span>
-            <span 
-              v-else 
-              class="block"
-            >
-              {{ resolvedFormatter(tooltip.data.value.value) }}
-            </span>
-          </p>
+          <ChartTooltipContent
+            v-if="tooltip.data.value"
+            :title="tooltip.data.value.label"
+            :label="tooltip.data.value.seriesName"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="hasDistinctColors ? tooltip.data.value.color : undefined"
+          />
         </slot>
       </template>
 
@@ -108,11 +109,13 @@ import type {
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format, select, easeCubicOut } from '@/lib/d3'
 import { useBarChart, isBarSeries } from '@/composables/useBarChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 
 interface BarChartProps {
   /** BarItem[] for single-series or BarSeries[] for multi-series. Detected automatically via type guard. */
@@ -124,7 +127,13 @@ interface BarChartProps {
   height?: number
   margin?: ChartMargin
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   showTooltip?: boolean
+  /** Toggles gridlines behind the bars, aligned to value-axis ticks. @default true */
+  showGrid?: boolean
   /** When provided, height is derived as containerWidth / aspectRatio. */
   aspectRatio?: number
   /** Format for x-axis tick labels on value axes. Used when orientation is horizontal. @default '~s' */
@@ -152,7 +161,10 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   height: 360,
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
+  showGrid: true,
   aspectRatio: undefined,
   xTickFormatter: '~s',
   yTickFormatter: '~s',
@@ -207,7 +219,7 @@ const resolvedFormatter = computed(() => {
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
-const { bars, xAxis, yAxis, legendItems } = useBarChart(
+const { bars, xAxis, yAxis, legendItems, gridLines } = useBarChart(
   dataRef,
   orientationRef,
   modeRef,
@@ -216,6 +228,7 @@ const { bars, xAxis, yAxis, legendItems } = useBarChart(
   xTickFormatterRef,
   yTickFormatterRef,
 )
+const hasDistinctColors = computed(() => hasMultipleColors(bars.value))
 
 // Entry animation
 const barsGroupRef = ref<SVGGElement | null>(null)
@@ -266,6 +279,13 @@ function computeBars(innerWidth: number, innerHeight: number, containerWidth: nu
   innerHeightRef.value = innerHeight
   containerWidthRef.value = containerWidth
   return bars.value
+}
+
+function computeGridLines(innerWidth: number, innerHeight: number, containerWidth: number) {
+  innerWidthRef.value = innerWidth
+  innerHeightRef.value = innerHeight
+  containerWidthRef.value = containerWidth
+  return gridLines.value
 }
 
 function getBarSeriesIndex(bar: BarRect): number | null {

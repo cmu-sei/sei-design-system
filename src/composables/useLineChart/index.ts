@@ -202,6 +202,7 @@ function resolveSeriesId(series: LineSeries): string {
  * @param xScaleType - X-axis scale mode.
  * @param xTickValuesOverride - Optional explicit x-axis tick values.
  * @param xTickFormatterOverride - Optional explicit x-axis tick formatter.
+ * @param yTickCountOverride - Optional target tick count shared by the y-axis and horizontal grid.
  * @returns Reactive chart primitives used by the LineChart component.
  */
 export function useLineChart(
@@ -214,6 +215,7 @@ export function useLineChart(
   xScaleType: Ref<LineXScaleType> | ComputedRef<LineXScaleType> = computed(() => 'category'),
   xTickValuesOverride?: Ref<AxisDomain[] | undefined> | ComputedRef<AxisDomain[] | undefined>,
   xTickFormatterOverride?: Ref<TickFormatter | undefined> | ComputedRef<TickFormatter | undefined>,
+  yTickCountOverride?: Ref<number> | ComputedRef<number>,
 ) {
   const _bodyDark = useDarkMode()
   const config = useChartConfig() ?? {}
@@ -430,14 +432,17 @@ export function useLineChart(
     computed(() => xTickValues.value),
   )
 
-  /** Responsive target tick count for the y-axis based on chart height. */
-  const yAxisTicks = computed(() => Math.max(2, Math.floor(innerHeight.value / 42)))
+  /** Y tick values shared by the axis and horizontal grid. */
+  const yAxisTicks = computed(() => yTickCountOverride?.value ?? Math.max(2, Math.floor(innerHeight.value / 42)))
+  const yTickValues = computed(() => yScale.value.ticks(yAxisTicks.value))
   /** Configured D3 left y-axis generator with numeric tick formatting. */
   const yAxis = useChartAxis(
     computed(() => yScale.value),
     computed(() => 'left' as const),
     yTickFormatter,
     computed(() => yAxisTicks.value),
+    undefined,
+    computed(() => yTickValues.value),
   )
 
   /** D3 line generator configured for the active x-scale type and current y scale. */
@@ -522,6 +527,7 @@ export function useLineChart(
     yAxis,
     xScale,
     yScale,
+    yTickValues,
     legendItems,
     xTickValues,
     xDomainLabels,

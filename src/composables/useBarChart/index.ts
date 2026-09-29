@@ -133,13 +133,14 @@ interface NormalizedGroup {
  * @param {Ref<string | Function> | ComputedRef<string | Function>} [xTickFormatter='~s'] - D3 format string or formatter function for x-axis numeric ticks.
  * @param {Ref<string | Function> | ComputedRef<string | Function>} [yTickFormatter='~s'] - D3 format string or formatter function for y-axis numeric ticks.
  *
- * @returns {{ data: BarData, categoryScale: ScaleBand<string>, valueScale: ScaleLinear<number, number>, xAxis: any, yAxis: any, bars: ComputedRef<BarRect[]>, legendItems: ComputedRef<ChartLegendItem[]> }} Reactive computed values:
+ * @returns {{ data: BarData, categoryScale: ScaleBand<string>, valueScale: ScaleLinear<number, number>, xAxis: any, yAxis: any, bars: ComputedRef<BarRect[]>, legendItems: ComputedRef<ChartLegendItem[]>, gridLines: ComputedRef<number[]> }} Reactive computed values:
  *   - categoryScale: ScaleBand for category axis
  *   - valueScale: ScaleLinear for value axis
  *   - xAxis: Computed D3 axis generator for x-axis
  *   - yAxis: Computed D3 axis generator for y-axis
  *   - bars: ComputedRef<BarRect[]> positioned and colored bars
  *   - legendItems: ComputedRef<ChartLegendItem[]> legend items for all series/items
+ *   - gridLines: ComputedRef<number[]> pixel positions of value-axis ticks (y when vertical, x when horizontal)
  *
  * @example
  * const { xAxis, yAxis, bars, legendItems } = useBarChart(
@@ -290,6 +291,12 @@ export function useBarChart(
   )
   const yAxis = useChartAxis(yAxisScale, yAxisDirection, yAxisFormat, yAxisTicks)
 
+  // Pixel positions of value-axis ticks, used for gridlines perpendicular to the value axis
+  const gridLines = computed<number[]>(() => {
+    const count = isVertical.value ? yAxisTicks.value : xAxisTicks.value
+    return valueScale.value.ticks(count).map((tick) => valueScale.value(tick))
+  })
+
   // Bar rectangles
   const bars = computed<BarRect[]>(() =>
     isStacked.value ? computeStackedBars() : computeGroupedBars(),
@@ -413,5 +420,5 @@ export function useBarChart(
     }))
   })
 
-  return { bars, xAxis, yAxis, legendItems, categoryScale, valueScale }
+  return { bars, xAxis, yAxis, legendItems, categoryScale, valueScale, gridLines }
 }

@@ -16,6 +16,8 @@
       }"
       :show-legend="showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -36,18 +38,6 @@
               :y1="y"
               :x2="innerWidth"
               :y2="y"
-              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
-              role="none"
-              stroke-width="1"
-            />
-            <line
-              v-for="(x, xIndex) in computeVerticalGridLines(innerWidth, innerHeight)"
-              :key="`line-grid-x-${xIndex}`"
-              data-id="sds-grid-line-x"
-              :x1="x"
-              y1="0"
-              :x2="x"
-              :y2="innerHeight"
               class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
               role="none"
               stroke-width="1"
@@ -127,14 +117,13 @@
           :data="tooltip.data.value"
           :format-value="resolvedFormatter"
         >
-          <p
+          <ChartTooltipContent
             v-if="tooltip.data.value"
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.seriesLabel }}</span>
-            <span class="block">{{ tooltip.data.value.xLabel }}</span>
-            <span class="block">{{ resolvedFormatter(tooltip.data.value.value) }}</span>
-          </p>
+            :title="tooltip.data.value.seriesLabel"
+            :label="tooltip.data.value.xLabel"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="tooltipColor"
+          />
         </slot>
       </template>
 
@@ -157,6 +146,7 @@ import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import type { LineData, LinePath, LineTooltipData, LineGapSegment, LineXScaleType } from '@/composables/useLineChart'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
 import { lineChartColorClasses, lineChartColorClassesDark, lineChartColorValues } from '@/helpers/charts/colors'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format, type AxisDomain, type ScaleLinear, type ScaleTime } from '@/lib/d3'
 import { useChartConfig } from '@/composables/useChartConfig'
 import { useDarkMode } from '@/composables/useDarkMode'
@@ -164,6 +154,7 @@ import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useLineChart } from '@/composables/useLineChart'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 
 export type { LineDatum, LineSeries, LineData, LineXScaleType } from '@/composables/useLineChart'
 
@@ -176,6 +167,10 @@ interface LineChartProps {
   margin?: ChartMargin
   /** Optional accessible chart title rendered within the SVG. */
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   /** Enables point/line tooltip rendering and hover behavior. @default true */
   showTooltip?: boolean
   /** Toggles gridline rendering behind line paths. @default true */
@@ -230,6 +225,8 @@ const props = withDefaults(defineProps<LineChartProps>(), {
   height: 360,
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
   showGrid: true,
   aspectRatio: undefined,
@@ -255,18 +252,18 @@ const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
 // Keep horizontal grid density readable across chart heights.
-const MIN_HORIZONTAL_GRID_TICKS = 2
 const HORIZONTAL_GRID_LINE_COUNT = 6
 
 const { hoveredIndex, setHovered } = useHoveredIndex()
 const hoveredPointKey = ref<string | null>(null)
 const tooltip = useTooltip<LineTooltipData>()
+const tooltipSeriesIndex = ref<number | null>(null)
 const _bodyDark = useDarkMode()
 const config = useChartConfig() ?? {}
 /** Effective dark-mode state resolved from chart config with document fallback. */
 const isDark = computed(() => config.isDarkMode?.value ?? _bodyDark.value)
 
-const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useLineChart(
+const { lines, gapSegments, xAxis, yAxis, xScale, yScale, yTickValues, xDomainLabels } = useLineChart(
   dataRef,
   innerWidthRef,
   innerHeightRef,
@@ -274,6 +271,7 @@ const { lines, gapSegments, xAxis, yAxis, xScale, yScale, xDomainLabels } = useL
   xScaleTypeRef,
   computed(() => props.xTickValues),
   computed(() => props.xTickFormatter),
+  computed(() => HORIZONTAL_GRID_LINE_COUNT),
 )
 
 /** Resolved chart margins, with automatic bottom padding for multi-line x labels. */
@@ -317,6 +315,11 @@ const resolvedLegendItems = computed(() =>
       color: lineChartColorValues[className] ?? lineSeries.color,
     }
   }),
+)
+const tooltipColor = computed(() =>
+  tooltipSeriesIndex.value === null || !hasMultipleColors(resolvedLegendItems.value)
+    ? undefined
+    : resolvedLegendItems.value[tooltipSeriesIndex.value]?.color,
 )
 
 /** Lookup map from series id to index for fast color-class resolution. */
@@ -382,20 +385,6 @@ function computeGapSegments(innerWidth: number, innerHeight: number): LineGapSeg
 }
 
 /**
- * Computes x positions for vertical grid lines.
- *
- * @param innerWidth - Current chart inner width in pixels.
- * @param innerHeight - Current chart inner height in pixels.
- * @returns X coordinates for each vertical grid line.
- */
-function computeVerticalGridLines(innerWidth: number, innerHeight: number): number[] {
-  syncDimensions(innerWidth, innerHeight)
-  const firstSeries = lines.value[0]
-  if (!firstSeries) return []
-  return firstSeries.points.map((point) => getXCoordinate(point.xPosition, point.xIndex))
-}
-
-/**
  * Computes y positions for horizontal grid lines.
  *
  * @param innerWidth - Current chart inner width in pixels.
@@ -404,8 +393,7 @@ function computeVerticalGridLines(innerWidth: number, innerHeight: number): numb
  */
 function computeHorizontalGridLines(innerWidth: number, innerHeight: number): number[] {
   syncDimensions(innerWidth, innerHeight)
-  const tickCount = Math.max(MIN_HORIZONTAL_GRID_TICKS, HORIZONTAL_GRID_LINE_COUNT)
-  return yScale.value.ticks(tickCount).map((tickValue) => yScale.value(tickValue))
+  return yTickValues.value.map((tickValue) => yScale.value(tickValue))
 }
 
 /**
@@ -494,6 +482,7 @@ function getTooltipAnchor(event: MouseEvent): { x: number; y: number } {
  */
 function onPointEnter(event: MouseEvent, point: LinePointMarker) {
   hoveredPointKey.value = point.key
+  tooltipSeriesIndex.value = point.seriesIndex
   setHovered(point.seriesIndex)
   if (!props.showTooltip) return
   const anchor = getTooltipAnchor(event)

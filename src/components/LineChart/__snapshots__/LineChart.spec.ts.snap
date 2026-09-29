@@ -153,9 +153,6 @@ exports[`LineChart.vue > Basic Rendering > matches snapshot with multi-series da
         <line data-id="sds-grid-line-y" x1="0" y1="180" x2="400" y2="180" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <line data-id="sds-grid-line-y" x1="0" y1="105" x2="400" y2="105" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <line data-id="sds-grid-line-y" x1="0" y1="29.999999999999993" x2="400" y2="29.999999999999993" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="0" y1="0" x2="0" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="200" y1="0" x2="200" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="400" y1="0" x2="400" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <path d="M0,180L200,30L400,105" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-blue-400" stroke-width="2" role="img" aria-label="Series Series A"></path>
         <path d="M0,255L200,105L400,210" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-teal-400" stroke-width="2" role="img" aria-label="Series Series B"></path>
         <path d="M0,180L200,30L400,105" fill="none" role="none" stroke="transparent" stroke-width="10" class="pointer-events-stroke"></path>
@@ -486,9 +483,6 @@ exports[`LineChart.vue > Basic Rendering > matches snapshot with single series d
         <line data-id="sds-grid-line-y" x1="0" y1="124.99999999999999" x2="400" y2="124.99999999999999" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <line data-id="sds-grid-line-y" x1="0" y1="75" x2="400" y2="75" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <line data-id="sds-grid-line-y" x1="0" y1="25.00000000000001" x2="400" y2="25.00000000000001" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="0" y1="0" x2="0" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="200" y1="0" x2="200" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
-        <line data-id="sds-grid-line-x" x1="400" y1="0" x2="400" y2="300" class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none" role="none" stroke-width="1"></line>
         <path d="M0,275L200,25L400,150" fill="none" stroke-linecap="round" stroke-linejoin="round" class="stroke-current transition-[opacity,stroke-width,color] duration-150 pointer-events-none text-blue-400" stroke-width="2" role="img" aria-label="Series Series"></path>
         <path d="M0,275L200,25L400,150" fill="none" role="none" stroke="transparent" stroke-width="10" class="pointer-events-stroke"></path>
         <!--v-if-->
