@@ -1,14 +1,22 @@
 @utility table-prose {
   @apply w-full table-auto text-left border border-gray-100 rounded-lg overflow-clip border-separate border-spacing-0;
-  @apply sds-theme-plaid:rounded-none dark:border-gray-800;
+  @apply sds-theme-plaid:rounded-none dark:border-gray-900;
+  @apply [&:has(>caption)]:border-0 [&:has(>caption)]:outline [&:has(>caption)]:-outline-offset-1 [&:has(>caption)]:outline-gray-100;
+  @apply dark:[&:has(>caption)]:outline-gray-900;
 
   @apply [&_thead]:border-y [&_thead]:border-gray-100 [&_thead]:rounded-lg [&_thead]:sds-theme-plaid:rounded-none;
-  @apply dark:[&_thead]:border-gray-800;
+  @apply [&:has(>caption)_thead]:border-t-0;
+  @apply dark:[&_thead]:border-gray-900;
+
+  @apply [&_caption]:table-caption [&_caption]:text-left [&_caption]:w-full [&_caption]:caption-top;
+  @apply [&_caption]:text-lg [&_caption]:font-semibold [&_caption]:p-4 [&_caption]:bg-white dark:[&_caption]:bg-gray-950;
+  @apply [&_caption]:border-b [&_caption]:border-gray-100 dark:[&_caption]:border-gray-900;
+  @apply [&_caption]:sds-theme-plaid:rounded-none;
 
   @apply [&_thead_th]:text-gray-600 [&_thead_th]:bg-gray-25/50 [&_thead_th]:font-semibold [&_thead_th]:text-sm;
   @apply [&_thead_th]:align-middle [&_thead_th]:p-2 [&_thead_th]:select-none [&_thead_th]:border-b [&_thead_th]:border-gray-100;
   @apply [&_thead_th:first-child]:pl-4 [&_thead_th:last-child]:pr-4;
-  @apply dark:[&_thead_th]:text-gray-400 dark:[&_thead_th]:bg-gray-900/85 dark:[&_thead_th]:border-b dark:[&_thead_th]:border-gray-800;
+  @apply dark:[&_thead_th]:text-gray-400 dark:[&_thead_th]:bg-gray-900/85 dark:[&_thead_th]:border-b dark:[&_thead_th]:border-gray-900;
 
   @apply [&_tbody_tr]:bg-white [&_tbody_tr]:px-2 dark:[&_tbody_tr]:bg-gray-950;
   @apply [[data-row-highlight]&_tbody_tr:hover]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:hover]:bg-gray-900/85;
@@ -19,13 +27,13 @@
   @apply [&_tbody_td:first-child]:pl-4 [&_tbody_td:last-child]:pr-4;
   @apply [&_tbody_th:first-child]:pl-4 [&_tbody_th:last-child]:pr-4;
   @apply [&_tbody_tr:last-child_td]:border-b-0 [&_tbody_tr:last-child_th]:border-b-0;
-  @apply dark:[&_tbody_td]:border-gray-800 dark:[&_tbody_th]:border-gray-800;
+  @apply dark:[&_tbody_td]:border-gray-900 dark:[&_tbody_th]:border-gray-900;
 
   @apply [&_tfoot]:bg-gray-600/2 dark:[&_tfoot]:bg-gray-400/2;
   @apply [&_tfoot_tr]:px-2;
   @apply [&_tfoot_td]:border-t [&_tfoot_td]:border-gray-100 [&_tfoot_td]:px-2 [&_tfoot_td]:py-4;
   @apply [&_tfoot_td:first-child]:pl-4 [&_tfoot_td:last-child]:pr-4;
-  @apply dark:[&_tfoot_td]:border-gray-800;
+  @apply dark:[&_tfoot_td]:border-gray-900;
 
   @apply sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tl-none sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&]:rounded-tr-none;
   @apply sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&>thead]:rounded-tl-none sds-theme-forge:[[data-id=sds-data-table][data-has-header]_&>thead]:rounded-tr-none;
@@ -37,13 +45,30 @@
   @apply [[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)_td.sticky]:bg-gray-25 dark:[[data-row-highlight]&_tbody_tr:has(+tr[data-drawer]:hover)_td.sticky]:bg-gray-900/85;
   @apply [[data-scrollable]_&_th.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-100)];
   @apply [[data-scrollable]_&_td.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-100)];
-  @apply dark:[[data-scrollable]_&_th.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-800)] dark:[[data-scrollable]_&_td.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-800)];
+  @apply dark:[[data-scrollable]_&_th.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-900)] dark:[[data-scrollable]_&_td.sticky-end]:shadow-[inset_-1px_0_0_var(--color-gray-900)];
 }
 
 /* th/td-based variants */
 
 @custom-variant table-prose-th (:is(& th, & thead th));
 @custom-variant table-prose-td (:is(& td, & tbody td));
+
+/* visually hidden header */
+
+@utility table-prose-hide-header {
+  @apply [&_thead]:sr-only;
+}
+
+/* standalone */
+
+@utility table-prose-standalone {
+  @apply shadow-sm;
+  @apply [&:has(>caption)]:shadow-none [&:has(>caption)]:drop-shadow-sm;
+  @apply [&:has(>caption)>caption]:overflow-clip [&:has(>caption)>caption]:rounded-t-lg [&:has(>caption)>caption]:shadow-none [&:has(>caption)>caption]:[clip-path:none];
+  @apply [&:has(>caption)>caption]:border-x [&:has(>caption)>caption]:border-t;
+  @apply sds-theme-plaid:rounded-none;
+  @apply [&:has(>caption)>caption]:sds-theme-plaid:rounded-none;
+}
 
 /* sm */
 

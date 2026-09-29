@@ -332,6 +332,9 @@
   & :where(th:not(.not-prose, .not-prose *), td:not(.not-prose, .not-prose *)) {
     font-size: var(--text-sm);
     padding: --spacing(3);
+  }
+
+  & :where(th:not([align]):not(.not-prose, .not-prose *), td:not([align]):not(.not-prose, .not-prose *)) {
     text-align: left;
   }
 

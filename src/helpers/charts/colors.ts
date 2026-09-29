@@ -60,6 +60,59 @@ export const defaultSingleColor = monochromeColorScheme[8] // blue-600
 export const defaultSingleColorDark = monochromeColorScheme[5] // blue-300
 
 /**
+ * Tailwind text-color classes used for line-chart series when six or fewer lines are present.
+ * These are intentionally chart-specific and not used by bar/pie/heatmap components.
+ */
+export const lineChartColorClasses = Object.freeze([
+  'text-blue-400',
+  'text-teal-400',
+  'text-red-400',
+  'text-green-400',
+  'text-orange-200',
+  'text-indigo-400',
+] as const)
+
+/**
+ * Dark-mode Tailwind text-color classes for line-chart series.
+ * Uses a palette two shades darker than the light-mode defaults.
+ */
+export const lineChartColorClassesDark = Object.freeze([
+  'text-blue-600',
+  'text-teal-600',
+  'text-red-600',
+  'text-green-600',
+  'text-orange-400',
+  'text-indigo-600',
+] as const)
+
+/**
+ * CSS color values mapped from line-chart Tailwind text-color classes.
+ * Used to keep legend swatches aligned with rendered line/point colors.
+ */
+export const lineChartColorValues: Record<
+  (typeof lineChartColorClasses)[number]
+  | (typeof lineChartColorClassesDark)[number]
+  | 'text-gray-200'
+  | 'text-gray-400',
+  string
+> = {
+  'text-blue-400': 'var(--color-blue-400)',
+  'text-blue-600': 'var(--color-blue-600)',
+  'text-teal-400': 'var(--color-teal-400)',
+  'text-teal-600': 'var(--color-teal-600)',
+  'text-red-400': 'var(--color-red-400)',
+  'text-red-600': 'var(--color-red-600)',
+  'text-green-400': 'var(--color-green-400)',
+  'text-green-600': 'var(--color-green-600)',
+  'text-orange-200': 'var(--color-orange-200)',
+  'text-orange-400': 'var(--color-orange-400)',
+  'text-indigo-400': 'var(--color-indigo-400)',
+  'text-indigo-600': 'var(--color-indigo-600)',
+  'text-gray-200': 'var(--color-gray-200)',
+  'text-gray-400': 'var(--color-gray-400)',
+}
+
+/**
  * Resolves a `color` property that is either a plain string or a `{ light, dark }` object
  * to a single color string based on the current dark-mode state.
  */

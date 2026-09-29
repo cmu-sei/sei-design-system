@@ -6,15 +6,13 @@ import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import Components from 'unplugin-vue-components/vite'
 
-console.log(resolve(__dirname, process.env.LIB_ROOT, 'index.js'))
-
 const isVueUseInvalidAnnotation = log => (
   log.code === 'INVALID_ANNOTATION' &&
   log.message.includes('node_modules/@vueuse/core/dist/index.js')
 )
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     Icons({
       compiler: 'vue3',
@@ -45,15 +43,15 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
+      '@': resolve(import.meta.dirname, './src')
     }
   },
   publicDir: false,
-  define: { 'process.env.NODE_ENV': '"production"' },
+  define: { 'process.env.NODE_ENV': JSON.stringify(mode === 'test' ? 'test' : 'production') },
   build: {
     target: 'esnext',
     lib: {
-      entry: resolve(__dirname, process.env.LIB_ROOT, 'index.ts'),
+      entry: resolve(import.meta.dirname, process.env.LIB_ROOT, 'index.ts'),
       name: process.env.LIB_NAME || 'SeiDesignSystem',
       fileName: format => {
         if (format === 'es') {
@@ -106,11 +104,11 @@ export default defineConfig({
     coverage: {
       include: [
         'src/components/**/*.vue',
-        'src/composables/*.{js,ts}',
+        'src/composables/**/*.{js,ts}',
         'src/helpers/**/*.{js,ts}',
         'src/lib/*.{js,ts}'
       ],
       provider: 'v8'
     }
   },
-})
+}))

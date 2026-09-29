@@ -1,8 +1,9 @@
 <template>
-  <div 
-    class="sds-heatmap-chart w-full" 
-    :class="containerClass" 
+  <div
+    class="sds-heatmap-chart w-full"
+    :class="containerClass"
     :style="containerStyle"
+    @mouseleave="onChartLeave"
   >
     <BaseChart
       v-bind="forwardedAttrs"
@@ -18,6 +19,8 @@
       }"
       :show-legend="props.showLegend"
       :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
@@ -25,8 +28,8 @@
       :y-axis="yAxis"
     >
       <template #default="{ innerWidth, innerHeight }">
-        <g 
-          v-if="innerWidth > 0" 
+        <g
+          v-if="innerWidth > 0"
           :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
           <rect
@@ -43,7 +46,6 @@
             :aria-label="`${cell.data.x}, ${cell.data.y}: ${cell.data.value}`"
             @mouseenter="(e) => onCellEnter(e, cell)"
             @mousemove="(e) => onCellMove(e, cell)"
-            @mouseleave="onCellLeave"
           />
         </g>
       </template>
@@ -55,13 +57,13 @@
           name="tooltip" 
           :data="tooltip.data.value"
         >
-          <p 
-            v-if="tooltip.data.value" 
-            class="text-xs wrap-break-word"
-          >
-            <span class="block font-semibold">{{ tooltip.data.value.x }} / {{ tooltip.data.value.y }}</span>
-            <span class="block">{{ tooltip.data.value.value }}</span>
-          </p>
+          <ChartTooltipContent
+            v-if="tooltip.data.value"
+            :title="tooltip.data.value.x"
+            :label="tooltip.data.value.y"
+            :datapoint="tooltip.data.value.value"
+            :color="hasDistinctColors ? tooltip.data.value.color : undefined"
+          />
         </slot>
       </template>
       <template #legend="{ items, hoveredIndex: legendHoveredIndex, updateHoveredIndex }">
@@ -76,7 +78,7 @@
           v-else 
           class="sds-heatmap-legend flex items-center justify-center gap-1 text-xs select-none"
         >
-          <span class="text-gray-900 dark:text-gray-100">Less</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">Less</span>
           <button
             v-for="(item, i) in items"
             :key="`heatmap-legend-bin-${i}`"
@@ -88,7 +90,7 @@
             @mouseenter="updateHoveredIndex(i)"
             @mouseleave="updateHoveredIndex(null)"
           />
-          <span class="text-gray-900 dark:text-gray-100">More</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">More</span>
         </div>
       </template>
     </BaseChart>
@@ -100,10 +102,12 @@ import type { AxisDomain } from '@/lib/d3'
 import type { ChartMargin } from '@/helpers/charts/constants'
 import type { HeatmapCell, HeatmapColors, HeatmapRect, HeatmapTooltipData } from '@/composables/useHeatmapChart'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 import { useHeatmapChart } from '@/composables/useHeatmapChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import { DEFAULT_CHART_MARGIN } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 
 interface HeatmapChartProps {
   data?: HeatmapCell[]
@@ -111,6 +115,10 @@ interface HeatmapChartProps {
   width?: string | number
   margin?: ChartMargin
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   showTooltip?: boolean
   showLegend?: boolean
   colors?: HeatmapColors
@@ -132,6 +140,8 @@ const props = withDefaults(defineProps<HeatmapChartProps>(), {
   width: '100%',
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
   showLegend: true,
   colors: undefined,
@@ -209,6 +219,7 @@ const { cells, xAxis, yAxis, legendItems } = useHeatmapChart(
     squareCells: squareCellsRef
   }
 )
+const hasDistinctColors = computed(() => hasMultipleColors(cells.value))
 
 function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
   innerWidthRef.value = innerWidth
@@ -216,9 +227,20 @@ function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
   return cells.value
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex
@@ -227,14 +249,16 @@ function onCellEnter(e: MouseEvent, cell: HeatmapRect) {
 
 function onCellMove(e: MouseEvent, cell: HeatmapRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     ...cell.data,
     color: cell.color,
     binIndex: cell.binIndex
   })
 }
 
-function onCellLeave() {
+function onChartLeave() {
+  hoveredIndex.value = null
   tooltip.hide()
 }
 </script>

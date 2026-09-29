@@ -1,0 +1,34 @@
+<template>
+  <ul
+    data-id="sds-list"
+    role="list"
+    class="space-y-4"
+    :class="{
+      '[&>[data-id=sds-list-item]+[data-id=sds-list-item]]:border-t [&>[data-id=sds-list-item]+[data-id=sds-list-item]]:border-gray-50 [&>[data-id=sds-list-item]+[data-id=sds-list-item]]:pt-4 dark:[&>[data-id=sds-list-item]+[data-id=sds-list-item]]:border-gray-900': divided
+    }"
+  >
+    <!-- @slot List items. -->
+    <slot />
+  </ul>
+</template>
+
+<script setup lang="ts">
+import { listContextKey, type ListContext } from './listContext'
+
+defineOptions({
+  name: 'SdsList'
+})
+
+interface ListProps {
+  /** Adds dividers between list items. */
+  divided?: boolean
+}
+
+withDefaults(defineProps<ListProps>(), {
+  divided: false
+})
+
+provide<ListContext>(listContextKey, {
+  titleClass: 'text-sm font-semibold text-gray-900 dark:text-gray-50'
+})
+</script>

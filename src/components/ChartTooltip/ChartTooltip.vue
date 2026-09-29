@@ -1,29 +1,27 @@
 <template>
   <Transition
-    enter-active-class="transition-opacity duration-150"
-    leave-active-class="transition-opacity duration-100"
     enter-from-class="opacity-0"
     leave-to-class="opacity-0"
   >
     <div
       v-if="props.visible"
       ref="tooltipRef"
-      class="fixed z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-2 text-xs text-gray-900 shadow-sm transition-[left,top] duration-60 ease-out dark:border-gray-800 dark:bg-black dark:text-gray-50 dark:shadow-gray-900"
+      class="fixed left-0 top-0 z-10 pointer-events-none min-w-24 rounded-md border border-gray-200 bg-gray-25 p-4 shadow-sm transition-[opacity,transform] duration-150 ease-out dark:border-gray-800 dark:bg-black dark:shadow-gray-900"
       :style="tooltipStyle"
     >
       <slot />
       <svg
-        class="absolute h-3.25 w-2 overflow-visible"
+        class="absolute h-6 w-3 overflow-visible"
         :style="arrowStyle"
-        viewBox="0 0 8 13"
+        viewBox="0 0 12 24"
         aria-hidden="true"
       >
         <path
-          d="M8 0 L0 6 L8 12 Z"
+          d="M12 0 L0 12 L12 24 Z"
           class="fill-gray-25 dark:fill-black"
         />
         <path
-          d="M0 6 L8 0 M0 6 L8 12"
+          d="M0 12 L12 0 M0 12 L12 24"
           class="stroke-gray-200 dark:stroke-gray-800"
           fill="none"
           stroke-width="1"
@@ -35,12 +33,14 @@
 </template>
 
 <script setup lang="ts">
+import { CSSProperties } from 'vue'
+
 /** Minimum viewport inset to keep tooltip content visible. */
 const EDGE_PADDING = 8
 /** Horizontal gap between cursor point and tooltip body. */
 const GAP = 12
-/** Vertical inset clamp for the arrow inside the tooltip body. */
-const ARROW_INSET = 10
+/** Height of the tooltip pointer in CSS pixels. */
+const ARROW_HEIGHT = 24
 /** Hard width cap for tooltip content before wrapping. */
 const MAX_WIDTH_PX = 384
 
@@ -49,6 +49,14 @@ interface ChartTooltipProps {
   visible: boolean
   x: number
   y: number
+}
+
+interface TooltipStyle extends CSSProperties {
+  transform: string
+  maxWidth: string
+  whiteSpace: 'normal'
+  overflowWrap: 'anywhere'
+  wordBreak: 'break-word'
 }
 
 defineOptions({ 
@@ -167,8 +175,8 @@ const tooltipTop = computed(() => {
 /** Arrow Y offset within tooltip body, clamped away from rounded corners. */
 const arrowOffsetY = computed(() => {
   const height = tooltipHeight.value
-  if (height <= 0) return 16
-  return clamp(props.y - tooltipTop.value, ARROW_INSET, height - ARROW_INSET)
+  if (height <= 0) return ARROW_HEIGHT / 2
+  return clamp(props.y - tooltipTop.value, ARROW_HEIGHT / 2, height - ARROW_HEIGHT / 2)
 })
 
 /** Side-aware arrow placement and mirroring transform. */
@@ -176,25 +184,24 @@ const arrowStyle = computed(() => {
   if (placement.value === 'right') {
     return {
       left: '0',
-      top: `${arrowOffsetY.value}px`,
-      transform: 'translate(-100%, -50%)',
+      top: `${arrowOffsetY.value - ARROW_HEIGHT / 2}px`,
+      transform: 'translateX(calc(-100% + 1px))',
     }
   }
 
   return {
     right: '0',
-    top: `${arrowOffsetY.value}px`,
-    transform: 'translate(100%, -50%) scaleX(-1)',
+    top: `${arrowOffsetY.value - ARROW_HEIGHT / 2}px`,
+    transform: 'translateX(calc(100% - 1px)) scaleX(-1)',
   }
 })
 
 /** Tooltip body style: position + width constraints + wrap behavior. */
-const tooltipStyle = computed(() => ({
-  left: `${tooltipLeft.value}px`,
-  top: `${tooltipTop.value}px`,
+const tooltipStyle = computed<TooltipStyle>(() => ({
+  transform: `translate3d(${tooltipLeft.value}px, ${tooltipTop.value}px, 0)`,
   maxWidth: `min(${MAX_WIDTH_PX}px, calc(100vw - ${EDGE_PADDING * 2}px))`,
-  whiteSpace: 'normal' as const,
-  overflowWrap: 'anywhere' as const,
-  wordBreak: 'break-word' as const,
+  whiteSpace: 'normal',
+  overflowWrap: 'anywhere',
+  wordBreak: 'break-word',
 }))
 </script>

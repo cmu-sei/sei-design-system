@@ -1,96 +1,101 @@
 <template>
-  <BaseChart 
-    v-model:hovered-index="hoveredIndex"
-    :height="props.height"
-    :aspect-ratio="props.aspectRatio"
-    :margin="resolvedMargin"
-    :legend="{
-      items: legendItems,
-      orientation: props.legendOrientation,
-      position: props.legendPosition,
-    }"
-    :show-legend="props.showLegend"
-    :title="props.title"
-    :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
-    :tooltip-x="tooltip.x.value"
-    :tooltip-y="tooltip.y.value"
-    :x-axis="xAxis"
-    :y-axis="yAxis"
+  <div
+    class="sds-bar-chart w-full"
+    @mouseleave="onChartLeave"
   >
-    <template #default="{ innerWidth, innerHeight, containerWidth }">
-      <g
-        v-if="innerWidth > 0"
-        ref="barsGroupRef"
-        :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
-      >
-        <!-- Bars (rendered first so axes paint on top of bar edges) -->
-        <rect
-          v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
-          :key="i"
-          :x="bar.x"
-          :y="bar.y"
-          :width="bar.width"
-          :height="bar.height"
-          :fill="bar.color"
-          class="transition-[opacity,filter] duration-100"
-          :class="
-            hoveredIndex !== null && getBarSeriesIndex(bar) !== hoveredIndex
-              ? 'opacity-40'
-              : 'opacity-100'
-          "
-          role="img"
-          :aria-label="`${bar.label}${bar.seriesName ? ` – ${bar.seriesName}` : ''}: ${bar.value}`"
-          @mouseenter="(e) => onBarEnter(e, bar)"
-          @mousemove="(e) => onBarMove(e, bar)"
-          @mouseleave="onBarLeave"
-        />
-      </g>
-    </template>
-
-    <template 
-      v-if="props.showTooltip" 
-      #tooltip
+    <BaseChart
+      v-model:hovered-index="hoveredIndex"
+      :height="props.height"
+      :aspect-ratio="props.aspectRatio"
+      :margin="resolvedMargin"
+      :legend="{
+        items: legendItems,
+        orientation: props.legendOrientation,
+        position: props.legendPosition,
+      }"
+      :show-legend="props.showLegend"
+      :title="props.title"
+      :x-axis-label="props.xAxisLabel"
+      :y-axis-label="props.yAxisLabel"
+      :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
+      :tooltip-x="tooltip.x.value"
+      :tooltip-y="tooltip.y.value"
+      :x-axis="xAxis"
+      :y-axis="yAxis"
     >
-      <slot 
-        name="tooltip" 
-        :data="tooltip.data.value" 
-        :format-value="resolvedFormatter"
-      >
-        <p 
-          v-if="tooltip.data.value" 
-          class="text-xs wrap-break-word"
+      <template #default="{ innerWidth, innerHeight, containerWidth }">
+        <g
+          v-if="innerWidth > 0"
+          ref="barsGroupRef"
+          :transform="`translate(${resolvedMargin.left}, ${resolvedMargin.top})`"
         >
-          <span class="block font-semibold">{{ tooltip.data.value.label }}</span>
-          <span 
-            v-if="tooltip.data.value.seriesName" 
-            class="block"
-          >
-            <span
-              class="inline-block w-2.5 h-2.5 rounded-sm mr-1"
-              :style="{ background: tooltip.data.value.color }"
+          <template v-if="props.showGrid">
+            <line
+              v-for="(position, gridIndex) in computeGridLines(innerWidth, innerHeight, containerWidth)"
+              :key="`bar-grid-${gridIndex}`"
+              :data-id="props.orientation === 'horizontal' ? 'sds-grid-line-x' : 'sds-grid-line-y'"
+              :x1="props.orientation === 'horizontal' ? position : 0"
+              :y1="props.orientation === 'horizontal' ? 0 : position"
+              :x2="props.orientation === 'horizontal' ? position : innerWidth"
+              :y2="props.orientation === 'horizontal' ? innerHeight : position"
+              class="stroke-current text-gray-100 dark:text-gray-900 pointer-events-none"
+              role="none"
+              stroke-width="1"
             />
-            {{ tooltip.data.value.seriesName }}: {{ resolvedFormatter(tooltip.data.value.value) }}
-          </span>
-          <span 
-            v-else 
-            class="block"
-          >
-            {{ resolvedFormatter(tooltip.data.value.value) }}
-          </span>
-        </p>
-      </slot>
-    </template>
+          </template>
+          <!-- Bars (rendered first so axes paint on top of bar edges) -->
+          <rect
+            v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
+            :key="i"
+            :x="bar.x"
+            :y="bar.y"
+            :width="bar.width"
+            :height="bar.height"
+            :fill="bar.color"
+            class="transition-[opacity,filter] duration-100"
+            :class="
+              hoveredIndex !== null && getBarSeriesIndex(bar) !== hoveredIndex
+                ? 'opacity-40'
+                : 'opacity-100'
+            "
+            role="img"
+            :aria-label="`${bar.label}${bar.seriesName ? ` – ${bar.seriesName}` : ''}: ${bar.value}`"
+            @mouseenter="(e) => onBarEnter(e, bar)"
+            @mousemove="(e) => onBarMove(e, bar)"
+          />
+        </g>
+      </template>
 
-    <template
-      v-if="$slots.legend" 
-      #legend="slotProps"
-    >
-      <slot 
-        name="legend" 
-        v-bind="slotProps" 
-      />
-    </template>
-  </BaseChart>
+      <template 
+        v-if="props.showTooltip" 
+        #tooltip
+      >
+        <slot 
+          name="tooltip" 
+          :data="tooltip.data.value" 
+          :format-value="resolvedFormatter"
+        >
+          <ChartTooltipContent
+            v-if="tooltip.data.value"
+            :title="tooltip.data.value.label"
+            :label="tooltip.data.value.seriesName"
+            :datapoint="resolvedFormatter(tooltip.data.value.value)"
+            :color="hasDistinctColors ? tooltip.data.value.color : undefined"
+          />
+        </slot>
+      </template>
+
+      <template
+        v-if="$slots.legend" 
+        #legend="slotProps"
+      >
+        <slot 
+          name="legend" 
+          v-bind="slotProps" 
+        />
+      </template>
+    </BaseChart>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -104,11 +109,13 @@ import type {
 import type { ChartMargin } from '@/helpers/charts'
 import type { ChartLegendPosition, ChartLegendOrientation } from '../index.ts'
 import { DEFAULT_BAR_CHART_MARGIN } from '@/helpers/charts/constants'
+import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 import { format, select, easeCubicOut } from '@/lib/d3'
 import { useBarChart, isBarSeries } from '@/composables/useBarChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import BaseChart from '../BaseChart'
+import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 
 interface BarChartProps {
   /** BarItem[] for single-series or BarSeries[] for multi-series. Detected automatically via type guard. */
@@ -120,12 +127,20 @@ interface BarChartProps {
   height?: number
   margin?: ChartMargin
   title?: string
+  /** Optional horizontal label displayed below the x-axis. */
+  xAxisLabel?: string
+  /** Optional vertical label displayed beside the y-axis. */
+  yAxisLabel?: string
   showTooltip?: boolean
+  /** Toggles gridlines behind the bars, aligned to value-axis ticks. @default true */
+  showGrid?: boolean
   /** When provided, height is derived as containerWidth / aspectRatio. */
   aspectRatio?: number
-  /** Format for value-axis tick labels. Pass a D3 format specifier string (e.g. `'~s'`, `',.0f'`) or a custom formatter function. @default '~s' */
-  valueFormat?: string | ((value: number) => string)
-  /** Format for tooltip values. Falls back to valueFormat when omitted. */
+  /** Format for x-axis tick labels on value axes. Used when orientation is horizontal. @default '~s' */
+  xTickFormatter?: string | ((value: number) => string)
+  /** Format for y-axis tick labels on value axes. Used when orientation is vertical. @default '~s' */
+  yTickFormatter?: string | ((value: number) => string)
+  /** Format for tooltip values. Falls back to the active value-axis tick formatter when omitted. */
   tooltipValueFormat?: string | ((value: number) => string)
   /** When true (default), bars grow from zero on mount and whenever data changes. The transition decelerates at the end. */
   animate?: boolean
@@ -146,9 +161,13 @@ const props = withDefaults(defineProps<BarChartProps>(), {
   height: 360,
   margin: undefined,
   title: undefined,
+  xAxisLabel: undefined,
+  yAxisLabel: undefined,
   showTooltip: true,
+  showGrid: true,
   aspectRatio: undefined,
-  valueFormat: '~s',
+  xTickFormatter: '~s',
+  yTickFormatter: '~s',
   tooltipValueFormat: undefined,
   animate: false,
   showLegend: false,
@@ -188,9 +207,11 @@ const resolvedMargin = computed<ChartMargin>(() => {
 const dataRef = computed(() => props.data)
 const orientationRef = computed(() => props.orientation)
 const modeRef = computed(() => props.mode)
-const valueFormatRef = computed(() => props.valueFormat)
+const xTickFormatterRef = computed(() => props.xTickFormatter)
+const yTickFormatterRef = computed(() => props.yTickFormatter)
 const resolvedFormatter = computed(() => {
-  const vf = props.tooltipValueFormat ?? props.valueFormat
+  const axisFormatter = props.orientation === 'horizontal' ? props.xTickFormatter : props.yTickFormatter
+  const vf = props.tooltipValueFormat ?? axisFormatter
   return typeof vf === 'function' ? vf : format(vf)
 })
 
@@ -198,14 +219,16 @@ const resolvedFormatter = computed(() => {
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
-const { bars, xAxis, yAxis, legendItems } = useBarChart(
+const { bars, xAxis, yAxis, legendItems, gridLines } = useBarChart(
   dataRef,
   orientationRef,
   modeRef,
   innerWidthRef,
   innerHeightRef,
-  valueFormatRef,
+  xTickFormatterRef,
+  yTickFormatterRef,
 )
+const hasDistinctColors = computed(() => hasMultipleColors(bars.value))
 
 // Entry animation
 const barsGroupRef = ref<SVGGElement | null>(null)
@@ -258,15 +281,33 @@ function computeBars(innerWidth: number, innerHeight: number, containerWidth: nu
   return bars.value
 }
 
+function computeGridLines(innerWidth: number, innerHeight: number, containerWidth: number) {
+  innerWidthRef.value = innerWidth
+  innerHeightRef.value = innerHeight
+  containerWidthRef.value = containerWidth
+  return gridLines.value
+}
+
 function getBarSeriesIndex(bar: BarRect): number | null {
   if (!bar.seriesName) return null
   const idx = legendItems.value.findIndex((item) => item.label === bar.seriesName)
   return idx >= 0 ? idx : null
 }
 
+function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
+  const target = e.currentTarget
+  if (!(target instanceof Element)) return { x: e.clientX, y: e.clientY }
+  const rect = target.getBoundingClientRect()
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  }
+}
+
 function onBarEnter(e: MouseEvent, bar: BarRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     label: bar.label,
     seriesName: bar.seriesName,
     value: bar.value,
@@ -276,7 +317,8 @@ function onBarEnter(e: MouseEvent, bar: BarRect) {
 
 function onBarMove(e: MouseEvent, bar: BarRect) {
   if (!props.showTooltip) return
-  tooltip.show(e.clientX, e.clientY, {
+  const anchor = getTooltipAnchor(e)
+  tooltip.show(anchor.x, anchor.y, {
     label: bar.label,
     seriesName: bar.seriesName,
     value: bar.value,
@@ -284,7 +326,8 @@ function onBarMove(e: MouseEvent, bar: BarRect) {
   })
 }
 
-function onBarLeave() {
+function onChartLeave() {
+  hoveredIndex.value = null
   tooltip.hide()
 }
 </script>

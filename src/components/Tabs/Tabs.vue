@@ -26,7 +26,7 @@
           }"
         >
           <component
-            :is="tab.tag || ('button' as unknown)"
+            :is="tab.href ? 'a' : (tab.tag ?? 'button')"
             :id="`sds-tabs-${root?.id}__${tab.key}__tab`"
             class="tab"
             :class="[
@@ -37,10 +37,10 @@
               (!!tab.active ? 'active' : ''),
               (!!tab.disabled ? 'disabled': '')
             ]"
-            :href="tab.tag === 'a' && tab.href || undefined"
-            :target="tab.tag === 'a' && tab.href && tab.external ? '_blank' : undefined"
-            :rel="tab.tag === 'a' && tab.href && tab.external ? 'noopener noreferrer' : undefined"
-            :type="tab.tag === 'button' ? 'button' : undefined"
+            :href="!tab.disabled ? tab.href : undefined"
+            :target="!tab.disabled && tab.href && tab.external ? '_blank' : undefined"
+            :rel="!tab.disabled && tab.href && tab.external ? 'noopener noreferrer' : undefined"
+            :type="!tab.href && tab.tag !== 'a' ? 'button' : undefined"
             :disabled="tab.disabled"
             :aria-disabled="tab.disabled"
             :tabindex="!props.focusable || tab.disabled || !tab.active ? -1 : 0"
@@ -48,7 +48,7 @@
             :aria-controls="`sds-tabs-${root?.id}__${tab.key}__tab-content`"
             :data-active="tab.active ? true : undefined"
             role="tab"
-            @click="changeTab(tab)"
+            @click="changeTab(tab, $event)"
             @keydown="onTabKeydown($event, tab)"
           >
             <!-- @slot Custom left-icon slot content. -->
@@ -286,8 +286,13 @@ const willChangeTabStateDelay = async (tab: TabItem, fn: GenericFunctionType) =>
   })
 }
 
-const changeTab = async (tab: TabItem) => {
-  if (tab.tag === 'a' && tab.href) {
+const changeTab = async (tab: TabItem, event?: Event) => {
+  if (tab.disabled) {
+    event?.preventDefault()
+    return false
+  }
+
+  if (tab.href) {
     return true
   } else {
     if (props.willChangeTab) {

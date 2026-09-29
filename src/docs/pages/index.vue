@@ -45,10 +45,22 @@
           Inputs
         </RouterLink>
         <RouterLink
+          to="/components/list"
+          class="link link-secondary w-fit"
+        >
+          List
+        </RouterLink>
+        <RouterLink
           to="/components/navigation"
           class="link link-secondary w-fit"
         >
           Navigation
+        </RouterLink>
+        <RouterLink
+          to="/components/timeline"
+          class="link link-secondary w-fit"
+        >
+          Timeline
         </RouterLink>
         <RouterLink
           to="/components/utility"

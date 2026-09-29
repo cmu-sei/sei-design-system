@@ -48,14 +48,29 @@
             }
           ]"
         >
-          <div class="input-group-addon">
-            <span class="sr-only">Combo box</span>
+          <button
+            v-if="!pending"
+            data-id="sds-combo-box-search-button"
+            type="button"
+            tabindex="-1"
+            class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
+            :aria-controls="dropdownId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :disabled="disabled || readonly || undefined"
+            @click="showDropdownResults"
+          >
+            <span class="sr-only">Show suggestions</span>
             <IconFa7SolidMagnifyingGlass
-              v-if="!pending"
+              aria-hidden="true"
               :class="searchIconClass"
             />
+          </button>
+          <div
+            v-else
+            class="input-group-addon"
+          >
+            <span class="sr-only">Loading suggestions</span>
             <SdsLoadingSpinner
-              v-else
               size="sm"
               class="inline-flex shrink-0 items-center justify-center"
               :class="searchIconClass"
@@ -142,16 +157,23 @@
               </p>
             </SdsTooltip>
           </div>
-          <div
-            v-else-if="isSelectType"
+          <button
+            v-else-if="isSelectType && hasDropdownSuggestion"
             data-id="sds-combo-box-select-caret"
-            aria-hidden="true"
-            class="input-group-addon pointer-events-none"
+            type="button"
+            tabindex="-1"
+            class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
+            :aria-controls="dropdownId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :disabled="disabled || readonly || undefined"
+            @click="showDropdownResults"
           >
+            <span class="sr-only">Show suggestions</span>
             <span
+              aria-hidden="true"
               class="block size-4.75 shrink-0 bg-no-repeat bg-center bg-size-[1rem_1rem] bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23747578%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2016%2016%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M4%206l4%204%204-4%27%20stroke%3D%27%23a6a7aa%27%20stroke-width%3D%271.75%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%3C/svg%3E')]"
             />
-          </div>
+          </button>
           <!-- @slot Default content. Good for adding content to the end of the input group -->
           <slot />
         </div>
@@ -160,6 +182,7 @@
     <div
       ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
+      class="@container"
     >
       <div
         v-if="hasCategories"
@@ -540,9 +563,11 @@
       <!-- Footer section -->
       <div
         v-if="!isSelected(query)"
-        class="border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-4 py-2 flex gap-6 items-center text-sm text-gray-700 dark:text-gray-300"
+        data-id="sds-combo-box-footer"
+        class="grid items-start gap-2 border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 @min-[28rem]:flex @min-[28rem]:items-center @min-[28rem]:gap-6 @min-[28rem]:px-4 @min-[28rem]:text-sm"
+        :class="isFlatArray || groups.length <= 1 ? 'grid-cols-2' : 'grid-cols-3'"
       >
-        <div class="ml-auto flex items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:ml-auto @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             <IconFa7SolidArrowUp
               class="w-3 h-3"
@@ -551,11 +576,11 @@
               class="w-3 h-3"
             />
           </div>
-          <span class="sr-only">Up, down</span> to navigate
+          <span class="sr-only">Up, down:</span> Navigate
         </div>
         <div
           v-if="!isFlatArray && groups.length > 1"
-          class="flex items-center gap-1.5"
+          class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5"
         >
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             <IconFa7SolidArrowLeft
@@ -565,13 +590,13 @@
               class="w-3 h-3"
             />
           </div>
-          <span class="sr-only">Left, right</span> to switch tabs
+          <span class="sr-only">Left, right:</span> Switch tabs
         </div>
-        <div class="flex items-center gap-1.5">
+        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
           <span class="inline-block p-1 border text-xs font-mono border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             Enter
           </span>
-          to select
+          Select
         </div>
       </div>
     </div>
@@ -603,7 +628,7 @@ interface ComboBoxProps {
    * Use this for select-like ComboBoxes where users should browse the full suggestion list.
    * When false, the dropdown opens from typing or keyboard navigation instead.
    *
-   * @default false
+   * @default true
    */
   clickToSelect?: boolean;
   /**
@@ -878,7 +903,7 @@ defineOptions({ name: 'SdsComboBox' })
 
 const props = withDefaults(defineProps<ComboBoxProps>(), {
   autofocus: false,
-  clickToSelect: false,
+  clickToSelect: true,
   debounceComplete: 250,
   disableGroupTabs: false,
   enableSelectAll: false,
@@ -1132,9 +1157,15 @@ const inputClick = () => {
       closeDropdown()
       return
     }
-    shouldAutoHighlightOnOpen.value = !showDropdown.value
-    showDropdown.value = true
+    showDropdownResults()
   }
+}
+
+const showDropdownResults = () => {
+  if (props.readonly || props.disabled || props.pending) return
+  inputField.value?.focus()
+  shouldAutoHighlightOnOpen.value = true
+  showDropdown.value = true
 }
 
 const toggleSelectAll = () => {

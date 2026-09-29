@@ -25,6 +25,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -51,6 +52,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -76,6 +78,7 @@ exports[`Tabs > should fire as expected with assigned \`willChangeTab\` prop/fun
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -151,6 +154,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -176,6 +180,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -201,6 +206,7 @@ exports[`Tabs > should match its default snapshot 1`] = `
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -275,6 +281,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -301,6 +308,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -326,6 +334,7 @@ exports[`Tabs > should match its snapshot when changing tabs 1`] = `
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -640,6 +649,7 @@ exports[`Tabs > should match its snapshot with assigned \`size\` prop: "lg" 1`] 
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -665,6 +675,7 @@ exports[`Tabs > should match its snapshot with assigned \`size\` prop: "lg" 1`] 
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -690,6 +701,7 @@ exports[`Tabs > should match its snapshot with assigned \`size\` prop: "lg" 1`] 
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -765,6 +777,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -790,6 +803,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -815,6 +829,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "block" 1
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -890,6 +905,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -915,6 +931,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -940,6 +957,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1019,6 +1037,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1044,6 +1063,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1069,6 +1089,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1148,6 +1169,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1173,6 +1195,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1198,6 +1221,7 @@ exports[`Tabs > should match its snapshot with assigned \`type\` prop: "underlin
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1277,6 +1301,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "blue"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1302,6 +1327,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "blue"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1327,6 +1353,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "blue"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1402,6 +1429,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "gray"
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1427,6 +1455,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "gray"
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1452,6 +1481,7 @@ exports[`Tabs > should match its snapshot with assigned \`variant\` prop: "gray"
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1527,6 +1557,7 @@ exports[`Tabs > should match its snapshot with property \`count\` in tab item(s)
           id="sds-tabs-v-0__tab-1__tab"
           role="tab"
           tabindex="0"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1556,6 +1587,7 @@ exports[`Tabs > should match its snapshot with property \`count\` in tab item(s)
           id="sds-tabs-v-0__tab-2__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           
@@ -1585,6 +1617,7 @@ exports[`Tabs > should match its snapshot with property \`count\` in tab item(s)
           id="sds-tabs-v-0__tab-3__tab"
           role="tab"
           tabindex="-1"
+          type="button"
         >
           <!-- @slot Custom left-icon slot content. -->
           

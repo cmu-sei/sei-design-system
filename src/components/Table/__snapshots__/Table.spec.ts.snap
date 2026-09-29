@@ -103,8 +103,8 @@ exports[`Table > matches default snapshot 1`] = `
 
 exports[`Table > matches snapshot with assigned \`caption\` prop 1`] = `
 "<table id="sds-table" data-id="sds-table" class="table-prose dark:table-prose-invert">
-  <caption>
-    <!-- @slot Caption content. This will override the **caption** prop. -->Caption
+  <caption><span class="block"><!-- @slot Caption content. This will override the **caption** prop. -->Caption</span>
+    <!--v-if-->
   </caption>
   <colgroup>
     <!-- @slot Col content. Used to help style columns. @binding active, activeClass -->

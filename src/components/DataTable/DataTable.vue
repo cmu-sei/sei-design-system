@@ -1,18 +1,45 @@
 <template>
   <div 
     data-id="sds-data-table"
-    class="w-full min-w-full overflow-x-hidden relative"
-    :data-has-header="(hasFilters || hasSearch || hasSortBy) || undefined"
+    class="w-full min-w-full overflow-x-hidden relative rounded-theme-lg shadow-sm"
+    :data-has-header="hasDataTableHeader || undefined"
     :data-has-footer="!!pagination || undefined"
   >
-    <div 
-      v-if="hasFilters || hasSearch || hasSortBy"
+    <div
+      v-if="hasTableCaption"
       class="
         bg-white dark:bg-gray-950
-        border border-b-0 border-gray-100 dark:border-gray-800 
+        border border-gray-100 dark:border-gray-900
+        text-left text-lg font-semibold p-4
+        rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none
+      "
+    >
+      <span class="block">
+        <slot name="caption">
+          {{ tableProps.caption }}
+        </slot>
+      </span>
+      <span
+        v-if="!!$slots.subcaption || tableProps.subcaption"
+        class="block text-sm font-normal text-gray-600 dark:text-gray-400"
+      >
+        <slot name="subcaption">
+          {{ tableProps.subcaption }}
+        </slot>
+      </span>
+    </div>
+    <div 
+      v-if="hasHeaderControls"
+      class="
+        bg-white dark:bg-gray-950
+        border border-gray-100 dark:border-gray-900 
         rounded-tl-lg rounded-tr-lg sds-theme-plaid:rounded-none overflow-hidden
         min-h-15.5 w-full min-w-full
       "
+      :class="{
+        'border-t-0 rounded-tl-none rounded-tr-none': hasTableCaption,
+        'border-b-0': !hasTableCaption
+      }"
     >
       <div class="flex flex-row flex-nowrap items-center gap-x-2 relative min-h-15.5">
         <div 
@@ -192,13 +219,21 @@
     <div
       ref="scrollContainerRef"
       class="overflow-x-auto max-w-full"
+      :class="{
+        'border-x border-gray-100 dark:border-gray-900': hasTableCaption && hasHeaderControls
+      }"
       :data-scrollable="isTableScrollable || undefined"
       @scroll.passive="onTableScroll"
     >
       <SdsTable 
         v-if="tableProps.items && tableProps.items.length"
-        v-bind="{ ...tableProps, ...$attrs }"
+        v-bind="{ ...tablePropsWithoutCaption, ...$attrs }"
         class="table-prose-td:align-middle w-full min-w-5xl"
+        :class="{
+          'rounded-tl-none rounded-tr-none': hasDataTableHeader,
+          'border-x-0 border-t-0 shadow-none [&_thead]:border-t-0': hasTableCaption && hasHeaderControls,
+          'border-t-0 shadow-none [&_thead]:border-t-0': hasTableCaption && !hasHeaderControls
+        }"
       >
         <template #col(selected)>
           <col 
@@ -236,7 +271,7 @@
           </label>
         </template>
         <template
-          v-for="(_, name) in $slots"
+          v-for="(_, name) in forwardedSlots"
           #[name]="slotProps"
         >
           <slot
@@ -254,8 +289,8 @@
             flex flex-col items-center justify-center px-3 pt-4 pb-8
           "
           :class="{
-            'border-t-0': hasFilters || hasSearch || hasSortBy,
-            'sds-theme-forge:rounded-tl-lg sds-theme-forge:rounded-tr-lg': !(hasFilters || hasSearch || hasSortBy)
+            'border-t-0': hasDataTableHeader,
+            'sds-theme-forge:rounded-tl-lg sds-theme-forge:rounded-tr-lg': !hasDataTableHeader
           }"
         >
           <slot 
@@ -343,7 +378,7 @@
       v-if="pagination && (tableProps.items && tableProps.items.length > 0)"
       class="
         bg-gray-600/2 dark:bg-gray-400/2
-        border border-gray-100 dark:border-gray-800
+        border border-gray-100 dark:border-gray-900
         rounded-bl-lg rounded-br-lg sds-theme-plaid:rounded-none
         px-3 py-4
       "
@@ -502,6 +537,10 @@ const props = withDefaults(defineProps<DataTableProps>(), {
 
 const slots = useSlots()
 
+const forwardedSlots = computed(() => Object.fromEntries(
+  Object.entries(slots).filter(([name]) => !['caption', 'subcaption'].includes(name))
+))
+
 const emit = defineEmits(['update:filters', 'update:searchQuery', 'update:sortBy', 'update:selectedItems', 'update:pagination'])
 
 /**
@@ -512,7 +551,7 @@ const filters = ref<DataTableFilterConfig[] | undefined>(
   props.filters && Array.isArray(props.filters)
     ? props.filters.map((f) => ({ 
       ...f,
-      segments: f.segments ? [{ label: 'All', selected: true }, ...f.segments] : undefined,
+      segments: f.segments ? [...f.segments] : undefined,
       options: f.options ? [...f.options] : undefined
     })) 
     : undefined
@@ -545,6 +584,7 @@ const hasFilters = computed(() => !!(props.filters && props.filters.length))
 const hasSearch = computed(() => !!props.search)
 const focusOnKeyPress = computed(() => props.focusSearchOnKeyPress)
 const hasSortBy = computed(() => !!(props.sortBy && props.sortBy.options.length))
+const hasHeaderControls = computed(() => hasFilters.value || hasSearch.value || hasSortBy.value)
 const hasEllipsisMenuItems = computed(() => !!(slots['ellipsis-menu-items'] || slots.ellipsisMenuItems))
 const isHeaderActionsDisabled = computed(() => !tableItems.value.length)
 
@@ -552,10 +592,8 @@ const hasActiveFilters = computed(() => {
   if (!filters.value) return false
   return filters.value.some((filter) => {
     if (isSegmentFilter(filter)) {
-      // Check if any segment other than "All" (first) is selected
       return filter.segments.some((segment, index) => index !== 0 && segment.selected)
     } else if (isDropdownFilter(filter)) {
-      // Check if any options are selected
       return filter.options.some((option) => option.selected)
     }
     return false
@@ -663,6 +701,16 @@ const tableProps = computed(() => ({
   items: tableItems.value
 }))
 
+const tablePropsWithoutCaption = computed(() => {
+  const tablePropsWithoutCaption = { ...tableProps.value }
+  delete tablePropsWithoutCaption.caption
+  delete tablePropsWithoutCaption.subcaption
+  return tablePropsWithoutCaption
+})
+
+const hasTableCaption = computed(() => !!slots.caption || !!tableProps.value.caption)
+const hasDataTableHeader = computed(() => hasTableCaption.value || hasHeaderControls.value)
+
 const paginatorProps = computed(() => ({
   loading: isLoading.value,
   currentPage: props.pagination?.currentPage ?? 1,
@@ -727,15 +775,9 @@ function clearFilters() {
   if (filters.value) {
     filters.value.forEach((filter) => {
       if (isSegmentFilter(filter)) {
-        // Set "All" (first segment) to selected, or true, and the rest to false
-        filter.segments.forEach((segment, index) => {
-          segment.selected = index === 0
-        })
+        filter.segments.forEach((segment) => segment.selected = false)
       } else if (isDropdownFilter(filter)) {
-        // Set all options (selected) to false
-        filter.options.forEach((option) => {
-          option.selected = false
-        })
+        filter.options.forEach((option) => option.selected = false)
       }
     })
   }
@@ -759,9 +801,9 @@ function onFilterChange(filterKey: string, segment?: DataTableSegments) {
   if (!filter) return
 
   if (isSegmentFilter(filter) && segment) {
-    // Set clicked segment to selected and all others to false
+    // Set clicked segment to selected and all others to false or toggle the clicked segment if it's already selected
     filter.segments.forEach((s) => {
-      s.selected = s.label === segment.label
+      s.selected = s.label === segment.label ? !s.selected : false
     })
   }
 

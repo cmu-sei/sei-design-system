@@ -19,7 +19,15 @@ export default {
       options: [true, false],
       control: { type: 'radio' }
     },
+    hideHeader: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
     rowHighlight: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
+    standalone: {
       options: [true, false],
       control: { type: 'radio' }
     },
@@ -88,10 +96,12 @@ Default.args = {
     { id: 5, fruit: "Elderberry", employee: "Matilda Jeffries", lastDelivered: new Date("01/01/2019"), createdDate: new Date("04/10/2017"), additionalData: {store: 'Foodland', aisle: '5', price: '2.00' } },
   ],
   enableDrawer: false,
+  hideHeader: false,
   sortBy: 'lastDelivered',
   sortDesc: true,
   onSort: undefined,
   density: undefined,
-  rowHighlight: false
+  rowHighlight: false,
+  standalone: false
 };
 

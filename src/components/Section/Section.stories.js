@@ -25,6 +25,19 @@ const Template = (args) => ({
   },
   template: `
     <sds-section v-bind="args">
+      <template #nav>Section nav</template>
+      Lorem ipsum dolor sit amet....
+    </sds-section>
+  `
+});
+
+const NamedSlotsTemplate = (args) => ({
+  components: { SdsSection },
+  setup() {
+    return { args }
+  },
+  template: `
+    <sds-section v-bind="args">
       <template #title>Section title</template>
       <template #subtitle>Section subtitle</template>
       <template #nav>Section nav</template>
@@ -34,5 +47,11 @@ const Template = (args) => ({
 });
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  title: 'Section title',
+  subtitle: 'Section subtitle'
+};
+
+export const NamedSlots = NamedSlotsTemplate.bind({});
+NamedSlots.args = {};
 

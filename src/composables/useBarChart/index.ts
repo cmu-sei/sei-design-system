@@ -130,15 +130,17 @@ interface NormalizedGroup {
  * @param {Ref<BarMode> | ComputedRef<BarMode>} mode - 'grouped' or 'stacked' for multi-series.
  * @param {Ref<number> | ComputedRef<number>} innerWidth - Inner SVG width (after margin subtraction).
  * @param {Ref<number> | ComputedRef<number>} innerHeight - Inner SVG height (after margin subtraction).
- * @param {Ref<string | Function> | ComputedRef<string | Function>} [valueFormat='~s'] - D3 format string or formatter function for numeric axis labels.
+ * @param {Ref<string | Function> | ComputedRef<string | Function>} [xTickFormatter='~s'] - D3 format string or formatter function for x-axis numeric ticks.
+ * @param {Ref<string | Function> | ComputedRef<string | Function>} [yTickFormatter='~s'] - D3 format string or formatter function for y-axis numeric ticks.
  *
- * @returns {{ data: BarData, categoryScale: ScaleBand<string>, valueScale: ScaleLinear<number, number>, xAxis: any, yAxis: any, bars: ComputedRef<BarRect[]>, legendItems: ComputedRef<ChartLegendItem[]> }} Reactive computed values:
+ * @returns {{ data: BarData, categoryScale: ScaleBand<string>, valueScale: ScaleLinear<number, number>, xAxis: any, yAxis: any, bars: ComputedRef<BarRect[]>, legendItems: ComputedRef<ChartLegendItem[]>, gridLines: ComputedRef<number[]> }} Reactive computed values:
  *   - categoryScale: ScaleBand for category axis
  *   - valueScale: ScaleLinear for value axis
  *   - xAxis: Computed D3 axis generator for x-axis
  *   - yAxis: Computed D3 axis generator for y-axis
  *   - bars: ComputedRef<BarRect[]> positioned and colored bars
  *   - legendItems: ComputedRef<ChartLegendItem[]> legend items for all series/items
+ *   - gridLines: ComputedRef<number[]> pixel positions of value-axis ticks (y when vertical, x when horizontal)
  *
  * @example
  * const { xAxis, yAxis, bars, legendItems } = useBarChart(
@@ -155,7 +157,10 @@ export function useBarChart(
   mode: Ref<BarMode> | ComputedRef<BarMode>,
   innerWidth: Ref<number> | ComputedRef<number>,
   innerHeight: Ref<number> | ComputedRef<number>,
-  valueFormat:
+  xTickFormatter:
+    | Ref<string | ((v: number) => string)>
+    | ComputedRef<string | ((v: number) => string)> = computed(() => '~s'),
+  yTickFormatter:
     | Ref<string | ((v: number) => string)>
     | ComputedRef<string | ((v: number) => string)> = computed(() => '~s'),
 ) {
@@ -270,7 +275,7 @@ export function useBarChart(
   // D3 axis generators
   const xAxisScale = computed(() => (isVertical.value ? categoryScale.value : valueScale.value))
   const xAxisDirection = computed(() => 'bottom' as const)
-  const xAxisFormat = computed(() => (isVertical.value ? undefined : valueFormat.value))
+  const xAxisFormat = computed(() => (isVertical.value ? undefined : xTickFormatter.value))
   // Only limit ticks on the linear (value) x-axis (horizontal orientation); band axes show all categories
   const xAxisTicks = computed(() =>
     isVertical.value ? undefined : Math.max(2, Math.floor(innerWidth.value / 60)),
@@ -279,12 +284,18 @@ export function useBarChart(
 
   const yAxisScale = computed(() => (isVertical.value ? valueScale.value : categoryScale.value))
   const yAxisDirection = computed(() => 'left' as const)
-  const yAxisFormat = computed(() => (isVertical.value ? valueFormat.value : undefined))
+  const yAxisFormat = computed(() => (isVertical.value ? yTickFormatter.value : undefined))
   // Only limit ticks on the linear (value) y-axis (vertical orientation); band axes show all categories
   const yAxisTicks = computed(() =>
     isVertical.value ? Math.max(2, Math.floor(innerHeight.value / 40)) : undefined,
   )
   const yAxis = useChartAxis(yAxisScale, yAxisDirection, yAxisFormat, yAxisTicks)
+
+  // Pixel positions of value-axis ticks, used for gridlines perpendicular to the value axis
+  const gridLines = computed<number[]>(() => {
+    const count = isVertical.value ? yAxisTicks.value : xAxisTicks.value
+    return valueScale.value.ticks(count).map((tick) => valueScale.value(tick))
+  })
 
   // Bar rectangles
   const bars = computed<BarRect[]>(() =>
@@ -409,5 +420,5 @@ export function useBarChart(
     }))
   })
 
-  return { bars, xAxis, yAxis, legendItems, categoryScale, valueScale }
+  return { bars, xAxis, yAxis, legendItems, categoryScale, valueScale, gridLines }
 }

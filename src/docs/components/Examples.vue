@@ -1514,17 +1514,11 @@
       Examples
     </h2>
     <sds-section
+      title="Section title"
+      subtitle="Section subtitle text"
       type="raised"
       nav-class="gap-2"
     >
-      <template #title>
-        <h3 class="text-2xl">
-          Hello
-        </h3>
-      </template>
-      <template #subtitle>
-        <p>Subtitle text</p>
-      </template>
       <template #nav>
         <a
           href="#"

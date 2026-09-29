@@ -33,14 +33,14 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src')
+      '@': resolve(import.meta.dirname, './src')
     }
   },
   test: {
     coverage: {
       include: [
         'src/components/**/*.vue',
-        'src/composables/*.{js,ts}',
+        'src/composables/**/*.{js,ts}',
         'src/helpers/**/*.{js,ts}',
         'src/lib/*.{js,ts}'
       ],

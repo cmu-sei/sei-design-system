@@ -180,7 +180,7 @@ const resultValue = (value: number) => {
 }
 
 const resultCountDisplay = (count: number) => {
-  return props.showPercent ? `${count}%` : count;
+  return props.showPercent ? `${count}%` : count.toLocaleString();
 }
 
 const resultHasUrl = (result: TopFiveChartResult) => {
