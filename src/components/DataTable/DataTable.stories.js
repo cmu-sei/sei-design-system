@@ -169,7 +169,6 @@ const DefaultTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :filters="localFilters"
@@ -332,7 +331,6 @@ const MinimalTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       @update:pagination="onUpdatePagination"
@@ -398,7 +396,6 @@ const WithSearchTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :search="true"
@@ -481,7 +478,6 @@ const WithFiltersTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :filters="localFilters"
@@ -575,7 +571,6 @@ const WithBatchSelectionTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :search="true"
@@ -695,7 +690,6 @@ const WithSortByDropdownTemplate = (args) => ({
   },
   template: `
     <sds-data-table
-      v-bind="args"
       :table-data="tableData"
       :pagination="pagination"
       :sort-by="sortByConfig"
