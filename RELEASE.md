@@ -67,6 +67,7 @@ This will trigger the GitHub Actions workflow that:
 - Builds Storybook documentation
 - Performs a dry-run publish
 - Publishes to the npm registry
+- Triggers a production SDS Base release with the same semantic version increment
 
 ### What NOT to Do
 
@@ -166,6 +167,18 @@ Beta versions are automatically published when you push to the `develop` branch:
    - Runs full test suite on the beta version
    - Publishes to npm with `--tag beta`
    - Does NOT commit version changes back to repo
+   - Triggers an SDS Base beta release with the same semantic version increment
+
+Before beginning work for a new release line, set the version on `develop` to
+the intended next production version. The beta workflow compares that version
+with the current production SDS package so SDS Base can independently apply the
+same patch, minor, or major increment.
+
+Both release workflows require the `SDS_BASE_DISPATCH_TOKEN` Actions secret. It
+must be able to create repository dispatch events in `cmu-sei/sds-base`.
+If publication succeeds but the downstream dispatch fails, rerun the SDS
+workflow. It detects the existing SDS package, skips republishing it, and retries
+the SDS Base dispatch.
 
 ### Installing Beta Versions
 

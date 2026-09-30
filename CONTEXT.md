@@ -294,3 +294,126 @@ A constrained region with its own scrollable content.
 
 ### Resizer
 A handle or affordance that changes the size of an adjacent region.
+
+# Technical Context
+
+This section defines the shared technical expectations for applications that consume the SEI Design System. Copy it into a consuming repository, then document any application-specific exceptions next to the relevant guidance rather than changing the meaning of the SDS terms above.
+
+## Technology Stack
+
+### Runtime
+
+- **Vue 3** is the component runtime and a peer dependency of `@cmu-sei/sei-design-system`.
+- **TypeScript** defines component props, events, slots, composables, and public declaration files. Consuming applications should retain strict type checking at their SDS integration boundaries.
+- **Tailwind CSS 4** provides design tokens, themes, variants, utilities, and component-level CSS. Consumers compile the shipped `tailwindcss/tailwind.css` source as part of their application CSS pipeline.
+- **CSS custom properties** carry theme and component tokens at runtime. Forge, Plaid, and dark-mode selectors change presentation without changing component behavior or application data.
+- **Floating UI** supports anchored surfaces such as dropdowns, popovers, tooltips, and ComboBox suggestion lists.
+- **D3** supports chart calculations and rendering where a data-visualization component requires it.
+
+### Build and Packaging
+
+- **Node.js 20.17 or newer** and npm are required to build the design-system package.
+- **Vite and Rollup** produce the library artifacts. The package publishes an ES module entry, a UMD entry, CSS, TypeScript declarations, Volar global-component declarations, source files, fonts, and Storybook documentation.
+- **Vue remains external** to the library bundle. The consuming application owns the Vue runtime and must provide a compatible Vue 3 version.
+- The package supports global registration through its default Vue plugin and named component imports through the package entry point. Consumers should prefer named imports when their bundler can remove unused exports.
+- The package declares `sideEffects: false` to support dead-code elimination. Consumers must import the SDS Tailwind source or generated CSS explicitly; JavaScript imports do not implicitly install global styles.
+
+### Development and Verification
+
+- **Vitest, jsdom, and Vue Test Utils** cover component and composable behavior.
+- **Storybook** documents component contracts and provides isolated visual and interaction examples.
+- **ESLint and vue-tsc** enforce code quality and type safety.
+- The release verification pipeline runs linting, tests, the Vite library build, TypeScript declaration generation, Volar declaration generation, and the Storybook build before publication.
+
+## System Architecture Flows
+
+### Dependency and Styling Flow
+
+1. The consuming application pins a released `@cmu-sei/sei-design-system` version in its package manifest and lockfile.
+2. The application provides compatible Vue 3 and Tailwind CSS 4 peer dependencies.
+3. The application imports named SDS components or installs the SDS plugin for global component registration.
+4. The application CSS entry imports `@cmu-sei/sei-design-system/tailwindcss/tailwind.css`, either directly or through a shared base package.
+5. Tailwind scans the consuming application and the SDS source declared by the SDS stylesheet, resolves tokens and variants, and emits the application CSS bundle.
+6. A theme selector supplies Forge, Plaid, and dark-mode token values to descendants. Components consume those values without owning application-level theme state.
+
+### Rendering and Interaction Flow
+
+1. The application or route owns domain data, authorization, navigation, and asynchronous operations.
+2. The application passes serializable data and configuration into SDS components through typed props and models.
+3. An SDS component renders semantic HTML and manages presentation-level state such as focus, selection, disclosure, keyboard navigation, and validation display.
+4. The component emits typed events or model updates in response to user interaction.
+5. The application validates the event against domain rules, changes application state, and passes the resulting state back to the component.
+
+SDS components must not become the source of truth for application records or business workflows. Components may own temporary interaction state, but domain state and side effects remain in the consuming application.
+
+### Overlay and Floating-Surface Flow
+
+1. An application-controlled trigger opens an overlay or anchored floating surface.
+2. SDS positions the surface and manages its interaction boundary, including keyboard handling, focus containment where applicable, and background scroll suppression for overlays.
+3. User actions emit intent back to the application; they do not bypass application authorization or validation.
+4. During the close lifecycle, the overlay continues to own focus restoration and scroll suppression.
+5. After close completes, focus returns to the initiating element when it is still available and the page regains normal scrolling.
+
+### Asynchronous Data Flow
+
+1. The application receives an SDS query, pagination, filtering, sorting, upload, or selection event.
+2. The application debounces or cancels superseded requests where appropriate and calls its API or service layer.
+3. SDS displays application-provided pending, empty, success, or error state without owning transport credentials or API clients.
+4. The application normalizes and validates the response before passing data into SDS.
+5. Large option and row collections use pagination or virtualization rather than rendering an unbounded DOM collection.
+
+### Release and Adoption Flow
+
+1. Changes are reviewed and pass lint, unit tests, type checking, the library build, declaration generation, and Storybook build.
+2. A beta package is published from `develop` for integration testing.
+3. A production release is created from `main` under semantic versioning and published to the package registry.
+4. A consuming repository updates its manifest and lockfile to an explicit released version.
+5. The consumer runs its own build, tests, accessibility checks, and performance checks before deployment. A successful SDS package release does not replace consumer-level verification.
+
+## Performance Targets
+
+Performance is a shared responsibility. SDS supplies reusable rendering and interaction primitives; the consuming application controls route composition, data volume, network behavior, asset loading, and deployment infrastructure. Measure production builds under representative data and device conditions.
+
+### User-Experience Targets
+
+At the 75th percentile of real-user measurements, on both mobile and desktop:
+
+| Metric | Target |
+| --- | --- |
+| Largest Contentful Paint (LCP) | 2.5 seconds or less |
+| Interaction to Next Paint (INP) | 200 milliseconds or less |
+| Cumulative Layout Shift (CLS) | 0.1 or less |
+
+For local component interactions that do not require a network response:
+
+- Visual acknowledgement should appear in the next animation frame when practical and within 100 milliseconds.
+- Keyboard navigation, selection, disclosure, and overlay open/close interactions should not create tasks longer than 50 milliseconds.
+- Focus restoration and background scroll release must complete with the overlay close lifecycle, without an additional perceptible delay.
+
+Network-backed controls must show a pending or optimistic state within 100 milliseconds. The API response time is an application service-level objective and must be measured separately from SDS rendering time.
+
+### Rendering and Collection Targets
+
+- Do not render unbounded tables, menus, or suggestion lists. Paginate or virtualize collections when representative data causes long tasks, missed interaction targets, or excessive DOM growth.
+- Keep rendered DOM proportional to the visible interface. Virtualized collections should render the visible range plus only the overscan required for smooth keyboard and pointer scrolling.
+- Reserve stable dimensions for images, charts, loading placeholders, and async content to protect the CLS target.
+- Avoid layout reads and writes inside unthrottled scroll, resize, pointer-move, and input loops. Use the SDS debounce, throttle, resize-observer, and virtual-scroller patterns where applicable.
+- Motion must not block input and must honor reduced-motion preferences.
+
+### Asset and Bundle Targets
+
+- Use named component imports unless global registration is an explicit application requirement.
+- Import only the icon sets, fonts, charting capabilities, and SDS surfaces required by the application.
+- Lazy-load route-specific heavy surfaces, especially charts, data-intensive views, and infrequently opened workflows.
+- Establish compressed JavaScript and CSS baselines from the production build. Pull requests must report and justify any SDS-related increase greater than 10 KB compressed or 5 percent for an affected entry chunk, whichever threshold is reached first.
+- Treat duplicate Vue runtimes or duplicate major versions of SDS dependencies as build failures.
+
+Absolute bundle-size limits are application-specific and must be recorded in the consuming repository after a representative production baseline is measured. They are not inferred from the size of the complete SDS package, because consumers use different component and data-visualization subsets.
+
+### Verification Gates
+
+- Run unit tests, type checking, linting, and the production build for every SDS dependency update.
+- Exercise changed components in Storybook or an equivalent isolated harness at supported viewport and container widths.
+- Run automated accessibility checks and keyboard verification for changed interaction flows.
+- Run a mobile and desktop Lighthouse or equivalent lab test on affected critical routes; investigate regressions before merge.
+- Collect real-user Core Web Vitals where the deployment platform permits it. Lab results guide development, while field measurements determine whether the user-experience targets are met.
