@@ -1,12 +1,8 @@
 @layer base {
   .sds-base-chart {
-    .tick text {
-       @apply dark:fill-gray-200;
-    }
-
-    .domain,
-    .text line {
-      @apply dark:stroke-gray-600;
+    .sds-axis-label {
+      @apply sds-theme-forge:font-sans;
+      @apply sds-theme-plaid:font-serif;
     }
   }
 }

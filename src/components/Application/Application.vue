@@ -105,11 +105,11 @@
                     <!-- @slot App icon content. @binding classList -->
                     <slot
                       name="app-icon"
-                      class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                      class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                     >
                       <span
                         v-if="!hideAppIcon"
-                        class="flex items-center w-4 h-4 my-auto shrink-0"
+                        class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                       >
                         <template v-if="appUrl">
                           <a
@@ -190,11 +190,11 @@
                         <slot
                           name="mobile-sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                          class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="flex items-center w-4 h-4 my-auto shrink-0"
+                            class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                           >
                             <img
                               v-if="item.iconUrl"
@@ -209,22 +209,17 @@
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
                         </slot>
-                        <span class="inline-block my-auto text-left">{{ item.title }}</span>
-                        <span
-                          v-if="itemsGroupBadgeCount(item) && !showItemsGroup(item)"
-                          class="inline-block my-auto"
-                        >
-                          <span
-                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                          >{{ itemsGroupBadgeCount(item) }}</span>
-                        </span>
+                        <ApplicationNavigationLabel
+                          :title="item.title"
+                          :badge-count="showItemsGroup(item) ? null : itemsGroupBadgeCount(item)"
+                        />
                         <IconFa7SolidChevronDown
                           v-if="showItemsGroup(item)"
-                          class="shrink-0 w-4 h-4 ml-auto my-auto"
+                          class="self-start shrink-0 w-4 h-4 ml-auto mt-1"
                         />
                         <IconFa7SolidChevronRight
                           v-else
-                          class="shrink-0 w-4 h-4 ml-auto my-auto"
+                          class="self-start shrink-0 w-4 h-4 ml-auto mt-1"
                         />
                       </button>
                       <template v-if="showItemsGroup(item)">
@@ -241,20 +236,13 @@
                           }"
                           @click="navigate(item, subitem, $event)"
                         >
-                          <span
-                            class="inline-block my-auto text-left"
-                          >{{ subitem.title }}</span>
-                          <span
-                            v-if="subitem.badgeCount"
-                            class="inline-block my-auto"
-                          >
-                            <span
-                              class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                            >{{ subitem.badgeCount }}</span>
-                          </span>
+                          <ApplicationNavigationLabel
+                            :title="subitem.title"
+                            :badge-count="subitem.badgeCount"
+                          />
                           <span
                             v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
-                            class="inline-flex gap-1 my-auto ml-auto"
+                            class="inline-flex gap-1 self-start ml-auto"
                           >
                             <kbd
                               v-for="(kbdSc, index) in subitem.keyboardShortcut"
@@ -280,11 +268,11 @@
                       <slot
                         name="mobile-sidebar-navigation-item-icon"
                         :item="item"
-                        class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                        class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                       >
                         <span
                           v-if="!hideSidebarIcons"
-                          class="flex items-center w-4 h-4 my-auto shrink-0"
+                          class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                         >
                           <img
                             v-if="item.iconUrl"
@@ -299,18 +287,13 @@
                           <span class="sr-only">{{ item.title }}</span>
                         </span>
                       </slot>
-                      <span class="inline-block my-auto text-left">{{ item.title }}</span>
-                      <span
-                        v-if="item.badgeCount"
-                        class="inline-block my-auto"
-                      >
-                        <span
-                          class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                        >{{ item.badgeCount }}</span>
-                      </span>
+                      <ApplicationNavigationLabel
+                        :title="item.title"
+                        :badge-count="item.badgeCount"
+                      />
                       <span
                         v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
-                        class="inline-flex gap-1 my-auto ml-auto"
+                        class="inline-flex gap-1 self-start ml-auto"
                       >
                         <kbd
                           v-for="(kbdSc, index) in item.keyboardShortcut"
@@ -430,11 +413,11 @@
                   <!-- @slot App icon content. @binding classList -->
                   <slot
                     name="app-icon"
-                    class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                    class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                   >
                     <span
                       v-if="!hideAppIcon"
-                      class="flex items-center w-4 h-4 my-auto shrink-0"
+                      class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                       :class="{ 'mx-auto': collapsed }"
                     >
                       <template v-if="appUrl">
@@ -508,6 +491,7 @@
                 >
                   <template v-if="item.items">
                     <sds-tooltip
+                      class="w-full"
                       placement="right"
                       :disabled="!collapsed"
                     >
@@ -525,11 +509,11 @@
                           <slot
                             name="sidebar-navigation-item-icon"
                             :item="item"
-                            class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                            class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                           >
                             <span
                               v-if="!hideSidebarIcons"
-                              class="flex items-center w-4 h-4 my-auto shrink-0"
+                              class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                               :class="{ 'mx-auto': collapsed }"
                             >
                               <img
@@ -545,33 +529,26 @@
                               <span class="sr-only">{{ item.title }}</span>
                             </span>
                           </slot>
-                          <span
+                          <ApplicationNavigationLabel
                             v-if="!collapsed"
-                            class="inline-block my-auto text-left"
-                          >{{ item.title }}</span>
+                            :title="item.title"
+                            :badge-count="showItemsGroup(item) ? null : itemsGroupBadgeCount(item)"
+                          />
                           <span
-                            v-if="itemsGroupBadgeCount(item) && !showItemsGroup(item)"
-                            class="inline-block my-auto"
-                            :class="{
-                              'absolute bottom-1 right-3': collapsed
-                            }"
+                            v-if="collapsed && itemsGroupBadgeCount(item) && !showItemsGroup(item)"
+                            class="absolute bottom-1 right-3"
                           >
                             <span
-                              v-if="!collapsed"
-                              class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                            >{{ itemsGroupBadgeCount(item) }}</span>
-                            <span
-                              v-else
                               class="flex justify-center p-1 rounded-full bg-red-600"
                             ><span class="sr-only">{{ itemsGroupBadgeCount(item) }}</span></span>
                           </span>
                           <IconFa7SolidChevronDown
                             v-if="!collapsed && showItemsGroup(item)"
-                            class="shrink-0 w-4 h-4 ml-auto my-auto"
+                            class="self-start shrink-0 w-4 h-4 ml-auto mt-1"
                           />
                           <IconFa7SolidChevronRight
                             v-else-if="!collapsed"
-                            class="shrink-0 w-4 h-4 ml-auto my-auto"
+                            class="self-start shrink-0 w-4 h-4 ml-auto mt-1"
                           />
                         </button>
                       </template>
@@ -591,20 +568,13 @@
                         }"
                         @click="navigate(item, subitem, $event)"
                       >
-                        <span
-                          class="inline-block my-auto text-left"
-                        >{{ subitem.title }}</span>
-                        <span
-                          v-if="subitem.badgeCount"
-                          class="inline-block my-auto"
-                        >
-                          <span
-                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                          >{{ subitem.badgeCount }}</span>
-                        </span>
+                        <ApplicationNavigationLabel
+                          :title="subitem.title"
+                          :badge-count="subitem.badgeCount"
+                        />
                         <span
                           v-if="!collapsed && subitem.keyboardShortcut && subitem.keyboardShortcut?.length"
-                          class="inline-flex gap-1 my-auto ml-auto"
+                          class="inline-flex gap-1 self-start ml-auto"
                         >
                           <kbd
                             v-for="(kbdSc, index) in subitem.keyboardShortcut"
@@ -618,6 +588,7 @@
                   </template>
                   <sds-tooltip
                     v-else
+                    class="w-full"
                     placement="right"
                     :disabled="!collapsed"
                   >
@@ -635,11 +606,11 @@
                         <slot
                           name="sidebar-navigation-item-icon"
                           :item="item"
-                          class-list="flex items-center w-4 h-4 my-auto shrink-0"
+                          class-list="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                         >
                           <span
                             v-if="!hideSidebarIcons"
-                            class="flex items-center w-4 h-4 my-auto shrink-0"
+                            class="flex items-center self-start w-4 h-4 mt-1 shrink-0"
                             :class="{ 'mx-auto': collapsed }"
                           >
                             <img
@@ -655,29 +626,22 @@
                             <span class="sr-only">{{ item.title }}</span>
                           </span>
                         </slot>
-                        <span
+                        <ApplicationNavigationLabel
                           v-if="!collapsed"
-                          class="inline-block my-auto text-left"
-                        >{{ item.title }}</span>
+                          :title="item.title"
+                          :badge-count="item.badgeCount"
+                        />
                         <span
-                          v-if="item.badgeCount"
-                          class="inline-block my-auto"
-                          :class="{
-                            'absolute bottom-1 right-3': collapsed
-                          }"
+                          v-if="collapsed && item.badgeCount"
+                          class="absolute bottom-1 right-3"
                         >
                           <span
-                            v-if="!collapsed"
-                            class="flex items-center justify-center px-2 py-1 text-xs font-bold rounded-full text-white bg-red-600 dark:bg-red-700"
-                          >{{ item.badgeCount }}</span>
-                          <span
-                            v-else
                             class="flex justify-center p-1 rounded-full bg-red-600 dark:bg-red-700"
                           ><span class="sr-only">{{ item.badgeCount }}</span></span>
                         </span>
                         <span
                           v-if="!collapsed && item.keyboardShortcut && item.keyboardShortcut?.length"
-                          class="inline-flex gap-1 my-auto ml-auto"
+                          class="inline-flex gap-1 self-start ml-auto"
                         >
                           <kbd
                             v-for="(kbdSc, index) in item.keyboardShortcut"
@@ -821,6 +785,7 @@
 import SdsLink from '../Link/Link.vue'
 import SdsTooltip from '../Tooltip/Tooltip.vue'
 import SdsSeiWordmark from '../SeiWordmark/SeiWordmark.vue'
+import ApplicationNavigationLabel from './ApplicationNavigationLabel.vue'
 import { useFocusTrap, useEventListener } from '@/composables'
 
 export interface ApplicationSidebarNavItem {
