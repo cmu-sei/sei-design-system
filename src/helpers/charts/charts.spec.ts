@@ -11,7 +11,12 @@ import {
   resolveItemColor,
   sortByProperty,
 } from './index'
-import { defaultColorsDark, defaultSingleColorDark, lineChartColorValues } from './colors'
+import {
+  defaultColorsDark,
+  defaultSingleColorDark,
+  lineChartColorValues,
+  monochromeColorScheme,
+} from './colors'
 
 interface SortableItem {
   label: string
@@ -109,6 +114,13 @@ describe('helpers/charts', () => {
   })
 
   describe('constants and mappings', () => {
+    it('orders the monochromatic color scheme from dark to light', () => {
+      expect(monochromeColorScheme[0]).toBe('var(--color-black)')
+      expect(monochromeColorScheme.at(-1)).toBe('var(--color-white)')
+      expect(defaultSingleColor).toBe('var(--color-blue-600)')
+      expect(defaultSingleColorDark).toBe('var(--color-blue-300)')
+    })
+
     it('exports expected chart constants', () => {
       expect(BAND_PADDING).toBe(0.1)
       expect(DEFAULT_CHART_MARGIN).toEqual({ top: 20, right: 20, bottom: 20, left: 20 })

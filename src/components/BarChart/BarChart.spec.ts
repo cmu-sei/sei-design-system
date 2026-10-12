@@ -37,6 +37,56 @@ describe('BarChart', () => {
     },
   )
 
+  it.each([
+    { orientation: 'vertical' as const, categoryAxis: 'x', plotSize: 400, otherSize: 300 },
+    { orientation: 'horizontal' as const, categoryAxis: 'y', plotSize: 300, otherSize: 400 },
+  ])('shows a consistent translucent category background on $orientation bar hover', async ({
+    orientation,
+    categoryAxis,
+    plotSize,
+    otherSize,
+  }) => {
+    const wrapper = mount(Component, {
+      props: {
+        data: [{ label: 'First', value: 20 }, { label: 'Second', value: 80 }],
+        orientation,
+        showTooltip: false,
+        showGrid: false,
+        margin: { top: 20, right: 20, bottom: 40, left: 60 },
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    await nextTick()
+
+    expect(wrapper.find('[data-id="sds-bar-chart-hover-background"]').exists()).toBe(false)
+
+    const bars = wrapper.findAll('rect[role="img"]')
+    await bars[0]!.trigger('mouseenter')
+
+    const firstBackground = wrapper.find('[data-id="sds-bar-chart-hover-background"]')
+    const firstStart = Number(firstBackground.attributes(categoryAxis))
+    const firstSize = Number(firstBackground.attributes(categoryAxis === 'x' ? 'width' : 'height'))
+    const firstEndInset = plotSize - firstStart - firstSize
+    expect(firstStart).toBeGreaterThan(0)
+    expect(Number(firstBackground.attributes(categoryAxis === 'x' ? 'height' : 'width'))).toBe(otherSize)
+    expect(firstBackground.classes()).toEqual(
+      expect.arrayContaining(['fill-gray-100/50', 'dark:fill-gray-900/50']),
+    )
+
+    await bars.at(-1)!.trigger('mouseenter')
+    const lastBackground = wrapper.find('[data-id="sds-bar-chart-hover-background"]')
+    const lastStart = Number(lastBackground.attributes(categoryAxis))
+    const lastSize = Number(lastBackground.attributes(categoryAxis === 'x' ? 'width' : 'height'))
+    const lastEndInset = plotSize - lastStart - lastSize
+    expect(lastStart).toBeCloseTo(firstEndInset)
+    expect(lastEndInset).toBeCloseTo(firstStart)
+    expect(lastSize).toBeCloseTo(firstSize)
+
+    await wrapper.trigger('mouseleave')
+    expect(wrapper.find('[data-id="sds-bar-chart-hover-background"]').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
   it('renders horizontal grid lines at value ticks behind vertical bars', async () => {
     const wrapper = mount(Component, {
       props: {

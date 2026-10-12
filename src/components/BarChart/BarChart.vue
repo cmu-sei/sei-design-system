@@ -43,6 +43,16 @@
               stroke-width="1"
             />
           </template>
+          <rect
+            v-if="hoveredCategoryBackground"
+            data-id="sds-bar-chart-hover-background"
+            :x="hoveredCategoryBackground.x"
+            :y="hoveredCategoryBackground.y"
+            :width="hoveredCategoryBackground.width"
+            :height="hoveredCategoryBackground.height"
+            class="pointer-events-none fill-gray-100/50 dark:fill-gray-900/50"
+            role="none"
+          />
           <!-- Bars (rendered first so axes paint on top of bar edges) -->
           <rect
             v-for="(bar, i) in computeBars(innerWidth, innerHeight, containerWidth)"
@@ -219,7 +229,7 @@ const resolvedFormatter = computed(() => {
 const innerWidthRef = ref(0)
 const innerHeightRef = ref(0)
 
-const { bars, xAxis, yAxis, legendItems, gridLines } = useBarChart(
+const { bars, xAxis, yAxis, legendItems, categoryScale, gridLines } = useBarChart(
   dataRef,
   orientationRef,
   modeRef,
@@ -229,6 +239,24 @@ const { bars, xAxis, yAxis, legendItems, gridLines } = useBarChart(
   yTickFormatterRef,
 )
 const hasDistinctColors = computed(() => hasMultipleColors(bars.value))
+const hoveredCategoryLabel = ref<string | null>(null)
+const hoveredCategoryBackground = computed(() => {
+  const label = hoveredCategoryLabel.value
+  if (label === null) return null
+
+  const position = categoryScale.value(label)
+  if (position === undefined) return null
+
+  const bandSize = categoryScale.value.bandwidth()
+  const slotSize = categoryScale.value.step()
+  const center = position + bandSize / 2
+  const start = center - slotSize / 2
+  const end = center + slotSize / 2
+
+  return props.orientation === 'horizontal'
+    ? { x: 0, y: start, width: innerWidthRef.value, height: end - start }
+    : { x: start, y: 0, width: end - start, height: innerHeightRef.value }
+})
 
 // Entry animation
 const barsGroupRef = ref<SVGGElement | null>(null)
@@ -239,7 +267,7 @@ async function animateBars() {
   if (!barsGroupRef.value) return
   const isVertical = props.orientation !== 'horizontal'
   const currentBars = bars.value
-  const rects = select(barsGroupRef.value).selectAll<SVGRectElement, unknown>('rect')
+  const rects = select(barsGroupRef.value).selectAll<SVGRectElement, unknown>('rect[role="img"]')
   if (isVertical) {
     rects
       .attr('height', 0)
@@ -305,6 +333,7 @@ function getTooltipAnchor(e: MouseEvent): { x: number; y: number } {
 }
 
 function onBarEnter(e: MouseEvent, bar: BarRect) {
+  hoveredCategoryLabel.value = bar.label
   if (!props.showTooltip) return
   const anchor = getTooltipAnchor(e)
   tooltip.show(anchor.x, anchor.y, {
@@ -316,6 +345,7 @@ function onBarEnter(e: MouseEvent, bar: BarRect) {
 }
 
 function onBarMove(e: MouseEvent, bar: BarRect) {
+  hoveredCategoryLabel.value = bar.label
   if (!props.showTooltip) return
   const anchor = getTooltipAnchor(e)
   tooltip.show(anchor.x, anchor.y, {
@@ -327,6 +357,7 @@ function onBarMove(e: MouseEvent, bar: BarRect) {
 }
 
 function onChartLeave() {
+  hoveredCategoryLabel.value = null
   hoveredIndex.value = null
   tooltip.hide()
 }

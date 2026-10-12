@@ -1,24 +1,24 @@
 /**
- * Monochromatic blue color scheme (12 shades from light to dark).
+ * Monochromatic blue color scheme (from dark to light).
  * Used as the base for categorical color palettes and dark mode variants.
  * CSS custom properties are used for dynamic theming support.
  * @const
  */
 export const monochromeColorScheme = Object.freeze([
-  'var(--color-white)',
-  'var(--color-blue-25)',
-  'var(--color-blue-50)',
-  'var(--color-blue-100)',
-  'var(--color-blue-200)',
-  'var(--color-blue-300)',
-  'var(--color-blue-400)',
-  'var(--color-blue-500)',
-  'var(--color-blue-600)',
-  'var(--color-blue-700)',
-  'var(--color-blue-800)',
-  'var(--color-blue-900)',
-  'var(--color-blue-950)',
   'var(--color-black)',
+  'var(--color-blue-950)',
+  'var(--color-blue-900)',
+  'var(--color-blue-800)',
+  'var(--color-blue-700)',
+  'var(--color-blue-600)',
+  'var(--color-blue-500)',
+  'var(--color-blue-400)',
+  'var(--color-blue-300)',
+  'var(--color-blue-200)',
+  'var(--color-blue-100)',
+  'var(--color-blue-50)',
+  'var(--color-blue-25)',
+  'var(--color-white)',
 ] as const)
 
 /**
@@ -51,13 +51,13 @@ export const heatmapColorsDark: string[] = [...monochromeColorScheme].reverse().
  * Default color used for single-series bar charts (blue-600).
  * @const
  */
-export const defaultSingleColor = monochromeColorScheme[8] // blue-600
+export const defaultSingleColor = monochromeColorScheme[5] // blue-600
 
 /**
  * Default color used for single-series bar charts in dark mode (blue-300).
  * @const
  */
-export const defaultSingleColorDark = monochromeColorScheme[5] // blue-300
+export const defaultSingleColorDark = monochromeColorScheme[8] // blue-300
 
 /**
  * Tailwind text-color classes used for line-chart series when six or fewer lines are present.
