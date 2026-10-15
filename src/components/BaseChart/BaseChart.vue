@@ -87,7 +87,7 @@
         >
           <span
             ref="yAxisLabelRef"
-            class="rotate-180 whitespace-nowrap text-base font-semibold text-gray-600 [writing-mode:vertical-rl] dark:text-gray-400"
+            class="sds-axis-label rotate-180 whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-gray-300 [writing-mode:vertical-rl]"
           >
             {{ props.yAxisLabel }}
           </span>
@@ -95,7 +95,7 @@
         <div
           v-if="props.xAxisLabel"
           ref="xAxisLabelRef"
-          class="absolute text-base font-semibold text-gray-600 dark:text-gray-400"
+          class="sds-axis-label absolute text-sm font-semibold text-gray-900 dark:text-gray-300"
           :style="xAxisLabelStyle"
         >
           {{ props.xAxisLabel }}

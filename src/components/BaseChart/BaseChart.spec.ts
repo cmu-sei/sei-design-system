@@ -99,19 +99,21 @@ describe('BaseChart', () => {
     expect(yLabel.element.tagName).toBe('DIV')
     expect(yLabel.text()).toBe('Percentage')
     expect(yLabelText.classes()).toEqual(expect.arrayContaining([
-      'text-base',
+      'sds-axis-label',
+      'text-sm',
       'font-semibold',
-      'text-gray-600',
-      'dark:text-gray-400',
+      'text-gray-900',
+      'dark:text-gray-300',
     ]))
     expect(yLabel.classes()).toContain('absolute')
     expect(xLabel?.classes()).toContain('absolute')
     expect(xLabel?.text()).toBe('Year')
     expect(xLabel?.classes()).toEqual(expect.arrayContaining([
-      'text-base',
+      'sds-axis-label',
+      'text-sm',
       'font-semibold',
-      'text-gray-600',
-      'dark:text-gray-400',
+      'text-gray-900',
+      'dark:text-gray-300',
     ]))
     expect(wrapper.find('.sds-base-chart').classes()).toContain('gap-y-4')
 
@@ -147,7 +149,7 @@ describe('BaseChart', () => {
 
     expect(wrapper.find('.sds-chart-axis[data-orientation="x"] .tick text').element.getBoundingClientRect().bottom)
       .toBe(116)
-    expect(wrapper.find('.absolute.text-base').attributes('style')).toContain('top: 124px')
+    expect(wrapper.find('.sds-axis-label.absolute:not(.flex)').attributes('style')).toContain('top: 124px')
     expect(wrapper.find('.sds-chart-axis[data-orientation="y"] .tick text').element.getBoundingClientRect().left)
       .toBe(32)
     const yLabelContainer = wrapper.find('.absolute.flex.items-center')
