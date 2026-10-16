@@ -167,7 +167,7 @@
           />
           <SdsFormGroup
             for="comboBox2_1"
-            label="size='sm' type='select' :click-to-select='true' required"
+            label="size='sm' type='select' required"
             helper-text="Select items to add to your grocery list"
           >
             <SdsComboBox
@@ -180,7 +180,6 @@
               size="sm"
               type="select"
               filter-suggestions
-              click-to-select
               @complete="comboBox2_1.onComplete"
               @result="comboBox2_1.onResult"
               @enter="comboBox2_1.onEnter"
@@ -205,7 +204,7 @@
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
           />
-          <code class="text-xs">size="sm" type="taggable-select" :click-to-select="true"</code>
+          <code class="text-xs">size="sm" type="taggable-select"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
             v-model:selected="comboBox3.selected"
@@ -217,7 +216,6 @@
             size="sm"
             type="taggable-select"
             filter-suggestions
-            click-to-select
             option-label="name"
             option-group-label="section"
             option-group-children="items"
@@ -354,7 +352,7 @@
             placeholder="Search..."
             @enter="comboBox7.onEnter"
           />
-          <code class="text-xs">size="lg" type="select" filter-suggestions :click-to-select="true"</code>
+          <code class="text-xs">size="lg" type="select" filter-suggestions</code>
           <SdsComboBox
             v-model="comboBox8.modelValue"
             v-model:selected="comboBox8.selected"
@@ -363,7 +361,6 @@
             placeholder="Search..."
             :suggestions="comboBox8.suggestions"
             filter-suggestions
-            click-to-select
             option-label="name"
             option-group-label="section"
             option-group-children="items"
@@ -380,7 +377,6 @@
             :suggestions="comboBox9.suggestions"
             :debounce-complete="0"
             :virtualize-threshold="100"
-            click-to-select
             filter-suggestions
             option-label="name"
             option-group-label="section"
@@ -668,17 +664,20 @@ const wait = (ms: number) => {
 
 let comboBox1RequestId = 0
 
-const mockApiRequest = async (query: string) => {
-  const requestId = ++comboBox1RequestId
+watch(() => comboBox1.modelValue, query => {
+  comboBox1RequestId++
   comboBox1.suggestions = []
-  if (query === '') {
-    comboBox1.pending = false
-    return
-  }
-  comboBox1.pending = true
+  comboBox1.pending = Boolean(query.trim())
+}, { flush: 'sync' })
+
+onScopeDispose(() => { comboBox1RequestId++ })
+
+const mockApiRequest = async (query: string) => {
+  const requestId = comboBox1RequestId
+  if (!query.trim()) return
   console.log("Waiting 1 seconds...");
   await wait(1000);
-  if (requestId !== comboBox1RequestId) return
+  if (requestId !== comboBox1RequestId || query !== comboBox1.modelValue) return
   console.log("1 seconds passed... now return mock API data");
   comboBox1.suggestions = [
     { label: 'Apple', test: 'cool', index: 'cool2' },

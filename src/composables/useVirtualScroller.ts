@@ -20,6 +20,8 @@ interface UseVirtualScrollerOptions<T> {
   maxScrollHeight?: MaybeRefOrGetter<number | undefined>;
   overscan?: MaybeRefOrGetter<number>;
   getKey?: (item: T, index: number) => string | number;
+  /** Retained offscreen rows. Clip the rendered list to scrollHeight so they cannot expand its scroll range. */
+  pinnedIndices?: MaybeRefOrGetter<readonly number[]>;
 }
 
 const DEFAULT_MAX_SCROLL_HEIGHT = 10000000
@@ -85,8 +87,12 @@ export function useVirtualScroller<T>(options: UseVirtualScrollerOptions<T>) {
 
   const virtualItems = computed<VirtualListItem<T>[]>(() => {
     const physicalScrollTop = toPhysicalScrollTop(scrollTop.value)
-    return items.value.slice(startIndex.value, endIndex.value).map((item, offset) => {
-      const index = startIndex.value + offset
+    const indices = new Set(Array.from({ length: Math.max(0, endIndex.value - startIndex.value) }, (_, offset) => startIndex.value + offset))
+    for (const index of toValue(options.pinnedIndices) ?? []) {
+      if (index >= 0 && index < items.value.length) indices.add(index)
+    }
+    return [...indices].sort((left, right) => left - right).map((index) => {
+      const item = items.value[index]
       const virtualOffsetTop = index * itemHeight.value
       return {
         item,

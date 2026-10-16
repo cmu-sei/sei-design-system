@@ -1,6 +1,9 @@
 import { computed, toValue, type MaybeRefOrGetter, type Ref } from 'vue'
 
-export type ComboBoxSuggestionObject = Record<string | number, unknown>
+export type ComboBoxSuggestionObject = Record<string | number, unknown> & {
+  /** Preserved origin marker for custom tags, distinct from existing record identities. */
+  __cbxCustom?: boolean;
+}
 export type ComboBoxSuggestion = ComboBoxSuggestionObject | string
 export type ComboBoxType = 'text' | 'select' | 'taggable-select'
 
@@ -20,6 +23,7 @@ interface UseComboBoxSuggestionsOptions {
   optionGroupChildren: MaybeRefOrGetter<string | undefined>;
   disableGroupTabs: MaybeRefOrGetter<boolean>;
   activeGroupKey: Ref<number>;
+  allGroupLabel?: MaybeRefOrGetter<string>;
 }
 
 const defaultOptionLabel = 'label'
@@ -71,13 +75,17 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
     return undefined
   }
 
-  const normalizeSuggestion = (item: ComboBoxSuggestion): ComboBoxSuggestion => {
-    if (typeof item === 'string') return { [labelKey.value]: item }
+  const normalizeSuggestion = (item: ComboBoxSuggestion): ComboBoxSuggestion | undefined => {
+    if (typeof item === 'string') return item.trim() ? { [labelKey.value]: item } : undefined
 
     const optionGroupChildren = toValue(options.optionGroupChildren)
     const normalized = { ...item }
     if (optionGroupChildren && Array.isArray(item[optionGroupChildren])) {
-      normalized[optionGroupChildren] = (item[optionGroupChildren] as ComboBoxSuggestion[]).map(normalizeSuggestion)
+      const children = (item[optionGroupChildren] as ComboBoxSuggestion[]).map(normalizeSuggestion).filter(child => child !== undefined)
+      if (!children.length) return undefined
+      normalized[optionGroupChildren] = children
+    } else if (!getLabel(item).trim()) {
+      return undefined
     }
     return normalized
   }
@@ -95,7 +103,7 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
         return accumulator
       }
 
-      if (removeHtmlFromString(getLabel(item)).toLowerCase().includes(query.toLowerCase())) {
+      if (normalizeString(getLabel(item)).includes(normalizeString(query))) {
         accumulator.push({ ...item })
       }
       return accumulator
@@ -121,7 +129,7 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
     })
   }
 
-  const allSuggestions = computed(() => toValue(options.suggestions).map(normalizeSuggestion))
+  const allSuggestions = computed(() => toValue(options.suggestions).map(normalizeSuggestion).filter(suggestion => suggestion !== undefined))
 
   const allSuggestionOptions = computed(() => {
     if (!toValue(options.filterSuggestions)) return allSuggestions.value
@@ -133,7 +141,7 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
   const groups = computed<ComboBoxGroup[]>(() => {
     let key = -1
     return [
-      { key, label: 'All', count: allCount.value },
+      { key, label: toValue(options.allGroupLabel) ?? 'All', count: allCount.value },
       ...allSuggestionOptions.value.map((item) => {
         const count = getChildren(item).length
         if (count > 0) key++
@@ -187,7 +195,7 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
   })
 
   const shouldShowNewSuggestion = computed(() => {
-    return toValue(options.query) !== '' && toValue(options.type) === 'taggable-select' && !matchesSuggestion.value
+    return normalizeString(toValue(options.query)) !== '' && toValue(options.type) === 'taggable-select' && !matchesSuggestion.value
   })
 
   const hasDropdownSuggestion = computed(() => {
