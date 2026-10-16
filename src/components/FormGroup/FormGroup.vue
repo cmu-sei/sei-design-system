@@ -16,12 +16,12 @@
       class="sr-only"
     >
       <span>{{ label }}</span>
-      <span
+      <span 
         v-if="required"
         :class="{
           'sr-only': !showMarker
         }"
-      >* required</span>
+      >*<span class="sr-only">required</span></span>
       <span
         v-if="!required"
         :class="{
@@ -77,11 +77,11 @@
       </slot>
       <span
         v-if="required"
+        class="font-normal text-red-500 dark:text-red-300 text-xs"
         :class="{
           'sr-only': !showMarker
         }"
-        class="font-normal text-red-500 dark:text-red-300 text-xs"
-      >* required</span>
+      >*<span class="sr-only">required</span></span>
       <span
         v-if="!required"
         :class="{
