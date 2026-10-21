@@ -167,6 +167,7 @@
             ref="button"
             type="button"
             :disabled="disabled"
+            :aria-label="actionLabel"
             class="z-10 flex flex-col items-center justify-center text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900 active:bg-red-100 dark:active:bg-red-800 focus:outline-none focus-visible:bg-red-50"
             :class="[buttonSizeClass]"
             @click.stop="remove"
@@ -226,6 +227,8 @@ interface TagProps {
    * Determines the type of action or button.
    */
   action?: TagActionType | null
+  /** Accessible name for the action button. */
+  actionLabel?: string
   /**
    * Determines the default count(er).
    */
@@ -261,6 +264,7 @@ interface TagProps {
 }
 
 const props = withDefaults(defineProps<TagProps>(), {
+  actionLabel: undefined,
   action: null,
   counter: null,
   external: false,

@@ -17,6 +17,8 @@ interface UseComboBoxCoreOptions {
   enableSelectAll: () => boolean
   filterSuggestions: () => boolean
   optionLabel: () => string | undefined
+  optionValue?: () => string | undefined
+  allGroupLabel?: () => string
   optionGroupLabel: () => string | undefined
   optionGroupChildren: () => string | undefined
   disableGroupTabs: () => boolean
@@ -64,11 +66,14 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     optionGroupLabel: options.optionGroupLabel,
     optionGroupChildren: options.optionGroupChildren,
     disableGroupTabs: options.disableGroupTabs,
-    activeGroupKey
+    activeGroupKey,
+    allGroupLabel: options.allGroupLabel
   })
 
   const {
     findOriginalSuggestion,
+    getOptionValue,
+    sameOption,
     stripIdx,
     findSelectedIndex,
     addSelection,
@@ -84,34 +89,9 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     selected: options.selected,
     suggestions: options.suggestions,
     getLabel,
-    getChildren
-  })
-
-  const selectAllVisible = computed(() => isSelectType.value && options.multiple() && options.enableSelectAll() && allCount.value > 1)
-  const selectAllRendered = computed(() => selectAllVisible.value && countVisibleOptions(suggestionOptions.value) > 1)
-
-  const addSuggestion = computed<ComboBoxSuggestionObject>(() => ({
-    label: options.query.value,
-    name: options.query.value,
-    value: options.query.value,
-    __cbxIdx: 'add'
-  }))
-
-  const {
-    dropdownItems,
-    getDropdownItem,
-    getCurrentSuggestion,
-    lastDropdownItemIndex,
-    firstItemIndex,
-    isDropdownItemActive,
-    isAddSuggestionActive
-  } = useComboBoxDropdownItems({
-    suggestionOptions,
+    getChildren,
     optionGroupChildren: options.optionGroupChildren,
-    selectAllRendered,
-    shouldShowNewSuggestion,
-    addSuggestion,
-    arrowCounter: options.arrowCounter
+    optionValue: options.optionValue
   })
 
   const getCurrentGroupOptions = (): ComboBoxSuggestion[] => {
@@ -122,6 +102,41 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     return flattenOptions(visibleOptions)
   }
 
+  const selectAllVisible = computed(() => isSelectType.value && options.multiple() && options.enableSelectAll() && allCount.value > 1)
+  const selectAllRendered = computed(() => selectAllVisible.value && getCurrentGroupOptions().length > 1)
+
+  const addSuggestion = computed<ComboBoxSuggestionObject>(() => {
+    const label = options.query.value.trim()
+    const valueKey = options.optionValue?.()
+    return {
+      label,
+      name: label,
+      value: label,
+      [labelKey.value]: label,
+      ...(valueKey ? { [valueKey]: label } : {}),
+      __cbxCustom: true,
+      __cbxIdx: 'add'
+    }
+  })
+
+  const {
+    dropdownItems,
+    activeItem,
+    getDropdownItem,
+    getCurrentSuggestion,
+    lastDropdownItemIndex,
+    firstItemIndex,
+    isDropdownItemActive,
+    isAddSuggestionActive
+  } = useComboBoxDropdownItems({
+    suggestionOptions,
+    optionGroupChildren: options.optionGroupChildren,
+    selectAllRendered,
+    shouldShowNewSuggestion: () => shouldShowNewSuggestion.value && !isSelected(options.query.value),
+    addSuggestion,
+    arrowCounter: options.arrowCounter
+  })
+
   const selectAllChecked = computed(() => areAllSelected(getCurrentGroupOptions()))
   const selectAllIndeterminate = computed(() => areSomeSelected(getCurrentGroupOptions()))
 
@@ -131,14 +146,6 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     onComplete: options.onComplete,
     onShowDropdown: options.onShowDropdown
   })
-
-  const updateQuery = (value: string): void => {
-    setQuery(value)
-  }
-
-  const updateUserQuery = (value: string): void => {
-    setUserQuery(value)
-  }
 
   return {
     activeGroupKey,
@@ -161,6 +168,8 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     hasCategories,
     hasNoMatches,
     findOriginalSuggestion,
+    getOptionValue,
+    sameOption,
     stripIdx,
     findSelectedIndex,
     addSelection,
@@ -178,6 +187,7 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     selectAllIndeterminate,
     addSuggestion,
     dropdownItems,
+    activeItem,
     getDropdownItem,
     getCurrentSuggestion,
     lastDropdownItemIndex,
@@ -185,7 +195,7 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     isDropdownItemActive,
     isAddSuggestionActive,
     getCurrentGroupOptions,
-    setQuery: updateQuery,
-    setUserQuery: updateUserQuery
+    setQuery,
+    setUserQuery
   }
 }
