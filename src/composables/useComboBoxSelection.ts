@@ -1,23 +1,59 @@
 import type { Ref } from 'vue'
 import type { ComboBoxSuggestion } from './useComboBoxSuggestions'
+import { normalizeString } from './useComboBoxSuggestions'
 
 interface UseComboBoxSelectionOptions {
   selected: Ref<ComboBoxSuggestion[]>;
   suggestions: () => ComboBoxSuggestion[];
   getLabel: (item: ComboBoxSuggestion) => string;
   getChildren?: (item: ComboBoxSuggestion) => ComboBoxSuggestion[];
+  optionGroupChildren?: () => string | undefined;
+  optionValue?: () => string | undefined;
 }
 
 /**
  * Handles ComboBox selected-value lookup, mutation, and emitted-value resolution.
  */
 export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
-  const findOriginalSuggestion = (label: string): ComboBoxSuggestion | undefined => {
+  const invalidIdentities = new WeakSet<object>()
+  const getIdentity = (item: ComboBoxSuggestion): string | number | undefined => {
+    if (typeof item === 'string') return undefined
+    const key = options.optionValue?.()
+    if (!key) return undefined
+    const value = item[key]
+    if (typeof value === 'string' || (typeof value === 'number' && Number.isFinite(value))) return value
+    if (import.meta.env.DEV && !invalidIdentities.has(item)) {
+      invalidIdentities.add(item)
+      console.warn(`[SdsComboBox] optionValue="${key}" requires a string or finite numeric value on each option.`, item)
+    }
+    return undefined
+  }
+
+  const getOptionValue = (item: ComboBoxSuggestion): string => String(getIdentity(item) ?? options.getLabel(item))
+
+  const sameOption = (left: ComboBoxSuggestion, right: ComboBoxSuggestion): boolean => {
+    const isLeftCustom = typeof left === 'object' && left.__cbxCustom === true
+    const isRightCustom = typeof right === 'object' && right.__cbxCustom === true
+    if (isLeftCustom || isRightCustom) {
+      if (typeof left === 'object' && typeof right === 'object' && isLeftCustom !== isRightCustom) return false
+      return normalizeString(options.getLabel(left)) === normalizeString(options.getLabel(right))
+    }
+    const leftIdentity = getIdentity(left)
+    const rightIdentity = getIdentity(right)
+    if (options.optionValue?.() && typeof left === 'object' && typeof right === 'object') {
+      return leftIdentity !== undefined && rightIdentity !== undefined && leftIdentity === rightIdentity
+    }
+    return normalizeString(options.getLabel(left)) === normalizeString(options.getLabel(right))
+  }
+
+  const findOriginalSuggestion = (option: ComboBoxSuggestion): ComboBoxSuggestion | undefined => {
+    if (typeof option === 'object' && option.__cbxCustom === true) return undefined
+    const childrenKey = options.optionGroupChildren?.()
     const findSuggestion = (suggestions: ComboBoxSuggestion[]): ComboBoxSuggestion | undefined => {
       for (const suggestion of suggestions) {
-        if (options.getLabel(suggestion) === label) return suggestion
-
         const children = options.getChildren?.(suggestion) ?? []
+        const isGroup = !!childrenKey && typeof suggestion === 'object' && Array.isArray(suggestion[childrenKey])
+        if (!isGroup && !children.length && sameOption(suggestion, option)) return suggestion
         const childSuggestion = findSuggestion(children)
         if (childSuggestion) return childSuggestion
       }
@@ -37,8 +73,8 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     return option
   }
 
-  const findSelectedIndex = (label: string): number => {
-    return options.selected.value.findIndex(item => options.getLabel(item) === label)
+  const findSelectedIndex = (option: ComboBoxSuggestion): number => {
+    return options.selected.value.findIndex(item => sameOption(item, option))
   }
 
   const addSelection = (option: ComboBoxSuggestion): void => {
@@ -57,20 +93,13 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     options.selected.value = []
   }
 
-  const isSelected = (label: string): boolean => {
-    return options.selected.value.some(item => options.getLabel(item) === label)
+  const isSelected = (option: ComboBoxSuggestion): boolean => {
+    return findSelectedIndex(option) !== -1
   }
 
   const resolveSuggestion = (option: ComboBoxSuggestion) => {
-    let normalizedOption = option
-    let original: ComboBoxSuggestion | undefined
-
-    if (typeof option === 'object' && option !== null) {
-      original = findOriginalSuggestion(options.getLabel(option))
-      normalizedOption = typeof original === 'string' ? original : stripIdx(option)
-    } else {
-      original = findOriginalSuggestion(option)
-    }
+    const original = findOriginalSuggestion(option)
+    const normalizedOption = stripIdx(original ?? option)
 
     return {
       normalizedOption,
@@ -79,11 +108,11 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
   }
 
   const areAllSelected = (optionsToCheck: ComboBoxSuggestion[]): boolean => {
-    return optionsToCheck.length > 0 && optionsToCheck.every(option => isSelected(options.getLabel(option)))
+    return optionsToCheck.length > 0 && optionsToCheck.every(isSelected)
   }
 
   const areSomeSelected = (optionsToCheck: ComboBoxSuggestion[]): boolean => {
-    const selectedCount = optionsToCheck.filter(option => isSelected(options.getLabel(option))).length
+    const selectedCount = optionsToCheck.filter(isSelected).length
     return selectedCount > 0 && selectedCount < optionsToCheck.length
   }
 
@@ -91,16 +120,14 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     if (!optionsToToggle.length) return
 
     if (areAllSelected(optionsToToggle)) {
-      const labelsToRemove = new Set(optionsToToggle.map(option => options.getLabel(option)))
-      options.selected.value = options.selected.value.filter(option => !labelsToRemove.has(options.getLabel(option)))
+      options.selected.value = options.selected.value.filter(option => !optionsToToggle.some(candidate => sameOption(candidate, option)))
       return
     }
 
     const nextSelected = [...options.selected.value]
     optionsToToggle.forEach((option) => {
-      const label = options.getLabel(option)
-      if (!nextSelected.some(selectedOption => options.getLabel(selectedOption) === label)) {
-        nextSelected.push(stripIdx(findOriginalSuggestion(label) ?? option))
+      if (!nextSelected.some(selectedOption => sameOption(selectedOption, option))) {
+        nextSelected.push(stripIdx(findOriginalSuggestion(option) ?? option))
       }
     })
     options.selected.value = nextSelected
@@ -108,6 +135,8 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
 
   return {
     findOriginalSuggestion,
+    getOptionValue,
+    sameOption,
     stripIdx,
     findSelectedIndex,
     addSelection,

@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A Combo Box is an input field that allows users to perform a simple search or select an item from a list of dynamically filtered options based on their query.',
+        component: 'A Combo Box is an input field that allows users to search or select from dynamically filtered options. Clicking the input opens available suggestions; clicking again keeps them open without changing the query or keyboard highlight.',
       },
     },
   },
@@ -55,7 +55,6 @@ export const NarrowContainer = (args) => ({
         v-model="query"
         :suggestions="suggestions"
         type="select"
-        click-to-select
         option-label="name"
         option-group-label="section"
         option-group-children="items"
