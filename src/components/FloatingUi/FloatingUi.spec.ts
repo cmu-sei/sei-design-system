@@ -1,5 +1,6 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import Component from './FloatingUi.vue'
 
 describe('FloatingUi', () => {
@@ -111,6 +112,153 @@ describe('FloatingUi', () => {
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('Teleported content')
+  })
+
+  it('closes without waiting for a timer when no delay or close hook is configured', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props, slots })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+    expect(document.getElementById('teleported')).not.toBeNull()
+
+    const closing = wrapper.vm.onClose()
+    await nextTick()
+
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(wrapper.emitted('close')).toHaveLength(1)
+    await closing
+  })
+
+  it.each([false, true])('waits for an explicit close delay with a close hook configured=%s', async (hasCloseHook) => {
+    const willClose = vi.fn((resolve: () => void) => resolve())
+    const wrapper = mount(Component, {
+      attachTo: document.body, props: { ...props, willClose: hasCloseHook ? willClose : undefined }, slots
+    })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+
+    const closing = wrapper.vm.onClose(100)
+    await vi.advanceTimersByTimeAsync(99)
+    expect(document.getElementById('teleported')).not.toBeNull()
+    expect(willClose).not.toHaveBeenCalled()
+    expect(wrapper.emitted('close')).toBeUndefined()
+    await vi.advanceTimersByTimeAsync(1)
+    await closing
+    await nextTick()
+
+    expect(willClose).toHaveBeenCalledTimes(hasCloseHook ? 1 : 0)
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('defers a zero-delay close hook until after the caller and Vue updates finish', async () => {
+    const callOrder: string[] = []
+    const willClose = vi.fn((resolve: () => void) => {
+      callOrder.push('hook')
+      resolve()
+    })
+    const wrapper = mount(Component, {
+      attachTo: document.body, props: { ...props, willClose }, slots
+    })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+
+    const closing = wrapper.vm.onClose(0)
+    callOrder.push('caller')
+    await nextTick()
+    callOrder.push('Vue update')
+    expect(willClose).not.toHaveBeenCalled()
+    expect(document.getElementById('teleported')).not.toBeNull()
+    expect(wrapper.emitted('close')).toBeUndefined()
+    await vi.runAllTimersAsync()
+    await closing
+    await nextTick()
+
+    expect(callOrder).toEqual(['caller', 'Vue update', 'hook'])
+    expect(willClose).toHaveBeenCalledOnce()
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('keeps the popup open until the close hook resolves', async () => {
+    let resolveClose: () => void = () => { throw new Error('Expected the close hook to run') }
+    const willClose = vi.fn((resolve: () => void) => { resolveClose = resolve })
+    const wrapper = mount(Component, {
+      attachTo: document.body, props: { ...props, willClose }, slots
+    })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+
+    const closing = wrapper.vm.onClose()
+    await vi.runAllTimersAsync()
+    expect(willClose).toHaveBeenCalledOnce()
+    expect(document.getElementById('teleported')).not.toBeNull()
+    expect(wrapper.emitted('close')).toBeUndefined()
+    resolveClose()
+    await closing
+    await nextTick()
+
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('keeps the popup open when the close hook cancels closing', async () => {
+    const willClose = vi.fn((_resolve: () => void, reject: (reason: Error) => void) => {
+      reject(new Error('Close cancelled'))
+    })
+    const wrapper = mount(Component, {
+      attachTo: document.body, props: { ...props, willClose }, slots
+    })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+
+    const closing = wrapper.vm.onClose()
+    await vi.runAllTimersAsync()
+    await closing
+    await nextTick()
+
+    expect(willClose).toHaveBeenCalledOnce()
+    expect(document.getElementById('teleported')).not.toBeNull()
+    expect(wrapper.emitted('close')).toBeUndefined()
+  })
+
+  it('cancels a pending open when closed immediately', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props, slots })
+    void wrapper.vm.onOpen(100)
+    await vi.advanceTimersByTimeAsync(50)
+
+    const closing = wrapper.vm.onClose()
+    await vi.runAllTimersAsync()
+    await closing
+
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(wrapper.emitted('open')).toBeUndefined()
+    expect(wrapper.emitted('close')).toBeUndefined()
+  })
+
+  it('cancels an earlier delayed close before reopening', async () => {
+    const wrapper = mount(Component, { attachTo: document.body, props, slots })
+    const opening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await opening
+    void wrapper.vm.onClose(100)
+
+    const closing = wrapper.vm.onClose()
+    await nextTick()
+    expect(document.getElementById('teleported')).toBeNull()
+    expect(vi.getTimerCount()).toBe(0)
+    await closing
+    const reopening = wrapper.vm.onOpen()
+    await vi.runAllTimersAsync()
+    await reopening
+
+    expect(document.getElementById('teleported')).not.toBeNull()
+    expect(wrapper.emitted('open')).toHaveLength(2)
+    expect(wrapper.emitted('close')).toHaveLength(1)
   })
 
   it('toggles open/close state with onToggle', async () => {
