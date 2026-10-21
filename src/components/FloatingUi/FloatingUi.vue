@@ -261,9 +261,9 @@ const onOpen = async (ms: number = 0): Promise<void> => {
 
 /**
  * Closes the floating UI component.
- * Sets `shouldOpen` to false, waits for the specified delay, then waits for the `willClose` delay.
- * If the component is still open after the delays, sets `open` to false.
- * Handles any errors silently.
+ * Cancels pending open/close timers and closes immediately unless a positive delay or
+ * `willClose` hook is configured. Hooks retain their timer-deferred invocation,
+ * and a rejecting hook cancels closing.
  *
  * @async
  * @param {number} [ms=0] - The delay in milliseconds before starting the close sequence.
@@ -272,8 +272,13 @@ const onOpen = async (ms: number = 0): Promise<void> => {
 const onClose = async (ms: number = 0): Promise<void> => {
   try {
     shouldOpen.value = false
-    await openStateDelay(ms)
-    await willOpenStateDelay(props.willClose!)
+    if (ms > 0 || props.willClose) {
+      await openStateDelay(ms)
+    } else if (openStateTimeout.value) {
+      clearTimeout(openStateTimeout.value)
+      openStateTimeout.value = null
+    }
+    if (props.willClose) await willOpenStateDelay(props.willClose)
     if (!open.value) return
     open.value = false
   } catch {

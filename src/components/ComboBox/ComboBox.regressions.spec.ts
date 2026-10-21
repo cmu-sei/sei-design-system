@@ -24,6 +24,49 @@ describe('ComboBox usability regressions', () => {
   const options = () => Array.from(document.body.querySelectorAll<HTMLElement>('[role="listbox"] [role="option"]'))
 
   it.each([
+    { type: 'select', interaction: 'click' },
+    { type: 'select', interaction: 'Enter' },
+    { type: 'taggable-select', interaction: 'click' },
+    { type: 'taggable-select', interaction: 'Enter' }
+  ] as const)('does not flash unfiltered $type suggestions after a single selection by $interaction', async ({ type, interaction }) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type, multiple: false, modelValue: '', selected: [],
+        suggestions: ['Apple', 'Banana'], filterSuggestions: true,
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue }),
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    await input.setValue('Apple')
+    await flush()
+    expect(options().map(option => option.textContent?.trim())).toEqual(['Apple'])
+    const visibleStates: string[][] = []
+    const observer = new MutationObserver(() => {
+      visibleStates.push(options().map(option => option.textContent?.trim() ?? ''))
+    })
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true })
+
+    try {
+      if (interaction === 'click') options()[0].click()
+      else await input.trigger('keyup.enter')
+      await flush()
+    } finally {
+      observer.disconnect()
+    }
+
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(visibleStates.flat()).not.toContain('Banana')
+    expect(document.querySelector('[role="listbox"]')).toBeNull()
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(input.element.value).toBe('')
+    expect(document.activeElement).toBe(input.element)
+    expect(wrapper.emitted('open')).toHaveLength(1)
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it.each([
     { key: 'ArrowUp', query: '', grouped: false },
     { key: 'ArrowUp', query: '', grouped: true },
     { key: 'ArrowDown', query: 'Option 199', grouped: false }
