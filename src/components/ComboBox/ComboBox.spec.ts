@@ -249,7 +249,7 @@ describe('ComboBox', () => {
     expect(wrapper.props('selected')).toEqual(['Apple'])
   })
 
-  it('keeps the clear button out of the tab order and clears only once per pointer click', async () => {
+  it('keeps the clear button out of the tab order and hides it after clearing search text', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
@@ -274,20 +274,16 @@ describe('ComboBox', () => {
 
     expect(input.element.value).toBe('')
     expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
-    expect(button.text()).toBe('Clear all selections')
-
-    await button.trigger('click')
-    await flushDropdown()
-
-    expect(wrapper.props('selected')).toEqual([])
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
     expect(document.activeElement).toBe(input.element)
   })
 
-  it('labels clearing a single selected item accurately', () => {
+  it.each(['select', 'taggable-select'] as const)('hides the clear button for a selected %s with no query', (type) => {
     const wrapper = mountComponent({
-      props: { suggestions, type: 'select', selected: ['Apple'] }
+      props: { suggestions, type, selected: ['Apple'] }
     })
-    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').text()).toBe('Clear selection')
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
   })
 
   it('does not select, remove, navigate, or emit searches while composing text', async () => {
@@ -1046,37 +1042,36 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('clears input and selections when clicking clear button', async () => {
-    const selected = ['Apple', 'Banana']
+  it.each([
+    { type: 'text', multiple: false },
+    { type: 'text', multiple: true },
+    { type: 'select', multiple: false },
+    { type: 'select', multiple: true },
+    { type: 'taggable-select', multiple: false },
+    { type: 'taggable-select', multiple: true }
+  ] as const)('clears only the query for $type with multiple=$multiple', async ({ type, multiple }) => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        type: 'select',
-        multiple: true,
-        selected,
-        'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
-          wrapper.setProps({ selected: val })
-        }
+        type,
+        multiple,
+        modelValue: 'Kiw',
+        selected: ['Apple'],
+        debounceComplete: 0,
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
       }
     })
-    // Simulate input value to trigger clear button
-    const input = wrapper.find('input[type="text"]')
-    await input.setValue('Apple')
-    await nextTick()
-    // Find clear button
-    const clearBtn = wrapper.find('button[type="button"]')
-    expect(clearBtn.exists()).toBe(true)
-    await clearBtn.trigger('click')
-    await nextTick()
-    const inputText = input.text()
-    // Input should be empty
-    expect(inputText).toBe('')
-    // Click again to clear selections
-    await clearBtn.trigger('click')
-    await nextTick()
-    // Selections should be cleared
-    expect(wrapper.props('selected')).toEqual([])
-    wrapper.unmount()
+    const input = wrapper.find('input[role="combobox"]')
+
+    await wrapper.get('[data-id="sds-combo-box-clear-button"]').trigger('click')
+    await flushDropdown()
+
+    expect(wrapper.props('modelValue')).toBe('')
+    expect(input.element.value).toBe('')
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
+    expect(document.activeElement).toBe(input.element)
   })
 
   it('shakes input on invalid submit (type="select" and value not in suggestions)', async () => {
@@ -1147,24 +1142,19 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('should allow clearing all tags with clear button in multiselect mode', async () => {
+  it('hides the clear button when multiselect has selections but no query', async () => {
     const wrapper = mountComponent({
       props: { suggestions, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
     })
-    // Simulate input value to trigger clear button
-    // Simulate input value to trigger clear button
     const input = wrapper.find('input[type="text"]')
-    await input.setValue('Apple')
-    wrapper.vm.$forceUpdate()
-    await nextTick()
-    // Find clear button
-    const clearBtn = wrapper.find('.clear, .clear-btn, .clear-button')
-    if (clearBtn.exists()) {
-      await clearBtn.trigger('click')
-      await nextTick()
-      const emitted = wrapper.emitted('clear')
-      expect(emitted).toBeTruthy()
-    }
+    await input.trigger('click')
+    await flushDropdown()
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flushDropdown()
+
+    expect(input.element.value).not.toBe('')
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
+    expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
     wrapper.unmount()
   })
 
@@ -1328,23 +1318,11 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('should allow clearing all tags with clear button in taggable-select mode', async () => {
+  it('hides the clear button when taggable multiselect has selections but no query', () => {
     const wrapper = mountComponent({
       props: { suggestions, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
     })
-    // Simulate input value to trigger clear button
-    const input = wrapper.find('input[type="text"]')
-    await input.setValue('Apple')
-    wrapper.vm.$forceUpdate()
-    await nextTick()
-    // Find clear button
-    const clearBtn = wrapper.find('.clear, .clear-btn, .clear-button')
-    if (clearBtn.exists()) {
-      await clearBtn.trigger('click')
-      await nextTick()
-      const emitted = wrapper.emitted('clear')
-      expect(emitted).toBeTruthy()
-    }
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
     wrapper.unmount()
   })
 
@@ -1705,6 +1683,7 @@ describe('ComboBox', () => {
       expect(wrapper.props('selected')).toContain(label)
       expect(dropdownInBody()).not.toBeNull()
       expect(input.element.value).toBe('')
+      expect(document.activeElement).toBe(input.element)
     }
 
     expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
@@ -1713,11 +1692,11 @@ describe('ComboBox', () => {
     expect(dropdownInBody()).toBeNull()
   })
 
-  it('replaces previous selections when multiple is false and a suggestion is clicked', async () => {
+  it.each(['select', 'taggable-select'] as const)('replaces the single %s selection and closes suggestions on click', async (type) => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        type: 'select',
+        type,
         multiple: false,
         selected: ['Apple', 'Banana'],
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
@@ -1734,14 +1713,16 @@ describe('ComboBox', () => {
     await flushDropdown()
 
     expect(wrapper.props('selected')).toEqual(['Kiwi'])
+    expect(dropdownInBody()).toBeNull()
+    expect(input.attributes('aria-expanded')).toBe('false')
     wrapper.unmount()
   })
 
-  it('replaces previous selections when multiple is false and a suggestion is selected with Enter', async () => {
+  it.each(['select', 'taggable-select'] as const)('replaces the single %s selection and closes suggestions on Enter', async (type) => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        type: 'select',
+        type,
         multiple: false,
         selected: ['Apple', 'Banana'],
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
@@ -1756,6 +1737,8 @@ describe('ComboBox', () => {
     await flushDropdown()
 
     expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(dropdownInBody()).toBeNull()
+    expect(input.attributes('aria-expanded')).toBe('false')
     wrapper.unmount()
   })
 
@@ -2032,6 +2015,53 @@ describe('ComboBox', () => {
     expect(dropdownInBody() !== null).toBe(multiple)
   })
 
+  it.each(['click', 'Enter'])('closes single-select before flashing an already-added message when creating a tag by %s', async (interaction) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: ['Altium Designer'],
+        type: 'taggable-select',
+        filterSuggestions: true,
+        debounceComplete: 0,
+        modelValue: '',
+        selected: [],
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue }),
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('input[role="combobox"]')
+    await input.setValue('Altium')
+    await flushDropdown()
+    expect(dropdownInBody()).not.toBeNull()
+    const visibleDropdownStates: string[] = []
+    const observer = new MutationObserver(() => {
+      const dropdown = dropdownInBody()
+      if (dropdown) visibleDropdownStates.push(text(dropdown))
+    })
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true })
+
+    try {
+      if (interaction === 'click') {
+        const addButton = findOptionInBody('Add "Altium"')
+        expect(addButton).toBeDefined()
+        addButton?.click()
+      } else {
+        await input.trigger('keyup.enter')
+      }
+      await flushDropdown()
+    } finally {
+      observer.disconnect()
+    }
+
+    expect(wrapper.props('selected')).toEqual([
+      { label: 'Altium', name: 'Altium', value: 'Altium', __cbxCustom: true }
+    ])
+    expect(dropdownInBody()).toBeNull()
+    expect(wrapper.emitted('open')).toHaveLength(1)
+    expect(wrapper.emitted('close')).toHaveLength(1)
+    expect(visibleDropdownStates.some(state => state.includes('Already added'))).toBe(false)
+    expect(document.activeElement).toBe(input.element)
+  })
+
   it('selects a partially matching suggestion when explicitly highlighted instead of adding typed text', async () => {
     const wrapper = mountComponent({
       props: {
@@ -2197,7 +2227,7 @@ describe('ComboBox', () => {
     expect(wrapper.find('[data-id="sds-tag"]').text()).toContain('Apple')
   })
 
-  it('clearQuery clears query first, then selections on second click in multiselect', async () => {
+  it('keeps selections when search text is cleared repeatedly', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
@@ -2209,28 +2239,18 @@ describe('ComboBox', () => {
         }
       }
     })
-    // Type a query so the clear button has something to clear
     const input = wrapper.find('input[type="text"]')
-    await input.setValue('Kiw')
-    await flushDropdown()
-    expect((input.element as HTMLInputElement).value).toBe('Kiw')
+    for (const query of ['Kiw', 'Orange']) {
+      await input.setValue(query)
+      await flushDropdown()
+      await wrapper.get('[data-id="sds-combo-box-clear-button"]').trigger('click')
+      await flushDropdown()
 
-    const findClearButton = () => wrapper.find('[data-id="sds-combo-box-clear-button"]')
-
-    // First click on the clear button: query cleared, selections retained
-    const clearBtn = findClearButton()
-    expect(clearBtn).toBeDefined()
-    await clearBtn.trigger('click')
-    await flushDropdown()
-    expect((input.element as HTMLInputElement).value).toBe('')
-    expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
-
-    // Second click on the clear button: selections cleared
-    const clearBtn2 = findClearButton()
-    expect(clearBtn2).toBeDefined()
-    await clearBtn2.trigger('click')
-    await flushDropdown()
-    expect(wrapper.props('selected')).toEqual([])
+      expect(input.element.value).toBe('')
+      expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
+      expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').exists()).toBe(false)
+    }
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
     wrapper.unmount()
   })
 
@@ -2446,7 +2466,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('clears the select query when clicking outside the ComboBox', async () => {
+  it.each(['select', 'taggable-select'] as const)('closes %s multiselect when clicking outside without removing selections', async (type) => {
     const outsideButton = document.createElement('button')
     document.body.appendChild(outsideButton)
     const wrapper = mountComponent({
@@ -2454,7 +2474,9 @@ describe('ComboBox', () => {
         debounceComplete: 0,
         modelValue: '',
         suggestions,
-        type: 'taggable-select',
+        type,
+        multiple: true,
+        selected: ['Banana'],
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
@@ -2463,6 +2485,7 @@ describe('ComboBox', () => {
     await input.setValue('App')
     await flushDropdown()
     inputElement.focus()
+    expect(dropdownInBody()).not.toBeNull()
 
     outsideButton.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, composed: true }))
     outsideButton.dispatchEvent(new MouseEvent('click', { bubbles: true }))
@@ -2470,6 +2493,9 @@ describe('ComboBox', () => {
 
     expect(wrapper.props('modelValue')).toBe('')
     expect(inputElement.value).toBe('')
+    expect(dropdownInBody()).toBeNull()
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(wrapper.props('selected')).toEqual(['Banana'])
     wrapper.unmount()
     outsideButton.remove()
   })

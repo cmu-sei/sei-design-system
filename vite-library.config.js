@@ -95,6 +95,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   test: {
+    pool: 'vmThreads',
     environment: 'jsdom',
     exclude: [
       ...configDefaults.exclude,

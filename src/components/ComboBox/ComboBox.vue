@@ -131,7 +131,7 @@
               @mousedown.prevent
               @click="clearQuery"
             >
-              <span class="sr-only">{{ clearButtonLabel }}</span>
+              <span class="sr-only">{{ text.clearSearch }}</span>
               <IconFa7SolidXmark aria-hidden="true" />
             </button>
           </div>
@@ -1254,19 +1254,7 @@ const focusIndicatorClass = computed(() => {
   return 'leading-3.5 px-1.5'
 })
 
-const showClearButton = computed(() => {
-  if (props.disabled || props.readonly) return false
-  if (inputDisplayValue.value !== '') return true
-  if (props.type !== 'text' && selected.value.length > 0) return true
-  return false
-})
-
-const clearButtonLabel = computed(() => {
-  if (isSelectType.value && selected.value.length && (!props.multiple || inputDisplayValue.value === '')) {
-    return props.multiple ? text.value.clearAllSelections : text.value.clearSelection
-  }
-  return text.value.clearSearch
-})
+const showClearButton = computed(() => !props.disabled && !props.readonly && query.value !== '')
 
 const showDropdownResults = () => {
   if (props.readonly || props.disabled || isComposing.value) return
@@ -1294,9 +1282,6 @@ const inputDisplayValue = computed(() => {
     if (active && active.kind !== 'select-all') {
       return getLabel(active.option)
     }
-  }
-  if (!isSelectType.value && selected.value.length > 0 && query.value === '' && !props.multiple) {
-    return getLabel(selected.value[0])
   }
   // Otherwise, show the query
   return query.value
@@ -1461,9 +1446,7 @@ useResizeObserver(virtualScrollContainer, (entry) => {
 const clearQuery = () => {
   if (props.disabled || props.readonly) return
   actionFeedback.value = ''
-  const shouldClearSelections = !isMultiselect.value || inputDisplayValue.value === ''
-  if (inputDisplayValue.value !== '') setQuery('')
-  if (shouldClearSelections) clearSelections()
+  setQuery('')
   closeDropdown({ resetSelectDisplay: false })
   inputField.value?.focus()
 }
@@ -1638,8 +1621,7 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
     if (index === -1) addSelection(normalizedOption)
     else removeSelectionAt(index)
   }
-  await nextTick()
-  emit('result', emitValue)
+  // Reset the query and close before rendering an intermediate "Already added" state.
   if (props.type !== 'text') {
     setQuery('')
   }
@@ -1648,6 +1630,8 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   } else {
     closeDropdown({ resetSelectDisplay: false })
   }
+  await nextTick()
+  emit('result', emitValue)
   inputField.value?.focus()
 }
 
