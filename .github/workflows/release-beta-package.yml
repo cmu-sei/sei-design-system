@@ -136,7 +136,6 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Trigger SDS Base beta release
-      if: false
       env:
         GH_TOKEN: ${{ secrets.SDS_BASE_DISPATCH_TOKEN }}
         SDS_PREVIOUS_VERSION: ${{ steps.production.outputs.version }}
