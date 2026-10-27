@@ -1357,7 +1357,7 @@ onKeyStroke('Escape', (e: KeyboardEvent) => {
   if (isComposing.value || e.isComposing || e.keyCode === 229) return
   if (!showDropdown.value) return
   e.preventDefault()
-  closeDropdown()
+  closeDropdown({ resetSelectDisplay: false })
 })
 
 // When FloatingUi closes externally (click-outside, Escape), sync local state

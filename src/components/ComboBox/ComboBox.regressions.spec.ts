@@ -163,7 +163,10 @@ describe('ComboBox usability regressions', () => {
     expect(document.getElementById(input.attributes('aria-activedescendant') ?? '')?.textContent?.trim()).toBe(`Option ${index}`)
   })
 
-  it.each(['Escape', 'Tab'])('reopens dismissed grouped loading results with a fresh highlight after %s', async (key) => {
+  it.each([
+    { key: 'Escape', query: 'New', label: 'Add "New"', group: undefined },
+    { key: 'Tab', query: '', label: 'Fresh first', group: 'Fresh' }
+  ])('reopens dismissed grouped loading results with a fresh highlight after $key', async ({ key, query, label, group }) => {
     const suggestions = Array.from({ length: 200 }, (_, index) => `Option ${index}`)
     const wrapper = mount(Component, {
       attachTo: document.body,
@@ -193,10 +196,10 @@ describe('ComboBox usability regressions', () => {
     await flush()
 
     const active = document.getElementById(input.attributes('aria-activedescendant') ?? '')
-    expect(active?.textContent?.trim()).toBe('Fresh first')
-    expect(active?.closest('[role="group"]')?.getAttribute('aria-label')).toBe('Fresh')
+    expect(active?.textContent?.trim()).toBe(label)
+    expect(active?.closest('[role="group"]')?.getAttribute('aria-label')).toBe(group)
     expect(document.querySelector('[role="listbox"]')?.scrollTop).toBe(0)
-    expect(input.element.value).toBe('')
+    expect(input.element.value).toBe(query)
     expect(wrapper.props('selected')).toEqual(['Saved'])
     expect(wrapper.emitted('open')).toHaveLength(2)
     expect(wrapper.emitted('close')).toHaveLength(1)
@@ -495,7 +498,10 @@ describe('ComboBox usability regressions', () => {
     expect(wrapper.emitted('update:modelValue')).toEqual([['zek']])
   })
 
-  it.each(['Escape', 'Tab'])('still clears an uncommitted select query on explicit %s dismissal after empty results', async (key) => {
+  it.each([
+    { key: 'Escape', query: 'zek' },
+    { key: 'Tab', query: '' }
+  ])('applies the $key query policy when dismissing after empty results', async ({ key, query }) => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       props: {
@@ -513,8 +519,61 @@ describe('ComboBox usability regressions', () => {
     await input.trigger('keydown', { key })
     await flush()
 
-    expect(input.element.value).toBe('')
+    expect(input.element.value).toBe(query)
     expect(input.attributes('aria-expanded')).toBe('false')
+  })
+
+  it.each(
+    (['text', 'select', 'taggable-select'] as const).flatMap(type =>
+      [false, true].flatMap(multiple =>
+        [false, true].map(pending => ({ type, multiple, pending }))
+      )
+    )
+  )('Escape dismisses $type suggestions without changing the query, multiple=$multiple, pending=$pending', async ({ type, multiple, pending }) => {
+    const selected = multiple ? ['Saved'] : []
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type, multiple, pending, selected, modelValue: '',
+        suggestions: ['Result One', 'Result Two'],
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    input.element.focus()
+    await input.setValue('res')
+    await flush()
+    if (!pending) {
+      await input.trigger('keydown', { key: 'ArrowDown' })
+      await flush()
+      expect(input.element.value).not.toBe('res')
+    }
+
+    await input.trigger('keydown', { key: 'Escape' })
+    await flush()
+
+    expect(input.element.value).toBe('res')
+    expect(wrapper.props('modelValue')).toBe('res')
+    expect(wrapper.props('selected')).toEqual(selected)
+    expect(document.activeElement).toBe(input.element)
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(input.attributes('aria-activedescendant')).toBeUndefined()
+    expect(document.querySelector('[role="listbox"]')).toBeNull()
+    expect(wrapper.emitted('update:modelValue')).toEqual([['res']])
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.emitted('result')).toBeUndefined()
+    expect(wrapper.emitted('close')).toHaveLength(1)
+
+    await wrapper.setProps({ pending: false, suggestions: ['Fresh result'] })
+    await flush()
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(input.element.value).toBe('res')
+
+    await input.trigger('click')
+    await flush()
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(input.element.value).toBe('res')
+    expect(wrapper.emitted('complete')).toEqual([['res']])
   })
 
   it.each(['disabled', 'readonly'] as const)('still resets the query when an open select becomes %s', async (state) => {
