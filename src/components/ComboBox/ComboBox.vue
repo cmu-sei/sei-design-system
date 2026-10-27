@@ -702,6 +702,7 @@ interface ComboBoxProps {
    * Shows loading indicators in the input and open dropdown while blocking suggestion actions.
    *
    * Enable as soon as a remote search is queued, including debounce delay, until its results are applied.
+   * An empty response may hide the dropdown but preserves the query so the user can refine it.
    *
    * @default false
    */
@@ -1805,8 +1806,8 @@ watchDebounced(() => [
 
 watch(shouldShowDropdown, async (val) => {
   const preserveQueryWhilePending = !val && props.pending
-  // Explicit closes already applied their query-reset policy.
-  const shouldResetSelectDisplay = !val && showDropdown.value && !props.pending
+  // Explicit closes already reset the query; empty results only hide the popup.
+  const shouldResetSelectDisplay = !val && showDropdown.value && !props.pending && (props.disabled || props.readonly)
   // Drive FloatingUi open/close state
   if (val) {
     if (shouldAutoHighlightOnOpen.value) highlightDefaultOption()

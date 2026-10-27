@@ -5,7 +5,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A Combo Box is an input field that allows users to search or select from dynamically filtered options. Clicking the input opens available suggestions; clicking again keeps them open without changing the query or keyboard highlight.',
+        component: 'A Combo Box is an input field that allows users to search or select from dynamically filtered options. Clicking the input opens available suggestions; clicking again keeps them open without changing the query or keyboard highlight. Empty remote search results preserve the query so users can refine it.',
       },
     },
   },

@@ -423,6 +423,119 @@ describe('ComboBox usability regressions', () => {
     expect(wrapper.get('input[role="combobox"]').attributes('aria-expanded')).toBe('true')
   })
 
+  it.each(
+    (['text', 'select', 'taggable-select'] as const).flatMap(type =>
+      [false, true].flatMap(multiple =>
+        [false, true].map(grouped => ({ type, multiple, grouped }))
+      )
+    )
+  )('preserves the query after an empty remote $type search, multiple=$multiple, grouped=$grouped', async ({ type, multiple, grouped }) => {
+    const selected = multiple ? ['Saved'] : []
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type, multiple, selected, pending: true, modelValue: '',
+        filterSuggestions: false,
+        optionGroupChildren: grouped ? 'items' : undefined,
+        suggestions: grouped ? [{ label: 'Results', items: [] }] : [],
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    input.element.focus()
+    await input.setValue('zek')
+    await flush()
+    expect(document.querySelector('[data-id="sds-combo-box-loading"]')).not.toBeNull()
+
+    await wrapper.setProps({ pending: false })
+    await flush()
+
+    expect(input.element.value).toBe('zek')
+    expect(wrapper.props('modelValue')).toBe('zek')
+    expect(wrapper.props('selected')).toEqual(selected)
+    expect(document.activeElement).toBe(input.element)
+    expect(wrapper.emitted('update:modelValue')).toEqual([['zek']])
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.emitted('result')).toBeUndefined()
+    expect(wrapper.emitted('complete')).toEqual([['zek']])
+
+    await input.setValue('Zeke')
+    await wrapper.setProps({ pending: true })
+    await flush()
+    await wrapper.setProps({
+      pending: false,
+      suggestions: grouped ? [{ label: 'Results', items: ['Zeke'] }] : ['Zeke']
+    })
+    await flush()
+
+    expect(input.element.value).toBe('Zeke')
+    expect(options().map(option => option.textContent?.trim())).toContain('Zeke')
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(wrapper.emitted('complete')).toEqual([['zek'], ['Zeke']])
+  })
+
+  it.each([false, true])('preserves the query when suggestions disappear without a loading state, multiple=%s', async (multiple) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type: 'select', multiple, modelValue: '', suggestions: ['Member', 'Fellow'],
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    await input.setValue('zek')
+    await flush()
+    expect(input.attributes('aria-expanded')).toBe('true')
+
+    await wrapper.setProps({ suggestions: [] })
+    await flush()
+
+    expect(input.element.value).toBe('zek')
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(wrapper.emitted('update:modelValue')).toEqual([['zek']])
+  })
+
+  it.each(['Escape', 'Tab'])('still clears an uncommitted select query on explicit %s dismissal after empty results', async (key) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type: 'select', pending: true, modelValue: '',
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    await input.setValue('zek')
+    await flush()
+    await wrapper.setProps({ pending: false })
+    await flush()
+    expect(input.element.value).toBe('zek')
+
+    await input.trigger('keydown', { key })
+    await flush()
+
+    expect(input.element.value).toBe('')
+    expect(input.attributes('aria-expanded')).toBe('false')
+  })
+
+  it.each(['disabled', 'readonly'] as const)('still resets the query when an open select becomes %s', async (state) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: {
+        type: 'select', modelValue: '', suggestions: ['Member'],
+        'onUpdate:modelValue': (modelValue: string) => wrapper.setProps({ modelValue })
+      }
+    })
+    const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
+    await input.setValue('zek')
+    await flush()
+
+    await wrapper.setProps({ [state]: true })
+    await flush()
+
+    expect(input.element.value).toBe('')
+    expect(input.attributes('aria-expanded')).toBe('false')
+  })
+
   it('clears stale keyboard display while pending and activates the new results on completion', async () => {
     const wrapper = mount(Component, { attachTo: document.body, props: { type: 'select', suggestions: ['Old one', 'Old two'] } })
     const input = wrapper.get<HTMLInputElement>('input[role="combobox"]')
