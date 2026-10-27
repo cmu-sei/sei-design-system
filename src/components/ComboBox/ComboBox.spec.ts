@@ -1946,7 +1946,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('keeps the selected tag when a replacement search is dismissed', async () => {
+  it('keeps the selected tag and query when a replacement search is dismissed with Escape', async () => {
     const wrapper = mountComponent({
       props: { suggestions, type: 'select', selected: ['Apple'], debounceComplete: 0 }
     })
@@ -1958,7 +1958,7 @@ describe('ComboBox', () => {
     await flushDropdown()
 
     expect(wrapper.find('[data-id="sds-tag"]').text()).toContain('Apple')
-    expect(input.element.value).toBe('')
+    expect(input.element.value).toBe('Ban')
     expect(wrapper.emitted('update:selected')).toBeUndefined()
   })
 
@@ -2419,7 +2419,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('clears the select query when Escape is pressed', async () => {
+  it('preserves the select query when Escape is pressed', async () => {
     const wrapper = mountComponent({
       props: {
         debounceComplete: 0,
@@ -2438,8 +2438,9 @@ describe('ComboBox', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     await flushDropdown()
 
-    expect(wrapper.props('modelValue')).toBe('')
-    expect(inputElement.value).toBe('')
+    expect(wrapper.props('modelValue')).toBe('App')
+    expect(inputElement.value).toBe('App')
+    expect(dropdownInBody()).toBeFalsy()
     wrapper.unmount()
   })
 
