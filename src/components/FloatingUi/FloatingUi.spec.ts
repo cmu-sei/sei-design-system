@@ -14,6 +14,7 @@ describe('FloatingUi', () => {
     inline?: boolean
     shift?: boolean
     disableAnimation?: boolean
+    closeOnEscape?: boolean
     animationEnterActiveClass?: string
     animationEnterFromClass?: string
     animationEnterToClass?: string
@@ -172,6 +173,26 @@ describe('FloatingUi', () => {
     vi.runAllTimers()
     await flushPromises()
     expect(document.body.innerHTML).not.toContain('Teleported content')
+  })
+
+  it.each(['owned', 'prevented'])('keeps content open when Escape dismissal is %s', async (mode) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { ...props, closeOnEscape: mode !== 'owned' },
+      slots
+    })
+    await wrapper.find('button').trigger('click')
+    vi.runAllTimers()
+    await flushPromises()
+    const event = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true })
+    if (mode === 'prevented') event.preventDefault()
+
+    window.dispatchEvent(event)
+    vi.runAllTimers()
+    await flushPromises()
+
+    expect(document.body.innerHTML).toContain('Teleported content')
+    expect(wrapper.emitted('close')).toBeUndefined()
   })
 
   it('does not open if `disabled` prop is true', async () => {

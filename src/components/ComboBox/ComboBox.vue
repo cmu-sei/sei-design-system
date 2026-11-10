@@ -9,6 +9,7 @@
     match-width
     hide-arrow
     shift
+    :close-on-escape="false"
     disable-animation
     :offset="4"
     popper-class="absolute z-50 p-0 bg-white border rounded-theme-sm shadow-lg dark:border-gray-700 dark:bg-gray-950"
@@ -19,6 +20,10 @@
         class="relative"
         :class="{ 'focus-ring rounded-theme-sm': showTagsBar }"
         @mousedown="handleTriggerMouseDown"
+        @focus.capture="handleFieldFocus"
+        @blur.capture="handleFieldBlur"
+        @keydown.esc="handleEscape"
+        @keyup.esc="handleEscapeKeyup"
       >
         <div
           v-if="showTagsBar"
@@ -26,7 +31,7 @@
           :class="[validationClasses, { invalid: showSelectionError }]"
         >
           <SdsTag
-            v-for="(option, index) in selected"
+            v-for="(option, index) in visibleTags"
             :key="index"
             :disabled="disabled"
             :readonly="readonly || disabled"
@@ -37,6 +42,17 @@
             :label="getLabel(option)"
             @remove="multiselectRemove(index)"
           />
+          <button
+            v-if="hasHiddenTags || tagsExpanded"
+            type="button"
+            data-id="sds-combo-box-tags-toggle"
+            :disabled="disabled"
+            class="px-2 text-sm text-blue-700 dark:text-blue-400 hover:underline"
+            :aria-expanded="tagsExpanded"
+            @click="tagsExpanded = !tagsExpanded"
+          >
+            {{ tagsExpanded ? text.showFewerSelections : text.moreSelections(selected.length - visibleTags.length) }}
+          </button>
         </div>
         <div
           class="input-group"
@@ -57,7 +73,7 @@
             type="button"
             tabindex="-1"
             class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
-            :aria-controls="dropdownId"
+            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :disabled="disabled || readonly || undefined"
             @click="showDropdownResults"
@@ -69,7 +85,7 @@
             />
           </button>
           <div
-            v-else
+            v-else-if="pending"
             class="input-group-addon"
           >
             <span class="sr-only">{{ text.loading }}</span>
@@ -80,7 +96,39 @@
               :class="searchIconClass"
             />
           </div>
+          <button
+            v-if="usesDropdownSearch"
+            :id="inputId"
+            ref="inputField"
+            type="button"
+            role="combobox"
+            aria-autocomplete="none"
+            aria-haspopup="dialog"
+            :form="form"
+            :value="inputDisplayValue"
+            :aria-label="getAriaAttribute('aria-label')"
+            :aria-labelledby="getAriaAttribute('aria-labelledby')"
+            :aria-describedby="getInputDescriptionIds()"
+            :aria-invalid="invalid || showSelectionError || undefined"
+            :aria-busy="pending || undefined"
+            :aria-controls="popupId"
+            :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
+            :aria-required="required || undefined"
+            :aria-readonly="readonly || undefined"
+            :disabled="disabled || undefined"
+            v-bind="getInputAttrs()"
+            class="form-control min-w-0 text-left select-none cursor-pointer disabled:cursor-not-allowed"
+            @click="toggleDropdownResults"
+            @keydown="handleInputKeydown"
+            @keyup.enter="handleEnterKeyUp"
+          >
+            <span
+              class="block truncate"
+              :class="{ 'text-gray-500 dark:text-gray-400': !inputDisplayValue }"
+            >{{ inputDisplayValue || placeholder || '\u00a0' }}</span>
+          </button>
           <input
+            v-else
             :id="inputId"
             ref="inputField"
             :name="!isSelectType ? name : undefined"
@@ -88,15 +136,16 @@
             :value="inputDisplayValue"
             type="text"
             role="combobox"
-            aria-autocomplete="list"
+            :aria-autocomplete="usesDropdownSearch ? 'none' : 'list'"
+            :aria-haspopup="usesDropdownSearch ? 'dialog' : undefined"
             :aria-label="getAriaAttribute('aria-label')"
             :aria-labelledby="getAriaAttribute('aria-labelledby')"
             :aria-describedby="getInputDescriptionIds()"
             :aria-invalid="invalid || showSelectionError || undefined"
             :aria-busy="pending || undefined"
-            :aria-controls="dropdownId"
+            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
-            :aria-activedescendant="activeDescendantId"
+            :aria-activedescendant="usesDropdownSearch ? undefined : activeDescendantId"
             :multiple="multiple || undefined"
             autocapitalize="off"
             autocomplete="off"
@@ -106,14 +155,13 @@
             class="form-control truncate overflow-hidden text-ellipsis whitespace-nowrap"
             :placeholder="placeholder || undefined"
             :disabled="disabled || undefined"
-            :readonly="readonly || undefined"
+            :readonly="readonly || usesDropdownSearch || undefined"
             :maxlength="maxlength !== undefined ? maxlength : undefined"
             :required="inputRequired || undefined"
             @input="onInputFieldInput"
             @compositionstart="onCompositionStart"
             @compositionend="onCompositionEnd"
             @invalid="handleInvalid"
-            @focus="emit('focus')"
             @click="showDropdownResults"
             @keydown="handleInputKeydown"
             @keyup.enter="handleEnterKeyUp"
@@ -154,15 +202,15 @@
             </SdsTooltip>
           </div>
           <button
-            v-else-if="isSelectType && hasDropdownSuggestion"
+            v-else-if="isSelectType && (usesDropdownSearch || hasDropdownSuggestion)"
             data-id="sds-combo-box-select-caret"
             type="button"
             tabindex="-1"
             class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
-            :aria-controls="dropdownId"
+            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :disabled="disabled || readonly || undefined"
-            @click="showDropdownResults"
+            @click="toggleDropdownResults"
           >
             <span class="sr-only">{{ text.showSuggestions }}</span>
             <span
@@ -173,6 +221,26 @@
           <!-- @slot Default content. Good for adding content to the end of the input group -->
           <slot />
         </div>
+        <!-- Read-only triggers do not participate in native constraint validation. -->
+        <select
+          v-if="usesDropdownSearch && required"
+          ref="selectionField"
+          class="sr-only"
+          tabindex="-1"
+          aria-hidden="true"
+          :form="form"
+          :disabled="disabled || readonly"
+          required
+          @invalid.prevent="handleSelectionInvalid"
+          @focus="inputField?.focus()"
+        >
+          <option
+            :value="hasValidSelection ? 'selected' : ''"
+            selected
+          >
+            {{ selected.length ? getLabel(selected[0]) : '' }}
+          </option>
+        </select>
         <input
           v-for="(option, index) in isSelectType && name ? selected.filter(option => getLabel(option).trim()) : []"
           :key="index"
@@ -221,12 +289,54 @@
       </div>
     </template>
     <div
+      :id="usesDropdownSearch ? popupId : undefined"
       ref="dropdownRef"
       data-id="sds-combo-box-dropdown"
       class="@container"
+      :role="usesDropdownSearch ? 'dialog' : undefined"
+      :aria-label="usesDropdownSearch ? text.suggestions : undefined"
+      @focus.capture="handleFieldFocus"
+      @blur.capture="handleFieldBlur"
+      @keydown="handlePopupKeydown"
+      @keydown.esc="handleEscape"
+      @keyup.esc="handleEscapeKeyup"
     >
       <div
-        v-if="!pending && hasCategories"
+        v-if="usesDropdownSearch"
+        class="p-2 border-b border-gray-100 dark:border-gray-800"
+      >
+        <input
+          :id="`${inputId}-filter`"
+          ref="searchField"
+          data-id="sds-combo-box-filter"
+          type="text"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-haspopup="listbox"
+          :aria-label="text.searchSuggestions"
+          :aria-controls="dropdownId"
+          :aria-expanded="shouldShowDropdown && !hasError && (pending || hasDropdownSuggestion) ? 'true' : 'false'"
+          :aria-activedescendant="activeDescendantId"
+          :aria-describedby="getInputDescriptionIds()"
+          :aria-busy="pending || undefined"
+          :value="isComposing ? compositionQuery : query"
+          :placeholder="text.searchSuggestions"
+          :maxlength="maxlength"
+          class="form-control"
+          :class="{ 'form-control-sm': size === 'sm', 'form-control-lg': size === 'lg' }"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          v-bind="getQueryInputAttrs()"
+          @input="onInputFieldInput"
+          @compositionstart="onCompositionStart"
+          @compositionend="onCompositionEnd"
+          @keydown="handleInputKeydown"
+          @keyup.enter="handleEnterKeyUp"
+        >
+      </div>
+      <div
+        v-if="!pending && !hasError && hasCategories"
         data-id="sds-combo-box-categories"
         class="overflow-x-auto overflow-y-hidden flex border-b border-gray-100 dark:border-gray-800"
       >
@@ -254,6 +364,7 @@
         </div>
       </div>
       <SdsScrollArea
+        v-show="!hasError && (pending || hasDropdownSuggestion)"
         :id="dropdownId"
         ref="scrollArea"
         role="listbox"
@@ -268,7 +379,7 @@
         @scroll.passive="onVirtualScroll"
       >
         <div
-          v-if="!pending && (shouldShowNewSuggestion || selectAllRendered)"
+          v-if="!pending && !hasError && (shouldShowNewSuggestion || selectAllRendered)"
           data-id="sds-combo-box-actions"
           class="flex flex-col"
         >
@@ -371,7 +482,7 @@
           </div>
         </div>
         <hr
-          v-if="(shouldShowNewSuggestion || selectAllRendered) && displayOptionRows.length"
+          v-if="!hasError && (shouldShowNewSuggestion || selectAllRendered) && displayOptionRows.length"
           aria-hidden="true"
           class="border-gray-100 dark:border-gray-700"
         >
@@ -462,7 +573,7 @@
                     />
                   </span>
                   <span
-                    class="min-w-0 wrap-anywhere"
+                    class="min-w-0 flex-1"
                     :class="{ truncate: row.virtual }"
                     :title="row.virtual ? getLabel(row.item.option) : undefined"
                   >
@@ -471,7 +582,10 @@
                       :option="row.item.option"
                       :label="getLabel(row.item.option)"
                     >
-                      {{ getLabel(row.item.option) }}
+                      <span
+                        class="block"
+                        :class="row.virtual ? 'truncate' : 'wrap-anywhere'"
+                      >{{ getLabel(row.item.option) }}</span>
                     </slot>
                   </span>
                   <IconFa7SolidCheck
@@ -483,60 +597,80 @@
             </template>
           </div>
         </div>
-        <div
-          v-if="pending"
-          class="flex items-center gap-2 py-3 px-4 text-sm text-gray-600 dark:text-gray-400"
-          data-id="sds-combo-box-loading"
-        >
-          <SdsLoadingSpinner
-            aria-hidden="true"
-            size="sm"
-            class="shrink-0"
-          />
-          <span>{{ text.loading }}</span>
-        </div>
-        <div
-          v-else-if="hasNoMatches && !shouldShowNewSuggestion"
-          class="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 italic"
-          data-id="sds-combo-box-no-matches"
-        >
-          {{ text.noMatches(query) }}
-        </div>
       </SdsScrollArea>
-      <!-- Footer section -->
       <div
-        v-if="!pending && !isSelected(query)"
-        data-id="sds-combo-box-footer"
-        class="grid items-start gap-2 border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-3 py-2 text-xs text-gray-700 dark:text-gray-300 @min-[28rem]:flex @min-[28rem]:items-center @min-[28rem]:gap-6 @min-[28rem]:px-4 @min-[28rem]:text-sm"
-        :class="isFlatArray || groups.length <= 1 ? 'grid-cols-2' : 'grid-cols-3'"
+        v-if="pending"
+        class="flex items-center gap-2 py-3 px-4 text-sm text-gray-600 dark:text-gray-400"
+        data-id="sds-combo-box-loading"
       >
-        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:ml-auto @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
+        <SdsLoadingSpinner
+          aria-hidden="true"
+          size="sm"
+          class="shrink-0"
+        />
+        <span>{{ text.loading }}</span>
+      </div>
+      <div
+        v-else-if="hasError"
+        data-id="sds-combo-box-error"
+        class="py-3 px-4 text-sm text-red-600 dark:text-red-400"
+        @keydown.enter="ignoreActionEnter = true"
+      >
+        <!-- @slot Remote failure feedback. Receives the message and a retry callback. -->
+        <slot
+          name="error"
+          :message="error"
+          :retry="retrySearch"
+        >
+          <p role="alert">
+            {{ error }}
+          </p>
+          <button
+            v-if="canRetry()"
+            type="button"
+            class="mt-2 text-blue-700 dark:text-blue-400 underline"
+            @click="retrySearch"
+          >
+            {{ text.retry }}
+          </button>
+        </slot>
+      </div>
+      <div
+        v-else-if="!hasDropdownSuggestion && !shouldShowNewSuggestion"
+        class="py-3 px-4 text-sm text-gray-600 dark:text-gray-400 italic"
+        data-id="sds-combo-box-no-matches"
+      >
+        {{ query.trim() ? text.noMatches(query) : text.noOptions }}
+      </div>
+      <div
+        v-if="!pending && !hasError && hasDropdownSuggestion && !isSelected(query)"
+        data-id="sds-combo-box-footer"
+        class="hidden items-center justify-end gap-6 border-t rounded-b-theme-sm border-gray-100 dark:border-gray-700 bg-gray-25 dark:bg-gray-900 px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
+        :class="hasCategories ? '@min-[30rem]:flex' : '@min-[28rem]:flex'"
+      >
+        <div class="flex items-center gap-1.5 whitespace-nowrap">
           <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <IconFa7SolidArrowUp
-              class="w-3 h-3"
-            />
-            <IconFa7SolidArrowDown
-              class="w-3 h-3"
-            />
+            <IconFa7SolidArrowUp class="w-3 h-3" />
+            <IconFa7SolidArrowDown class="w-3 h-3" />
           </div>
           <span class="sr-only">{{ text.navigationKeys }}</span> {{ text.navigate }}
         </div>
         <div
-          v-if="!isFlatArray && groups.length > 1"
-          class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5"
+          v-if="hasCategories"
+          class="flex items-center gap-1.5 whitespace-nowrap"
         >
-          <div class="flex gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
-            <span aria-hidden="true">{{ text.altKey }}</span>
-            <IconFa7SolidArrowLeft
-              class="w-3 h-3"
-            />
-            <IconFa7SolidArrowRight
-              class="w-3 h-3"
-            />
+          <div
+            aria-hidden="true"
+            class="flex items-center gap-1 p-1 border border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner"
+          >
+            <span class="text-xs font-mono">{{ text.altKey }}</span>
+            <span class="text-xs font-mono">+</span>
+            <IconFa7SolidArrowLeft class="w-3 h-3" />
+            <IconFa7SolidArrowRight class="w-3 h-3" />
           </div>
           <span class="sr-only">{{ text.categoryKeys }}</span> {{ text.switchGroups }}
         </div>
-        <div class="flex flex-col items-center gap-1 whitespace-nowrap @min-[28rem]:flex-row @min-[28rem]:gap-1.5">
+        <div class="flex items-center gap-1.5 whitespace-nowrap">
           <span class="inline-block p-1 border text-xs font-mono border-gray-100 dark:border-gray-500 rounded-theme-sm shadow-inner">
             {{ text.enterKey }}
           </span>
@@ -555,6 +689,7 @@ import SdsTag from '../Tag/Tag.vue'
 import { useComboBoxCore, useFormField, useResizeObserver, useVirtualScroller } from '@/composables'
 import type { ComboBoxGroup, ComboBoxSuggestion, ComboBoxType, VirtualListItem } from '@/composables'
 import { normalizeString } from '@/composables/useComboBoxSuggestions'
+import { focusTrapScopeKey, FOCUSABLE_SELECTOR } from '@/composables/useFocusTrap'
 import { comboBoxMessages, type ComboBoxMessages } from '@/composables/useComboBoxMessages'
 import type { VNodeChild } from 'vue'
 import { watchDebounced } from '@vueuse/core'
@@ -614,12 +749,18 @@ interface ComboBoxProps {
    * @default undefined
    */
   maxlength?: number;
+  /** Maximum tags shown before an expandable summary. Unset keeps every tag visible. */
+  maxVisibleTags?: number;
   /**
    * Allows more than one selected value.
    *
    * This only affects `type="select"` and `type="taggable-select"`. Selected values render as
    * removable tags above the input. `type="text"` is an autosuggest text field and does not use
    * multi-selection.
+   *
+   * Multiselect dropdowns stay open for further selections. Clearing suggestions after a selection
+   * dismisses the dropdown without empty-list feedback; a new search, loading, or an error preserves
+   * its own feedback instead.
    *
    * @default false
    */
@@ -706,8 +847,15 @@ interface ComboBoxProps {
    * @default false
    */
   pending?: boolean;
+  /** Remote search failure message. Supply a retry listener to offer a retry action. */
+  error?: string;
   /**
-   * Placeholder text shown when the query is empty and no single selection is displayed.
+   * Placeholder text shown when the input is empty.
+   *
+   * In single-select modes this labels the trigger. Use `messages.searchSuggestions` to localize
+   * the separate dropdown search field.
+   * Provide an associated label, `aria-label`, or `aria-labelledby` for the field's accessible name;
+   * the single-select button does not use its placeholder or selected text as an accessible name.
    *
    * @default undefined
    */
@@ -735,8 +883,12 @@ interface ComboBoxProps {
    * Interaction mode for the ComboBox.
    *
    * `text` behaves like an autosuggest input and writes the chosen label into the query.
+   * Enter submits the literal text query, including an empty query unless `required` is enabled.
    * `select` requires the final value to come from `suggestions`.
    * `taggable-select` allows both suggestions and new user-created values.
+   * Single-select modes keep the selected label in the trigger and search through a separate
+   * field in the dropdown. Multiple selections keep the search field in the trigger.
+   * Every mode shows a leading search icon, replaced by a spinner while pending.
    *
    * @default 'text'
    */
@@ -787,7 +939,9 @@ interface ComboBoxProps {
    *
    * Virtualization renders only the visible rows plus a small buffer, which keeps very large flat or
    * grouped lists responsive. It is used only when `optionType` is not `custom` and the visible
-   * option count meets `virtualizeThreshold`.
+   * option count meets `virtualizeThreshold`. Default and slotted labels inherit single-line
+   * truncation. Use the `option` slot to customize content and `virtualItemHeight` to match a
+   * custom fixed-height layout.
    *
    * @default false
    */
@@ -840,6 +994,7 @@ defineSlots<{
   option?: (props: ComboBoxOptionSlotProps) => VNodeChild;
   optionGroup?: (props: ComboBoxOptionGroupSlotProps) => VNodeChild;
   customOption?: (props: ComboBoxCustomOptionSlotProps) => VNodeChild;
+  error?: (props: { message: string | undefined; retry: () => void }) => VNodeChild;
 }>()
 
 defineOptions({ name: 'SdsComboBox', inheritAttrs: false })
@@ -854,6 +1009,7 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   disableGroupTabs: false,
   enableSelectAll: false,
   maxlength: undefined,
+  maxVisibleTags: undefined,
   multiple: false,
   id: undefined,
   focusOnKeyPress: false,
@@ -864,6 +1020,7 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   optionGroupChildren: undefined,
   optionType: 'button',
   pending: false,
+  error: undefined,
   placeholder: undefined,
   size: undefined,
   suggestions: () => [],
@@ -878,20 +1035,29 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   virtualItemHeight: 36
 })
 
-const emit = defineEmits(['close', 'complete', 'enter', 'focus', 'open', 'result'])
+const emit = defineEmits([
+  /** Emitted when focus leaves the trigger or popup for an outside control. */
+  'blur',
+  'close', 'complete', 'enter', 'focus', 'open', 'result',
+  /** Requests another remote search with the current query. */
+  'retry'
+])
 
 const scrollArea = ref()
-const inputField = ref<HTMLInputElement>()
+const inputField = ref<HTMLInputElement | HTMLButtonElement>()
+const searchField = ref<HTMLInputElement>()
+const selectionField = ref<HTMLSelectElement>()
 const virtualScrollContainer = ref<HTMLElement>()
 const virtualOptionsContainer = ref<HTMLElement>()
 const floatingUiRef = ref()
-const dropdownRef = ref()
+const dropdownRef = ref<HTMLElement>()
 const componentId = useId()
 
 const { validationClasses, validationAttrs } = useFormField(props)
 const query = defineModel({ type: String, default: '' })
 const selected = defineModel<ComboBoxSuggestion[]>('selected', { type: Array as () => ComboBoxSuggestion[], default: () => [] })
 const showDropdown = ref(false)
+const shouldDismissEmptySuggestions = ref(false)
 const arrowCounter = ref(-1)
 const shouldScrollActiveItem = ref(false)
 const shouldAutoHighlightOnOpen = ref(false)
@@ -900,6 +1066,18 @@ const shakeTimeout = ref<ReturnType<typeof window.setTimeout>>()
 const isComposing = ref(false)
 const compositionQuery = ref('')
 const ignoreCompositionEnter = ref(false)
+const ignoreActionEnter = ref(false)
+const ignoreEscapeKeyup = ref(false)
+const tagsExpanded = ref(false)
+const focusScope = inject(focusTrapScopeKey, undefined)
+const instance = getCurrentInstance()
+const hasError = computed(() => !props.pending && !!props.error?.trim())
+const canRetry = () => !!instance?.vnode.props?.onRetry
+const retrySearch = () => {
+  if (props.disabled || props.readonly || props.pending) return
+  queryField.value?.focus({ preventScroll: true })
+  emit('retry', query.value)
+}
 const selectionValidationAttempted = ref(false)
 const selectionAnnouncement = ref('')
 const resultsAnnouncement = ref('')
@@ -913,8 +1091,12 @@ const optionClass = 'flex items-center w-full sds-theme-forge:mx-2 sds-theme-pla
 const checkboxClass = 'mr-2 flex size-4 shrink-0 items-center justify-center rounded border border-gray-400 bg-white dark:border-gray-500 dark:bg-gray-900 data-[checked=true]:border-blue-500 data-[checked=true]:bg-blue-500 data-[checked=true]:text-white'
 const isInputAttribute = (key: string) => key.startsWith('aria-') || key.startsWith('on') ||
   ['tabindex', 'title', 'inputmode', 'enterkeyhint', 'autocomplete', 'autocapitalize', 'autocorrect', 'spellcheck', 'minlength', 'pattern'].includes(key)
+const isQueryAttribute = (key: string) => /^(on(Input|Beforeinput|Change|Key|Composition))/i.test(key) ||
+  ['inputmode', 'enterkeyhint', 'autocomplete', 'autocapitalize', 'autocorrect', 'spellcheck', 'minlength', 'pattern'].includes(key)
 const getInputAttrs = () => Object.fromEntries(Object.entries(attrs).filter(([key]) => isInputAttribute(key) &&
+  (!usesDropdownSearch.value || !isQueryAttribute(key)) &&
   !['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-invalid', 'aria-busy', 'aria-controls', 'aria-expanded', 'aria-activedescendant', 'aria-required', 'aria-readonly', 'aria-disabled'].includes(key)))
+const getQueryInputAttrs = () => Object.fromEntries(Object.entries(attrs).filter(([key]) => isQueryAttribute(key)))
 const getRootAttrs = () => Object.fromEntries(Object.entries(attrs).filter(([key]) => !isInputAttribute(key)))
 const getAriaAttribute = (name: 'aria-label' | 'aria-labelledby' | 'aria-describedby'): string | undefined => {
   const value = attrs[name]
@@ -927,6 +1109,7 @@ const autoFocused = ref(false)
 
 const inputId = computed(() => props.id ?? `${componentId}-input`)
 const dropdownId = computed(() => `${componentId}-listbox`)
+const popupId = computed(() => `${componentId}-popup`)
 const selectionErrorId = computed(() => `${componentId}-error`)
 const selectionSummaryId = computed(() => `${componentId}-selection`)
 const selectAllStateId = computed(() => `${componentId}-select-all-state`)
@@ -960,6 +1143,7 @@ const {
   findOriginalSuggestion,
   getOptionValue,
   sameOption,
+  createMatcher,
   findSelectedIndex,
   addSelection,
   replaceSelection,
@@ -979,13 +1163,12 @@ const {
   getChildren,
   getHref,
   countVisibleOptions,
+  allCount,
   groups,
   suggestionOptions,
   shouldShowNewSuggestion,
   hasDropdownSuggestion,
-  isFlatArray,
   hasCategories,
-  hasNoMatches,
   dropdownItems,
   activeItem,
   getDropdownItem,
@@ -1008,11 +1191,15 @@ const {
   optionLabel: () => props.optionLabel,
   optionValue: () => props.optionValue,
   allGroupLabel: () => text.value.all,
+  pending: () => props.pending,
   optionGroupLabel: () => props.optionGroupLabel,
   optionGroupChildren: () => props.optionGroupChildren,
   disableGroupTabs: () => props.disableGroupTabs,
   debounceComplete: () => props.debounceComplete,
-  onComplete: value => emit('complete', value),
+  onComplete: value => {
+    shouldDismissEmptySuggestions.value = false
+    emit('complete', value)
+  },
   onShowDropdown: () => {
     if (props.disabled || props.readonly || isComposing.value) return
     openDropdown()
@@ -1059,14 +1246,14 @@ const handleCustomOptionClick = async (event: Event | undefined, option: ComboBo
   return handleSuggestionClick(option)
 }
 const activeDescendantId = computed(() => {
-  if (props.pending || !shouldShowDropdown.value) return undefined
+  if (props.pending || hasError.value || !shouldShowDropdown.value) return undefined
   const item = activeItem.value
   if (!item || (item.kind === 'add' && isSelected(query.value))) return undefined
   return getDropdownItemId(item.index)
 })
 
 const shouldVirtualizeOptions = computed(() => {
-  return !props.pending && props.virtualize &&
+  return !props.pending && !hasError.value && props.virtualize &&
     props.optionType !== 'custom' &&
     countVisibleOptions(suggestionOptions.value) >= props.virtualizeThreshold
 })
@@ -1089,7 +1276,7 @@ const optionLayout = computed(() => {
     if (row.isRoot) rootOptions.push(row)
   }
 
-  for (const [index, suggestion] of (props.pending ? [] : suggestionOptions.value).entries()) {
+  for (const [index, suggestion] of (props.pending || hasError.value ? [] : suggestionOptions.value).entries()) {
     const children = getChildren(suggestion)
     const previous = groups.at(-1)
     const group: ComboBoxDisplayGroup = !children.length && previous && previous.label === undefined
@@ -1172,8 +1359,12 @@ const renderedOptionGroups = computed<ComboBoxRenderedGroup[]>(() => {
   return [...groups.values()]
 })
 
+const selectedItemIndex = computed(() => selected.value.length
+  ? dropdownItems.value.find(item => item.kind === 'option' && sameOption(item.option, selected.value[0]))?.index ?? -1
+  : -1)
 const defaultItemIndex = computed(() => {
-  if (props.pending) return -1
+  if (props.pending || hasError.value) return -1
+  if (usesDropdownSearch.value && !query.value.trim() && selectedItemIndex.value !== -1) return selectedItemIndex.value
   const exact = dropdownItems.value.find(item => item.kind === 'option' && normalizeString(getLabel(item.option)) === normalizeString(query.value))
   if (query.value.trim() && exact) return exact.index
   if (props.type === 'taggable-select' && query.value.trim() && (isSelected(query.value) || findOriginalSuggestion(query.value))) return -1
@@ -1187,18 +1378,24 @@ const comboBoxTabs = computed(() => groups.value.map((group: ComboBoxGroup) => (
   key: String(group.key),
   title: group.label,
   count: group.count,
-  active: String(group.key) === String(activeGroupKey.value) && group.count > 0,
-  disabled: group.count < 1
+  active: group.key === activeGroupKey.value,
+  disabled: group.count < 1 && group.key !== -1 && group.key !== activeGroupKey.value
 })))
 
-// Selected values use the same tag bar in single- and multi-select modes.
-const showTagsBar = computed(() => isSelectType.value && selected.value.length > 0)
+const showTagsBar = computed(() => isMultiselect.value && selected.value.length > 0)
+const visibleTags = computed(() => tagsExpanded.value || props.maxVisibleTags === undefined
+  ? selected.value
+  : selected.value.slice(0, Math.max(1, props.maxVisibleTags)))
+const hasHiddenTags = computed(() => visibleTags.value.length < selected.value.length)
+watch(() => props.maxVisibleTags, () => { tagsExpanded.value = false })
 
 const isMultiselect = computed(() => isSelectType.value && props.multiple)
+const usesDropdownSearch = computed(() => isSelectType.value && !props.multiple)
+const queryField = computed(() => usesDropdownSearch.value ? searchField.value : inputField.value)
 const selectAllIndex = computed(() => dropdownItems.value.find(item => item.kind === 'select-all')?.index ?? -1)
 
 const hasValidSelection = computed(() => selected.value.some(option => getLabel(option).trim() !== ''))
-const inputRequired = computed(() => props.required && (!isSelectType.value || !hasValidSelection.value))
+const inputRequired = computed(() => !usesDropdownSearch.value && props.required && (!isSelectType.value || !hasValidSelection.value))
 const selectionMissing = computed(() => isSelectType.value && props.required && !hasValidSelection.value && !props.disabled && !props.readonly)
 const selectionValidationMessage = computed(() => props.type === 'taggable-select'
   ? text.value.requiredTaggable
@@ -1212,7 +1409,10 @@ const getInputDescriptionIds = () => [
 ].filter(Boolean).join(' ') || undefined
 
 watchEffect(() => {
-  inputField.value?.setCustomValidity(selectionMissing.value ? selectionValidationMessage.value : '')
+  if (inputField.value && 'setCustomValidity' in inputField.value) {
+    inputField.value.setCustomValidity(selectionMissing.value ? selectionValidationMessage.value : '')
+  }
+  selectionField.value?.setCustomValidity(selectionMissing.value ? selectionValidationMessage.value : '')
   if (!selectionMissing.value) selectionValidationAttempted.value = false
 }, { flush: 'post' })
 
@@ -1221,10 +1421,17 @@ const handleInvalid = () => {
   selectionValidationAttempted.value = true
 }
 
+const handleSelectionInvalid = () => {
+  handleInvalid()
+  inputField.value?.focus()
+}
+
 watch(() => [...selected.value], (items, previousItems) => {
   if (!isSelectType.value) return
-  const added = items.filter(item => !previousItems.some(previous => sameOption(item, previous))).map(getLabel)
-  const removed = previousItems.filter(item => !items.some(current => sameOption(item, current))).map(getLabel)
+  const wasSelected = createMatcher(previousItems)
+  const nowSelected = createMatcher(items)
+  const added = items.filter(item => !wasSelected(item)).map(getLabel)
+  const removed = previousItems.filter(item => !nowSelected(item)).map(getLabel)
   const changes = [
     removed.length ? text.value.removed(removed) : '',
     added.length ? text.value.added(added) : ''
@@ -1256,6 +1463,7 @@ const focusIndicatorClass = computed(() => {
 
 const showClearButton = computed(() => {
   if (props.disabled || props.readonly) return false
+  if (usesDropdownSearch.value) return hasValidSelection.value
   if (inputDisplayValue.value !== '') return true
   if (props.type !== 'text' && selected.value.length > 0) return true
   return false
@@ -1270,20 +1478,35 @@ const clearButtonLabel = computed(() => {
 
 const showDropdownResults = () => {
   if (props.readonly || props.disabled || isComposing.value) return
-  if (!props.pending && !hasDropdownSuggestion.value && !hasNoMatches.value) return
+  if (showDropdown.value) {
+    queryField.value?.focus({ preventScroll: true })
+    return
+  }
+  if (!usesDropdownSearch.value && !props.pending && !hasError.value && !hasDropdownSuggestion.value && !query.value.trim()) return
   inputField.value?.focus()
-  if (showDropdown.value) return
   openDropdown()
 }
 
+const toggleDropdownResults = () => {
+  if (props.readonly || props.disabled || isComposing.value) return
+  if (showDropdown.value) {
+    closeDropdown()
+    inputField.value?.focus({ preventScroll: true })
+  } else {
+    showDropdownResults()
+  }
+}
+
 const toggleSelectAll = () => {
-  if (props.disabled || props.readonly || props.pending || isComposing.value) return
+  if (props.disabled || props.readonly || props.pending || hasError.value || isComposing.value) return
   actionFeedback.value = ''
   toggleSelections(getCurrentGroupOptions())
+  shouldDismissEmptySuggestions.value = true
 }
 
 // Computed property for input display value
 const inputDisplayValue = computed(() => {
+  if (usesDropdownSearch.value) return selected.value.length ? getLabel(selected.value[0]) : ''
   if (isComposing.value) return compositionQuery.value
   // If a suggestion is highlighted via explicit arrow-key navigation, show its label.
   // When autoFocused is true the highlight was set automatically (on dropdown open/query change)
@@ -1295,7 +1518,7 @@ const inputDisplayValue = computed(() => {
       return getLabel(active.option)
     }
   }
-  if (!isSelectType.value && selected.value.length > 0 && query.value === '' && !props.multiple) {
+  if (selected.value.length > 0 && query.value === '' && !props.multiple) {
     return getLabel(selected.value[0])
   }
   // Otherwise, show the query
@@ -1313,7 +1536,7 @@ useEventListener(() => props.form && typeof document !== 'undefined' ? document.
     selectionValidationAttempted.value = false
     actionFeedback.value = ''
     await nextTick()
-    if (inputField.value) inputField.value.value = inputDisplayValue.value
+    if (inputField.value && !usesDropdownSearch.value) inputField.value.value = inputDisplayValue.value
   })
 })
 onMounted(() => { if (props.autofocus) inputField.value?.focus() })
@@ -1347,11 +1570,14 @@ const highlightDefaultOption = () => {
 }
 
 const openDropdown = (direction?: 'up' | 'down') => {
+  shouldDismissEmptySuggestions.value = false
   shouldAutoHighlightOnOpen.value = direction === undefined
   showDropdown.value = true
   if (direction) {
     activeGroupKey.value = -1
-    arrowCounter.value = direction === 'down' ? defaultItemIndex.value : lastDropdownItemIndex()
+    arrowCounter.value = usesDropdownSearch.value && !query.value.trim() && selectedItemIndex.value !== -1
+      ? selectedItemIndex.value
+      : direction === 'down' ? defaultItemIndex.value : lastDropdownItemIndex()
     autoFocused.value = false
   }
 }
@@ -1361,18 +1587,99 @@ type CloseDropdownOptions = {
 }
 
 const closeDropdown = (options: CloseDropdownOptions = {}) => {
+  shouldDismissEmptySuggestions.value = false
+  if (usesDropdownSearch.value && dropdownRef.value?.contains(document.activeElement)) inputField.value?.focus({ preventScroll: true })
   showDropdown.value = false
   actionFeedback.value = ''
   if (options.resetSelectDisplay !== false) resetSelectDisplayOnClose()
   resetActiveOption()
 }
 
-onKeyStroke('Escape', (e: KeyboardEvent) => {
-  if (isComposing.value || e.isComposing || e.keyCode === 229) return
-  if (!showDropdown.value) return
-  e.preventDefault()
-  closeDropdown()
+// Loading and errors must not inherit dismissal from a previous selection.
+watch([() => props.pending, () => props.error], () => {
+  shouldDismissEmptySuggestions.value = false
+}, { flush: 'sync' })
+
+watch(() => shouldDismissEmptySuggestions.value && allCount.value === 0 && !props.pending && !hasError.value, (shouldDismiss) => {
+  if (shouldDismiss) closeDropdown({ resetSelectDisplay: false })
 })
+
+const handleEscape = (event: KeyboardEvent) => {
+  if (isComposing.value || event.isComposing || event.keyCode === 229) return
+  if (!showDropdown.value) return
+  event.preventDefault()
+  event.stopPropagation()
+  ignoreEscapeKeyup.value = true
+  closeDropdown()
+}
+
+const handleEscapeKeyup = (event: KeyboardEvent) => {
+  if (showDropdown.value && (isComposing.value || event.isComposing || event.keyCode === 229)) {
+    event.stopPropagation()
+    return
+  }
+  if (!ignoreEscapeKeyup.value) return
+  event.preventDefault()
+  event.stopPropagation()
+  ignoreEscapeKeyup.value = false
+}
+
+watch(() => props.disabled || props.readonly, (blocked) => {
+  if (blocked) closeDropdown()
+}, { flush: 'sync' })
+
+const isComboBoxTarget = (target: EventTarget | null) => target instanceof Node && (
+  inputField.value?.closest('[data-id="sds-combo-box"]')?.contains(target) || dropdownRef.value?.contains(target)
+)
+const handleFieldFocus = (event: FocusEvent) => {
+  if (!isComboBoxTarget(event.relatedTarget)) emit('focus')
+}
+const handleFieldBlur = (event: FocusEvent) => {
+  if (!isComboBoxTarget(event.relatedTarget)) emit('blur', event)
+}
+
+const getFocusable = (container: ParentNode): HTMLElement[] => {
+  const displayed = new Map<HTMLElement, boolean>()
+  const isDisplayed = (element: HTMLElement): boolean => {
+    const cached = displayed.get(element)
+    if (cached !== undefined) return cached
+    const visible = getComputedStyle(element).display !== 'none' &&
+      (!element.parentElement || isDisplayed(element.parentElement))
+    displayed.set(element, visible)
+    return visible
+  }
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+    .filter(element => element.tabIndex >= 0 && !element.matches(':disabled, input[type="hidden"]') &&
+      !element.closest('[inert], [hidden], [aria-hidden="true"]') &&
+      getComputedStyle(element).visibility !== 'hidden' && isDisplayed(element))
+    .sort((left, right) => left.tabIndex === right.tabIndex ? 0
+      : left.tabIndex === 0 ? 1 : right.tabIndex === 0 ? -1 : left.tabIndex - right.tabIndex)
+}
+
+const handlePopupKeydown = (event: KeyboardEvent) => {
+  if (event.key !== 'Tab' || event.defaultPrevented || isComposing.value) return
+  event.preventDefault()
+  event.stopPropagation()
+  const popup = dropdownRef.value
+  const popupFields = popup ? getFocusable(popup) : []
+  const index = popupFields.findIndex(element => element === event.target)
+  const nextPopupField = popupFields[index + (event.shiftKey ? -1 : 1)]
+  if (index !== -1 && nextPopupField) {
+    nextPopupField.focus({ preventScroll: true })
+    return
+  }
+  if (event.shiftKey && !usesDropdownSearch.value) {
+    inputField.value?.focus({ preventScroll: true })
+    return
+  }
+  const scope = focusScope?.enabled() ? focusScope.container.value : undefined
+  const fields = getFocusable(scope ?? document).filter(element => !popup?.contains(element))
+  const triggerIndex = fields.findIndex(element => element === inputField.value)
+  const nextIndex = triggerIndex + (event.shiftKey ? -1 : 1)
+  const next = fields[(nextIndex + fields.length) % fields.length]
+  closeDropdown()
+  next?.focus({ preventScroll: true })
+}
 
 // When FloatingUi closes externally (click-outside, Escape), sync local state
 const onFloatingUiClose = () => {
@@ -1414,10 +1721,13 @@ const resetVirtualScroll = () => {
   if (parent) parent.scrollTop = 0
 }
 
+const shouldRevealActiveOption = () => !autoFocused.value || isAddSuggestionActive.value ||
+  (usesDropdownSearch.value && !query.value.trim() && selectedItemIndex.value !== -1)
+
 const syncDropdownScroll = async () => {
   await nextTick()
   resetVirtualScroll()
-  if (!autoFocused.value || isAddSuggestionActive.value) await scrollToChild()
+  if (shouldRevealActiveOption()) await scrollToChild()
 }
 
 const scrollToChild = async () => {
@@ -1455,14 +1765,14 @@ const scrollToChild = async () => {
 
 useResizeObserver(virtualScrollContainer, (entry) => {
   // FloatingUi initially mounts at zero width before applying its position and width.
-  if (entry.contentRect.width > 0 && shouldShowDropdown.value && !autoFocused.value) syncDropdownScroll()
+  if (entry.contentRect.width > 0 && shouldShowDropdown.value && shouldRevealActiveOption()) syncDropdownScroll()
 })
 
 const clearQuery = () => {
   if (props.disabled || props.readonly) return
   actionFeedback.value = ''
   const shouldClearSelections = !isMultiselect.value || inputDisplayValue.value === ''
-  if (inputDisplayValue.value !== '') setQuery('')
+  if (query.value !== '') setQuery('')
   if (shouldClearSelections) clearSelections()
   closeDropdown({ resetSelectDisplay: false })
   inputField.value?.focus()
@@ -1470,11 +1780,12 @@ const clearQuery = () => {
 
 const shake = (message = query.value.trim() ? text.value.chooseSuggestion : text.value.emptyValue) => {
   actionFeedback.value = message
-  if (!inputField.value) return
-  inputField.value.classList.add('animate-shake')
+  const field = queryField.value ?? inputField.value
+  if (!field) return
+  field.classList.add('animate-shake')
   if (shakeTimeout.value) window.clearTimeout(shakeTimeout.value)
   shakeTimeout.value = window.setTimeout(() => {
-    inputField.value?.classList.remove('animate-shake')
+    field.classList.remove('animate-shake')
     shakeTimeout.value = undefined
   }, 500)
 }
@@ -1496,15 +1807,16 @@ const multiselectRemove = (index: number) => {
   if (inputField.value) inputField.value.focus()
 }
 
-const handleDelete = () => {
+const handleDelete = (event: KeyboardEvent) => {
   if (props.disabled || props.readonly || !inputField.value) return
+  if (usesDropdownSearch.value && event.target === searchField.value) return
   if (selected.value.length && props.type === 'text' && inputField.value.value === '') {
     clearSelections()
     return
   }
   if (selected.value.length && props.type === 'text') removeSelectionAt(selected.value.length - 1)
-  // Only remove a selected tag when there is no search text to edit.
-  if (selected.value.length && !props.multiple && isSelectType.value && inputField.value.value === '') {
+  if (selected.value.length && usesDropdownSearch.value) {
+    event.preventDefault()
     multiselectRemove(-1)
     setQuery('')
     return
@@ -1516,7 +1828,7 @@ const activeElement = useActiveElement()
 const isFocused = computed(() => {
   // SSR guard: activeElement might be null during SSR
   if (!activeElement.value || !inputField.value) return false
-  return activeElement.value === inputField.value
+  return activeElement.value === inputField.value || activeElement.value === searchField.value
 })
 
 // Whether the "/" focus-on-key-press indicator badge should be shown.
@@ -1532,6 +1844,8 @@ const onInputFieldInput = (e: Event) => {
   if (props.disabled || props.readonly) return
   const target = e.target
   if (!(target instanceof HTMLInputElement)) return
+  if (usesDropdownSearch.value && target !== searchField.value) return
+  shouldDismissEmptySuggestions.value = false
   if (isComposing.value || (e instanceof InputEvent && e.isComposing)) {
     compositionQuery.value = target.value
     return
@@ -1543,7 +1857,8 @@ const onInputFieldInput = (e: Event) => {
 }
 
 const onCompositionStart = () => {
-  compositionQuery.value = inputField.value?.value ?? ''
+  shouldDismissEmptySuggestions.value = false
+  compositionQuery.value = queryField.value?.value ?? ''
   isComposing.value = true
 }
 
@@ -1559,18 +1874,66 @@ const handleInputKeydown = (event: KeyboardEvent) => {
     return
   }
   ignoreCompositionEnter.value = false
+  ignoreActionEnter.value = false
   if (props.disabled || props.readonly) return
+  if (usesDropdownSearch.value && event.target === inputField.value) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      ignoreActionEnter.value = event.key === 'Enter'
+      showDropdownResults()
+      return
+    }
+    if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      event.preventDefault()
+      showDropdownResults()
+      setUserQuery(event.key)
+      handleInput()
+      return
+    }
+  }
   switch (event.key) {
     case 'Enter':
       if (shouldShowDropdown.value || (props.type === 'taggable-select' && query.value.trim())) event.preventDefault()
       break
     case 'Backspace':
     case 'Delete':
-      handleDelete()
+      handleDelete(event)
       break
     case 'Tab':
-      closeDropdown()
+      if (!usesDropdownSearch.value && shouldShowDropdown.value && !event.shiftKey && dropdownRef.value) {
+        const firstPopupField = getFocusable(dropdownRef.value)[0]
+        if (firstPopupField) {
+          event.preventDefault()
+          event.stopPropagation()
+          firstPopupField.focus({ preventScroll: true })
+          return
+        }
+      }
+      if (!usesDropdownSearch.value || event.target === inputField.value) closeDropdown()
       break
+    case 'Home':
+    case 'End':
+      if (!usesDropdownSearch.value || event.target !== inputField.value || event.ctrlKey || event.metaKey || event.altKey) return
+      event.preventDefault()
+      showDropdownResults()
+      shouldAutoHighlightOnOpen.value = false
+      autoFocused.value = false
+      shouldScrollActiveItem.value = true
+      arrowCounter.value = event.key === 'Home' ? firstItemIndex.value : lastDropdownItemIndex()
+      break
+    case 'PageUp':
+    case 'PageDown': {
+      if (event.ctrlKey || event.metaKey || event.altKey || props.pending || hasError.value) return
+      event.preventDefault()
+      showDropdownResults()
+      shouldAutoHighlightOnOpen.value = false
+      autoFocused.value = false
+      shouldScrollActiveItem.value = true
+      const page = Math.max(1, Math.floor((getScrollAreaElement()?.clientHeight || 288) / props.virtualItemHeight))
+      arrowCounter.value = Math.max(firstItemIndex.value, Math.min(lastDropdownItemIndex(),
+        arrowCounter.value + (event.key === 'PageDown' ? page : -page)))
+      break
+    }
     case 'ArrowUp':
     case 'ArrowDown':
       if (event.ctrlKey || event.metaKey || event.shiftKey) return
@@ -1580,12 +1943,16 @@ const handleInputKeydown = (event: KeyboardEvent) => {
         else showDropdownResults()
         return
       }
-      if (props.pending) {
+      if (props.pending || hasError.value) {
         event.preventDefault()
         showDropdownResults()
         return
       }
-      if (!hasDropdownSuggestion.value && !hasNoMatches.value) return
+      if (!hasDropdownSuggestion.value) {
+        event.preventDefault()
+        showDropdownResults()
+        return
+      }
       event.preventDefault()
       handleArrows(event.key === 'ArrowUp' ? 'up' : 'down', event)
       break
@@ -1609,17 +1976,18 @@ const handleInput = async () => {
 }
 
 const commitSelection = () => {
-  if (!query.value.trim() && !selected.value.length) {
+  const hasQuery = query.value.trim() !== ''
+  if (!hasQuery && !selected.value.length && props.required) {
     shake()
     return
   }
-  selected.value = selected.value.length ? selected.value : [query.value]
+  if (hasQuery && !selected.value.length) selected.value = [query.value]
   if (!isMultiselect.value) closeDropdown({ resetSelectDisplay: isSelectType.value })
   emitEnter()
 }
 
 const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
-  if (props.disabled || props.readonly || props.pending || isComposing.value) return
+  if (props.disabled || props.readonly || props.pending || hasError.value || isComposing.value) return
   if (!getLabel(option).trim()) {
     shake(text.value.emptyValue)
     return
@@ -1645,6 +2013,7 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
   }
   if (isMultiselect.value) {
     resetActiveOption()
+    shouldDismissEmptySuggestions.value = true
   } else {
     closeDropdown({ resetSelectDisplay: false })
   }
@@ -1653,12 +2022,20 @@ const handleSuggestionClick = async (option: ComboBoxSuggestion) => {
 
 const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
   if (props.disabled || props.readonly) return
+  if (ignoreActionEnter.value) {
+    ignoreActionEnter.value = false
+    return
+  }
   if (event instanceof KeyboardEvent && (isComposing.value || event.isComposing || event.keyCode === 229 || ignoreCompositionEnter.value)) {
     ignoreCompositionEnter.value = false
     return
   }
   if (props.pending) {
     shake(text.value.loading)
+    return
+  }
+  if (hasError.value) {
+    shake(props.error)
     return
   }
   const currentItem = shouldShowDropdown.value ? activeItem.value : undefined
@@ -1698,7 +2075,7 @@ const handleEnterKeyUp = async (event: KeyboardEvent | MouseEvent) => {
 }
 
 const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: KeyboardEvent) => {
-  if (props.disabled || props.readonly || props.pending || isComposing.value) return
+  if (props.disabled || props.readonly || props.pending || hasError.value || isComposing.value) return
   // SSR guard: ensure dropdownRef.value exists before querying
   const activeTab = (dropdownRef.value?.querySelector('button.tab[data-active="true"]') as HTMLElement) || null
 
@@ -1739,7 +2116,7 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: 
       if (hasCategories.value) { // Has categories?
         if (arrowCounter.value === firstItemIndex.value) { // First option is active
           arrowCounter.value = -1
-          inputField.value?.focus()
+          queryField.value?.focus({ preventScroll: true })
           return
         }
       }
@@ -1754,29 +2131,23 @@ const handleArrows = async (direction: 'up' | 'down' | 'left' | 'right', event: 
     }
     // Allow left/right arrow navigation only if categories are shown and input is not focused
     case 'left':
-      if (hasCategories.value && shouldShowDropdown.value) {
-        event.preventDefault()
-        if (activeGroupKey.value === -1) {
-          activeGroupKey.value = comboBoxTabs.value.length - 2
-        } else {
-          activeGroupKey.value--
-        }
-        await nextTick()
-        const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
-        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
-      }
-      break
     case 'right':
       if (hasCategories.value && shouldShowDropdown.value) {
         event.preventDefault()
-        if (activeGroupKey.value === comboBoxTabs.value.length - 2) {
-          activeGroupKey.value = -1
-        } else {
-          activeGroupKey.value++
-        }
+        const tabs = comboBoxTabs.value.filter(tab => !tab.disabled)
+        const current = tabs.findIndex(tab => Number(tab.key) === activeGroupKey.value)
+        const next = tabs[(current + (direction === 'right' ? 1 : -1) + tabs.length) % tabs.length]
+        if (!next) return
+        activeGroupKey.value = Number(next.key)
         await nextTick()
-        const newActiveTab = dropdownRef.value?.querySelector('button.tab[data-active="true"]')
-        newActiveTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        const tab = dropdownRef.value?.querySelector<HTMLElement>('button.tab[data-active="true"]')
+        const container = tab?.closest<HTMLElement>('[data-id="sds-combo-box-categories"]')
+        if (tab && container) {
+          const tabRect = tab.getBoundingClientRect()
+          const containerRect = container.getBoundingClientRect()
+          if (tabRect.left < containerRect.left) container.scrollLeft += tabRect.left - containerRect.left
+          else if (tabRect.right > containerRect.right) container.scrollLeft += tabRect.right - containerRect.right
+        }
       }
       break
   }
@@ -1792,10 +2163,7 @@ watch(arrowCounter, (val, oldVal) => {
 
 const shouldShowDropdown = computed(() => {
   if (props.disabled || props.readonly) return false
-  if (!showDropdown.value) return false
-  if (props.pending) return true
-  if (!hasDropdownSuggestion.value && !hasNoMatches.value) return false
-  return true
+  return showDropdown.value
 })
 
 watchDebounced(() => [
@@ -1803,10 +2171,13 @@ watchDebounced(() => [
   shouldShowDropdown.value,
   countVisibleOptions(suggestionOptions.value),
   shouldShowNewSuggestion.value ? query.value : '',
-  activeGroupKey.value
+  activeGroupKey.value,
+  hasError.value
 ] as const, ([pending, open, count]) => {
   if (pending) {
     resultsAnnouncement.value = text.value.loading
+  } else if (hasError.value) {
+    resultsAnnouncement.value = ''
   } else if (open) {
     const category = hasCategories.value ? `${groups.value.find(group => group.key === activeGroupKey.value)?.label ?? text.value.all}. ` : ''
     const countMessage = `${category}${text.value.results(count)}`
@@ -1841,6 +2212,7 @@ watch(shouldShowDropdown, async (val) => {
   // autoFocused keeps the typed query visible in the input (no label substitution).
   if (val) {
     await syncDropdownScroll()
+    if (usesDropdownSearch.value && shouldShowDropdown.value) searchField.value?.focus({ preventScroll: true })
   } else {
     resetActiveOption()
     if (!preserveQueryWhilePending) shouldAutoHighlightOnOpen.value = false
@@ -1858,9 +2230,8 @@ watch(activeGroupKey, async () => {
 watch(displayOptionRows, async () => {
   if (!props.pending && actionFeedback.value === text.value.loading) actionFeedback.value = ''
   if (!shouldShowDropdown.value) return
-  if (props.pending) {
+  if (props.pending || hasError.value) {
     autoFocused.value = true
-    activeGroupKey.value = -1
   }
   if (autoFocused.value) highlightDefaultOption()
   await syncDropdownScroll()

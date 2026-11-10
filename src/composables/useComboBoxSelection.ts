@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import { computed, type Ref } from 'vue'
 import type { ComboBoxSuggestion } from './useComboBoxSuggestions'
 import { normalizeString } from './useComboBoxSuggestions'
 
@@ -46,22 +46,68 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     return normalizeString(options.getLabel(left)) === normalizeString(options.getLabel(right))
   }
 
+  const createIndex = (items: ComboBoxSuggestion[]) => {
+    const labels = new Map<string, number>()
+    const strings = new Map<string, number>()
+    const custom = new Map<string, number>()
+    const regular = new Map<string, number>()
+    const identities = new Map<string | number, number>()
+    const add = (item: ComboBoxSuggestion, index: number) => {
+      const label = normalizeString(options.getLabel(item))
+      if (!labels.has(label)) labels.set(label, index)
+      const labelIndex = typeof item === 'string' ? strings : item.__cbxCustom === true ? custom : regular
+      if (!labelIndex.has(label)) labelIndex.set(label, index)
+      if (typeof item === 'object' && item.__cbxCustom !== true) {
+        const identity = getIdentity(item)
+        if (identity !== undefined && !identities.has(identity)) identities.set(identity, index)
+      }
+    }
+    items.forEach(add)
+    const find = (item: ComboBoxSuggestion): number => {
+      const label = normalizeString(options.getLabel(item))
+      if (typeof item === 'string') return labels.get(label) ?? -1
+      const identity = item.__cbxCustom !== true && options.optionValue?.() ? getIdentity(item) : undefined
+      const candidate = item.__cbxCustom === true
+        ? custom.get(label)
+        : options.optionValue?.()
+          ? identity === undefined ? undefined : identities.get(identity)
+          : regular.get(label)
+      const stringCandidate = strings.get(label)
+      if (candidate === undefined) return stringCandidate ?? -1
+      return stringCandidate === undefined ? candidate : Math.min(candidate, stringCandidate)
+    }
+    return { add, find }
+  }
+
+  const selectedIndex = computed(() => createIndex(options.selected.value))
+  const originalIndex = computed(() => {
+    const items: ComboBoxSuggestion[] = []
+    const append = (suggestions: ComboBoxSuggestion[]) => {
+      for (const item of suggestions) {
+        const children = options.getChildren?.(item) ?? []
+        const childrenKey = options.optionGroupChildren?.()
+        const isGroup = !!childrenKey && typeof item === 'object' && Array.isArray(item[childrenKey])
+        if (!isGroup && !children.length) items.push(item)
+        else append(children)
+      }
+    }
+    append(options.suggestions())
+    return { items, ...createIndex(items) }
+  })
+
   const findOriginalSuggestion = (option: ComboBoxSuggestion): ComboBoxSuggestion | undefined => {
     if (typeof option === 'object' && option.__cbxCustom === true) return undefined
-    const childrenKey = options.optionGroupChildren?.()
-    const findSuggestion = (suggestions: ComboBoxSuggestion[]): ComboBoxSuggestion | undefined => {
-      for (const suggestion of suggestions) {
-        const children = options.getChildren?.(suggestion) ?? []
-        const isGroup = !!childrenKey && typeof suggestion === 'object' && Array.isArray(suggestion[childrenKey])
-        if (!isGroup && !children.length && sameOption(suggestion, option)) return suggestion
-        const childSuggestion = findSuggestion(children)
-        if (childSuggestion) return childSuggestion
-      }
+    return originalIndex.value.items[originalIndex.value.find(option)]
+  }
 
-      return undefined
-    }
-
-    return findSuggestion(options.suggestions())
+  /**
+   * Builds an indexed membership check using the same identity rules as selection.
+   * @param items - Options to match against.
+   * @returns A predicate indicating whether an option is present.
+   */
+  const createMatcher = (items: ComboBoxSuggestion[]) => {
+    const index = createIndex(items)
+    return (option: ComboBoxSuggestion): boolean => index.find(option) !== -1
   }
 
   const stripIdx = (option: ComboBoxSuggestion): ComboBoxSuggestion => {
@@ -74,7 +120,7 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
   }
 
   const findSelectedIndex = (option: ComboBoxSuggestion): number => {
-    return options.selected.value.findIndex(item => sameOption(item, option))
+    return selectedIndex.value.find(option)
   }
 
   const addSelection = (option: ComboBoxSuggestion): void => {
@@ -120,14 +166,18 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     if (!optionsToToggle.length) return
 
     if (areAllSelected(optionsToToggle)) {
-      options.selected.value = options.selected.value.filter(option => !optionsToToggle.some(candidate => sameOption(candidate, option)))
+      const matches = createMatcher(optionsToToggle)
+      options.selected.value = options.selected.value.filter(option => !matches(option))
       return
     }
 
     const nextSelected = [...options.selected.value]
+    const index = createIndex(nextSelected)
     optionsToToggle.forEach((option) => {
-      if (!nextSelected.some(selectedOption => sameOption(selectedOption, option))) {
-        nextSelected.push(stripIdx(findOriginalSuggestion(option) ?? option))
+      if (index.find(option) === -1) {
+        const original = stripIdx(findOriginalSuggestion(option) ?? option)
+        index.add(original, nextSelected.length)
+        nextSelected.push(original)
       }
     })
     options.selected.value = nextSelected
@@ -137,6 +187,7 @@ export function useComboBoxSelection(options: UseComboBoxSelectionOptions) {
     findOriginalSuggestion,
     getOptionValue,
     sameOption,
+    createMatcher,
     stripIdx,
     findSelectedIndex,
     addSelection,

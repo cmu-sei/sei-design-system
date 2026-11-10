@@ -81,6 +81,8 @@ interface FloatingUiProps {
   inline?: boolean;
   shift?: boolean;
   disableAnimation?: boolean;
+  /** Allows interactive popup content to own Escape dismissal. Defaults to true. */
+  closeOnEscape?: boolean;
   animationEnterActiveClass?: string;
   animationEnterFromClass?: string;
   animationEnterToClass?: string;
@@ -141,6 +143,7 @@ const props = withDefaults(defineProps<FloatingUiProps>(), {
   inline: false,
   shift: false,
   disableAnimation: false,
+  closeOnEscape: true,
   animationEnterActiveClass: 'transition duration-75 ease-out',
   animationEnterFromClass: 'transform scale-95 opacity-0',
   animationEnterToClass: 'transform scale-100 opacity-100',
@@ -401,7 +404,7 @@ useClickOutside(popperRef, (event: Event) => {
 })
 
 onKeyStroke('Escape', (e) => {
-  if (!open.value) return
+  if (!props.closeOnEscape || !open.value || e.defaultPrevented) return
   e.preventDefault()
   onClose()
 })

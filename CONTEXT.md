@@ -130,7 +130,7 @@ A calendar surface used to choose a date, a date range, or time-related values d
 A text input that presents a suggestion list and lets the user either enter free text, choose from suggestions, or create new tagged values depending on its mode.
 
 ### Query
-The current user-entered text shown in the ComboBox input before it is committed as a selection.
+The current user-entered search text before it is committed as a selection. Single-select ComboBoxes keep this text in a dropdown search field, separate from the selected label in the trigger.
 
 ### Suggestion
 A candidate value presented by a ComboBox for selection. A suggestion may be a simple text value or a structured object, but it is always treated as one selectable choice.

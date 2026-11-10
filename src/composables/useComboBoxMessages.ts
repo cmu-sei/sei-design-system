@@ -3,8 +3,13 @@ export interface ComboBoxMessages {
   all: string;
   categories: string;
   showSuggestions: string;
+  searchSuggestions: string;
   suggestions: string;
   loading: string;
+  noOptions: string;
+  retry: string;
+  showFewerSelections: string;
+  moreSelections: (count: number) => string;
   selectAll: string;
   partiallySelected: string;
   navigate: string;
@@ -38,13 +43,18 @@ export const comboBoxMessages: ComboBoxMessages = {
   all: 'All',
   categories: 'Suggestion categories',
   showSuggestions: 'Show suggestions',
+  searchSuggestions: 'Search suggestions',
   suggestions: 'Suggestions',
   loading: 'Loading suggestions.',
+  noOptions: 'No options available.',
+  retry: 'Try again',
+  showFewerSelections: 'Show fewer selections',
+  moreSelections: count => `+${count} more`,
   selectAll: 'Select all',
   partiallySelected: 'Some suggestions are selected.',
   navigate: 'Navigate',
   navigationKeys: 'Up, down:',
-  categoryKeys: 'Alt+Left, Alt+Right:',
+  categoryKeys: 'Alt/Option+Left, Alt/Option+Right:',
   enterKey: 'Enter',
   altKey: 'Alt',
   switchGroups: 'Switch categories',
