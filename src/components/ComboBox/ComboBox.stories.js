@@ -1,18 +1,27 @@
 import SdsComboBox from './ComboBox.vue';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Components/Inputs/Combo Box',
   parameters: {
     docs: {
       description: {
-        component: 'A Combo Box is an input field that allows users to search or select from dynamically filtered options. Clicking the input opens available suggestions; clicking again keeps them open without changing the query or keyboard highlight. Empty remote search results preserve the query so users can refine it. Escape dismisses suggestions without clearing the query or changing selected values.',
+        component: 'A Combo Box lets users search or select from dynamically filtered options. Single-select buttons toggle a dropdown with its own search field; editable text and multiselect inputs keep suggestions open when clicked.',
       },
     },
   },
   component: SdsComboBox,
   argTypes: {
-    variant: {
-      options: ['gray', 'blue', 'red'],
+    type: {
+      options: ['text', 'select', 'taggable-select'],
+      control: { type: 'select' }
+    },
+    optionType: {
+      options: ['button', 'a', 'custom'],
+      control: { type: 'select' }
+    },
+    size: {
+      options: ['sm', 'md', 'lg'],
       control: { type: 'select' }
     }
   }
@@ -24,20 +33,74 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <sds-combo-box v-model="localValue" v-bind="args" />
+    <sds-combo-box
+      v-bind="args"
+      v-model="localValue"
+      v-model:selected="localSelected"
+      @complete="onComplete"
+      @result="onResult"
+      @enter="onEnter"
+      @open="onOpen"
+      @close="onClose"
+      @focus="onFocus"
+      @blur="onBlur"
+    />
   `,
   data() {
-    return { localValue: this.$props.modelValue }
+    return { localValue: this.args.modelValue ?? '', localSelected: [...(this.args.selected ?? [])] }
   },
   watch: {
-    modelValue(value) {
+    'args.modelValue'(value) {
       this.localValue = value
+    },
+    'args.selected'(value) {
+      this.localSelected = [...(value ?? [])]
     }
   },
+  methods: {
+    onComplete: action('complete'),
+    onResult: action('result'),
+    onEnter: action('enter'),
+    onOpen: action('open'),
+    onClose: action('close'),
+    onFocus: action('focus'),
+    onBlur: action('blur')
+  }
 });
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const SingleSelect = Template.bind({});
+SingleSelect.args = {
+  type: 'select',
+  'aria-label': 'Choose fruit',
+  selected: ['Banana'],
+  suggestions: ['Apple', 'Banana', 'Cherry'],
+  filterSuggestions: true
+};
+
+export const CompactSelections = Template.bind({});
+CompactSelections.args = {
+  ...SingleSelect.args,
+  multiple: true,
+  maxVisibleTags: 2,
+  selected: ['Apple', 'Banana', 'Cherry']
+};
+CompactSelections.parameters = {
+  docs: { description: { story: 'Expand or collapse the selected tags without changing their values.' } }
+};
+
+export const RemoteError = Template.bind({});
+RemoteError.args = {
+  type: 'select',
+  'aria-label': 'Choose fruit',
+  error: 'Suggestions could not be loaded.',
+  onRetry: action('retry')
+};
+RemoteError.parameters = {
+  docs: { description: { story: 'Open the dropdown and use Tab to reach the retry action. Retry logs the current query; clear error or enable pending in Controls to inspect the response states.' } }
+};
 
 export const NarrowContainer = (args) => ({
   components: { SdsComboBox },
@@ -65,7 +128,9 @@ export const NarrowContainer = (args) => ({
     return { query: '' }
   }
 });
-NarrowContainer.args = {};
+NarrowContainer.args = {
+  'aria-label': 'Choose fruit or vegetables'
+};
 NarrowContainer.parameters = {
   docs: {
     description: {

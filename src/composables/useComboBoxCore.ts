@@ -19,6 +19,7 @@ interface UseComboBoxCoreOptions {
   optionLabel: () => string | undefined
   optionValue?: () => string | undefined
   allGroupLabel?: () => string
+  pending?: () => boolean
   optionGroupLabel: () => string | undefined
   optionGroupChildren: () => string | undefined
   disableGroupTabs: () => boolean
@@ -67,13 +68,15 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     optionGroupChildren: options.optionGroupChildren,
     disableGroupTabs: options.disableGroupTabs,
     activeGroupKey,
-    allGroupLabel: options.allGroupLabel
+    allGroupLabel: options.allGroupLabel,
+    pending: options.pending
   })
 
   const {
     findOriginalSuggestion,
     getOptionValue,
     sameOption,
+    createMatcher,
     stripIdx,
     findSelectedIndex,
     addSelection,
@@ -170,6 +173,7 @@ export function useComboBoxCore(options: UseComboBoxCoreOptions) {
     findOriginalSuggestion,
     getOptionValue,
     sameOption,
+    createMatcher,
     stripIdx,
     findSelectedIndex,
     addSelection,

@@ -97,6 +97,8 @@ All source files use TypeScript with `strict: true`. Key rules (see `.github/ins
 - Add JSDoc comments on all public/exported APIs with `@param` and `@returns`.
 - Avoid type assertions (`as` or `!`).
 
+The exact `vue-tsc` version in `package.json` is intentional. Version `3.3.14` incorrectly infers refs and template-local scopes in valid examples. Keep the pin until a replacement passes `npm run typecheck` against the full project.
+
 ### Vue Components
 
 - All components use `<script setup lang="ts">` with the Composition API.

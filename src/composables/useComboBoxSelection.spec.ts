@@ -200,4 +200,33 @@ describe('useComboBoxSelection', () => {
     expect(selection.findOriginalSuggestion('Apple')).toEqual(apple)
     expect(selection.resolveSuggestion({ label: 'Apple', __cbxIdx: 0 }).emitValue).toEqual(apple)
   })
+
+  it.each([undefined, 'id'])('keeps indexed selection lookup consistent with pairwise identity using optionValue=%s', (optionValue) => {
+    const choices: ComboBoxSuggestion[] = [
+      'Apple', ' apple ', { label: 'Apple', id: 1 }, { label: 'Apple', id: 2 },
+      { label: 'Renamed', id: 1 }, { label: 'Apple', id: '1' },
+      { label: 'Apple', id: 1, __cbxCustom: true }, 'Banana'
+    ]
+    for (const selected of [choices, choices.slice(2), [choices[6], choices[2]], [choices[0]]]) {
+      const selection = createSelection({ selected, suggestions: choices, optionValue })
+      for (const option of choices) {
+        expect(selection.findSelectedIndex(option)).toBe(selected.findIndex(item => selection.sameOption(item, option)))
+      }
+    }
+  })
+
+  it('scales bulk selection and membership checks linearly in label reads', () => {
+    const suggestions = Array.from({ length: 1000 }, (_, index) => `Option ${index}`)
+    const selected = ref<ComboBoxSuggestion[]>([])
+    const label = vi.fn(getLabel)
+    const selection = useComboBoxSelection({ selected, suggestions: () => suggestions, getLabel: label })
+
+    selection.toggleSelections(suggestions)
+    expect(selection.areAllSelected(suggestions)).toBe(true)
+    expect(selection.areSomeSelected(suggestions)).toBe(false)
+    selection.toggleSelections(suggestions)
+
+    expect(selected.value).toEqual([])
+    expect(label.mock.calls.length).toBeLessThan(20000)
+  })
 })

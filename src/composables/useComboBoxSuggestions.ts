@@ -1,4 +1,4 @@
-import { computed, toValue, type MaybeRefOrGetter, type Ref } from 'vue'
+import { computed, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 
 export type ComboBoxSuggestionObject = Record<string | number, unknown> & {
   /** Preserved origin marker for custom tags, distinct from existing record identities. */
@@ -24,6 +24,7 @@ interface UseComboBoxSuggestionsOptions {
   disableGroupTabs: MaybeRefOrGetter<boolean>;
   activeGroupKey: Ref<number>;
   allGroupLabel?: MaybeRefOrGetter<string>;
+  pending?: MaybeRefOrGetter<boolean>;
 }
 
 const defaultOptionLabel = 'label'
@@ -82,7 +83,6 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
     const normalized = { ...item }
     if (optionGroupChildren && Array.isArray(item[optionGroupChildren])) {
       const children = (item[optionGroupChildren] as ComboBoxSuggestion[]).map(normalizeSuggestion).filter(child => child !== undefined)
-      if (!children.length) return undefined
       normalized[optionGroupChildren] = children
     } else if (!getLabel(item).trim()) {
       return undefined
@@ -131,38 +131,48 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
 
   const allSuggestions = computed(() => toValue(options.suggestions).map(normalizeSuggestion).filter(suggestion => suggestion !== undefined))
 
-  const allSuggestionOptions = computed(() => {
-    if (!toValue(options.filterSuggestions)) return allSuggestions.value
-    return filterSuggestionList(allSuggestions.value)
+  const groupKeys = new Map<string, number>()
+  const suggestionEntries = computed(() => {
+    const occurrences = new Map<string, number>()
+    const childrenKey = toValue(options.optionGroupChildren)
+    return allSuggestions.value.map((option) => {
+      if (!childrenKey || typeof option !== 'object' || !Array.isArray(option[childrenKey])) return { option, key: undefined }
+      const label = getGroupLabel(option)
+      const occurrence = occurrences.get(label) ?? 0
+      occurrences.set(label, occurrence + 1)
+      const identity = JSON.stringify([label, occurrence])
+      if (!groupKeys.has(identity)) groupKeys.set(identity, groupKeys.size)
+      return { option, key: groupKeys.get(identity) }
+    })
   })
 
+  watch([suggestionEntries, () => toValue(options.pending)], ([entries, pending]) => {
+    if (!pending && !entries.some(entry => entry.key === options.activeGroupKey.value)) {
+      options.activeGroupKey.value = -1
+    }
+  })
+
+  const visibleEntries = computed(() => suggestionEntries.value.flatMap((entry) => {
+    const option = toValue(options.filterSuggestions) ? filterSuggestionList([entry.option])[0] : entry.option
+    return option && countVisibleOptions([option]) > 0 ? [{ ...entry, option }] : []
+  }))
+  const allSuggestionOptions = computed(() => visibleEntries.value.map(entry => entry.option))
   const allCount = computed(() => countVisibleOptions(allSuggestionOptions.value))
 
   const groups = computed<ComboBoxGroup[]>(() => {
-    let key = -1
+    const counts = new Map(visibleEntries.value.map(({ option, key }) => [key, countVisibleOptions(getChildren(option))]))
     return [
-      { key, label: toValue(options.allGroupLabel) ?? 'All', count: allCount.value },
-      ...allSuggestionOptions.value.map((item) => {
-        const count = getChildren(item).length
-        if (count > 0) key++
-
-        return {
-          key,
-          label: getGroupLabel(item),
-          count
-        }
-      }).filter((group) => group.count > 0)
+      { key: -1, label: toValue(options.allGroupLabel) ?? 'All', count: allCount.value },
+      ...suggestionEntries.value.flatMap(({ option, key }) => key === undefined ||
+        (!counts.has(key) && key !== options.activeGroupKey.value) ? [] : [{
+          key, label: getGroupLabel(option), count: counts.get(key) ?? 0
+        }])
     ]
   })
 
   const activeGroupSuggestion = computed(() => {
     if (!toValue(options.optionGroupChildren) || options.activeGroupKey.value === -1) return undefined
-    let key = -1
-    return allSuggestionOptions.value.find((item) => {
-      if (!getChildren(item).length) return false
-      key++
-      return key === options.activeGroupKey.value
-    })
+    return visibleEntries.value.find(entry => entry.key === options.activeGroupKey.value)?.option
   })
 
   const groupSuggestionOptions = computed(() => activeGroupSuggestion.value ? [activeGroupSuggestion.value] : [])
@@ -203,15 +213,15 @@ export function useComboBoxSuggestions(options: UseComboBoxSuggestionsOptions) {
     return countVisibleOptions(suggestionOptions.value) > 0
   })
 
-  const isFlatArray = computed(() => groups.value.filter(group => group.count > 0).length <= 1)
+  const isFlatArray = computed(() => groups.value.length <= 1)
 
   const hasCategories = computed(() => {
     if (!groups.value.length || isFlatArray.value || toValue(options.disableGroupTabs)) return false
-    return allCount.value > 1
+    return allCount.value > 1 || options.activeGroupKey.value !== -1
   })
 
   const hasNoMatches = computed(() => {
-    return toValue(options.filterSuggestions) && !hasDropdownSuggestion.value && toValue(options.query) !== ''
+    return !hasDropdownSuggestion.value && toValue(options.query) !== ''
   })
 
   return {

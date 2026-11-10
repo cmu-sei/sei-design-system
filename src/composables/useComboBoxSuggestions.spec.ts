@@ -137,4 +137,47 @@ describe('useComboBoxSuggestions', () => {
     expect(comboBoxSuggestions.hasDropdownSuggestion.value).toBe(false)
     expect(comboBoxSuggestions.hasNoMatches.value).toBe(true)
   })
+
+  it('keeps the active category when filtering removes an earlier category', () => {
+    const suggestions = createSuggestions({
+      suggestions: [
+        { section: 'Fruits', items: [{ name: 'Apple' }] },
+        { section: 'Vegetables', items: [{ name: 'Carrot' }] },
+        { section: 'Animals', items: [{ name: 'Cat' }] }
+      ],
+      activeGroupKey: 1,
+      filterSuggestions: true
+    })
+    expect(suggestions.groups.value[2]?.label).toBe('Vegetables')
+
+    suggestions.query.value = 'Ca'
+
+    expect(suggestions.suggestionOptions.value).toEqual([
+      { section: 'Vegetables', items: [{ name: 'Carrot' }] }
+    ])
+    expect(suggestions.hasNoMatches.value).toBe(false)
+  })
+
+  it('preserves category identity when remote groups are reordered', () => {
+    const suggestions = createSuggestions({ activeGroupKey: 1 })
+    expect(suggestions.groups.value[2]?.label).toBe('Vegetables')
+
+    suggestions.suggestions.value = [...groupedSuggestions].reverse()
+
+    expect(suggestions.groupSuggestionOptions.value[0]).toMatchObject({ section: 'Vegetables' })
+  })
+
+  it('reports no matches for empty remote results without local filtering', () => {
+    const suggestions = createSuggestions({ suggestions: [], query: 'missing', filterSuggestions: false })
+
+    expect(suggestions.hasNoMatches.value).toBe(true)
+  })
+
+  it('keeps an empty active category visible so users can return to All', () => {
+    const suggestions = createSuggestions({ activeGroupKey: 1, filterSuggestions: true, query: 'Apple' })
+
+    expect(suggestions.suggestionOptions.value).toEqual([])
+    expect(suggestions.groups.value).toContainEqual({ key: 1, label: 'Vegetables', count: 0 })
+    expect(suggestions.hasCategories.value).toBe(true)
+  })
 })
