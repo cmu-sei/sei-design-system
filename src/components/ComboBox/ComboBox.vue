@@ -73,7 +73,7 @@
             type="button"
             tabindex="-1"
             class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
-            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
+            :aria-controls="controlledPopupId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :disabled="disabled || readonly || undefined"
             @click="showDropdownResults"
@@ -103,7 +103,7 @@
             type="button"
             role="combobox"
             aria-autocomplete="none"
-            aria-haspopup="dialog"
+            :aria-haspopup="hasSuggestionSource ? 'dialog' : undefined"
             :form="form"
             :value="inputDisplayValue"
             :aria-label="getAriaAttribute('aria-label')"
@@ -111,7 +111,7 @@
             :aria-describedby="getInputDescriptionIds()"
             :aria-invalid="invalid || showSelectionError || undefined"
             :aria-busy="pending || undefined"
-            :aria-controls="popupId"
+            :aria-controls="controlledPopupId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :aria-required="required || undefined"
             :aria-readonly="readonly || undefined"
@@ -136,14 +136,14 @@
             :value="inputDisplayValue"
             type="text"
             role="combobox"
-            :aria-autocomplete="usesDropdownSearch ? 'none' : 'list'"
-            :aria-haspopup="usesDropdownSearch ? 'dialog' : undefined"
+            :aria-autocomplete="hasSuggestionSource && !usesDropdownSearch ? 'list' : 'none'"
+            :aria-haspopup="hasSuggestionSource && usesDropdownSearch ? 'dialog' : undefined"
             :aria-label="getAriaAttribute('aria-label')"
             :aria-labelledby="getAriaAttribute('aria-labelledby')"
             :aria-describedby="getInputDescriptionIds()"
             :aria-invalid="invalid || showSelectionError || undefined"
             :aria-busy="pending || undefined"
-            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
+            :aria-controls="controlledPopupId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :aria-activedescendant="usesDropdownSearch ? undefined : activeDescendantId"
             :multiple="multiple || undefined"
@@ -207,7 +207,7 @@
             type="button"
             tabindex="-1"
             class="input-group-addon cursor-pointer disabled:cursor-not-allowed"
-            :aria-controls="usesDropdownSearch ? popupId : dropdownId"
+            :aria-controls="controlledPopupId"
             :aria-expanded="shouldShowDropdown ? 'true' : 'false'"
             :disabled="disabled || readonly || undefined"
             @click="toggleDropdownResults"
@@ -875,8 +875,10 @@ interface ComboBoxProps {
    * Items may be strings or objects. For object suggestions, use `optionLabel` to choose the
    * display field. For grouped suggestions, provide group objects and configure
    * `optionGroupLabel` plus `optionGroupChildren`.
+   * Omit this prop to disable the suggestions dropdown. Pass an empty array to enable
+   * suggestions before results arrive or to show no-match feedback for an empty response.
    *
-   * @default []
+   * @default undefined
    */
   suggestions?: ComboBoxSuggestion[];
   /**
@@ -1023,7 +1025,7 @@ const props = withDefaults(defineProps<ComboBoxProps>(), {
   error: undefined,
   placeholder: undefined,
   size: undefined,
-  suggestions: () => [],
+  suggestions: undefined,
   type: 'text',
   disabled: false,
   readonly: false,
@@ -1071,6 +1073,7 @@ const ignoreEscapeKeyup = ref(false)
 const tagsExpanded = ref(false)
 const focusScope = inject(focusTrapScopeKey, undefined)
 const instance = getCurrentInstance()
+const hasSuggestionSource = computed(() => props.suggestions !== undefined)
 const hasError = computed(() => !props.pending && !!props.error?.trim())
 const canRetry = () => !!instance?.vnode.props?.onRetry
 const retrySearch = () => {
@@ -1180,7 +1183,7 @@ const {
   setQuery,
   setUserQuery
 } = useComboBoxCore({
-  suggestions: () => props.suggestions,
+  suggestions: () => props.suggestions ?? [],
   query,
   selected,
   arrowCounter,
@@ -1391,6 +1394,10 @@ watch(() => props.maxVisibleTags, () => { tagsExpanded.value = false })
 
 const isMultiselect = computed(() => isSelectType.value && props.multiple)
 const usesDropdownSearch = computed(() => isSelectType.value && !props.multiple)
+const controlledPopupId = computed(() => {
+  if (!hasSuggestionSource.value) return undefined
+  return usesDropdownSearch.value ? popupId.value : dropdownId.value
+})
 const queryField = computed(() => usesDropdownSearch.value ? searchField.value : inputField.value)
 const selectAllIndex = computed(() => dropdownItems.value.find(item => item.kind === 'select-all')?.index ?? -1)
 
@@ -1606,7 +1613,7 @@ watch(() => shouldDismissEmptySuggestions.value && allCount.value === 0 && !prop
 
 const handleEscape = (event: KeyboardEvent) => {
   if (isComposing.value || event.isComposing || event.keyCode === 229) return
-  if (!showDropdown.value) return
+  if (!shouldShowDropdown.value) return
   event.preventDefault()
   event.stopPropagation()
   ignoreEscapeKeyup.value = true
@@ -1614,7 +1621,7 @@ const handleEscape = (event: KeyboardEvent) => {
 }
 
 const handleEscapeKeyup = (event: KeyboardEvent) => {
-  if (showDropdown.value && (isComposing.value || event.isComposing || event.keyCode === 229)) {
+  if (shouldShowDropdown.value && (isComposing.value || event.isComposing || event.keyCode === 229)) {
     event.stopPropagation()
     return
   }
@@ -2163,6 +2170,7 @@ watch(arrowCounter, (val, oldVal) => {
 
 const shouldShowDropdown = computed(() => {
   if (props.disabled || props.readonly) return false
+  if (!hasSuggestionSource.value) return false
   return showDropdown.value
 })
 
@@ -2172,9 +2180,12 @@ watchDebounced(() => [
   countVisibleOptions(suggestionOptions.value),
   shouldShowNewSuggestion.value ? query.value : '',
   activeGroupKey.value,
-  hasError.value
+  hasError.value,
+  hasSuggestionSource.value
 ] as const, ([pending, open, count]) => {
-  if (pending) {
+  if (!hasSuggestionSource.value) {
+    resultsAnnouncement.value = ''
+  } else if (pending) {
     resultsAnnouncement.value = text.value.loading
   } else if (hasError.value) {
     resultsAnnouncement.value = ''

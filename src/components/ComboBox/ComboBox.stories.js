@@ -70,6 +70,9 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+Default.parameters = {
+  docs: { description: { story: 'Omit suggestions for a plain search input with no suggestions dropdown. Pass an array, including [], to enable suggestions; initialize remote results to [] so loading, error, and empty-result feedback are available.' } }
+};
 
 export const SingleSelect = Template.bind({});
 SingleSelect.args = {
@@ -95,6 +98,7 @@ export const RemoteError = Template.bind({});
 RemoteError.args = {
   type: 'select',
   'aria-label': 'Choose fruit',
+  suggestions: [],
   error: 'Suggestions could not be loaded.',
   onRetry: action('retry')
 };

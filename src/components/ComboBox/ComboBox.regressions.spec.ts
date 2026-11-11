@@ -37,6 +37,169 @@ describe('ComboBox usability regressions', () => {
     return new DOMWrapper(search)
   }
 
+  it('keeps text-only search closed when suggestions are omitted', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { modelValue: '' }
+    })
+    const input = wrapper.get('[role="combobox"]')
+
+    await input.trigger('focus')
+    await input.setValue('a')
+    await flush()
+
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')).toBeNull()
+    expect(document.querySelector('[role="listbox"]')).toBeNull()
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['a'])
+    expect(wrapper.emitted('complete')?.at(-1)).toEqual(['a'])
+    expect(wrapper.emitted('open')).toBeUndefined()
+
+    await input.trigger('click')
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')).toBeNull()
+
+    await input.trigger('keydown', { key: 'Enter' })
+    await input.trigger('keyup', { key: 'Enter' })
+    await flush()
+
+    expect(wrapper.emitted('enter')?.at(-1)).toEqual(['a'])
+  })
+
+  it('shows no-match feedback when text suggestions are explicitly empty', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { modelValue: '', suggestions: [] }
+    })
+    const input = wrapper.get('[role="combobox"]')
+
+    await input.setValue('missing')
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')?.textContent)
+      .toContain('No matches for "missing"')
+  })
+
+  it('only announces suggestion loading when a suggestion source is configured', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { modelValue: '', pending: true }
+    })
+    const input = wrapper.get('[role="combobox"]')
+    const status = wrapper.get('[data-id="sds-combo-box-results-status"]')
+
+    await input.setValue('a')
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(status.text()).toBe('')
+
+    await wrapper.setProps({ suggestions: [] })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(status.text()).toBe('Loading suggestions.')
+
+    await wrapper.setProps({ suggestions: undefined })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(status.text()).toBe('')
+  })
+
+  it.each([
+    { type: 'text', multiple: false },
+    { type: 'select', multiple: false },
+    { type: 'select', multiple: true },
+    { type: 'taggable-select', multiple: false },
+    { type: 'taggable-select', multiple: true }
+  ] as const)('does not expose suggestion interactions without a source in $type mode, multiple=$multiple', async ({ type, multiple }) => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { type, multiple, modelValue: '' }
+    })
+    const input = wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]')
+
+    await input.trigger('click')
+    if (input.element instanceof HTMLInputElement) await input.setValue('missing')
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(input.attributes('aria-autocomplete')).toBe('none')
+    expect(input.attributes('aria-controls')).toBeUndefined()
+    expect(input.attributes('aria-haspopup')).toBeUndefined()
+    expect(document.querySelector('[data-id="sds-combo-box-dropdown"]')).toBeNull()
+    expect(wrapper.get('[data-id="sds-combo-box-results-status"]').text()).toBe('')
+    expect(wrapper.emitted('open')).toBeUndefined()
+  })
+
+  it('lets Escape reach the parent after typing without a suggestion source', async () => {
+    const onKeydown = vi.fn()
+    const wrapper = mount(() => h('div', { onKeydown }, h(Component, { modelValue: '' })), {
+      attachTo: document.body
+    })
+    const input = wrapper.get('[role="combobox"]')
+    await input.setValue('a')
+    await flush()
+    const escape = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })
+
+    input.element.dispatchEvent(escape)
+
+    expect(escape.defaultPrevented).toBe(false)
+    expect(onKeydown).toHaveBeenCalledOnce()
+  })
+
+  it('keeps no-match feedback for text searches that filter a populated suggestion list', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { type: 'text', modelValue: '', suggestions: ['Apple'], filterSuggestions: true }
+    })
+    const input = wrapper.get('[role="combobox"]')
+
+    await input.setValue('missing')
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')?.textContent)
+      .toContain('No matches for "missing"')
+  })
+
+  it('keeps empty-result feedback until the parent removes the suggestion source', async () => {
+    const wrapper = mount(Component, {
+      attachTo: document.body,
+      props: { type: 'text', modelValue: '', suggestions: ['Apple'] }
+    })
+    const input = wrapper.get('[role="combobox"]')
+    await input.setValue('a')
+    await flush()
+    expect(input.attributes('aria-expanded')).toBe('true')
+
+    await wrapper.setProps({ suggestions: [] })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')?.textContent)
+      .toContain('No matches for "a"')
+
+    await wrapper.setProps({ suggestions: undefined })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('false')
+    expect(document.querySelector('[data-id="sds-combo-box-no-matches"]')).toBeNull()
+    expect(wrapper.get('[data-id="sds-combo-box-results-status"]').text()).toBe('')
+
+    await wrapper.setProps({ suggestions: ['Apricot'] })
+    await flush()
+
+    expect(input.attributes('aria-expanded')).toBe('true')
+    expect(options().map(option => option.textContent?.trim())).toEqual(['Apricot'])
+  })
+
   it.each([false, true])('closes a multiselect when its result handler clears suggestions (in-place: %s)', async (shouldMutate) => {
     const query = ref('')
     const selected = ref<ComboBoxSuggestion[]>([])
@@ -651,7 +814,7 @@ describe('ComboBox usability regressions', () => {
   it.each([false, true])('emits blur once when focus leaves a popup action with multiple=%s', async (multiple) => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      props: { type: 'select', multiple, error: 'Unavailable.', onRetry: vi.fn() }
+      props: { type: 'select', multiple, suggestions: [], error: 'Unavailable.', onRetry: vi.fn() }
     })
     const trigger = wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]')
     trigger.element.focus()
@@ -790,7 +953,7 @@ describe('ComboBox usability regressions', () => {
   it('does not offer an unhandled retry action and supports custom error feedback', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      props: { type: 'select', error: 'Unavailable.' }
+      props: { type: 'select', suggestions: [], error: 'Unavailable.' }
     })
 
     await getQueryInput(wrapper)
@@ -799,7 +962,7 @@ describe('ComboBox usability regressions', () => {
 
     const custom = mount(Component, {
       attachTo: document.body,
-      props: { type: 'select', error: 'Unavailable.' },
+      props: { type: 'select', suggestions: [], error: 'Unavailable.' },
       slots: { error: ({ message }) => h('p', { role: 'alert' }, `Custom: ${message}`) }
     })
     await getQueryInput(custom)
@@ -832,7 +995,7 @@ describe('ComboBox usability regressions', () => {
     const wrapper = mount(Component, {
       attachTo: host,
       props: {
-        type, multiple: type !== 'text', modelValue: 'Apple',
+        type, multiple: type !== 'text', modelValue: 'Apple', suggestions: [],
         error: 'Could not load fruit.', onRetry: vi.fn()
       }
     })
@@ -859,7 +1022,7 @@ describe('ComboBox usability regressions', () => {
   it.each(['text', 'select', 'taggable-select'] as const)('returns from retry to the editable %s query with Shift+Tab', async (type) => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      props: { type, multiple: type !== 'text', error: 'Unavailable.', onRetry: vi.fn() }
+      props: { type, multiple: type !== 'text', suggestions: [], error: 'Unavailable.', onRetry: vi.fn() }
     })
     const input = wrapper.get<HTMLInputElement>('[role="combobox"]')
     await input.trigger('click')
@@ -879,7 +1042,7 @@ describe('ComboBox usability regressions', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       props: {
-        type: 'select', multiple, error: 'Unavailable.',
+        type: 'select', multiple, suggestions: [], error: 'Unavailable.',
         onRetry: () => wrapper.setProps({ pending: true })
       }
     })
@@ -903,7 +1066,7 @@ describe('ComboBox usability regressions', () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
       props: {
-        type: 'select', multiple: true, error: 'Unavailable.',
+        type: 'select', multiple: true, suggestions: [], error: 'Unavailable.',
         onRetry: () => wrapper.setProps({ pending: true })
       }
     })
@@ -1342,7 +1505,7 @@ describe('ComboBox usability regressions', () => {
   it('localizes the dropdown search field independently of the trigger placeholder', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      props: { type: 'select', placeholder: 'Choose a fruit', messages: { searchSuggestions: 'Frucht suchen' } }
+      props: { type: 'select', suggestions: [], placeholder: 'Choose a fruit', messages: { searchSuggestions: 'Frucht suchen' } }
     })
 
     const search = await getQueryInput(wrapper)
@@ -1716,7 +1879,7 @@ describe('ComboBox usability regressions', () => {
   })
 
   it('does not offer Add for whitespace after a pending search completes', async () => {
-    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', pending: true } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', suggestions: [], pending: true } })
     const input = await getQueryInput(wrapper)
     await input.setValue('   ')
     await input.trigger('click')
@@ -1774,7 +1937,7 @@ describe('ComboBox usability regressions', () => {
   })
 
   it.each(['Escape', 'Tab'])('does not reopen a dismissed pending search after %s', async (key) => {
-    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', pending: true } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', suggestions: [], pending: true } })
     const input = await getQueryInput(wrapper)
     await input.setValue('New')
     await flush()
@@ -1789,7 +1952,7 @@ describe('ComboBox usability regressions', () => {
   })
 
   it('replaces loading with the no-matches view after an empty search response', async () => {
-    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'select', pending: true, filterSuggestions: true } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'select', suggestions: [], pending: true, filterSuggestions: true } })
     await (await getQueryInput(wrapper)).setValue('Missing')
     await flush()
     await wrapper.setProps({ pending: false, suggestions: [] })
@@ -1836,7 +1999,7 @@ describe('ComboBox usability regressions', () => {
 
   it('adds a custom value immediately without waiting for search debounce', async () => {
     const complete = vi.fn()
-    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', debounceComplete: 250, onComplete: complete } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', suggestions: [], debounceComplete: 250, onComplete: complete } })
     const input = await getQueryInput(wrapper)
     await input.setValue('New tag')
     await input.trigger('keydown', { key: 'Enter' })
@@ -1850,7 +2013,7 @@ describe('ComboBox usability regressions', () => {
   })
 
   it('uses the configured label and value fields for custom tags', async () => {
-    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', optionLabel: 'title', optionValue: 'key' } })
+    const wrapper = mount(Component, { attachTo: document.body, props: { type: 'taggable-select', suggestions: [], optionLabel: 'title', optionValue: 'key' } })
     const input = await getQueryInput(wrapper)
     await input.setValue(' List<T> ')
     await input.trigger('keyup', { key: 'Enter' })
@@ -2541,7 +2704,7 @@ describe('ComboBox usability regressions', () => {
   it('localizes action feedback, Add text, and contextual tag-removal names', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
-      props: { type: 'taggable-select', multiple: true, messages: { emptyValue: 'Bitte Text eingeben.', add: label => `Neu: ${label}`, remove: label => `${label} entfernen` } }
+      props: { type: 'taggable-select', multiple: true, suggestions: [], messages: { emptyValue: 'Bitte Text eingeben.', add: label => `Neu: ${label}`, remove: label => `${label} entfernen` } }
     })
     const input = wrapper.get('[role="combobox"]')
     await input.setValue(' ')
