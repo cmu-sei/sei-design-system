@@ -37,6 +37,28 @@ describe('ComboBox usability regressions', () => {
     return new DOMWrapper(search)
   }
 
+  it.each(['select', 'taggable-select'] as const)('matches native placeholder styling in single %s mode without styling selected labels', async (type) => {
+    const wrapper = mount(Component, {
+      props: { type, modelValue: '', selected: [], placeholder: 'Search for a fruit', suggestions: ['Apple'] }
+    })
+    const label = wrapper.get('[role="combobox"] span')
+
+    expect(label.text()).toBe('Search for a fruit')
+    expect(label.classes()).toEqual(expect.arrayContaining(['italic', 'text-gray-400']))
+    expect(label.classes()).not.toContain('text-gray-500')
+
+    await wrapper.setProps({ selected: ['Apple'] })
+
+    expect(label.text()).toBe('Apple')
+    expect(label.classes()).not.toContain('italic')
+    expect(label.classes()).not.toContain('text-gray-400')
+
+    await wrapper.setProps({ selected: [] })
+
+    expect(label.text()).toBe('Search for a fruit')
+    expect(label.classes()).toEqual(expect.arrayContaining(['italic', 'text-gray-400']))
+  })
+
   it('keeps text-only search closed when suggestions are omitted', async () => {
     const wrapper = mount(Component, {
       attachTo: document.body,
