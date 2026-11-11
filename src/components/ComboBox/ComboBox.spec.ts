@@ -2652,6 +2652,53 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it.each([
+    ['input', '<input data-entry>'],
+    ['textarea', '<textarea data-entry></textarea>'],
+    ['select', '<select data-entry><option>/</option></select>'],
+    ['contenteditable', '<div contenteditable="true" data-entry tabindex="0"></div>'],
+    ['empty contenteditable', '<div contenteditable data-entry tabindex="0"></div>'],
+    ['plaintext editor', '<div contenteditable="plaintext-only" data-entry tabindex="0"></div>'],
+    ['nested editor', '<div contenteditable="true"><span data-entry tabindex="0"></span></div>'],
+    ['textbox widget', '<div role="textbox" data-entry tabindex="0"></div>'],
+    ['nested textbox widget', '<div role="textbox"><span data-entry tabindex="0"></span></div>'],
+    ['searchbox widget', '<div role="searchbox" data-entry tabindex="0"></div>'],
+    ['combobox widget', '<div role="combobox" data-entry tabindex="0"></div>']
+  ])('"/" keypress preserves typing and focus in a %s', async (_name, markup) => {
+    mountComponent({ props: { focusOnKeyPress: true } })
+    const container = document.createElement('div')
+    container.innerHTML = markup
+    document.body.append(container)
+    const editor = container.querySelector<HTMLElement>('[data-entry]')
+    if (!editor) throw new Error('Expected the text entry fixture')
+    editor.focus()
+    const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true })
+
+    editor.dispatchEvent(event)
+    await flushDropdown()
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(document.activeElement).toBe(editor)
+  })
+
+  it('"/" keypress preserves typing inside a shadow root', async () => {
+    mountComponent({ props: { focusOnKeyPress: true } })
+    const host = document.createElement('div')
+    const shadow = host.attachShadow({ mode: 'open' })
+    const editor = document.createElement('input')
+    shadow.append(editor)
+    document.body.append(host)
+    editor.focus()
+    const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true, composed: true })
+
+    editor.dispatchEvent(event)
+    await flushDropdown()
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(shadow.activeElement).toBe(editor)
+    expect(document.activeElement).toBe(host)
+  })
+
   it('filterSuggestions: true filters dropdown options as user types', async () => {
     const wrapper = mountComponent({
       props: {
