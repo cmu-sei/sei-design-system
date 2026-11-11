@@ -124,7 +124,7 @@
           >
             <span
               class="block truncate"
-              :class="{ 'text-gray-500 dark:text-gray-400': !inputDisplayValue }"
+              :class="{ 'italic text-gray-400': !inputDisplayValue }"
             >{{ inputDisplayValue || placeholder || '\u00a0' }}</span>
           </button>
           <input
@@ -851,6 +851,7 @@ interface ComboBoxProps {
   error?: string;
   /**
    * Placeholder text shown when the input is empty.
+   * Uses the same muted, italic styling in single-select and multiselect modes.
    *
    * In single-select modes this labels the trigger. Use `messages.searchSuggestions` to localize
    * the separate dropdown search field.
