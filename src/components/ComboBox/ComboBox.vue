@@ -774,7 +774,7 @@ interface ComboBoxProps {
    */
   id?: string;
   /**
-   * Focuses the ComboBox input when the user presses `/` anywhere on the page.
+   * Focuses the ComboBox input when the user presses `/` outside text-entry elements.
    *
    * Pair with `hideFocusIndicator` when you want the keyboard shortcut without showing the visual
    * `/` helper in the input group.
@@ -1700,9 +1700,11 @@ const onFloatingUiClose = () => {
 
 onKeyStroke('/', (e: KeyboardEvent) => {
   if (!props.focusOnKeyPress) return
-  if (!e.target) return
-  const tagName = (e.target as HTMLElement).tagName.toLowerCase()
-  if (["textarea", "input", "select"].includes(tagName)) return
+  const isTextEntry = e.composedPath().some(target => target instanceof HTMLElement && (
+    target.isContentEditable ||
+    target.matches('input, textarea, select, [contenteditable=""], [contenteditable="true"], [contenteditable="plaintext-only"], [role="textbox"], [role="searchbox"], [role="combobox"]')
+  ))
+  if (isTextEntry) return
   e.preventDefault()
   inputField.value?.focus()
 })
