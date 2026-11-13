@@ -24,7 +24,7 @@
 @utility form-control-sm {
   @apply px-2 py-1 text-sm;
   @apply [[type=checkbox]]:size-3.5 [[type=radio]]:size-3.5;
-  @apply [select:not([multiple])]:pr-5 [select:not([multiple])]:bg-position-[right_0.5rem_center];
+  @apply [select:not([multiple])]:pr-7 [select:not([multiple])]:bg-position-[right_0.5rem_center];
 }
 
 @utility form-control-lg {
