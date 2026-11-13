@@ -110,22 +110,24 @@ export const NarrowContainer = (args) => ({
   components: { SdsComboBox },
   setup() {
     const suggestions = [
-      { section: 'Fruits', items: [{ name: 'Apple' }, { name: 'Banana' }] },
+      { section: 'Fruits', items: [{ name: 'Apple' }, { name: 'Banana' }, ...(args.selected ?? [])] },
       { section: 'Vegetables', items: [{ name: 'Artichoke' }, { name: 'Carrot' }] }
     ]
     return { args, suggestions }
   },
   template: `
-    <div class="w-80 max-w-full">
-      <sds-combo-box
-        v-bind="args"
-        v-model="query"
-        :suggestions="suggestions"
-        type="select"
-        option-label="name"
-        option-group-label="section"
-        option-group-children="items"
-      />
+    <div class="grid w-80 max-w-full" style="grid-template-columns: 1fr">
+      <div>
+        <sds-combo-box
+          v-bind="args"
+          v-model="query"
+          :suggestions="suggestions"
+          type="select"
+          option-label="name"
+          option-group-label="section"
+          option-group-children="items"
+        />
+      </div>
     </div>
   `,
   data() {
@@ -133,12 +135,13 @@ export const NarrowContainer = (args) => ({
   }
 });
 NarrowContainer.args = {
-  'aria-label': 'Choose fruit or vegetables'
+  'aria-label': 'Choose fruit or vegetables',
+  selected: [{ name: 'A very long selected fruit label that should truncate in a narrow container' }]
 };
 NarrowContainer.parameters = {
   docs: {
     description: {
-      story: 'Open the Combo Box to verify the compact keyboard footer at a common 320px container width, independent of viewport width.'
+      story: 'The selected label truncates inside a nested wrapper without widening this 320px grid container or overflowing on mobile. Open the Combo Box to verify the compact keyboard footer.'
     }
   }
 };
