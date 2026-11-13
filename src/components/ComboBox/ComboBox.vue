@@ -62,6 +62,7 @@
               invalid: showSelectionError,
               'input-group-sm': size === 'sm',
               'input-group-lg': size === 'lg',
+              '[&>.input-group-addon]:flex-none': usesDropdownSearch,
               'border-t-0 rounded-t-none': showTagsBar,
               'ring-0! focus-within:ring-0!': showTagsBar,
             }
@@ -117,7 +118,7 @@
             :aria-readonly="readonly || undefined"
             :disabled="disabled || undefined"
             v-bind="getInputAttrs()"
-            class="form-control min-w-0 text-left select-none cursor-pointer disabled:cursor-not-allowed"
+            class="form-control min-w-0 w-0 flex-1 text-left select-none cursor-pointer disabled:cursor-not-allowed"
             @click="toggleDropdownResults"
             @keydown="handleInputKeydown"
             @keyup.enter="handleEnterKeyUp"
