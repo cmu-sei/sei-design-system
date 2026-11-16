@@ -87,14 +87,14 @@
 @utility link-cta {
   @apply font-semibold text-sm transition-all duration-100 ease-linear;
 
-  @apply after:content-[''] after:inline-block after:relative after:top-px after:h-2.75 after:w-(--link-cta-default-w,0.75rem);
+  @apply after:content-[''] after:inline-block after:relative after:top-px after:h-2.75 after:w-(--link-cta-default-w,0.6875rem);
   @apply after:mask-(--link-cta-default-icon,var(--chevrons-right-sm)) after:mask-no-repeat after:mask-contain;
   @apply after:bg-current after:ml-2 after:transition-transform;
-  @apply [&.text-xs]:after:h-2.25 [&.text-xs]:after:w-(--link-cta-w-xs,0.625rem) [&.text-xs]:after:top-(--link-cta-top-xs,1px) [&.text-xs]:after:mask-(--link-cta-icon-xs,var(--chevrons-right-xs));
-  @apply [&.text-sm]:after:h-2.75 [&.text-sm]:after:w-(--link-cta-w-sm,0.75rem) [&.text-sm]:after:top-(--link-cta-top-sm,1px) [&.text-sm]:after:mask-(--link-cta-icon-sm,var(--chevrons-right-sm));
-  @apply [&.text-base]:after:h-3.25 [&.text-base]:after:w-(--link-cta-w-base,0.875rem) [&.text-base]:after:top-(--link-cta-top-base,1px) [&.text-base]:after:mask-(--link-cta-icon-base,var(--chevrons-right-md));
-  @apply [&.text-lg]:after:h-3.75 [&.text-lg]:after:w-(--link-cta-w-lg,1rem) [&.text-lg]:after:top-(--link-cta-top-lg,1px) [&.text-lg]:after:mask-(--link-cta-icon-lg,var(--chevrons-right-lg));
-  @apply [&.text-xl]:after:h-4.25 [&.text-xl]:after:w-(--link-cta-w-xl,1.125rem) [&.text-xl]:after:top-(--link-cta-top-xl,0.125rem) [&.text-xl]:after:mask-(--link-cta-icon-xl,var(--chevrons-right-xl));
+  @apply [&.text-xs]:after:h-2.25 [&.text-xs]:after:w-(--link-cta-w-xs,0.5625rem) [&.text-xs]:after:top-(--link-cta-top-xs,1px) [&.text-xs]:after:mask-(--link-cta-icon-xs,var(--chevrons-right-xs));
+  @apply [&.text-sm]:after:h-2.75 [&.text-sm]:after:w-(--link-cta-w-sm,0.6875rem) [&.text-sm]:after:top-(--link-cta-top-sm,1px) [&.text-sm]:after:mask-(--link-cta-icon-sm,var(--chevrons-right-sm));
+  @apply [&.text-base]:after:h-3.25 [&.text-base]:after:w-(--link-cta-w-base,0.8125rem) [&.text-base]:after:top-(--link-cta-top-base,1px) [&.text-base]:after:mask-(--link-cta-icon-base,var(--chevrons-right-md));
+  @apply [&.text-lg]:after:h-3.75 [&.text-lg]:after:w-(--link-cta-w-lg,0.9375rem) [&.text-lg]:after:top-(--link-cta-top-lg,1px) [&.text-lg]:after:mask-(--link-cta-icon-lg,var(--chevrons-right-lg));
+  @apply [&.text-xl]:after:h-4.25 [&.text-xl]:after:w-(--link-cta-w-xl,1.0625rem) [&.text-xl]:after:top-(--link-cta-top-xl,0.125rem) [&.text-xl]:after:mask-(--link-cta-icon-xl,var(--chevrons-right-xl));
   @apply where-hover:after:translate-x-1;
 
   /* Tertiary dark-mode icon: diverges between themes (token in tokens.css) */

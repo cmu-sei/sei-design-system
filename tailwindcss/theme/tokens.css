@@ -39,27 +39,27 @@
     --link-primary-white-text: oklch(1 0 0 / 0.95);    /* text-white/95 */
     --link-secondary-white-text: var(--color-gray-100);
 
-    /* CTA icon — forge uses double chevrons, narrower widths */
-    --link-cta-default-w: 0.75rem;      /* w-3 */
+    /* CTA icon — forge uses double chevrons; odd-pixel widths avoid Firefox rotation artifacts. */
+    --link-cta-default-w: 0.6875rem;    /* w-2.75 = 11px */
     --link-cta-default-icon: var(--chevrons-right-sm);
 
-    --link-cta-w-xs: 0.625rem;          /* w-2.5 */
+    --link-cta-w-xs: 0.5625rem;         /* w-2.25 = 9px */
     --link-cta-icon-xs: var(--chevrons-right-xs);
     --link-cta-top-xs: 1px;
 
-    --link-cta-w-sm: 0.75rem;           /* w-3 */
+    --link-cta-w-sm: 0.6875rem;         /* w-2.75 = 11px */
     --link-cta-icon-sm: var(--chevrons-right-sm);
     --link-cta-top-sm: 1px;
 
-    --link-cta-w-base: 0.875rem;        /* w-3.5 */
+    --link-cta-w-base: 0.8125rem;       /* w-3.25 = 13px */
     --link-cta-icon-base: var(--chevrons-right-md);
     --link-cta-top-base: 1px;
 
-    --link-cta-w-lg: 1rem;              /* w-4 */
+    --link-cta-w-lg: 0.9375rem;         /* w-3.75 = 15px */
     --link-cta-icon-lg: var(--chevrons-right-lg);
     --link-cta-top-lg: 1px;
 
-    --link-cta-w-xl: 1.125rem;          /* w-4.5 */
+    --link-cta-w-xl: 1.0625rem;         /* w-4.25 = 17px */
     --link-cta-icon-xl: var(--chevrons-right-xl);
     --link-cta-top-xl: 0.125rem;        /* top-0.5 */
 
