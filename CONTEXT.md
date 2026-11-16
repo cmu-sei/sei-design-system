@@ -312,7 +312,7 @@ This section defines the shared technical expectations for applications that con
 
 ### Build and Packaging
 
-- **Node.js 20.17 or newer** and npm are required to build the design-system package.
+- **Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`** and npm are required to build the design-system package. Use the recommended LTS version pinned in `.nvmrc`.
 - **Vite and Rollup** produce the library artifacts. The package publishes an ES module entry, a UMD entry, CSS, TypeScript declarations, Volar global-component declarations, source files, fonts, and Storybook documentation.
 - **Vue remains external** to the library bundle. The consuming application owns the Vue runtime and must provide a compatible Vue 3 version.
 - The package supports global registration through its default Vue plugin and named component imports through the package entry point. Consumers should prefer named imports when their bundler can remove unused exports.

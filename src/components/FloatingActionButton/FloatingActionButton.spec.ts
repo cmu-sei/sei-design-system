@@ -1,4 +1,4 @@
-import { nextTick } from 'vue'
+import { nextTick, reactive } from 'vue'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils'
 import Component from './FloatingActionButton.vue'
@@ -12,10 +12,11 @@ describe('FloatingActionButton', () => {
     { key: 'tab2', tabName: 'Tab 2', title: 'Active Tab 2', active: false },
     { key: 'tab3', tabName: 'Tab 3', title: 'Active Tab 3', active: false }
   ]
+  let tabs: typeof defaultTabs
 
   const mountComponent = async (props = {}) => {
     const component = mount(Component, {
-      props: { modelValue: defaultTabs, ...props },
+      props: { modelValue: tabs, ...props },
       attachTo: containerEl
     })
     await flushPromises()
@@ -24,6 +25,7 @@ describe('FloatingActionButton', () => {
   }
 
   beforeEach(async () => {
+    tabs = reactive(defaultTabs.map(tab => ({ ...tab })))
     containerEl = document.createElement('div')
     document.body.appendChild(containerEl)
     wrapper = await mountComponent()
@@ -193,8 +195,8 @@ describe('FloatingActionButton', () => {
     ;(tabButtons[1] as HTMLElement).click()
     await nextTick()
 
-    expect(defaultTabs[0].active).toBe(false)
-    expect(defaultTabs[1].active).toBe(true)
+    expect(tabs[0].active).toBe(false)
+    expect(tabs[1].active).toBe(true)
   })
 
   it('should display tab names', async () => {
