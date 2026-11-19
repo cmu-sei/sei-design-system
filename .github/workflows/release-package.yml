@@ -52,6 +52,7 @@ jobs:
       run: npm ci
 
     - name: Check whether version already published
+      id: package
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
@@ -59,37 +60,65 @@ jobs:
         PKG_NAME=$(node -p "require('./package.json').name")
         echo "Checking registry for $PKG_NAME@$VERSION"
         if npm --registry=https://npm.pkg.github.com view "$PKG_NAME@$VERSION" >/dev/null 2>&1; then
-          echo "Version $VERSION already exists in registry - aborting publish"
-          exit 1
+          echo "Version $VERSION already exists in registry - skipping publication"
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
         fi
 
+    - name: Get current production version
+      id: production
+      run: |
+        VERSION=$(git show HEAD^:package.json | jq -r .version)
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
     - name: Lint components
+      if: steps.package.outputs.exists != 'true'
       run: npm run lint
     
     - name: Test components
+      if: steps.package.outputs.exists != 'true'
       run: npm test
     
     - name: Build components
+      if: steps.package.outputs.exists != 'true'
       run: |
         printf "\nbuilding all components...\n"
         LIB_NAME=SeiDesignSystem LIB_ROOT=src/components npx vite build --config vite-library.config.js
         npx vue-tsc --declaration --emitDeclarationOnly --outDir dist/types
 
     - name: Generate Volar types
+      if: steps.package.outputs.exists != 'true'
       run: |
         # Generate ./volar.d.ts that adds Types for Global Components
         printf "\nGenerating Volar types for global components...\n"
         npm run gen-volar-dts
 
     - name: Build Storybook
+      if: steps.package.outputs.exists != 'true'
       run: npm run build-storybook
 
     - name: Publish dry-run
+      if: steps.package.outputs.exists != 'true'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: npm publish --dry-run
 
     - name: Publish package
+      if: steps.package.outputs.exists != 'true'
       run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Trigger SDS Base production release
+      env:
+        GH_TOKEN: ${{ secrets.SDS_BASE_DISPATCH_TOKEN }}
+        SDS_PREVIOUS_VERSION: ${{ steps.production.outputs.version }}
+        SOURCE_RUN: ${{ github.run_id }}.${{ github.run_attempt }}
+      run: |
+        SDS_VERSION=$(node -p "require('./package.json').version")
+        gh api --method POST repos/cmu-sei/sds-base/dispatches \
+          -f event_type=sds-production-published \
+          -F "client_payload[sds_previous_version]=$SDS_PREVIOUS_VERSION" \
+          -F "client_payload[sds_version]=$SDS_VERSION" \
+          -F "client_payload[source_run]=$SOURCE_RUN"

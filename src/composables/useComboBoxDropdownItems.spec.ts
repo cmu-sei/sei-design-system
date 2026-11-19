@@ -48,26 +48,41 @@ const createDropdownItems = (overrides: Partial<{
 }
 
 describe('useComboBoxDropdownItems', () => {
+  it('tracks the active action or option and clears it outside the dropdown indexes', () => {
+    const dropdown = createDropdownItems({ arrowCounter: 1 })
+
+    expect(dropdown.activeItem.value).toEqual({ kind: 'select-all', index: 1 })
+    expect(dropdown.getCurrentSuggestion()).toBeNull()
+    dropdown.arrowCounter.value = 0
+    expect(dropdown.activeItem.value?.kind).toBe('add')
+    dropdown.arrowCounter.value = 3
+    expect(dropdown.activeItem.value).toEqual({ kind: 'option', index: 3, option: { label: 'Banana' } })
+    dropdown.arrowCounter.value = -1
+    expect(dropdown.activeItem.value).toBeUndefined()
+    dropdown.arrowCounter.value = 99
+    expect(dropdown.activeItem.value).toBeUndefined()
+  })
+
   it('flattens rendered dropdown rows into stable keyboard indexes', () => {
     const dropdown = createDropdownItems()
 
     expect(dropdown.dropdownItems.value).toEqual([
-      { kind: 'select-all', index: 0 },
-      { kind: 'option', index: 1, option: { label: 'Apple' } },
-      { kind: 'option', index: 2, option: { label: 'Banana' } },
-      { kind: 'option', index: 3, option: { label: 'Kale' } },
-      { kind: 'add', index: 4, option: { label: 'Dragonfruit', __cbxIdx: 'add' } }
+      { kind: 'add', index: 0, option: { label: 'Dragonfruit', __cbxIdx: 'add' } },
+      { kind: 'select-all', index: 1 },
+      { kind: 'option', index: 2, option: { label: 'Apple' } },
+      { kind: 'option', index: 3, option: { label: 'Banana' } },
+      { kind: 'option', index: 4, option: { label: 'Kale' } }
     ])
-    expect(dropdown.firstItemIndex.value).toBe(1)
+    expect(dropdown.firstItemIndex.value).toBe(0)
     expect(dropdown.lastDropdownItemIndex()).toBe(4)
   })
 
   it('returns null for the Select all row and option data for rendered options', () => {
-    const dropdown = createDropdownItems()
+    const dropdown = createDropdownItems({ arrowCounter: 1 })
 
     expect(dropdown.getCurrentSuggestion()).toBeNull()
 
-    dropdown.arrowCounter.value = 2
+    dropdown.arrowCounter.value = 3
 
     expect(dropdown.getCurrentSuggestion()).toEqual({ label: 'Banana' })
   })
@@ -77,13 +92,13 @@ describe('useComboBoxDropdownItems', () => {
     const dropdown = createDropdownItems({
       suggestionOptions: [apple],
       optionGroupChildren: undefined,
-      arrowCounter: 1
+      arrowCounter: 2
     })
 
     expect(dropdown.isDropdownItemActive(dropdown.suggestionOptions.value[0])).toBe(true)
     expect(dropdown.isAddSuggestionActive.value).toBe(false)
 
-    dropdown.arrowCounter.value = 2
+    dropdown.arrowCounter.value = 0
 
     expect(dropdown.isAddSuggestionActive.value).toBe(true)
     expect(dropdown.getCurrentSuggestion()).toEqual({ label: 'Dragonfruit', __cbxIdx: 'add' })
@@ -103,5 +118,34 @@ describe('useComboBoxDropdownItems', () => {
     ])
     expect(dropdown.firstItemIndex.value).toBe(0)
     expect(dropdown.lastDropdownItemIndex()).toBe(1)
+  })
+
+  it('refreshes option lookups when actions and suggestions change', () => {
+    const dropdown = createDropdownItems({
+      optionGroupChildren: undefined,
+      suggestionOptions: [{ label: 'Apple' }]
+    })
+    const apple = dropdown.suggestionOptions.value[0]
+
+    expect(dropdown.getDropdownItem(apple)?.index).toBe(2)
+    dropdown.selectAllRendered.value = false
+    expect(dropdown.getDropdownItem(apple)?.index).toBe(1)
+    dropdown.shouldShowNewSuggestion.value = false
+    expect(dropdown.getDropdownItem(apple)?.index).toBe(0)
+    dropdown.suggestionOptions.value = ['Banana', apple]
+    expect(dropdown.getDropdownItem(apple)?.index).toBe(1)
+    dropdown.suggestionOptions.value = ['Banana']
+    expect(dropdown.getDropdownItem(apple)).toBeUndefined()
+  })
+
+  it('preserves the first matching index for repeated option references', () => {
+    const dropdown = createDropdownItems({
+      optionGroupChildren: undefined,
+      suggestionOptions: ['Apple', 'Apple'],
+      selectAllRendered: false,
+      shouldShowNewSuggestion: false
+    })
+
+    expect(dropdown.getDropdownItem('Apple')?.index).toBe(0)
   })
 })

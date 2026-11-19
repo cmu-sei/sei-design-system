@@ -1,6 +1,5 @@
-import { watchDebounced } from '@vueuse/core'
-import { nextTick, ref, toValue, type MaybeRefOrGetter, type Ref } from 'vue'
-import { removeHtmlFromString } from './useComboBoxSuggestions'
+import { useDebounceFn } from '@vueuse/core'
+import { onScopeDispose, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 
 interface UseComboBoxQueryOptions {
   query: Ref<string>;
@@ -9,61 +8,47 @@ interface UseComboBoxQueryOptions {
   onShowDropdown: () => void;
 }
 
-interface QueryUpdateOptions {
+/** Optional search and popup side effects for a programmatic query update. */
+export interface QueryUpdateOptions {
   emitComplete?: boolean;
   showDropdown?: boolean;
 }
 
 /**
- * Coordinates sanitized ComboBox query updates with debounced complete events.
- * @param options - Query ref and callbacks for query side effects.
+ * Preserves literal queries and debounces search requests independently of popup interaction.
+ * @param options - Query ref, debounce delay, and callbacks for query side effects.
  * @returns Helpers for internal and user-entered query updates.
  */
 export function useComboBoxQuery(options: UseComboBoxQueryOptions) {
-  const nextQueryUpdate = ref<QueryUpdateOptions | null>(null)
-  const skipNextQueryUpdate = ref(false)
+  let isInternalUpdate = false
+  let revision = 0
+  let lastPublishedQuery = options.query.value
+  onScopeDispose(() => { revision++ }, true)
+  const complete = useDebounceFn((value: string, requestRevision: number) => {
+    if (requestRevision === revision) options.onComplete(value)
+  }, options.debounce)
+
+  const publishQuery = (value: string, updateOptions: QueryUpdateOptions) => {
+    lastPublishedQuery = value
+    const requestRevision = ++revision
+    if (value.trim() && updateOptions.showDropdown) options.onShowDropdown()
+    if (updateOptions.emitComplete) complete(value, requestRevision)
+  }
+
+  watch(options.query, value => {
+    if (!isInternalUpdate && value !== lastPublishedQuery) publishQuery(value, { emitComplete: true, showDropdown: true })
+  }, { flush: 'sync' })
 
   const setQuery = (value: string, updateOptions: QueryUpdateOptions = {}): void => {
-    nextQueryUpdate.value = {
-      emitComplete: updateOptions.emitComplete ?? false,
-      showDropdown: updateOptions.showDropdown ?? false
-    }
-    options.query.value = removeHtmlFromString(value)
+    isInternalUpdate = true
+    options.query.value = value
+    isInternalUpdate = false
+    publishQuery(value, updateOptions)
   }
 
   const setUserQuery = (value: string): void => {
     setQuery(value, { emitComplete: true, showDropdown: true })
   }
 
-  watchDebounced(options.query, async () => {
-    await nextTick()
-    if (skipNextQueryUpdate.value) {
-      skipNextQueryUpdate.value = false
-      return
-    }
-
-    const queryUpdate = nextQueryUpdate.value
-    const isExternalUpdate = queryUpdate === null
-    const sanitizedQuery = removeHtmlFromString(options.query.value)
-
-    if (sanitizedQuery !== options.query.value) {
-      skipNextQueryUpdate.value = true
-      options.query.value = sanitizedQuery
-    }
-
-    if (sanitizedQuery !== '' && (queryUpdate?.showDropdown ?? isExternalUpdate)) {
-      options.onShowDropdown()
-    }
-
-    if (queryUpdate?.emitComplete ?? isExternalUpdate) {
-      options.onComplete(sanitizedQuery)
-    }
-
-    nextQueryUpdate.value = null
-  }, { debounce: toValue(options.debounce) })
-
-  return {
-    setQuery,
-    setUserQuery
-  }
+  return { setQuery, setUserQuery }
 }

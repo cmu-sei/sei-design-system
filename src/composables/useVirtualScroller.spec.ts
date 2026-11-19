@@ -3,6 +3,23 @@ import { ref } from 'vue'
 import { useVirtualScroller } from './useVirtualScroller'
 
 describe('useVirtualScroller', () => {
+  it('pins active rows outside the visible window without changing the scroll position', () => {
+    const pinnedIndices = ref([0])
+    const virtualScroller = useVirtualScroller({
+      items: Array.from({ length: 100 }, (_, index) => index),
+      itemHeight: 20,
+      containerHeight: 100,
+      pinnedIndices
+    })
+
+    virtualScroller.setScrollTop(1000)
+
+    expect(virtualScroller.virtualItems.value.map(row => row.index)).toEqual([0, 50, 51, 52, 53, 54])
+    expect(virtualScroller.scrollTop.value).toBe(1000)
+    pinnedIndices.value = [99, -1, 100]
+    expect(virtualScroller.virtualItems.value.map(row => row.index)).toEqual([50, 51, 52, 53, 54, 99])
+  })
+
   it('returns only the visible window plus overscan rows', () => {
     const items = ref(Array.from({ length: 100 }, (_, index) => `Item ${index}`))
     const virtualScroller = useVirtualScroller({

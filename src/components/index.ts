@@ -4,7 +4,7 @@ import type { TagActionType, TagIconAttrs, TagIconSize, TagIconTypes } from './T
 import type { CalendarDate, CalendarMode, CalendarRange } from './Calendar/Calendar.vue'
 import type { ChartLegendItem, ChartLegendOrientation, ChartLegendPosition, ChartLegendProps } from './ChartLegend/ChartLegend.vue'
 import type { CheckboxGroupOption, CheckboxGroupOptionValue } from './CheckboxGroup/CheckboxGroup.vue'
-import type { ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
+import type { ComboBoxMessages, ComboBoxSuggestion } from './ComboBox/ComboBox.vue'
 import type { DatepickerPlacement } from './Datepicker/Datepicker.vue'
 import type { DataTableFilterConfig, DataTableFilterType, DataTableSegments, BatchSelectionAction } from './DataTable/DataTable.vue'
 import type { FileWithInvalidDefinitions, FileTypes, SvgIconTypes, SvgIcons } from './FileUploader/FileUploader.vue'
@@ -44,6 +44,7 @@ export type {
   CheckboxGroupOption,
   CheckboxGroupOptionValue,
   ComboBoxSuggestion,
+  ComboBoxMessages,
   DatepickerPlacement,
   DataTableFilterConfig,
   DataTableFilterType,

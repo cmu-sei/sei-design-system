@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach, afterEach, afterAll, vi } from 'vitest'
 import { h, nextTick } from 'vue'
-import { mount, enableAutoUnmount, flushPromises } from '@vue/test-utils'
-import type { ComponentMountingOptions } from '@vue/test-utils'
+import { DOMWrapper, mount, enableAutoUnmount, flushPromises } from '@vue/test-utils'
+import type { ComponentMountingOptions, VueWrapper } from '@vue/test-utils'
 import Component from './ComboBox.vue'
 import type { ComboBoxSuggestion } from './ComboBox.vue'
 
@@ -86,6 +86,18 @@ describe('ComboBox', () => {
     await nextTick()
   }
 
+  const getQueryInput = async (wrapper: VueWrapper) => {
+    const trigger = wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]')
+    if (!['select', 'taggable-select'].includes(wrapper.props('type')) || wrapper.props('multiple')) return trigger
+    if (trigger.attributes('aria-expanded') !== 'true') {
+      await trigger.trigger('click')
+      await flushDropdown()
+    }
+    const search = document.querySelector<HTMLInputElement>('[data-id="sds-combo-box-filter"]')
+    if (!search) throw new Error('Expected the dropdown search field')
+    return new DOMWrapper(search)
+  }
+
   // The dropdown is teleported to document.body, so wrapper.find won't see it.
   // Query the body directly via DOMParser-friendly selector.
   const findInBody = (selector: string): HTMLElement | null =>
@@ -106,6 +118,354 @@ describe('ComboBox', () => {
     expect(optionTop + height).toBeLessThanOrEqual(scrollArea.scrollTop + 288)
   }
 
+  it.each([
+    { type: 'text', multiple: false },
+    { type: 'select', multiple: true },
+    { type: 'taggable-select', multiple: true }
+  ] as const)('keeps editable $type suggestions open on input clicks without changing the query or active option', async ({ type, multiple }) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type, multiple, modelValue: 'Ap', selected: ['Apple'], debounceComplete: 0 }
+    })
+    const input = wrapper.find<HTMLInputElement | HTMLButtonElement>('[role="combobox"]')
+    await input.trigger('click')
+    await flushDropdown()
+    expect(dropdownInBody()).not.toBeNull()
+
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flushDropdown()
+    const activeId = input.attributes('aria-activedescendant')
+    const displayValue = input.element.value
+    if (input.element instanceof HTMLInputElement) input.element.setSelectionRange(1, 1)
+    const click = new MouseEvent('click', { bubbles: true, cancelable: true })
+    input.element.dispatchEvent(click)
+    await flushDropdown()
+
+    expect(click.defaultPrevented).toBe(false)
+    expect(dropdownInBody()).not.toBeNull()
+    expect(input.attributes('aria-activedescendant')).toBe(activeId)
+    expect(input.element.value).toBe(displayValue)
+    if (input.element instanceof HTMLInputElement) {
+      expect(input.element.selectionStart).toBe(1)
+      expect(input.element.selectionEnd).toBe(1)
+    }
+    expect(wrapper.props('modelValue')).toBe('Ap')
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(wrapper.emitted('complete')).toBeUndefined()
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    expect(wrapper.emitted('close')).toBeUndefined()
+    expect(wrapper.emitted('open')).toHaveLength(1)
+  })
+
+  it.each(['text', 'select', 'taggable-select'] as const)('opens initial empty %s lists only for dropdown search, without fetching on click', async (type) => {
+    const wrapper = mountComponent({
+      props: { type, suggestions: [], debounceComplete: 0 }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('focus')
+    await input.trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody() !== null).toBe(type !== 'text')
+    expect(input.attributes('aria-expanded')).toBe(String(type !== 'text'))
+    expect(wrapper.emitted('complete')).toBeUndefined()
+    expect(wrapper.emitted('open')?.length ?? 0).toBe(type === 'text' ? 0 : 1)
+
+    await wrapper.setProps({ suggestions })
+    await flushDropdown()
+    expect(dropdownInBody() !== null).toBe(type !== 'text')
+
+    if (input.attributes('aria-expanded') !== 'true') await input.trigger('click')
+    await flushDropdown()
+    expect(dropdownInBody()).not.toBeNull()
+    expect(wrapper.emitted('complete')).toBeUndefined()
+  })
+
+  it.each(['disabled', 'readonly'] as const)('does not open suggestions on click when %s', async (state) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', [state]: true }
+    })
+    await wrapper.find('[role="combobox"]').trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()).toBeNull()
+    expect(wrapper.emitted('open')).toBeUndefined()
+    expect(wrapper.emitted('complete')).toBeUndefined()
+  })
+
+  it.each([false, true])('keeps actual selection separate from keyboard focus when virtualize is %s', async (virtualize) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected: ['Banana'],
+        virtualize,
+        virtualizeThreshold: 1,
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()?.getAttribute('aria-multiselectable')).toBe('true')
+    expect(findOptionInBody('Apple')?.getAttribute('aria-selected')).toBe('false')
+    expect(findOptionInBody('Banana')?.getAttribute('aria-selected')).toBe('true')
+    expect(findOptionInBody('Apple')?.getAttribute('data-active')).toBe('true')
+
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flushDropdown()
+
+    expect(findOptionInBody('Kiwi')?.getAttribute('data-active')).toBe('true')
+    expect(findOptionInBody('Kiwi')?.getAttribute('aria-selected')).toBe('false')
+    expect(findOptionInBody('Banana')?.getAttribute('aria-selected')).toBe('true')
+    await input.trigger('keydown', { key: 'Escape' })
+    await flushDropdown()
+    expect(input.attributes('aria-activedescendant')).toBeUndefined()
+  })
+
+  it('reports Select all as selected only when all options are selected', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        enableSelectAll: true,
+        selected: ['Apple'],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    await wrapper.find('[role="combobox"]').trigger('click')
+    await flushDropdown()
+    const option = findOptionInBody('Select all')
+    expect(option?.getAttribute('aria-selected')).toBe('false')
+
+    option?.click()
+    await flushDropdown()
+
+    expect(option?.getAttribute('aria-selected')).toBe('true')
+    expect(findOptionInBody('Banana')?.getAttribute('aria-selected')).toBe('true')
+    expect(option?.querySelector('[data-id="sds-combo-box-checkbox"]')?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it.each([
+    ['select', 'trigger'],
+    ['select', 'sds-combo-box-select-caret'],
+    ['taggable-select', 'trigger'],
+    ['taggable-select', 'sds-combo-box-select-caret']
+  ] as const)('opens a selected %s through %s', async (type, buttonId) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type, selected: ['Apple'] }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await (buttonId === 'trigger' ? input : wrapper.find(`[data-id="${buttonId}"]`)).trigger('click')
+    await flushDropdown()
+
+    expect(dropdownInBody()).not.toBeNull()
+    expect((await getQueryInput(wrapper)).element).toBe(document.activeElement)
+    expect(input.element.value).toBe('Apple')
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+  })
+
+  it('keeps the clear button out of the tab order and clears only once per pointer click', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected: ['Apple', 'Banana'],
+        debounceComplete: 0,
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.setValue('Ki')
+    await flushDropdown()
+    const button = wrapper.find('[data-id="sds-combo-box-clear-button"]')
+    expect(button.attributes('tabindex')).toBe('-1')
+    expect(button.text()).toBe('Clear search')
+
+    await button.trigger('mousedown')
+    await button.trigger('mouseup')
+    await button.trigger('click')
+    await flushDropdown()
+
+    expect(input.element.value).toBe('')
+    expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
+    expect(button.text()).toBe('Clear all selections')
+
+    await button.trigger('click')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual([])
+    expect(document.activeElement).toBe(input.element)
+  })
+
+  it('labels clearing a single selected item accurately', () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', selected: ['Apple'] }
+    })
+    expect(wrapper.find('[data-id="sds-combo-box-clear-button"]').text()).toBe('Clear selection')
+  })
+
+  it('does not select, remove, navigate, or emit searches while composing text', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: [],
+        type: 'taggable-select',
+        multiple: true,
+        selected: ['Apple'],
+        debounceComplete: 0,
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('compositionstart')
+    await input.setValue('\u65e5\u672c')
+    await wrapper.setProps({ pending: true, suggestions: ['Apple'] })
+    await flushDropdown()
+    expect(input.element.value).toBe('\u65e5\u672c')
+    const enter = new KeyboardEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true, cancelable: true })
+    input.element.dispatchEvent(enter)
+    await input.trigger('keyup', { key: 'Enter', isComposing: true })
+    await input.trigger('keydown', { key: 'Backspace', isComposing: true })
+    await input.trigger('keydown', { key: 'ArrowDown', isComposing: true })
+    await flushDropdown()
+
+    expect(enter.defaultPrevented).toBe(false)
+    expect(wrapper.emitted('complete')).toBeUndefined()
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(dropdownInBody()).toBeNull()
+
+    await wrapper.setProps({ pending: false })
+    await input.trigger('compositionend')
+    await input.trigger('keyup', { key: 'Enter' })
+    await flushDropdown()
+
+    expect(wrapper.emitted('complete')?.at(-1)).toEqual(['\u65e5\u672c'])
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(input.element.value).toBe('\u65e5\u672c')
+
+    await input.trigger('keydown', { key: 'Enter' })
+    await input.trigger('keyup', { key: 'Enter' })
+    await flushDropdown()
+
+    expect(wrapper.findAll('[data-id="sds-tag"]')).toHaveLength(2)
+    expect(wrapper.findAll('[data-id="sds-tag"]')[1].text()).toContain('\u65e5\u672c')
+  })
+
+  it('does not dismiss an open dropdown when Escape cancels IME composition', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select' }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    await input.trigger('compositionstart')
+    await input.trigger('keydown', { key: 'Escape', isComposing: true })
+    await flushDropdown()
+
+    expect(dropdownInBody()).not.toBeNull()
+  })
+
+  it('ignores legacy IME key code 229 even when isComposing is false', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', selected: ['Apple'] }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('keydown', { key: 'Delete', keyCode: 229 })
+    await input.trigger('keyup', { key: 'Enter', keyCode: 229 })
+    await flushDropdown()
+
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.emitted('enter')).toBeUndefined()
+  })
+
+  it.each(['select', 'taggable-select'] as const)('validates required %s selections independently of dropdown query text', async (type) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type, required: true, debounceComplete: 0 },
+      attrs: { 'aria-describedby': 'fruit-help', 'aria-label': 'Fruit' }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    expect(wrapper.findAll('[role="combobox"]')).toHaveLength(1)
+    expect(input.attributes('aria-required')).toBe('true')
+
+    const search = await getQueryInput(wrapper)
+    await search.setValue('Apple')
+    await flushDropdown()
+    expect(wrapper.get('select').element.checkValidity()).toBe(false)
+    await nextTick()
+
+    const error = wrapper.find('[role="alert"]')
+    expect(error.exists()).toBe(true)
+    expect(input.attributes('aria-describedby')?.split(' ')).toEqual(['fruit-help', error.attributes('id')])
+    expect(input.attributes('aria-invalid')).toBe('true')
+
+    await wrapper.setProps({ selected: ['Apple'] })
+
+    expect(wrapper.get('select').element.checkValidity()).toBe(true)
+    expect(input.attributes('aria-required')).toBe('true')
+    expect(input.attributes('aria-invalid')).toBeUndefined()
+    expect(wrapper.find('[role="alert"]').exists()).toBe(false)
+    expect(input.attributes('aria-describedby')).toContain('fruit-help')
+  })
+
+  it.each(['disabled', 'readonly'] as const)('does not block native form validation when a required select is %s', async (state) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', required: true }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    expect(wrapper.get('select').element.checkValidity()).toBe(false)
+
+    await wrapper.setProps({ [state]: true })
+
+    expect(input.element.validationMessage).toBe('')
+    expect(input.element.checkValidity()).toBe(true)
+    expect(wrapper.find('[role="alert"]').exists()).toBe(false)
+  })
+
+  it('announces additions, removals, result counts, and loading without moving focus', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'select',
+        multiple: true,
+        selected: [],
+        debounceComplete: 0,
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      },
+      attrs: { 'aria-label': 'Fruit' }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('click')
+    await flushDropdown()
+    const results = wrapper.find('[data-id="sds-combo-box-results-status"]')
+    const selection = wrapper.find('[data-id="sds-combo-box-selection-status"]')
+    expect(results.text()).toBe('10 suggestions available.')
+    expect(input.attributes('aria-label')).toBe('Fruit')
+
+    findOptionInBody('Apple')?.click()
+    await flushDropdown()
+
+    expect(selection.attributes('aria-live')).toBe('polite')
+    expect(selection.text()).toBe('Apple added. 1 item selected.')
+    const descriptionId = input.attributes('aria-describedby')
+    expect(descriptionId).toBeTruthy()
+    expect(document.getElementById(descriptionId ?? '')?.textContent).toBe('Selected: Apple.')
+    expect(document.activeElement).toBe(input.element)
+
+    await wrapper.find('[data-id="sds-tag"] button').trigger('click')
+    await flushDropdown()
+    expect(selection.text()).toBe('Apple removed. 0 items selected.')
+
+    await wrapper.setProps({ pending: true })
+    await flushDropdown()
+    expect(results.text()).toBe('Loading suggestions.')
+    expect(input.attributes('aria-busy')).toBe('true')
+  })
+
   it('should match its default snapshot', () => {
     const wrapper = mountComponent({
       props: { suggestions },
@@ -116,7 +476,6 @@ describe('ComboBox', () => {
   it('should render tabs (and labels) when optionGroupLabel is provided', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -129,7 +488,7 @@ describe('ComboBox', () => {
      * will throw an error otherwise when navigating options */
     window.HTMLElement.prototype.scrollIntoView = () => {}
     // Open dropdown
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.trigger('click')
     await flushDropdown()
     expect(input.attributes('role')).toBe('combobox')
@@ -147,10 +506,9 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('should switch tabs with ArrowLeft/ArrowRight, should update suggestions when switching tabs', async () => {
+  it('switches categories with Alt+ArrowLeft/ArrowRight without changing selected values', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -162,14 +520,14 @@ describe('ComboBox', () => {
     /* Stub scrollIntoView since jsdom doesn't implement it,
      * will throw an error otherwise when navigating options */
     window.HTMLElement.prototype.scrollIntoView = () => {}
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     /* Click the input and navigate down to an arbitrary suggestion,
      * then right from "All" to "Fruits" */
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.right')
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowRight', altKey: true })
     await flushDropdown()
     // Expect only Fruits to be visible
     const optionFruitTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
@@ -179,9 +537,9 @@ describe('ComboBox', () => {
     expect(optionFruitTexts).not.toContain('Daikon')
     /* Again navigate down to an arbitrary suggestion,
      * then right from "Fruits" to "Vegetables" */
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.right')
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowRight', altKey: true })
     await flushDropdown()
     // Expect only Vegetables to be visible
     const optionVegTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
@@ -241,7 +599,7 @@ describe('ComboBox', () => {
     expect(taggableSelectWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
     expect(textWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
     expect(focusIndicatorWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
-    expect(emptySuggestionsWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(false)
+    expect(emptySuggestionsWrapper.find('[data-id="sds-combo-box-select-caret"]').exists()).toBe(true)
   })
 
   it('keeps the select caret vertically centered for every size', () => {
@@ -266,7 +624,7 @@ describe('ComboBox', () => {
 
   it('shows dropdown results when the search icon is clicked', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: false }
+      props: { suggestions }
     })
     const searchButton = wrapper.find('[data-id="sds-combo-box-search-button"]')
 
@@ -275,13 +633,13 @@ describe('ComboBox', () => {
 
     expect(dropdownInBody()).toBeTruthy()
     expect(searchButton.attributes('aria-expanded')).toBe('true')
-    expect(wrapper.find('input[type="text"]').element).toBe(document.activeElement)
+    expect(wrapper.find('[role="combobox"]').element).toBe(document.activeElement)
     wrapper.unmount()
   })
 
   it('shows dropdown results when the select caret is clicked', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, type: 'select', clickToSelect: false }
+      props: { suggestions, type: 'select' }
     })
     const caret = wrapper.find('[data-id="sds-combo-box-select-caret"]')
 
@@ -290,7 +648,7 @@ describe('ComboBox', () => {
 
     expect(dropdownInBody()).toBeTruthy()
     expect(caret.attributes('aria-expanded')).toBe('true')
-    expect(wrapper.find('input[type="text"]').element).toBe(document.activeElement)
+    expect((await getQueryInput(wrapper)).element).toBe(document.activeElement)
     wrapper.unmount()
   })
 
@@ -332,14 +690,14 @@ describe('ComboBox', () => {
     expect(wrapper.html()).toMatchSnapshot()
   })
 
-  it('shows the clear query button when clearable select has a query', async () => {
+  it('keeps the clear-selection button available while searching a single selection', async () => {
     const wrapper = mountComponent({
       props: { suggestions, type: 'select', selected: ['Apple'] }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('Apple')
 
-    const clearButton = wrapper.findAll('button').find(button => button.text() === 'Clear query')
+    const clearButton = wrapper.find('[data-id="sds-combo-box-clear-button"]')
     expect(clearButton).toBeTruthy()
     expect(clearButton!.attributes('type')).toBe('button')
     expect(clearButton!.attributes('tabindex')).toBe('-1')
@@ -377,7 +735,6 @@ describe('ComboBox', () => {
     ]
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         multiple: true,
         optionLabel: 'label',
         optionType: 'custom',
@@ -400,7 +757,7 @@ describe('ComboBox', () => {
         }, props.label)
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.trigger('click')
     await flushDropdown()
@@ -409,7 +766,7 @@ describe('ComboBox', () => {
     expect(activeDescendantId).toBeTruthy()
     const activeOption = document.getElementById(activeDescendantId!)
     expect(activeOption?.getAttribute('role')).toBe('option')
-    expect(activeOption?.getAttribute('aria-selected')).toBe('true')
+    expect(activeOption?.getAttribute('aria-selected')).toBe('false')
 
     activeOption!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushDropdown()
@@ -418,14 +775,13 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('keeps the active custom option tabindex aligned with keyboard navigation', async () => {
+  it('keeps custom options outside the tab sequence during keyboard navigation', async () => {
     const objectSuggestions = [
       { label: 'Custom1', value: 'c1' },
       { label: 'Custom2', value: 'c2' }
     ]
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         optionLabel: 'label',
         optionType: 'custom',
         suggestions: objectSuggestions,
@@ -445,39 +801,39 @@ describe('ComboBox', () => {
         }, props.label)
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
 
-    const customOptions = findAllInBody('button[role="option"]')
-    expect(customOptions.map(option => option.getAttribute('tabindex'))).toEqual(['-1', '0'])
+    const customOptions = findAllInBody('[role="option"]')
+    expect(customOptions.map(option => option.getAttribute('tabindex'))).toEqual(['-1', '-1'])
     expect(text(customOptions[1])).toBe('Custom2')
     wrapper.unmount()
   })
 
-  it('keeps footer help text outside the ARIA listbox', async () => {
-    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]')
+  it('caps the option list without automatic viewport-height sizing', async () => {
+    const wrapper = mountComponent({
+      props: { type: 'select', suggestions: Array.from({ length: 50 }, (_, index) => `Option ${index}`) }
+    })
 
-    await input.trigger('click')
+    await wrapper.find('[role="combobox"]').trigger('click')
     await flushDropdown()
 
-    const listbox = dropdownInBody()
-    expect(listbox).toBeTruthy()
-    expect(listbox?.id).toBe(input.attributes('aria-controls'))
-    expect(text(listbox)).not.toContain('Select')
-    expect(text(findInBody('[data-id="sds-combo-box-dropdown"]'))).toContain('Select')
+    const dropdown = findInBody('[data-id="sds-combo-box-dropdown"]')
+    expect(dropdown).toBeTruthy()
+    expect(dropdown?.querySelector('[role="listbox"]')?.classList).toContain('max-h-72')
+    expect(dropdown?.className).not.toContain('max-h-')
+    expect(dropdown?.parentElement?.style.getPropertyValue('--sds-floating-available-height')).toBe('')
     wrapper.unmount()
   })
 
-  it('uses container-responsive, non-wrapping keyboard instructions', async () => {
+  it.each([false, true])('provides only the full-size container-responsive keyboard-help footer, grouped=%s', async (grouped) => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
-        suggestions: groupedSuggestions,
+        suggestions: grouped ? groupedSuggestions : suggestions,
         type: 'select',
         optionGroupLabel: 'section',
         optionGroupChildren: 'items',
@@ -485,27 +841,52 @@ describe('ComboBox', () => {
       }
     })
 
-    await wrapper.find('input[type="text"]').trigger('click')
+    await wrapper.find('[role="combobox"]').trigger('click')
     await flushDropdown()
 
     const dropdown = findInBody('[data-id="sds-combo-box-dropdown"]')
     const footer = findInBody('[data-id="sds-combo-box-footer"]')
-    const instructions = footer?.children ?? []
 
+    expect(dropdown).toBeTruthy()
+    expect(dropdown?.querySelectorAll('[role="option"]')).toHaveLength(grouped ? 15 : suggestions.length)
     expect(dropdown?.classList).toContain('@container')
-    expect(footer?.classList).toContain('grid-cols-3')
-    expect(footer?.classList).toContain('@min-[28rem]:flex')
-    expect(Array.from(instructions)).toHaveLength(3)
-    Array.from(instructions).forEach(instruction => {
-      expect(instruction.classList).toContain('flex-col')
+    expect(footer?.classList).toContain('hidden')
+    expect(footer?.classList).toContain(grouped ? '@min-[30rem]:flex' : '@min-[28rem]:flex')
+    expect(footer?.className).not.toContain('grid')
+    expect(footer?.children).toHaveLength(grouped ? 3 : 2)
+    Array.from(footer?.children ?? []).forEach(instruction => {
       expect(instruction.classList).toContain('items-center')
-      expect(instruction.classList).toContain('whitespace-nowrap')
-      expect(instruction.classList).toContain('@min-[28rem]:flex-row')
+      expect(instruction.classList).not.toContain('flex-col')
     })
     expect(text(footer)).toContain('Navigate')
-    expect(text(footer)).toContain('Switch tabs')
     expect(text(footer)).toContain('Select')
-    expect(text(footer)).not.toContain('to navigate')
+    expect(text(footer).includes('Switch categories')).toBe(grouped)
+    expect(dropdown?.querySelector('[role="listbox"]')?.contains(footer)).toBe(false)
+    expect(footer?.querySelector('span[aria-hidden="true"]')).toBeNull()
+    wrapper.unmount()
+  })
+
+  it.each([
+    { messages: undefined, modifier: 'Alt', description: 'Alt/Option+Left, Alt/Option+Right:' },
+    { messages: { altKey: 'Wahltaste', categoryKeys: 'Wahltaste+Links, Wahltaste+Rechts:' }, modifier: 'Wahltaste', description: 'Wahltaste+Links, Wahltaste+Rechts:' }
+  ])('shows the $modifier category modifier visibly in the keyboard hint', async ({ messages, modifier, description }) => {
+    const wrapper = mountComponent({
+      props: {
+        type: 'select', suggestions: groupedSuggestions,
+        optionGroupLabel: 'section', optionGroupChildren: 'items', optionLabel: 'name', messages
+      }
+    })
+    await wrapper.find('[role="combobox"]').trigger('click')
+    await flushDropdown()
+    const footer = findInBody('[data-id="sds-combo-box-footer"]')
+    const categoryHint = footer?.children[1]
+    const visibleModifier = categoryHint?.querySelector('span.font-mono')
+
+    expect(visibleModifier?.textContent?.trim()).toBe(modifier)
+    expect(visibleModifier?.classList.contains('sr-only')).toBe(false)
+    expect(visibleModifier?.nextElementSibling?.textContent).toBe('+')
+    expect(visibleModifier?.parentElement?.classList).toContain('gap-1')
+    expect(categoryHint?.querySelector('.sr-only')?.textContent).toBe(description)
     wrapper.unmount()
   })
 
@@ -521,12 +902,12 @@ describe('ComboBox', () => {
   })
 
   it('should open dropdown and highlight last option on ArrowUp', async () => {
-    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]')
+    const wrapper = mountComponent({ props: { suggestions } })
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
     expect(dropdownInBody()).not.toBeNull()
     const active = findInBody('button[data-active="true"]')
@@ -538,7 +919,6 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -548,7 +928,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const active = findInBody('button[data-active="true"]')
@@ -564,39 +944,41 @@ describe('ComboBox', () => {
   })
 
   it('should close dropdown on Tab', async () => {
-    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]')
+    const wrapper = mountComponent({ props: { suggestions } })
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     expect(dropdownInBody()).not.toBeNull()
-    await input.trigger('keydown.tab')
+    await input.trigger('keydown', { key: 'Tab' })
     await flushDropdown()
     expect(dropdownInBody()).toBeNull()
     wrapper.unmount()
   })
 
-  it('restores the selected item text when the dropdown closes after navigation', async () => {
+  it('restores the selected label when the dropdown closes after navigation', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        clickToSelect: true,
         selected: ['Apple'],
         type: 'select'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find<HTMLButtonElement>('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
 
-    expect((input.element as HTMLInputElement).value).toBe('Banana')
+    expect(input.element.value).toBe('Apple')
+    const search = await getQueryInput(wrapper)
+    expect(document.getElementById(search.attributes('aria-activedescendant') ?? '')?.textContent).toContain('Banana')
 
-    await input.trigger('keydown.tab')
+    await input.trigger('keydown', { key: 'Tab' })
     await flushDropdown()
 
     expect(dropdownInBody()).toBeNull()
-    expect((input.element as HTMLInputElement).value).toBe('Apple')
+    expect(input.element.value).toBe('Apple')
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
     wrapper.unmount()
   })
 
@@ -604,19 +986,18 @@ describe('ComboBox', () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        clickToSelect: true,
         selected: [],
         type: 'select',
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('App')
     await flushDropdown()
 
     expect((input.element as HTMLInputElement).value).toBe('App')
 
-    await input.trigger('keydown.tab')
+    await input.trigger('keydown', { key: 'Tab' })
     await flushDropdown()
 
     expect(dropdownInBody()).toBeNull()
@@ -625,9 +1006,9 @@ describe('ComboBox', () => {
   })
 
   it('should not throw or open dropdown on ArrowDown if no suggestions', async () => {
-    const wrapper = mountComponent({ props: { suggestions: [], clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]')
-    await input.trigger('keydown.down')
+    const wrapper = mountComponent({ props: { suggestions: [] } })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await nextTick()
     const dropdown = wrapper.find('[data-id="sds-combo-box-dropdown"]')
     // Expect the dropdown to be visible
@@ -644,10 +1025,10 @@ describe('ComboBox', () => {
           type: 'select'
         }
       })
-      const input = wrapper.find('input[type="text"]')
-      expect((input.element as HTMLInputElement).readOnly).toBe(true)
+      const input = wrapper.find('[role="combobox"]')
+      expect(input.element.tagName).toBe('BUTTON')
 
-      await input.trigger(`keydown.${key}`)
+      await input.trigger('keydown', { key: key === 'up' ? 'ArrowUp' : 'ArrowDown' })
       await flushDropdown()
 
       expect(dropdownInBody()).not.toBeNull()
@@ -659,25 +1040,24 @@ describe('ComboBox', () => {
   it('should allow navigation with dropdown already open', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         mutliple: false,
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     expect(dropdownInBody()).not.toBeNull()
     expect(text(findInBody('button[data-active="true"]'))).toBe('Apple')
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
     expect(text(findInBody('button[data-active="true"]'))).toBe('Banana')
     wrapper.unmount()
   })
 
   it('should set input as readonly and allow focus when readonly prop is true', async () => {
-    const wrapper = mountComponent({ attachTo: document.body, props: { clickToSelect: true, readonly: true, suggestions } })
-    const input = wrapper.find('input[type="text"]')
+    const wrapper = mountComponent({ attachTo: document.body, props: { readonly: true, suggestions } })
+    const input = wrapper.find('[role="combobox"]')
     expect(input.attributes('readonly')).toBeDefined()
     // Should still be focusable
     const i = input.element as HTMLInputElement
@@ -686,23 +1066,22 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('does not leave selected single-select text highlighted when the input receives focus', async () => {
+  it.each(['select', 'taggable-select'] as const)('displays a single %s selection as button text without a tag', async (type) => {
     const wrapper = mountComponent({
       props: {
         selected: ['Apple'],
         suggestions,
-        type: 'select'
+        type
       }
     })
-    const input = wrapper.find('input[type="text"]')
-    const inputElement = input.element as HTMLInputElement
-    inputElement.setSelectionRange(0, inputElement.value.length)
-
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('focus')
-    await vi.runAllTimersAsync()
 
-    expect(inputElement.selectionStart).toBe(inputElement.value.length)
-    expect(inputElement.selectionEnd).toBe(inputElement.value.length)
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
+    expect(input.element.value).toBe('Apple')
+    expect(input.element.tagName).toBe('BUTTON')
+    expect(input.text()).toBe('Apple')
+    expect(wrapper.emitted('focus')).toBeTruthy()
     wrapper.unmount()
   })
 
@@ -710,7 +1089,7 @@ describe('ComboBox', () => {
     const wrapper = mountComponent({
       props: { required: true, suggestions }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     expect(input.attributes('required')).toBeDefined()
     expect((input.element as HTMLInputElement).required).toBe(true)
     expect(wrapper.html()).toMatchSnapshot()
@@ -720,7 +1099,6 @@ describe('ComboBox', () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -731,7 +1109,7 @@ describe('ComboBox', () => {
       }
     })
     // Simulate input value to trigger clear button
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Apple')
     await nextTick()
     // Find clear button
@@ -752,10 +1130,10 @@ describe('ComboBox', () => {
 
   it('shakes input on invalid submit (type="select" and value not in suggestions)', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, type: 'select', multiple: false },
+      props: { suggestions, type: 'select', multiple: false },
       attachTo: document.body
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('NotInList')
     await input.trigger('keyup', { key: 'Enter' })
     await nextTick()
@@ -772,7 +1150,6 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -783,10 +1160,10 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
     const active = findInBody('button[data-active="true"]')
     expect(text(active)).toEqual('Select all')
@@ -804,7 +1181,7 @@ describe('ComboBox', () => {
 
   it('should allow removing a tag in multiselect mode (click)', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Find the remove button for the first tag
     const removeButtons = wrapper.findAll('.tag-remove, .remove-tag, .remove')
@@ -821,11 +1198,11 @@ describe('ComboBox', () => {
 
   it('should allow clearing all tags with clear button in multiselect mode', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, type: 'select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Simulate input value to trigger clear button
     // Simulate input value to trigger clear button
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Apple')
     wrapper.vm.$forceUpdate()
     await nextTick()
@@ -842,9 +1219,9 @@ describe('ComboBox', () => {
 
   it('shows dropdown after typing', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, debounceComplete: 0 }
+      props: { suggestions, debounceComplete: 0 }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('focus')
     await input.setValue('Dragonfruit')
     // flushDropdown drains fake timers (debounced query watcher),
@@ -854,10 +1231,9 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('does not highlight a selected option when a focused ComboBox opens passively', async () => {
+  it('highlights a matching option without changing the selection on external query updates', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         debounceComplete: 0,
         modelValue: '',
         selected: ['Apple'],
@@ -865,18 +1241,19 @@ describe('ComboBox', () => {
         type: 'select'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.trigger('focus')
     await wrapper.setProps({ modelValue: 'A' })
     await flushDropdown()
 
     expect(dropdownInBody()).not.toBeNull()
-    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+    expect(wrapper.props('selected')).toEqual(['Apple'])
     wrapper.unmount()
   })
 
-  it('sanitizes external modelValue updates, emits complete, and opens dropdown', async () => {
+  it('preserves external modelValue updates, emits complete, and opens dropdown', async () => {
     const onUpdateModelValue = vi.fn()
     const onComplete = vi.fn()
     const wrapper = mountComponent({
@@ -891,10 +1268,10 @@ describe('ComboBox', () => {
     await wrapper.setProps({ modelValue: '<strong>App</strong>' })
     await flushDropdown()
 
-    const input = wrapper.find('input[type="text"]')
-    expect((input.element as HTMLInputElement).value).toBe('App')
-    expect(onUpdateModelValue).toHaveBeenLastCalledWith('App')
-    expect(onComplete).toHaveBeenLastCalledWith('App')
+    const input = wrapper.find('[role="combobox"]')
+    expect((input.element as HTMLInputElement).value).toBe('<strong>App</strong>')
+    expect(onUpdateModelValue).not.toHaveBeenCalled()
+    expect(onComplete).toHaveBeenLastCalledWith('<strong>App</strong>')
     expect(dropdownInBody()).not.toBeNull()
     wrapper.unmount()
   })
@@ -920,7 +1297,7 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.setValue('o')
     await flushDropdown()
@@ -959,7 +1336,7 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.setValue('a')
     await flushDropdown()
@@ -968,7 +1345,7 @@ describe('ComboBox', () => {
 
     await wrapper.setProps({ pending: false, suggestions: ['Apple', 'Banana'] })
     await flushDropdown()
-    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Add "a"')
 
     await input.setValue('ab')
     await flushDropdown()
@@ -977,7 +1354,7 @@ describe('ComboBox', () => {
     await wrapper.setProps({ pending: false, suggestions: ['Apple'] })
     await flushDropdown()
 
-    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Apple')
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Add "ab"')
     expect(onComplete).toHaveBeenNthCalledWith(1, 'a')
     expect(onComplete).toHaveBeenNthCalledWith(2, 'ab')
     wrapper.unmount()
@@ -985,7 +1362,7 @@ describe('ComboBox', () => {
 
   it('should allow removing a tag in taggable-select mode (click)', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Find the remove button for the first tag
     const removeButtons = wrapper.findAll('.tag-remove, .remove-tag, .remove')
@@ -1002,10 +1379,10 @@ describe('ComboBox', () => {
 
   it('should allow clearing all tags with clear button in taggable-select mode', async () => {
     const wrapper = mountComponent({
-      props: { suggestions, clickToSelect: true, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
+      props: { suggestions, type: 'taggable-select', multiple: true, selected: ['Apple', 'Banana'] }
     })
     // Simulate input value to trigger clear button
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Apple')
     wrapper.vm.$forceUpdate()
     await nextTick()
@@ -1023,14 +1400,13 @@ describe('ComboBox', () => {
   it('should remove last tag on Backspace when input is empty (taggable-select)', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'taggable-select',
         multiple: true,
         selected: ['Apple', 'Banana']
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     const tags = wrapper.findAll('[data-id="sds-tag"]>div>span')
     const tagsText = tags.map(t => t.text())
     // Should emit result event with removed tag value
@@ -1049,7 +1425,6 @@ describe('ComboBox', () => {
     const selected = ['Apple', 'Banana']
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -1076,7 +1451,6 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -1088,7 +1462,7 @@ describe('ComboBox', () => {
       }
     })
     // Open dropdown
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     // Find "Select all" button (in teleported dropdown)
@@ -1113,13 +1487,12 @@ describe('ComboBox', () => {
     window.HTMLElement.prototype.scrollIntoView = scrollIntoView
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
@@ -1139,12 +1512,11 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('switches grouped tabs with Left and Right only when the input caret is at a text boundary', async () => {
+  it('preserves caret movement and switches categories only with Alt+Left or Alt+Right', async () => {
     const scrollIntoView = vi.fn()
     window.HTMLElement.prototype.scrollIntoView = scrollIntoView
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         debounceComplete: 0,
@@ -1153,7 +1525,7 @@ describe('ComboBox', () => {
         optionLabel: 'name'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     const inputElement = input.element as HTMLInputElement
     await input.trigger('click')
     await input.setValue('Apple')
@@ -1172,16 +1544,16 @@ describe('ComboBox', () => {
     expect(scrollIntoView).not.toHaveBeenCalled()
 
     inputElement.setSelectionRange(0, 0)
-    const boundaryLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    const boundaryLeftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', altKey: true, bubbles: true, cancelable: true })
     inputElement.dispatchEvent(boundaryLeftEvent)
     await flushDropdown()
 
     expect(boundaryLeftEvent.defaultPrevented).toBe(true)
-    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
+    expect(scrollIntoView).not.toHaveBeenCalled()
     expect(text(dropdownInBody())).toContain('Beetroot')
 
     inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length)
-    const boundaryRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    const boundaryRightEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', altKey: true, bubbles: true, cancelable: true })
     inputElement.dispatchEvent(boundaryRightEvent)
     await flushDropdown()
 
@@ -1190,12 +1562,11 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('switches grouped tabs with Left and Right when a single selection is displayed', async () => {
+  it('switches categories with Alt+Left and Alt+Right while retaining a single selection', async () => {
     const scrollIntoView = vi.fn()
     window.HTMLElement.prototype.scrollIntoView = scrollIntoView
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         selected: [{ name: 'Apple' }],
@@ -1205,11 +1576,11 @@ describe('ComboBox', () => {
         optionLabel: 'name'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
-    const rightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    const rightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', altKey: true, bubbles: true, cancelable: true })
     input.element.dispatchEvent(rightArrowEvent)
     await flushDropdown()
 
@@ -1218,7 +1589,7 @@ describe('ComboBox', () => {
     expect(optionTexts).toContain('Blueberry')
     expect(optionTexts).not.toContain('Beetroot')
 
-    const secondRightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+    const secondRightArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', altKey: true, bubbles: true, cancelable: true })
     input.element.dispatchEvent(secondRightArrowEvent)
     await flushDropdown()
 
@@ -1227,12 +1598,12 @@ describe('ComboBox', () => {
     expect(optionTexts).toContain('Beetroot')
     expect(optionTexts).not.toContain('Apple')
 
-    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', altKey: true, bubbles: true, cancelable: true })
     input.element.dispatchEvent(leftArrowEvent)
     await flushDropdown()
 
     expect(leftArrowEvent.defaultPrevented).toBe(true)
-    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
+    expect(scrollIntoView).not.toHaveBeenCalled()
     optionTexts = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
     expect(optionTexts).toContain('Apple')
     expect(optionTexts).not.toContain('Beetroot')
@@ -1245,7 +1616,6 @@ describe('ComboBox', () => {
     })
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -1253,14 +1623,16 @@ describe('ComboBox', () => {
         'onUpdate:selected': onUpdateSelected
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
-    const firstCheckbox = findInBody('[data-id="sds-scroll-area"] input[type="checkbox"]') as HTMLInputElement | null
+    const firstCheckbox = findInBody('[data-id="sds-scroll-area"] [data-id="sds-combo-box-checkbox"]')
     expect(firstCheckbox).toBeTruthy()
-    expect(firstCheckbox!.getAttribute('aria-label')).toBe('Select Apple')
-    firstCheckbox!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+    if (!firstCheckbox) throw new Error('Expected a multiselect indicator')
+    expect(firstCheckbox.getAttribute('aria-hidden')).toBe('true')
+    expect(firstCheckbox.matches('input, button, [tabindex]')).toBe(false)
+    firstCheckbox.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushDropdown()
 
     expect(wrapper.props('selected')).toEqual(['Apple'])
@@ -1271,13 +1643,12 @@ describe('ComboBox', () => {
   it('does not activate an option when hovering a rendered option', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
@@ -1298,7 +1669,6 @@ describe('ComboBox', () => {
     const selected: ComboBoxSuggestion[] = []
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -1309,7 +1679,7 @@ describe('ComboBox', () => {
       }
     })
     // Open dropdown
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     // Find the Apple option button in teleported dropdown
@@ -1328,10 +1698,73 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
+  it.each(['select', 'taggable-select'] as const)('keeps %s multiselect open while picking and deselecting several options', async (type) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type,
+        multiple: true,
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('click')
+    await flushDropdown()
+
+    for (const label of ['Apple', 'Banana', 'Apple']) {
+      const option = findOptionInBody(label)
+      expect(option).toBeDefined()
+      option?.click()
+      await flushDropdown()
+
+      expect(dropdownInBody()).not.toBeNull()
+      expect(input.attributes('aria-expanded')).toBe('true')
+      expect(document.activeElement).toBe(input.element)
+    }
+
+    expect(wrapper.props('selected')).toEqual(['Banana'])
+    expect(wrapper.emitted('close')).toBeUndefined()
+    await input.trigger('keydown', { key: 'Escape' })
+    await flushDropdown()
+    expect(dropdownInBody()).toBeNull()
+  })
+
+  it.each(['select', 'taggable-select'] as const)('keeps %s multiselect open after consecutive keyboard picks', async (type) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type,
+        multiple: true,
+        filterSuggestions: true,
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+
+    for (const label of ['Apple', 'Banana']) {
+      await input.setValue(label)
+      await flushDropdown()
+      await input.trigger('keyup.enter')
+      await flushDropdown()
+
+      expect(wrapper.props('selected')).toContain(label)
+      expect(dropdownInBody()).not.toBeNull()
+      expect(input.element.value).toBe('')
+    }
+
+    expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
+    await input.trigger('keydown', { key: 'Tab' })
+    await flushDropdown()
+    expect(dropdownInBody()).toBeNull()
+  })
+
   it('replaces previous selections when multiple is false and a suggestion is clicked', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: false,
@@ -1341,7 +1774,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const kiwiButton = findAllInBody('[data-id="sds-scroll-area"] button').find(button => text(button) === 'Kiwi')
@@ -1356,7 +1789,6 @@ describe('ComboBox', () => {
   it('replaces previous selections when multiple is false and a suggestion is selected with Enter', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: false,
@@ -1366,10 +1798,8 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
-    await input.trigger('keydown.down')
-    await flushDropdown()
-    await input.trigger('keydown.down')
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
     await input.trigger('keyup.enter')
     await flushDropdown()
@@ -1381,7 +1811,6 @@ describe('ComboBox', () => {
   it('keeps focus on the input while keyboard navigation moves between input and options', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -1391,7 +1820,7 @@ describe('ComboBox', () => {
       }
     })
     window.HTMLElement.prototype.scrollIntoView = () => {}
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     const inputElement = input.element as HTMLInputElement
     inputElement.focus()
     await input.trigger('click')
@@ -1406,13 +1835,13 @@ describe('ComboBox', () => {
     const active = findInBody('button[data-active="true"]')
     expect(active).toBeTruthy()
     // ArrowUp should move active state back to the input, never to a tab.
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
     const activeAfterUp = findInBody('button:not(.tab)[data-active="true"]')
     expect(activeAfterUp).toBeFalsy()
     expect(document.activeElement).toBe(inputElement)
 
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
     const activeAfterDown = findInBody('button:not(.tab)[data-active="true"]')
     expect(activeAfterDown).toBeTruthy()
@@ -1512,7 +1941,7 @@ describe('ComboBox', () => {
         })
       }
     })
-    const inputElement = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const inputElement = wrapper.find('[role="combobox"]').element as HTMLInputElement
     const inputGroup = wrapper.find('.input-group')
     const decorativeDivider = wrapper.find('[data-id="decorative-divider"]')
 
@@ -1537,7 +1966,7 @@ describe('ComboBox', () => {
         }, 'Action')
       }
     })
-    const inputElement = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const inputElement = wrapper.find('[role="combobox"]').element as HTMLInputElement
     const trailingAction = wrapper.find('[data-id="trailing-action"]')
     outsideButton.focus()
 
@@ -1548,11 +1977,13 @@ describe('ComboBox', () => {
     outsideButton.remove()
   })
 
-  it('replaces existing single-select selection when user starts typing', async () => {
+  it.each(['select', 'taggable-select'] as const)('preserves the %s selection while searching and displays its replacement when chosen', async (type) => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        type: 'select',
+        type,
+        filterSuggestions: true,
+        debounceComplete: 0,
         multiple: false,
         selected: ['Apple'],
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
@@ -1560,15 +1991,256 @@ describe('ComboBox', () => {
         }
       }
     })
-    // Type a single character — should clear selection and start fresh
-    const input = wrapper.find('input[type="text"]')
-    await input.setValue('B')
+    const input = await getQueryInput(wrapper)
+    await input.setValue('Ban')
     await flushDropdown()
-    // Selection cleared
-    expect(wrapper.props('selected')).toEqual([])
-    // Input contains only the typed character (last char of setValue)
-    expect((input.element as HTMLInputElement).value).toBe('B')
+
+    expect(wrapper.props('selected')).toEqual(['Apple'])
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
+    expect(input.element.value).toBe('Ban')
+    expect(wrapper.emitted('complete')?.at(-1)).toEqual(['Ban'])
+    const option = findOptionInBody('Banana')
+    expect(option).toBeDefined()
+
+    option?.click()
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Banana'])
+    expect(wrapper.findAll('[data-id="sds-tag"]')).toHaveLength(0)
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('Banana')
     wrapper.unmount()
+  })
+
+  it('restores the selected label when a replacement search is dismissed', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', selected: ['Apple'], debounceComplete: 0 }
+    })
+    const input = await getQueryInput(wrapper)
+
+    await input.setValue('Ban')
+    await flushDropdown()
+    await input.trigger('keydown', { key: 'Escape' })
+    await flushDropdown()
+
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('Apple')
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+  })
+
+  it.each(['select', 'taggable-select'] as const)('replaces a single %s selection using the keyboard', async (type) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type,
+        selected: ['Apple'],
+        filterSuggestions: true,
+        debounceComplete: 0,
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = await getQueryInput(wrapper)
+    await input.setValue('Banana')
+    await flushDropdown()
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Banana'])
+    expect(wrapper.findAll('[data-id="sds-tag"]')).toHaveLength(0)
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('Banana')
+    expect(dropdownInBody()).toBeNull()
+  })
+
+  it.each([false, true])('adds typed text with Enter instead of a partial match when multiple is %s', async (multiple) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: ['Altium Designer', 'Altium CircuitMaker'],
+        type: 'taggable-select',
+        multiple,
+        filterSuggestions: true,
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = await getQueryInput(wrapper)
+    await input.setValue('Altium')
+    await flushDropdown()
+    expect(text(findInBody('[role="option"][data-active="true"]'))).toContain('Add "Altium"')
+    expect(text(findAllInBody('[data-id="sds-combo-box-dropdown"] [role="option"]')[0])).toBe('Add "Altium"')
+    expect(findOptionInBody('Altium Designer')).toBeDefined()
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual([{ label: 'Altium', name: 'Altium', value: 'Altium', __cbxCustom: true }])
+    expect(wrapper.emitted('result')?.at(-1)).toEqual([{ label: 'Altium', name: 'Altium', value: 'Altium', __cbxCustom: true }])
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe(multiple ? '' : 'Altium')
+    expect(dropdownInBody() !== null).toBe(multiple)
+  })
+
+  it('selects a partially matching suggestion when explicitly highlighted instead of adding typed text', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: ['Altium Designer'],
+        type: 'taggable-select',
+        multiple: true,
+        filterSuggestions: true,
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.setValue('Altium')
+    await flushDropdown()
+
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual(['Altium Designer'])
+    expect(dropdownInBody()).not.toBeNull()
+  })
+
+  it.each([false, true])('places Add before Select all and grouped options with correct keyboard indexes when virtualize is %s', async (virtualize) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: groupedSuggestions,
+        type: 'taggable-select',
+        multiple: true,
+        enableSelectAll: true,
+        filterSuggestions: true,
+        optionLabel: 'name',
+        optionGroupLabel: 'section',
+        optionGroupChildren: 'items',
+        virtualize,
+        virtualizeThreshold: 1,
+        debounceComplete: 0,
+        selected: [],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.setValue('a')
+    await flushDropdown()
+    const options = findAllInBody('[data-id="sds-combo-box-dropdown"] [role="option"]')
+    expect(text(options[0])).toBe('Add "a"')
+    expect(text(options[1])).toBe('Select all')
+    expect(input.attributes('aria-activedescendant')).toBe(options[0].id)
+
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await flushDropdown()
+    expect(input.attributes('aria-activedescendant')).toBe(options[1].id)
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+    expect(wrapper.props('selected')).toEqual(expect.arrayContaining([{ name: 'Apple' }, { name: 'Banana' }]))
+    expect(options[1].getAttribute('aria-selected')).toBe('true')
+    expect(dropdownInBody()).not.toBeNull()
+
+    options[0].click()
+    await flushDropdown()
+    expect(wrapper.props('selected')).toEqual(expect.arrayContaining([expect.objectContaining({ name: 'a' })]))
+    expect(dropdownInBody()).not.toBeNull()
+  })
+
+  it('does not remove or duplicate an already-added custom tag when Enter is pressed', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions: [],
+        type: 'taggable-select',
+        multiple: true,
+        selected: ['Altium'],
+        debounceComplete: 0
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    await input.setValue('Altium')
+    await flushDropdown()
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.props('selected')).toEqual(['Altium'])
+    expect(dropdownInBody()).not.toBeNull()
+  })
+
+  it('displays a newly created custom item as the single selection', async () => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type: 'taggable-select',
+        selected: ['Apple'],
+        filterSuggestions: true,
+        debounceComplete: 0,
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = await getQueryInput(wrapper)
+    await input.setValue('Dragonfruit')
+    await flushDropdown()
+
+    await input.trigger('keyup.enter')
+    await flushDropdown()
+
+    expect(wrapper.findAll('[data-id="sds-tag"]')).toHaveLength(0)
+    expect(wrapper.props('selected')).toHaveLength(1)
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('Dragonfruit')
+  })
+
+  it.each(['select', 'taggable-select'] as const)('clears a single %s selection and restores required validation', async (type) => {
+    const wrapper = mountComponent({
+      props: {
+        suggestions,
+        type,
+        required: true,
+        selected: ['Apple'],
+        'onUpdate:selected': (selected: ComboBoxSuggestion[]) => wrapper.setProps({ selected })
+      }
+    })
+    const input = wrapper.find('[role="combobox"]')
+    expect(wrapper.findAll('[role="combobox"]')).toHaveLength(1)
+    expect(input.element.validity.valid).toBe(true)
+
+    await wrapper.find('[data-id="sds-combo-box-clear-button"]').trigger('click')
+    await flushDropdown()
+
+    expect(wrapper.props('selected')).toEqual([])
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
+    expect(wrapper.get('select').element.validity.valueMissing).toBe(true)
+    expect(document.activeElement).toBe(input.element)
+  })
+
+  it.each(['readonly', 'disabled'] as const)('prevents modifying a single selection when %s', async (state) => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', selected: ['Apple'], [state]: true }
+    })
+    const input = wrapper.find('[role="combobox"]')
+
+    await input.trigger('keydown', { key: 'B' })
+    await input.trigger('keydown', { key: 'Backspace' })
+
+    expect(wrapper.find('[data-id="sds-tag"] button').exists()).toBe(false)
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
+    expect(input.element.value).toBe('Apple')
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+  })
+
+  it('keeps the selection when deleting search text', async () => {
+    const wrapper = mountComponent({
+      props: { suggestions, type: 'select', selected: ['Apple'], debounceComplete: 0 }
+    })
+    const input = await getQueryInput(wrapper)
+    await input.setValue('Ban')
+    await flushDropdown()
+
+    await input.trigger('keydown', { key: 'Backspace' })
+    await input.trigger('keydown', { key: 'Delete' })
+
+    expect(wrapper.emitted('update:selected')).toBeUndefined()
+    expect(wrapper.props('selected')).toEqual(['Apple'])
   })
 
   it('clearQuery clears query first, then selections on second click in multiselect', async () => {
@@ -1584,17 +2256,17 @@ describe('ComboBox', () => {
       }
     })
     // Type a query so the clear button has something to clear
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Kiw')
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('Kiw')
 
-    const findClearButton = () => wrapper.findAll('button').find(button => button.text().includes('Clear query'))
+    const findClearButton = () => wrapper.find('[data-id="sds-combo-box-clear-button"]')
 
     // First click on the clear button: query cleared, selections retained
     const clearBtn = findClearButton()
     expect(clearBtn).toBeDefined()
-    await clearBtn?.trigger('mousedown')
+    await clearBtn.trigger('click')
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('')
     expect(wrapper.props('selected')).toEqual(['Apple', 'Banana'])
@@ -1602,7 +2274,7 @@ describe('ComboBox', () => {
     // Second click on the clear button: selections cleared
     const clearBtn2 = findClearButton()
     expect(clearBtn2).toBeDefined()
-    await clearBtn2?.trigger('mousedown')
+    await clearBtn2.trigger('click')
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual([])
     wrapper.unmount()
@@ -1620,8 +2292,8 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
-    await input.trigger('keydown.delete')
+    const input = wrapper.find('[role="combobox"]')
+    await input.trigger('keydown', { key: 'Delete' })
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual([])
     expect((input.element as HTMLInputElement).value).toBe('')
@@ -1640,13 +2312,13 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     // Input is already empty; keydown.delete with empty input removes last
-    await input.trigger('keydown.delete')
+    await input.trigger('keydown', { key: 'Delete' })
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual(['Apple'])
     // Again removes the next one
-    await input.trigger('keydown.delete')
+    await input.trigger('keydown', { key: 'Delete' })
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual([])
     wrapper.unmount()
@@ -1664,9 +2336,9 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     // For text type with empty input, handleDelete pops AND removes-last
-    await input.trigger('keydown.delete')
+    await input.trigger('keydown', { key: 'Delete' })
     await flushDropdown()
     expect(wrapper.props('selected')).toEqual([])
     wrapper.unmount()
@@ -1685,15 +2357,14 @@ describe('ComboBox', () => {
       }
     })
     // Type a query that does NOT match any existing suggestion
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Dragonfruit')
     await flushDropdown()
     // Find the "Add" button by searching for one whose text contains both Add and the query
     const buttons = findAllInBody('button')
     const addBtn = buttons.find(b => text(b).includes('Add') && text(b).includes('Dragonfruit'))
     expect(addBtn).toBeTruthy()
-    // Click it via mousedown (the handler is @mousedown.prevent)
-    addBtn!.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }))
+    addBtn!.click()
     await flushDropdown()
     // Selection should contain a Dragonfruit entry (object, with __cbxIdx stripped)
     const sel = wrapper.props('selected') as ComboBoxSuggestion[]
@@ -1717,7 +2388,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Dragonfruit')
     await flushDropdown()
     // The "Already added" message should appear
@@ -1732,7 +2403,6 @@ describe('ComboBox', () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        clickToSelect: true,
         type: 'taggable-select',
         multiple: true,
         selected: [],
@@ -1742,13 +2412,10 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('NewFruit')
     await flushDropdown()
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
-    await flushDropdown()
     await input.trigger('keyup.enter')
     await flushDropdown()
 
@@ -1766,13 +2433,12 @@ describe('ComboBox', () => {
   })
 
   it('Escape key closes the dropdown', async () => {
-    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]')
+    const wrapper = mountComponent({ props: { suggestions } })
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     expect(dropdownInBody()).toBeTruthy()
-    // Escape via window (VueUse onKeyStroke defaults to window)
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await input.trigger('keydown', { key: 'Escape' })
     await flushDropdown()
     expect(dropdownInBody()).toBeFalsy()
     wrapper.unmount()
@@ -1788,13 +2454,13 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     const inputElement = input.element as HTMLInputElement
     await input.setValue('App')
     await flushDropdown()
     inputElement.focus()
 
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+    await input.trigger('keydown', { key: 'Escape' })
     await flushDropdown()
 
     expect(wrapper.props('modelValue')).toBe('')
@@ -1812,12 +2478,12 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     const inputElement = input.element as HTMLInputElement
     await input.setValue('App')
     await flushDropdown()
 
-    await input.trigger('keydown.tab')
+    await input.trigger('keydown', { key: 'Tab' })
     await flushDropdown()
 
     expect(wrapper.props('modelValue')).toBe('')
@@ -1837,7 +2503,7 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     const inputElement = input.element as HTMLInputElement
     await input.setValue('App')
     await flushDropdown()
@@ -1848,7 +2514,7 @@ describe('ComboBox', () => {
     await flushDropdown()
 
     expect(wrapper.props('modelValue')).toBe('')
-    expect(inputElement.value).toBe('')
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('')
     wrapper.unmount()
     outsideButton.remove()
   })
@@ -1865,7 +2531,7 @@ describe('ComboBox', () => {
         'onUpdate:modelValue': (value: string) => wrapper.setProps({ modelValue: value })
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     const inputElement = input.element as HTMLInputElement
     await input.setValue('App')
     await flushDropdown()
@@ -1881,34 +2547,36 @@ describe('ComboBox', () => {
     outsideButton.remove()
   })
 
-  it('Escape key restores selected item text after highlighting a different option', async () => {
+  it('Escape key restores the selected label after highlighting a different option', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
-        clickToSelect: true,
         selected: ['Apple'],
         type: 'select'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await nextTick()
 
-    expect((input.element as HTMLInputElement).value).toBe('Banana')
+    expect((input.element as HTMLInputElement).value).toBe('Apple')
+    const search = await getQueryInput(wrapper)
+    expect(document.getElementById(search.attributes('aria-activedescendant') ?? '')?.textContent).toContain('Banana')
 
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     await nextTick()
 
-    expect((input.element as HTMLInputElement).value).toBe('Apple')
+    expect(input.element.value).toBe('Apple')
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
     expect(wrapper.props('selected')).toEqual(['Apple'])
     wrapper.unmount()
   })
 
   it('Escape key is ignored when the ComboBox is closed and unfocused', async () => {
-    const wrapper = mountComponent({ props: { suggestions, clickToSelect: true } })
-    const input = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const wrapper = mountComponent({ props: { suggestions } })
+    const input = wrapper.find('[role="combobox"]').element as HTMLInputElement
     input.blur()
 
     const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true })
@@ -1930,7 +2598,7 @@ describe('ComboBox', () => {
         type: 'text'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Search term')
     await flushDropdown()
 
@@ -1945,14 +2613,13 @@ describe('ComboBox', () => {
     const onEnter = vi.fn()
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         onEnter,
         selected: ['Apple'],
         suggestions,
         type: 'select'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
 
     await input.trigger('keyup', { key: 'Enter' })
     await flushDropdown()
@@ -1966,7 +2633,7 @@ describe('ComboBox', () => {
     const wrapper = mountComponent({
       props: { suggestions, focusOnKeyPress: true }
     })
-    const input = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const input = wrapper.find('[role="combobox"]').element as HTMLInputElement
     // Confirm not focused initially
     expect(document.activeElement).not.toBe(input)
     // Dispatch "/" from document.body (not inside an input)
@@ -1978,11 +2645,58 @@ describe('ComboBox', () => {
 
   it('"/" keypress is ignored when focusOnKeyPress is false (default)', async () => {
     const wrapper = mountComponent({ props: { suggestions } })
-    const input = wrapper.find('input[type="text"]').element as HTMLInputElement
+    const input = wrapper.find('[role="combobox"]').element as HTMLInputElement
     document.body.dispatchEvent(new KeyboardEvent('keydown', { key: '/', bubbles: true }))
     await flushDropdown()
     expect(document.activeElement).not.toBe(input)
     wrapper.unmount()
+  })
+
+  it.each([
+    ['input', '<input data-entry>'],
+    ['textarea', '<textarea data-entry></textarea>'],
+    ['select', '<select data-entry><option>/</option></select>'],
+    ['contenteditable', '<div contenteditable="true" data-entry tabindex="0"></div>'],
+    ['empty contenteditable', '<div contenteditable data-entry tabindex="0"></div>'],
+    ['plaintext editor', '<div contenteditable="plaintext-only" data-entry tabindex="0"></div>'],
+    ['nested editor', '<div contenteditable="true"><span data-entry tabindex="0"></span></div>'],
+    ['textbox widget', '<div role="textbox" data-entry tabindex="0"></div>'],
+    ['nested textbox widget', '<div role="textbox"><span data-entry tabindex="0"></span></div>'],
+    ['searchbox widget', '<div role="searchbox" data-entry tabindex="0"></div>'],
+    ['combobox widget', '<div role="combobox" data-entry tabindex="0"></div>']
+  ])('"/" keypress preserves typing and focus in a %s', async (_name, markup) => {
+    mountComponent({ props: { focusOnKeyPress: true } })
+    const container = document.createElement('div')
+    container.innerHTML = markup
+    document.body.append(container)
+    const editor = container.querySelector<HTMLElement>('[data-entry]')
+    if (!editor) throw new Error('Expected the text entry fixture')
+    editor.focus()
+    const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true })
+
+    editor.dispatchEvent(event)
+    await flushDropdown()
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(document.activeElement).toBe(editor)
+  })
+
+  it('"/" keypress preserves typing inside a shadow root', async () => {
+    mountComponent({ props: { focusOnKeyPress: true } })
+    const host = document.createElement('div')
+    const shadow = host.attachShadow({ mode: 'open' })
+    const editor = document.createElement('input')
+    shadow.append(editor)
+    document.body.append(host)
+    editor.focus()
+    const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true, composed: true })
+
+    editor.dispatchEvent(event)
+    await flushDropdown()
+
+    expect(event.defaultPrevented).toBe(false)
+    expect(shadow.activeElement).toBe(editor)
+    expect(document.activeElement).toBe(host)
   })
 
   it('filterSuggestions: true filters dropdown options as user types', async () => {
@@ -1990,12 +2704,11 @@ describe('ComboBox', () => {
       props: {
         suggestions,
         type: 'select',
-        clickToSelect: true,
         filterSuggestions: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('berry')
     await flushDropdown()
     // Inspect dropdown text — should contain berry items but not Apple/Banana
@@ -2014,7 +2727,6 @@ describe('ComboBox', () => {
       props: {
         suggestions: groupedSuggestions,
         type: 'select',
-        clickToSelect: true,
         optionGroupLabel: 'section',
         optionGroupChildren: 'items',
         optionLabel: 'name',
@@ -2023,7 +2735,7 @@ describe('ComboBox', () => {
       }
     })
     window.HTMLElement.prototype.scrollIntoView = () => {}
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('Apple')
     await flushDropdown()
     // Apple is only in Fruits group; the Vegetables group should be removed entirely
@@ -2050,7 +2762,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('Apple')
     await flushDropdown()
     // Press Enter — Apple is already selected, so it should toggle off
@@ -2070,14 +2782,13 @@ describe('ComboBox', () => {
         suggestions: objectSuggestions,
         type: 'select',
         optionLabel: 'label',
-        clickToSelect: true,
         selected: [],
         'onUpdate:selected': (val: ComboBoxSuggestion[]) => {
           wrapper.setProps({ selected: val })
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const dropdown = dropdownInBody()
@@ -2095,10 +2806,9 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('ArrowLeft cycles tabs backward in grouped mode', async () => {
+  it('Alt+ArrowLeft cycles categories backward in grouped mode', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         optionGroupLabel: 'section',
@@ -2109,26 +2819,24 @@ describe('ComboBox', () => {
     })
     const scrollIntoView = vi.fn()
     window.HTMLElement.prototype.scrollIntoView = scrollIntoView
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     // Down twice to enter dropdown options, then left to cycle backwards
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.down')
-    ;(input.element as HTMLInputElement).setSelectionRange(0, 0)
-    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    const leftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', altKey: true, bubbles: true, cancelable: true })
     input.element.dispatchEvent(leftArrowEvent)
     await flushDropdown()
     expect(leftArrowEvent.defaultPrevented).toBe(true)
-    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest' })
+    expect(scrollIntoView).not.toHaveBeenCalled()
     // After left from "All", we should be on Vegetables (last group)
     const vegOptions = findAllInBody('[data-id="sds-scroll-area"] button').map(text)
     expect(vegOptions).toContain('Beetroot')
     expect(vegOptions).not.toContain('Apple')
     // Left again should go to Fruits
-    await input.trigger('keydown.down')
-    ;(input.element as HTMLInputElement).setSelectionRange(0, 0)
-    const secondLeftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    const secondLeftArrowEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', altKey: true, bubbles: true, cancelable: true })
     input.element.dispatchEvent(secondLeftArrowEvent)
     await flushDropdown()
     expect(secondLeftArrowEvent.defaultPrevented).toBe(true)
@@ -2143,16 +2851,15 @@ describe('ComboBox', () => {
       props: {
         suggestions: ['Apple', 'Banana'],
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
-    await input.trigger('keydown.down')
-    await input.trigger('keydown.down')
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
 
     const active = findInBody('button[data-active="true"]')
@@ -2165,16 +2872,15 @@ describe('ComboBox', () => {
       props: {
         suggestions: ['Apple', 'Banana', 'Kiwi'],
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
 
     const buttons = findAllInBody('[data-id="sds-scroll-area"] button')
@@ -2192,7 +2898,7 @@ describe('ComboBox', () => {
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('partial query')
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('partial query')
@@ -2209,11 +2915,10 @@ describe('ComboBox', () => {
       props: {
         suggestions,
         type: 'select',
-        clickToSelect: true,
         disabled: true
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     // Dropdown should not be open when disabled
@@ -2221,17 +2926,21 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('readonly prop prevents typing but allows opening dropdown', async () => {
+  it('keeps a read-only single-select button focusable without opening the dropdown', async () => {
     const wrapper = mountComponent({
       props: {
         suggestions,
         type: 'select',
-        clickToSelect: true,
         readonly: true
       }
     })
-    const input = wrapper.find('input[type="text"]')
-    expect((input.element as HTMLInputElement).readOnly).toBe(true)
+    const input = wrapper.find('[role="combobox"]')
+    expect(input.attributes('aria-readonly')).toBe('true')
+    input.element.focus()
+    await input.trigger('click')
+    await flushDropdown()
+    expect(document.activeElement).toBe(input.element)
+    expect(dropdownInBody()).toBeNull()
     wrapper.unmount()
   })
 
@@ -2243,7 +2952,7 @@ describe('ComboBox', () => {
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.setValue('App')
     await flushDropdown()
     // Click an option
@@ -2260,7 +2969,6 @@ describe('ComboBox', () => {
   it('clicking Select All in a specific group selects only that group items', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: groupedSuggestions,
         type: 'select',
         multiple: true,
@@ -2276,7 +2984,7 @@ describe('ComboBox', () => {
       }
     })
     window.HTMLElement.prototype.scrollIntoView = () => {}
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     // Click "Fruits" tab
@@ -2299,7 +3007,6 @@ describe('ComboBox', () => {
   it('clicking Select All shows indeterminate when partially selected', async () => {
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions,
         type: 'select',
         multiple: true,
@@ -2310,14 +3017,14 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
-    // Find select-all checkbox input
-    const checkbox = findInBody('input[id$="-select-all"]') as HTMLInputElement | null
+    const checkbox = findInBody('[id$="-select-all"]')
     expect(checkbox).toBeTruthy()
-    expect(checkbox!.indeterminate).toBe(true)
-    expect(checkbox!.checked).toBe(false)
+    expect(checkbox?.getAttribute('data-indeterminate')).toBe('true')
+    expect(checkbox?.getAttribute('data-checked')).toBe('true')
+    expect(checkbox?.closest('[role="option"]')?.getAttribute('aria-selected')).toBe('false')
     wrapper.unmount()
   })
 
@@ -2328,11 +3035,10 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
@@ -2350,12 +3056,11 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         filterSuggestions: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2380,11 +3085,10 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     expect((input.element as HTMLInputElement).value).toBe('')
@@ -2393,7 +3097,7 @@ describe('ComboBox', () => {
     expect(scrollArea!.scrollTop).toBe(0)
 
     for (let index = 0; index < 25; index++) {
-      await input.trigger('keydown.down')
+      await input.trigger('keydown', { key: 'ArrowDown' })
     }
     await flushDropdown()
 
@@ -2409,18 +3113,17 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
     expect(scrollArea).toBeTruthy()
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
 
     const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
@@ -2443,19 +3146,18 @@ describe('ComboBox', () => {
         type: 'select',
         multiple: true,
         enableSelectAll: true,
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
     expect(scrollArea).toBeTruthy()
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
 
     const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
@@ -2471,11 +3173,10 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2499,13 +3200,12 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         filterSuggestions: true,
         virtualItemHeight,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2530,18 +3230,17 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('scrolls to the Add row after a virtualized option list during keyboard navigation', async () => {
+  it('keeps the Add row first and scrolls to the top when navigating back to it above virtualized options', async () => {
     const largeSuggestions = Array.from({ length: 150 }, (_, index) => `Option ${index}`)
     const wrapper = mountComponent({
       props: {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'taggable-select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = await getQueryInput(wrapper)
     await input.setValue('Dragonfruit')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2549,13 +3248,20 @@ describe('ComboBox', () => {
     Object.defineProperty(scrollArea!, 'scrollHeight', { value: (largeSuggestions.length + 1) * 36, configurable: true })
     Object.defineProperty(scrollArea!, 'clientHeight', { value: 288, configurable: true })
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await flushDropdown()
+    expect(text(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]'))).toBe('Option 149')
+    expect(scrollArea!.scrollTop).toBeGreaterThan(0)
+
+    await input.trigger('keydown', { key: 'ArrowDown' })
+    await input.trigger('keydown', { key: 'ArrowDown' })
     await flushDropdown()
 
     const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
     expect(text(activeOption)).toBe('Add "Dragonfruit"')
-    expect(scrollArea!.scrollTop).toBe(((largeSuggestions.length + 1) * 36) - 288)
+    expect(scrollArea!.scrollTop).toBe(0)
+    expect(text(findAllInBody('[data-id="sds-combo-box-dropdown"] [role="option"]')[0])).toBe('Add "Dragonfruit"')
     wrapper.unmount()
   })
 
@@ -2578,7 +3284,6 @@ describe('ComboBox', () => {
           createCategory('Facilities')
         ],
         type: 'select',
-        clickToSelect: true,
         filterSuggestions: true,
         virtualize: true,
         debounceComplete: 0,
@@ -2587,14 +3292,14 @@ describe('ComboBox', () => {
         optionGroupChildren: 'items'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
     expect(scrollArea).toBeTruthy()
 
-    await input.trigger('keydown.up')
-    await input.trigger('keydown.up')
+    await input.trigger('keydown', { key: 'ArrowUp' })
+    await input.trigger('keydown', { key: 'ArrowUp' })
     await flushDropdown()
 
     const activeOption = findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')
@@ -2604,7 +3309,7 @@ describe('ComboBox', () => {
     wrapper.unmount()
   })
 
-  it('renders virtualized grouped options after replacing a selected item with typed text', async () => {
+  it('renders virtualized grouped options while preserving the selection during a new search', async () => {
     const createCategory = (section: string) => ({
       section,
       items: Array.from({ length: 2000 }, (_, index) => ({
@@ -2624,7 +3329,6 @@ describe('ComboBox', () => {
           createCategory('Facilities')
         ],
         type: 'select',
-        clickToSelect: true,
         filterSuggestions: true,
         debounceComplete: 0,
         optionLabel: 'name',
@@ -2636,8 +3340,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
-    const inputElement = input.element as HTMLInputElement
+    const input = await getQueryInput(wrapper)
     await input.setValue('art')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2652,13 +3355,15 @@ describe('ComboBox', () => {
     artifactOption!.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushDropdown()
     expect(dropdownInBody()).toBeNull()
-    expect(inputElement.value).toBe('Artifacts item 0040')
+    expect(wrapper.get<HTMLInputElement | HTMLButtonElement>('[role="combobox"]').element.value).toBe('Artifacts item 0040')
+    expect(wrapper.find('[data-id="sds-tag"]').exists()).toBe(false)
 
-    inputElement.setSelectionRange(0, inputElement.value.length)
-    inputElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true }))
+    const reopenedSearch = await getQueryInput(wrapper)
+    await reopenedSearch.setValue('a')
     await flushDropdown()
 
-    expect(inputElement.value).toBe('a')
+    expect(reopenedSearch.element.value).toBe('a')
+    expect(wrapper.props('selected')[0]).toMatchObject({ name: 'Artifacts item 0040' })
     expect(dropdownInBody()).not.toBeNull()
     const reopenedScrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
     expect(reopenedScrollArea).toBeTruthy()
@@ -2684,7 +3389,6 @@ describe('ComboBox', () => {
       props: {
         suggestions: groupedLargeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0,
         virtualize: true,
         optionLabel: 'name',
@@ -2692,7 +3396,7 @@ describe('ComboBox', () => {
         optionGroupChildren: 'items'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 
@@ -2711,11 +3415,10 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2726,12 +3429,12 @@ describe('ComboBox', () => {
 
     const renderedOption = findInBody('[data-id="sds-scroll-area"] button') as HTMLElement | null
     expect(renderedOption).toBeTruthy()
-    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
+    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).not.toBeNull()
     renderedOption!.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }))
     await flushDropdown()
 
     expect(scrollArea!.scrollTop).toBe(1000)
-    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).toBeNull()
+    expect(findInBody('[data-id="sds-scroll-area"] button[data-active="true"]')).not.toBeNull()
     expect((input.element as HTMLInputElement).value).toBe('')
     wrapper.unmount()
   })
@@ -2742,11 +3445,10 @@ describe('ComboBox', () => {
       props: {
         suggestions: largeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
@@ -2788,21 +3490,20 @@ describe('ComboBox', () => {
         virtualize: true,
         suggestions: groupedLargeSuggestions,
         type: 'select',
-        clickToSelect: true,
         debounceComplete: 0,
         optionLabel: 'name',
         optionGroupLabel: 'section',
         optionGroupChildren: 'items'
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
     const scrollArea = findInBody('[data-id="sds-scroll-area"]') as HTMLElement | null
     expect(scrollArea).toBeTruthy()
 
     for (let index = 0; index < 25; index++) {
-      await input.trigger('keydown.down')
+      await input.trigger('keydown', { key: 'ArrowDown' })
     }
     await flushDropdown()
     expect(scrollArea!.scrollTop).toBeGreaterThan(0)
@@ -2823,7 +3524,6 @@ describe('ComboBox', () => {
     const onResult = vi.fn()
     const wrapper = mountComponent({
       props: {
-        clickToSelect: true,
         suggestions: [
           {
             section: 'Fruits',
@@ -2842,7 +3542,7 @@ describe('ComboBox', () => {
         }
       }
     })
-    const input = wrapper.find('input[type="text"]')
+    const input = wrapper.find('[role="combobox"]')
     await input.trigger('click')
     await flushDropdown()
 

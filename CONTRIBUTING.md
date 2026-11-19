@@ -21,7 +21,7 @@ Thank you for your interest in contributing to the SEI Design System (`@cmu-sei/
 
 ### Prerequisites
 
-- **Node.js** `LTS` (use [nvm](https://github.com/nvm-sh/nvm) to manage versions; the exact version is pinned in `.nvmrc`)
+- **Node.js** `^22.22.2 || ^24.15.0 || >=26.0.0` (use [nvm](https://github.com/nvm-sh/nvm) to manage versions; the recommended LTS version is pinned in `.nvmrc`)
 - **npm** (bundled with Node.js)
 - **Git**
 
@@ -97,6 +97,10 @@ All source files use TypeScript with `strict: true`. Key rules (see `.github/ins
 - Add JSDoc comments on all public/exported APIs with `@param` and `@returns`.
 - Avoid type assertions (`as` or `!`).
 
+The exact `vue-tsc` version in `package.json` is intentional. Version `3.3.14` incorrectly infers refs and template-local scopes in valid examples. Keep the pin until a replacement passes `npm run typecheck` against the full project.
+
+TypeScript remains on version 6 because `typescript-eslint` 8.73 supports TypeScript versions below 6.1, not TypeScript 7.
+
 ### Vue Components
 
 - All components use `<script setup lang="ts">` with the Composition API.
@@ -119,6 +123,8 @@ Tests are written with [Vitest](https://vitest.dev/) and [@vue/test-utils](https
 - Accessibility checks using [`axe-core`](https://github.com/dequelabs/axe-core).
 
 Tests live alongside the component in `ComponentName.spec.ts`. Refer to `.github/skills/unit-testing-guidelines/SKILL.md` for patterns and examples.
+
+Keep jsdom on version 30 until its CSS transform serialization preserves large pixel values. Version 31.0.1 rounds `translateY(9999712px)` to `translateY(9999710px)`, breaking the capped virtual-scrolling visibility checks.
 
 Before opening a pull request, run the full verification pipeline to confirm everything passes end-to-end:
 

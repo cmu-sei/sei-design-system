@@ -138,6 +138,81 @@
         Combo Box
       </h2>
       <form
+        data-id="sds-combo-box-empty-search-example"
+        class="space-y-3"
+        @submit.prevent
+      >
+        <SdsFormGroup
+          id="comboBoxEmptySearch-group"
+          label-for="comboBoxEmptySearch"
+          label="Optional people search"
+          helper-text="Type Jason and press Enter, or choose a suggestion to search. Clear with X and press Enter again to show all people."
+        >
+          <SdsComboBox
+            id="comboBoxEmptySearch"
+            v-model="comboBoxEmptySearch.modelValue"
+            type="text"
+            placeholder="Search"
+            :required="false"
+            :suggestions="emptySearchPeople"
+            filter-suggestions
+            @enter="comboBoxEmptySearch.onEnter"
+            @result="comboBoxEmptySearch.onEnter(comboBoxEmptySearch.modelValue)"
+          />
+        </SdsFormGroup>
+        <p
+          data-id="sds-combo-box-empty-search-status"
+          role="status"
+          class="text-sm"
+        >
+          Searches submitted: {{ comboBoxEmptySearch.searchCount }}.
+          Last submitted query: <code>{{ JSON.stringify(comboBoxEmptySearch.submittedQuery) }}</code>.
+          Showing {{ emptySearchResults.length }} of {{ emptySearchPeople.length }} people.
+        </p>
+        <ul class="list-disc pl-5">
+          <li
+            v-for="person in emptySearchResults"
+            :key="person"
+          >
+            {{ person }}
+          </li>
+        </ul>
+        <p v-if="!emptySearchResults.length">
+          No people match this search.
+        </p>
+      </form>
+      <div
+        data-id="sds-combo-box-cleared-suggestions-example"
+        class="space-y-3"
+      >
+        <SdsFormGroup
+          id="comboBoxClearedSuggestions-group"
+          label-for="comboBoxClearedSuggestions"
+          label="Clear suggestions after selection"
+          helper-text="Choose Apple to clear the suggestions and close the dropdown. Type Man to load Mango, or Missing to see no-match feedback."
+        >
+          <SdsComboBox
+            id="comboBoxClearedSuggestions"
+            v-model="comboBoxClearedSuggestions.modelValue"
+            v-model:selected="comboBoxClearedSuggestions.selected"
+            type="select"
+            multiple
+            placeholder="Search fruit"
+            :suggestions="comboBoxClearedSuggestions.suggestions"
+            :debounce-complete="0"
+            @complete="comboBoxClearedSuggestions.onComplete"
+            @result="comboBoxClearedSuggestions.onResult"
+          />
+        </SdsFormGroup>
+        <p
+          role="status"
+          class="text-sm"
+        >
+          Suggestions remaining: {{ comboBoxClearedSuggestions.suggestions.length }}.
+          Selected values: {{ comboBoxClearedSuggestions.selected.join(', ') || '(none)' }}.
+        </p>
+      </div>
+      <form
         class="mb-4"
         @submit.prevent="handleSubmit"
       >
@@ -166,9 +241,11 @@
             @enter="comboBox1.onEnter"
           />
           <SdsFormGroup
-            for="comboBox2_1"
-            label="size='sm' type='select' :click-to-select='true' required"
+            id="comboBox2_1-group"
+            label-for="comboBox2_1"
+            label="size='sm' type='select' required"
             helper-text="Select items to add to your grocery list"
+            required
           >
             <SdsComboBox
               id="comboBox2_1"
@@ -180,7 +257,6 @@
               size="sm"
               type="select"
               filter-suggestions
-              click-to-select
               @complete="comboBox2_1.onComplete"
               @result="comboBox2_1.onResult"
               @enter="comboBox2_1.onEnter"
@@ -205,10 +281,11 @@
             @result="comboBox2_2.onResult"
             @enter="comboBox2_2.onEnter"
           />
-          <code class="text-xs">size="sm" type="taggable-select" :click-to-select="true"</code>
+          <code class="text-xs">size="sm" type="taggable-select"</code>
           <SdsComboBox
             v-model="comboBox3.modelValue"
             v-model:selected="comboBox3.selected"
+            aria-label="Select or add a fruit or vegetable"
             placeholder="Search"
             :disabled="false"
             :autofocus="false"
@@ -217,7 +294,6 @@
             size="sm"
             type="taggable-select"
             filter-suggestions
-            click-to-select
             option-label="name"
             option-group-label="section"
             option-group-children="items"
@@ -354,16 +430,16 @@
             placeholder="Search..."
             @enter="comboBox7.onEnter"
           />
-          <code class="text-xs">size="lg" type="select" filter-suggestions :click-to-select="true"</code>
+          <code class="text-xs">size="lg" type="select" filter-suggestions</code>
           <SdsComboBox
             v-model="comboBox8.modelValue"
             v-model:selected="comboBox8.selected"
+            aria-label="Select a fruit or vegetable"
             size="lg"
             type="select"
             placeholder="Search..."
             :suggestions="comboBox8.suggestions"
             filter-suggestions
-            click-to-select
             option-label="name"
             option-group-label="section"
             option-group-children="items"
@@ -375,12 +451,12 @@
           <SdsComboBox
             v-model="comboBox9.modelValue"
             v-model:selected="comboBox9.selected"
+            aria-label="Select an item from the categorized data"
             type="select"
             placeholder="Search very large categorized data..."
             :suggestions="comboBox9.suggestions"
             :debounce-complete="0"
             :virtualize-threshold="100"
-            click-to-select
             filter-suggestions
             option-label="name"
             option-group-label="section"
@@ -638,6 +714,36 @@ const radioGroup = reactive({
   ]
 })
 
+const emptySearchPeople = ['Jason Chen', 'Morgan Lee', 'Sam Patel']
+const comboBoxEmptySearch = reactive({
+  modelValue: '',
+  submittedQuery: '',
+  searchCount: 0,
+  onEnter(query: string): void {
+    comboBoxEmptySearch.submittedQuery = query
+    comboBoxEmptySearch.searchCount++
+  }
+})
+const emptySearchResults = computed(() => {
+  const query = comboBoxEmptySearch.submittedQuery.trim().toLowerCase()
+  return emptySearchPeople.filter(person => person.toLowerCase().includes(query))
+})
+
+const clearedSuggestionFruit = ['Apple', 'Banana', 'Mango']
+const comboBoxClearedSuggestions = reactive({
+  modelValue: '',
+  selected: ref<ComboBoxSuggestion[]>([]),
+  suggestions: [...clearedSuggestionFruit],
+  onComplete(query: string) {
+    comboBoxClearedSuggestions.suggestions = clearedSuggestionFruit.filter(fruit =>
+      fruit.toLowerCase().includes(query.trim().toLowerCase())
+    )
+  },
+  onResult() {
+    comboBoxClearedSuggestions.suggestions = []
+  }
+})
+
 const comboBox0 = reactive({
   modelValue: '',
   onEnter(value: string) {
@@ -668,17 +774,20 @@ const wait = (ms: number) => {
 
 let comboBox1RequestId = 0
 
+watch(() => comboBox1.modelValue, query => {
+  comboBox1RequestId++
+  comboBox1.pending = Boolean(query.trim())
+  if (comboBox1.pending) comboBox1.suggestions = []
+}, { flush: 'sync' })
+
+onScopeDispose(() => { comboBox1RequestId++ })
+
 const mockApiRequest = async (query: string) => {
-  const requestId = ++comboBox1RequestId
-  comboBox1.suggestions = []
-  if (query === '') {
-    comboBox1.pending = false
-    return
-  }
-  comboBox1.pending = true
+  const requestId = comboBox1RequestId
+  if (!query.trim()) return
   console.log("Waiting 1 seconds...");
   await wait(1000);
-  if (requestId !== comboBox1RequestId) return
+  if (requestId !== comboBox1RequestId || query !== comboBox1.modelValue) return
   console.log("1 seconds passed... now return mock API data");
   comboBox1.suggestions = [
     { label: 'Apple', test: 'cool', index: 'cool2' },

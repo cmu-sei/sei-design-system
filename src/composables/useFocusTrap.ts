@@ -1,4 +1,10 @@
-import { type Ref, computed, unref, type ComputedRef } from 'vue'
+import { type Ref, computed, unref, type ComputedRef, type InjectionKey, getCurrentInstance, provide } from 'vue'
+
+/** Allows teleported controls to keep keyboard navigation inside their parent focus trap. */
+export const focusTrapScopeKey: InjectionKey<{
+  container: Ref<HTMLElement | null | undefined>;
+  enabled: () => boolean;
+}> = Symbol('sds-focus-trap-scope')
 
 /**
  * Standard selector for focusable elements within a container.
@@ -110,6 +116,13 @@ export function useFocusTrap(
     handleEscape = false,
     onEscape
   } = options
+
+  if (getCurrentInstance()) {
+    provide(focusTrapScopeKey, {
+      container: containerRef,
+      enabled: () => typeof enabled === 'function' ? enabled() : unref(enabled)
+    })
+  }
 
   /**
    * Computed array of all focusable elements within the container.
