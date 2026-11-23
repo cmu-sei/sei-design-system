@@ -171,6 +171,53 @@ describe('BaseChart', () => {
     svgRect.mockRestore()
   })
 
+  it('fits vertical padding to rendered axis labels rather than fixed margins', async () => {
+    let xTickHeight = 15
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 32)
+      if (this.classList.contains('sds-axis-label')) return new DOMRect(0, 0, 50, 18)
+      return new DOMRect()
+    })
+    vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      const svg = this.tagName.toLowerCase() === 'svg' ? this : this.ownerSVGElement
+      const padding = Number.parseFloat(svg?.parentElement?.style.paddingTop || '0')
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, padding, 480, 32)
+      if (this.closest('[data-orientation="x"]')) return new DOMRect(20, padding + 42, 40, xTickHeight)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(20, padding - 6, 40, 16)
+      return new DOMRect()
+    })
+    const wrapper = mount(BaseChart, {
+      props: {
+        height: 32,
+        margin: { top: 0, right: 20, bottom: 0, left: 40 },
+        xAxis: axisBottom(scaleLinear()),
+        yAxis: axisLeft(scaleLinear()),
+        fitAxisLabels: true,
+      },
+      global,
+    })
+    await nextTick()
+    await nextTick()
+
+    const container = wrapper.find('svg').element.parentElement
+    expect(container?.style.paddingTop).toBe('6px')
+    expect(container?.style.paddingBottom).toBe('25px')
+    expect(wrapper.find('svg').classes()).toContain('overflow-visible')
+
+    xTickHeight = 34
+    resize(480)
+    await nextTick()
+    await nextTick()
+    expect(container?.style.paddingBottom).toBe('44px')
+
+    await wrapper.setProps({ xAxisLabel: 'Hour', yAxisLabel: 'Day' })
+    await nextTick()
+    await nextTick()
+    expect(container?.style.paddingBottom).toBe('70px')
+    expect(wrapper.find('.absolute.flex.items-center').attributes('style')).toContain('top: 6px')
+    wrapper.unmount()
+  })
+
   it('reserves left padding when the y-axis title would overflow the container', async () => {
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
       if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 240)

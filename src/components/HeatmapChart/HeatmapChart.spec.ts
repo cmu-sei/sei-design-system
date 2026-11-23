@@ -1,14 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import type { ChartLegendPosition } from '../ChartLegend/ChartLegend.vue'
 import HeatmapChart from './HeatmapChart.vue'
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'yAxisLabel', 'xAxis', 'yAxis', 'width', 'height', 'minPlotWidth'],
+  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'yAxisLabel', 'xAxis', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitAxisLabels'],
   emits: ['update:hoveredIndex'],
   template: `
     <div>
-      <svg><slot :inner-width="typeof width === 'number' ? Math.max(width, minPlotWidth) : 400" :inner-height="height - 64" /></svg>
+      <svg><slot :inner-width="typeof width === 'number' ? Math.max(width, minPlotWidth) : 400" :inner-height="height - margin.top - margin.bottom" /></svg>
       <slot
         name="legend"
         :items="legend.items"
@@ -52,7 +53,6 @@ describe('HeatmapChart', () => {
     const wrapper = mount(HeatmapChart, {
       props: {
         width: 80,
-        height: 100,
         data: [
           { x: 'Monday', y: 'Morning', value: 0 },
           { x: 'Tuesday', y: 'Morning', value: 1 },
@@ -80,11 +80,10 @@ describe('HeatmapChart', () => {
     }
   })
 
-  it('allows horizontal scrolling and grows vertically for a large grid', async () => {
+  it('sizes the plot to its data and margins rather than a fixed height', async () => {
     const wrapper = mount(HeatmapChart, {
       props: {
         width: 100,
-        height: 100,
         margin: { left: 20, right: 10, top: 10, bottom: 20 },
         data: Array.from({ length: 10 }, (_, i) => ({ x: `x${i}`, y: `y${i}`, value: i })),
       },
@@ -100,8 +99,31 @@ describe('HeatmapChart', () => {
     await wrapper.setProps({ data: [{ x: 'only', y: 'only', value: 1 }] })
     expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
       minPlotWidth: 32,
-      height: 100,
+      height: 62,
     })
+
+    await wrapper.setProps({ data: [] })
+    expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
+      minPlotWidth: 0,
+      height: 30,
+    })
+  })
+
+  it('fits axis labels by default while preserving explicit margins', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }] },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const chart = wrapper.findComponent(BaseChartStub)
+    expect(chart.props()).toMatchObject({
+      height: 32,
+      margin: { top: 0, bottom: 0 },
+      fitAxisLabels: true,
+    })
+
+    const margin = { top: 10, bottom: 20, left: 30, right: 40 }
+    await wrapper.setProps({ margin })
+    expect(chart.props()).toMatchObject({ height: 62, margin, fitAxisLabels: false })
   })
 
   it('reserves enough space for a large grid in the real chart', async () => {
@@ -113,11 +135,11 @@ describe('HeatmapChart', () => {
     const wrapper = mount(HeatmapChart, {
       props: {
         width: 100,
-        height: 100,
         margin: { left: 20, right: 10, top: 10, bottom: 20 },
         data: Array.from({ length: 10 }, (_, i) => ({ x: `x${i}`, y: `y${i}`, value: i })),
       },
       global: { stubs: { SdsChartAxis: true } },
+      attrs: { height: 1000 },
     })
     await wrapper.vm.$nextTick()
 
@@ -127,6 +149,19 @@ describe('HeatmapChart', () => {
     const cells = wrapper.findAll('rect')
     expect(Number(cells[9]?.attributes('x')) + 32).toBeCloseTo(356)
     expect(Number(cells[9]?.attributes('y')) + 32).toBeCloseTo(356)
+    const legend = wrapper.find('.sds-heatmap-legend').element.parentElement
+    expect(legend?.parentElement?.getAttribute('data-id')).toBe('sds-base-chart')
+    expect(legend?.parentElement?.classList.contains('gap-y-4')).toBe(true)
+    expect(legend?.classList.contains('order-first')).toBe(true)
+    await wrapper.setProps({ legendPosition: 'bottom-right', xAxisLabel: 'Hour' })
+    expect(legend?.classList.contains('order-first')).toBe(false)
+    expect(legend?.parentElement?.classList.contains('gap-y-4')).toBe(true)
+    await wrapper.setProps({ showLegend: false })
+    expect(wrapper.find('.sds-heatmap-legend').exists()).toBe(false)
+    await wrapper.setProps({ data: [{ x: 'only', y: 'only', value: 1 }] })
+    expect(svg.attributes('height')).toBe('62')
+    expect(Number(wrapper.find('rect').attributes('x'))).toBeCloseTo(0)
+    expect(Number(wrapper.find('rect').attributes('y'))).toBeCloseTo(0)
     wrapper.unmount()
   })
 
@@ -146,6 +181,66 @@ describe('HeatmapChart', () => {
     })
   })
 
+  it('positions the legend above and centered by default and supports all chart legend positions', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }] },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const legend = wrapper.find('.sds-heatmap-legend').element.parentElement
+    expect(legend?.classList.contains('order-first')).toBe(true)
+    expect(legend?.classList.contains('justify-center')).toBe(true)
+    expect(wrapper.findComponent(BaseChartStub).props('legend').position).toBe('top-center')
+
+    const positions: [ChartLegendPosition, string, boolean][] = [
+      ['top-left', 'justify-start', true],
+      ['top-center', 'justify-center', true],
+      ['top-right', 'justify-end', true],
+      ['bottom-left', 'justify-start', false],
+      ['bottom-center', 'justify-center', false],
+      ['bottom-right', 'justify-end', false],
+    ]
+    for (const [position, alignment, onTop] of positions) {
+      await wrapper.setProps({ legendPosition: position })
+      expect(legend?.classList.contains(alignment)).toBe(true)
+      expect(legend?.classList.contains('order-first')).toBe(onTop)
+      expect(wrapper.findComponent(BaseChartStub).props('legend').position).toBe(position)
+    }
+  })
+
+  it('positions a custom legend and preserves its hover callback', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }], legendPosition: 'bottom-right' },
+      slots: {
+        legend: '<template #legend="{ updateHoveredIndex }"><button class="custom-legend" @mouseenter="updateHoveredIndex(1)">Custom</button></template>',
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+
+    const legend = wrapper.find('.custom-legend')
+    expect(legend.element.parentElement?.classList.contains('justify-end')).toBe(true)
+    expect(legend.element.parentElement?.classList.contains('order-first')).toBe(false)
+    await legend.trigger('mouseenter')
+    expect(wrapper.findComponent(BaseChartStub).props('hoveredIndex')).toBe(1)
+
+    await wrapper.setProps({ legendPosition: 'top-center' })
+    expect(legend.element.parentElement?.classList.contains('order-first')).toBe(true)
+    expect(legend.element.parentElement?.classList.contains('justify-center')).toBe(true)
+  })
+
+  it('supports horizontal and vertical legend layouts', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }] },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const legend = wrapper.find('.sds-heatmap-legend')
+    expect(legend.classes()).toContain('flex-row')
+    expect(wrapper.findComponent(BaseChartStub).props('legend').orientation).toBe('horizontal')
+
+    await wrapper.setProps({ legendOrientation: 'vertical' })
+    expect(legend.classes()).toContain('flex-col')
+    expect(wrapper.findComponent(BaseChartStub).props('legend').orientation).toBe('vertical')
+  })
+
   it('renders borderless square color bins that respond to hover', async () => {
     const wrapper = mount(HeatmapChart, {
       props: { data: [
@@ -156,7 +251,7 @@ describe('HeatmapChart', () => {
     })
 
     const bin = wrapper.find('.sds-heatmap-legend button')
-    expect(bin.classes()).toEqual(expect.arrayContaining(['size-[16px]', 'shrink-0', 'rounded-[2px]', 'border-0']))
+    expect(bin.classes()).toEqual(expect.arrayContaining(['size-4', 'shrink-0', 'rounded-[2px]', 'border-0']))
     expect(bin.attributes('style')).toContain('background-color:')
     expect(bin.find('span').exists()).toBe(false)
 

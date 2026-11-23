@@ -126,7 +126,9 @@ export function useHeatmapChart(
       ? scaleBand<string>()
         .domain(xDomain.value)
         .range([0, heatmapGridSize(xDomain.value.length, layoutOptions.fixedCellSize, layoutOptions.cellGap ?? 0)])
-        .paddingInner((layoutOptions.cellGap ?? 0) / (layoutOptions.fixedCellSize + (layoutOptions.cellGap ?? 0)))
+        .paddingInner(xDomain.value.length > 1
+          ? (layoutOptions.cellGap ?? 0) / (layoutOptions.fixedCellSize + (layoutOptions.cellGap ?? 0))
+          : 0)
       : scaleBand<string>().domain(xDomain.value).range([0, resolvedPlotSize.value.width]).padding(BAND_PADDING),
   )
 
@@ -139,7 +141,7 @@ export function useHeatmapChart(
     return scaleBand<string>()
       .domain(yDomain.value)
       .range([innerHeight.value - gridHeight, innerHeight.value])
-      .paddingInner(gap / (layoutOptions.fixedCellSize + gap))
+      .paddingInner(yDomain.value.length > 1 ? gap / (layoutOptions.fixedCellSize + gap) : 0)
   })
 
   const valueExtent = computed<[number, number]>(() => {

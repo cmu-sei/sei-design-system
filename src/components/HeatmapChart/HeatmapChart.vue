@@ -11,11 +11,12 @@
       :height="resolvedHeight"
       :width="props.width"
       :min-plot-width="gridWidth"
+      :fit-axis-labels="!props.margin"
       :margin="resolvedMargin"
       :legend="{
         items: legendItems,
-        orientation: 'horizontal',
-        position: 'bottom-center',
+        orientation: props.legendOrientation,
+        position: props.legendPosition,
       }"
       :show-legend="props.showLegend"
       :title="props.title"
@@ -68,31 +69,38 @@
         </slot>
       </template>
       <template #legend="{ items, hoveredIndex: legendHoveredIndex, updateHoveredIndex }">
-        <slot
-          v-if="$slots.legend"
-          name="legend"
-          :items="items"
-          :hovered-index="legendHoveredIndex"
-          :update-hovered-index="updateHoveredIndex"
-        />
-        <div 
-          v-else 
-          class="sds-heatmap-legend flex min-w-max items-center justify-center gap-1 text-xs select-none"
+        <ChartLegend
+          class="min-w-max"
+          :orientation="props.legendOrientation"
+          :position="props.legendPosition"
         >
-          <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">Less</span>
-          <button
-            v-for="(item, i) in items"
-            :key="`heatmap-legend-bin-${i}`"
-            type="button"
-            class="size-4 shrink-0 rounded-[2px] border-0 p-0 transition-opacity"
-            :class="legendHoveredIndex !== null && legendHoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
-            :style="{ backgroundColor: item.color }"
-            :aria-label="`Range ${item.label}`"
-            @mouseenter="updateHoveredIndex(i)"
-            @mouseleave="updateHoveredIndex(null)"
+          <slot
+            v-if="$slots.legend"
+            name="legend"
+            :items="items"
+            :hovered-index="legendHoveredIndex"
+            :update-hovered-index="updateHoveredIndex"
           />
-          <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">More</span>
-        </div>
+          <div
+            v-else
+            class="sds-heatmap-legend flex items-center gap-1 text-xs select-none"
+            :class="props.legendOrientation === 'vertical' ? 'flex-col' : 'flex-row'"
+          >
+            <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">Less</span>
+            <button
+              v-for="(item, i) in items"
+              :key="`heatmap-legend-bin-${i}`"
+              type="button"
+              class="size-4 shrink-0 rounded-[2px] border-0 p-0 transition-opacity"
+              :class="legendHoveredIndex !== null && legendHoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
+              :style="{ backgroundColor: item.color }"
+              :aria-label="`Range ${item.label}`"
+              @mouseenter="updateHoveredIndex(i)"
+              @mouseleave="updateHoveredIndex(null)"
+            />
+            <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">More</span>
+          </div>
+        </ChartLegend>
       </template>
     </BaseChart>
   </div>
@@ -101,8 +109,10 @@
 <script setup lang="ts">
 import type { AxisDomain } from '@/lib/d3'
 import type { ChartMargin } from '@/helpers/charts/constants'
+import type { ChartLegendOrientation, ChartLegendPosition } from '../ChartLegend/ChartLegend.vue'
 import type { HeatmapCell, HeatmapColors, HeatmapRect, HeatmapTooltipData } from '@/composables/useHeatmapChart'
 import BaseChart from '../BaseChart'
+import ChartLegend from '../ChartLegend'
 import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
 import { heatmapGridSize, useHeatmapChart } from '@/composables/useHeatmapChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
@@ -112,7 +122,6 @@ import { hasMultipleColors } from '@/helpers/charts/hasMultipleColors'
 
 interface HeatmapChartProps {
   data?: HeatmapCell[]
-  height?: number
   width?: string | number
   margin?: ChartMargin
   title?: string
@@ -122,6 +131,10 @@ interface HeatmapChartProps {
   yAxisLabel?: string
   showTooltip?: boolean
   showLegend?: boolean
+  /** Legend items layout direction. @default 'horizontal' */
+  legendOrientation?: ChartLegendOrientation
+  /** Position of the legend relative to the chart. @default 'top-center' */
+  legendPosition?: ChartLegendPosition
   colors?: HeatmapColors
   xTickValues?: string[]
   xTickFormatter?: (value: AxisDomain) => string
@@ -137,7 +150,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<HeatmapChartProps>(), {
   data: () => [],
-  height: 360,
   width: '100%',
   margin: undefined,
   title: undefined,
@@ -145,6 +157,8 @@ const props = withDefaults(defineProps<HeatmapChartProps>(), {
   yAxisLabel: undefined,
   showTooltip: true,
   showLegend: true,
+  legendOrientation: 'horizontal',
+  legendPosition: 'top-center',
   colors: undefined,
   xTickValues: undefined,
   xTickFormatter: undefined,
@@ -160,6 +174,7 @@ const forwardedAttrs = computed<Record<string, unknown>>(() => {
   const rest = { ...attrs }
   delete rest.class
   delete rest.style
+  delete rest.height
   return rest
 })
 
@@ -171,7 +186,8 @@ const resolvedMargin = computed<ChartMargin>(() => {
   return {
     ...DEFAULT_CHART_MARGIN,
     left: 72,
-    bottom: 44
+    top: 0,
+    bottom: 0
   }
 })
 
@@ -180,7 +196,7 @@ const CELL_GAP = 4
 const gridWidth = computed(() => heatmapGridSize(new Set(props.data.map((d) => d.x)).size, CELL_SIZE, CELL_GAP))
 const gridHeight = computed(() => heatmapGridSize(new Set(props.data.map((d) => d.y)).size, CELL_SIZE, CELL_GAP))
 const resolvedHeight = computed(() =>
-  Math.max(props.height, gridHeight.value + resolvedMargin.value.top + resolvedMargin.value.bottom),
+  gridHeight.value + resolvedMargin.value.top + resolvedMargin.value.bottom,
 )
 
 const dataRef = computed(() => props.data)

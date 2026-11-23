@@ -21,4 +21,15 @@ describe('ChartLegend', () => {
 
     expect(wrapper.find('li > span[aria-hidden="true"]').exists()).toBe(false)
   })
+
+  it('positions custom legend content using the same alignment classes', () => {
+    const wrapper = mount(ChartLegend, {
+      props: { position: 'top-center', items: [{ label: 'Default' }] },
+      slots: { default: '<span>Custom</span>' },
+    })
+
+    expect(wrapper.classes()).toEqual(expect.arrayContaining(['flex', 'justify-center', 'order-first']))
+    expect(wrapper.text()).toBe('Custom')
+    expect(wrapper.find('ul').exists()).toBe(false)
+  })
 })

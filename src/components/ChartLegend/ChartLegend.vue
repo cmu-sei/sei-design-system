@@ -3,34 +3,36 @@
     class="sds-legend" 
     :class="getLegendContainerClasses(LEGEND_ALIGNMENT_CLASSES, props.position)"
   >
-    <ul 
-      :class="[isVertical ? 'flex flex-col gap-x-0 gap-y-2' : 'flex flex-wrap gap-x-6 gap-y-2']" 
-      role="list"
-    >
-      <li
-        v-for="(item, i) in items"
-        :key="item.label"
-        class="flex items-center gap-2 transition-opacity duration-150 cursor-default"
-        :class="[
-          hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100',
-          hoveredIndex !== null ? 'cursor-pointer' : 'cursor-default',
-        ]"
-        @mouseenter="emit('update:hoveredIndex', i)"
-        @mouseleave="emit('update:hoveredIndex', null)"
+    <slot>
+      <ul
+        :class="[isVertical ? 'flex flex-col gap-x-0 gap-y-2' : 'flex flex-wrap gap-x-6 gap-y-2']"
+        role="list"
       >
-        <span
-          v-if="item.color"
-          class="inline-block h-3.5 w-3.5 shrink-0 rounded-xs"
-          :style="{ backgroundColor: item.color }"
-          aria-hidden="true"
-        />
-        <span class="font-normal text-sm text-gray-600 dark:text-gray-400">{{ item.label }}</span>
-        <span 
-          v-if="item.value !== undefined" 
-          class="font-normaltext-sm text-gray-600 dark:text-gray-400 tabular-nums"
-        >{{ item.value }}</span>
-      </li>
-    </ul>
+        <li
+          v-for="(item, i) in items"
+          :key="item.label"
+          class="flex items-center gap-2 transition-opacity duration-150 cursor-default"
+          :class="[
+            hoveredIndex !== null && hoveredIndex !== i ? 'opacity-40' : 'opacity-100',
+            hoveredIndex !== null ? 'cursor-pointer' : 'cursor-default',
+          ]"
+          @mouseenter="emit('update:hoveredIndex', i)"
+          @mouseleave="emit('update:hoveredIndex', null)"
+        >
+          <span
+            v-if="item.color"
+            class="inline-block h-3.5 w-3.5 shrink-0 rounded-xs"
+            :style="{ backgroundColor: item.color }"
+            aria-hidden="true"
+          />
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">{{ item.label }}</span>
+          <span
+            v-if="item.value !== undefined"
+            class="font-normaltext-sm text-gray-600 dark:text-gray-400 tabular-nums"
+          >{{ item.value }}</span>
+        </li>
+      </ul>
+    </slot>
   </div>
 </template>
 

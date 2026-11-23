@@ -6,12 +6,22 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A heatmap chart visualizes values across two discrete dimensions using color intensity. Optional x- and y-axis labels help clarify the dimensions when comparing distribution patterns by category and time.',
+        component: 'A heatmap chart visualizes values across two discrete dimensions using color intensity. Its height grows with the number of rows, and optional x- and y-axis labels clarify the dimensions.',
       },
     },
   },
   component: SdsHeatmapChart,
   argTypes: {
+    legendOrientation: {
+      options: ['horizontal', 'vertical'],
+      control: { type: 'select' },
+      description: 'Legend layout direction.',
+    },
+    legendPosition: {
+      options: ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'],
+      control: { type: 'select' },
+      description: 'Legend position relative to the chart. Defaults to top-center.',
+    },
     xAxisLabel: {
       control: { type: 'text' },
       description: 'Optional horizontal label below the x-axis.',
@@ -180,6 +190,12 @@ Default.parameters = {
       story: 'Axis titles are optional. This example labels both dimensions; omit either prop to hide that label.',
     },
   },
+};
+
+export const BottomRightLegend = Template.bind({});
+BottomRightLegend.args = {
+  ...Default.args,
+  legendPosition: 'bottom-right',
 };
 
 export const WithoutAxisLabels = Template.bind({});

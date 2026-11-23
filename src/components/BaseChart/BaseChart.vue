@@ -10,7 +10,12 @@
       <div
         ref="containerRef"
         class="relative w-full min-w-0"
-        :style="{ width: props.width, minWidth: minContainerWidth, paddingBottom: `${axisLabelPadding}px` }"
+        :style="{
+          width: props.width,
+          minWidth: minContainerWidth,
+          paddingTop: props.fitAxisLabels ? `${axisTopPadding}px` : undefined,
+          paddingBottom: `${axisLabelPadding}px`,
+        }"
       >
         <svg
           width="100%"
@@ -18,6 +23,7 @@
           :aria-label="props.title"
           role="img"
           class="block"
+          :class="{ 'overflow-visible': props.fitAxisLabels }"
           v-bind="$attrs"
         >
           <title v-if="props.title">{{ props.title }}</title>
@@ -144,6 +150,8 @@ interface BaseChartProps {
   aspectRatio?: number
   /** Minimum width of the inner plot area in pixels. */
   minPlotWidth?: number
+  /** Reserve only the vertical space needed by rendered axis labels. */
+  fitAxisLabels?: boolean
   /** Tooltip visibility — when provided the ChartTooltip is rendered by BaseChart. */
   tooltipVisible?: boolean
   tooltipX?: number
@@ -177,6 +185,7 @@ const props = withDefaults(defineProps<BaseChartProps>(), {
   hoveredIndex: null,
   aspectRatio: undefined,
   minPlotWidth: 0,
+  fitAxisLabels: false,
   tooltipVisible: undefined,
   tooltipX: 0,
   tooltipY: 0,
@@ -197,6 +206,7 @@ const xAxisLabelRef = ref<HTMLDivElement | null>(null)
 const yAxisLabelRef = ref<HTMLSpanElement | null>(null)
 const yAxisLabelContainerRef = ref<HTMLDivElement | null>(null)
 const axisLabelPadding = ref(0)
+const axisTopPadding = ref(0)
 const yAxisLabelPadding = ref(0)
 const xAxisLabelStyle = ref({ left: '50%', top: '100%', transform: 'translateX(-50%)' })
 const yAxisLabelStyle = ref({ left: '0px', top: '0px', width: '0px', height: '0px' })
@@ -221,6 +231,8 @@ function updateAxisLabelLayout() {
 
   const containerRect = container.getBoundingClientRect()
   const svgRect = svg.getBoundingClientRect()
+  const svgTop = props.fitAxisLabels ? svgRect.top - containerRect.top : 0
+  const svgBottom = svgTop + svgRect.height
   const xTickTexts = Array.from(svg.querySelectorAll<SVGTextElement>(
     '.sds-chart-axis[data-orientation="x"] .tick text',
   ))
@@ -239,12 +251,13 @@ function updateAxisLabelLayout() {
       ? Math.min(left, rect.left - containerRect.left)
       : left
   }, Infinity)
+  let bottomPadding = 0
 
   if (props.xAxisLabel && xAxisLabelRef.value) {
     const labelHeight = xAxisLabelRef.value.getBoundingClientRect().height || 24
     const top = Number.isFinite(xTickBottom)
       ? xTickBottom + 8
-      : svgRect.height - props.margin.bottom + 22
+      : svgBottom - props.margin.bottom + 22
     const plotCenter = props.margin.left + (svgRect.width - props.margin.left - props.margin.right) / 2
     const style = {
       left: `${plotCenter}px`,
@@ -258,9 +271,7 @@ function updateAxisLabelLayout() {
     ) {
       xAxisLabelStyle.value = style
     }
-    axisLabelPadding.value = Math.max(0, Math.ceil(top + labelHeight - svgRect.height))
-  } else {
-    axisLabelPadding.value = 0
+    bottomPadding = Math.max(0, Math.ceil(top + labelHeight - svgBottom))
   }
 
   if (props.yAxisLabel && yAxisLabelRef.value) {
@@ -271,7 +282,7 @@ function updateAxisLabelLayout() {
       : props.margin.left - (props.margin.left - 10) - 8 - labelWidth
     const style = {
       left: `${left}px`,
-      top: `${props.margin.top}px`,
+      top: `${svgTop + props.margin.top}px`,
       width: `${labelWidth}px`,
       height: `${innerHeight.value}px`,
     }
@@ -288,13 +299,67 @@ function updateAxisLabelLayout() {
   } else {
     yAxisLabelPadding.value = 0
   }
+
+  if (props.fitAxisLabels) {
+    const axisRects = [...xTickTexts, ...yTickTexts, ...svg.querySelectorAll('.sds-chart-axis')]
+      .map((element) => element.getBoundingClientRect())
+      .filter((rect) => rect.width > 0 && rect.height > 0)
+    let top = axisRects.reduce((minimum, rect) => Math.min(minimum, rect.top), svgRect.top)
+    let bottom = axisRects.reduce((maximum, rect) => Math.max(maximum, rect.bottom), svgRect.bottom)
+    if (props.yAxisLabel && yAxisLabelRef.value) {
+      const labelHeight = yAxisLabelRef.value.getBoundingClientRect().height
+      const labelTop = svgRect.top + props.margin.top + (innerHeight.value - labelHeight) / 2
+      top = Math.min(top, labelTop)
+      bottom = Math.max(bottom, labelTop + labelHeight)
+    }
+    axisTopPadding.value = Math.max(0, Math.ceil(svgRect.top - top))
+    bottomPadding = Math.max(bottomPadding, Math.ceil(bottom - svgRect.bottom))
+  } else {
+    axisTopPadding.value = 0
+  }
+  axisLabelPadding.value = bottomPadding
+}
+
+let axisResizeObserver: ResizeObserver | undefined
+let observedAxisElements = new WeakSet<Element>()
+
+function observeAxisLabels() {
+  if (!props.fitAxisLabels) {
+    axisResizeObserver?.disconnect()
+    axisResizeObserver = undefined
+    observedAxisElements = new WeakSet()
+    return
+  }
+  const container = containerRef.value
+  if (!container) return
+  axisResizeObserver ??= new ResizeObserver(() => void nextTick(updateAxisLabelLayout))
+  const elements = [
+    ...container.querySelectorAll('.sds-chart-axis'),
+    xAxisLabelRef.value,
+    yAxisLabelRef.value,
+  ]
+  for (const element of elements) {
+    if (element && !observedAxisElements.has(element)) {
+      axisResizeObserver.observe(element)
+      observedAxisElements.add(element)
+    }
+  }
+}
+
+function updateLayout() {
+  updateAxisLabelLayout()
+  observeAxisLabels()
 }
 
 onMounted(() => {
-  void nextTick(updateAxisLabelLayout)
+  void nextTick(updateLayout)
 })
 
 onUpdated(() => {
-  void nextTick(updateAxisLabelLayout)
+  void nextTick(updateLayout)
+})
+
+onBeforeUnmount(() => {
+  axisResizeObserver?.disconnect()
 })
 </script>
