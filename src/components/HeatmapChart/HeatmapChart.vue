@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sds-heatmap-chart w-full"
+    class="sds-heatmap-chart w-full overflow-x-auto"
     :class="containerClass"
     :style="containerStyle"
     @mouseleave="onChartLeave"
@@ -8,9 +8,9 @@
     <BaseChart
       v-bind="forwardedAttrs"
       v-model:hovered-index="hoveredIndex"
-      :height="props.height"
+      :height="resolvedHeight"
       :width="props.width"
-      :aspect-ratio="resolvedAspectRatio"
+      :min-plot-width="gridWidth"
       :margin="resolvedMargin"
       :legend="{
         items: legendItems,
@@ -37,8 +37,9 @@
             :key="`${cell.data.x}-${cell.data.y}-${i}`"
             :x="cell.x"
             :y="cell.y"
-            :width="cell.width"
-            :height="cell.height"
+            :width="CELL_SIZE"
+            :height="CELL_SIZE"
+            rx="2"
             :fill="cell.color"
             class="transition-opacity duration-150"
             :class="hoveredIndex !== null && hoveredIndex !== cell.binIndex ? 'opacity-40' : 'opacity-100'"
@@ -76,21 +77,21 @@
         />
         <div 
           v-else 
-          class="sds-heatmap-legend flex items-center justify-center gap-1 text-xs select-none"
+          class="sds-heatmap-legend flex min-w-max items-center justify-center gap-1 text-xs select-none"
         >
-          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">Less</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">Less</span>
           <button
             v-for="(item, i) in items"
             :key="`heatmap-legend-bin-${i}`"
             type="button"
-            class="h-4 w-8 p-0 transition-opacity border border-gray-300 dark:border-gray-600"
+            class="size-4 shrink-0 rounded-[2px] border-0 p-0 transition-opacity"
             :class="legendHoveredIndex !== null && legendHoveredIndex !== i ? 'opacity-40' : 'opacity-100'"
             :style="{ backgroundColor: item.color }"
             :aria-label="`Range ${item.label}`"
             @mouseenter="updateHoveredIndex(i)"
             @mouseleave="updateHoveredIndex(null)"
           />
-          <span class="font-normal text-sm text-gray-600 dark:text-gray-400">More</span>
+          <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">More</span>
         </div>
       </template>
     </BaseChart>
@@ -103,7 +104,7 @@ import type { ChartMargin } from '@/helpers/charts/constants'
 import type { HeatmapCell, HeatmapColors, HeatmapRect, HeatmapTooltipData } from '@/composables/useHeatmapChart'
 import BaseChart from '../BaseChart'
 import ChartTooltipContent from '../ChartTooltip/ChartTooltipContent.vue'
-import { useHeatmapChart } from '@/composables/useHeatmapChart'
+import { heatmapGridSize, useHeatmapChart } from '@/composables/useHeatmapChart'
 import { useHoveredIndex } from '@/composables/useHoveredIndex'
 import { useTooltip } from '@/composables/useTooltip'
 import { DEFAULT_CHART_MARGIN } from '@/helpers/charts/constants'
@@ -174,24 +175,13 @@ const resolvedMargin = computed<ChartMargin>(() => {
   }
 })
 
-const resolvedAspectRatio = computed<number | undefined>(() => {
-  if (!props.squareCells || !props.data.length) return undefined
-  const xCount = new Set(props.data.map((d) => d.x)).size
-  const yCount = new Set(props.data.map((d) => d.y)).size
-  if (xCount === 0 || yCount === 0) return undefined
-
-  const measuredInnerWidth = innerWidthRef.value
-  if (measuredInnerWidth > 0) {
-    const desiredInnerHeight = (measuredInnerWidth * yCount) / xCount
-    const svgHeight = desiredInnerHeight + resolvedMargin.value.top + resolvedMargin.value.bottom
-    const containerWidth = measuredInnerWidth + resolvedMargin.value.left + resolvedMargin.value.right
-    if (svgHeight > 0) {
-      return containerWidth / svgHeight
-    }
-  }
-
-  return xCount / yCount
-})
+const CELL_SIZE = 32
+const CELL_GAP = 4
+const gridWidth = computed(() => heatmapGridSize(new Set(props.data.map((d) => d.x)).size, CELL_SIZE, CELL_GAP))
+const gridHeight = computed(() => heatmapGridSize(new Set(props.data.map((d) => d.y)).size, CELL_SIZE, CELL_GAP))
+const resolvedHeight = computed(() =>
+  Math.max(props.height, gridHeight.value + resolvedMargin.value.top + resolvedMargin.value.bottom),
+)
 
 const dataRef = computed(() => props.data)
 const colorsRef = computed(() => props.colors)
@@ -216,7 +206,9 @@ const { cells, xAxis, yAxis, legendItems } = useHeatmapChart(
     yTickValues: yTickValuesRef
   },
   {
-    squareCells: squareCellsRef
+    squareCells: squareCellsRef,
+    fixedCellSize: CELL_SIZE,
+    cellGap: CELL_GAP
   }
 )
 const hasDistinctColors = computed(() => hasMultipleColors(cells.value))

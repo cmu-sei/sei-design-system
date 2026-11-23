@@ -10,7 +10,7 @@
       <div
         ref="containerRef"
         class="relative w-full min-w-0"
-        :style="{ width: props.width, paddingBottom: `${axisLabelPadding}px` }"
+        :style="{ width: props.width, minWidth: minContainerWidth, paddingBottom: `${axisLabelPadding}px` }"
       >
         <svg
           width="100%"
@@ -142,6 +142,8 @@ interface BaseChartProps {
   hoveredIndex?: number | null
   /** When provided, height is derived as containerWidth / aspectRatio (e.g. 16/9). */
   aspectRatio?: number
+  /** Minimum width of the inner plot area in pixels. */
+  minPlotWidth?: number
   /** Tooltip visibility — when provided the ChartTooltip is rendered by BaseChart. */
   tooltipVisible?: boolean
   tooltipX?: number
@@ -174,6 +176,7 @@ const props = withDefaults(defineProps<BaseChartProps>(), {
   title: undefined,
   hoveredIndex: null,
   aspectRatio: undefined,
+  minPlotWidth: 0,
   tooltipVisible: undefined,
   tooltipX: 0,
   tooltipY: 0,
@@ -200,6 +203,9 @@ const yAxisLabelStyle = ref({ left: '0px', top: '0px', width: '0px', height: '0p
 const heightRef = computed(() => props.height)
 const marginRef = computed(() => props.margin)
 const aspectRatioRef = computed(() => props.aspectRatio)
+const minContainerWidth = computed(() =>
+  props.minPlotWidth > 0 ? `${props.minPlotWidth + props.margin.left + props.margin.right}px` : undefined,
+)
 
 const { containerWidth, innerWidth, innerHeight, svgHeight } = useChartDimensions(
   containerRef,

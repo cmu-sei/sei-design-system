@@ -81,6 +81,15 @@ describe('BaseChart', () => {
     expect(disconnect).toHaveBeenCalled()
   })
 
+  it('reserves the requested minimum plot width including margins', () => {
+    const wrapper = mount(BaseChart, {
+      props: { margin, minPlotWidth: 356, width: '100%' },
+      global,
+    })
+
+    expect(wrapper.find('svg').element.parentElement?.getAttribute('style')).toContain('min-width: 416px')
+  })
+
   it('renders optional HTML axis labels with spacing before the chart and legend', async () => {
     const wrapper = mount(BaseChart, {
       props: {
