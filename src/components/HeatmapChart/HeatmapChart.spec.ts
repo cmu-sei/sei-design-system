@@ -7,7 +7,7 @@ import HeatmapChart from './HeatmapChart.vue'
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'yAxisLabel', 'xAxis', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitAxisLabels'],
+  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'xAxisLabelPosition', 'xAxisLabelPlotWidth', 'yAxisLabel', 'xAxis', 'xAxisPosition', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitAxisLabels', 'alignXAxisLabelsToPlot'],
   emits: ['update:hoveredIndex'],
   template: `
     <div>
@@ -80,6 +80,25 @@ describe('HeatmapChart', () => {
       expect(xScale('Monday') + xScale.bandwidth() / 2).toBeCloseTo(x0 + 16)
       expect(yScale('Morning') + yScale.bandwidth() / 2).toBeCloseTo(y0 + 16)
     }
+  })
+
+  it('keeps axis labels eight pixels from the cell grid', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }] },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const chart = wrapper.findComponent(BaseChartStub)
+    expect(chart.props('alignXAxisLabelsToPlot')).toBe(true)
+    for (const axisName of ['xAxis', 'yAxis']) {
+      const axis = chart.props(axisName)
+      expect(axis.tickSizeInner()).toBe(0)
+      expect(axis.tickPadding()).toBe(8)
+    }
+
+    await wrapper.setProps({ data: [{ x: 'Tuesday', y: 'Evening', value: 1 }] })
+    expect(chart.props('xAxis').tickSizeInner()).toBe(0)
+    expect(chart.props('yAxis').tickSizeInner()).toBe(0)
+    wrapper.unmount()
   })
 
   it('sizes the plot to its data and margins rather than a fixed height', async () => {
@@ -207,6 +226,9 @@ describe('HeatmapChart', () => {
 
     expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
       xAxisLabel: 'Hour',
+      xAxisLabelPosition: 'top',
+      xAxisLabelPlotWidth: 32,
+      xAxisPosition: 'top',
       yAxisLabel: 'Day',
     })
   })

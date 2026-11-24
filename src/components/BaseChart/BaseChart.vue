@@ -13,7 +13,9 @@
         :style="{
           width: props.width,
           minWidth: minContainerWidth,
-          paddingTop: props.fitAxisLabels ? `${axisTopPadding}px` : undefined,
+          paddingTop: props.fitAxisLabels || props.xAxisPosition === 'top' || props.xAxisLabelPosition === 'top'
+            ? `${axisTopPadding}px`
+            : undefined,
           paddingBottom: `${axisLabelPadding}px`,
         }"
       >
@@ -23,7 +25,7 @@
           :aria-label="props.title"
           role="img"
           class="block"
-          :class="{ 'overflow-visible': props.fitAxisLabels }"
+          :class="{ 'overflow-visible': props.fitAxisLabels || props.xAxisPosition === 'top' }"
           v-bind="$attrs"
         >
           <title v-if="props.title">{{ props.title }}</title>
@@ -33,10 +35,10 @@
             :inner-height="innerHeight"
             :container-ref="containerRef"
           />
-          <!-- x-axis: rendered at the bottom edge of the inner chart area -->
+          <!-- x-axis: rendered at the selected edge of the inner chart area -->
           <g
             v-if="$slots['x-axis'] || props.xAxis"
-            :transform="`translate(${props.margin.left}, ${props.margin.top + innerHeight})`"
+            :transform="`translate(${props.margin.left}, ${props.margin.top + (props.xAxisPosition === 'bottom' ? innerHeight : 0)})`"
           >
             <slot
               name="x-axis"
@@ -49,6 +51,8 @@
                 :inner-width="innerWidth"
                 :inner-height="innerHeight"
                 orientation="x"
+                :align-labels-to-plot="props.alignXAxisLabelsToPlot"
+                :label-position="props.xAxisPosition"
                 :min-font-size="props.axisMinFontSize"
                 :max-font-size="props.axisMaxFontSize"
               />
@@ -152,16 +156,24 @@ interface BaseChartProps {
   minPlotWidth?: number
   /** Reserve only the vertical space needed by rendered axis labels. */
   fitAxisLabels?: boolean
+  /** Align x-axis tick labels by their top edge rather than their text baseline. */
+  alignXAxisLabelsToPlot?: boolean
   /** Tooltip visibility — when provided the ChartTooltip is rendered by BaseChart. */
   tooltipVisible?: boolean
   tooltipX?: number
   tooltipY?: number
   /** D3 x-axis generator. When provided, BaseChart renders a responsive x-axis. */
   xAxis?: Axis<AxisDomain>
+  /** Position of the x-axis relative to the plot. */
+  xAxisPosition?: 'top' | 'bottom'
   /** D3 y-axis generator. When provided, BaseChart renders a responsive y-axis. */
   yAxis?: Axis<AxisDomain>
-  /** Optional horizontal label displayed below the x-axis. */
+  /** Optional horizontal axis title. */
   xAxisLabel?: string
+  /** Position of the x-axis title relative to the plot. */
+  xAxisLabelPosition?: 'top' | 'bottom'
+  /** Width of the plotted data used to center the x-axis title. */
+  xAxisLabelPlotWidth?: number
   /** Optional vertical label displayed beside the y-axis. */
   yAxisLabel?: string
   /** Minimum font size (px) for axis tick labels. @default 9 */
@@ -186,12 +198,16 @@ const props = withDefaults(defineProps<BaseChartProps>(), {
   aspectRatio: undefined,
   minPlotWidth: 0,
   fitAxisLabels: false,
+  alignXAxisLabelsToPlot: false,
   tooltipVisible: undefined,
   tooltipX: 0,
   tooltipY: 0,
   xAxis: undefined,
+  xAxisPosition: 'bottom',
   yAxis: undefined,
   xAxisLabel: undefined,
+  xAxisLabelPosition: 'bottom',
+  xAxisLabelPlotWidth: undefined,
   yAxisLabel: undefined,
   axisMinFontSize: 9,
   axisMaxFontSize: 14,
@@ -231,7 +247,9 @@ function updateAxisLabelLayout() {
 
   const containerRect = container.getBoundingClientRect()
   const svgRect = svg.getBoundingClientRect()
-  const svgTop = props.fitAxisLabels ? svgRect.top - containerRect.top : 0
+  const svgTop = props.fitAxisLabels || props.xAxisPosition === 'top' || props.xAxisLabelPosition === 'top'
+    ? svgRect.top - containerRect.top
+    : 0
   const svgBottom = svgTop + svgRect.height
   const xTickTexts = Array.from(svg.querySelectorAll<SVGTextElement>(
     '.sds-chart-axis[data-orientation="x"] .tick text',
@@ -245,6 +263,12 @@ function updateAxisLabelLayout() {
       ? Math.max(bottom, rect.bottom - containerRect.top)
       : bottom
   }, -Infinity)
+  const xTickTop = xTickTexts.reduce((top, text) => {
+    const rect = text.getBoundingClientRect()
+    return rect.width > 0 || rect.height > 0
+      ? Math.min(top, rect.top - containerRect.top)
+      : top
+  }, Infinity)
   const yTickLeft = yTickTexts.reduce((left, text) => {
     const rect = text.getBoundingClientRect()
     return rect.width > 0 || rect.height > 0
@@ -252,13 +276,19 @@ function updateAxisLabelLayout() {
       : left
   }, Infinity)
   let bottomPadding = 0
+  let topPadding = 0
 
   if (props.xAxisLabel && xAxisLabelRef.value) {
     const labelHeight = xAxisLabelRef.value.getBoundingClientRect().height || 24
-    const top = Number.isFinite(xTickBottom)
-      ? xTickBottom + 8
-      : svgBottom - props.margin.bottom + 22
-    const plotCenter = props.margin.left + (svgRect.width - props.margin.left - props.margin.right) / 2
+    const top = props.xAxisLabelPosition === 'top'
+      ? (props.xAxisPosition === 'top' && Number.isFinite(xTickTop)
+        ? xTickTop
+        : svgTop + props.margin.top) - 8 - labelHeight
+      : Number.isFinite(xTickBottom)
+        ? xTickBottom + 8
+        : svgBottom - props.margin.bottom + 22
+    const plotWidth = props.xAxisLabelPlotWidth ?? svgRect.width - props.margin.left - props.margin.right
+    const plotCenter = props.margin.left + plotWidth / 2
     const style = {
       left: `${plotCenter}px`,
       top: `${top}px`,
@@ -271,7 +301,11 @@ function updateAxisLabelLayout() {
     ) {
       xAxisLabelStyle.value = style
     }
-    bottomPadding = Math.max(0, Math.ceil(top + labelHeight - svgBottom))
+    if (props.xAxisLabelPosition === 'top') {
+      topPadding = Math.max(0, Math.ceil(svgTop - top))
+    } else {
+      bottomPadding = Math.max(0, Math.ceil(top + labelHeight - svgBottom))
+    }
   }
 
   if (props.yAxisLabel && yAxisLabelRef.value) {
@@ -312,11 +346,12 @@ function updateAxisLabelLayout() {
       top = Math.min(top, labelTop)
       bottom = Math.max(bottom, labelTop + labelHeight)
     }
-    axisTopPadding.value = Math.max(0, Math.ceil(svgRect.top - top))
+    topPadding = Math.max(topPadding, Math.ceil(svgRect.top - top))
     bottomPadding = Math.max(bottomPadding, Math.ceil(bottom - svgRect.bottom))
-  } else {
-    axisTopPadding.value = 0
+  } else if (props.xAxisPosition === 'top' && Number.isFinite(xTickTop)) {
+    topPadding = Math.max(topPadding, Math.ceil(svgTop - xTickTop))
   }
+  axisTopPadding.value = topPadding
   axisLabelPadding.value = bottomPadding
 }
 
@@ -324,7 +359,7 @@ let axisResizeObserver: ResizeObserver | undefined
 let observedAxisElements = new WeakSet<Element>()
 
 function observeAxisLabels() {
-  if (!props.fitAxisLabels) {
+  if (!props.fitAxisLabels && props.xAxisPosition !== 'top' && props.xAxisLabelPosition !== 'top') {
     axisResizeObserver?.disconnect()
     axisResizeObserver = undefined
     observedAxisElements = new WeakSet()

@@ -24,7 +24,7 @@ export default {
     },
     xAxisLabel: {
       control: { type: 'text' },
-      description: 'Optional horizontal label below the x-axis.',
+      description: 'Optional horizontal label above the heatmap cells.',
     },
     yAxisLabel: {
       control: { type: 'text' },

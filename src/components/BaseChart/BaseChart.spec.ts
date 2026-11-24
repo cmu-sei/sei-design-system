@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { axisBottom, axisLeft, scaleLinear } from '@/lib/d3'
@@ -215,6 +215,60 @@ describe('BaseChart', () => {
     await nextTick()
     expect(container?.style.paddingBottom).toBe('70px')
     expect(wrapper.find('.absolute.flex.items-center').attributes('style')).toContain('top: 6px')
+    wrapper.unmount()
+  })
+
+  it('places a top x-axis title eight pixels above the tick labels', async () => {
+    let labelHeight = 18
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 32)
+      if (this.classList.contains('sds-axis-label')) return new DOMRect(0, 0, 50, labelHeight)
+      return new DOMRect()
+    })
+    vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      const svg = this.tagName.toLowerCase() === 'svg' ? this : this.ownerSVGElement
+      const padding = Number.parseFloat(svg?.parentElement?.style.paddingTop || '0')
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, padding, 480, 32)
+      if (this.closest('[data-orientation="x"]')) return new DOMRect(20, padding - 23, 40, 15)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(20, padding - 6, 40, 16)
+      return new DOMRect()
+    })
+    const wrapper = mount(BaseChart, {
+      props: {
+        height: 32,
+        margin: { top: 0, right: 20, bottom: 0, left: 40 },
+        xAxis: axisBottom(scaleLinear()),
+        yAxis: axisLeft(scaleLinear()),
+        fitAxisLabels: true,
+        xAxisLabel: 'Hour',
+        xAxisPosition: 'top',
+        xAxisLabelPosition: 'top',
+        xAxisLabelPlotWidth: 32,
+      },
+      global,
+    })
+    await flushPromises()
+    const container = wrapper.find('svg').element.parentElement
+    const label = wrapper.find('.sds-axis-label')
+    expect(container?.style.paddingTop).toBe('49px')
+    expect(container?.style.paddingBottom).toBe('0px')
+    expect(label.attributes('style')).toContain('left: 56px')
+    expect(label.attributes('style')).toContain('top: 0px')
+    expect(wrapper.find('svg > g').attributes('transform')).toBe('translate(40, 0)')
+
+    labelHeight = 28
+    resize(480)
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('59px')
+    expect(label.attributes('style')).toContain('top: 0px')
+
+    await wrapper.setProps({ xAxisLabel: undefined })
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('23px')
+    await wrapper.setProps({ fitAxisLabels: false })
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('23px')
+    expect(wrapper.find('svg').classes()).toContain('overflow-visible')
     wrapper.unmount()
   })
 

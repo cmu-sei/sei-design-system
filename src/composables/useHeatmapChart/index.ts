@@ -184,7 +184,7 @@ export function useHeatmapChart(
 
   const xAxis = useChartAxis(
     computed(() => xScale.value),
-    computed(() => 'bottom' as const),
+    computed(() => 'top' as const),
     undefined,
     undefined,
     computed(() => axisOptions?.xTickFormatter?.value),

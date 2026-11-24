@@ -13,6 +13,7 @@
       :width="props.width"
       :min-plot-width="gridWidth"
       :fit-axis-labels="!props.margin"
+      :align-x-axis-labels-to-plot="true"
       :margin="resolvedMargin"
       :legend="{
         items: legendItems,
@@ -22,12 +23,15 @@
       :show-legend="props.showLegend"
       :title="props.title"
       :x-axis-label="props.xAxisLabel"
+      x-axis-label-position="top"
+      :x-axis-label-plot-width="gridWidth"
       :y-axis-label="props.yAxisLabel"
       :tooltip-visible="props.showTooltip ? tooltip.visible.value : undefined"
       :tooltip-x="tooltip.x.value"
       :tooltip-y="tooltip.y.value"
-      :x-axis="xAxis"
-      :y-axis="yAxis"
+      :x-axis="xAxisWithoutTicks"
+      x-axis-position="top"
+      :y-axis="yAxisWithoutTicks"
     >
       <template #default="{ innerWidth, innerHeight }">
         <g
@@ -87,7 +91,7 @@
             class="sds-heatmap-legend flex items-center gap-1 text-xs select-none"
             :class="props.legendOrientation === 'vertical' ? 'flex-col' : 'flex-row'"
           >
-            <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">Less</span>
+            <span class="font-normal text-sm leading-0 text-gray-600 dark:text-gray-400 px-0.5">Less</span>
             <button
               v-for="(item, i) in items"
               :key="`heatmap-legend-bin-${i}`"
@@ -99,7 +103,7 @@
               @mouseenter="updateHoveredIndex(i)"
               @mouseleave="updateHoveredIndex(null)"
             />
-            <span class="font-normal text-sm text-gray-600 dark:text-gray-400 p-0.5">More</span>
+            <span class="font-normal text-sm leading-0 text-gray-600 dark:text-gray-400 px-0.5">More</span>
           </div>
         </ChartLegend>
       </template>
@@ -126,7 +130,7 @@ interface HeatmapChartProps {
   width?: string | number
   margin?: ChartMargin
   title?: string
-  /** Optional horizontal label displayed below the x-axis. */
+  /** Optional horizontal label displayed above the cells. */
   xAxisLabel?: string
   /** Optional vertical label displayed beside the y-axis. */
   yAxisLabel?: string
@@ -228,6 +232,8 @@ const { cells, xAxis, yAxis, legendItems } = useHeatmapChart(
     cellGap: CELL_GAP
   }
 )
+const xAxisWithoutTicks = computed(() => xAxis.value.tickSizeInner(0))
+const yAxisWithoutTicks = computed(() => yAxis.value.tickSizeInner(0))
 const hasDistinctColors = computed(() => hasMultipleColors(cells.value))
 
 function computeCells(innerWidth: number, innerHeight: number): HeatmapRect[] {
