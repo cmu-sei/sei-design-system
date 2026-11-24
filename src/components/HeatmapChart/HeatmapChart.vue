@@ -8,6 +8,7 @@
     <BaseChart
       v-bind="forwardedAttrs"
       v-model:hovered-index="hoveredIndex"
+      class="[&_.sds-chart-axis_.domain]:hidden [&_.sds-chart-axis_.tick_line]:hidden"
       :height="resolvedHeight"
       :width="props.width"
       :min-plot-width="gridWidth"

@@ -1,5 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { ref } from 'vue'
+import { CHART_CONFIG_KEY } from '@/composables/useChartConfig'
 import type { ChartLegendPosition } from '../ChartLegend/ChartLegend.vue'
 import HeatmapChart from './HeatmapChart.vue'
 
@@ -124,6 +126,34 @@ describe('HeatmapChart', () => {
     const margin = { top: 10, bottom: 20, left: 30, right: 40 }
     await wrapper.setProps({ margin })
     expect(chart.props()).toMatchObject({ height: 62, margin, fitAxisLabels: false })
+  })
+
+  it('hides axis lines while retaining axis labels', async () => {
+    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(400)
+    vi.stubGlobal('ResizeObserver', class {
+      observe() {}
+      disconnect() {}
+    })
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 1 }] },
+      global: {
+        stubs: {
+          SdsChartAxis: {
+            props: ['orientation'],
+            template: '<g class="sds-chart-axis"><path class="domain"/><g class="tick"><line/><text>{{ orientation }}</text></g></g>',
+          },
+        },
+      },
+    })
+    await wrapper.vm.$nextTick()
+
+    const svg = wrapper.find('svg')
+    expect(svg.classes()).toEqual(expect.arrayContaining([
+      '[&_.sds-chart-axis_.domain]:hidden',
+      '[&_.sds-chart-axis_.tick_line]:hidden',
+    ]))
+    expect(svg.findAll('.tick text').map((label) => label.text())).toEqual(['x', 'y'])
+    wrapper.unmount()
   })
 
   it('reserves enough space for a large grid in the real chart', async () => {
@@ -257,5 +287,38 @@ describe('HeatmapChart', () => {
 
     await bin.trigger('mouseenter')
     expect(wrapper.findComponent(BaseChartStub).props('hoveredIndex')).toBe(0)
+  })
+
+  it('updates cell and legend colors to the default light and dark palettes', async () => {
+    const isDarkMode = ref(false)
+    const wrapper = mount(HeatmapChart, {
+      props: {
+        data: Array.from({ length: 6 }, (_, value) => ({ x: `x${value}`, y: 'Morning', value })),
+      },
+      global: {
+        stubs: { SdsBaseChart: BaseChartStub },
+        provide: { [CHART_CONFIG_KEY]: { isDarkMode } },
+      },
+    })
+    const lightColors = [
+      'var(--color-gray-50)',
+      'var(--color-blue-50)',
+      'var(--color-blue-200)',
+      'var(--color-blue-400)',
+      'var(--color-blue-600)',
+      'var(--color-blue-800)',
+    ]
+    const expectColors = (colors: string[]) => {
+      expect(wrapper.findAll('rect').map((cell) => cell.attributes('fill'))).toEqual(colors)
+      expect(wrapper.findAll('.sds-heatmap-legend button').map((bin) =>
+        bin.element.style.backgroundColor,
+      )).toEqual(colors)
+    }
+
+    expectColors(lightColors)
+    isDarkMode.value = true
+    await wrapper.vm.$nextTick()
+    expectColors([...lightColors].reverse())
+    wrapper.unmount()
   })
 })
