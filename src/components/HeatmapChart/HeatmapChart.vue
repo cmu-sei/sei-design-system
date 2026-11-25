@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sds-heatmap-chart w-full min-w-0 [contain:inline-size]"
+    class="sds-heatmap-chart w-full min-w-0 contain-[inline-size]"
     :class="containerClass"
     :style="[{ width: typeof props.width === 'number' ? `${props.width}px` : props.width }, containerStyle]"
     @mouseleave="onChartLeave"
@@ -140,7 +140,7 @@ interface HeatmapChartProps {
   /** Legend items layout direction. @default 'horizontal' */
   legendOrientation?: ChartLegendOrientation
   /** Position of the legend relative to the chart. @default 'top-center' */
-  legendPosition?: ChartLegendPosition
+  legendPosition?: Extract<ChartLegendPosition, 'top-center' | 'bottom-right'>
   colors?: HeatmapColors
   xTickValues?: string[]
   xTickFormatter?: (value: AxisDomain) => string

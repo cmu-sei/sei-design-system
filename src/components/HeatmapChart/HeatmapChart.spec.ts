@@ -2,8 +2,9 @@ import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ref } from 'vue'
 import { CHART_CONFIG_KEY } from '../../composables/useChartConfig'
-import type { ChartLegendPosition } from '../ChartLegend/ChartLegend.vue'
 import HeatmapChart from './HeatmapChart.vue'
+
+type HeatmapLegendPosition = NonNullable<InstanceType<typeof HeatmapChart>['$props']['legendPosition']>
 
 const BaseChartStub = {
   name: 'BaseChart',
@@ -113,7 +114,7 @@ describe('HeatmapChart', () => {
     })
 
     expect(wrapper.classes().some((name) => name.startsWith('overflow-'))).toBe(false)
-    expect(wrapper.classes()).toContain('[contain:inline-size]')
+    expect(wrapper.classes()).toContain('contain-[inline-size]')
     expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
       minPlotWidth: 356,
       fitPlotWidth: true,
@@ -263,7 +264,7 @@ describe('HeatmapChart', () => {
     })
   })
 
-  it('positions the legend above and centered by default and supports all chart legend positions', async () => {
+  it('centers the legend above the chart by default and supports bottom-right positioning', async () => {
     const wrapper = mount(HeatmapChart, {
       props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }] },
       global: { stubs: { SdsBaseChart: BaseChartStub } },
@@ -273,12 +274,8 @@ describe('HeatmapChart', () => {
     expect(legend?.classList.contains('justify-center')).toBe(true)
     expect(wrapper.findComponent(BaseChartStub).props('legend').position).toBe('top-center')
 
-    const positions: [ChartLegendPosition, string, boolean][] = [
-      ['top-left', 'justify-start', true],
+    const positions: [HeatmapLegendPosition, string, boolean][] = [
       ['top-center', 'justify-center', true],
-      ['top-right', 'justify-end', true],
-      ['bottom-left', 'justify-start', false],
-      ['bottom-center', 'justify-center', false],
       ['bottom-right', 'justify-end', false],
     ]
     for (const [position, alignment, onTop] of positions) {
@@ -287,6 +284,7 @@ describe('HeatmapChart', () => {
       expect(legend?.classList.contains('order-first')).toBe(onTop)
       expect(wrapper.findComponent(BaseChartStub).props('legend').position).toBe(position)
     }
+    wrapper.unmount()
   })
 
   it('positions a custom legend and preserves its hover callback', async () => {
