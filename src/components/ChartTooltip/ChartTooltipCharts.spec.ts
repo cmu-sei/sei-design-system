@@ -169,7 +169,8 @@ describe('chart default tooltips', () => {
     const parts = tooltipParts(wrapper)
     expect(parts.label.exists()).toBe(false)
     expect(parts.swatch.exists()).toBe(true)
-    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes()).toContain('gap-x-2')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes())
+      .toEqual(expect.arrayContaining(['justify-between', 'gap-x-6', 'w-full']))
   })
 
   it('omits swatches when multiple items share one rendered color', async () => {

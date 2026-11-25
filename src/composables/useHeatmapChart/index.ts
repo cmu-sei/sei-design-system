@@ -48,6 +48,12 @@ export interface HeatmapAxisOptions {
 
 export interface HeatmapLayoutOptions {
   squareCells?: Ref<boolean | undefined> | ComputedRef<boolean | undefined>
+  fixedCellSize?: number
+  cellGap?: number
+}
+
+export function heatmapGridSize(count: number, cellSize: number, gap: number): number {
+  return count > 0 ? count * cellSize + (count - 1) * gap : 0
 }
 
 function toDomain(values: string[]): string[] {
@@ -116,12 +122,27 @@ export function useHeatmapChart(
   })
 
   const xScale = computed(() =>
-    scaleBand<string>().domain(xDomain.value).range([0, resolvedPlotSize.value.width]).padding(BAND_PADDING),
+    layoutOptions?.fixedCellSize
+      ? scaleBand<string>()
+        .domain(xDomain.value)
+        .range([0, heatmapGridSize(xDomain.value.length, layoutOptions.fixedCellSize, layoutOptions.cellGap ?? 0)])
+        .paddingInner(xDomain.value.length > 1
+          ? (layoutOptions.cellGap ?? 0) / (layoutOptions.fixedCellSize + (layoutOptions.cellGap ?? 0))
+          : 0)
+      : scaleBand<string>().domain(xDomain.value).range([0, resolvedPlotSize.value.width]).padding(BAND_PADDING),
   )
 
-  const yScale = computed(() =>
-    scaleBand<string>().domain(yDomain.value).range([0, resolvedPlotSize.value.height]).padding(BAND_PADDING),
-  )
+  const yScale = computed(() => {
+    if (!layoutOptions?.fixedCellSize) {
+      return scaleBand<string>().domain(yDomain.value).range([0, resolvedPlotSize.value.height]).padding(BAND_PADDING)
+    }
+    const gap = layoutOptions.cellGap ?? 0
+    const gridHeight = heatmapGridSize(yDomain.value.length, layoutOptions.fixedCellSize, gap)
+    return scaleBand<string>()
+      .domain(yDomain.value)
+      .range([innerHeight.value - gridHeight, innerHeight.value])
+      .paddingInner(yDomain.value.length > 1 ? gap / (layoutOptions.fixedCellSize + gap) : 0)
+  })
 
   const valueExtent = computed<[number, number]>(() => {
     if (!data.value.length) return [0, 1]
@@ -142,11 +163,12 @@ export function useHeatmapChart(
     data.value.map((cell) => {
       const bandWidth = xScale.value.bandwidth()
       const bandHeight = yScale.value.bandwidth()
-      const side = squareCells.value ? Math.min(bandWidth, bandHeight) : 0
-      const width = squareCells.value ? side : bandWidth
-      const height = squareCells.value ? side : bandHeight
-      const offsetX = squareCells.value ? (bandWidth - width) / 2 : 0
-      const offsetY = squareCells.value ? (bandHeight - height) / 2 : 0
+      const makeSquare = squareCells.value && !layoutOptions?.fixedCellSize
+      const side = makeSquare ? Math.min(bandWidth, bandHeight) : 0
+      const width = makeSquare ? side : bandWidth
+      const height = makeSquare ? side : bandHeight
+      const offsetX = makeSquare ? (bandWidth - width) / 2 : 0
+      const offsetY = makeSquare ? (bandHeight - height) / 2 : 0
       const color = colorScale.value(cell.value)
       return {
         x: (xScale.value(cell.x) ?? 0) + offsetX,
@@ -162,7 +184,7 @@ export function useHeatmapChart(
 
   const xAxis = useChartAxis(
     computed(() => xScale.value),
-    computed(() => 'bottom' as const),
+    computed(() => 'top' as const),
     undefined,
     undefined,
     computed(() => axisOptions?.xTickFormatter?.value),

@@ -39,13 +39,20 @@ export const defaultColorsDark: string[] = [...monochromeColorScheme].reverse().
  * This is intentionally separate so only Heatmap defaults are affected.
  * @const
  */
-export const heatmapColors: string[] = monochromeColorScheme.slice(2)
+export const heatmapColors: string[] = [
+  'var(--color-gray-50)',
+  monochromeColorScheme[2],
+  monochromeColorScheme[4],
+  monochromeColorScheme[6],
+  monochromeColorScheme[8],
+  monochromeColorScheme[10]
+]
 
 /**
  * Dark-mode heatmap palette derived from the same base range.
  * @const
  */
-export const heatmapColorsDark: string[] = [...monochromeColorScheme].reverse().slice(2)
+export const heatmapColorsDark: string[] = [...heatmapColors].reverse()
 
 /**
  * Default color used for single-series bar charts (blue-600).

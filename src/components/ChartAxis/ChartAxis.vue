@@ -19,6 +19,10 @@ interface ChartAxisProps {
   innerHeight: number
   /** Axis orientation — determines truncation strategy. */
   orientation: 'x' | 'y'
+  /** Align x-axis tick labels by the edge nearest the plot. */
+  alignLabelsToPlot?: boolean
+  /** Position of the x-axis relative to the plot. */
+  labelPosition?: 'top' | 'bottom'
   /** Font size in px for tick labels. @default 14 */
   maxFontSize?: number
   /** Minimum font size in px for x-axis tick labels when shrinking to fit. @default 9 */
@@ -33,11 +37,14 @@ defineOptions({
 
 const props = withDefaults(defineProps<ChartAxisProps>(), {
   maxFontSize: 14,
+  alignLabelsToPlot: false,
+  labelPosition: 'bottom',
   minFontSize: 9,
   maxLabelWidth: 60,
 })
 
 const axisRef = useTemplateRef<SVGGElement>('axisRef')
+const originalLabelAttributes = new WeakMap<SVGTextElement, { dy: string | null, baseline: string | null }>()
 
 watchEffect(
   () => {
@@ -52,6 +59,26 @@ watchEffect(
     if (!tickGroups.length) return
 
     if (props.orientation === 'x') {
+      el.querySelectorAll<SVGTextElement>('.tick text').forEach((text) => {
+        if (props.alignLabelsToPlot) {
+          if (!originalLabelAttributes.has(text)) {
+            originalLabelAttributes.set(text, {
+              dy: text.getAttribute('dy'),
+              baseline: text.getAttribute('dominant-baseline'),
+            })
+          }
+          text.setAttribute('dy', '0')
+          text.setAttribute('dominant-baseline', props.labelPosition === 'top' ? 'text-after-edge' : 'text-before-edge')
+        } else {
+          const original = originalLabelAttributes.get(text)
+          if (!original) return
+          if (original.dy === null) text.removeAttribute('dy')
+          else text.setAttribute('dy', original.dy)
+          if (original.baseline === null) text.removeAttribute('dominant-baseline')
+          else text.setAttribute('dominant-baseline', original.baseline)
+          originalLabelAttributes.delete(text)
+        }
+      })
       const tickCount = tickGroups.length
       // Available width per tick label for responsive wrapping
       const availablePerTick = tickCount > 0 ? props.innerWidth / tickCount : props.innerWidth
@@ -167,7 +194,9 @@ function applyWrappedXAxisLabel(textEl: SVGTextElement, fullText: string, maxWid
   if (lines.length <= 1) return
 
   const x = textEl.getAttribute('x') ?? '0'
-  const baseDy = textEl.getAttribute('dy') ?? '0.71em'
+  const baseDy = props.alignLabelsToPlot && props.labelPosition === 'top'
+    ? `${-(lines.length - 1) * 1.1}em`
+    : textEl.getAttribute('dy') ?? '0.71em'
   textEl.textContent = ''
 
   lines.forEach((lineText, index) => {

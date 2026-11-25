@@ -1,7 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
-import { axisBottom, axisLeft, scaleLinear } from '@/lib/d3'
+import type { AxisDomain } from '../../lib/d3'
+import { axisBottom, axisLeft, scaleBand } from '../../lib/d3'
 import BaseChart from './BaseChart.vue'
 
 const ChartAxisStub = {
@@ -43,6 +44,7 @@ describe('BaseChart', () => {
       }
 
       observe = vi.fn()
+      unobserve = vi.fn()
       disconnect = disconnect
     })
   })
@@ -79,6 +81,23 @@ describe('BaseChart', () => {
 
     wrapper.unmount()
     expect(disconnect).toHaveBeenCalled()
+  })
+
+  it('can fit the chart and legend layout to the fixed plot width', async () => {
+    const wrapper = mount(BaseChart, {
+      props: { margin, minPlotWidth: 356, width: '100%' },
+      slots: { legend: '<span data-id="plot-left">{{ plotLeft }}</span>' },
+      global,
+    })
+
+    expect(wrapper.find('svg').element.parentElement?.getAttribute('style')).toContain('min-width: 416px')
+    expect(wrapper.attributes('style') ?? '').not.toContain('width: 416px')
+
+    await wrapper.setProps({ fitPlotWidth: true, showLegend: true })
+    expect(wrapper.attributes('style')).toContain('width: 416px')
+    expect(wrapper.find('svg').element.parentElement?.getAttribute('style')).toContain('width: 416px')
+    expect(wrapper.find('[data-id="plot-left"]').text()).toBe('40')
+    wrapper.unmount()
   })
 
   it('renders optional HTML axis labels with spacing before the chart and legend', async () => {
@@ -137,8 +156,8 @@ describe('BaseChart', () => {
       props: {
         height: 240,
         margin,
-        xAxis: axisBottom(scaleLinear()),
-        yAxis: axisLeft(scaleLinear()),
+        xAxis: axisBottom(scaleBand<AxisDomain>()),
+        yAxis: axisLeft(scaleBand<AxisDomain>()),
         xAxisLabel: 'Year',
         yAxisLabel: 'Percentage',
       },
@@ -162,6 +181,107 @@ describe('BaseChart', () => {
     svgRect.mockRestore()
   })
 
+  it('fits vertical padding to rendered axis labels rather than fixed margins', async () => {
+    let xTickHeight = 15
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 32)
+      if (this.classList.contains('sds-axis-label')) return new DOMRect(0, 0, 50, 18)
+      return new DOMRect()
+    })
+    vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      const svg = this.tagName.toLowerCase() === 'svg' ? this : this.ownerSVGElement
+      const padding = Number.parseFloat(svg?.parentElement?.style.paddingTop || '0')
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, padding, 480, 32)
+      if (this.closest('[data-orientation="x"]')) return new DOMRect(20, padding + 42, 40, xTickHeight)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(20, padding - 6, 40, 16)
+      return new DOMRect()
+    })
+    const wrapper = mount(BaseChart, {
+      props: {
+        height: 32,
+        margin: { top: 0, right: 20, bottom: 0, left: 40 },
+        xAxis: axisBottom(scaleBand<AxisDomain>()),
+        yAxis: axisLeft(scaleBand<AxisDomain>()),
+        fitAxisLabels: true,
+      },
+      global,
+    })
+    await nextTick()
+    await nextTick()
+
+    const container = wrapper.find('svg').element.parentElement
+    expect(container?.style.paddingTop).toBe('6px')
+    expect(container?.style.paddingBottom).toBe('25px')
+    expect(wrapper.find('svg').classes()).toContain('overflow-visible')
+
+    xTickHeight = 34
+    resize(480)
+    await nextTick()
+    await nextTick()
+    expect(container?.style.paddingBottom).toBe('44px')
+
+    await wrapper.setProps({ xAxisLabel: 'Hour', yAxisLabel: 'Day' })
+    await nextTick()
+    await nextTick()
+    expect(container?.style.paddingBottom).toBe('70px')
+    expect(wrapper.find('.absolute.flex.items-center').attributes('style')).toContain('top: 6px')
+    wrapper.unmount()
+  })
+
+  it('places a top x-axis title eight pixels above the tick labels', async () => {
+    let labelHeight = 18
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+      if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 32)
+      if (this.classList.contains('sds-axis-label')) return new DOMRect(0, 0, 50, labelHeight)
+      return new DOMRect()
+    })
+    vi.spyOn(SVGElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: SVGElement) {
+      const svg = this.tagName.toLowerCase() === 'svg' ? this : this.ownerSVGElement
+      const padding = Number.parseFloat(svg?.parentElement?.style.paddingTop || '0')
+      if (this.tagName.toLowerCase() === 'svg') return new DOMRect(0, padding, 480, 32)
+      if (this.closest('[data-orientation="x"]')) return new DOMRect(20, padding - 23, 40, 15)
+      if (this.closest('[data-orientation="y"]')) return new DOMRect(20, padding - 6, 40, 16)
+      return new DOMRect()
+    })
+    const wrapper = mount(BaseChart, {
+      props: {
+        height: 32,
+        margin: { top: 0, right: 20, bottom: 0, left: 40 },
+        xAxis: axisBottom(scaleBand<AxisDomain>()),
+        yAxis: axisLeft(scaleBand<AxisDomain>()),
+        fitAxisLabels: true,
+        xAxisLabel: 'Hour',
+        xAxisPosition: 'top',
+        xAxisLabelPosition: 'top',
+        xAxisLabelPlotWidth: 32,
+      },
+      global,
+    })
+    await flushPromises()
+    const container = wrapper.find('svg').element.parentElement
+    const label = wrapper.find('.sds-axis-label')
+    expect(container?.style.paddingTop).toBe('49px')
+    expect(container?.style.paddingBottom).toBe('0px')
+    expect(label.attributes('style')).toContain('left: 56px')
+    expect(label.attributes('style')).toContain('top: 0px')
+    expect(wrapper.find('svg > g').attributes('transform')).toBe('translate(40, 0)')
+
+    labelHeight = 28
+    resize(480)
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('59px')
+    expect(label.attributes('style')).toContain('top: 0px')
+
+    await wrapper.setProps({ xAxisLabel: undefined })
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('23px')
+    await wrapper.setProps({ fitAxisLabels: false })
+    await flushPromises()
+    expect(container?.style.paddingTop).toBe('23px')
+    expect(wrapper.find('svg').classes()).toContain('overflow-visible')
+    wrapper.unmount()
+  })
+
   it('reserves left padding when the y-axis title would overflow the container', async () => {
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
       if (this.classList.contains('relative')) return new DOMRect(0, 0, 480, 240)
@@ -174,7 +294,11 @@ describe('BaseChart', () => {
       return new DOMRect(0, 0, 0, 0)
     })
     const wrapper = mount(BaseChart, {
-      props: { height: 240, margin, yAxis: axisLeft(scaleLinear()), yAxisLabel: 'Browser' },
+      props: {
+        height: 240, margin, yAxis: axisLeft(scaleBand<AxisDomain>()), yAxisLabel: 'Browser',
+        minPlotWidth: 100, fitPlotWidth: true, showLegend: true,
+      },
+      slots: { legend: '<span data-id="plot-left">{{ plotLeft }}</span>' },
       global,
     })
     await nextTick()
@@ -182,6 +306,8 @@ describe('BaseChart', () => {
 
     expect(wrapper.find('.absolute.flex.items-center').attributes('style')).toContain('left: -26px')
     expect(wrapper.find('.sds-base-chart > .min-w-0').attributes('style')).toContain('padding-left: 26px')
+    expect(wrapper.attributes('style')).toContain('width: 186px')
+    expect(wrapper.find('[data-id="plot-left"]').text()).toBe('66')
 
     await wrapper.setProps({ yAxisLabel: undefined })
     await nextTick()
@@ -222,8 +348,8 @@ describe('BaseChart', () => {
   })
 
   it('places fallback axes at the plot edges and forwards axis sizing', async () => {
-    const xAxis = axisBottom(scaleLinear())
-    const yAxis = axisLeft(scaleLinear())
+    const xAxis = axisBottom(scaleBand<AxisDomain>())
+    const yAxis = axisLeft(scaleBand<AxisDomain>())
     const wrapper = mount(BaseChart, {
       props: { margin, height: 240, xAxis, yAxis, axisMinFontSize: 8, axisMaxFontSize: 16 },
       global,
@@ -257,7 +383,7 @@ describe('BaseChart', () => {
 
   it('prefers custom axis slots to fallback axes and supplies plot dimensions', async () => {
     const wrapper = mount(BaseChart, {
-      props: { margin, height: 240, xAxis: axisBottom(scaleLinear()), yAxis: axisLeft(scaleLinear()) },
+      props: { margin, height: 240, xAxis: axisBottom(scaleBand<AxisDomain>()), yAxis: axisLeft(scaleBand<AxisDomain>()) },
       slots: {
         'x-axis': '<text data-id="custom-x">{{ innerWidth }},{{ innerHeight }}</text>',
         'y-axis': '<text data-id="custom-y">{{ innerWidth }},{{ innerHeight }}</text>',
