@@ -30,12 +30,9 @@ describe('ChartTooltip', () => {
     const tooltip = wrapper.find('div.fixed')
     expect(tooltip.text()).toBe('January: 42')
     expect(tooltip.classes()).toContain('p-4')
-    expect(tooltip.attributes('style')).toContain('translate3d(62px, 80px, 0)')
+    expect(tooltip.attributes('style')).toContain('translate3d(70px, 80px, 0)')
     expect(tooltip.attributes('style')).toContain('overflow-wrap: anywhere')
-    expect(wrapper.find('svg').classes()).toEqual(expect.arrayContaining(['h-6', 'w-3']))
-    expect(wrapper.find('svg').attributes('viewBox')).toBe('0 0 12 24')
-    expect(wrapper.find('svg').attributes('style')).toContain('top: 8px')
-    expect(wrapper.find('svg').attributes('style')).toContain('translateX(calc(-100% + 1px))')
+    expect(wrapper.find('svg').exists()).toBe(false)
 
     wrapper.unmount()
   })
@@ -46,26 +43,24 @@ describe('ChartTooltip', () => {
       slots: { default: 'Datapoint' },
     })
     await vi.waitFor(() => {
-      expect(wrapper.find('div.fixed').attributes('style')).toContain('translate3d(168px, 80px, 0)')
+      expect(wrapper.find('div.fixed').attributes('style')).toContain('translate3d(160px, 80px, 0)')
     })
-    expect(wrapper.find('svg').attributes('style')).toContain('translateX(calc(100% - 1px)) scaleX(-1)')
-    expect(wrapper.find('svg').attributes('style')).toContain('top: 8px')
 
     wrapper.unmount()
   })
 
-  it('keeps the pointer base inside the tooltip at top and bottom viewport edges', async () => {
+  it('keeps the tooltip eight pixels inside the top and bottom viewport edges', async () => {
     const wrapper = mount(ChartTooltip, {
       props: { visible: true, x: 50, y: 10 },
       slots: { default: 'Datapoint' },
     })
     await vi.waitFor(() => {
-      expect(wrapper.find('svg').attributes('style')).toContain('top: 0px')
+      expect(wrapper.find('div.fixed').attributes('style')).toContain('translate3d(70px, 8px, 0)')
     })
 
     await wrapper.setProps({ y: 190 })
     await vi.waitFor(() => {
-      expect(wrapper.find('svg').attributes('style')).toContain('top: 16px')
+      expect(wrapper.find('div.fixed').attributes('style')).toContain('translate3d(70px, 152px, 0)')
     })
 
     wrapper.unmount()
