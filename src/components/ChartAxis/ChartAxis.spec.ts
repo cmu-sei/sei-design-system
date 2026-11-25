@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { axisBottom, axisLeft, axisTop, scaleBand } from '@/lib/d3'
+import { axisBottom, axisLeft, axisTop, scaleBand } from '../../lib/d3'
 import ChartAxis from './ChartAxis.vue'
 
 const xLabels = ['North Region', 'South Region']
@@ -93,8 +93,10 @@ describe('ChartAxis', () => {
     })
     const text = wrapper.find('.tick text')
     const lines = text.findAll('tspan')
+    const dy = text.get('tspan').attributes('dy')
+    if (dy === undefined) throw new Error('Expected the wrapped label to have a dy attribute')
     expect(text.attributes('dominant-baseline')).toBe('text-after-edge')
-    expect(Number.parseFloat(lines[0].attributes('dy'))).toBeCloseTo(-(lines.length - 1) * 1.1)
+    expect(Number.parseFloat(dy)).toBeCloseTo(-(lines.length - 1) * 1.1)
     expect(lines[1].attributes('dy')).toBe('1.1em')
     wrapper.unmount()
   })
@@ -176,8 +178,10 @@ describe('ChartAxis', () => {
     })
 
     const lines = wrapper.find('.tick').findAll('text[data-wrap]')
+    const fontSize = wrapper.get('text[data-wrap]').attributes('font-size')
+    if (fontSize === undefined) throw new Error('Expected the wrapped label to have a font-size attribute')
     expect(lines.map((line) => line.text())).toEqual(['North', 'East', 'West'])
-    expect(Number.parseFloat(lines[0].attributes('font-size'))).toBeLessThan(14)
+    expect(Number.parseFloat(fontSize)).toBeLessThan(14)
     wrapper.unmount()
   })
 

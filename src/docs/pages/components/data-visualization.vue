@@ -1087,7 +1087,7 @@
       </div>
     </div>
     <div class="grid gap-4">
-      <div class="prose prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
+      <div class="prose min-w-0 prose-blue dark:prose-invert prose-headings:max-w-prose prose-p:max-w-4xl max-w-none p-4 md:p-8">
         <h2>
           Heatmap Chart
         </h2>

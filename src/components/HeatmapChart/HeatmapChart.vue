@@ -1,8 +1,8 @@
 <template>
   <div
-    class="sds-heatmap-chart w-full overflow-x-auto"
+    class="sds-heatmap-chart w-full min-w-0 [contain:inline-size]"
     :class="containerClass"
-    :style="containerStyle"
+    :style="[{ width: typeof props.width === 'number' ? `${props.width}px` : props.width }, containerStyle]"
     @mouseleave="onChartLeave"
   >
     <BaseChart
@@ -12,6 +12,7 @@
       :height="resolvedHeight"
       :width="props.width"
       :min-plot-width="gridWidth"
+      :fit-plot-width="true"
       :fit-axis-labels="!props.margin"
       :align-x-axis-labels-to-plot="true"
       :margin="resolvedMargin"
@@ -73,9 +74,9 @@
           />
         </slot>
       </template>
-      <template #legend="{ items, hoveredIndex: legendHoveredIndex, updateHoveredIndex }">
+      <template #legend="{ items, hoveredIndex: legendHoveredIndex, updateHoveredIndex, plotLeft }">
         <ChartLegend
-          class="min-w-max"
+          :style="{ width: `${gridWidth}px`, marginLeft: `${plotLeft}px` }"
           :orientation="props.legendOrientation"
           :position="props.legendPosition"
         >

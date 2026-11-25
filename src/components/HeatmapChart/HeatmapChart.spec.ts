@@ -1,13 +1,13 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ref } from 'vue'
-import { CHART_CONFIG_KEY } from '@/composables/useChartConfig'
+import { CHART_CONFIG_KEY } from '../../composables/useChartConfig'
 import type { ChartLegendPosition } from '../ChartLegend/ChartLegend.vue'
 import HeatmapChart from './HeatmapChart.vue'
 
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'xAxisLabelPosition', 'xAxisLabelPlotWidth', 'yAxisLabel', 'xAxis', 'xAxisPosition', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitAxisLabels', 'alignXAxisLabelsToPlot'],
+  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'xAxisLabelPosition', 'xAxisLabelPlotWidth', 'yAxisLabel', 'xAxis', 'xAxisPosition', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitPlotWidth', 'fitAxisLabels', 'alignXAxisLabelsToPlot'],
   emits: ['update:hoveredIndex'],
   template: `
     <div>
@@ -16,6 +16,7 @@ const BaseChartStub = {
         name="legend"
         :items="legend.items"
         :hovered-index="hoveredIndex"
+        :plot-left="margin.left"
         :update-hovered-index="(index) => $emit('update:hoveredIndex', index)"
       />
     </div>
@@ -111,9 +112,11 @@ describe('HeatmapChart', () => {
       global: { stubs: { SdsBaseChart: BaseChartStub } },
     })
 
-    expect(wrapper.classes()).toContain('overflow-x-auto')
+    expect(wrapper.classes().some((name) => name.startsWith('overflow-'))).toBe(false)
+    expect(wrapper.classes()).toContain('[contain:inline-size]')
     expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
       minPlotWidth: 356,
+      fitPlotWidth: true,
       height: 386,
     })
 
@@ -211,6 +214,33 @@ describe('HeatmapChart', () => {
     expect(svg.attributes('height')).toBe('62')
     expect(Number(wrapper.find('rect').attributes('x'))).toBeCloseTo(0)
     expect(Number(wrapper.find('rect').attributes('y'))).toBeCloseTo(0)
+    wrapper.unmount()
+  })
+
+  it('aligns the legend with the cell grid as columns and margins change', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: {
+        width: 300,
+        data: [{ x: 'Monday', y: 'Morning', value: 0 }],
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const legend = wrapper.find('.sds-heatmap-legend').element.parentElement
+    expect(legend?.style.width).toBe('32px')
+    expect(legend?.style.marginLeft).toBe('72px')
+    expect(wrapper.element.style.width).toBe('300px')
+
+    await wrapper.setProps({
+      width: '75%',
+      margin: { left: 40, right: 20, top: 0, bottom: 0 },
+      data: [
+        { x: 'Monday', y: 'Morning', value: 0 },
+        { x: 'Tuesday', y: 'Morning', value: 1 },
+      ],
+    })
+    expect(legend?.style.width).toBe('68px')
+    expect(legend?.style.marginLeft).toBe('40px')
+    expect(wrapper.element.style.width).toBe('75%')
     wrapper.unmount()
   })
 
@@ -332,7 +362,7 @@ describe('HeatmapChart', () => {
     ]
     const expectColors = (colors: string[]) => {
       expect(wrapper.findAll('rect').map((cell) => cell.attributes('fill'))).toEqual(colors)
-      expect(wrapper.findAll('.sds-heatmap-legend button').map((bin) =>
+      expect(wrapper.findAll<HTMLButtonElement>('.sds-heatmap-legend button').map((bin) =>
         bin.element.style.backgroundColor,
       )).toEqual(colors)
     }

@@ -2,6 +2,7 @@
   <div 
     data-id="sds-base-chart" 
     class="sds-base-chart flex w-full min-w-0 flex-col gap-y-4"
+    :style="{ width: props.fitPlotWidth ? `${fixedContainerWidth + yAxisLabelPadding}px` : undefined }"
   >
     <div
       class="min-w-0"
@@ -11,7 +12,7 @@
         ref="containerRef"
         class="relative w-full min-w-0"
         :style="{
-          width: props.width,
+          width: props.fitPlotWidth ? `${fixedContainerWidth}px` : props.width,
           minWidth: minContainerWidth,
           paddingTop: props.fitAxisLabels || props.xAxisPosition === 'top' || props.xAxisLabelPosition === 'top'
             ? `${axisTopPadding}px`
@@ -117,6 +118,7 @@
         name="legend"
         :items="props.legend?.items ?? []"
         :hovered-index="props.hoveredIndex"
+        :plot-left="props.margin.left + yAxisLabelPadding"
         :update-hovered-index="(i: number | null) => emit('update:hoveredIndex', i)"
       >
         <ChartLegend
@@ -154,6 +156,8 @@ interface BaseChartProps {
   aspectRatio?: number
   /** Minimum width of the inner plot area in pixels. */
   minPlotWidth?: number
+  /** Size the chart and its legend layout to the minimum plot width instead of stretching. */
+  fitPlotWidth?: boolean
   /** Reserve only the vertical space needed by rendered axis labels. */
   fitAxisLabels?: boolean
   /** Align x-axis tick labels by their top edge rather than their text baseline. */
@@ -197,6 +201,7 @@ const props = withDefaults(defineProps<BaseChartProps>(), {
   hoveredIndex: null,
   aspectRatio: undefined,
   minPlotWidth: 0,
+  fitPlotWidth: false,
   fitAxisLabels: false,
   alignXAxisLabelsToPlot: false,
   tooltipVisible: undefined,
@@ -229,8 +234,9 @@ const yAxisLabelStyle = ref({ left: '0px', top: '0px', width: '0px', height: '0p
 const heightRef = computed(() => props.height)
 const marginRef = computed(() => props.margin)
 const aspectRatioRef = computed(() => props.aspectRatio)
+const fixedContainerWidth = computed(() => props.minPlotWidth + props.margin.left + props.margin.right)
 const minContainerWidth = computed(() =>
-  props.minPlotWidth > 0 ? `${props.minPlotWidth + props.margin.left + props.margin.right}px` : undefined,
+  props.minPlotWidth > 0 ? `${fixedContainerWidth.value}px` : undefined,
 )
 
 const { containerWidth, innerWidth, innerHeight, svgHeight } = useChartDimensions(

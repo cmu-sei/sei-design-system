@@ -158,7 +158,7 @@ const Template = (args) => ({
   },
   template: `
     <div class="overflow-x-auto">
-      <sds-heatmap-chart v-bind="args" class="min-w-5xl">
+      <sds-heatmap-chart v-bind="args">
         <template #tooltip="{ data }">
           <p v-if="data" class="text-xs whitespace-nowrap font-semibold">
             {{ formatTaxiPickupTooltip(data) }}
@@ -246,7 +246,7 @@ const CustomLegendTemplate = (args) => ({
   },
   template: `
     <div class="overflow-x-auto">
-      <sds-heatmap-chart v-bind="args" class="min-w-5xl">
+      <sds-heatmap-chart v-bind="args">
         <template #tooltip="{ data }">
           <p v-if="data" class="text-xs whitespace-nowrap font-semibold">
             {{ formatTaxiPickupTooltip(data) }}
@@ -302,7 +302,7 @@ const CustomTooltipTemplate = (args) => ({
   },
   template: `
     <div class="overflow-x-auto">
-      <sds-heatmap-chart v-bind="args" class="min-w-5xl">
+      <sds-heatmap-chart v-bind="args">
         <template #tooltip="{ data }">
           <div v-if="data" class="flex items-center gap-2">
             <span
