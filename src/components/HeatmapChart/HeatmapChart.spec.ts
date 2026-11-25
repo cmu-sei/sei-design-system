@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ref } from 'vue'
 import { CHART_CONFIG_KEY } from '../../composables/useChartConfig'
@@ -6,9 +6,11 @@ import HeatmapChart from './HeatmapChart.vue'
 
 type HeatmapLegendPosition = NonNullable<InstanceType<typeof HeatmapChart>['$props']['legendPosition']>
 
+enableAutoUnmount(afterEach)
+
 const BaseChartStub = {
   name: 'BaseChart',
-  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'xAxisLabelPosition', 'xAxisLabelPlotWidth', 'yAxisLabel', 'xAxis', 'xAxisPosition', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitPlotWidth', 'fitAxisLabels', 'alignXAxisLabelsToPlot'],
+  props: ['legend', 'hoveredIndex', 'xAxisLabel', 'xAxisLabelPosition', 'xAxisLabelPlotWidth', 'yAxisLabel', 'xAxis', 'xAxisPosition', 'yAxis', 'width', 'height', 'margin', 'minPlotWidth', 'fitPlotWidth', 'fitAxisLabels', 'alignXAxisLabelsToPlot', 'tooltipVisible', 'tooltipX', 'tooltipY'],
   emits: ['update:hoveredIndex'],
   template: `
     <div>
@@ -20,6 +22,7 @@ const BaseChartStub = {
         :plot-left="margin.left"
         :update-hovered-index="(index) => $emit('update:hoveredIndex', index)"
       />
+      <slot v-if="tooltipVisible" name="tooltip" />
     </div>
   `,
 }
@@ -28,6 +31,7 @@ describe('HeatmapChart', () => {
   afterEach(() => {
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
+    vi.useRealTimers()
   })
 
   it('keeps cells 32 pixels square with rounded corners as the data and layout change', async () => {
@@ -128,6 +132,7 @@ describe('HeatmapChart', () => {
     })
 
     await wrapper.setProps({ data: [] })
+    expect(wrapper.findAll('rect')).toHaveLength(0)
     expect(wrapper.findComponent(BaseChartStub).props()).toMatchObject({
       minPlotWidth: 0,
       height: 30,
@@ -321,12 +326,13 @@ describe('HeatmapChart', () => {
     expect(wrapper.findComponent(BaseChartStub).props('legend').orientation).toBe('vertical')
   })
 
-  it('renders borderless square color bins that respond to hover', async () => {
+  it('renders borderless color bins and dims only cells outside the hovered range until the pointer leaves', async () => {
     const wrapper = mount(HeatmapChart, {
       props: { data: [
         { x: 'Monday', y: 'Morning', value: 0 },
+        { x: 'Monday', y: 'Evening', value: 25 },
         { x: 'Tuesday', y: 'Morning', value: 100 },
-      ] },
+      ], colors: { light: ['#123456', '#abcdef'], dark: ['#123456', '#abcdef'] } },
       global: { stubs: { SdsBaseChart: BaseChartStub } },
     })
 
@@ -337,6 +343,80 @@ describe('HeatmapChart', () => {
 
     await bin.trigger('mouseenter')
     expect(wrapper.findComponent(BaseChartStub).props('hoveredIndex')).toBe(0)
+    expect(wrapper.findAll('rect').map((cell) => cell.classes().includes('opacity-40')))
+      .toEqual([false, false, true])
+    expect(wrapper.findAll('.sds-heatmap-legend button').map((item) => item.classes().includes('opacity-40')))
+      .toEqual([false, true])
+
+    await bin.trigger('mouseleave')
+    expect(wrapper.findComponent(BaseChartStub).props('hoveredIndex')).toBeNull()
+    expect(wrapper.findAll('rect').every((cell) => cell.classes().includes('opacity-100'))).toBe(true)
+
+    await bin.trigger('mouseenter')
+    await wrapper.trigger('mouseleave')
+    expect(wrapper.findComponent(BaseChartStub).props('hoveredIndex')).toBeNull()
+    expect(wrapper.findAll('rect').every((cell) => cell.classes().includes('opacity-100'))).toBe(true)
+    expect(wrapper.findAll('.sds-heatmap-legend button').every((item) => item.classes().includes('opacity-100'))).toBe(true)
+  })
+
+  it('anchors custom tooltips to cell centers, updates their payload on movement, and hides them on chart leave', async () => {
+    vi.useFakeTimers()
+    const wrapper = mount(HeatmapChart, {
+      props: {
+        data: [
+          { x: 'Monday', y: 'Morning', value: 0 },
+          { x: 'Tuesday', y: 'Evening', value: 100 },
+        ],
+        colors: { light: ['#123456', '#abcdef'], dark: ['#123456', '#abcdef'] },
+      },
+      slots: {
+        tooltip: '<template #tooltip="{ data }"><output>{{ data.x }}, {{ data.y }}: {{ data.value }}; {{ data.color }}; {{ data.binIndex }}</output></template>',
+      },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const cells = wrapper.findAll('rect')
+    vi.spyOn(cells[0].element, 'getBoundingClientRect').mockReturnValue(new DOMRect(100, 200, 32, 32))
+    vi.spyOn(cells[1].element, 'getBoundingClientRect').mockReturnValue(new DOMRect(136, 236, 32, 32))
+    const chart = wrapper.findComponent(BaseChartStub)
+    expect(wrapper.find('output').exists()).toBe(false)
+
+    await cells[0].trigger('mouseenter', { clientX: 999, clientY: 999 })
+    expect(chart.props()).toMatchObject({ tooltipVisible: true, tooltipX: 116, tooltipY: 216 })
+    expect(wrapper.get('output').text()).toBe('Monday, Morning: 0; #123456; 0')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-content"]').exists()).toBe(false)
+
+    await cells[1].trigger('mousemove', { clientX: 1, clientY: 1 })
+    expect(chart.props()).toMatchObject({ tooltipVisible: true, tooltipX: 152, tooltipY: 252 })
+    expect(wrapper.get('output').text()).toBe('Tuesday, Evening: 100; #abcdef; 1')
+
+    await wrapper.trigger('mouseleave')
+    await vi.runAllTimersAsync()
+    expect(chart.props('tooltipVisible')).toBe(false)
+    expect(wrapper.find('output').exists()).toBe(false)
+  })
+
+  it('ignores cell entry and movement while tooltips are disabled and permits them when re-enabled', async () => {
+    const wrapper = mount(HeatmapChart, {
+      props: { data: [{ x: 'Monday', y: 'Morning', value: 0 }], showTooltip: false },
+      global: { stubs: { SdsBaseChart: BaseChartStub } },
+    })
+    const cell = wrapper.get('rect')
+    const chart = wrapper.findComponent(BaseChartStub)
+
+    await cell.trigger('mouseenter')
+    await cell.trigger('mousemove')
+    expect(chart.props('tooltipVisible')).toBeUndefined()
+    expect(wrapper.find('[data-id="sds-chart-tooltip-content"]').exists()).toBe(false)
+
+    await wrapper.setProps({ showTooltip: true })
+    expect(chart.props('tooltipVisible')).toBe(false)
+    await cell.trigger('mouseenter')
+    expect(chart.props('tooltipVisible')).toBe(true)
+    expect(wrapper.get('[data-id="sds-chart-tooltip-datapoint"]').text()).toBe('0')
+
+    await wrapper.setProps({ showTooltip: false })
+    expect(chart.props('tooltipVisible')).toBeUndefined()
+    expect(wrapper.find('[data-id="sds-chart-tooltip-content"]').exists()).toBe(false)
   })
 
   it('updates cell and legend colors to the default light and dark palettes', async () => {
