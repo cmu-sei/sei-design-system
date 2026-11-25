@@ -1,38 +1,37 @@
 <template>
   <div
     data-id="sds-chart-tooltip-content"
-    class="flex flex-col gap-y-2"
+    class="flex flex-col gap-y-3"
   >
-    <span class="text-base font-semibold text-gray-600 dark:text-gray-400">
+    <span class="text-xs leading-none font-semibold text-gray-900 dark:text-gray-100">
       {{ props.title }}
     </span>
     <div
       data-id="sds-chart-tooltip-details"
-      class="flex flex-wrap items-center gap-y-1"
-      :class="props.label === undefined ? 'gap-x-2' : 'gap-x-4'"
+      class="flex flex-wrap items-center justify-between gap-x-6 w-full"
     >
       <span
         v-if="props.color || props.label !== undefined"
-        class="flex min-w-0 items-center gap-x-2"
+        class="flex min-w-0 items-center gap-x-1.5"
       >
         <span
           v-if="props.color"
           data-id="sds-chart-tooltip-swatch"
-          class="block h-3.5 w-3.5 shrink-0 rounded-xs"
+          class="block h-2 w-2 shrink-0 rounded-xs"
           :style="{ backgroundColor: props.color }"
           aria-hidden="true"
         />
         <span
           v-if="props.label !== undefined"
           data-id="sds-chart-tooltip-label"
-          class="text-sm font-normal text-gray-600 dark:text-gray-400"
+          class="text-xs leading-none font-normal text-gray-600 dark:text-gray-400"
         >
           {{ props.label }}
         </span>
       </span>
       <span
         data-id="sds-chart-tooltip-datapoint"
-        class="text-sm font-semibold text-gray-600 dark:text-gray-400"
+        class="text-xs leading-none font-semibold text-gray-900 dark:text-gray-100"
       >
         {{ props.datapoint }}
       </span>
@@ -52,7 +51,9 @@ interface ChartTooltipContentProps {
   color?: string
 }
 
-defineOptions({ name: 'SdsChartTooltipContent' })
+defineOptions({ name:
+  'SdsChartTooltipContent'
+})
 
 const props = defineProps<ChartTooltipContentProps>()
 </script>

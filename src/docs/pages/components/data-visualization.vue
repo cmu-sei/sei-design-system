@@ -1134,14 +1134,14 @@
             y-axis-label="Weekday"
             class="min-w-5xl"
           >
-            <template #tooltip="{ data }">
+            <!-- <template #tooltip="{ data }">
               <span
                 v-if="data"
                 class="font-semibold text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap"
               >
                 {{ formatContributionTooltip(data) }}
               </span>
-            </template>
+            </template> -->
           </SdsHeatmapChart>
         </div>
 

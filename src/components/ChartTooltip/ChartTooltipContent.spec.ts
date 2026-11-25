@@ -14,14 +14,16 @@ describe('ChartTooltipContent', () => {
     const swatch = wrapper.find('[data-id="sds-chart-tooltip-swatch"]')
 
     expect(title.text()).toBe('Series')
-    expect(title.classes()).toEqual(expect.arrayContaining(['text-base', 'text-gray-600', 'font-semibold']))
+    expect(title.classes()).toEqual(expect.arrayContaining(['text-xs', 'leading-none', 'text-gray-900', 'dark:text-gray-100', 'font-semibold']))
     expect(label.text()).toBe('January')
-    expect(label.classes()).toEqual(expect.arrayContaining(['text-sm', 'text-gray-600', 'font-normal']))
+    expect(label.classes()).toEqual(expect.arrayContaining(['text-xs', 'leading-none', 'text-gray-600', 'dark:text-gray-400', 'font-normal']))
     expect(datapoint.text()).toBe('42%')
-    expect(datapoint.classes()).toEqual(expect.arrayContaining(['text-sm', 'text-gray-600', 'font-semibold']))
+    expect(datapoint.classes()).toEqual(expect.arrayContaining(['text-xs', 'leading-none', 'text-gray-900', 'dark:text-gray-100', 'font-semibold']))
     expect(swatch.attributes('style')).toContain('background-color: rgb(18, 52, 86)')
     expect(swatch.attributes('aria-hidden')).toBe('true')
-    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes()).toContain('gap-x-4')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-content"]').classes()).toContain('gap-y-3')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes())
+      .toEqual(expect.arrayContaining(['justify-between', 'gap-x-6', 'w-full']))
   })
 
   it('omits the label and optional swatch when absent while preserving a zero datapoint', () => {
@@ -30,15 +32,16 @@ describe('ChartTooltipContent', () => {
     expect(wrapper.find('[data-id="sds-chart-tooltip-label"]').exists()).toBe(false)
     expect(wrapper.find('[data-id="sds-chart-tooltip-swatch"]').exists()).toBe(false)
     expect(wrapper.find('[data-id="sds-chart-tooltip-datapoint"]').text()).toBe('0')
-    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes()).toContain('gap-x-2')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes()).toContain('gap-x-6')
   })
 
-  it('spaces an unlabelled swatch two units from the datapoint', () => {
+  it('separates an unlabelled swatch and datapoint by at least twenty-four pixels', () => {
     const wrapper = mount(Component, {
       props: { title: 'Slice', datapoint: '42%', color: '#123456' },
     })
 
     expect(wrapper.find('[data-id="sds-chart-tooltip-swatch"]').exists()).toBe(true)
-    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes()).toContain('gap-x-2')
+    expect(wrapper.find('[data-id="sds-chart-tooltip-details"]').classes())
+      .toEqual(expect.arrayContaining(['justify-between', 'gap-x-6', 'w-full']))
   })
 })

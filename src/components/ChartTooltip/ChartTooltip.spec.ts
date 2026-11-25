@@ -29,7 +29,7 @@ describe('ChartTooltip', () => {
     await wrapper.setProps({ visible: true })
     const tooltip = wrapper.find('div.fixed')
     expect(tooltip.text()).toBe('January: 42')
-    expect(tooltip.classes()).toContain('p-4')
+    expect(tooltip.classes()).toContain('p-3')
     expect(tooltip.attributes('style')).toContain('translate3d(70px, 80px, 0)')
     expect(tooltip.attributes('style')).toContain('overflow-wrap: anywhere')
     expect(wrapper.find('svg').exists()).toBe(false)
